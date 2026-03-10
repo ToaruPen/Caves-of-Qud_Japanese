@@ -47,3 +47,6 @@ packages/
 
 # Decompiled game source (copyrighted, local reference only)
 docs/ilspy-raw/
+
+# Local tool installations
+.sisyphus/tools/

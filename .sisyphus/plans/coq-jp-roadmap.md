@@ -1005,7 +1005,7 @@ Wave FINAL (After ALL tasks — verification, 4 parallel):
   **Commit**: YES
   - Message: `feat(scripts): add core Python tooling (sync, encoding check, extraction)`
 
-- [ ] 9. 基本 Harmony パッチの実装 + L2テスト
+- [x] 9. 基本 Harmony パッチの実装 + L2テスト
 
   **What to do**:
   - `OptionsLocalizationPatch.cs` — Options画面の日本語化
