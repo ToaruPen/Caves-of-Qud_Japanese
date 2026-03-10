@@ -47,3 +47,20 @@
 - `DescriptionBuilder` の優先順は `Mark(-800) -> Adjective(-500) -> Base(10) -> Clause(600) -> Tag(1100)`。
 - `Markup` のエスケープは `&&` と `^^` がリテラル扱い（色コード開始を抑止）。
 - `IComponent<T>` に `XDidY` / `XDidYToZ` / `DidX` / `DidXToY` ラッパーがあり、内部で `Messaging.*` へ委譲。
+
+## 2026-03-11 Task 6 テストハーネス構築
+- `QudJP.Tests` は `net10.0` + NUnit 4.3.2 + NUnit3TestAdapter 5.0.0 + Microsoft.NET.Test.Sdk 17.14.0 の組み合わせで安定実行。
+- Harmony 2.4.2 は NuGet パッケージIDが `HarmonyLib` ではなく `Lib.Harmony`。
+- `net10.0` テストプロジェクトから `net48` 本体への `ProjectReference` は `ReferenceOutputAssembly=false` と `SkipGetTargetFrameworkProperties=true` を併用すると警告なしで共存できる。
+- L2 の Harmony 後片付けは `Harmony.UnpatchID` ではなく `harmony.UnpatchAll(harmonyId)` が有効（この環境の API 実体に一致）。
+- レイヤ分離チェックは `L1` で `using HarmonyLib` 0件、`L2` で `using UnityEngine` 0件を grep で機械確認できる。
+
+## 2026-03-11 Task 5 エンコーディング正規化検証
+- Task 3のコピー時にBOM除去・LF正規化が既に実施済みだった。
+- 全78ファイルがUTF-8 (BOM無し)・LF改行であることを確認。
+- XML 35/35・JSON 35/35のパース検証OK。
+- mojibake文字 (繧/縺/驕/蜒) は0件。
+- `docs/glossary.csv` は正しい位置にあり、UTF-8/BOM無し。
+- エビデンス: `.sisyphus/evidence/task-5-encoding-check.txt`, `task-5-xml-migration.txt`
+- コミット: `chore(localization): verify encoding normalization for migrated translations`
+- 教訓: ファイルコピー時にPythonのopen(encoding='utf-8')で読み書きするとBOMが自動除去される。明示的なBOM除去ステップが不要になる場合がある。

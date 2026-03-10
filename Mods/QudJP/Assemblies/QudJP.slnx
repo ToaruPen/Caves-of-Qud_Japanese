@@ -1,2 +1,4 @@
 <Solution>
+  <Project Path="QudJP.csproj" />
+  <Project Path="QudJP.Tests/QudJP.Tests.csproj" />
 </Solution>

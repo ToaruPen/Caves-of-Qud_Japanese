@@ -1,0 +1,22 @@
+Task 6 Layer Isolation Evidence
+Date: 2026-03-11
+
+Directory structure check:
+- Mods/QudJP/Assemblies/QudJP.Tests/DummyTargets/
+- Mods/QudJP/Assemblies/QudJP.Tests/L1/
+- Mods/QudJP/Assemblies/QudJP.Tests/L2/
+
+Command: grep pattern "using\s+HarmonyLib" in Mods/QudJP/Assemblies/QudJP.Tests/L1/*.cs
+Result:
+- No matches found
+
+Command: grep pattern "using\s+UnityEngine" in Mods/QudJP/Assemblies/QudJP.Tests/L2/*.cs
+Result:
+- No matches found
+
+DummyTarget signatures provided:
+- DummyGrammar.A(string, bool)
+- DummyGrammar.Pluralize(string)
+- DummyGrammar.MakePossessive(string)
+- DummyMessageQueue.AddPlayerMessage(string, string, bool)
+- DummyConversationElement.GetDisplayText(bool)

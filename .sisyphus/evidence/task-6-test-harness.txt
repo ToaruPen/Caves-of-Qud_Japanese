@@ -1,0 +1,31 @@
+Task 6 Test Harness Evidence
+Date: 2026-03-11
+
+Project:
+- Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj
+- TargetFramework: net10.0
+- Test stack: NUnit 4.3.2, NUnit3TestAdapter 5.0.0, Microsoft.NET.Test.Sdk 17.14.0
+- Harmony test package: Lib.Harmony 2.4.2
+
+Command: dotnet test "Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj"
+Result:
+- Passed: 5
+- Failed: 0
+- Skipped: 0
+- Duration: 515 ms
+
+Command: (workdir=Mods/QudJP/Assemblies) dotnet test --filter TestCategory=L1
+Result:
+- Passed: 2
+- Failed: 0
+- Skipped: 0
+
+Command: (workdir=Mods/QudJP/Assemblies) dotnet test --filter TestCategory=L2
+Result:
+- Passed: 3
+- Failed: 0
+- Skipped: 0
+
+Notes:
+- L1 tests validate pure string manipulation helpers.
+- L2 tests validate Harmony Prefix/Postfix behavior against DummyTargets.
