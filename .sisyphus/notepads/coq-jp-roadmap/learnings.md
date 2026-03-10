@@ -71,3 +71,10 @@
 - `Translator` は `DataContractJsonSerializer` + 遅延ロード + `ConcurrentDictionary` キャッシュで net48 互換のままスレッドセーフに実装できる。
 - `QudJP.Tests` 側で `../src/*.cs` を `Compile Include` でリンクすると、`net10.0` L1 から本番ロジックを直接検証できる（`net48` 参照なし）。
 - LSP は `csharp-ls` が PATH 未解決だと診断不可。`/Users/sankenbisha/bin` に `~/.dotnet/tools/csharp-ls` をリンクすると `lsp_diagnostics` 実行が復旧した。
+
+## 2026-03-11 Task 9 基本UI Harmonyパッチ + L2
+- `QudJP.csproj` にゲーム同梱 `0Harmony.dll` 参照（`<Private>false</Private>`）を追加し、net48本体で `[HarmonyPatch]` 属性付きパッチをコンパイル可能にした。
+- UI共通処理は `UITextSkinTranslationPatch` に集約し、`Translator.Translate()` + `ColorCodePreserver` で `{{...|...}}` 等を保全したまま翻訳できる形にした。
+- Popupは `XRL.UI.Popup.ShowBlock` と `ShowOptionList` を `HarmonyTargetMethods` + `object[] __args` で一括Prefix処理し、タイトル/本文/選択肢/ボタン文言を反映できる。
+- MainMenu/Options は `Show()` Postfixでメニュー要素フィールドを反射更新する方式にすると、ゲーム型を直接参照せずにL2 DummyTargetでも検証可能。
+- L2は既存3 + 新規6 = 合計9テストが `--filter TestCategory=L2` で全件パス。

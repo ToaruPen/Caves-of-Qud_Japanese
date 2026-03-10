@@ -20,6 +20,12 @@
     <Compile Include="src/**/*.cs" />
   </ItemGroup>
 
+  <ItemGroup Condition="Exists('$(ManagedDir)/0Harmony.dll')">
+    <Reference Include="0Harmony">
+      <HintPath>$(ManagedDir)/0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
   <!-- Game DLL references - only resolve when building locally with game installed -->
-  <!-- Will be populated in Task 6 (test harness) when needed -->
 </Project>

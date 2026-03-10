@@ -1,0 +1,105 @@
+namespace QudJP.Tests.DummyTargets;
+
+internal static class DummyPopupTarget
+{
+    public static string LastShowBlockMessage { get; private set; } = string.Empty;
+
+    public static string LastShowBlockTitle { get; private set; } = string.Empty;
+
+    public static string LastOptionListTitle { get; private set; } = string.Empty;
+
+    public static IReadOnlyList<string>? LastOptionListOptions { get; private set; }
+
+    public static string LastOptionListIntro { get; private set; } = string.Empty;
+
+    public static string LastOptionListSpacingText { get; private set; } = string.Empty;
+
+    public static IReadOnlyList<DummyPopupMenuItem>? LastOptionListButtons { get; private set; }
+
+    public static void Reset()
+    {
+        LastShowBlockMessage = string.Empty;
+        LastShowBlockTitle = string.Empty;
+        LastOptionListTitle = string.Empty;
+        LastOptionListOptions = null;
+        LastOptionListIntro = string.Empty;
+        LastOptionListSpacingText = string.Empty;
+        LastOptionListButtons = null;
+    }
+
+    public static int ShowBlock(
+        string Message,
+        string? Title = null,
+        string Sound = "Sounds/UI/ui_notification",
+        bool CopyScrap = true,
+        bool Capitalize = true,
+        bool DimBackground = true,
+        bool LogMessage = true,
+        object? PopupLocation = null)
+    {
+        _ = Sound;
+        _ = CopyScrap;
+        _ = Capitalize;
+        _ = DimBackground;
+        _ = LogMessage;
+        _ = PopupLocation;
+
+        LastShowBlockMessage = Message;
+        LastShowBlockTitle = Title ?? string.Empty;
+        return 0;
+    }
+
+    public static int ShowOptionList(
+        string Title = "",
+        IReadOnlyList<string>? Options = null,
+        IReadOnlyList<char>? Hotkeys = null,
+        int Spacing = 0,
+        string? Intro = null,
+        int MaxWidth = 60,
+        bool RespectOptionNewlines = false,
+        bool AllowEscape = false,
+        int DefaultSelected = 0,
+        string SpacingText = "",
+        Action<int>? onResult = null,
+        object? context = null,
+        IReadOnlyList<object>? Icons = null,
+        object? IntroIcon = null,
+        IReadOnlyList<DummyPopupMenuItem>? Buttons = null,
+        bool centerIntro = false,
+        bool centerIntroIcon = true,
+        int iconPosition = -1,
+        bool forceNewPopup = false)
+    {
+        _ = Hotkeys;
+        _ = Spacing;
+        _ = MaxWidth;
+        _ = RespectOptionNewlines;
+        _ = AllowEscape;
+        _ = DefaultSelected;
+        _ = onResult;
+        _ = context;
+        _ = Icons;
+        _ = IntroIcon;
+        _ = centerIntro;
+        _ = centerIntroIcon;
+        _ = iconPosition;
+        _ = forceNewPopup;
+
+        LastOptionListTitle = Title;
+        LastOptionListOptions = Options;
+        LastOptionListIntro = Intro ?? string.Empty;
+        LastOptionListSpacingText = SpacingText;
+        LastOptionListButtons = Buttons;
+        return 0;
+    }
+}
+
+internal sealed class DummyPopupMenuItem
+{
+    public DummyPopupMenuItem(string text)
+    {
+        this.text = text;
+    }
+
+    public string text;
+}

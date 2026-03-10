@@ -1,0 +1,31 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  QudJP -> /Users/sankenbisha/Dev/Caves-of-Qud_Japanese/Mods/QudJP/Assemblies/QudJP.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.30
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  QudJP -> /Users/sankenbisha/Dev/Caves-of-Qud_Japanese/Mods/QudJP/Assemblies/QudJP.dll
+  QudJP.Tests -> /Users/sankenbisha/Dev/Caves-of-Qud_Japanese/Mods/QudJP/Assemblies/QudJP.Tests/bin/Debug/net10.0/QudJP.Tests.dll
+Test run for /Users/sankenbisha/Dev/Caves-of-Qud_Japanese/Mods/QudJP/Assemblies/QudJP.Tests/bin/Debug/net10.0/QudJP.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (arm64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     9, Skipped:     0, Total:     9, Duration: 354 ms - QudJP.Tests.dll (net10.0)
+
+
+---
+LSP diagnostics (changed C# files): clean (No diagnostics found on all changed files)
+
+ILSpy signature evidence used in implementation:
+- XRL.UI.Popup.ShowBlock(string Message, string Title = null, string Sound = "Sounds/UI/ui_notification", bool CopyScrap = true, bool Capitalize = true, bool DimBackground = true, bool LogMessage = true, Location2D PopupLocation = null)
+- XRL.UI.Popup.ShowOptionList(string Title = "", IReadOnlyList<string> Options = null, IReadOnlyList<char> Hotkeys = null, int Spacing = 0, string Intro = null, int MaxWidth = 60, bool RespectOptionNewlines = false, bool AllowEscape = false, int DefaultSelected = 0, string SpacingText = "", Action<int> onResult = null, XRL.World.GameObject context = null, IReadOnlyList<IRenderable> Icons = null, IRenderable IntroIcon = null, IReadOnlyList<QudMenuItem> Buttons = null, bool centerIntro = false, bool centerIntroIcon = true, int iconPosition = -1, bool forceNewPopup = false)
+- Qud.UI.MainMenu.Show()
+- Qud.UI.OptionsScreen.Show()
+- XRL.UI.UITextSkin.SetText(string text)

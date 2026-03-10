@@ -1,0 +1,132 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using HarmonyLib;
+
+namespace QudJP.Patches;
+
+[HarmonyPatch]
+public static class PopupTranslationPatch
+{
+    private const string TargetTypeName = "XRL.UI.Popup";
+
+    [HarmonyTargetMethods]
+    private static IEnumerable<MethodBase> TargetMethods()
+    {
+        var showBlock = FindMethod(methodName: "ShowBlock", parameterCount: 8);
+        if (showBlock is not null)
+        {
+            yield return showBlock;
+        }
+
+        var showOptionList = FindMethod(methodName: "ShowOptionList", parameterCount: 19);
+        if (showOptionList is not null)
+        {
+            yield return showOptionList;
+        }
+    }
+
+    public static void Prefix(MethodBase __originalMethod, object[] __args)
+    {
+        if (__originalMethod is null || __args is null)
+        {
+            return;
+        }
+
+        if (__originalMethod.Name == "ShowBlock")
+        {
+            TranslateShowBlockArgs(__args);
+            return;
+        }
+
+        if (__originalMethod.Name == "ShowOptionList")
+        {
+            TranslateShowOptionListArgs(__args);
+        }
+    }
+
+    private static void TranslateShowBlockArgs(object[] args)
+    {
+        TranslateStringArg(args, index: 0);
+        TranslateStringArg(args, index: 1);
+    }
+
+    private static void TranslateShowOptionListArgs(object[] args)
+    {
+        TranslateStringArg(args, index: 0);
+        TranslateStringListArg(args, index: 1);
+        TranslateStringArg(args, index: 4);
+        TranslateStringArg(args, index: 9);
+
+        if (args.Length > 14)
+        {
+            UITextSkinTranslationPatch.TranslateStringFieldsInCollection(args[14], "text");
+        }
+    }
+
+    private static void TranslateStringArg(object[] args, int index)
+    {
+        if (index < 0 || index >= args.Length)
+        {
+            return;
+        }
+
+        if (args[index] is string text)
+        {
+            args[index] = UITextSkinTranslationPatch.TranslatePreservingColors(text);
+        }
+    }
+
+    private static void TranslateStringListArg(object[] args, int index)
+    {
+        if (index < 0 || index >= args.Length)
+        {
+            return;
+        }
+
+        if (args[index] is null || args[index] is string || args[index] is not IEnumerable enumerable)
+        {
+            return;
+        }
+
+        var translated = new List<string>();
+        foreach (var item in enumerable)
+        {
+            if (item is null)
+            {
+                translated.Add(string.Empty);
+                continue;
+            }
+
+            if (item is not string text)
+            {
+                return;
+            }
+
+            translated.Add(UITextSkinTranslationPatch.TranslatePreservingColors(text));
+        }
+
+        args[index] = translated;
+    }
+
+    private static MethodBase? FindMethod(string methodName, int parameterCount)
+    {
+        var targetType = AccessTools.TypeByName(TargetTypeName);
+        if (targetType is null)
+        {
+            return null;
+        }
+
+        var methods = AccessTools.GetDeclaredMethods(targetType);
+        for (var index = 0; index < methods.Count; index++)
+        {
+            var method = methods[index];
+            if (method.Name == methodName && method.GetParameters().Length == parameterCount)
+            {
+                return method;
+            }
+        }
+
+        return null;
+    }
+}
