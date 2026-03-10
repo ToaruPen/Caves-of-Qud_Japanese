@@ -1,7 +1,4 @@
-using System;
-using System.IO;
 using System.Text;
-using QudJP;
 
 namespace QudJP.Tests.L1;
 

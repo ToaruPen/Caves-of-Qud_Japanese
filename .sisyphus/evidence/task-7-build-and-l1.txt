@@ -1,0 +1,20 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  QudJP -> /Users/sankenbisha/Dev/Caves-of-Qud_Japanese/Mods/QudJP/Assemblies/QudJP.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.29
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  QudJP -> /Users/sankenbisha/Dev/Caves-of-Qud_Japanese/Mods/QudJP/Assemblies/QudJP.dll
+  QudJP.Tests -> /Users/sankenbisha/Dev/Caves-of-Qud_Japanese/Mods/QudJP/Assemblies/QudJP.Tests/bin/Debug/net10.0/QudJP.Tests.dll
+Test run for /Users/sankenbisha/Dev/Caves-of-Qud_Japanese/Mods/QudJP/Assemblies/QudJP.Tests/bin/Debug/net10.0/QudJP.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (arm64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    12, Skipped:     0, Total:    12, Duration: 14 ms - QudJP.Tests.dll (net10.0)

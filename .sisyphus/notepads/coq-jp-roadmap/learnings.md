@@ -64,3 +64,10 @@
 - エビデンス: `.sisyphus/evidence/task-5-encoding-check.txt`, `task-5-xml-migration.txt`
 - コミット: `chore(localization): verify encoding normalization for migrated translations`
 - 教訓: ファイルコピー時にPythonのopen(encoding='utf-8')で読み書きするとBOMが自動除去される。明示的なBOM除去ステップが不要になる場合がある。
+
+## 2026-03-11 Task 7 C#翻訳インフラ
+- `ColorCodePreserver` は `{{W|...}}` / `&X` / `^Y` を span 化して可視テキストと分離し、復元時にインデックス順で再挿入する方式がL1で安定した。
+- `&&` と `^^` は色コードではなくエスケープとして `Strip` 時にそのまま残すと、誤検出を防ぎつつ往復一致を維持できる。
+- `Translator` は `DataContractJsonSerializer` + 遅延ロード + `ConcurrentDictionary` キャッシュで net48 互換のままスレッドセーフに実装できる。
+- `QudJP.Tests` 側で `../src/*.cs` を `Compile Include` でリンクすると、`net10.0` L1 から本番ロジックを直接検証できる（`net48` 参照なし）。
+- LSP は `csharp-ls` が PATH 未解決だと診断不可。`/Users/sankenbisha/bin` に `~/.dotnet/tools/csharp-ls` をリンクすると `lsp_diagnostics` 実行が復旧した。

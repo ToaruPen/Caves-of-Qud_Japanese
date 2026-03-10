@@ -1,5 +1,3 @@
-using QudJP;
-
 namespace QudJP.Tests.L1;
 
 [TestFixture]
