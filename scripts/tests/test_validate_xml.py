@@ -1,0 +1,110 @@
+from pathlib import Path
+
+import pytest
+
+from scripts.validate_xml import main
+
+
+def _write_xml(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+
+
+def test_valid_xml_file_passes(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """A well-formed XML file exits successfully."""
+    xml_path = tmp_path / "valid.xml"
+    _write_xml(xml_path, "<root><text>OK</text></root>")
+
+    result = main([str(xml_path)])
+    captured = capsys.readouterr()
+
+    assert result == 0
+    assert "OK" in captured.out
+
+
+def test_invalid_xml_reports_error(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """Malformed XML reports an error and exits non-zero."""
+    xml_path = tmp_path / "broken.xml"
+    _write_xml(xml_path, "<root><text>broken</root>")
+
+    result = main([str(xml_path)])
+    captured = capsys.readouterr()
+
+    assert result == 1
+    assert "ERROR" in captured.out
+    assert "XML parse failed" in captured.out
+
+
+def test_unbalanced_color_code_reports_warning(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """Unbalanced ``{{`` and ``}}`` markup is reported as warning."""
+    xml_path = tmp_path / "colors.xml"
+    _write_xml(xml_path, "<root><text>{{W|missing close</text></root>")
+
+    result = main([str(xml_path)])
+    captured = capsys.readouterr()
+
+    assert result == 0
+    assert "warning" in captured.out
+    assert "Unbalanced color code" in captured.out
+
+
+def test_duplicate_id_in_same_parent_reports_warning(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """Duplicate sibling IDs are reported as warning."""
+    xml_path = tmp_path / "duplicate_id.xml"
+    _write_xml(xml_path, '<root><item ID="A"/><item ID="A"/></root>')
+
+    result = main([str(xml_path)])
+    captured = capsys.readouterr()
+
+    assert result == 0
+    assert 'Duplicate sibling ID="A"' in captured.out
+
+
+def test_empty_text_element_reports_warning(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """Whitespace-only text elements are reported as warning."""
+    xml_path = tmp_path / "empty_text.xml"
+    _write_xml(xml_path, "<root><text>   </text></root>")
+
+    result = main([str(xml_path)])
+    captured = capsys.readouterr()
+
+    assert result == 0
+    assert "Empty text in element 'text'" in captured.out
+
+
+def test_strict_mode_treats_warning_as_error(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """Strict mode returns non-zero when warnings are present."""
+    xml_path = tmp_path / "strict.xml"
+    _write_xml(xml_path, "<root><text>{{G|strict mode</text></root>")
+
+    result = main(["--strict", str(xml_path)])
+    captured = capsys.readouterr()
+
+    assert result == 1
+    assert "WARNING" in captured.out
+
+
+def test_directory_scanning_finds_nested_xml_files(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """Directory input recursively scans nested XML files."""
+    root_dir = tmp_path / "Localization"
+    _write_xml(root_dir / "Top.jp.xml", "<root><text>top</text></root>")
+    _write_xml(root_dir / "nested" / "Deep.xml", "<root><text>deep</text></root>")
+
+    result = main([str(root_dir)])
+    captured = capsys.readouterr()
+
+    assert result == 0
+    assert "Top.jp.xml" in captured.out
+    assert "Deep.xml" in captured.out
+
+
+def test_file_with_no_issues_reports_ok(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """Issue-free files are reported with an OK status line."""
+    xml_path = tmp_path / "clean.xml"
+    _write_xml(xml_path, "<root><text>all good</text></root>")
+
+    result = main([str(xml_path)])
+    captured = capsys.readouterr()
+
+    assert result == 0
+    assert f"Checking {xml_path}... OK" in captured.out

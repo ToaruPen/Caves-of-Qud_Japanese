@@ -109,3 +109,16 @@
 - net48 互換では `string.Replace(old, new, StringComparison)` と `^1` インデクサは使えないため、`Replace(old, new)` と `items[items.Count - 1]` を使う必要がある。
 - L1 では Harmony適用を使わず Prefix を直接呼ぶだけで、文法中和ロジック（無冠詞化・複数形無効化・`の`付与・和文リスト化）を高速に検証できる。
 - `SplitOfSentenceList` は `、` と英語の `, and` / ` and ` を `,` 正規化してから分割すると、色コードを壊さずに要素化できる。
+
+## 2026-03-11 Task diff_localization
+- `scripts/diff_localization.py` は `ObjectBlueprints` をサブディレクトリ集約、`Conversations` は `<conversation ID>`、その他はルート直下の `ID/Name` 優先で比較すると、カテゴリ別カバレッジを安定算出できる。
+- `Books.xml` は `ET.parse()` 失敗時に `<book ... ID="...">` を bytes 正規表現で抽出するフォールバックを入れると、不正文字を含む実データでも継続可能。
+- 空の翻訳XMLは parse error を失敗扱いにせず、空集合として処理すると `--summary`/`--missing-only` のCLI挙動を壊さずに0%を報告できる。
+- `python` コマンド非搭載環境があるため、検証コマンドは `python3 scripts/diff_localization.py --help` で実行すると再現性が高い。
+
+## 2026-03-11 Task validate_xml
+- `scripts/validate_xml.py` は `Path` の複数入力（ファイル/ディレクトリ混在）を受け、ディレクトリ時は `rglob("*.xml")` で再帰収集すると `*.jp.xml` も自然に包含できる。
+- 色コード検証は文字列走査で `{{`/`}}` のスタック整合を取ると、最初の不整合行を警告として返せる。
+- 兄弟重複チェックは親要素ごとに `ID` と `Name` を別カウントして `count > 1` を警告化すると要件に合う。
+- 空翻訳チェックは leaf 要素に限定し、`<text>` の `None` / 空白のみ文字列を警告対象にすると過検出を抑えられる。
+- Ruff `D103` が `scripts/tests/` の test 関数にも適用されるため、各 test に短い docstring が必要。
