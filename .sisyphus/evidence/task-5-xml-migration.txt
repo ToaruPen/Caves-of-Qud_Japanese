@@ -1,0 +1,100 @@
+Task 5: XML/JSON Parse Validation
+Generated: 2026-03-10T16:44:12Z
+Scope: Mods/QudJP/Localization/ (all XML and JSON files)
+
+====================================================================
+XML PARSE RESULTS (35/35 PASS)
+====================================================================
+  PASS: ActivatedAbilities.jp.xml
+  PASS: Books.jp.xml
+  PASS: ChiliadFactions.jp.xml
+  PASS: Commands.jp.xml
+  PASS: Conversations.jp.xml
+  PASS: EmbarkModules.jp.xml
+  PASS: Factions.jp.xml
+  PASS: Genotypes.jp.xml
+  PASS: HiddenConversations.jp.xml
+  PASS: HiddenMutations.jp.xml
+  PASS: Manual.jp.xml
+  PASS: Mods.jp.xml
+  PASS: Mutations.jp.xml
+  PASS: Options.jp.xml
+  PASS: Quests.jp.xml
+  PASS: Relics.jp.xml
+  PASS: Skills.jp.xml
+  PASS: SparkingBaetyls.jp.xml
+  PASS: Subtypes.jp.xml
+  PASS: WishCommands.jp.xml
+  PASS: Worlds.jp.xml
+  PASS: ObjectBlueprints/Creatures.jp.xml
+  PASS: ObjectBlueprints/Data.jp.xml
+  PASS: ObjectBlueprints/Foods.jp.xml
+  PASS: ObjectBlueprints/Furniture.jp.xml
+  PASS: ObjectBlueprints/HiddenObjects.jp.xml
+  PASS: ObjectBlueprints/Items.jp.xml
+  PASS: ObjectBlueprints/PhysicalPhenomena.jp.xml
+  PASS: ObjectBlueprints/RootObjects.jp.xml
+  PASS: ObjectBlueprints/Staging.jp.xml
+  PASS: ObjectBlueprints/TutorialStaging.jp.xml
+  PASS: ObjectBlueprints/Walls.jp.xml
+  PASS: ObjectBlueprints/Widgets.jp.xml
+  PASS: ObjectBlueprints/WorldTerrain.jp.xml
+  PASS: ObjectBlueprints/ZoneTerrain.jp.xml
+
+====================================================================
+JSON PARSE RESULTS (35/35 PASS)
+====================================================================
+  PASS: Dictionaries/bodypart-position.ja.json
+  PASS: Dictionaries/mutation-descriptions.ja.json
+  PASS: Dictionaries/mutation-ranktext.ja.json
+  PASS: Dictionaries/ui-attributes.ja.json
+  PASS: Dictionaries/ui-auto-generated.ja.json
+  PASS: Dictionaries/ui-chargen-supplement.ja.json
+  PASS: Dictionaries/ui-chargen.ja.json
+  PASS: Dictionaries/ui-default.ja.json
+  PASS: Dictionaries/ui-displayname-adjectives.ja.json
+  PASS: Dictionaries/ui-help.ja.json
+  PASS: Dictionaries/ui-inventory-actions.ja.json
+  PASS: Dictionaries/ui-inventory-legacy.ja.json
+  PASS: Dictionaries/ui-inventory.ja.json
+  PASS: Dictionaries/ui-journal.ja.json
+  PASS: Dictionaries/ui-keybinds.ja.json
+  PASS: Dictionaries/ui-liquid-adjectives.ja.json
+  PASS: Dictionaries/ui-liquids.ja.json
+  PASS: Dictionaries/ui-messagelog-combat.ja.json
+  PASS: Dictionaries/ui-messagelog-world.ja.json
+  PASS: Dictionaries/ui-messagelog.ja.json
+  PASS: Dictionaries/ui-modpage.ja.json
+  PASS: Dictionaries/ui-options.ja.json
+  PASS: Dictionaries/ui-pickitem.ja.json
+  PASS: Dictionaries/ui-popup.ja.json
+  PASS: Dictionaries/ui-quit-hotfix.ja.json
+  PASS: Dictionaries/ui-reputation.ja.json
+  PASS: Dictionaries/ui-skillsandpowers.ja.json
+  PASS: Dictionaries/ui-worldgen.ja.json
+  PASS: Dictionaries/world-effects-cooking.ja.json
+  PASS: Dictionaries/world-effects-tonics.ja.json
+  PASS: Dictionaries/world-factions.ja.json
+  PASS: Dictionaries/world-gospels.ja.json
+  PASS: Dictionaries/world-mods.ja.json
+  PASS: Dictionaries/world-parts-extra.ja.json
+  PASS: Dictionaries/world-parts.ja.json
+
+====================================================================
+SUMMARY
+====================================================================
+  XML files: 35/35 passed (100%)
+  JSON files: 35/35 passed (100%)
+  Total: 70/70 passed (100%)
+
+  Validation method:
+    - XML: python3 xml.etree.ElementTree.parse()
+    - JSON: python3 json.load()
+    - Both validate well-formedness and UTF-8 decoding
+
+====================================================================
+GLOSSARY CHECK
+====================================================================
+  docs/glossary.csv: Already at correct location
+  Encoding: UTF-8, no BOM
+  Entries: 83 (per migration-report.json)

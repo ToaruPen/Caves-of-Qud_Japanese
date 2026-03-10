@@ -1,0 +1,144 @@
+Task 5: Encoding Normalization Check
+Generated: 2026-03-10T16:44:12Z
+Scope: Mods/QudJP/Localization/ (all files)
+
+====================================================================
+1. BOM CHECK
+====================================================================
+Expected BOM files (per migration-report.json): 15 XML + 2 JSON = 17
+Actual BOM files found: 0
+
+All 17 files that previously had BOM are now clean UTF-8 without BOM.
+The BOM was already stripped during the Task 3 file copy operation.
+
+Previously-BOM XML files (now clean):
+  - ActivatedAbilities.jp.xml
+  - Books.jp.xml
+  - Conversations.jp.xml
+  - EmbarkModules.jp.xml
+  - HiddenConversations.jp.xml
+  - ObjectBlueprints/Creatures.jp.xml
+  - ObjectBlueprints/Foods.jp.xml
+  - ObjectBlueprints/Items.jp.xml
+  - ObjectBlueprints/PhysicalPhenomena.jp.xml
+  - ObjectBlueprints/Widgets.jp.xml
+  - ObjectBlueprints/WorldTerrain.jp.xml
+  - ObjectBlueprints/ZoneTerrain.jp.xml
+  - Options.jp.xml
+  - Subtypes.jp.xml
+  - Worlds.jp.xml
+
+Previously-BOM JSON files (now clean):
+  - Dictionaries/mutation-ranktext.ja.json
+  - Dictionaries/world-parts.ja.json
+
+====================================================================
+2. LINE ENDING CHECK
+====================================================================
+Files with CRLF: 0
+Files with lone CR: 0
+All 78 files use LF line endings.
+
+====================================================================
+3. FULL FILE AUDIT
+====================================================================
+File                                                     BOM  CRLF   CR     Size
+--------------------------------------------------------------------------------
+AGENTS.md                                                 no    no   no     3625
+ActivatedAbilities.jp.xml                                 no    no   no    80388
+Books.jp.xml                                              no    no   no   164120
+ChiliadFactions.jp.xml                                    no    no   no    26656
+Commands.jp.xml                                           no    no   no    44907
+Conversations.jp.xml                                      no    no   no   693267
+EmbarkModules.jp.xml                                      no    no   no    32342
+Factions.jp.xml                                           no    no   no     6760
+Genotypes.jp.xml                                          no    no   no     4664
+HiddenConversations.jp.xml                                no    no   no   111245
+HiddenMutations.jp.xml                                    no    no   no     9362
+Manual.jp.xml                                             no    no   no      230
+Mods.jp.xml                                               no    no   no    13031
+Mutations.jp.xml                                          no    no   no    16131
+Options.jp.xml                                            no    no   no    39836
+Quests.jp.xml                                             no    no   no    27919
+Relics.jp.xml                                             no    no   no     3845
+Skills.jp.xml                                             no    no   no    53262
+SparkingBaetyls.jp.xml                                    no    no   no     1852
+Subtypes.jp.xml                                           no    no   no    13091
+Text.jp.txt                                               no    no   no     1491
+WishCommands.jp.xml                                       no    no   no     1913
+Worlds.jp.xml                                             no    no   no   153545
+Corpus/Machinery-of-the-Universe-excerpt.jp.txt           no    no   no    42462
+Corpus/Meteorology-Weather-Explained-excerpt.jp.txt       no    no   no    31828
+Corpus/Thought-Forms-excerpt.jp.txt                       no    no   no    35107
+ObjectBlueprints/Creatures.jp.xml                         no    no   no   851045
+ObjectBlueprints/Data.jp.xml                              no    no   no    16211
+ObjectBlueprints/Foods.jp.xml                             no    no   no    95280
+ObjectBlueprints/Furniture.jp.xml                         no    no   no   325179
+ObjectBlueprints/HiddenObjects.jp.xml                     no    no   no   175692
+ObjectBlueprints/Items.jp.xml                             no    no   no   757285
+ObjectBlueprints/PhysicalPhenomena.jp.xml                 no    no   no    41376
+ObjectBlueprints/RootObjects.jp.xml                       no    no   no      524
+ObjectBlueprints/Staging.jp.xml                           no    no   no       50
+ObjectBlueprints/TutorialStaging.jp.xml                   no    no   no     3492
+ObjectBlueprints/Walls.jp.xml                             no    no   no   146702
+ObjectBlueprints/Widgets.jp.xml                           no    no   no    48556
+ObjectBlueprints/WorldTerrain.jp.xml                      no    no   no    37938
+ObjectBlueprints/ZoneTerrain.jp.xml                       no    no   no    81230
+Dictionaries/PHASE2_NOTES.md                              no    no   no      168
+Dictionaries/README.md                                    no    no   no     2924
+Dictionaries/bodypart-position.ja.json                    no    no   no      931
+Dictionaries/mutation-descriptions.ja.json                no    no   no    25198
+Dictionaries/mutation-ranktext.ja.json                    no    no   no   395173
+Dictionaries/progress.md                                  no    no   no     4995
+Dictionaries/ui-attributes.ja.json                        no    no   no    13782
+Dictionaries/ui-auto-generated.ja.json                    no    no   no    84702
+Dictionaries/ui-chargen-supplement.ja.json                no    no   no     7950
+Dictionaries/ui-chargen.ja.json                           no    no   no    11993
+Dictionaries/ui-default.ja.json                           no    no   no    17080
+Dictionaries/ui-displayname-adjectives.ja.json            no    no   no    42279
+Dictionaries/ui-help.ja.json                              no    no   no     1091
+Dictionaries/ui-inventory-actions.ja.json                 no    no   no      829
+Dictionaries/ui-inventory-legacy.ja.json                  no    no   no     1078
+Dictionaries/ui-inventory.ja.json                         no    no   no     8253
+Dictionaries/ui-journal.ja.json                           no    no   no    15589
+Dictionaries/ui-keybinds.ja.json                          no    no   no     1519
+Dictionaries/ui-liquid-adjectives.ja.json                 no    no   no     1947
+Dictionaries/ui-liquids.ja.json                           no    no   no     8241
+Dictionaries/ui-messagelog-combat.ja.json                 no    no   no     7175
+Dictionaries/ui-messagelog-world.ja.json                  no    no   no    91770
+Dictionaries/ui-messagelog.ja.json                        no    no   no    16405
+Dictionaries/ui-modpage.ja.json                           no    no   no    12263
+Dictionaries/ui-options.ja.json                           no    no   no     4794
+Dictionaries/ui-pickitem.ja.json                          no    no   no     1063
+Dictionaries/ui-popup.ja.json                             no    no   no    14520
+Dictionaries/ui-quit-hotfix.ja.json                       no    no   no      979
+Dictionaries/ui-reputation.ja.json                        no    no   no      864
+Dictionaries/ui-skillsandpowers.ja.json                   no    no   no    77362
+Dictionaries/ui-worldgen.ja.json                          no    no   no     7472
+Dictionaries/world-effects-cooking.ja.json                no    no   no    82714
+Dictionaries/world-effects-tonics.ja.json                 no    no   no    13457
+Dictionaries/world-factions.ja.json                       no    no   no    18872
+Dictionaries/world-gospels.ja.json                        no    no   no   240166
+Dictionaries/world-mods.ja.json                           no    no   no    44221
+Dictionaries/world-parts-extra.ja.json                    no    no   no      373
+Dictionaries/world-parts.ja.json                          no    no   no   140903
+
+Total files: 78
+Files with BOM: 0
+Files with CRLF: 0
+Files with lone CR: 0
+
+====================================================================
+4. MOJIBAKE CHECK
+====================================================================
+Pattern searched: [繧縺驕蜒] (common Shift_JIS misinterpretation sequences)
+Mojibake occurrences found: 0
+
+====================================================================
+CONCLUSION
+====================================================================
+All files in Mods/QudJP/Localization/ are:
+  ✓ UTF-8 without BOM
+  ✓ LF line endings only
+  ✓ No mojibake characters detected
+  ✓ Encoding normalization already applied during Task 3 copy
