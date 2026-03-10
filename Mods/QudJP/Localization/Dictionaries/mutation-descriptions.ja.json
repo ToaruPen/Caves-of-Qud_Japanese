@@ -1,0 +1,433 @@
+{
+  "meta": {
+    "id": "mutation-descriptions",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "mutation:Chimera",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "肉体突然変異しか発現しない。新しい突然変異の候補もすべて肉体系になり、突然変異を得るたび候補の1つでランダムな部位が増える。"
+    },
+    {
+      "key": "mutation:Esper",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "精神突然変異しか発現しない。新しい突然変異の候補も精神系になる。予備ターンを得て、サイオニック系のシフラで有利になる。"
+    },
+    {
+      "key": "mutation:Unstable Genome",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "購入するたびに突然変異ポイントを余計に1つ得るが、発現は後回しになる。レベルアップのたび{{rules|33%}}の確率でゲノムが不安定化し、ランダムな突然変異3つから1つを選んで発現する。"
+    },
+    {
+      "key": "mutation:Adrenal Control",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "あなたは自分の体内でアドレナリンの分泌を制御できる。\n\n20ターンのあいだアドレナリンの流れを高められる。\nそのあいだ{{C|+10}}の俊敏を得て、ほかの肉体突然変異のランクが{{C|+1}}上昇する。\nクールダウン: 200ターン"
+    },
+    {
+      "key": "mutation:Beak",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "顔に立派なくちばしが生えている。\n\n{{rules|+1}} 意力。時おり敵をついばむ。\n{{w|鳥}}との評判+200。"
+    },
+    {
+      "key": "mutation:Burrowing Claws",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "両手がスコップ状の爪になっている。\n\n壁を掘削でき、戦闘外なら上下に通路を掘り進められる。爪は自然武器として働き、近接攻撃や壁への貫通力が高い。"
+    },
+    {
+      "key": "mutation:Carapace",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "頑丈な甲殻に覆われている。\n\n静止しているあいだ甲殻を締め付け、DV-2の代わりにAVを2倍にできる。胴体用の防具は装備できない。"
+    },
+    {
+      "key": "mutation:Carapace:rank:1",
+      "context": "Chargen.Mutation.RankText",
+      "text": "{{rules|+3}} AV\n{{rules|-2}} DV\n{{rules|+10}} 耐熱力\n{{rules|+10}} 耐寒力\n{{rules|+400}} 亀派との評判\n静止しているあいだ甲殻を締め付ければ、AVボーナスが2倍になる代わりにDV-2のペナルティを受ける。\n胴体用の防具は装備できない。"
+    },
+    {
+      "key": "mutation:Corrosive Gas Generation",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "周囲に腐食性のガスを噴出する。"
+    },
+    {
+      "key": "mutation:Double-muscled",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "あなたは怪力を振るうことができる。\n\n+{{C|2}} 筋力\n近接攻撃が命中するたび{{C|15%}}の確率で敵を2～3ターン朦朧させる"
+    },
+    {
+      "key": "mutation:Electrical Generation",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "電荷を溜め込み、放電してダメージを与えられる。\n\n最大蓄電量: {{C|4000}}\n1ターンごとに基礎{{C|100}}チャージを獲得する\n蓄えた電荷をすべて放出し、1000ごとに1d4ダメージを与える\n放電は隣接する目標へ減衰しながら連鎖し、1000チャージごとに1体まで跳ぶ\nEMPを受けると意志力18の判定に失敗した場合に強制放電する"
+    },
+    {
+      "key": "mutation:Electromagnetic Pulse",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "周囲の機械やアーティファクトを無力化する電磁パルスを放てる。\n\n範囲: 自身を中心とした{{rules|5x5}}\n持続時間: {{rules|6-15}}ターン\nクールダウン: 200ターン"
+    },
+    {
+      "key": "mutation:Flaming Ray",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "任意の方向へ火炎の光線を放つ。近接攻撃でも目標を加熱する力を帯びる。"
+    },
+    {
+      "key": "mutation:Freezing Ray",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "任意の方向へ冷気の光線を放つ。近接攻撃でも目標の体温を下げる力を帯びる。"
+    },
+    {
+      "key": "mutation:Heightened Hearing",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "不自然なほど鋭い聴覚を持つ。\n\n半径{{rules|5}}マス以内にいる生物の存在を感知する。\n周囲で感知した対象を識別できる可能性がある"
+    },
+    {
+      "key": "mutation:Heightened Quickness",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "驚異的な速度を授かっている。\n\n+{{rules|15}} 俊敏"
+    },
+    {
+      "key": "mutation:Horns",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "額に角が生えている。\n\n近接攻撃の{{rules|20%}}で角による突き刺しを行い、出血判定を難しくする。{{w|レイヨウ}}と{{w|ヤギ人}}との評判+100。"
+    },
+    {
+      "key": "mutation:Metamorphosis",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "触れた生物の姿をコピーして変身できる。\n\n自分より高レベルの生物には変身できず、装備は元のまま維持される。"
+    },
+    {
+      "key": "mutation:Multiple Arms",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "腕がもう1組ある。\n\n近接攻撃を行うたび、追加の腕それぞれが{{rules|10%}}の確率で追加の近接攻撃を繰り出す。"
+    },
+    {
+      "key": "mutation:Multiple Legs",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "脚がもう1組ある。\n\n移動速度が上がり、所持重量の許容量も増える。"
+    },
+    {
+      "key": "mutation:Night Vision",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "暗闇の中でも見通せる。\n\n"
+    },
+    {
+      "key": "mutation:Phasing",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "短時間だけ自分の身体を位相させ、固体をすり抜けられる。\n\n持続時間: {{rules|7}}ターン\nクールダウン: {{rules|100}}ターン"
+    },
+    {
+      "key": "mutation:Photosynthetic Skin",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "たくましい緑の皮膚で日光を吸収し、そこから養分を得る。\n\n食事の代わりに日光浴して{{rules|1 day}}のあいだ特別な代謝効果を得られる: 自然回復速度が{{rules|+30%}}、俊敏が{{rules|+15}}。\n日光の下にいるとデンプンとリグニンを蓄え、調理にそれぞれ{{rules|1}}食分まで使える。\n植生と同じマスにいるあいだはDVに{{rules|+1}}の迷彩ボーナス。\n{{w|根}}、{{w|木々}}、{{w|蔦}}、{{w|コンソーシアム・オブ・ファイタ}}との評判+200。"
+    },
+    {
+      "key": "mutation:Quills",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "体が無数の針で覆われている。\n\n近接で攻撃してきた敵は針に刺さって反射ダメージを受け、一部の針は折れる。蓄えた針を周囲に射出して弾幕を張ることもできる。"
+    },
+    {
+      "key": "mutation:Regeneration",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "傷が驚異的な速さで癒える。\n\n戦闘中でも自然回復速度がフルに適用される。\n自然回復速度が{{rules|+20%}}上昇する\n{{rules|10%}}の確率でターンごとに失った四肢を再生する\n毎ターン{{rules|1%}}の確率で{{rules|軽度の肉体的デバフ}}をランダムに取り除く"
+    },
+    {
+      "key": "mutation:Sleep Gas Generation",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "周囲に睡眠ガスを放出する。"
+    },
+    {
+      "key": "mutation:Slime Glands",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "粘つくスライムを生成し、唾として吐きかけられる。\n\n射程8の3x3にスライムをまき散らし、クールダウンは40ラウンド。スライムの上を滑らずに歩ける。"
+    },
+    {
+      "key": "mutation:Spinnerets",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "どこを通っても粘糸を紡ぎ、移動した跡に巣を張る。\n\n{{w|クモ類}}との評判+300。"
+    },
+    {
+      "key": "mutation:Stinger (Confusing Venom)",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "臀部の毒針を持つ。長刃扱いで突撃・跳躍時は必ず刺突し、近接攻撃の{{rules|20%}}で敵を刺す。\n\n刺突では混乱毒を与え、能動アビリティ「Sting」で確実に命中・貫通する。"
+    },
+    {
+      "key": "mutation:Stinger (Paralyzing Venom)",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "臀部の毒針を持つ。長刃扱いで突撃・跳躍時は必ず刺突し、近接攻撃の{{rules|20%}}で敵を刺す。\n\n刺突では麻痺毒を与え、能動アビリティ「Sting」で確実に命中・貫通する。"
+    },
+    {
+      "key": "mutation:Stinger (Poisoning Venom)",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "臀部の毒針を持つ。長刃扱いで突撃・跳躍時は必ず刺突し、近接攻撃の{{rules|20%}}で敵を刺す。\n\n刺突では衰弱毒を与え、能動アビリティ「Sting」で確実に命中・貫通する。"
+    },
+    {
+      "key": "mutation:Thick Fur",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "厚い毛皮に覆われ、外気から守られている。\n\n熱抵抗+5、冷気抵抗+5。{{w|類人猿}}、{{w|ヒヒ}}、{{w|クマ}}、{{w|草食の快楽主義者}}との評判+100。"
+    },
+    {
+      "key": "mutation:Triple-jointed",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "関節が異様に柔らかい。\n\n{{rules|+2}}以上の敏捷ボーナスを得て、俊敏系スキルやスプリントがクールダウンしない確率がある。"
+    },
+    {
+      "key": "mutation:Two-headed",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "頭が2つある。\n\n精神行動のエネルギーコストが下がり、精神系の悪性状態を振りほどく判定を毎ラウンド行う。"
+    },
+    {
+      "key": "mutation:Two-hearted",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "心臓が2つある。\n\n頑健性が向上し、スプリントできる時間が延びる。"
+    },
+    {
+      "key": "mutation:Wings",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "屋外では飛行できる。飛行中は地上の敵から近接攻撃を受けない。\n\n{{w|鳥}}と{{w|翼のある哺乳類}}との評判+300。"
+    },
+    {
+      "key": "mutation:Albino",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "皮膚も髪も瞳も無色素だ。\n\n日光下ではHPの自然回復が通常の5分の1になる。"
+    },
+    {
+      "key": "mutation:Amphibious",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "肌を新鮮な水で潤さなければならない。\n\n飲むかわりに水を体にかけて渇きを癒やし、通常より約3分の2多く水が要る。{{w|カエル}}との評判+100。"
+    },
+    {
+      "key": "mutation:Brittle Bones",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "骨が脆い。\n\n打撃、落下など衝撃ダメージを{{rules|+50%}}多く受ける。"
+    },
+    {
+      "key": "mutation:Nerve Poppy",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "痛覚がほとんど発達していない。\n\n自身の正確なHPを把握できず、おおよその健康状態しか分からない。"
+    },
+    {
+      "key": "mutation:Carnivorous",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "肉しか食べられない。\n\n植物や菌類の食材では満腹度を得られず、料理の材料にも使えない。生肉を食べても病気にならず、飢餓状態でも生肉を口にできる。肉以外の生食では50%の確率で2時間病気になる。"
+    },
+    {
+      "key": "mutation:Cold-Blooded",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "体温に活力が左右される。\n\n基礎俊敏が10低下する。気温が高いほど俊敏が増し、低いほど鈍る。{{w|無甲殼爬虫類}}との評判+100。"
+    },
+    {
+      "key": "mutation:Electromagnetic Impulse",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "戦闘中にときおり制御不能の電磁パルスを放ち、周囲のロボットやアーティファクトを無効化する（自分の所持品も含む）。\n\n衝動は半径3、持続11～20ラウンド。"
+    },
+    {
+      "key": "mutation:Hooks for Feet",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "足が鉤爪になっている。\n\n靴を履けないが、鉤爪の装備が自動で足に固定される。"
+    },
+    {
+      "key": "mutation:Irritable Genome",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "ゲノムが不機嫌で気まぐれだ。\n\n突然変異ポイントを使うと、次に得たポイントはランダムに消費される。新規突然変異を買うときも、3つの選択ではなくランダムに決まる。"
+    },
+    {
+      "key": "mutation:Myopic",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "近視だ。\n\n視界半径が10マスまでに制限される。"
+    },
+    {
+      "key": "mutation:Spontaneous Combustion",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "突発的に発火する。\n\n戦闘中は毎ラウンド、小さな確率で自分が炎上する。"
+    },
+    {
+      "key": "mutation:Tonic Allergy",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "強壮剤にアレルギーがある。\n\nトニックの逆効果が発生する確率が{{rules|33%}}に上がる。軟膏やウーバーノストラムを逆効果で飲んだ場合でも体は回復するが、逆効果の内容は他のトニック効果からランダムに選ばれる。"
+    },
+    {
+      "key": "mutation:Beguiling",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "精神攻撃で隣接した生物を魅了し、仲間にできる。\n\n成功判定: {{rules|突然変異ランクか意力修正の高い方}} + キャラクターレベル + 1d8 対目標のMA + レベル。射程1。魅了した相手には追加のHPボーナスが与えられる。"
+    },
+    {
+      "key": "mutation:Burgeoning",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "近くの地面に植物を繁茂させ、敵の行動を妨げる。"
+    },
+    {
+      "key": "mutation:Clairvoyance",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "精神を飛ばして離れた場所を透視し、一定時間その位置の視界を得る。\n\n小さな半径から範囲全体まで透視でき、探索結果が共有される。"
+    },
+    {
+      "key": "mutation:Confusion",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "精神攻撃で対象を混乱させる。\n\n命中した生物は数ラウンドのあいだランダム行動を取り、精神能力にペナルティを受ける。"
+    },
+    {
+      "key": "mutation:Cryokinesis",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "意念で近くの空間を冷やし、寒冷ダメージを与える。"
+    },
+    {
+      "key": "mutation:Disintegration",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "周囲の物質を分解する。防具や構造物にも大きなダメージを与える。"
+    },
+    {
+      "key": "mutation:Domination",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "精神攻撃で対象の意志を乗っ取り操る。\n\n成功判定: {{rules|突然変異ランクか意力修正の高い方}} + キャラクターレベル + 1d8 対目標のMA + レベル。射程1。支配中は持続ターン経過で終了する。"
+    },
+    {
+      "key": "mutation:Ego Projection",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "純粋な意志力で肉体能力を押し上げる。\n\n意力修正の2倍だけ指定した肉体ステータスを強化し、短時間持続する。"
+    },
+    {
+      "key": "mutation:Force Bubble",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "自分を中心に3x3の力場を張る。\n\n力場の内外から飛び道具は通る。バブルを展開・解除して敵から身を守れる。"
+    },
+    {
+      "key": "mutation:Force Wall",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "力の壁を生み出し、9マス連続の力場で敵を遮る。\n\n飛び道具は壁を通過させられる。"
+    },
+    {
+      "key": "mutation:Kindle",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "意念で小さな火を点ける。\n\n射程12。クールダウン50。"
+    },
+    {
+      "key": "mutation:Light Manipulation",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "光を操る。\n\n周囲に{{rules|可変半径}}の環境光を放ち、光を収束させてレーザーとして撃つことで光量を消費する。光は時間で再充填され、一定の確率で光学攻撃を反射する。"
+    },
+    {
+      "key": "mutation:Mass Mind",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "統合意識に接続し、ほかのエスパーから力を奪う。\n\n周囲の精神変異者から一時的にレベルを借り、自身の能力を高める。"
+    },
+    {
+      "key": "mutation:Mental Mirror",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "精神への干渉を鏡のように反射する。\n\nクールダウン中でなければ精神攻撃へのMAが上昇し、貫通に失敗した攻撃を攻撃者に跳ね返す。"
+    },
+    {
+      "key": "mutation:Precognition",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "予見を発動し、あとでその時点に時間を巻き戻せる。\n\n持続が切れそうなときや死の直前に戻るかどうか選択できる。"
+    },
+    {
+      "key": "mutation:Psychometry",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "触れたアーティファクトの歴史を読み取り、機能や製造法を理解する。\n\n鑑定して使い方と作り方を学び、複雑さが一定以下の設計図を作成できる。安全装置付きドアなどを触れて開けることもあり、工匠系シフラで有利。"
+    },
+    {
+      "key": "mutation:Pyrokinesis",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "意念で近くの空間を熱し、3ラウンドかけて焼き払う。\n\n熱ダメージと着火を与える。"
+    },
+    {
+      "key": "mutation:Sense Psychic",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "サイコニックの気配を感じ取る。\n\n半径9マス（レベルに応じて拡大）の範囲にいる精神変異を持つ敵の存在を察知し、場合によっては正体も見抜く。"
+    },
+    {
+      "key": "mutation:Spacetime Vortex",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "時空を裂き、渦が周囲のものを飲み込んでワープさせる。\n\n渦に入るとクゥドのどこかへランダム転移する。{{w|高エントロピー体}}との評判+200。"
+    },
+    {
+      "key": "mutation:Stunning Force",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "近くの区域に衝撃波を起こし、敵を吹き飛ばして気絶させる。"
+    },
+    {
+      "key": "mutation:Sunder Mind",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "敵の精神を断ち切り、激痛に陥れる。\n\n集中が途切れるとチャネリングは中断する。"
+    },
+    {
+      "key": "mutation:Syphon Vim",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "近くの有機体と繋がり、生命力を吸い上げる。\n\n精神判定に成功するとダメージを免れるが、抵抗されない限り生命力を吸収し続ける。"
+    },
+    {
+      "key": "mutation:Telepathy",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "精神の大気を通じて会話できる。\n\n視界内の誰とでも意思疎通でき、仲間への命令にかかる時間も短縮される。多くの社交・サイオニック系シフラで役立つ。"
+    },
+    {
+      "key": "mutation:Teleportation",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "指定範囲内のランダムな位置へ瞬間移動する。\n\nワールドマップでは使用できない。"
+    },
+    {
+      "key": "mutation:Teleport Other",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "隣接した生物を周囲のランダムな位置へ転送する。\n\nワールドマップでは使えず、転送ごとにクールダウンが発生する。"
+    },
+    {
+      "key": "mutation:Time Dilation",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "周囲の時間を歪め、敵を鈍らせる。\n\n自身を中心に距離が近いほど大きく速度を低下させる。"
+    },
+    {
+      "key": "mutation:Temporal Fugue",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "時間の裂け目を行き来し、自分の分身を複数生み出す。"
+    },
+    {
+      "key": "mutation:Amnesia",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "ものや場所の記憶を失いやすい。\n\n秘密を1つ覚えるたびに別の秘密を忘れる可能性があり、過去に訪れたマップへ戻ると配置を忘れていることがある。"
+    },
+    {
+      "key": "mutation:Blinking Tic",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "制御できない瞬間移動癖がある。\n\n戦闘中は毎ラウンド、小さな確率で近くへランダムにテレポートする。"
+    },
+    {
+      "key": "mutation:Dystechnia",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "技術的な複雑さに混乱してしまう。\n\nアーティファクトの調査が極めて苦手になり、説明を理解できないため誰かに鑑定してもらうこともできない。調査に大失敗するとアーティファクトが爆発する。シフラでは工匠系で1ターン、ハッキング系で2ターン失う。"
+    },
+    {
+      "key": "mutation:Evil Twin",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "何かに導かれ、あなたを殺すために並行世界の自分が追ってくる。\n\n新しいエリアへ移動するたび、小さな確率で邪悪な双子が追跡して襲いかかる。"
+    },
+    {
+      "key": "mutation:Narcolepsy",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "突然眠りに落ちる。\n\n戦闘中は毎ラウンド、小さな確率で20～29ラウンド眠ってしまう。"
+    },
+    {
+      "key": "mutation:Psionic Migraines",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "強烈なサイキック偏頭痛に蝕まれ、頭部が極端に敏感になっている。\n\n帽子やヘルメットを装備できない。"
+    },
+    {
+      "key": "mutation:Quantum Jitters",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "意志行動がときおり時空を歪める。\n\nアクティブ能力を使うたび小さな確率で集中が途切れ、局所の時空がへこんで{{rules|1-2}}体の時空渦が発生する。この確率は能力を使わずにいる時間が長いほど上がる。"
+    },
+    {
+      "key": "mutation:Socially Repugnant",
+      "context": "Chargen.Mutation.LongDescription",
+      "text": "人から疎まれる性質を持つ。\n\n全派閥との評判-50。"
+    },
+    {
+      "key": "You only manifest mental mutations, and all of your mutation choices when manifesting a new mutation are mental.",
+      "context": "XRL.World.Parts.Mutation.Esper",
+      "text": "精神変異のみを発現し、新しい変異を選ぶときの候補もすべて精神系になる。"
+    }
+  ]
+}

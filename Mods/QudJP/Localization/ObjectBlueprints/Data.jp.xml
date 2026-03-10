@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects Load="Merge">
+  <object Name="BaseUnknown">
+    <part Name="Render" DisplayName="奇妙な遺物"/>
+    <part Name="Description" Short="不可思議な装置に埃が降り積もっている。"/>
+  </object>
+  <object Name="UnknownGigantic">
+    <part Name="Description" Short="巨大な装置に埃が降り積もっている。"/>
+    <part Name="SizeAdjective" Adjective="gigantic"/>
+  </object>
+  <object Name="UnknownOddTrinket">
+    <part Name="Render" DisplayName="奇妙な小物"/>
+    <part Name="Description" Short="小さな骨董の縁で光がきらめいている。"/>
+  </object>
+  <object Name="UnknownStrangeTubes">
+    <part Name="Render" DisplayName="奇妙な管"/>
+    <part Name="Description" Short="用途不明のチューブが溶接部から四方へ伸びている。"/>
+  </object>
+  <object Name="UnknownStrangeFurniture">
+    <part Name="Render" DisplayName="奇妙な家具"/>
+    <part Name="Description" Short="座るための空虚な物体が塵と薄光を受け止めている。"/>
+  </object>
+  <object Name="UnknownBizarreContraption">
+    <part Name="Render" DisplayName="異様な装置"/>
+    <part Name="Description" Short="不可解な機械一面にノブと鋲が交差している。"/>
+  </object>
+  <object Name="UnknownMed">
+    <part Name="Render" DisplayName="チューブ"/>
+    <part Name="Description" Short="奇妙な物質がガラスの導管を満たしている。"/>
+    <part Name="SizeAdjective" Adjective="small"/>
+  </object>
+  <object Name="UnknownStrangeMeat">
+    <part Name="Render" DisplayName="奇妙な肉片"/>
+    <part Name="Description" Short="未知の器官が命の断末魔のように鳴き声を上げている。"/>
+  </object>
+  <object Name="UnknownStrangePlant">
+    <part Name="Render" DisplayName="奇妙な植物"/>
+    <part Name="Description" Short="見慣れぬ緑の巻きひげが葉鞘の内側で自身を巻き付けている。"/>
+  </object>
+  <object Name="UnknownPistol">
+    <part Name="Render" DisplayName="ピストル"/>
+    <part Name="Description" Short="正体不明の銃の短い銃身に傷跡が走っている。"/>
+  </object>
+  <object Name="UnknownRifle">
+    <part Name="Render" DisplayName="ライフル"/>
+    <part Name="Description" Short="正体不明の銃の長い銃身に傷跡が走っている。"/>
+  </object>
+  <object Name="UnknownCannon">
+    <part Name="Render" DisplayName="大砲"/>
+    <part Name="Description" Short="煤の痕が照準器を黒く染め、大砲の砲身を伝って伸びている。"/>
+  </object>
+  <object Name="UnknownBow">
+    <part Name="Render" DisplayName="弓"/>
+    <part Name="Description" Short="張られた弦が正体不明の弓のノックを結んでいる。"/>
+  </object>
+  <object Name="UnknownGrenade">
+    <part Name="Render" DisplayName="手榴弾"/>
+    <part Name="Description" Short="爆発物の筒が解読不能な金属鞘に収められている。"/>
+  </object>
+  <object Name="UnknownClub">
+    <part Name="Render" DisplayName="棍棒"/>
+    <part Name="Description" Short="融け合った素材の塊が殴打用の棒になっている。"/>
+  </object>
+  <object Name="UnknownKnife">
+    <part Name="Render" DisplayName="ナイフ"/>
+    <part Name="Description" Short="奇妙な柄の先に鋭い刃が付いている。"/>
+  </object>
+  <object Name="UnknownSword">
+    <part Name="Render" DisplayName="剣"/>
+    <part Name="Description" Short="かなりの長さの刃が奇妙な柄を貫いている。"/>
+  </object>
+  <object Name="UnknownAxe">
+    <part Name="Render" DisplayName="斧"/>
+    <part Name="Description" Short="指の跡で汚れた柄の先に刃がぶら下がっている。"/>
+  </object>
+  <object Name="UnknownShield">
+    <part Name="Render" DisplayName="盾"/>
+    <part Name="Description" Short="衝撃に強い湾曲した盾面が溶接された把手で支えられている。"/>
+  </object>
+  <object Name="UnknownArmor">
+    <part Name="Render" DisplayName="鎧"/>
+    <part Name="Description" Short="出自不明の成形胸甲が身体の大半を守る。"/>
+  </object>
+  <object Name="UnknownHelmet">
+    <part Name="Render" DisplayName="兜"/>
+    <part Name="Description" Short="用途不明の頭部装具が何者かのために成形されている。"/>
+  </object>
+  <object Name="UnknownMask">
+    <part Name="Render" DisplayName="仮面"/>
+    <part Name="Description" Short="偽りの顔が未知の意図で造形され、縫い合わされている。"/>
+  </object>
+  <object Name="UnknownGoggles">
+    <part Name="Render" DisplayName="ゴーグル"/>
+    <part Name="Description" Short="丸い覗き窓が帯で固定されている。"/>
+  </object>
+  <object Name="UnknownGloves">
+    <part Name="Render" DisplayName="手袋"/>
+    <part Name="Description" Short="奇妙な手袋がほとんどの手首と指に収まりそうだ。"/>
+  </object>
+  <object Name="UnknownJewelry">
+    <part Name="Render" DisplayName="宝飾品"/>
+    <part Name="Description" Short="丸いトルクが意図せぬ視線に向けてきらめいている。"/>
+  </object>
+  <object Name="UnknownCloak">
+    <part Name="Render" DisplayName="外套"/>
+    <part Name="Description" Short="何らかの布地が正体不明の意図で縫い合わされている。"/>
+  </object>
+  <object Name="UnknownBackpack">
+    <part Name="Render" DisplayName="背嚢"/>
+    <part Name="Description" Short="何かを運ぶために肩紐付きの袋が縫い上げられている。"/>
+  </object>
+  <object Name="UnknownBoots">
+    <part Name="Render" DisplayName="ブーツ"/>
+    <part Name="Description" Short="長年の使用痕が履物の表面を横切っている。"/>
+  </object>
+  <object Name="UnknownBottle">
+    <part Name="Render" DisplayName="瓶"/>
+    <part Name="Description" Short="奇妙な造りの器だ。"/>
+  </object>
+  <object Name="UnknownDataDisk">
+    <part Name="Render" DisplayName="データディスク"/>
+    <part Name="Description" Short="矩形の棺の中でビットが眠り、やがて起動する時を待っている。"/>
+  </object>
+  <object Name="UnknownTool">
+    <part Name="Render" DisplayName="工具"/>
+    <part Name="Description" Short="奇妙な部品の集合体が一種の工具にまとまっている。"/>
+  </object>
+  <object Name="UnknownEmptyMed">
+    <part Name="Render" DisplayName="チューブ"/>
+    <part Name="Description" Short="空の空気がガラスの導管に圧縮されている。"/>
+  </object>
+  <object Name="UnknownSmallMilkyTube">
+    <part Name="Render" DisplayName="{{Y|乳白色の}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallSmokeyTube">
+    <part Name="Render" DisplayName="{{K|煙色の}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallRoseyTube">
+    <part Name="Render" DisplayName="{{R|薔薇色の}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallTurquoiseTube">
+    <part Name="Render" DisplayName="{{C|トルコ石色の}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallCobaltTube">
+    <part Name="Render" DisplayName="{{b|コバルト色の}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallMossyTube">
+    <part Name="Render" DisplayName="{{g|苔色の}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallGoldFleckedTube">
+    <part Name="Render" DisplayName="{{W|金の斑が入った}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallMuddyTube">
+    <part Name="Render" DisplayName="{{w|泥色の}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallVioletTube">
+    <part Name="Render" DisplayName="{{m|菫色の}}チューブ"/>
+  </object>
+  <object Name="UnknownSmallPlatinumTube">
+    <part Name="Render" DisplayName="{{y|白金色の}}チューブ"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_artifacts">
+    <tag Name="Description" Value="遺物由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_thirst">
+    <tag Name="Description" Value="水と渇き由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_secrets">
+    <tag Name="Description" Value="秘密由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_darkness">
+    <tag Name="Description" Value="暗闇由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_armor">
+    <tag Name="Description" Value="装甲由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_plantMinor">
+    <tag Name="Description" Value="シンプルな植物由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_plantHighTier">
+    <tag Name="Description" Value="強力な植物由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_electric">
+    <tag Name="Description" Value="電気由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_cold">
+    <tag Name="Description" Value="冷気由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_heat">
+    <tag Name="Description" Value="熱と火炎由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_love">
+    <tag Name="Description" Value="愛と忠義由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_teleport">
+    <tag Name="Description" Value="テレポート由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_regenLowtier">
+    <tag Name="Description" Value="再生と治癒由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_regenHightier">
+    <tag Name="Description" Value="強力な再生と治癒由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_medicinal">
+    <tag Name="Description" Value="病気の予防と治療由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_acid">
+    <tag Name="Description" Value="酸性由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_fungus">
+    <tag Name="Description" Value="菌類由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_phase">
+    <tag Name="Description" Value="相転移由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_HP">
+    <tag Name="Description" Value="HP由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_reflectHighTier">
+    <tag Name="Description" Value="強力なダメージ反射由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_reflect">
+    <tag Name="Description" Value="ダメージ反射由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_willpower">
+    <tag Name="Description" Value="シンプルな意志力由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_strength">
+    <tag Name="Description" Value="筋力由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_burrowing">
+    <tag Name="Description" Value="地中潜行由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_agility">
+    <tag Name="Description" Value="敏捷由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_fear">
+    <tag Name="Description" Value="恐怖由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_fireBreath">
+    <tag Name="Description" Value="火炎吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_elderFireBreath">
+    <tag Name="Description" Value="強力な火炎吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_iceBreath">
+    <tag Name="Description" Value="冷気吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_elderIceBreath">
+    <tag Name="Description" Value="強力な冷気吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_corrosiveGasBreath">
+    <tag Name="Description" Value="腐食性ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_elderCorrosiveGasBreath">
+    <tag Name="Description" Value="強力な腐食性ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_sleepGasBreath">
+    <tag Name="Description" Value="睡眠ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_elderSleepGasBreath">
+    <tag Name="Description" Value="強力な睡眠ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_normalityGasBreath">
+    <tag Name="Description" Value="常態化ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_elderNormalityGasBreath">
+    <tag Name="Description" Value="強力な常態化ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_poisonGasBreath">
+    <tag Name="Description" Value="毒ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_elderPoisonGasBreath">
+    <tag Name="Description" Value="強力な毒ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_stunGasBreath">
+    <tag Name="Description" Value="衝撃ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_elderStunGasBreath">
+    <tag Name="Description" Value="強力な衝撃ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_confusionGasBreath">
+    <tag Name="Description" Value="混乱ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_elderConfusionGasBreath">
+    <tag Name="Description" Value="強力な混乱ガス吐息"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_starch">
+    <tag Name="Description" Value="特殊な俊敏由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_lignin">
+    <tag Name="Description" Value="特殊な再生由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_quicknessMinor">
+    <tag Name="Description" Value="シンプルな俊敏由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_density">
+    <tag Name="Description" Value="不安定な密度由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_dissociation">
+    <tag Name="Description" Value="解離性"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_attributes">
+    <tag Name="Description" Value="属性不明由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_slimeSpitting">
+    <tag Name="Description" Value="粘液噴射"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_regenLowtierMinor">
+    <tag Name="Description" Value="シンプルな再生と治癒由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_coldMinor">
+    <tag Name="Description" Value="シンプルな冷気由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_heatMinor">
+    <tag Name="Description" Value="シンプルな熱と火炎由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_medicinalMinor">
+    <tag Name="Description" Value="シンプルな疾病予防由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_acidMinor">
+    <tag Name="Description" Value="シンプルな酸性由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_tastyMinor">
+    <tag Name="Description" Value="シンプルな風味由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_cloningMinor">
+    <tag Name="Description" Value="シンプルなクローン生成"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_stabilityMinor">
+    <tag Name="Description" Value="シンプルな安定化由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_selfPoison">
+    <tag Name="Description" Value="自毒化"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_selfGlotrot">
+    <tag Name="Description" Value="自己感染"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_rubberLowTier">
+    <tag Name="Description" Value="ゴム質由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_rubberHighTier">
+    <tag Name="Description" Value="強力なゴム質由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_tongue">
+    <tag Name="Description" Value="舌由来"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_random">
+    <tag Name="Description" Value="ランダム"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_randomHighTier">
+    <tag Name="Description" Value="ランダム（たいてい強力）"/>
+  </object>
+  <object Name="ProceduralCookingIngredient_ego">
+    <tag Name="Description" Value="自我由来"/>
+  </object>
+</objects>

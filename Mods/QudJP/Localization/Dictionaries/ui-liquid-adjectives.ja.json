@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "id": "ui-liquid-adjectives",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "{{Y|salty}}",
+      "context": "XRL.Liquids.Adjective",
+      "text": "{{Y|塩気のある}}"
+    },
+    {
+      "key": "salty",
+      "context": "XRL.Liquids.Adjective",
+      "text": "塩気のある"
+    },
+    {
+      "key": "{{K|oily}}",
+      "context": "XRL.Liquids.Adjective",
+      "text": "{{K|油っぽい}}"
+    },
+    {
+      "key": "oily",
+      "context": "XRL.Liquids.Adjective",
+      "text": "油っぽい"
+    },
+    {
+      "key": "{{G|acidic}}",
+      "context": "XRL.Liquids.Adjective",
+      "text": "{{G|酸性の}}"
+    },
+    {
+      "key": "acidic",
+      "context": "XRL.Liquids.Adjective",
+      "text": "酸性の"
+    },
+    {
+      "key": "alkaline",
+      "context": "XRL.Liquids.Adjective",
+      "text": "アルカリ性の"
+    },
+    {
+      "key": "boiling",
+      "context": "XRL.Liquids.Adjective",
+      "text": "沸き立つ"
+    },
+    {
+      "key": "freezing",
+      "context": "XRL.Liquids.Adjective",
+      "text": "凍てつく"
+    },
+    {
+      "key": "warm",
+      "context": "XRL.Liquids.Adjective",
+      "text": "温かな"
+    },
+    {
+      "key": "cold",
+      "context": "XRL.Liquids.Adjective",
+      "text": "冷たい"
+    },
+    {
+      "key": "fetid",
+      "context": "XRL.Liquids.Adjective",
+      "text": "悪臭のする"
+    },
+    {
+      "key": "stagnant",
+      "context": "XRL.Liquids.Adjective",
+      "text": "淀んだ"
+    },
+    {
+      "key": "{{Y|dilute}}",
+      "context": "XRL.Liquids.Adjective",
+      "text": "{{Y|薄めの}}"
+    },
+    {
+      "key": "dilute",
+      "context": "XRL.Liquids.Adjective",
+      "text": "薄めの"
+    },
+    {
+      "key": "bloody",
+      "context": "XRL.Liquids.Adjective",
+      "text": "血混じりの"
+    }
+  ]
+}

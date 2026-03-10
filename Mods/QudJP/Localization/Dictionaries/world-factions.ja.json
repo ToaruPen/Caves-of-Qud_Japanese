@@ -1,0 +1,888 @@
+{
+  "meta": {
+    "id": "world-factions",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Algae",
+      "context": "Faction.Name",
+      "text": "藻類"
+    },
+    {
+      "key": "Amoeba",
+      "context": "Faction.Name",
+      "text": "アメーバ"
+    },
+    {
+      "key": "Antelopes",
+      "context": "Faction.Name",
+      "text": "アンテロープ"
+    },
+    {
+      "key": "Apes",
+      "context": "Faction.Name",
+      "text": "類人猿"
+    },
+    {
+      "key": "Arachnids",
+      "context": "Faction.Name",
+      "text": "クモ類"
+    },
+    {
+      "key": "Baboons",
+      "context": "Faction.Name",
+      "text": "ヒヒ"
+    },
+    {
+      "key": "Bacilli",
+      "context": "Faction.Name",
+      "text": "桿菌"
+    },
+    {
+      "key": "Baetyls",
+      "context": "Faction.Name",
+      "text": "ベテル"
+    },
+    {
+      "key": "Barathrumites",
+      "context": "Faction.Name",
+      "text": "バラサラム派"
+    },
+    {
+      "key": "Batfolk",
+      "context": "Faction.Name",
+      "text": "コウモリ人"
+    },
+    {
+      "key": "Bears",
+      "context": "Faction.Name",
+      "text": "クマ"
+    },
+    {
+      "key": "Beasts",
+      "context": "Faction.Name",
+      "text": "獣"
+    },
+    {
+      "key": "Birds",
+      "context": "Faction.Name",
+      "text": "鳥"
+    },
+    {
+      "key": "Cannibals",
+      "context": "Faction.Name",
+      "text": "人食い"
+    },
+    {
+      "key": "Cats",
+      "context": "Faction.Name",
+      "text": "猫"
+    },
+    {
+      "key": "Chavvah",
+      "context": "Faction.Name",
+      "text": "チャヴァ"
+    },
+    {
+      "key": "Cherubim",
+      "context": "Faction.Name",
+      "text": "ケルビム"
+    },
+    {
+      "key": "Chiliad Mamon",
+      "context": "Faction.Name",
+      "text": "キリアド・マモン"
+    },
+    {
+      "key": "Cocci",
+      "context": "Faction.Name",
+      "text": "球菌"
+    },
+    {
+      "key": "Consortium",
+      "context": "Faction.Name",
+      "text": "コンソーシアム"
+    },
+    {
+      "key": "The Cult Of The Coiled Lamb",
+      "context": "Faction.Name",
+      "text": "とぐろを巻く子羊のカルト"
+    },
+    {
+      "key": "Crabs",
+      "context": "Faction.Name",
+      "text": "カニ"
+    },
+    {
+      "key": "Cragmensch",
+      "context": "Faction.Name",
+      "text": "クラッグメンシュ"
+    },
+    {
+      "key": "Crystal",
+      "context": "Faction.Name",
+      "text": "クリスタル"
+    },
+    {
+      "key": "Daughters",
+      "context": "Faction.Name",
+      "text": "ドーター"
+    },
+    {
+      "key": "Dogs",
+      "context": "Faction.Name",
+      "text": "犬"
+    },
+    {
+      "key": "Dromad",
+      "context": "Faction.Name",
+      "text": "ドロマド"
+    },
+    {
+      "key": "Elephantines",
+      "context": "Faction.Name",
+      "text": "エレファンティン"
+    },
+    {
+      "key": "Entropic",
+      "context": "Faction.Name",
+      "text": "エントロピック"
+    },
+    {
+      "key": "Equines",
+      "context": "Faction.Name",
+      "text": "馬類"
+    },
+    {
+      "key": "Ezra",
+      "context": "Faction.Name",
+      "text": "エズラ"
+    },
+    {
+      "key": "Farmers",
+      "context": "Faction.Name",
+      "text": "農夫"
+    },
+    {
+      "key": "Fish",
+      "context": "Faction.Name",
+      "text": "魚"
+    },
+    {
+      "key": "Flowers",
+      "context": "Faction.Name",
+      "text": "花"
+    },
+    {
+      "key": "Foxen",
+      "context": "Faction.Name",
+      "text": "キツネ"
+    },
+    {
+      "key": "Frogs",
+      "context": "Faction.Name",
+      "text": "カエル"
+    },
+    {
+      "key": "Fungi",
+      "context": "Faction.Name",
+      "text": "真菌"
+    },
+    {
+      "key": "Gelatinous Polyhedra",
+      "context": "Faction.Name",
+      "text": "ゼラチン多面体"
+    },
+    {
+      "key": "GerminatedPlants",
+      "context": "Faction.Name",
+      "text": "芽吹き植物"
+    },
+    {
+      "key": "Girsh",
+      "context": "Faction.Name",
+      "text": "ギルシュ"
+    },
+    {
+      "key": "Goatfolk",
+      "context": "Faction.Name",
+      "text": "山羊人"
+    },
+    {
+      "key": "Gyre Wights",
+      "context": "Faction.Name",
+      "text": "ジャイアワイト"
+    },
+    {
+      "key": "Halophiles",
+      "context": "Faction.Name",
+      "text": "好塩菌"
+    },
+    {
+      "key": "Hermits",
+      "context": "Faction.Name",
+      "text": "隠者"
+    },
+    {
+      "key": "Hindren",
+      "context": "Faction.Name",
+      "text": "ヒンドレン"
+    },
+    {
+      "key": "Humanoids",
+      "context": "Faction.Name",
+      "text": "人型"
+    },
+    {
+      "key": "Hunters",
+      "context": "Faction.Name",
+      "text": "狩人"
+    },
+    {
+      "key": "Inanimate",
+      "context": "Faction.Name",
+      "text": "無生物"
+    },
+    {
+      "key": "Insects",
+      "context": "Faction.Name",
+      "text": "昆虫"
+    },
+    {
+      "key": "Issachari",
+      "context": "Faction.Name",
+      "text": "イサカリ"
+    },
+    {
+      "key": "Jellies",
+      "context": "Faction.Name",
+      "text": "ゼリー"
+    },
+    {
+      "key": "Joppa",
+      "context": "Faction.Name",
+      "text": "ジョッパ"
+    },
+    {
+      "key": "Knight Liminal",
+      "context": "Faction.Name",
+      "text": "ナイト・リミナル"
+    },
+    {
+      "key": "Kyakukya",
+      "context": "Faction.Name",
+      "text": "キャクキャ"
+    },
+    {
+      "key": "Mamon",
+      "context": "Faction.Name",
+      "text": "マモン"
+    },
+    {
+      "key": "Mean",
+      "context": "Faction.Name",
+      "text": "ミーン"
+    },
+    {
+      "key": "Mechanimists",
+      "context": "Faction.Name",
+      "text": "メカニマス教"
+    },
+    {
+      "key": "MechaSub",
+      "context": "Faction.Name",
+      "text": "メカサブ"
+    },
+    {
+      "key": "Merchants",
+      "context": "Faction.Name",
+      "text": "商人"
+    },
+    {
+      "key": "Methanogens",
+      "context": "Faction.Name",
+      "text": "メタン生成菌"
+    },
+    {
+      "key": "Mildews",
+      "context": "Faction.Name",
+      "text": "ミルデュー"
+    },
+    {
+      "key": "Molds",
+      "context": "Faction.Name",
+      "text": "モールド"
+    },
+    {
+      "key": "Mollusks",
+      "context": "Faction.Name",
+      "text": "軟体動物"
+    },
+    {
+      "key": "Mopango",
+      "context": "Faction.Name",
+      "text": "モパンゴ"
+    },
+    {
+      "key": "Mushrooms",
+      "context": "Faction.Name",
+      "text": "キノコ"
+    },
+    {
+      "key": "Naphtaali",
+      "context": "Faction.Name",
+      "text": "ナフターリ"
+    },
+    {
+      "key": "Nephilim",
+      "context": "Faction.Name",
+      "text": "ネフィリム"
+    },
+    {
+      "key": "Newly Sentient Beings",
+      "context": "Faction.Name",
+      "text": "新知性体"
+    },
+    {
+      "key": "Oozes",
+      "context": "Faction.Name",
+      "text": "ウーズ"
+    },
+    {
+      "key": "Pariahs",
+      "context": "Faction.Name",
+      "text": "パリア"
+    },
+    {
+      "key": "Plants",
+      "context": "Faction.Name",
+      "text": "植物"
+    },
+    {
+      "key": "Player",
+      "context": "Faction.Name",
+      "text": "プレイヤー"
+    },
+    {
+      "key": "PlayerCult",
+      "context": "Faction.Name",
+      "text": "プレイヤー教団"
+    },
+    {
+      "key": "Playerhater",
+      "context": "Faction.Name",
+      "text": "プレイヤー嫌い"
+    },
+    {
+      "key": "Playerneutral",
+      "context": "Faction.Name",
+      "text": "プレイヤー中立"
+    },
+    {
+      "key": "Prey",
+      "context": "Faction.Name",
+      "text": "獲物"
+    },
+    {
+      "key": "Quetzal Council",
+      "context": "Faction.Name",
+      "text": "ケツァール評議会"
+    },
+    {
+      "key": "Resheph",
+      "context": "Faction.Name",
+      "text": "レシェフ"
+    },
+    {
+      "key": "Robots",
+      "context": "Faction.Name",
+      "text": "ロボット"
+    },
+    {
+      "key": "Roots",
+      "context": "Faction.Name",
+      "text": "根"
+    },
+    {
+      "key": "Rusts",
+      "context": "Faction.Name",
+      "text": "ラスト"
+    },
+    {
+      "key": "Seekers",
+      "context": "Faction.Name",
+      "text": "シーカー"
+    },
+    {
+      "key": "Slimes",
+      "context": "Faction.Name",
+      "text": "スライム"
+    },
+    {
+      "key": "Sludges",
+      "context": "Faction.Name",
+      "text": "スラッジ"
+    },
+    {
+      "key": "Smuts",
+      "context": "Faction.Name",
+      "text": "スマット"
+    },
+    {
+      "key": "Snailfolk",
+      "context": "Faction.Name",
+      "text": "カタツムリ人"
+    },
+    {
+      "key": "Snapjaws",
+      "context": "Faction.Name",
+      "text": "スナップジョー"
+    },
+    {
+      "key": "Solos",
+      "context": "Faction.Name",
+      "text": "ソロ"
+    },
+    {
+      "key": "Soups",
+      "context": "Faction.Name",
+      "text": "スープ"
+    },
+    {
+      "key": "Spirilla",
+      "context": "Faction.Name",
+      "text": "スピリラ"
+    },
+    {
+      "key": "Spirochaetes",
+      "context": "Faction.Name",
+      "text": "スピロヘータ"
+    },
+    {
+      "key": "Strangers",
+      "context": "Faction.Name",
+      "text": "よそ者"
+    },
+    {
+      "key": "Succulents",
+      "context": "Faction.Name",
+      "text": "多肉植物"
+    },
+    {
+      "key": "Sludges",
+      "context": "Faction.Name",
+      "text": "スラッジ"
+    },
+    {
+      "key": "Soups",
+      "context": "Faction.Name",
+      "text": "スープ"
+    },
+    {
+      "key": "Gelatinous Polyhedra",
+      "context": "Faction.Name",
+      "text": "ゼラチン質多面体"
+    },
+    {
+      "key": "SultanCult1",
+      "context": "Faction.Name",
+      "text": "スルタン教団1"
+    },
+    {
+      "key": "SultanCult2",
+      "context": "Faction.Name",
+      "text": "スルタン教団2"
+    },
+    {
+      "key": "SultanCult3",
+      "context": "Faction.Name",
+      "text": "スルタン教団3"
+    },
+    {
+      "key": "SultanCult4",
+      "context": "Faction.Name",
+      "text": "スルタン教団4"
+    },
+    {
+      "key": "SultanCult5",
+      "context": "Faction.Name",
+      "text": "スルタン教団5"
+    },
+    {
+      "key": "Svardym",
+      "context": "Faction.Name",
+      "text": "スヴァーディム"
+    },
+    {
+      "key": "Swine",
+      "context": "Faction.Name",
+      "text": "豚"
+    },
+    {
+      "key": "Templar",
+      "context": "Faction.Name",
+      "text": "テンプラー"
+    },
+    {
+      "key": "Thermoacidophiles",
+      "context": "Faction.Name",
+      "text": "好熱好酸菌"
+    },
+    {
+      "key": "Tortoises",
+      "context": "Faction.Name",
+      "text": "亀"
+    },
+    {
+      "key": "Trees",
+      "context": "Faction.Name",
+      "text": "木々"
+    },
+    {
+      "key": "Trolls",
+      "context": "Faction.Name",
+      "text": "トロール"
+    },
+    {
+      "key": "Unshelled Reptiles",
+      "context": "Faction.Name",
+      "text": "無殻爬虫類"
+    },
+    {
+      "key": "Urchins",
+      "context": "Faction.Name",
+      "text": "ウニ"
+    },
+    {
+      "key": "Vibrios",
+      "context": "Faction.Name",
+      "text": "ビブリオ"
+    },
+    {
+      "key": "Vines",
+      "context": "Faction.Name",
+      "text": "蔦"
+    },
+    {
+      "key": "Walking Ibes",
+      "context": "Faction.Name",
+      "text": "歩くイベス"
+    },
+    {
+      "key": "Wardens",
+      "context": "Faction.Name",
+      "text": "守衛"
+    },
+    {
+      "key": "Water",
+      "context": "Faction.Name",
+      "text": "水"
+    },
+    {
+      "key": "Winged Mammals",
+      "context": "Faction.Name",
+      "text": "翼ある哺乳類"
+    },
+    {
+      "key": "Worms",
+      "context": "Faction.Name",
+      "text": "ワーム"
+    },
+    {
+      "key": "Yanshufim",
+      "context": "Faction.Name",
+      "text": "ヤンシュフィム"
+    },
+    {
+      "key": "YdFreehold",
+      "context": "Faction.Name",
+      "text": "イド"
+    },
+    {
+      "key": "Yeasts",
+      "context": "Faction.Name",
+      "text": "酵母"
+    },
+    {
+      "key": "Chavvah, the Tree of Life",
+      "context": "Faction.Name",
+      "text": "生命の木チャヴァ"
+    },
+    {
+      "key": "Children of Mamon",
+      "context": "Faction.Name",
+      "text": "マモンの子ら"
+    },
+    {
+      "key": "Consortium of Phyta",
+      "context": "Faction.Name",
+      "text": "フィタ・コンソーシアム"
+    },
+    {
+      "key": "Cult of the Coiled Lamb",
+      "context": "Faction.Name",
+      "text": "とぐろを巻く子羊のカルト"
+    },
+    {
+      "key": "Daughters of Exile",
+      "context": "Faction.Name",
+      "text": "流配の娘たち"
+    },
+    {
+      "key": "denizens of the Yd Freehold",
+      "context": "Faction.Name",
+      "text": "イドの住民"
+    },
+    {
+      "key": "dromad merchants",
+      "context": "Faction.Name",
+      "text": "ドロマド商人"
+    },
+    {
+      "key": "Farmers' Guild",
+      "context": "Faction.Name",
+      "text": "農夫ギルド"
+    },
+    {
+      "key": "Fellowship of Wardens",
+      "context": "Faction.Name",
+      "text": "監視官同胞団"
+    },
+    {
+      "key": "Grandchildren of Mamon",
+      "context": "Faction.Name",
+      "text": "マモンの孫たち"
+    },
+    {
+      "key": "grazing hedonists",
+      "context": "Faction.Name",
+      "text": "牧草を食む快楽主義者"
+    },
+    {
+      "key": "highly entropic beings",
+      "context": "Faction.Name",
+      "text": "高エントロピー存在"
+    },
+    {
+      "key": "hindren of Bey Lah",
+      "context": "Faction.Name",
+      "text": "ベイ・ラーのヒンドレン"
+    },
+    {
+      "key": "Issachari tribe",
+      "context": "Faction.Name",
+      "text": "イッサカリ族"
+    },
+    {
+      "key": "Knights Liminal",
+      "context": "Faction.Name",
+      "text": "ナイト・リミナル"
+    },
+    {
+      "key": "Merchants' Guild",
+      "context": "Faction.Name",
+      "text": "商人ギルド"
+    },
+    {
+      "key": "mysterious strangers",
+      "context": "Faction.Name",
+      "text": "謎めいたよそ者"
+    },
+    {
+      "key": "Naphtaali tribe",
+      "context": "Faction.Name",
+      "text": "ナフタリ族"
+    },
+    {
+      "key": "Putus Templar",
+      "context": "Faction.Name",
+      "text": "プトゥス聖堂騎士団"
+    },
+    {
+      "key": "Seekers of the Sightless Way",
+      "context": "Faction.Name",
+      "text": "盲道の求道者"
+    },
+    {
+      "key": "splayed crystal-things that glint",
+      "context": "Faction.Name",
+      "text": "きらめく平晶体"
+    },
+    {
+      "key": "the Barathrumites",
+      "context": "Faction.Name",
+      "text": "バラサラム派（技師団）"
+    },
+    {
+      "key": "the Children of Mamon",
+      "context": "Faction.Name",
+      "text": "マモンの子ら"
+    },
+    {
+      "key": "the Consortium of Phyta",
+      "context": "Faction.Name",
+      "text": "フィタ・コンソーシアム"
+    },
+    {
+      "key": "the Daughters of Exile",
+      "context": "Faction.Name",
+      "text": "流配の娘たち"
+    },
+    {
+      "key": "the denizens of the Yd Freehold",
+      "context": "Faction.Name",
+      "text": "イドの住民"
+    },
+    {
+      "key": "the Farmers' Guild",
+      "context": "Faction.Name",
+      "text": "農夫ギルド"
+    },
+    {
+      "key": "the Fellowship of Wardens",
+      "context": "Faction.Name",
+      "text": "監視官同胞団"
+    },
+    {
+      "key": "the Girsh",
+      "context": "Faction.Name",
+      "text": "ギルシュ"
+    },
+    {
+      "key": "the Grandchildren of Mamon",
+      "context": "Faction.Name",
+      "text": "マモンの孫たち"
+    },
+    {
+      "key": "the Gyre wights",
+      "context": "Faction.Name",
+      "text": "渦動ワイト"
+    },
+    {
+      "key": "the hindren of Bey Lah",
+      "context": "Faction.Name",
+      "text": "ベイ・ラーのヒンドレン"
+    },
+    {
+      "key": "the Issachari tribe",
+      "context": "Faction.Name",
+      "text": "イッサカリ族"
+    },
+    {
+      "key": "the Knights Liminal",
+      "context": "Faction.Name",
+      "text": "ナイト・リミナル"
+    },
+    {
+      "key": "the Mechanimists",
+      "context": "Faction.Name",
+      "text": "メカニマス教"
+    },
+    {
+      "key": "the Merchants' Guild",
+      "context": "Faction.Name",
+      "text": "商人ギルド"
+    },
+    {
+      "key": "the mopango",
+      "context": "Faction.Name",
+      "text": "モパンゴ"
+    },
+    {
+      "key": "the Naphtaali tribe",
+      "context": "Faction.Name",
+      "text": "ナフタリ族"
+    },
+    {
+      "key": "the PlayerCult",
+      "context": "Faction.Name",
+      "text": "プレイヤー教団"
+    },
+    {
+      "key": "the Putus Templar",
+      "context": "Faction.Name",
+      "text": "プトゥス聖堂騎士団"
+    },
+    {
+      "key": "the Quetzal Council",
+      "context": "Faction.Name",
+      "text": "ケツァール評議会"
+    },
+    {
+      "key": "the Seekers of the Sightless Way",
+      "context": "Faction.Name",
+      "text": "盲道の求道者"
+    },
+    {
+      "key": "the SultanCult1",
+      "context": "Faction.Name",
+      "text": "スルタン教団1"
+    },
+    {
+      "key": "the SultanCult2",
+      "context": "Faction.Name",
+      "text": "スルタン教団2"
+    },
+    {
+      "key": "the SultanCult3",
+      "context": "Faction.Name",
+      "text": "スルタン教団3"
+    },
+    {
+      "key": "the SultanCult4",
+      "context": "Faction.Name",
+      "text": "スルタン教団4"
+    },
+    {
+      "key": "the SultanCult5",
+      "context": "Faction.Name",
+      "text": "スルタン教団5"
+    },
+    {
+      "key": "the villagers of Ezra",
+      "context": "Faction.Name",
+      "text": "エズラの村人たち"
+    },
+    {
+      "key": "the villagers of Joppa",
+      "context": "Faction.Name",
+      "text": "ジョッパの村人たち"
+    },
+    {
+      "key": "the villagers of Kyakukya",
+      "context": "Faction.Name",
+      "text": "キャクキャの村人たち"
+    },
+    {
+      "key": "the yanshufim",
+      "context": "Faction.Name",
+      "text": "ヤンシュフィム"
+    },
+    {
+      "key": "villagers of Ezra",
+      "context": "Faction.Name",
+      "text": "エズラの村人たち"
+    },
+    {
+      "key": "villagers of Joppa",
+      "context": "Faction.Name",
+      "text": "ジョッパの村人たち"
+    },
+    {
+      "key": "villagers of Kyakukya",
+      "context": "Faction.Name",
+      "text": "キャクキャの村人たち"
+    },
+    {
+      "key": "water barons",
+      "context": "Faction.Name",
+      "text": "水の男爵たち"
+    }
+  ]
+}

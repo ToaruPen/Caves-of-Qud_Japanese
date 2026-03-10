@@ -1,0 +1,217 @@
+{
+    "meta": {
+        "id": "world-effects-tonics",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true
+    },
+    "entries": [
+        {
+            "key": "{{blaze|blaze}} tonic",
+            "context": "XRL.World.Effects.Blaze_Tonic.Description",
+            "text": "{{blaze|ブレイズ}}トニック"
+        },
+        {
+            "key": "+100 Heat Resistance\nCan't be frozen.\n+25% heat damage dealt.\n-50 Cold Resistance\n+20 Quickness\nTemperature can't be increased by external heat sources.\nMust move around to avoid combusting and losing the effects of this tonic.",
+            "context": "XRL.World.Effects.Blaze_Tonic.Details",
+            "text": "+100 熱耐性\n凍結しない。\n与える熱ダメージ+25%。\n-50 冷気耐性\n迅速+20\n外部の熱源では体温が上がらない。\n動き続けないと発火してトニックの効果を失う。"
+        },
+        {
+            "key": "+100 Heat Resistance\nCan't be frozen.\n+25% heat damage dealt.\n-50 Cold Resistance\n+10 Quickness\nTemperature can't be increased by external heat sources.\nMust move around to avoid combusting and losing the effects of this tonic.",
+            "context": "XRL.World.Effects.Blaze_Tonic.Details",
+            "text": "+100 熱耐性\n凍結しない。\n与える熱ダメージ+25%。\n-50 冷気耐性\n迅速+10\n外部の熱源では体温が上がらない。\n動き続けないと発火してトニックの効果を失う。"
+        },
+        {
+            "key": "{{C|illuminated}}",
+            "context": "XRL.World.Effects.Hoarshroom_Tonic.Description",
+            "text": "{{C|発光}}"
+        },
+        {
+            "key": "Casts light in radius 2.\nFor the first 5 rounds after imbibing, gains 0.6 hit points per level (minimum 3) each turn.\n+20 Cold Resist\nCan't be poisoned.",
+            "context": "XRL.World.Effects.Hoarshroom_Tonic.Details",
+            "text": "半径2に光を放つ。\n服用後5ラウンドのあいだ毎ターン、レベル×0.6（最低3）HPを回復する。\n冷気耐性+20\n毒無効。"
+        },
+        {
+            "key": "{{G|hulk}} {{w|honey}} tonic",
+            "context": "XRL.World.Effects.HulkHoney_Tonic.Description",
+            "text": "{{G|ハルク}} {{w|ハニー}}トニック"
+        },
+        {
+            "key": "+9 Strength\n+3 temporary hit points per level.\n-25 Move Speed\nCan't feel pain.\nImmune to fear.\nSuffers 1% of max hit points in damage each turn (can't be reduced below one hit point by this effect).",
+            "context": "XRL.World.Effects.HulkHoney_Tonic.Details",
+            "text": "筋力+9\nレベルごとに一時HP+3。\n移動速度-25\n痛みを感じない。\n恐怖無効。\n毎ターン最大HPの1%のダメージを受ける（この効果ではHP1未満にならない）。"
+        },
+        {
+            "key": "+6 Strength\n+2 temporary hit points per level.\n-25 Move Speed\nCan't feel pain.\nImmune to fear.\nSuffers 1% of max hit points in damage each turn (can't be reduced below one hit point by this effect).",
+            "context": "XRL.World.Effects.HulkHoney_Tonic.Details",
+            "text": "筋力+6\nレベルごとに一時HP+2。\n移動速度-25\n痛みを感じない。\n恐怖無効。\n毎ターン最大HPの1%のダメージを受ける（この効果ではHP1未満にならない）。"
+        },
+        {
+            "key": "{{R|enraged}}",
+            "context": "XRL.World.Effects.HulkHoney_Tonic_Allergy.Description",
+            "text": "{{R|激昂}}"
+        },
+        {
+            "key": "ARRRRRRHGHH",
+            "context": "XRL.World.Effects.HulkHoney_Tonic_Allergy.Details",
+            "text": "アアアアアーッ！"
+        },
+        {
+            "key": "{{amorous|love}} tonic",
+            "context": "XRL.World.Effects.LoveTonic.Description",
+            "text": "{{amorous|ラブ}}トニック"
+        },
+        {
+            "key": "under the effects of {{amorous|love}} tonic",
+            "context": "XRL.World.Effects.LoveTonic.StateDescription",
+            "text": "{{amorous|ラブ}}トニックの効果を受けている"
+        },
+        {
+            "key": "Will fall in love with the first thing examined.",
+            "context": "XRL.World.Effects.LoveTonic.Details",
+            "text": "調べた最初のものに恋をする。"
+        },
+        {
+            "key": "{{rubbergum|rubbergum}} tonic",
+            "context": "XRL.World.Effects.Rubbergum_Tonic.Description",
+            "text": "{{rubbergum|ラバーガム}}トニック"
+        },
+        {
+            "key": "under the effects of {{rubbergum|rubbergum}} tonic",
+            "context": "XRL.World.Effects.Rubbergum_Tonic.StateDescription",
+            "text": "ラバーガムトニックの効果を受けている"
+        },
+        {
+            "key": "+100 electric resistance\n+50 cold resistance\n-1 AV\n+5 to saves vs. being restrained\n-5 to saves vs. bleeding\nOnly suffers 25% damage from bludgeoning attacks.\nOnly suffers 25% damage from falling.\nCan't be grabbed.",
+            "context": "XRL.World.Effects.Rubbergum_Tonic.Details",
+            "text": "電気耐性+100\n冷気耐性+50\nAV -1\n拘束に対するセーヴ+5\n出血に対するセーヴ-5\n鈍打攻撃によるダメージを25%しか受けない。\n落下ダメージを25%しか受けない。\n掴まれない。"
+        },
+        {
+            "key": "+100 electric resistance\n+25 cold resistance\n-1 AV\n+5 to saves vs. being restrained\n-5 to saves vs. bleeding\nOnly suffers 50% damage from bludgeoning attacks.\nOnly suffers 50% damage from falling.\nCan't be grabbed.",
+            "context": "XRL.World.Effects.Rubbergum_Tonic.Details",
+            "text": "電気耐性+100\n冷気耐性+25\nAV -1\n拘束に対するセーヴ+5\n出血に対するセーヴ-5\n鈍打攻撃によるダメージを50%しか受けない。\n落下ダメージを50%しか受けない。\n掴まれない。"
+        },
+        {
+            "key": "{{W|floppy}}",
+            "context": "XRL.World.Effects.Rubbergum_Tonic_Allergy.Description",
+            "text": "{{W|へにゃへにゃ}}"
+        },
+        {
+            "key": "35% chance to fall prone when moving.",
+            "context": "XRL.World.Effects.Rubbergum_Tonic_Allergy.Details",
+            "text": "移動時に35%の確率で伏せ状態になる。"
+        },
+        {
+            "key": "{{Y|salve}} tonic",
+            "context": "XRL.World.Effects.Salve_Tonic.Description",
+            "text": "{{Y|サルヴ}}トニック"
+        },
+        {
+            "key": "under the effects of {{Y|salve}} tonic",
+            "context": "XRL.World.Effects.Salve_Tonic.StateDescription",
+            "text": "サルヴトニックの効果を受けている"
+        },
+        {
+            "key": "Recovers 0.9 hit points per level (minimum 5) each turn.",
+            "context": "XRL.World.Effects.Salve_Tonic.Details",
+            "text": "毎ターン、レベル×0.9（最低5）HPを回復する。"
+        },
+        {
+            "key": "Recovers 0.6 hit points per level (minimum 3) each turn.",
+            "context": "XRL.World.Effects.Salve_Tonic.Details",
+            "text": "毎ターン、レベル×0.6（最低3）HPを回復する。"
+        },
+        {
+            "key": "{{shade|shade oil}} tonic",
+            "context": "XRL.World.Effects.ShadeOil_Tonic.Description",
+            "text": "{{shade|シェードオイル}}トニック"
+        },
+        {
+            "key": "under the effects of {{shade|shade oil}} tonic",
+            "context": "XRL.World.Effects.ShadeOil_Tonic.StateDescription",
+            "text": "{{shade|シェードオイル}}トニックの効果を受けている"
+        },
+        {
+            "key": "+8 DV\nCan phase out of the spatial dimension for 7-9 turns.",
+            "context": "XRL.World.Effects.ShadeOil_Tonic.Details",
+            "text": "DV+8\n7～9ターンのあいだ空間次元からフェイズアウトできる。"
+        },
+        {
+            "key": "+8 DV\n25% chance per turn to phase out of the spatial dimension for 1-3 turns.",
+            "context": "XRL.World.Effects.ShadeOil_Tonic.Details",
+            "text": "DV+8\n毎ターン25%の確率で1～3ターン空間次元からフェイズアウトする。"
+        },
+        {
+            "key": "{{skulk|skulk}} tonic",
+            "context": "XRL.World.Effects.Skulk_Tonic.Description",
+            "text": "{{skulk|スカルク}}トニック"
+        },
+        {
+            "key": "under the effects of {{skulk|skulk}} tonic",
+            "context": "XRL.World.Effects.Skulk_Tonic.StateDescription",
+            "text": "{{skulk|スカルク}}トニックの効果を受けている"
+        },
+        {
+            "key": "+40% Move Speed at night and underground.\n+4 Agility at night and underground.\n-20% Move Speed in the daylight.\n-3 Agility in the daylight.\nCan see in the dark (radius 8).\nSuffers double damage from light-based attacks.",
+            "context": "XRL.World.Effects.Skulk_Tonic.Details",
+            "text": "夜間と地下で移動速度+40%\n夜間と地下で敏捷+4\n昼間は移動速度-20%\n昼間は敏捷-3\n暗闇視界（半径8）\n光属性の攻撃から受けるダメージが2倍になる。"
+        },
+        {
+            "key": "Has grown burrowing claws.\n+25% Move Speed at night and underground.\n+3 Agility at night and underground.\n-20% Move Speed in the daylight.\n-3 Agility in the daylight.\nCan see in the dark (radius 8).\nSuffers double damage from light-based attacks.",
+            "context": "XRL.World.Effects.Skulk_Tonic.Details",
+            "text": "掘爪が生えた。\n夜間と地下で移動速度+25%\n夜間と地下で敏捷+3\n昼間は移動速度-20%\n昼間は敏捷-3\n暗闇視界（半径8）\n光属性の攻撃から受けるダメージが2倍になる。"
+        },
+        {
+            "key": "{{sphynx|sphynx}} {{Y|salt}} tonic",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Description",
+            "text": "{{sphynx|スフィンクス}} {{Y|ソルト}}トニック"
+        },
+        {
+            "key": "under the effects of {{sphynx|sphynx}} {{Y|salt}} tonic",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.StateDescription",
+            "text": "{{sphynx|スフィンクス}} {{Y|ソルト}}トニックの効果を受けている"
+        },
+        {
+            "key": "Immune to confusing attacks.\nCan peer into the near future.",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Details",
+            "text": "混乱攻撃に対して無効。\n近い未来を垣間見られる。"
+        },
+        {
+            "key": "Immune to confusing attacks.\nCan peer into the near future.\nAdds a bonus turn in psionic Sifrah games.",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Details",
+            "text": "混乱攻撃に対して無効。\n近い未来を垣間見られる。\nサイオニックのシフラでボーナスターンを得る。"
+        },
+        {
+            "key": "Immune to confusing attacks.\nActivated mental mutations cool down twice as quickly.",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Details",
+            "text": "混乱攻撃に対して無効。\n発動型精神変異のクールダウンが半減する。"
+        },
+        {
+            "key": "Immune to confusing attacks.\nActivated mental mutations cool down twice as quickly.\nAdds a bonus turn in psionic Sifrah games.",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Details",
+            "text": "混乱攻撃に対して無効。\n発動型精神変異のクールダウンが半減する。\nサイオニックのシフラでボーナスターンを得る。"
+        },
+        {
+            "key": "{{ubernostrum|ubernostrum}} tonic",
+            "context": "XRL.World.Effects.Ubernostrum_Tonic.Description",
+            "text": "{{ubernostrum|ウベルノストラム}}トニック"
+        },
+        {
+            "key": "under the effects of {{ubernostrum|ubernostrum}} tonic",
+            "context": "XRL.World.Effects.Ubernostrum_Tonic.StateDescription",
+            "text": "{{ubernostrum|ウベルノストラム}}トニックの効果を受けている"
+        },
+        {
+            "key": "Recovers 0.9 hit points per level (minimum 5) each turn.\nPurged of all short-term, biological debuffs and up to one severed appendage is regrown at the end of the tenth turn.",
+            "context": "XRL.World.Effects.Ubernostrum_Tonic.Details",
+            "text": "毎ターン、レベル×0.9（最低5）HPを回復する。\n短期の生物学的デバフがすべて浄化され、10ターン目の終了時に切断された肢を最大1本再生する。"
+        },
+        {
+            "key": "Recovers 0.6 hit points per level (minimum 3) each turn.\nPurged of all short-term, biological debuffs and up to one severed appendage is regrown at the end of the tenth turn.",
+            "context": "XRL.World.Effects.Ubernostrum_Tonic.Details",
+            "text": "毎ターン、レベル×0.6（最低3）HPを回復する。\n短期の生物学的デバフがすべて浄化され、10ターン目の終了時に切断された肢を最大1本再生する。"
+        }
+    ]
+}

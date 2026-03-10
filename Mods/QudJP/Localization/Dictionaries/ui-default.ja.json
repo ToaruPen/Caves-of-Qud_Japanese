@@ -1,0 +1,555 @@
+{
+  "meta": {
+    "id": "ui-default",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Inventory",
+      "text": "インベントリ"
+    },
+    {
+      "key": "Equipment",
+      "text": "装備"
+    },
+    {
+      "key": "Weight",
+      "text": "重量"
+    },
+    {
+      "key": "Take all",
+      "text": "すべて取る"
+    },
+    {
+      "key": "Drop",
+      "text": "捨てる"
+    },
+    {
+      "key": "Trade",
+      "text": "取引"
+    },
+    {
+      "key": "Filter",
+      "text": "フィルター"
+    },
+    {
+      "key": "Apply",
+      "text": "使用"
+    },
+    {
+      "key": "Damage",
+      "text": "ダメージ"
+    },
+    {
+      "key": "Penetration",
+      "text": "貫通力"
+    },
+    {
+      "key": "Hit Bonus",
+      "text": "命中ボーナス"
+    },
+    {
+      "key": "Quit Without Saving",
+      "text": "セーブせずに終了",
+      "context": "QudMenuItem.QuitWithoutSaving"
+    },
+    {
+      "key": "Save and Quit",
+      "text": "セーブして終了",
+      "context": "QudMenuItem.SaveAndQuit"
+    },
+    {
+      "key": "Continue",
+      "text": "続ける"
+    },
+    {
+      "key": "Are you sure you want to quit?",
+      "text": "本当に終了しますか？"
+    },
+    {
+      "key": "Are you sure you want to quit?",
+      "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+      "text": "本当に終了しますか？"
+    },
+    {
+      "key": "Yes",
+      "text": "はい"
+    },
+    {
+      "key": "No",
+      "text": "いいえ"
+    },
+    {
+      "key": "Yes",
+      "context": "QudMenuItem.Yes",
+      "text": "はい"
+    },
+    {
+      "key": "No",
+      "context": "QudMenuItem.No",
+      "text": "いいえ"
+    },
+    {
+      "key": "Cancel",
+      "text": "キャンセル"
+    },
+    {
+      "key": "Accept",
+      "text": "決定"
+    },
+    {
+      "key": "Delete Game",
+      "text": "セーブ削除"
+    },
+    {
+      "key": "Load Game",
+      "text": "セーブを読み込む"
+    },
+    {
+      "key": "Save Game",
+      "text": "セーブ"
+    },
+    {
+      "key": "Location:",
+      "text": "場所："
+    },
+    {
+      "key": "Last saved:",
+      "text": "最終セーブ："
+    },
+    {
+      "key": "Expand",
+      "text": "展開"
+    },
+    {
+      "key": "Collapse",
+      "text": "折りたたむ"
+    },
+    {
+      "key": "Show Tooltip",
+      "text": "ツールチップ表示"
+    },
+    {
+      "key": "Quick Drop",
+      "text": "高速ドロップ"
+    },
+    {
+      "key": "Quick Eat",
+      "text": "高速食事"
+    },
+    {
+      "key": "Quick Drink",
+      "text": "高速飲用"
+    },
+    {
+      "key": "Quick Apply",
+      "text": "高速使用"
+    },
+    {
+      "key": "Copy",
+      "text": "コピー"
+    },
+    {
+      "key": "Look",
+      "text": "調べる"
+    },
+    {
+      "key": "Color",
+      "text": "色"
+    },
+    {
+      "key": "Submit",
+      "text": "送信"
+    },
+    {
+      "key": "Hold to Accept",
+      "text": "長押しして決定"
+    },
+    {
+      "key": "Mutations",
+      "text": "変異"
+    },
+    {
+      "key": "Attributes",
+      "text": "能力値"
+    },
+    {
+      "key": "Summary",
+      "text": "概要"
+    },
+    {
+      "key": "Customize",
+      "text": "カスタマイズ"
+    },
+    {
+      "key": "Game Deleted!",
+      "text": "セーブを削除しました！"
+    },
+    {
+      "key": "Unapproved Scripting",
+      "text": "未承認のスクリプト"
+    },
+    {
+      "key": "Warning!",
+      "text": "警告！"
+    },
+    {
+      "key": "Mods Differ",
+      "text": "Mod が一致しません"
+    },
+    {
+      "key": "delete",
+      "text": "削除"
+    },
+    {
+      "key": "Character name :: ",
+      "text": "キャラクター名 :: "
+    },
+    {
+      "key": "Location:",
+      "context": "SaveManagement.Location",
+      "text": "場所："
+    },
+    {
+      "key": "Last saved:",
+      "context": "SaveManagement.LastSaved",
+      "text": "最後の保存："
+    },
+    {
+      "key": "Error!",
+      "text": "エラー！"
+    },
+    {
+      "key": "Manage Build:",
+      "text": "ビルド管理："
+    },
+    {
+      "key": "Points Remaining:",
+      "text": "残りポイント："
+    },
+    {
+      "key": "Option:",
+      "text": "オプション："
+    },
+    {
+      "key": "&KSet Checkpoint",
+      "text": "&Kチェックポイントを設定"
+    },
+    {
+      "key": "Set Checkpoint",
+      "text": "チェックポイントを設定"
+    },
+    {
+      "key": "Restore Checkpoint",
+      "text": "チェックポイントを復元"
+    },
+    {
+      "key": "&KRestore Checkpoint",
+      "text": "&Kチェックポイントを復元"
+    },
+    {
+      "key": "Control Mapping",
+      "text": "操作設定"
+    },
+    {
+      "key": "Options",
+      "text": "オプション"
+    },
+    {
+      "key": "Game Info",
+      "text": "ゲーム情報"
+    },
+    {
+      "key": "Save and Quit",
+      "text": "セーブして終了"
+    },
+    {
+      "key": "Quit Without Saving",
+      "text": "セーブせずに終了"
+    },
+    {
+      "key": "Abandon Character",
+      "text": "キャラクターを放棄"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your unsaved progress. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\n Type '",
+      "text": "セーブせずに終了すると保存されていない進行状況がすべて失われます。本当に終了してよろしいですか？\\n\\n「"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your progress and your character will be lost. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\nType '",
+      "text": "セーブせずに終了すると進行状況とキャラクターが完全に失われます。本当に終了してよろしいですか？\\n\\n「"
+    },
+    {
+      "key": "character creation",
+      "text": "キャラクター作成"
+    },
+    {
+      "key": "Choose Game Mode",
+      "text": "ゲームモードを選択"
+    },
+    {
+      "key": "Randomize Selection",
+      "text": "ランダムに選択"
+    },
+    {
+      "key": "Randomize Selection",
+      "context": "QudMenuItem.CmdChargenRandom",
+      "text": "ランダムに選択"
+    },
+    {
+      "key": "LOAD GAME",
+      "text": "ロードゲーム"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your unsaved progress. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\n Type 'QUIT' to confirm.",
+      "context": "PopupMessage.ShowPopup.Message",
+      "text": "セーブせずに終了すると保存されていない進行状況がすべて失われます。本当に終了してよろしいですか？\\n\\n「QUIT」と入力すると確定します。"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your unsaved progress. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\nType 'QUIT' to confirm.",
+      "context": "PopupMessage.ShowPopup.Message",
+      "text": "セーブせずに終了すると保存されていない進行状況がすべて失われます。本当に終了してよろしいですか？\\n\\n「QUIT」と入力すると確定します。"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your progress and your character will be lost. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\n Type 'QUIT' to confirm.",
+      "context": "PopupMessage.ShowPopup.Message",
+      "text": "セーブせずに終了すると進行状況とキャラクターが完全に失われます。本当に終了してよろしいですか？\\n\\n「QUIT」と入力すると確定します。"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your progress and your character will be lost. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\nType 'QUIT' to confirm.",
+      "context": "PopupMessage.ShowPopup.Message",
+      "text": "セーブせずに終了すると進行状況とキャラクターが完全に失われます。本当に終了してよろしいですか？\\n\\n「QUIT」と入力すると確定します。"
+    },
+    {
+      "key": "' to confirm.",
+      "text": "」と入力すると確定します。"
+    },
+    {
+      "key": "You can only set your checkpoint in settlements.",
+      "text": "集落内でのみチェックポイントを設定できます。"
+    },
+    {
+      "key": "You can only restore your checkpoint outside settlements.",
+      "text": "集落の外でのみチェックポイントを復元できます。"
+    },
+    {
+      "key": "Are you sure you want to restore your checkpoint?",
+      "text": "本当にチェックポイントを復元しますか？"
+    },
+    {
+      "key": "This Item",
+      "text": "このアイテム"
+    },
+    {
+      "key": "Equipped Item",
+      "text": "装備中のアイテム"
+    },
+    {
+      "key": "Creates:",
+      "text": "作成物："
+    },
+    {
+      "key": "Requires:",
+      "text": "要件："
+    },
+    {
+      "key": "Strength",
+      "text": "筋力"
+    },
+    {
+      "key": "Weight:",
+      "text": "重量："
+    },
+    {
+      "key": "unburnt",
+      "text": "未点火"
+    },
+    {
+      "key": "Adds",
+      "text": "追加"
+    },
+    {
+      "key": "effects to cooked meals.",
+      "text": "の効果を料理に付与。"
+    },
+    {
+      "key": "Cudgel (dazes on critical hit)",
+      "text": "棍棒（クリティカル時に朦朧付与）"
+    },
+    {
+      "key": "Short Blades (causes bleeding on critical hit)",
+      "text": "短剣（クリティカル時に出血）"
+    },
+    {
+      "key": "Axe (cleaves armor on critical hit)",
+      "text": "斧（クリティカル時に装甲切断）"
+    },
+    {
+      "key": "Long Blades (can dismember)",
+      "text": "長剣（切断可能）"
+    },
+    {
+      "key": "Welcome to the Caves of Qud tutorial. We'll just be scratching the surface here, learning enough of the basics to help you get your footing.\\n\\nIn Caves of Qud, you play as a mutated human or true kin.\\n\\nFor the tutorial, we're picking mutated human.",
+      "text": "『Caves of Qud』のチュートリアルへようこそ。ここではごく基本だけをなぞり、歩き出すのに必要な基本を身に付けます。\\n\\nこのゲームでは突然変異した人間か、真の人間を操作します。\\n\\nチュートリアルでは突然変異した人間を選びましょう。"
+    },
+    {
+      "key": "Character creation is a deep and sometimes long process. We included some preset builds to help you get started. After the tutorial, you can try another build, or make a character from scratch. (The recommended way! Once you get your footing.) \\n\\nFor now, pick the marsh taur.",
+      "text": "キャラクター作成は奥深く、ときには時間のかかる工程です。すぐに遊べるよう、いくつかプリセットを用意しています。チュートリアルが終わったら、別のビルドを試したり、一から作ってみましょう（慣れてきたら特におすすめです）。\\n\\n今はマーシュ・ターを選んでください。"
+    },
+    {
+      "key": "Here is a summary of your attributes and mutations, which grant your character unique abilities.",
+      "text": "ここには能力値と突然変異の概要が表示されます。どちらもキャラクター固有の力を与えてくれます。"
+    },
+    {
+      "key": "You can name your character or choose Next for a random name.",
+      "text": "ここでキャラクターの名前を入力するか、［Next］でランダムな名前を採用できます。"
+    },
+    {
+      "key": "On the 30th of Kisu Ux, you scuttle down a dark shaft at the edge of a sunken trade path and arrive at a caravanserai. It's powdered in salt and dust from across the ribbon of time.",
+      "text": "キス・ウックスの30日、あなたは沈んだ交易路の縁に穿たれた暗い縦穴を滑り降り、隊商宿へたどり着いた。そこは時間の川向こうから舞い込んだ塩と砂埃にまみれている。"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your unsaved progress. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\n Type 'QUIT' to confirm.",
+      "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+      "text": "保存せずに終了すると保存していない進捗をすべて失います。本当に終了してしまってよろしいですか？\\n\\n「QUIT」と入力すると確認します。"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your unsaved progress. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\nType 'QUIT' to confirm.",
+      "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+      "text": "保存せずに終了すると保存していない進捗をすべて失います。本当に終了してしまってよろしいですか？\\n\\n「QUIT」と入力すると確認します。"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your progress and your character will be lost. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\n Type 'QUIT' to confirm.",
+      "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+      "text": "保存せずに終了すると進捗とキャラクターがすべて消えてしまいます。本当に終了してしまってよろしいですか？\\n\\n「QUIT」と入力すると確認します。"
+    },
+    {
+      "key": "If you quit without saving, you will lose all your progress and your character will be lost. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\\n\\nType 'QUIT' to confirm.",
+      "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+      "text": "保存せずに終了すると進捗とキャラクターがすべて消えてしまいます。本当に終了してしまってよろしいですか？\\n\\n「QUIT」と入力すると確認します。"
+    },
+    {
+      "key": "navigate",
+      "text": "移動"
+    },
+    {
+      "key": "select",
+      "text": "決定"
+    },
+    {
+      "key": "Pistol",
+      "context": "Look.TooltipValue",
+      "text": "ピストル"
+    },
+    {
+      "key": "Bows && Rifles",
+      "context": "Look.TooltipValue",
+      "text": "弓・ライフル"
+    },
+    {
+      "key": "Heavy Weapon",
+      "context": "Look.TooltipValue",
+      "text": "重火器"
+    },
+    {
+      "key": "Cudgel",
+      "context": "Look.TooltipValue",
+      "text": "鈍器"
+    },
+    {
+      "key": "Short Blades",
+      "context": "Look.TooltipValue",
+      "text": "短剣"
+    },
+    {
+      "key": "Long Blades",
+      "context": "Look.TooltipValue",
+      "text": "長剣"
+    },
+    {
+      "key": "Axe",
+      "context": "Look.TooltipValue",
+      "text": "斧"
+    },
+    {
+      "key": "Cudgel (dazes on critical hit)",
+      "context": "Look.TooltipValue",
+      "text": "棍棒（クリティカル時に朦朧付与）"
+    },
+    {
+      "key": "Short Blades (causes bleeding on critical hit)",
+      "context": "Look.TooltipValue",
+      "text": "短剣（クリティカル時に出血）"
+    },
+    {
+      "key": "Axe (cleaves armor on critical hit)",
+      "context": "Look.TooltipValue",
+      "text": "斧（クリティカル時に装甲切断）"
+    },
+    {
+      "key": "Long Blades (can dismember)",
+      "context": "Look.TooltipValue",
+      "text": "長剣（切断可能）"
+    },
+    {
+      "key": "Reset Selection",
+      "context": "TMP.Title",
+      "text": "選択をリセット"
+    },
+    {
+      "key": "Reset Selection",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "選択をリセット"
+    },
+    {
+      "key": "Until Waning Salt Sun",
+      "context": "QudMenuItem",
+      "text": "塩の陽が欠けるまで待つ"
+    },
+    {
+      "key": "Until Waning Salt Sun",
+      "context": "QudMenuItem.option:0",
+      "text": "塩の陽が欠けるまで待つ"
+    },
+    {
+      "key": "Until Waning Salt Sun",
+      "context": "QudMenuItem.option:1",
+      "text": "塩の陽が欠けるまで待つ"
+    },
+    {
+      "key": "Until Waxing Beetle Moon",
+      "context": "QudMenuItem",
+      "text": "甲虫の月が満ちるまで待つ"
+    },
+    {
+      "key": "Until Waxing Beetle Moon",
+      "context": "QudMenuItem.option:0",
+      "text": "甲虫の月が満ちるまで待つ"
+    },
+    {
+      "key": "Until Waxing Beetle Moon",
+      "context": "QudMenuItem.option:1",
+      "text": "甲虫の月が満ちるまで待つ"
+    },
+    {
+      "key": "Until Jeweled Dusk",
+      "context": "QudMenuItem",
+      "text": "宝玉の夕暮れまで待つ"
+    },
+    {
+      "key": "Until Jeweled Dusk",
+      "context": "QudMenuItem.option:0",
+      "text": "宝玉の夕暮れまで待つ"
+    },
+    {
+      "key": "Until Jeweled Dusk",
+      "context": "QudMenuItem.option:1",
+      "text": "宝玉の夕暮れまで待つ"
+    }
+  ]
+}

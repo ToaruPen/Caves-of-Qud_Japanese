@@ -1,0 +1,417 @@
+{
+  "meta": {
+    "id": "ui-chargen",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Choose Genotype",
+      "context": "Chargen.Genotype.Title",
+      "text": "遺伝型を選択"
+    },
+    {
+      "key": "choose subtype",
+      "context": "Chargen.Subtype.Title",
+      "text": "職能を選択"
+    },
+    {
+      "key": "Select Character Option",
+      "context": "Chargen.Chartype.Breadcrumb",
+      "text": "プレイ方式を選択"
+    },
+    {
+      "key": "Select Starting Location",
+      "context": "Chargen.StartingLocation.Breadcrumb",
+      "text": "開始地点を選択"
+    },
+    {
+      "key": "Mutated Human",
+      "context": "Chargen.Genotype.Mutated Human.Title",
+      "text": "突然変異した人間"
+    },
+    {
+      "key": "True Kin",
+      "context": "Chargen.Genotype.True Kin.Title",
+      "text": "真性人類"
+    },
+    {
+      "key": "Apostle",
+      "context": "Chargen.Subtype.Apostle.Title",
+      "text": "使徒"
+    },
+    {
+      "key": "Arconaut",
+      "context": "Chargen.Subtype.Arconaut.Title",
+      "text": "アルコノート"
+    },
+    {
+      "key": "Artifex",
+      "context": "Chargen.Subtype.Artifex.Title",
+      "text": "アーティフェクス"
+    },
+    {
+      "key": "Child of the Deep",
+      "context": "Chargen.Subtype.Child of the Deep.Title",
+      "text": "深淵の子"
+    },
+    {
+      "key": "Child of the Hearth",
+      "context": "Chargen.Subtype.Child of the Hearth.Title",
+      "text": "炉の子"
+    },
+    {
+      "key": "Child of the Wheel",
+      "context": "Chargen.Subtype.Child of the Wheel.Title",
+      "text": "歯車の子"
+    },
+    {
+      "key": "Consul",
+      "context": "Chargen.Subtype.Consul.Title",
+      "text": "コンスル"
+    },
+    {
+      "key": "Eunuch",
+      "context": "Chargen.Subtype.Eunuch.Title",
+      "text": "宦官"
+    },
+    {
+      "key": "Fuming God-Child",
+      "context": "Chargen.Subtype.Fuming God-Child.Title",
+      "text": "噴煙の神子"
+    },
+    {
+      "key": "Greybeard",
+      "context": "Chargen.Subtype.Greybeard.Title",
+      "text": "グレイビアード"
+    },
+    {
+      "key": "Gunslinger",
+      "context": "Chargen.Subtype.Gunslinger.Title",
+      "text": "ガンスリンガー"
+    },
+    {
+      "key": "Horticulturist",
+      "context": "Chargen.Subtype.Horticulturist.Title",
+      "text": "園芸家"
+    },
+    {
+      "key": "Marauder",
+      "context": "Chargen.Subtype.Marauder.Title",
+      "text": "マローダー"
+    },
+    {
+      "key": "Nomad",
+      "context": "Chargen.Subtype.Nomad.Title",
+      "text": "ノマド"
+    },
+    {
+      "key": "Pilgrim",
+      "context": "Chargen.Subtype.Pilgrim.Title",
+      "text": "巡礼者"
+    },
+    {
+      "key": "Praetorian",
+      "context": "Chargen.Subtype.Praetorian.Title",
+      "text": "プラエトリアン"
+    },
+    {
+      "key": "Priest of All Moons",
+      "context": "Chargen.Subtype.Priest of All Moons.Title",
+      "text": "すべての月の司祭"
+    },
+    {
+      "key": "Priest of All Suns",
+      "context": "Chargen.Subtype.Priest of All Suns.Title",
+      "text": "すべての太陽の司祭"
+    },
+    {
+      "key": "Scholar",
+      "context": "Chargen.Subtype.Scholar.Title",
+      "text": "学者"
+    },
+    {
+      "key": "Syzygyrior",
+      "context": "Chargen.Subtype.Syzygyrior.Title",
+      "text": "シジジリオル"
+    },
+    {
+      "key": "Tinker",
+      "context": "Chargen.Subtype.Tinker.Title",
+      "text": "ティンカー"
+    },
+    {
+      "key": "Warden",
+      "context": "Chargen.Subtype.Warden.Title",
+      "text": "ウォーデン"
+    },
+    {
+      "key": "Water Merchant",
+      "context": "Chargen.Subtype.Water Merchant.Title",
+      "text": "水商人"
+    },
+    {
+      "key": "Watervine Farmer",
+      "context": "Chargen.Subtype.Watervine Farmer.Title",
+      "text": "ウォーターヴァイン農家"
+    },
+    {
+      "key": "Apostle\n[{{W|A}}]",
+      "context": "TMP.Title",
+      "text": "使徒\n[{{W|A}}]"
+    },
+    {
+      "key": "Arconaut\n[{{W|B}}]",
+      "context": "TMP.Title",
+      "text": "アルコノート\n[{{W|B}}]"
+    },
+    {
+      "key": "Greybeard\n[{{W|C}}]",
+      "context": "TMP.Title",
+      "text": "グレイビアード\n[{{W|C}}]"
+    },
+    {
+      "key": "Gunslinger\n[{{W|D}}]",
+      "context": "TMP.Title",
+      "text": "ガンスリンガー\n[{{W|D}}]"
+    },
+    {
+      "key": "Marauder\n[{{W|E}}]",
+      "context": "TMP.Title",
+      "text": "マローダー\n[{{W|E}}]"
+    },
+    {
+      "key": "Pilgrim\n[{{W|F}}]",
+      "context": "TMP.Title",
+      "text": "巡礼者\n[{{W|F}}]"
+    },
+    {
+      "key": "Nomad\n[{{W|G}}]",
+      "context": "TMP.Title",
+      "text": "ノマド\n[{{W|G}}]"
+    },
+    {
+      "key": "Scholar\n[{{W|H}}]",
+      "context": "TMP.Title",
+      "text": "学者\n[{{W|H}}]"
+    },
+    {
+      "key": "Tinker\n[{{W|I}}]",
+      "context": "TMP.Title",
+      "text": "ティンカー\n[{{W|I}}]"
+    },
+    {
+      "key": "Warden\n[{{W|J}}]",
+      "context": "TMP.Title",
+      "text": "ウォーデン\n[{{W|J}}]"
+    },
+    {
+      "key": "Water Merchant\n[{{W|K}}]",
+      "context": "TMP.Title",
+      "text": "水商人\n[{{W|K}}]"
+    },
+    {
+      "key": "Watervine Farmer\n[{{W|L}}]",
+      "context": "TMP.Title",
+      "text": "ウォーターヴァイン農家\n[{{W|L}}]"
+    },
+    {
+      "key": "Apostle \n[A] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "使徒 \n[A] "
+    },
+    {
+      "key": "Arconaut \n[B] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "アルコノート \n[B] "
+    },
+    {
+      "key": "Greybeard \n[C] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "グレイビアード \n[C] "
+    },
+    {
+      "key": "Gunslinger \n[D] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "ガンスリンガー \n[D] "
+    },
+    {
+      "key": "Marauder \n[E] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "マローダー \n[E] "
+    },
+    {
+      "key": "Pilgrim \n[F] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "巡礼者 \n[F] "
+    },
+    {
+      "key": "Nomad \n[G] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "ノマド \n[G] "
+    },
+    {
+      "key": "Scholar \n[H] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "学者 \n[H] "
+    },
+    {
+      "key": "Tinker \n[I] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "ティンカー \n[I] "
+    },
+    {
+      "key": "Warden \n[J] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "ウォーデン \n[J] "
+    },
+    {
+      "key": "Water Merchant \n[K] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "水商人 \n[K] "
+    },
+    {
+      "key": "Watervine Farmer \n[L] ",
+      "context": "TMPro.TextMeshProUGUI",
+      "text": "ウォーターヴァイン農家 \n[L] "
+    },
+    {
+      "key": "Joppa",
+      "context": "Chargen.StartingLocation.Joppa.Name",
+      "text": "ジョッパ"
+    },
+    {
+      "key": "{{G|salt marsh}}\nvillage",
+      "context": "Chargen.StartingLocation.SaltMarshVillage.Name",
+      "text": "塩性湿地の村"
+    },
+    {
+      "key": "{{Y|salt dunes}}\nvillage",
+      "context": "Chargen.StartingLocation.SaltDuneVillage.Name",
+      "text": "塩砂丘の村"
+    },
+    {
+      "key": "{{W|desert canyon}}\nvillage",
+      "context": "Chargen.StartingLocation.DesertCanyonsVillage.Name",
+      "text": "砂漠峡谷の村"
+    },
+    {
+      "key": "{{Y|hill}}\nvillage",
+      "context": "Chargen.StartingLocation.HillsVillage.Name",
+      "text": "丘の村"
+    },
+    {
+      "key": "Recommended for new players.",
+      "context": "Chargen.StartingLocation.Hint",
+      "text": "初心者に推奨されます。"
+    },
+    {
+      "key": "You have unspent mutation points.",
+      "context": "Chargen.Mutations.UnspentWarning",
+      "text": "未使用の突然変異ポイントが残っています。"
+    },
+    {
+      "key": "You have spent too many mutation points.",
+      "context": "Chargen.Mutations.OverspentWarning",
+      "text": "突然変異ポイントを使いすぎています。"
+    },
+    {
+      "key": "You don't have ",
+      "context": "Chargen.Mutations.InsufficientPoints.Prefix",
+      "text": "突然変異ポイントが足りません。"
+    },
+    {
+      "key": " mutation points!",
+      "context": "Chargen.Mutations.InsufficientPoints.Suffix",
+      "text": "ポイントが不足しています！"
+    },
+    {
+      "key": "Are you sure you want to spend ",
+      "context": "Chargen.Mutations.SpendConfirm.Prefix",
+      "text": "本当にそのポイントを消費しますか？ "
+    },
+    {
+      "key": " mutation points to buy a new ",
+      "context": "Chargen.Mutations.SpendConfirm.Suffix",
+      "text": " ポイントを使って新しい突然変異を購入します。"
+    },
+    {
+      "key": "BuyNew",
+      "context": "Chargen.Mutations.Action.BuyNew",
+      "text": "新規購入"
+    },
+    {
+      "key": "BuyRandomMutation",
+      "context": "Chargen.Mutations.Action.Random",
+      "text": "ランダム購入"
+    },
+    {
+      "key": "Randomize Selection",
+      "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.AbstractBuilderModuleWindowBase",
+      "text": "選択をランダムにする"
+    },
+    {
+      "key": "Reset Selection",
+      "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.AbstractBuilderModuleWindowBase",
+      "text": "選択をリセット"
+    },
+    {
+      "key": "You must make a selection before advancing.",
+      "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.AbstractEmbarkBuilderModule",
+      "text": "進む前に選択してください。"
+    },
+    {
+      "key": "You have unspent mutation points.",
+      "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.Qud.QudMutationsModule",
+      "text": "未使用の変異ポイントがあります。"
+    },
+    {
+      "key": "You have spent too many mutation points.",
+      "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.Qud.QudMutationsModule",
+      "text": "変異ポイントを使いすぎています。"
+    },
+    {
+      "key": "{{r|Error!}}",
+      "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.EmbarkBuilder",
+      "text": "{{r|エラー！}}"
+    },
+    {
+      "key": "{{W|Warning!}}",
+      "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.EmbarkBuilder",
+      "text": "{{W|警告！}}"
+    },
+    {
+      "key": "AttributeDescription:Strength",
+      "text": "筋力は、近接攻撃で敵の装甲を貫通する効率、近接攻撃のダメージ量、強制移動への抵抗力、持ち運べる荷物の量（所持重量）を決定します。"
+    },
+    {
+      "key": "AttributeDescription:Agility",
+      "text": "敏捷性は、遠隔攻撃の命中率、敵の攻撃を回避する能力（DV）を決定します。"
+    },
+    {
+      "key": "AttributeDescription:Toughness",
+      "text": "耐久力は、HP（ヒットポイント）、自然治癒の速度、毒や病気への抵抗力を決定します。"
+    },
+    {
+      "key": "AttributeDescription:Intelligence",
+      "text": "知性は、スキルポイントの獲得量、アーティファクトを鑑定・修理する能力を決定します。"
+    },
+    {
+      "key": "AttributeDescription:Willpower",
+      "text": "意志力は、精神攻撃への抵抗力（MA）、アビリティのクールダウン回復速度、HPの自然治癒速度を決定します。"
+    },
+    {
+      "key": "AttributeDescription:Ego",
+      "text": "自我は、精神変異の強さ、商人との取引価格、他者を服従させる能力を決定します。"
+    },
+    {
+      "key": "Points Remaining:",
+      "context": "QudAttributesModuleWindow",
+      "text": "残りポイント："
+    }
+  ]
+}

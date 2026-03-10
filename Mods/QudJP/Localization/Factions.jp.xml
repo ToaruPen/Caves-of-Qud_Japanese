@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='utf-8'?>
+<factions Load="Merge">
+  <faction Name="Prey" DisplayName="牧草を食む快楽主義者" />
+  <faction Name="Joppa" DisplayName="ジョッパの村人たち" />
+  <faction Name="Kyakukya" DisplayName="キャクキャの村人たち">
+    <waterritual
+      Skill="CookingAndGathering"
+      Recipe="MushroomCider"
+      RecipeText="キャクキャの村人たちの大好物を分けてもらえますか？"
+    />
+  </faction>
+  <faction Name="Ezra" DisplayName="エズラの村人たち">
+    <waterritual
+      Skill="Customs"
+      Recipe="GoatAndSweetLeaf"
+      RecipeText="エズラの村人たちの大好物を分けてもらえますか？"
+    />
+  </faction>
+  <faction Name="Snapjaws" DisplayName="スナップジョー" />
+  <faction Name="Baboons" DisplayName="ヒヒ" />
+  <faction Name="Apes" DisplayName="類人猿" />
+  <faction Name="Crabs" DisplayName="カニ" />
+  <faction Name="Bears" DisplayName="クマ" />
+  <faction Name="Winged Mammals" DisplayName="翼ある哺乳類" />
+  <faction Name="Birds" DisplayName="鳥" />
+  <faction Name="Fish" DisplayName="魚">
+    <interests>
+      <interest Tags="opalduskwaters,riveryonth,riversvy,mountainstream,riveropal" MatchAny="true" Description="水辺の場所" />
+    </interests>
+  </faction>
+  <faction Name="Insects" DisplayName="昆虫" />
+  <faction Name="Swine" DisplayName="豚" />
+  <faction Name="Unshelled Reptiles" DisplayName="無殻爬虫類" />
+  <faction Name="Cannibals" DisplayName="人食い" />
+  <faction Name="Arachnids" DisplayName="クモ類" />
+  <faction Name="Cats" DisplayName="猫" />
+  <faction Name="Dogs" DisplayName="犬" />
+  <faction Name="Cragmensch" DisplayName="クラッグメンシュ" />
+  <faction Name="Mollusks" DisplayName="軟体動物" />
+  <faction Name="Tortoises" DisplayName="亀" />
+  <faction Name="Robots" DisplayName="ロボット" />
+  <faction Name="Baetyls" DisplayName="ベテル" />
+  <faction Name="Dromad" DisplayName="ドロマド商人" />
+  <faction Name="Entropic" DisplayName="高エントロピー存在" />
+  <faction Name="Antelopes" DisplayName="アンテロープ" />
+  <faction Name="Worms" DisplayName="ワーム" />
+  <faction Name="Oozes" DisplayName="ウーズ" />
+  <faction Name="Equines" DisplayName="馬類" />
+  <faction Name="Newly Sentient Beings" DisplayName="新知性体">
+    <interests BuyTargetedSecrets="false" Blurb=" 何も知らない">
+      <interest Tags="*" WillBuy="true" WillSell="false" />
+    </interests>
+  </faction>
+  <faction Name="Goatfolk" DisplayName="山羊人" />
+  <faction Name="Hermits" DisplayName="隠者" />
+  <faction Name="Frogs" DisplayName="カエル" />
+  <faction Name="Svardym" DisplayName="スヴァーディム">
+    <interests>
+      <interest Tags="insect,lair" WillBuy="true" WillSell="false" />
+      <interest Tags="gyreplagues" WillBuy="false" WillSell="true" Description="ジャイアの疫病" />
+    </interests>
+  </faction>
+  <faction Name="Naphtaali" DisplayName="ナフタリ族" />
+  <faction Name="Trolls" DisplayName="トロール" />
+  <faction Name="Issachari" DisplayName="イッサカリ族" />
+  <faction Name="Strangers" DisplayName="謎めいたよそ者" />
+  <faction Name="Pariahs" DisplayName="パリア">
+    <interests BuyDescription=" 新しい社会を築くために必要な資源に関心がある： ">
+      <interest Tags="water,weep" WillBuy="true" WillSell="false" />
+      <interest Tags="recipe" WillBuy="true" WillSell="false" />
+      <interest Tags="tech" WillBuy="true" WillSell="false" />
+      <interest Tags="settlement" WillBuy="false" WillSell="true" />
+      <interest Tags="gossip" WillBuy="false" WillSell="true" />
+    </interests>
+  </faction>
+  <faction Name="Hindren" DisplayName="ベイ・ラーのヒンドレン" />
+  <faction Name="Mopango" DisplayName="モパンゴ">
+    <waterritual
+      Recipe="BoneBabka"
+      RecipeText="モパンゴの大好物を分けてもらえますか？"
+    />
+  </faction>
+  <faction Name="Girsh" DisplayName="ギルシュ" />
+  <faction Name="Barathrumites" DisplayName="バラサラム派">
+    <waterritual
+      Skill="Tinkering"
+      Blueprints="1d3"
+      Recipe="ThePorridge"
+      RecipeText="なんと……鼻をつく匂いだ。バラサラム派の好物の作り方を教えてもらえますか？"
+    />
+  </faction>
+  <faction Name="Consortium" DisplayName="フィタ・コンソーシアム" />
+  <faction Name="Templar" DisplayName="プトゥス聖堂騎士団">
+    <interests>
+      <interest Tags="ruins,tech,historic,sultan,cybernetics,rebekah,sultanTombPropaganda" WillBuy="true" WillSell="false" MatchAny="true" Inverse="true" Description="現代世界" />
+      <interest Tags="cybernetics" WillBuy="false" WillSell="true" />
+      <interest Tags="historic" WillBuy="false" WillSell="true" />
+    </interests>
+  </faction>
+  <faction Name="Mechanimists" DisplayName="メカニマス教" />
+  <faction Name="Gyre Wights" DisplayName="渦動ワイト" />
+  <faction Name="Mamon" DisplayName="マモンの子ら" />
+  <faction Name="Seekers" DisplayName="盲道の求道者" />
+  <faction Name="Wardens" DisplayName="監視官同胞団" />
+  <faction Name="Water" DisplayName="水の男爵たち" />
+  <faction Name="Flowers" DisplayName="花" />
+  <faction Name="Roots" DisplayName="根" />
+  <faction Name="Fungi" DisplayName="真菌" />
+  <faction Name="Vines" DisplayName="蔦" />
+  <faction Name="Urchins" DisplayName="ウニ" />
+  <faction Name="Succulents" DisplayName="多肉植物" />
+  <faction Name="Trees" DisplayName="木々" />
+  <faction Name="Merchants" DisplayName="商人ギルド" />
+  <faction Name="Farmers" DisplayName="農夫ギルド" />
+  <faction Name="Resheph" DisplayName="とぐろを巻く子羊のカルト" />
+  <faction Name="Daughters" DisplayName="流配の娘たち" />
+  <faction Name="YdFreehold" DisplayName="イドの住民">
+    <waterritual
+      Skill="CookingAndGathering_Spicer"
+      Recipe="TongueAndCheek"
+      RecipeText="イドの住民の大好物を分けてもらえますか？"
+    />
+  </faction>
+  <faction Name="Chavvah" DisplayName="生命の木チャヴァ">
+    <waterritual
+      Skill="Nonlinearity_Tomorrowful"
+      Recipe="CrystalDelight"
+      RecipeText="チャヴァの存在たちの大好物を分けてもらえますか？"
+      RecipeGenotype="!True Kin"
+    />
+  </faction>
+  <faction Name="SultanCult1" DisplayName="スルタン教団1" />
+  <faction Name="SultanCult2" DisplayName="スルタン教団2" />
+  <faction Name="SultanCult3" DisplayName="スルタン教団3" />
+  <faction Name="SultanCult4" DisplayName="スルタン教団4" />
+  <faction Name="SultanCult5" DisplayName="スルタン教団5" />
+</factions>

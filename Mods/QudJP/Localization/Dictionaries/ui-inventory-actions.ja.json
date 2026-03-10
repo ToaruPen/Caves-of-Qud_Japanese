@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "id": "ui-inventory-actions",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Mark Important",
+      "context": "XRL.World.IInventoryActionsEvent",
+      "text": "重要にマーク"
+    },
+    {
+      "key": "Mark Unimportant",
+      "context": "XRL.World.IInventoryActionsEvent",
+      "text": "重要マークを外す"
+    },
+    {
+      "key": "Add Notes",
+      "context": "XRL.World.IInventoryActionsEvent",
+      "text": "メモを追加"
+    },
+    {
+      "key": "Remove Notes",
+      "context": "XRL.World.IInventoryActionsEvent",
+      "text": "メモを削除"
+    },
+    {
+      "key": "Remove",
+      "context": "XRL.World.IInventoryActionsEvent",
+      "text": "外す"
+    }
+  ]
+}

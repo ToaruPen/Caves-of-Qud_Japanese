@@ -1,0 +1,278 @@
+{
+    "meta": {
+        "id": "ui-attributes",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true,
+        "protectHtmlEntities": true
+    },
+    "entries": [
+        {
+            "key": "STR",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "筋力"
+        },
+        {
+            "key": "Strength",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "筋力"
+        },
+        {
+            "key": "AGI",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "敏捷"
+        },
+        {
+            "key": "Agility",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "敏捷"
+        },
+        {
+            "key": "TOU",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "頑健"
+        },
+        {
+            "key": "Toughness",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "頑健"
+        },
+        {
+            "key": "INT",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "知力"
+        },
+        {
+            "key": "Intelligence",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "知力"
+        },
+        {
+            "key": "WIL",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "意志力"
+        },
+        {
+            "key": "Willpower",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "意志力"
+        },
+        {
+            "key": "EGO",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "自我"
+        },
+        {
+            "key": "Ego",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "自我"
+        },
+        {
+            "key": "QN",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "俊敏"
+        },
+        {
+            "key": "Speed",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "俊敏"
+        },
+        {
+            "key": "MS",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "移動速度"
+        },
+        {
+            "key": "MoveSpeed",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "移動速度"
+        },
+        {
+            "key": "AV",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "装甲値"
+        },
+        {
+            "key": "DV",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "回避値"
+        },
+        {
+            "key": "MA",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "精神装甲"
+        },
+        {
+            "key": "CP",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "CP"
+        },
+        {
+            "key": "AR",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "酸耐性"
+        },
+        {
+            "key": "CR",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "冷気耐性"
+        },
+        {
+            "key": "ER",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "電気耐性"
+        },
+        {
+            "key": "HR",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "熱耐性"
+        },
+        {
+            "key": "HP",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "ヒットポイント"
+        },
+        {
+            "key": "Hitpoints",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "ヒットポイント"
+        },
+        {
+            "key": "AP",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "能力値P"
+        },
+        {
+            "key": "MP",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "突然変異P"
+        },
+        {
+            "key": "SP",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "スキルP"
+        },
+        {
+            "key": "XP",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "経験値"
+        },
+        {
+            "key": "Attribute Points: {0}{1}}}}}",
+            "context": "Qud.UI.CharacterStatusScreen.AttributePointsText",
+            "text": "能力値ポイント: {0}{1}}}}}"
+        },
+        {
+            "key": "MP: {0}{1}}}}}",
+            "context": "Qud.UI.CharacterStatusScreen.MutationPointsText.Short",
+            "text": "突然変異P: {0}{1}}}}}"
+        },
+        {
+            "key": "{0} Points: {1}{2}}}}}",
+            "context": "Qud.UI.CharacterStatusScreen.MutationPointsText.Long",
+            "text": "{0}ポイント: {1}{2}}}}}"
+        },
+        {
+            "key": "Your {{W|Compute Power (CP)}} scales the bonuses of certain compute-enabled items and cybernetic implants. Your base compute power is 0.",
+            "context": "Qud.UI.CharacterStatusScreen.ComputePowerHelp",
+            "text": "あなたの{{W|演算能力 (CP)}}は特定の計算機構付きアイテムやサイバネティクスのボーナス倍率を決める。基礎演算能力は0。"
+        },
+        {
+            "key": "Expand",
+            "context": "Qud.UI.CharacterAttributeLine.MenuOption",
+            "text": "展開"
+        },
+        {
+            "key": "Collapse",
+            "context": "Qud.UI.CharacterAttributeLine.MenuOption",
+            "text": "折りたたむ"
+        },
+        {
+            "key": "Your {{W|Strength}} determines how much melee damage you do (by improving your armor penetration), your ability to resist forced movement, and your carry capacity.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|筋力}}は（装甲貫通で増幅された）近接攻撃のダメージ、強制移動への抵抗、所持重量の上限を決める。"
+        },
+        {
+            "key": "Your {{W|Agility}} determines your accuracy with both melee and ranged weapons and your chance to dodge attacks.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|敏捷}}は近接・遠隔攻撃の命中率と、攻撃を回避する確率を左右する。"
+        },
+        {
+            "key": "Your {{W|Toughness}} determines your number of hit points, your hit point regeneration rate, and your ability to resist poison and disease.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|頑健}}はヒットポイントの最大値と回復速度、毒や疾病への抵抗力を決める。"
+        },
+        {
+            "key": "Your {{W|Intelligence}} determines your number of skill points and your ability to examine artifacts.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|知力}}はスキルポイントの獲得量と遺物を解析する能力を決める。"
+        },
+        {
+            "key": "Your {{W|Willpower}} modifies the cooldowns of your activated abilities, determines your ability to resist mental attacks, and modifies your hit point regeneration rate.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|意志力}}は起動型アビリティのクールダウン、精神攻撃への抵抗力、ヒットポイントの回復速度に影響する。"
+        },
+        {
+            "key": "Your {{W|Ego}} determines the potency of your mental mutations, your ability to haggle with merchants, and your ability to dominate the wills of other living creatures.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|自我}}は精神突然変異の威力、商人との取引能力、他者の意志を支配する力を決める。"
+        },
+        {
+            "key": "Your {{W|Armor Value (AV)}} measures how well protected you are against physical attacks that hit you. The higher your score, the fewer times an opponent's attack will penetrate your armor and do damage to you. Your base AV is 0.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|装甲値 (AV)}}は被弾した物理攻撃からどれだけ守られているかを示す。値が高いほど敵の攻撃が装甲を貫いてダメージを与える回数が減る。基礎AVは0。"
+        },
+        {
+            "key": "Your {{W|Dodge Value (DV)}} measures how likely you are to be hit by physical attacks. The higher your score, the less likely an opponent's attack will hit you. Your DV is modified by your Agility modifier. Your base DV is 6.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|回避値 (DV)}}は物理攻撃に当たる確率を示す。値が高いほど敵の攻撃は命中しにくくなる。DVは敏捷修正の影響を受ける。基礎DVは6。"
+        },
+        {
+            "key": "Your {{W|mental armor (MA)}} measures how well protected you are against mental attacks. The higher your score, the less likely an opponent's mental attack will penetrate your defenses and harm you. Your MA is modified by your Willpower modifier. Your base MA is 4.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|精神装甲 (MA)}}は精神攻撃からどれだけ守られているかを示す。値が高いほど敵の精神攻撃が防御を貫いて害を与える確率が下がる。MAは意志力修正の影響を受ける。基礎MAは4。"
+        },
+        {
+            "key": "Your {{W|Quickness}} measures the speed you perform every action you take. Your base Quickness score is 100.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|俊敏}}はあらゆる行動をこなす速度を示す。基礎俊敏は100。"
+        },
+        {
+            "key": "Your {{W|Move Speed}} measures how fast you walk or fly. Your base move speed is 100.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|移動速度}}は歩行や飛行の速さを示す。基礎移動速度は100。"
+        },
+        {
+            "key": "Your {{W|Temperature}} measures how hot or cold you are. Being too cold can reduce your Quickness and prevent you from taking physical actions. Being too hot can set you aflame and cause damage every round.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|体温}}はどれだけ熱いか寒いかを示す。冷えすぎると俊敏が下がり、物理行動ができなくなることがある。熱すぎると発火し、毎ラウンドダメージを受ける。"
+        },
+        {
+            "key": "Your {{W|Acid Resist}} determines how much acid damage you ablate. Your base acid resist score is 0. At 100, you are immune to acid damage.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|酸耐性}}は酸ダメージをどれだけ軽減できるかを示す。基礎酸耐性は0。100に達すると酸ダメージを完全に無効化する。"
+        },
+        {
+            "key": "Your {{W|Cold Resist}} determines how much cold damage you ablate and how insulated you are from effects that reduce your temperature. Your base Cold Resist score is 0. At 100, you are immune to cold damage and your temperature cannot be reduced.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|冷気耐性}}は冷気ダメージの軽減量と、体温を下げる効果への耐性を示す。基礎冷気耐性は0。100に達すると冷気ダメージを無効化し、体温が下がらなくなる。"
+        },
+        {
+            "key": "Your {{W|Electrical Resist}} determines how much electrical damage you ablate and how resistive you are to electric current. Your base Electrical Resist score is 0. At 100, you are immune to electrical damage and you do not conduct electricity.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|電気耐性}}は電撃ダメージの軽減量と、電流への耐性を示す。基礎電気耐性は0。100に達すると電撃ダメージを無効化し、導電しなくなる。"
+        },
+        {
+            "key": "Your {{W|Heat Resist}} determines how much heat damage you ablate and how insulated you are from effects that increase your temperature. Your base Heat Resist score is 0. At 100, you are immune to heat damage and your temperature cannot be increased.",
+            "context": "XRL.World.Statistic.GetHelpText",
+            "text": "あなたの{{W|熱耐性}}は熱ダメージの軽減量と、体温を上げる効果への耐性を示す。基礎熱耐性は0。100に達すると熱ダメージを無効化し、体温が上がらなくなる。"
+        },
+        {
+            "key": "carry capacity",
+            "context": "Qud.UI.CharacterAttributeLine.AttributeLabel",
+            "text": "運搬能力"
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "id": "ui-keybinds",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    { "key": "Keybinds", "context": "Qud.UI.KeybindsScreen", "text": "キー設定" },
+    { "key": "Keyboard && Mouse", "context": "Qud.UI.KeybindsScreen", "text": "キーボード＆マウス" },
+    { "key": "Gamepad", "context": "Qud.UI.KeybindsScreen", "text": "ゲームパッド" },
+    { "key": "restore defaults", "context": "Qud.UI.KeybindsScreen", "text": "初期設定に戻す" },
+    { "key": "remove keybind", "context": "Qud.UI.KeybindsScreen", "text": "キー設定を削除" },
+    { "key": "RESTORE_DEFAULTS", "context": "Qud.UI.KeybindsScreen", "text": "初期設定に戻す" },
+    { "key": "REMOVE_BIND", "context": "Qud.UI.KeybindsScreen", "text": "キー設定を削除" },
+
+    { "key": "{{R|press key...}}", "context": "Qud.UI.KeybindBox", "text": "{{R|キーを押してください...}}" },
+    { "key": "{{c|None}}", "context": "Qud.UI.KeybindBox", "text": "{{c|なし}}" },
+    { "key": "{{K|None}}", "context": "Qud.UI.KeybindRow", "text": "{{K|なし}}" },
+    { "key": "{{C|[+]}}", "context": "Qud.UI.KeybindRow", "text": "{{C|[+]}}" },
+    { "key": "{{C|[-]}}", "context": "Qud.UI.KeybindRow", "text": "{{C|[-]}}" },
+    { "key": "Interact Nearby", "context": "Qud.UI.KeybindRow", "text": "近くと交互作用" },
+    { "key": "Ctrl+Space", "context": "Qud.UI.KeybindRow", "text": "Ctrl+Space" }
+  ]
+}

@@ -1,0 +1,3489 @@
+{
+    "meta": {
+        "id": "world-parts",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true,
+        "protectHtmlEntities": true
+    },
+    "entries": [
+        {
+            "key": "insulting their $noun",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "$nounを侮辱した"
+        },
+        {
+            "key": "stealing a cherished heirloom",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "大切にしていた家宝を盗んだ"
+        },
+        {
+            "key": "slaying one of their leaders",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "指導者のひとりを殺した"
+        },
+        {
+            "key": "eating one of their young",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "子を食べた"
+        },
+        {
+            "key": "casting doubt on their beliefs",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "信仰に疑念を投げかけた"
+        },
+        {
+            "key": "tricking them into sharing their freshwater",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "淡水をだまし取って分けさせた"
+        },
+        {
+            "key": "some reason no one remembers",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "誰も覚えていない理由で"
+        },
+        {
+            "key": "sowing their fields with salt",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "畑に塩を撒いた"
+        },
+        {
+            "key": "disproving a famous theorem",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "有名な定理を否定した"
+        },
+        {
+            "key": "digging up the remains of their ancestors",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "祖先の遺骸を掘り返した"
+        },
+        {
+            "key": "torching one of their villages",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "村のひとつを焼き払った"
+        },
+        {
+            "key": "repeatedly beating them at dice",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "賽の目勝負で何度も打ち負かした"
+        },
+        {
+            "key": "releasing snakes into one of their camps",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "陣地に蛇を放った"
+        },
+        {
+            "key": "disparaging a famous poet",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "著名な詩人を貶めた"
+        },
+        {
+            "key": "poisoning their freshwater",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "淡水に毒を盛った"
+        },
+        {
+            "key": "impersonating one of their leaders",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "指導者のひとりになりすました"
+        },
+        {
+            "key": "leading a raiding party on one of their camps",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "陣地に襲撃隊を率いて攻め込んだ"
+        },
+        {
+            "key": "cooking them a rancid meal",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "腐った飯を食べさせた"
+        },
+        {
+            "key": "telling bawdy jokes",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "下品な冗談を言った"
+        },
+        {
+            "key": "lighting a beacon fire to warn their enemies",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "敵に知らせるため狼煙を上げた"
+        },
+        {
+            "key": "refusing them entrance to a local library",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "郷土図書館への入館を拒んだ"
+        },
+        {
+            "key": "selling a map of their vaults to adventurers",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "宝物庫の地図を冒険者に売った"
+        },
+        {
+            "key": "eating all their fruit",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "果物を食べ尽くした"
+        },
+        {
+            "key": "eavesdropping on their secret ceremonies",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "秘儀を盗み聞きした"
+        },
+        {
+            "key": "reprogramming their favorite robot",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "お気に入りのロボットを書き換えた"
+        },
+        {
+            "key": "ruining the festival of Ut yara Ux",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "ウト・ヤラ・ウクス祭を台無しにした"
+        },
+        {
+            "key": "burning one of their leaders in effigy",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "指導者のひとりを藁人形で焼いた"
+        },
+        {
+            "key": "giving one of their kind an unfavorable horoscope reading",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "同族に不吉な星占いを告げた"
+        },
+        {
+            "key": "questioning the origins of the moon",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "月の起源に異議を唱えた"
+        },
+        {
+            "key": "worshipping a highly entropic being",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "強くエントロピー的な存在を崇拝した"
+        },
+        {
+            "key": "praising their $noun",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "$nounを称賛した"
+        },
+        {
+            "key": "sharing freshwater with them",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "淡水を分け与えた"
+        },
+        {
+            "key": "making them feel welcomed at a supper feast",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "夕食の饗宴でもてなした"
+        },
+        {
+            "key": "saving one of their young from drowning",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "子が溺れるのを救った"
+        },
+        {
+            "key": "resembling one of their idols",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "偶像のひとつに似ていた"
+        },
+        {
+            "key": "respecting the sanctity of a burial site",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "墓所の神聖さを尊重した"
+        },
+        {
+            "key": "worshipping the same deities",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "同じ神々を崇拝している"
+        },
+        {
+            "key": "attending a funeral for their leader",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "指導者の葬儀に参列した"
+        },
+        {
+            "key": "uncovering a plot against them",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "彼らへの陰謀を暴いた"
+        },
+        {
+            "key": "penning a moving poem",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "心を打つ詩を書いた"
+        },
+        {
+            "key": "cooking them a splendid meal",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "見事な料理を振る舞った"
+        },
+        {
+            "key": "giving one of their kind a favorable horoscope reading",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "同族に吉兆の星占いを告げた"
+        },
+        {
+            "key": "faithfully adapting one of their plays",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "戯曲を忠実に翻案した"
+        },
+        {
+            "key": "pouring asphalt on one of their enemies",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "敵のひとりにアスファルトを浴びせた"
+        },
+        {
+            "key": "explaining the meaning of the Canticles Chromaic",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "『カンティクル・クロマイック』の意味を解き明かした"
+        },
+        {
+            "key": "reprogramming their least favorite robot",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "嫌いなロボットを書き換えてやった"
+        },
+        {
+            "key": "fervently celebrating the solstice",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "至点を熱心に祝った"
+        },
+        {
+            "key": "providing shelter during a glass storm",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "ガラスの嵐の間、避難所を提供した"
+        },
+        {
+            "key": "<spice.nouns.!random>",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "<spice.nouns.!random>"
+        },
+        {
+            "key": "Reputation",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "評判"
+        },
+        {
+            "key": "LovedBy",
+            "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
+            "text": "好かれている"
+        },
+        {
+            "key": "no liquid",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "液体なし"
+        },
+        {
+            "key": "no component liquid list",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "構成液体リストなし"
+        },
+        {
+            "key": "empty component liquid",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "構成液体が空"
+        },
+        {
+            "key": "secondary liquid cannot be determined",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "第二液体を特定できない"
+        },
+        {
+            "key": "liquid-covered",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "液塗れ"
+        },
+        {
+            "key": "-stained",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "染み付き"
+        },
+        {
+            "key": "stained",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "染み"
+        },
+        {
+            "key": "Water Containers",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "水用容器"
+        },
+        {
+            "key": "[empty, sealed]",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "[空／密封]"
+        },
+        {
+            "key": "{{y|[{{K|empty, {{c|sealed}}}}]}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "{{y|[{{K|空、{{c|密封}}}}]}}"
+        },
+        {
+            "key": "[empty]",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "[空]"
+        },
+        {
+            "key": "{{y|[{{K|empty}}]}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "{{y|[{{K|空}}]}}"
+        },
+        {
+            "key": "[sealed]",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "[密封]"
+        },
+        {
+            "key": "{{y|[{{c|sealed}}]}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "{{y|[{{c|密封}}]}}"
+        },
+        {
+            "key": "[auto-collecting ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "[自動採取 "
+        },
+        {
+            "key": "{{y|[{{c|auto-collecting ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "{{y|[{{c|自動採取 "
+        },
+        {
+            "key": "unknown AutoCollectLiquidType ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "未知の自動採取液種 "
+        },
+        {
+            "key": "[auto-collecting]",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "[自動採取中]"
+        },
+        {
+            "key": "{{y|[{{c|auto-collecting}}]}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "{{y|[{{c|自動採取中}}]}}"
+        },
+        {
+            "key": "Light scatters off the surface of the wide and yawning pool and gets lost in its depths.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "広く口を開けた水溜まりの表面で光が散乱し、深みに消えていく。"
+        },
+        {
+            "key": "Liquid pools into a cistern of air and ground.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "液体が空気と地面の間に溜まり、水槽を形作っている。"
+        },
+        {
+            "key": "Liquid dots the ground in shallow pools.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "浅い水溜まりとなって地表をまだらに覆っている。"
+        },
+        {
+            "key": "Sealed: The liquid contained inside can't be accessed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "密封: 中の液体にはアクセスできない。"
+        },
+        {
+            "key": "stop auto-collecting liquid",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "液体の自動採取をやめる"
+        },
+        {
+            "key": "auto-collect liquid",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "液体を自動採取する"
+        },
+        {
+            "key": "collect liquid",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "液体を採取する"
+        },
+        {
+            "key": "clean all your items [1 dram]",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "手持ちのアイテムをすべて洗う [1 ドラム]"
+        },
+        {
+            "key": "clean all your items [{dram} dram]",
+            "context": "XRL.World.Parts.LiquidVolume",
+            "text": "手持ちのアイテムをすべて洗う [{dram} ドラム]"
+        },
+        {
+            "key": "pray",
+            "context": "XRL.World.Parts.Shrine",
+            "text": "祈る"
+        },
+        {
+            "key": "desecrate",
+            "context": "XRL.World.Parts.Shrine",
+            "text": "冒涜する"
+        },
+        {
+            "key": "blazing",
+            "context": "XRL.World.Parts.TorchProperties.State",
+            "text": "燃え盛る"
+        },
+        {
+            "key": "bright",
+            "context": "XRL.World.Parts.TorchProperties.State",
+            "text": "明るい"
+        },
+        {
+            "key": "dim",
+            "context": "XRL.World.Parts.TorchProperties.State",
+            "text": "薄暗い"
+        },
+        {
+            "key": "smouldering",
+            "context": "XRL.World.Parts.TorchProperties.State",
+            "text": "燻っている"
+        },
+        {
+            "key": "unburnt",
+            "context": "XRL.World.Parts.TorchProperties.State",
+            "text": "未点火"
+        },
+        {
+            "key": "half-burnt",
+            "context": "XRL.World.Parts.TorchProperties.State",
+            "text": "半ば燃えた"
+        },
+        {
+            "key": "mostly burnt",
+            "context": "XRL.World.Parts.TorchProperties.State",
+            "text": "ほぼ燃え尽き"
+        },
+        {
+            "key": "nearly extinguished",
+            "context": "XRL.World.Parts.TorchProperties.State",
+            "text": "ほとんど消えかけ"
+        },
+        {
+            "key": "water",
+            "context": "XRL.Liquids.Name",
+            "text": "水"
+        },
+        {
+            "key": "fresh water",
+            "context": "XRL.Liquids.Name",
+            "text": "真水"
+        },
+        {
+            "key": "wine",
+            "context": "XRL.Liquids.Name",
+            "text": "ワイン"
+        },
+        {
+            "key": "You are unable to drink that.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "それは飲めない。"
+        },
+        {
+            "key": "You are unable to drink liquids.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "液体を飲むことができない。"
+        },
+        {
+            "key": "You cannot seem to interact with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "何かが邪魔で "
+        },
+        {
+            "key": " in any way.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": " とやり取りできない。"
+        },
+        {
+            "key": "Are you sure you want to drink that?",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "本当にそれを飲みますか？"
+        },
+        {
+            "key": "It's fizzy.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "発泡している。"
+        },
+        {
+            "key": " not owned by you. Are you sure you want to drink from ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": " はあなたの所有物ではない。本当に "
+        },
+        {
+            "key": "You are now ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "あなたは今 "
+        },
+        {
+            "key": "It's empty, there's nothing left to drink!",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "空だ。飲むものは残っていない！"
+        },
+        {
+            "key": "Item Drink",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "アイテム 飲む"
+        },
+        {
+            "key": " no drain.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": " 排出なし。"
+        },
+        {
+            "key": " sealed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": " 密封。"
+        },
+        {
+            "key": " empty.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": " 空。"
+        },
+        {
+            "key": " not owned by you. Are you sure you want to drain ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": " はあなたの所有物ではない。本当に排出しますか: "
+        },
+        {
+            "key": "Are you sure you want to drain ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "本当に排出しますか: "
+        },
+        {
+            "key": " not owned by you. Are you sure you want to fill ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": " はあなたの所有物ではない。本当に満たしますか: "
+        },
+        {
+            "key": "You have no containers to pour from.",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "注ぐための容器がない。"
+        },
+        {
+            "key": "[Select a container to fill from]",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "[注ぎ元の容器を選択]"
+        },
+        {
+            "key": "You can't pour from a container into ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "容器から注ぐことはできない: "
+        },
+        {
+            "key": "Do you want to empty ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "先に "
+        },
+        {
+            "key": " first?",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": " を空にしますか？"
+        },
+        {
+            "key": "How many drams? (max=",
+            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
+            "text": "何ドラム？(最大="
+        },
+        {
+            "key": "EskhindSonnetBook",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "エスキンドの十四行詩"
+        },
+        {
+            "key": "{{W|a crumpled sheet of paper}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "{{W|くしゃくしゃになった紙切れ}}"
+        },
+        {
+            "key": "all four limbs of mine do long to run",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "四肢は走りたくてうずいている"
+        },
+        {
+            "key": "weary mind cannot conceive of fun",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "疲れた心は楽しみを思い描けない"
+        },
+        {
+            "key": "I can feel my walls are closing in",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "周りの壁が迫ってくるのを感じる"
+        },
+        {
+            "key": "Hindriarch says all I do is sin",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "ヒンドリアークは私のすることすべてが罪だと言う"
+        },
+        {
+            "key": "evil thoughts accost my blackened soul",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "邪念が黒ずんだ魂に襲いかかる"
+        },
+        {
+            "key": "splitting head feels much more like a hole",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "割れそうな頭は穴のように空虚だ"
+        },
+        {
+            "key": "spitting anger boils up in my blood",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "吐き出す怒りが血に煮え立つ"
+        },
+        {
+            "key": "hardened heart despises all of Qud",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "硬くなった心はクッドのすべてを嫌悪する"
+        },
+        {
+            "key": "my mind does all grievances rehash",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "心は不満を何度も反芻する"
+        },
+        {
+            "key": "Hindriarch treats kendren like they're trash",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "ヒンドリアークはケンドレンをゴミのように扱う"
+        },
+        {
+            "key": "this cruel world does bring me sad and low",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "この残酷な世界が私を悲しみと卑屈へ落とす"
+        },
+        {
+            "key": "there's a line I clearly cannot tow",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "越えられない一線がはっきりとある"
+        },
+        {
+            "key": "your sparring axeblade parts the air",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "あなたの稽古用の斧刃が空を裂く"
+        },
+        {
+            "key": "you run your fingers through your hair",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "あなたは髪に指を滑らせる"
+        },
+        {
+            "key": "you look at me with those sweet eyes",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "あなたは甘いその眼差しで私を見る"
+        },
+        {
+            "key": "you're close enough to tantalize",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "近くにいて焦らすには十分だ"
+        },
+        {
+            "key": "you stand, resplendent and refined",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "あなたは華やかで洗練された姿で立っている"
+        },
+        {
+            "key": "I think perhaps you could be mine",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "もしかするとあなたは私のものになるかもしれない"
+        },
+        {
+            "key": "your armor glints under the sun",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "あなたの鎧が陽の下できらめく"
+        },
+        {
+            "key": "our hearts both beat in time as one",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "私たちの心臓は一つの拍で打つ"
+        },
+        {
+            "key": "you take my hand, yours rough but warm",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "あなたは私の手を取る、荒れているが温かい"
+        },
+        {
+            "key": "my eyes, unbidden, trace your form",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "目は知らず知らずにあなたの体の線をなぞる"
+        },
+        {
+            "key": "my heart ascends the spindle's height",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "心はスピンドルの頂へ昇る"
+        },
+        {
+            "key": "I know that everything's all right",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "すべてがうまくいくとわかっている"
+        },
+        {
+            "key": "a happy smile comes to my face",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "幸せな笑みがこぼれる"
+        },
+        {
+            "key": "I think that I might find my place",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "自分の居場所を見つけられるかもしれないと思う"
+        },
+        {
+            "key": "I feel the gentle warmth of love",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "愛の穏やかな温もりを感じる"
+        },
+        {
+            "key": "I hope that we could be enough",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "私たちだけで足りると願う"
+        },
+        {
+            "key": "I feel a tingle on my skin",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "皮膚がうずくのを感じる"
+        },
+        {
+            "key": "my heart scarce knows where to begin",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "心は何から始めればいいか戸惑う"
+        },
+        {
+            "key": "my breath comes, like my heart, too quick",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "息は、心と同じく、速くなる"
+        },
+        {
+            "key": "I see you and become lovesick",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "あなたを見ると恋煩いになる"
+        },
+        {
+            "key": "tended fields of lah",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "ラーの畑を耕し"
+        },
+        {
+            "key": "felling trees by saw",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "鋸で木を倒し"
+        },
+        {
+            "key": "eating in a yurt",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "ゲルで食事をし"
+        },
+        {
+            "key": "farming 'til we hurt",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "痛むほど働き"
+        },
+        {
+            "key": "stripping watervine",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "ウォーター・ヴァインを剥ぎ"
+        },
+        {
+            "key": "claiming to be fine",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "大丈夫だと言い張り"
+        },
+        {
+            "key": "putting safety first",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "安全第一を掲げ"
+        },
+        {
+            "key": "planning for the worst",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "最悪に備え"
+        },
+        {
+            "key": "gath'ring morning dew",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "朝露を集め"
+        },
+        {
+            "key": "fearing what is new",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "新しいものを恐れ"
+        },
+        {
+            "key": "ease us when we hurt",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "傷むときに慰め"
+        },
+        {
+            "key": "to the past revert",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "過去へと戻り"
+        },
+        {
+            "key": "treat us like their own",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "自分たちのように扱い"
+        },
+        {
+            "key": "melt their hearts of stone",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "石の心を溶かし"
+        },
+        {
+            "key": "let me be myself",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "私を私のままにさせ"
+        },
+        {
+            "key": "look out for our health",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "私たちの健康を気遣い"
+        },
+        {
+            "key": "see that life needs love",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "生活に愛が要ると悟り"
+        },
+        {
+            "key": "ever be enough",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "いつもそれで十分だと信じ"
+        },
+        {
+            "key": "offer me your hand",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "私に手を差し伸べ"
+        },
+        {
+            "key": "ever understand",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "いつも理解してくれる"
+        },
+        {
+            "key": "However can I tell my aching heart",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "この痛む心にどう言えばいいのだろう"
+        },
+        {
+            "key": "that our remaining years will be apart?",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "残りの年月を別れて過ごすと"
+        },
+        {
+            "key": "Although I may succumb to nature's fang,",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "自然の牙に屈するかもしれなくとも"
+        },
+        {
+            "key": "my heart needs more than one square parasang.",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "心は一平方パラサング以上を求めている"
+        },
+        {
+            "key": "But I must leave you if you won't concede",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "それでも、あなたが許さないなら去らねばならない"
+        },
+        {
+            "key": "that death will find me should I stay unfreed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "自由を得ないまま留まれば死が私を見つけると"
+        },
+        {
+            "key": "Now knowing I must go and you must stay",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "私が行き、あなたが残ると知った今"
+        },
+        {
+            "key": "it makes my tender heartstrings start to fray.",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "優しい心の琴線がほころび始める"
+        },
+        {
+            "key": "To know I cannot stay, and you can't leave",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "私は留まれず、あなたは去れないと知ることは"
+        },
+        {
+            "key": "I'm left with no recourse except to grieve.",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "嘆くしか術を残さない"
+        },
+        {
+            "key": "But then ",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "だがそこで "
+        },
+        {
+            "key": "and so ",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "そして "
+        },
+        {
+            "key": "That's when ",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "そのとき "
+        },
+        {
+            "key": "What need have we for ",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "なぜ私たちは必要とするのか "
+        },
+        {
+            "key": "Our parents will not ",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "私たちの親は決して "
+        },
+        {
+            "key": "What do we gain from ",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "それで何を得るのか "
+        },
+        {
+            "key": "Our village shall not ",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "村は決して "
+        },
+        {
+            "key": "1,2,2,2",
+            "context": "XRL.World.Parts.XRL.World.Parts.EskhindSonnetBook",
+            "text": "1,2,2,2"
+        },
+        {
+            "key": "I'm going to move towards my target.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "目標に向かって移動する。"
+        },
+        {
+            "key": "Target's on the world map, can't follow!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "対象は世界マップ上にいる。追従できない！"
+        },
+        {
+            "key": "Object without brain ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "脳のないオブジェクト "
+        },
+        {
+            "key": " thinks: '",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": " は考える：「"
+        },
+        {
+            "key": "I'm going to kill ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": " を殺すつもりだ"
+        },
+        {
+            "key": " because ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": " なぜなら "
+        },
+        {
+            "key": "Potential leader cycle: {Object} + {ParentObject}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "リーダー循環の可能性: {Object} + {ParentObject}"
+        },
+        {
+            "key": "Targeting",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "照準中"
+        },
+        {
+            "key": "PickTargetFrame",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "ターゲット選択枠"
+        },
+        {
+            "key": "Missile Weapon",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "飛び道具"
+        },
+        {
+            "key": "Agility",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "敏捷"
+        },
+        {
+            "key": "Combat",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "戦闘"
+        },
+        {
+            "key": "({{C|1}} turn)",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "（{{C|1}} ターン）"
+        },
+        {
+            "key": "}} turns)",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "}} ターン）"
+        },
+        {
+            "key": "FireMissileWeapon",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "飛び道具を撃つ"
+        },
+        {
+            "key": "ModifyAimVariance",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "照準ぶれの補正"
+        },
+        {
+            "key": "ModifyIncomingAimVariance",
+            "context": "XRL.World.Parts.XRL.World.Parts.MissileWeapon",
+            "text": "被照準ぶれの補正"
+        },
+        {
+            "key": "Show Attitude",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "態度を表示"
+        },
+        {
+            "key": "show attitude",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "態度を表示"
+        },
+        {
+            "key": "think out loud",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "声に出して考える"
+        },
+        {
+            "key": "thinking out loud",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "独り言を言っている"
+        },
+        {
+            "key": "Base allegiance ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "基本陣営 "
+        },
+        {
+            "key": "---- Leader ---- ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "---- リーダー ---- "
+        },
+        {
+            "key": "---- Allegiances ---- ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "---- 陣営 ---- "
+        },
+        {
+            "key": "    Reputation (",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "    評判 ("
+        },
+        {
+            "key": "staying put",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "留まる"
+        },
+        {
+            "key": "because I was attacked",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "攻撃されたからだ"
+        },
+        {
+            "key": "Hostile walk radius to player",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "敵対歩行半径（プレイヤー）"
+        },
+        {
+            "key": "Last thought",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "最後の思考"
+        },
+        {
+            "key": "Faction membership",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "派閥所属"
+        },
+        {
+            "key": "I'm frozen!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "凍りついている！"
+        },
+        {
+            "key": "to aid my leader",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "リーダーを援護するため"
+        },
+        {
+            "key": "out of hostility",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "敵意から"
+        },
+        {
+            "key": "I looked for the player to target but didn't find them.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "プレイヤーを狙おうと探したが見つからなかった。"
+        },
+        {
+            "key": "I looked for a target but didn't find one.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "ターゲットを探したが見つからなかった。"
+        },
+        {
+            "key": "I'm going to join my leader.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "リーダーに合流するつもりだ。"
+        },
+        {
+            "key": "Move Join Leader",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "移動してリーダーに合流"
+        },
+        {
+            "key": "Invalid faction membership specification: ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "派閥所属の指定が無効: "
+        },
+        {
+            "key": "because I was accidentally attacked",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "誤って攻撃されたから"
+        },
+        {
+            "key": "to help ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": " 助けるため"
+        },
+        {
+            "key": "to avenge ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": " 仇を討つため"
+        },
+        {
+            "key": "to protect ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": " 守るため"
+        },
+        {
+            "key": "leader cycle in ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "リーダー循環が発生: "
+        },
+        {
+            "key": " trying to be set as partyleader for ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": " をパーティリーダーに設定しようとしている: "
+        },
+        {
+            "key": "\n Feeling (",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "\n 感情 ("
+        },
+        {
+            "key": "\n\n---- Opinions ---- ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "\n\n---- 意見 ---- "
+        },
+        {
+            "key": "\n    -- ID #",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "\n    -- ID #"
+        },
+        {
+            "key": "\nBase demeanor: {{r|aggressive}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "\n基本態度: {{r|攻撃的}}"
+        },
+        {
+            "key": "\nBase demeanor: {{g|docile}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "\n基本態度: {{g|温和}}"
+        },
+        {
+            "key": "\nEngagement style: {{g|defensive}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "\n交戦スタイル: {{g|防御的}}"
+        },
+        {
+            "key": "\nEngagement style: {{r|aggressive}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "\n交戦スタイル: {{r|攻撃的}}"
+        },
+        {
+            "key": "\nFighting {{r|",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "\n交戦中 {{r|"
+        },
+        {
+            "key": "Seekers",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "求道者"
+        },
+        {
+            "key": "You were resorbed into the Mass Mind.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "あなたは大いなる精神に再吸収された。"
+        },
+        {
+            "key": " @@resorbed into the Mass Mind.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " @@は大いなる精神に再吸収された。"
+        },
+        {
+            "key": "Your psyche exploded, and its psionic bits were encoded on the holographic boundary surrounding the psyche of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "あなたの精神が爆散し、そのサイオニック片は"
+        },
+        {
+            "key": " psyche exploded, and its psionic bits were encoded on the holographic boundary surrounding the psyche of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " の精神が爆散し、そのサイオニック片は"
+        },
+        {
+            "key": "At the moment of victory, your swelling ego curves the psychic aether and causes the psyche of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "勝利の瞬間、膨張する自我が精神のエーテルをゆがませ、 の精神を"
+        },
+        {
+            "key": " to collide with your own. As the weaker of the two, its binding energy is exceeded and it explodes. Would you like to encode its psionic bits on the holographic boundary of your own psyche?\n\n(+1 Ego permanently)",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " と衝突させる。2つのうち弱い方として束縛エネルギーを超え、爆発した。自分の精神を囲むホログラフィック境界に、そのサイオニック片を刻みつけるか？\n\n（恒久的に自我 +1）"
+        },
+        {
+            "key": "You encode the psyche of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "あなたは の精神を刻みつけ、"
+        },
+        {
+            "key": " and gain +{{C|1}} {{Y|Ego}}!",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " 自我が +{{C|1}} {{Y|上昇}}！"
+        },
+        {
+            "key": "You slew ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "あなたは を殺し、"
+        },
+        {
+            "key": " and encoded their psyche's psionic bits on the holographic boundary of your own psyche.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " その精神のサイオニック片を自分の精神を囲むホログラフィック境界に刻みつけた。"
+        },
+        {
+            "key": "After a climactic battle of wills, =name= slew ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "意志の頂上決戦の末、=name= は を殺し、"
+        },
+        {
+            "key": " and absorbed ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " の精神を吸収し、"
+        },
+        {
+            "key": " psyche, thickening toward Godhood.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " 神格化へと濃密化した。"
+        },
+        {
+            "key": "In the month of {Calendar.GetMonth()} of {Calendar.GetYear()}, =name= was challenged by <spice.commonPhrases.pretender.!random.article> to a duel over the rights of {Factions.GetMostLikedFormattedName()}. =name= won and had the pretender's psyche kibbled and absorbed into {The.Player.GetPronounProvider().PossessiveAdjective} own.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "{Calendar.GetYear()}年{Calendar.GetMonth()}、=name= は {Factions.GetMostLikedFormattedName()}の権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、偽者の精神を刻んで吸収した。"
+        },
+        {
+            "key": "general",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "general"
+        },
+        {
+            "key": "You pause as the psyche of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "あなたは の精神が"
+        },
+        {
+            "key": " radiates into nothingness.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " 無へと放射されていくのを見届ける。"
+        },
+        {
+            "key": " and watched their psyche radiate into nothingness.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " そしてその精神が無へと放射されるのを見届けた。"
+        },
+        {
+            "key": " and watched ",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " そして を見届けた。"
+        },
+        {
+            "key": " psyche radiate into nothingness.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": " の精神が無へと放射されるのを。"
+        },
+        {
+            "key": "In the month of {Calendar.GetMonth()} of {Calendar.GetYear()}, =name= was challenged by <spice.commonPhrases.pretender.!random.article> to a duel over the rights of {Factions.GetMostLikedFormattedName()}. =name= won and had the pretender's psyche kibbled and radiated into nothingness.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "{Calendar.GetYear()}年{Calendar.GetMonth()}、=name= は {Factions.GetMostLikedFormattedName()}の権利を巡って<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、偽者の精神を刻んで無へと放射させた。"
+        },
+        {
+            "key": "In the month of {Calendar.GetMonth()} of {Calendar.GetYear()}, =name= was challenged by <spice.commonPhrases.pretender.!random.article> to a duel over the rights of {Factions.GetMostLikedFormattedName()}. =name= won and slew the pretender, charitably not radiating <spice.pronouns.possessive.!random> psyche into nothingness.",
+            "context": "XRL.World.Parts.XRL.World.Parts.AbsorbablePsyche",
+            "text": "{Calendar.GetYear()}年{Calendar.GetMonth()}、=name= は {Factions.GetMostLikedFormattedName()}の権利を巡って<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、偽者を倒したが、その精神を無へと放射することは慈悲としてしなかった。"
+        },
+        {
+            "key": "StopFighting",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "戦闘を停止"
+        },
+        {
+            "key": "Target",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "ターゲット"
+        },
+        {
+            "key": "Involuntary",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "非自発的"
+        },
+        {
+            "key": "GoalRemoved",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "目標を除去"
+        },
+        {
+            "key": "friendlyfire",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "誤射"
+        },
+        {
+            "key": "ThinkOutLoud",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "声に出して考える"
+        },
+        {
+            "key": "ShowAttitude",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "態度を表示"
+        },
+        {
+            "key": "Disable",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "無効化"
+        },
+        {
+            "key": "Enable",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "有効化"
+        },
+        {
+            "key": " think out loud",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": " 声に出して考える"
+        },
+        {
+            "key": "ToggleThinkOutLoud",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "声に出して考えるの切替"
+        },
+        {
+            "key": "disable",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "無効化する"
+        },
+        {
+            "key": "enable",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "有効化する"
+        },
+        {
+            "key": "Hitpoints",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "ヒットポイント"
+        },
+        {
+            "key": "Attack",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "攻撃"
+        },
+        {
+            "key": "NoStay",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "滞在禁止"
+        },
+        {
+            "key": "square",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "マス"
+        },
+        {
+            "key": "NeedToReload",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "要リロード"
+        },
+        {
+            "key": "MinKillRadius",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "最小殺害半径"
+        },
+        {
+            "key": "MaxKillRadius",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "最大殺害半径"
+        },
+        {
+            "key": "StartNotHibernatingChanceIn100",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "休眠解除開始確率(%)"
+        },
+        {
+            "key": "TurnsAsPlayerMinion",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "プレイヤー眷属ターン数"
+        },
+        {
+            "key": "MinionTakingAction",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "眷属の行動中"
+        },
+        {
+            "key": "AIMessage",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "AIメッセージ"
+        },
+        {
+            "key": "AIWakeupBroadcast",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "AI起床ブロードキャスト"
+        },
+        {
+            "key": "DoesNotJoinPartyLeader",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "パーティリーダーに加わらない"
+        },
+        {
+            "key": "JoinPartyLeaderPossible",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "パーティリーダー参加可能"
+        },
+        {
+            "key": "Message",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "メッセージ"
+        },
+        {
+            "key": "Attacked",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "攻撃された"
+        },
+        {
+            "key": "CanBeAngeredByBeingAttacked",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "攻撃で激怒し得る"
+        },
+        {
+            "key": "NoHelpBroadcastWake",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "助力喚起なしで覚醒"
+        },
+        {
+            "key": "WakeUp",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "起床"
+        },
+        {
+            "key": "CanBeAngeredByPropertyCrime",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "財産犯罪で激怒し得る"
+        },
+        {
+            "key": "Faction",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "派閥"
+        },
+        {
+            "key": "AILookForTarget",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "AIターゲット探索"
+        },
+        {
+            "key": "CanBeAngeredByFriendlyFire",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "友軍誤射で激怒し得る"
+        },
+        {
+            "key": "On the ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "その "
+        },
+        {
+            "key": "Agility",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "敏捷"
+        },
+        {
+            "key": "Strength",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "筋力"
+        },
+        {
+            "key": "ExitEnclosing",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲い退出"
+        },
+        {
+            "key": "EnterEnclosing",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲い進入"
+        },
+        {
+            "key": "Entering may not succeed, and is a task dependent on ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入は成功しないかもしれず、次に依存する行為です: "
+        },
+        {
+            "key": "Entering may not succeed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入に失敗する可能性がある。"
+        },
+        {
+            "key": "Attempting to enter and failing inflicts damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入に失敗するとダメージを受ける。"
+        },
+        {
+            "key": "Attempting to enter inflicts damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入を試みるとダメージを受ける。"
+        },
+        {
+            "key": "Entering inflicts damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入するとダメージを受ける。"
+        },
+        {
+            "key": "Attempting to enter and failing may inflict damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入に失敗するとダメージを受ける場合がある。"
+        },
+        {
+            "key": "Attempting to enter may inflict damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入を試みるとダメージを受ける場合がある。"
+        },
+        {
+            "key": "Entering may inflict damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入するとダメージを受ける場合がある。"
+        },
+        {
+            "key": " AV to occupant.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": " 入居者の AV。"
+        },
+        {
+            "key": " DV to occupant.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": " 入居者の DV。"
+        },
+        {
+            "key": "Inflicts periodic damage to occupant.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "入居者に定期的なダメージを与える。"
+        },
+        {
+            "key": "May inflict periodic damage to occupant.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "入居者に定期的なダメージを与える場合がある。"
+        },
+        {
+            "key": "Must spend a turn exiting before moving.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "移動前に退出に1ターンを消費する必要がある。"
+        },
+        {
+            "key": "Exiting may not succeed, and is a task dependent on ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出は成功しないかもしれず、次に依存する行為です: "
+        },
+        {
+            "key": "Exiting may not succeed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出に失敗する可能性がある。"
+        },
+        {
+            "key": "Attempting to exit and failing inflicts damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出に失敗するとダメージを受ける。"
+        },
+        {
+            "key": "Attempting to exit inflicts damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出を試みるとダメージを受ける。"
+        },
+        {
+            "key": "Exiting inflicts damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出するとダメージを受ける。"
+        },
+        {
+            "key": "Attempting to exit and failing may inflict damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出に失敗するとダメージを受ける場合がある。"
+        },
+        {
+            "key": "Attempting to exit may inflict damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出を試みるとダメージを受ける場合がある。"
+        },
+        {
+            "key": "Exiting may inflict damage.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出するとダメージを受ける場合がある。"
+        },
+        {
+            "key": "Must be completely filled with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "完全に満たされていなければならない: "
+        },
+        {
+            "key": " to be fully functional.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": " そうでないと完全には機能しない。"
+        },
+        {
+            "key": "BeginBeingTaken",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "取得開始"
+        },
+        {
+            "key": "CanSmartUse",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "スマート使用可"
+        },
+        {
+            "key": "CommandSmartUse",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "スマート使用コマンド"
+        },
+        {
+            "key": "LeaveCell",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "セルを離れる"
+        },
+        {
+            "key": "ProcessInputMissing",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "入力処理が欠落"
+        },
+        {
+            "key": "from %O!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "%O から！"
+        },
+        {
+            "key": "You cannot enter ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入できない: "
+        },
+        {
+            "key": "You are too large to enter ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "大きすぎて進入できない: "
+        },
+        {
+            "key": "Sealed",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "密封"
+        },
+        {
+            "key": " sealed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": " 密封。"
+        },
+        {
+            "key": "You are already in ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "すでに中にいる: "
+        },
+        {
+            "key": "BeforeClosing",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "閉鎖前"
+        },
+        {
+            "key": "Enclosed",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲まれている"
+        },
+        {
+            "key": "Enclosure Entry Access",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲いへの進入権限"
+        },
+        {
+            "key": "You fail to get ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "これを取得できなかった: "
+        },
+        {
+            "key": " to get ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": " を取得するには "
+        },
+        {
+            "key": "Position",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "位置"
+        },
+        {
+            "key": "Sounds/Interact/sfx_interact_furniture_enter",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "Sounds/Interact/sfx_interact_furniture_enter"
+        },
+        {
+            "key": "Entered",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "進入した"
+        },
+        {
+            "key": "Object",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "オブジェクト"
+        },
+        {
+            "key": "ObjectEntered",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "オブジェクトが進入した"
+        },
+        {
+            "key": "SyncClosed",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "同期閉鎖"
+        },
+        {
+            "key": "You are not enclosed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲われていない。"
+        },
+        {
+            "key": "It is not ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "それは "
+        },
+        {
+            "key": " that you are enclosed by.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": " に囲われてはいない。"
+        },
+        {
+            "key": "Teleporting",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "テレポート中"
+        },
+        {
+            "key": "Enclosure Exit Restraint",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲い退出拘束"
+        },
+        {
+            "key": "You fail to extricate ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "引き抜けなかった: "
+        },
+        {
+            "key": " to extricate ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": " 引き抜くには "
+        },
+        {
+            "key": "Dragging",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "引きずり"
+        },
+        {
+            "key": "Forced",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "強制"
+        },
+        {
+            "key": "You extricate ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "あなたは を引き抜いた。"
+        },
+        {
+            "key": "extricate",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "引き抜く"
+        },
+        {
+            "key": "Exited",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "退出した"
+        },
+        {
+            "key": "ObjectExited",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "オブジェクトが退出した"
+        },
+        {
+            "key": "SyncOpened",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "同期開放"
+        },
+        {
+            "key": "You cannot do that while enclosed by ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": " に囲われている間はそれを行えない。"
+        },
+        {
+            "key": "Source",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "ソース"
+        },
+        {
+            "key": "StartTurnEnclosed",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲い中ターン開始"
+        },
+        {
+            "key": "Enclosing",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲い"
+        },
+        {
+            "key": "Disabled",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "無効"
+        },
+        {
+            "key": "StartTurnEnclosing",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲い開始ターン"
+        },
+        {
+            "key": "EndTurnEnclosed",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲い中ターン終了"
+        },
+        {
+            "key": "EndTurnEnclosing",
+            "context": "XRL.World.Parts.XRL.World.Parts.Enclosing",
+            "text": "囲いターン終了"
+        },
+        {
+            "key": "Inventory has invalid objects, skipping backup store.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "インベントリに不正なオブジェクトがあるためバックアップ保存をスキップする。"
+        },
+        {
+            "key": "Error writing container backup",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "コンテナのバックアップ書き込みエラー"
+        },
+        {
+            "key": "Failed to write Base64 string to buffer.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "Base64 文字列のバッファ書き込みに失敗した。"
+        },
+        {
+            "key": "Restored backup has invalid objects, removing.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "復元されたバックアップに不正なオブジェクトがあるため削除する。"
+        },
+        {
+            "key": "Error reading container backup",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "コンテナのバックアップ読み取りエラー"
+        },
+        {
+            "key": "Invalid inventory objects on ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "不正なインベントリオブジェクト: "
+        },
+        {
+            "key": "restored backup",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "復元したバックアップ"
+        },
+        {
+            "key": "cleared objects",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "削除したオブジェクト"
+        },
+        {
+            "key": "Attempting to add untakeable object '",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "拾えないオブジェクト「"
+        },
+        {
+            "key": "' to inventory of '",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "」を のインベントリに追加しようとしている"
+        },
+        {
+            "key": " can't be picked up",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": " は拾えない"
+        },
+        {
+            "key": "Attempting to add graveyard object '",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "墓場オブジェクト「"
+        },
+        {
+            "key": "Attempting to add invalid object '",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "不正なオブジェクト「"
+        },
+        {
+            "key": "version with MapInv argument should always be called",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "MapInv 引数つきのバージョンを常に呼び出すこと"
+        },
+        {
+            "key": "There's nothing you can interact with.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "操作できるものは何もない。"
+        },
+        {
+            "key": "There's nothing to take.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Inventory",
+            "text": "拾えるものがない。"
+        },
+        {
+            "key": "{{g|Sated}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{g|満腹}}"
+        },
+        {
+            "key": "{{W|Hungry}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{W|空腹}}"
+        },
+        {
+            "key": "{{R|Wilted!}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{R|枯れた！}}"
+        },
+        {
+            "key": "{{R|Famished!}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{R|飢餓！}}"
+        },
+        {
+            "key": "{{R|Desiccated!}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{R|干からびた！}}"
+        },
+        {
+            "key": "{{r|Dry}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{r|乾き}}"
+        },
+        {
+            "key": "{{c|Moist}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{c|潤い}}"
+        },
+        {
+            "key": "{{b|Wet}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{b|濡れ}}"
+        },
+        {
+            "key": "{{B|Soaked}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{B|びしょ濡れ}}"
+        },
+        {
+            "key": "{{R|Dehydrated!}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{R|脱水！}}"
+        },
+        {
+            "key": "{{r|Parched}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{r|渇き}}"
+        },
+        {
+            "key": "{{Y|Thirsty}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{Y|喉が渇いた}}"
+        },
+        {
+            "key": "{{g|Quenched}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{g|潤った}}"
+        },
+        {
+            "key": "{{G|Tumescent}}",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{G|膨満}}"
+        },
+        {
+            "key": "You vomit!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "吐いた！"
+        },
+        {
+            "key": " everywhere!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": " そこら中に！"
+        },
+        {
+            "key": "fresh water over",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "真水をぶちまける"
+        },
+        {
+            "key": "fresh water from",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "真水を取り出す"
+        },
+        {
+            "key": "a sip of fresh water",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "真水をひとくち"
+        },
+        {
+            "key": "a sip of fresh water from",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "真水をひとくち（元容器）"
+        },
+        {
+            "key": "You have run out of {{B|water}}! Do you want to stop travelling?",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "{{B|水}}が尽きた！移動を止めますか？"
+        },
+        {
+            "key": "You are drying out! Do you want to stop travelling?",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "干上がりつつある！移動を止めますか？"
+        },
+        {
+            "key": "You are dying of thirst! Do you want to stop travelling?",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "渇きで死にかけている！移動を止めますか？"
+        },
+        {
+            "key": "You are drying out!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "干上がりつつある！"
+        },
+        {
+            "key": "You are dying of thirst!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "渇きで死にかけている！"
+        },
+        {
+            "key": "You died of thirst.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Stomach",
+            "text": "渇きで死んだ。"
+        },
+        {
+            "key": "Baetyl.",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "ベートル。"
+        },
+        {
+            "key": "cannot find any baetyl demands, aborting to avoid infinite loop",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "ベートルの要求が見つからないため無限ループを避けて中断する"
+        },
+        {
+            "key": "{tier}",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "{tier}"
+        },
+        {
+            "key": "NULL object returned from spec {Spec} {Value} {TierSpec} in RandomAltarBaetyl::GenerateItem",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "RandomAltarBaetyl::GenerateItem で NULL オブジェクトが返された: spec {Spec} {Value} {TierSpec}"
+        },
+        {
+            "key": "some forgotten ruins",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "忘れ去られた遺跡"
+        },
+        {
+            "key": "<spice.elements.\n.adjectives.!random> ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "<spice.elements.\n.adjectives.!random> "
+        },
+        {
+            "key": "<spice.itemTypes.\n.!random>",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "<spice.itemTypes.\n.!random>"
+        },
+        {
+            "key": "<spice.personNouns.!random>",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "<spice.personNouns.!random>"
+        },
+        {
+            "key": "<spice.history.relics.names.!random>",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "<spice.history.relics.names.!random>"
+        },
+        {
+            "key": "I AM SATED, MORTAL. BEGONE.",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "我は満ちた、凡人よ。失せよ。"
+        },
+        {
+            "key": "PETTY MORTAL! BRING ME ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "矮小なる凡人よ！ を捧げよ"
+        },
+        {
+            "key": ", AND I SHALL REWARD YOU WITH ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "、そうすれば を授けよう"
+        },
+        {
+            "key": " out of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " のうち "
+        },
+        {
+            "key": " nearby",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " の近く"
+        },
+        {
+            "key": "You appeased a baetyl with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "あなたは でベートルをなだめ、"
+        },
+        {
+            "key": ", and in return received ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " 見返りに を受け取った"
+        },
+        {
+            "key": "While leading a small army through ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "小さな軍を率いて を通過中に、"
+        },
+        {
+            "key": ", =name= demanded that a local baetyl use its powers to transmute ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "、=name= は地元のベートルに力を使って の変換を要求した"
+        },
+        {
+            "key": "I ACCEPT YOUR OFFERING!",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "供物を受け入れよう！"
+        },
+        {
+            "key": "The sparking baetyl gives you ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "火花を散らすベートルはあなたに を与える"
+        },
+        {
+            "key": " attribute ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " 属性 "
+        },
+        {
+            "key": " mutation ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " 変異 "
+        },
+        {
+            "key": " experience ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " 経験値 "
+        },
+        {
+            "key": " cybernetics license ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " サイバネ許可証 "
+        },
+        {
+            "key": " reputation with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " との評判 "
+        },
+        {
+            "key": "A \"SATED\" baetyl",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "「満ちた」ベートル"
+        },
+        {
+            "key": "A baetyl demanding \"",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "「を要求するベートル」"
+        },
+        {
+            "key": "\" and promising \"",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "」と、見返りに「"
+        },
+        {
+            "key": "@Melee Weapons {tier}R",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "@近接武器 {tier}R"
+        },
+        {
+            "key": "@Armor {tier}R",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "@防具 {tier}R"
+        },
+        {
+            "key": "@Missile {tier}",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "@飛び道具 {tier}"
+        },
+        {
+            "key": "@Artifact {tier}R",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "@アーティファクト {tier}R"
+        },
+        {
+            "key": "Generated ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": "生成された "
+        },
+        {
+            "key": " as reward for ",
+            "context": "XRL.World.Parts.XRL.World.Parts.RandomAltarBaetyl",
+            "text": " の報酬として "
+        },
+        {
+            "key": "GainedNewFollower",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "新たな従者を獲得"
+        },
+        {
+            "key": "sfx_creature_angered",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "sfx_creature_angered"
+        },
+        {
+            "key": "Beasts",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "獣"
+        },
+        {
+            "key": "Player",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "プレイヤー"
+        },
+        {
+            "key": "Sounds/UI/ui_notification",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "Sounds/UI/ui_notification"
+        },
+        {
+            "key": "CanBeAngeredByDamage",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "ダメージで激怒し得る"
+        },
+        {
+            "key": "Attacker",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "攻撃者"
+        },
+        {
+            "key": "Damage",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "ダメージ"
+        },
+        {
+            "key": "Accidental",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "事故"
+        },
+        {
+            "key": "Intelligence",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "知性"
+        },
+        {
+            "key": "PartyLeader",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "パーティリーダー"
+        },
+        {
+            "key": "Wanders",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "徘徊する"
+        },
+        {
+            "key": "WandersRandomly",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "無作為に徘徊する"
+        },
+        {
+            "key": "Hostile is part of allegiance set, use Brain.Allegiance.Hostile = value",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "敵対は陣営セットの一部。Brain.Allegiance.Hostile = value を使用せよ"
+        },
+        {
+            "key": "Calm is part of allegiance set, use Brain.Allegiance.Calm = value",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "静穏は陣営セットの一部。Brain.Allegiance.Calm = value を使用せよ"
+        },
+        {
+            "key": "use pPhysics on parent object",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "親オブジェクトで pPhysics を使用してください"
+        },
+        {
+            "key": "F:XRL.World.Parts.Brain.Goals",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "F:XRL.World.Parts.Brain.Goals"
+        },
+        {
+            "key": "sfx_characterMod_follower_lose",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "sfx_characterMod_follower_lose"
+        },
+        {
+            "key": "sfx_characterMod_follower_gain",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "sfx_characterMod_follower_gain"
+        },
+        {
+            "key": "AITakingAction",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "AIが行動中"
+        },
+        {
+            "key": "TakingAction",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "行動中"
+        },
+        {
+            "key": "CommandEquipObject",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "装備コマンド"
+        },
+        {
+            "key": "Object",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "オブジェクト"
+        },
+        {
+            "key": "BodyPart",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "部位"
+        },
+        {
+            "key": "EnergyCost",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "エネルギー消費"
+        },
+        {
+            "key": "FactionsAdded",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "派閥を追加"
+        },
+        {
+            "key": "use IsMobile(), will be removed after Q2 2024",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "IsMobile() を使用してください（2024 Q2 以降削除予定）"
+        },
+        {
+            "key": "use LimitToAquatic(), will be removed after Q2 2024",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "LimitToAquatic() を使用してください（2024 Q2 以降削除予定）"
+        },
+        {
+            "key": "use CheckMobility(), will be removed after Q2 2024",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "CheckMobility() を使用してください（2024 Q2 以降削除予定）"
+        },
+        {
+            "key": "use SetFactionFeeling(), will be removed after Q2 2024",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "SetFactionFeeling() を使用してください（2024 Q2 以降削除予定）"
+        },
+        {
+            "key": "use SetFactionMembership(), will be removed after Q2 2024",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "SetFactionMembership() を使用してください（2024 Q2 以降削除予定）"
+        },
+        {
+            "key": "PostWrite",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "書き込み後"
+        },
+        {
+            "key": "PostRead",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "読み取り後"
+        },
+        {
+            "key": "PoolPartialsGenerator",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "部分生成器プール"
+        },
+        {
+            "key": "SerializationPartialsGenerator",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "シリアライズ部分生成器"
+        },
+        {
+            "key": "1.0.0.0",
+            "context": "XRL.World.Parts.XRL.World.Parts.Brain",
+            "text": "1.0.0.0"
+        },
+        {
+            "key": "You must wait ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ActivatedAbilityEntry",
+            "text": "待たなければならない "
+        },
+        {
+            "key": "You cannot sleep on ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Bed",
+            "text": "上で眠れない: "
+        },
+        {
+            "key": "You cannot do that while sitting.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Bed",
+            "text": "座っている間はそれを行えない。"
+        },
+        {
+            "key": "You cannot do that while burrowed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Bed",
+            "text": "潜伏中はそれを行えない。"
+        },
+        {
+            "key": "You cannot do that while flying.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Bed",
+            "text": "飛行中はそれを行えない。"
+        },
+        {
+            "key": "You cannot reach ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Bed",
+            "text": "手が届かない: "
+        },
+        {
+            "key": "You are out of phase with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Bed",
+            "text": "あなたは と位相がずれている。"
+        },
+        {
+            "key": "You can't go to sleep right now.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Bed",
+            "text": "今は眠れない。"
+        },
+        {
+            "key": "You cannot sit on ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": "座れない: "
+        },
+        {
+            "key": "You are already sitting down.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": "すでに座っている。"
+        },
+        {
+            "key": "You cannot do that while enclosed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": "囲われている間はそれを行えない。"
+        },
+        {
+            "key": "You cannot do that while burrowed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": "潜伏中はそれを行えない。"
+        },
+        {
+            "key": "You cannot reach ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": "手が届かない: "
+        },
+        {
+            "key": "You are out of phase with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": "あなたは と位相がずれている。"
+        },
+        {
+            "key": "You cannot unequip ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": " を外せない。"
+        },
+        {
+            "key": "You cannot set ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": " を設定できない。"
+        },
+        {
+            "key": "You think you broke ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": " を壊してしまった気がする。"
+        },
+        {
+            "key": "You are not sitting down.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Chair",
+            "text": "座っていない。"
+        },
+        {
+            "key": "You cannot open ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": "開けられない: "
+        },
+        {
+            "key": "You are out of phase with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": "あなたは と位相がずれている。"
+        },
+        {
+            "key": "You cannot reach ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": "手が届かない: "
+        },
+        {
+            "key": "You can't unlock ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": "解錠できない。"
+        },
+        {
+            "key": "You interface with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": " にインターフェースした。"
+        },
+        {
+            "key": "You lay your hand upon ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": " に手を置いた。"
+        },
+        {
+            "key": "You cannot close ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": "閉められない: "
+        },
+        {
+            "key": "You hack ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": " をハッキングした。"
+        },
+        {
+            "key": "You feel like you're making progress on hacking ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": " のハッキングが進んでいる気がする。"
+        },
+        {
+            "key": "You cannot seem to work out how to hack ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Door",
+            "text": " のハッキング方法がわからない。"
+        },
+        {
+            "key": "You cannot reach ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": "手が届かない: "
+        },
+        {
+            "key": "You are out of phase with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": "あなたは と位相がずれている。"
+        },
+        {
+            "key": "You can't repair that.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": "それは修理できない。"
+        },
+        {
+            "key": "You can't repair with hostile creatures nearby.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": "敵対者が近くにいると修理できない。"
+        },
+        {
+            "key": "You repair ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": " を修理した。"
+        },
+        {
+            "key": "You receive tinkering bits <{{|",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": "細工ビット <{{| を受け取った"
+        },
+        {
+            "key": "You make some progress repairing ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": " の修理が少し進んだ。"
+        },
+        {
+            "key": "You can't figure out how to fix ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": " の修理方法がわからない。"
+        },
+        {
+            "key": "You think you broke ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Repair",
+            "text": " を壊してしまった気がする。"
+        },
+        {
+            "key": "You block with {arg}! (+{part.AV} AV)",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "あなたは{arg}で受け止めた！（+{part.AV} AV）"
+        },
+        {
+            "key": "You cannot throw things on the world map.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "ワールドマップでは物を投げられない。"
+        },
+        {
+            "key": "You do not have a thrown weapon equipped.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "投擲武器を装備していない。"
+        },
+        {
+            "key": "You cannot fire missile weapons on the world map.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "ワールドマップでは飛び道具を撃てない。"
+        },
+        {
+            "key": "You miss!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "外した！"
+        },
+        {
+            "key": "You are in no shape to start a conversation.",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": "会話を始められる状態ではない。"
+        },
+        {
+            "key": "You can't seem to make out what ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " よく聞き取れない: "
+        },
+        {
+            "key": " saying.",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " と言っている。"
+        },
+        {
+            "key": " utterly unresponsive.",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " まったく反応がない。"
+        },
+        {
+            "key": "You hear a muffled grunting coming from inside the block of ice.",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": "氷塊の中からうめき声が漏れ聞こえる。"
+        },
+        {
+            "key": " refuse",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " は拒んでいる"
+        },
+        {
+            "key": " to speak to you.",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " あなたと話そうとしない。"
+        },
+        {
+            "key": " engaged in hand-to-hand combat and",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " 近接戦闘中であり、"
+        },
+        {
+            "key": " too busy to have a conversation with you.",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " 忙しすぎて会話できない。"
+        },
+        {
+            "key": " on fire and",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " 炎上しており、"
+        },
+        {
+            "key": "You cannot seem to engage ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " 会話に入れない: "
+        },
+        {
+            "key": " in conversation.",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " と話せない。"
+        },
+        {
+            "key": "You can sense nothing from ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " からは何も感じ取れない。"
+        },
+        {
+            "key": "You sense only hostility from ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " からは敵意しか感じない。"
+        },
+        {
+            "key": "You cannot seem to make contact with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " とうまく交信できない。"
+        },
+        {
+            "key": " nothing to say.",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " は何も言うことがない。"
+        },
+        {
+            "key": "you and ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": "あなたと "
+        },
+        {
+            "key": " exchange pronouns; ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " は代名詞を交換する； "
+        },
+        {
+            "key": " pronouns, which are ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " 代名詞、それは "
+        },
+        {
+            "key": "you give ",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": "あなたは を伝える"
+        },
+        {
+            "key": " your new pronouns",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " 新しい代名詞を伝える"
+        },
+        {
+            "key": " your pronouns",
+            "context": "XRL.World.Parts.XRL.World.Parts.ConversationScript",
+            "text": " 代名詞を伝える"
+        },
+        {
+            "key": "You're too confused to do that.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": "混乱しすぎてそれはできない。"
+        },
+        {
+            "key": "You commit the distinguishing characteristics of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " の特徴を記憶に刻んだ。"
+        },
+        {
+            "key": " to memory.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " を記憶した。"
+        },
+        {
+            "key": "You identify ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " を同定した。"
+        },
+        {
+            "key": "You now understand ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " について理解した。"
+        },
+        {
+            "key": "You discover something about ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " について何かを発見した。"
+        },
+        {
+            "key": " that was hidden!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " 隠されていた！"
+        },
+        {
+            "key": "You make some progress understanding ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " の理解が少し進んだ。"
+        },
+        {
+            "key": ". You think ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": "。おそらく "
+        },
+        {
+            "key": " probably a variety of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " は の一種だろう。"
+        },
+        {
+            "key": ", and you believe you would be able to recognize an ordinary ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " と考え、普通の を見分けられるだろう。"
+        },
+        {
+            "key": ", and you think ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " と考え、 おそらく "
+        },
+        {
+            "key": "; you believe you would be able to recognize an ordinary ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": "；普通の を見分けられるだろう。"
+        },
+        {
+            "key": "You are puzzled by ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " に戸惑っている。"
+        },
+        {
+            "key": "You think you broke ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Examiner",
+            "text": " を壊してしまった気がする。"
+        },
+        {
+            "key": "You already know that recipe!",
+            "context": "XRL.World.Parts.XRL.World.Parts.DataDisk",
+            "text": "そのレシピはもう知っている！"
+        },
+        {
+            "key": "You don't have the required skill: ",
+            "context": "XRL.World.Parts.XRL.World.Parts.DataDisk",
+            "text": "必要なスキルがない: "
+        },
+        {
+            "key": "You learn the item modification {{W|",
+            "context": "XRL.World.Parts.XRL.World.Parts.DataDisk",
+            "text": "アイテム改造 {{W|"
+        },
+        {
+            "key": "You learn to build ",
+            "context": "XRL.World.Parts.XRL.World.Parts.DataDisk",
+            "text": " を作成する方法を習得した。"
+        },
+        {
+            "key": "You don't have the required <",
+            "context": "XRL.World.Parts.XRL.World.Parts.DataDisk",
+            "text": "必要な < がない。"
+        },
+        {
+            "key": "> bits! You have:\n\n",
+            "context": "XRL.World.Parts.XRL.World.Parts.DataDisk",
+            "text": "> ビットが足りない！現在の所持:\n\n"
+        },
+        {
+            "key": "You can't tinker with hostiles nearby!",
+            "context": "XRL.World.Parts.XRL.World.Parts.DataDisk",
+            "text": "敵対者が近くにいると細工できない！"
+        },
+        {
+            "key": "CombatPreventsTinkering",
+            "context": "XRL.World.Parts.XRL.World.Parts.DataDisk",
+            "text": "戦闘状態で細工不可"
+        },
+        {
+            "key": "You cannot do that on the world map.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": "ワールドマップ上ではそれを行えない。"
+        },
+        {
+            "key": "You can't deploy there!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": "そこには設置できない！"
+        },
+        {
+            "key": "You disarm ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": " を解除した。"
+        },
+        {
+            "key": "You receive tinkering bits <{{|",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": "細工ビット <{{| を受け取った"
+        },
+        {
+            "key": "You make some progress disarming ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": " の解除が少し進んだ。"
+        },
+        {
+            "key": "You cannot reach ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": "手が届かない: "
+        },
+        {
+            "key": "appendages",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": "付属肢"
+        },
+        {
+            "key": " pass through ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": " を通過する "
+        },
+        {
+            "key": "Failing to disarm ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": "解除に失敗すると "
+        },
+        {
+            "key": " will detonate ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": " が爆発する。"
+        },
+        {
+            "key": ". You estimate you have",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": "。成功確率はおよそ"
+        },
+        {
+            "key": " less than a ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": " 未満"
+        },
+        {
+            "key": " about a ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": " 約 "
+        },
+        {
+            "key": " chance of success. Do you want to make the attempt?",
+            "context": "XRL.World.Parts.XRL.World.Parts.Tinkering_Mine",
+            "text": " の成功確率。試みますか？"
+        },
+        {
+            "key": "You cannot reach ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": "手が届かない: "
+        },
+        {
+            "key": "You cannot make contact with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": " とうまく接触できない。"
+        },
+        {
+            "key": "You cannot clone ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": " クローンできない。"
+        },
+        {
+            "key": " cannot be cloned.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": " はクローンできない。"
+        },
+        {
+            "key": "You fail to clone ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": " クローンに失敗した。"
+        },
+        {
+            "key": "You do not have 1 dram of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": "1ドラムの がない。"
+        },
+        {
+            "key": "Your cloning capacity is refreshed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": "クローン容量が回復した。"
+        },
+        {
+            "key": "There is nothing there for you to clone.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": "クローンできるものがそこにはない。"
+        },
+        {
+            "key": "Your onboard systems are out of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": "搭載システムの が枯渇している。"
+        },
+        {
+            "key": "Your onboard cloning systems are offline.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Cloneling",
+            "text": "搭載クローンシステムは停止中だ。"
+        },
+        {
+            "key": "You hear a shloop and then a hitch. Nothing happens.",
+            "context": "XRL.World.Parts.XRL.World.Parts.GiantClamProperties",
+            "text": "シュロープという音の後につまずきのような感触がする。何も起こらない。"
+        },
+        {
+            "key": "You hear a shloop, and the world around you warps and shifts violently.",
+            "context": "XRL.World.Parts.XRL.World.Parts.GiantClamProperties",
+            "text": "シュロープという音とともに、周囲の世界が激しくゆがみ、ずれる。"
+        },
+        {
+            "key": "You find a passageway back to your home dimension.",
+            "context": "XRL.World.Parts.XRL.World.Parts.GiantClamProperties",
+            "text": "故郷の次元へ戻る通路を見つけた。"
+        },
+        {
+            "key": "You hear a shloop and the world around you shifts.",
+            "context": "XRL.World.Parts.XRL.World.Parts.GiantClamProperties",
+            "text": "シュロープという音とともに、周囲の世界がずれる。"
+        },
+        {
+            "key": "You are water-bonded with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.GivesRep",
+            "text": "あなたは と水の儀式で結ばれている。"
+        },
+        {
+            "key": "You violated the covenant of the water ritual and killed your bonded kith. You are cursed.",
+            "context": "XRL.World.Parts.XRL.World.Parts.GivesRep",
+            "text": "水の契りを破り、結んだ仲間を殺した。あなたは呪われている。"
+        },
+        {
+            "key": "You slew your bonded kith ",
+            "context": "XRL.World.Parts.XRL.World.Parts.GivesRep",
+            "text": "あなたは契りを結んだ仲間 を殺した。"
+        },
+        {
+            "key": "You slew ",
+            "context": "XRL.World.Parts.XRL.World.Parts.GivesRep",
+            "text": "あなたは を殺した。"
+        },
+        {
+            "key": "You fall down a deep shaft!",
+            "context": "XRL.World.Parts.XRL.World.Parts.StairsDown",
+            "text": "深い縦穴に落ちた！"
+        },
+        {
+            "key": "You fell down ",
+            "context": "XRL.World.Parts.XRL.World.Parts.StairsDown",
+            "text": "あなたは 落下した。"
+        },
+        {
+            "key": "You fall downward!",
+            "context": "XRL.World.Parts.XRL.World.Parts.StairsDown",
+            "text": "下へ落ちる！"
+        },
+        {
+            "key": "You fell from a great height.",
+            "context": "XRL.World.Parts.XRL.World.Parts.StairsDown",
+            "text": "高所から落下した。"
+        },
+        {
+            "key": "You can't dominate ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Teleprojector",
+            "text": "支配できない: "
+        },
+        {
+            "key": "You can't dominate someone you are already dominating.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Teleprojector",
+            "text": "すでに支配している相手は支配できない。"
+        },
+        {
+            "key": "You can't do that.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Teleprojector",
+            "text": "それはできない。"
+        },
+        {
+            "key": "You take control of ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Teleprojector",
+            "text": " を支配下に置いた。"
+        },
+        {
+            "key": "You have lost the use of your ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Body",
+            "text": "あなたは の機能を失った。"
+        },
+        {
+            "key": "You have recovered the use of your ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Body",
+            "text": "あなたは の機能を回復した。"
+        },
+        {
+            "key": "You regenerate your ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Body",
+            "text": "あなたは を再生した。"
+        },
+        {
+            "key": "ValidateGameObjects",
+            "context": "XRL.World.Parts.XRL.World.Parts.Physics",
+            "text": "ゲームオブジェクトの検証"
+        },
+        {
+            "key": "Attack",
+            "context": "XRL.World.Parts.XRL.World.Parts.Physics",
+            "text": "攻撃"
+        },
+        {
+            "key": "Unknown",
+            "context": "XRL.World.Parts.XRL.World.Parts.Physics",
+            "text": "不明"
+        },
+        {
+            "key": "You stagger ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "あなたは"
+        },
+        {
+            "key": " with your shield block!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "を盾受けでよろめかせた！"
+        },
+        {
+            "key": "You are staggered by ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": " にひるまされた！"
+        },
+        {
+            "key": "You do not have ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "あなたは"
+        },
+        {
+            "key": "an appropriate",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "適切な"
+        },
+        {
+            "key": " missile weapon equipped!",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "飛び道具を装備していない！"
+        },
+        {
+            "key": "you are under attack by ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": " に攻撃されている！"
+        },
+        {
+            "key": "you ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Combat",
+            "text": "あなたは"
+        },
+        {
+            "key": "You slot ",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": " を"
+        },
+        {
+            "key": " into ",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": " に装填した。"
+        },
+        {
+            "key": "You have no tonics to load.",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": "装填できるトニックがない。"
+        },
+        {
+            "key": "You eject ",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": " を排出した。"
+        },
+        {
+            "key": "the injectors",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": "注射器"
+        },
+        {
+            "key": " from ",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": " を"
+        },
+        {
+            "key": "Your ",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": "あなたの"
+        },
+        {
+            "key": "inject",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": "インジェクタが"
+        },
+        {
+            "key": " you with ",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": " で注入した。"
+        },
+        {
+            "key": "The injection fails.",
+            "context": "XRL.World.Parts.XRL.World.Parts.CyberneticsMedassistModule",
+            "text": "注入に失敗した。"
+        },
+        {
+            "key": "You can't engrave with hostiles nearby.",
+            "context": "XRL.World.Parts.XRL.World.Parts.Engraver",
+            "text": "敵対者が近くにいると刻印できない。"
+        },
+        {
+            "key": "You can only engrave ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Engraver",
+            "text": "刻印できるのは "
+        },
+        {
+            "key": "You cannot engrave ",
+            "context": "XRL.World.Parts.XRL.World.Parts.Engraver",
+            "text": "刻印できない: "
+        },
+        {
+            "key": "You discover ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LocationFinder",
+            "text": " を発見した！"
+        },
+        {
+            "key": "You discovered ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LocationFinder",
+            "text": " を発見した。"
+        },
+        {
+            "key": "You traveled to ",
+            "context": "XRL.World.Parts.XRL.World.Parts.LocationFinder",
+            "text": " へ到達した！"
+        },
+        {
+            "key": "You hack ",
+            "context": "XRL.World.Parts.XRL.World.Parts.PowerSwitch",
+            "text": " をハッキングした。"
+        },
+        {
+            "key": "You feel like you're making progress on hacking ",
+            "context": "XRL.World.Parts.XRL.World.Parts.PowerSwitch",
+            "text": " のハッキングが進んでいる気がする。"
+        },
+        {
+            "key": "You cannot seem to work out how to hack ",
+            "context": "XRL.World.Parts.XRL.World.Parts.PowerSwitch",
+            "text": " のハッキング方法がわからない。"
+        },
+        {
+            "key": "You have no usable options to employ for ",
+            "context": "XRL.World.Parts.XRL.World.PsychicCombatSifrah",
+            "text": " に使える手段がないため、"
+        },
+        {
+            "key": ", giving you no chance of performing well. You can remedy this situation by improving your Ego, Willpower, Intelligence, and esoteric skills.",
+            "context": "XRL.World.Parts.XRL.World.PsychicCombatSifrah",
+            "text": "成果を上げる見込みがない。エゴ・意志力・知力や秘術技能を高めれば状況を改善できる。"
+        },
+        {
+            "key": "You have mastered psychic combat at this level of difficulty. Do you want to guide the process in detail anyway, with an enhanced chance of exceptional success? If you answer 'No', you will automatically receive the results of strong but unexceptional performance.",
+            "context": "XRL.World.Parts.XRL.World.PsychicCombatSifrah",
+            "text": "この難度での精神戦闘は習熟済みだ。卓越した成功率を狙って詳細な手順を自ら指揮する？「いいえ」を選ぶと、平凡でも堅実な結果が自動的に得られる。"
+        },
+        {
+            "key": "You have no more usable options, so your performance so far will determine the outcome.",
+            "context": "XRL.World.Parts.XRL.World.PsychicCombatSifrah",
+            "text": "使える手段が尽きたので、ここまでの成果で結果が決まる。"
+        },
+        {
+            "key": "whenever @thisCreature deal@s cold damage, there's a 25% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainCold_OnDealingColdDamage",
+            "text": "@thisCreature が冷気ダメージを与えるたび、25%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature deal@s electric damage, there's a 25% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainElectric_OnDealingElectricDamage",
+            "text": "@thisCreature が電撃ダメージを与えるたび、25%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s electric damage, there's ",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainElectric_OnElectricDamaged",
+            "text": "@thisCreature が電撃ダメージを受けるたび、"
+        },
+        {
+            "key": "% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainElectric_OnElectricDamaged",
+            "text": "%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s electric damage, there's a 50% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainElectric_OnElectricDamaged",
+            "text": "@thisCreature が電撃ダメージを受けるたび、50%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature deal@s fire damage, there's a 10% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainHeat_OnDealingHeatDamage",
+            "text": "@thisCreature が火炎ダメージを与えるたび、10%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a ",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainHP_OnDamaged",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 8-10% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainHP_OnDamaged",
+            "text": "@thisCreature がダメージを受けるたび、8～10%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 12-15% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainHP_OnDamagedMidTier",
+            "text": "@thisCreature がダメージを受けるたび、12～15%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 15-20% chance @they start phasing for 8-10 turns.",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainPhase_UnitPhaseOnDamage",
+            "text": "@thisCreature がダメージを受けるたび、15～20%の確率で@they は8～10ターンのあいだフェイズアウトする。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 16-20% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainRegenHightier_OnDamaged",
+            "text": "@thisCreature がダメージを受けるたび、16～20%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature reflect@s damage, there's a 50% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_OnReflectedDamage",
+            "text": "@thisCreature がダメージを反射するたび、50%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature reflect@s damage, there's a 100% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_OnReflectedDamageHighTier",
+            "text": "@thisCreature がダメージを反射するたび、100%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 8-10% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_OnDamaged",
+            "text": "@thisCreature がダメージを受けるたび、8～10%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 16-20% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_OnDamagedHighTier",
+            "text": "@thisCreature がダメージを受けるたび、16～20%の確率で"
+        },
+        {
+            "key": "Reflect ",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": "受けたダメージの"
+        },
+        {
+            "key": "% damage back at @their attackers, rounded up.",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": "%を切り上げて@their 攻撃者に反射する。"
+        },
+        {
+            "key": "Reflect 3-4% damage back at @their attackers, rounded up.",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": "受けたダメージの3～4%を切り上げて@their 攻撃者に反射する。"
+        },
+        {
+            "key": "from %t tiny spines!",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": "%t 本の小さな棘から反射する。"
+        },
+        {
+            "key": "You reflect ",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": "あなたは"
+        },
+        {
+            "key": " damage back at ",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": " のダメージを跳ね返して "
+        },
+        {
+            "key": "&y.",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": "&y。"
+        },
+        {
+            "key": " damage back at you.",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": " のダメージがあなたに跳ね返ってきた。"
+        },
+        {
+            "key": "Reflect 15-18% damage back at @their attackers, rounded up.",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainReflect_UnitReflectDamageHighTier",
+            "text": "受けたダメージの15～18%を切り上げて@their 攻撃者に反射する。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a ",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainRegenLowtier_OnDamaged",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 8-10% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainRegenLowtier_OnDamaged",
+            "text": "@thisCreature がダメージを受けるたび、8～10%の確率で"
+        },
+        {
+            "key": "Falling damage @thisCreature take@s is reduced by 90%.",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainRubber_ExtraReducedFallDamage",
+            "text": "@thisCreature が受ける落下ダメージが90%軽減される。"
+        },
+        {
+            "key": "Falling damage @thisCreature take@s is reduced by 50%.",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainRubber_ReducedFallDamage",
+            "text": "@thisCreature が受ける落下ダメージが50%軽減される。"
+        },
+        {
+            "key": "away from the danger",
+            "context": "XRL.World.XRL.World.Parts.BlinkOnDamage",
+            "text": "危険から離れた"
+        },
+        {
+            "key": "from %t digestive enzymes!",
+            "context": "XRL.World.XRL.World.Parts.EngulfingDamage",
+            "text": "%t の消化酵素による！"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 30-40% chance",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainRegenHightier_OnDamaged",
+            "text": "@thisCreature がダメージを受けるたび、30～40%の確率で"
+        },
+        {
+            "key": "You do not have a bow or rifle equipped!",
+            "context": "XRL.World.XRL.World.Parts.Skill.Rifle_WoundingFire",
+            "text": "弓またはライフルを装備していない！"
+        },
+        {
+            "key": "You need to reload! (",
+            "context": "XRL.World.XRL.World.Parts.Skill.Rifle_WoundingFire",
+            "text": "リロードが必要だ！（"
+        },
+        {
+            "key": "You reflect ",
+            "context": "XRL.World.XRL.World.Parts.ReflectDamage",
+            "text": "あなたは"
+        },
+        {
+            "key": " damage back at ",
+            "context": "XRL.World.XRL.World.Parts.ReflectDamage",
+            "text": " のダメージを跳ね返して "
+        },
+        {
+            "key": " damage back at you.",
+            "context": "XRL.World.XRL.World.Parts.ReflectDamage",
+            "text": " のダメージがあなたに跳ね返ってきた。"
+        },
+        {
+            "key": "from %t damage reflection!",
+            "context": "XRL.World.XRL.World.Parts.ReflectDamage",
+            "text": "%t のダメージ反射による！"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage from a plant,",
+            "context": "XRL.World.XRL.World.Effects.CookingDomainPlant_OnDamageByPlant",
+            "text": "@thisCreature が植物からダメージを受けるたび、"
+        },
+        {
+            "key": "Robber chimes ring through the vault, and you hear the grating of stone on stone as the other imperial reliquaries slide into the unreachable recesses of the Tomb.",
+            "context": "XRL.World.Parts.CherubimLock",
+            "text": "盗人の鐘が金庫室に鳴り響き、他の帝国の聖遺物庫が墓の手の届かない奥へ滑り込む石ずれの音が聞こえた。"
+        },
+        {
+            "key": "The metal satchel opens, folds itself inside out, and transforms into a contraption studded with pinions and drills. It starts to burrow into the ground.",
+            "context": "XRL.World.Parts.SpiralBorerCurio",
+            "text": "金属製のバッグが開いて裏返り、ピニオンとドリルが突き出た装置へ変形した。それは地面に穴を掘り始めた。"
+        },
+        {
+            "key": "A normality lattice prevents you from altering spacetime in both your local region and the local region you're trying to interact with.",
+            "context": "XRL.World.Effects.RealityStabilized",
+            "text": "正規化格子があなたのいる局所と相手の局所の両方で時空の改変を阻んでいる。"
+        },
+        {
+            "key": "A normality lattice prevents you from altering spacetime in the local region.",
+            "context": "XRL.World.Effects.RealityStabilized",
+            "text": "正規化格子がその局所で時空の改変を阻んでいる。"
+        },
+        {
+            "key": "A normality lattice prevents you from altering spacetime in that local region.",
+            "context": "XRL.World.Effects.RealityStabilized",
+            "text": "正規化格子がその局所で時空の改変を阻んでいる。"
+        },
+        {
+            "key": "A bilge hose painted with mucus undulates out of your lower body. It spews the amniotic broth of its birth from its sputtering mouth.",
+            "context": "XRL.World.Effects.CookingDomainSpecial_UnitSlogTransform",
+            "text": "粘液で塗られたビルジホースが下半身からうねり出る。ぱくつく口からは生まれの羊水を噴き出している。"
+        },
+        {
+            "key": "The pact is struck. The Barathrumites may lease control of the Spindle, and all the attending factions owe a debt to Asphodel.",
+            "context": "XRL.World.Parts.SpindleNegotiation",
+            "text": "取引が成立した。バラサラム派はスピンドルの管理を借り受け、同席した派閥はみなアスフォデルへの借りを負う。"
+        },
+        {
+            "key": "The pact is struck. The Barathrumites may lease control of the Spindle, and the chosen factions owe a debt to Asphodel.",
+            "context": "XRL.World.Parts.SpindleNegotiation",
+            "text": "取引が成立した。バラサラム派はスピンドルの管理を借り受け、選ばれた派閥はアスフォデルへの借りを負う。"
+        },
+        {
+            "key": "The pact is struck. The Barathrumites may lease control the Spindle.",
+            "context": "XRL.World.Parts.SpindleNegotiation",
+            "text": "取引が成立した。バラサラム派はスピンドルの管理を借り受ける。"
+        },
+        {
+            "key": "You don't have enough allied factions. Come back when you're favored by {{C|4}} or more factions.",
+            "context": "XRL.World.Parts.SpindleNegotiation",
+            "text": "同盟派閥が足りない。{{C|4}} 派閥以上に好かれてから戻ってこい。"
+        },
+        {
+            "key": "You have contracted Ironshank! You feel the cartilage stretch as your leg bones grind together at the joints.",
+            "context": "XRL.World.Effects.Ironshank",
+            "text": "アイアンシャンクに感染した！脚の骨が関節で軋み、軟骨が引き伸ばされるのを感じる。"
+        },
+        {
+            "key": "You are cured of ironshank.",
+            "context": "XRL.World.Effects.Ironshank",
+            "text": "アイアンシャンクが治った。"
+        }
+    ]
+}
+

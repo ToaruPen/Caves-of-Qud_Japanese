@@ -1,0 +1,443 @@
+{
+    "meta": {
+        "id": "ui-popup",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true,
+        "protectHtmlEntities": true
+    },
+    "entries": [
+        {
+            "key": "{{W|[Esc]}} {{y|Cancel}}",
+            "context": "Qud.UI.PopupMessage.Button.Cancel.Hotkey",
+            "text": "{{W|[Esc]}} {{y|キャンセル}}"
+        },
+        {
+            "key": "Cancel",
+            "context": "Qud.UI.PopupMessage.Button.Cancel.Label",
+            "text": "キャンセル"
+        },
+        {
+            "key": "{{W|[C]}} {{y|Copy}}",
+            "context": "Qud.UI.PopupMessage.Button.Copy.Hotkey",
+            "text": "{{W|[C]}} {{y|コピー}}"
+        },
+        {
+            "key": "Copy",
+            "context": "Qud.UI.PopupMessage.Button.Copy.Label",
+            "text": "コピー"
+        },
+        {
+            "key": "{{W|[L]}} {{y|Look}}",
+            "context": "Qud.UI.PopupMessage.Button.Look.Hotkey",
+            "text": "{{W|[L]}} {{y|調べる}}"
+        },
+        {
+            "key": "Look",
+            "context": "Qud.UI.PopupMessage.Button.Look.Label",
+            "text": "調べる"
+        },
+        {
+            "key": "{{W|[space]}} {{y|Continue}}",
+            "context": "Qud.UI.PopupMessage.Button.Continue.Hotkey",
+            "text": "{{W|[Space]}} {{y|続ける}}"
+        },
+        {
+            "key": "{{W|[y]}} {{y|Yes}}",
+            "context": "Qud.UI.PopupMessage.Button.Yes.Hotkey",
+            "text": "{{W|[y]}} {{y|はい}}"
+        },
+        {
+            "key": "{{W|[n]}} {{y|No}}",
+            "context": "Qud.UI.PopupMessage.Button.No.Hotkey",
+            "text": "{{W|[n]}} {{y|いいえ}}"
+        },
+        {
+            "key": "{{y|Yes}}",
+            "context": "Qud.UI.PopupMessage.Button.Yes.Label",
+            "text": "{{y|はい}}"
+        },
+        {
+            "key": "{{y|No}}",
+            "context": "Qud.UI.PopupMessage.Button.No.Label",
+            "text": "{{y|いいえ}}"
+        },
+        {
+            "key": "{{y|Accept}}",
+            "context": "Qud.UI.PopupMessage.Button.Accept.Label",
+            "text": "{{y|決定}}"
+        },
+        {
+            "key": "{{y|Submit}}",
+            "context": "Qud.UI.PopupMessage.Button.Submit.Label",
+            "text": "{{y|送信}}"
+        },
+        {
+            "key": "press {key}",
+            "context": "Qud.UI.PopupMessage.Button.Single.Gamepad",
+            "text": "{key}を押す"
+        },
+        {
+            "key": "{{W|[F1]}} {{y|Color}}",
+            "context": "Qud.UI.PopupMessage.Button.Color.Hotkey",
+            "text": "{{W|[F1]}} {{y|色}}"
+        },
+        {
+            "key": "{{W|[Enter]}} {{y|Accept}}",
+            "context": "Qud.UI.PopupMessage.Button.Accept.Enter",
+            "text": "{{W|[Enter]}} {{y|決定}}"
+        },
+        {
+            "key": "{{y|Hold to Accept}}",
+            "context": "Qud.UI.PopupMessage.Button.HoldToAccept.Label",
+            "text": "{{y|長押しで決定}}"
+        },
+        {
+            "key": "Trade",
+            "context": "Qud.UI.PopupMessage.AcceptCancelTradeButton.Trade",
+            "text": "取引"
+        },
+        {
+            "key": "Expand",
+            "context": "Qud.UI.MessageLogLine.Expand.Description",
+            "text": "展開"
+        },
+        {
+            "key": "Collapse",
+            "context": "Qud.UI.MessageLogLine.Collapse.Description",
+            "text": "折りたたむ"
+        },
+        {
+            "key": "Message Log",
+            "context": "Qud.UI.MessageLogStatusScreen.GetTabString",
+            "text": "メッセージログ"
+        },
+        {
+            "key": "MessageLog",
+            "context": "Qud.UI.MessageLogWindow.ViewName",
+            "text": "メッセージログ"
+        },
+        {
+            "key": "Redeem a Code",
+            "context": "Popup.AskString.Prompt",
+            "text": "コードを引き換える"
+        },
+        {
+            "key": "If you quit without saving, you will lose all your unsaved progress. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\n\n Type 'QUIT' to confirm.",
+            "context": "Popup.AskString.Prompt",
+            "text": "セーブせずに終了すると保存されていない進行状況がすべて失われます。本当に終了して進行状況を失いますか？\\n\\n「QUIT」と入力すると確定します。"
+        },
+        {
+            "key": "If you quit without saving, you will lose all your progress and your character will be lost. Are you sure you want to QUIT and LOSE YOUR PROGRESS?\n\nType 'ABANDON' to confirm.",
+            "context": "Popup.AskString.Prompt",
+            "text": "セーブせずに終了すると進行状況とキャラクターが完全に失われます。本当に終了して進行状況とキャラクターを失いますか？\\n\\n「ABANDON」と入力すると確定します。"
+        },
+        {
+            "key": "If you retire this character, your score will be recorded and your character will be lost. Are you sure you want to RETIRE THIS CHARACTER FOREVER? Type 'RETIRE' to confirm.",
+            "context": "Popup.AskString.Prompt",
+            "text": "このキャラクターを引退するとスコアは記録されますがキャラクターは失われます。本当にこのキャラクターを永遠に引退させますか？「RETIRE」と入力すると確定します。"
+        },
+        {
+            "key": "Enter text to filter inventory by item name.",
+            "context": "Popup.AskString.Prompt",
+            "text": "アイテム名でフィルタするテキストを入力してください。"
+        },
+        {
+            "key": "Entry text",
+            "context": "Popup.AskString.Prompt",
+            "text": "入力テキスト"
+        },
+        {
+            "key": "What do you want to draw?",
+            "context": "Popup.AskString.Prompt",
+            "text": "何を描きますか？"
+        },
+        {
+            "key": "Describe your engraving. For example: \"a tiny snail\".",
+            "context": "Popup.AskString.Prompt",
+            "text": "刻印の内容を入力してください。例: \\\"a tiny snail\\\"."
+        },
+        {
+            "key": "[~Accept] Continue",
+            "context": "Qud.UI.TutorialManager",
+            "text": "[~Accept] 続行"
+        },
+        {
+            "key": "[~Accept] Continue",
+            "context": "Qud.UI.JoppaTutorial.BattleRemains",
+            "text": "[~Accept] 続行"
+        },
+        {
+            "key": "[~Accept] Continue",
+            "context": "Qud.UI.JoppaTutorial.ExamineChemcell",
+            "text": "[~Accept] 続行"
+        },
+        {
+            "key": "[~Accept] Continue",
+            "context": "Qud.UI.JoppaTutorial.FightBear",
+            "text": "[~Accept] 続行"
+        },
+        {
+            "key": "[~Accept] Continue",
+            "context": "Qud.UI.JoppaTutorial.FightSnapjaw",
+            "text": "[~Accept] 続行"
+        },
+        {
+            "key": "[~Accept] Continue",
+            "context": "Qud.UI.JoppaTutorial.GetBooks",
+            "text": "[~Accept] 続行"
+        },
+        {
+            "key": "[~Accept] Continue",
+            "context": "Qud.UI.JoppaTutorial.MakeCamp",
+            "text": "[~Accept] 続行"
+        },
+        {
+            "key": "chat",
+            "context": "QudMenuItem",
+            "text": "話す"
+        },
+        {
+            "key": "collect liquid",
+            "context": "QudMenuItem",
+            "text": "液体を採取"
+        },
+        {
+            "key": "attack",
+            "context": "QudMenuItem",
+            "text": "攻撃"
+        },
+        {
+            "key": "look",
+            "context": "QudMenuItem",
+            "text": "調べる"
+        },
+        {
+            "key": "target",
+            "context": "QudMenuItem",
+            "text": "狙う"
+        },
+        {
+            "key": "show effects",
+            "context": "QudMenuItem",
+            "text": "効果を表示"
+        },
+        {
+            "key": "[h] chat",
+            "context": "QudMenuItem",
+            "text": "[h] 話す"
+        },
+        {
+            "key": "[k] attack",
+            "context": "QudMenuItem",
+            "text": "[k] 攻撃"
+        },
+        {
+            "key": "[l] look",
+            "context": "QudMenuItem",
+            "text": "[l] 調べる"
+        },
+        {
+            "key": "[t] target",
+            "context": "QudMenuItem",
+            "text": "[t] 狙う"
+        },
+        {
+            "key": "[w] show effects",
+            "context": "QudMenuItem",
+            "text": "[w] 効果を表示"
+        },
+        {
+            "key": "[c] collect liquid",
+            "context": "QudMenuItem",
+            "text": "[c] 液体を採取"
+        },
+        {
+            "key": "You embark for the caves of Qud.",
+            "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+            "text": "クッドの洞窟へ旅立つ。"
+        },
+        {
+            "key": "You embark for the caves of Qud.",
+            "context": "XRL.UI.XRL.CharacterBuilds.Qud.QudSpecificBootHandlersModule",
+            "text": "クッドの洞窟へ旅立つ。"
+        },
+        {
+            "key": "You embark for the caves of Qud.",
+            "context": "XRL.UI.Popup.ShowBlock.Message",
+            "text": "クッドの洞窟へ旅立つ。"
+        },
+        {
+            "key": "Acting on some inscrutable impulse, a parallel version of yourself travels through space and time to destroy you.\n\nEach time you embark on a new location, there's a small chance your evil twin has tracked you there and attempts to kill you.",
+            "context": "XRL.UI.XRL.World.Parts.Mutation.EvilTwin",
+            "text": "不可解な衝動に突き動かされ、並行世界の自分自身が時空を越えてあなたを滅ぼしに来る。\\n\\n新しい場所へ赴くたび、あなたの邪悪な双子がそこを突き止め、命を狙ってくる可能性がある。"
+        },
+        {
+            "key": "equip (auto)",
+            "context": "QudMenuItem",
+            "text": "自動で装備"
+        },
+        {
+            "key": "Equip (manual)",
+            "context": "QudMenuItem",
+            "text": "手動で装備"
+        },
+        {
+            "key": "Esc",
+            "context": "QudMenuItem",
+            "text": "Esc"
+        },
+        {
+            "key": "Enter",
+            "context": "QudMenuItem",
+            "text": "Enter"
+        },
+        {
+            "key": "Tab",
+            "context": "QudMenuItem",
+            "text": "Tab"
+        },
+        {
+            "key": "get",
+            "context": "QudMenuItem",
+            "text": "拾う"
+        },
+        {
+            "key": "open",
+            "context": "QudMenuItem",
+            "text": "開ける"
+        },
+        {
+            "key": "close",
+            "context": "QudMenuItem",
+            "text": "閉める"
+        },
+        {
+            "key": "drink",
+            "context": "QudMenuItem",
+            "text": "飲む"
+        },
+        {
+            "key": "eat",
+            "context": "QudMenuItem",
+            "text": "食べる"
+        },
+        {
+            "key": "fill",
+            "context": "QudMenuItem",
+            "text": "満たす"
+        },
+        {
+            "key": "pour",
+            "context": "QudMenuItem",
+            "text": "注ぐ"
+        },
+        {
+            "key": "activate",
+            "context": "QudMenuItem",
+            "text": "起動する"
+        },
+        {
+            "key": "apply",
+            "context": "QudMenuItem",
+            "text": "使用する"
+        },
+        {
+            "key": "disassemble",
+            "context": "QudMenuItem",
+            "text": "分解する"
+        },
+        {
+            "key": "examine",
+            "context": "QudMenuItem",
+            "text": "調べる"
+        },
+        {
+            "key": "give",
+            "context": "QudMenuItem",
+            "text": "渡す"
+        },
+        {
+            "key": "interact",
+            "context": "QudMenuItem",
+            "text": "操作する"
+        },
+        {
+            "key": "read",
+            "context": "QudMenuItem",
+            "text": "読む"
+        },
+        {
+            "key": "take",
+            "context": "QudMenuItem",
+            "text": "取る"
+        },
+        {
+            "key": "unequip",
+            "context": "QudMenuItem",
+            "text": "装備を外す"
+        },
+        {
+            "key": "paint",
+            "context": "QudMenuItem",
+            "text": "塗る"
+        },
+        {
+            "key": "sit",
+            "context": "QudMenuItem",
+            "text": "座る"
+        },
+        {
+            "key": "stand",
+            "context": "QudMenuItem",
+            "text": "立つ"
+        },
+        {
+            "key": "[e] equip (auto)",
+            "context": "QudMenuItem",
+            "text": "[e] 自動で装備"
+        },
+        {
+            "key": "[E] Equip (manual)",
+            "context": "QudMenuItem",
+            "text": "[E] 手動で装備"
+        },
+        {
+            "key": "[g] get",
+            "context": "QudMenuItem",
+            "text": "[g] 拾う"
+        },
+        {
+            "key": "[o] open",
+            "context": "QudMenuItem",
+            "text": "[o] 開ける"
+        },
+        {
+            "key": "[c] close",
+            "context": "QudMenuItem",
+            "text": "[c] 閉める"
+        },
+        {
+            "key": "You need to reload! (R)",
+            "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+            "text": "リロードが必要だ！（R）"
+        },
+        {
+            "key": "{{y|You need to reload! (R)}}",
+            "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+            "text": "{{y|リロードが必要だ！（R）}}"
+        },
+        {
+            "key": "<color=#B1C9C3FF>You need to reload! (R) </color>",
+            "context": "TMP.PopupMessage.Message",
+            "text": "<color=#B1C9C3FF>リロードが必要だ！（R） </color>"
+        },
+        {
+            "key": "You don't have anything to use in that slot.",
+            "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+            "text": "そのスロットで使えるものがありません。"
+        }
+    ]
+}

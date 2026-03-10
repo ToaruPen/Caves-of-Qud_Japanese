@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<help>
+  <!--
+    Manual topics are localized via Harmony (see Docs/manual/ManualPatch.jp.manual).
+    This stub keeps the localization loader happy without duplicating topics.
+  -->
+</help>

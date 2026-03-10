@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "id": "ui-pickitem",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Take all",
+      "context": "XRL.UI.PickItem",
+      "text": "すべて取る"
+    },
+    {
+      "key": "Store an item",
+      "context": "XRL.UI.PickItem",
+      "text": "アイテムを預ける"
+    },
+    {
+      "key": "to scroll up",
+      "context": "XRL.UI.PickItem",
+      "text": "で上にスクロール"
+    },
+    {
+      "key": "to scroll down",
+      "context": "XRL.UI.PickItem",
+      "text": "で下にスクロール"
+    },
+    {
+      "key": "{{W|Select an item}}",
+      "context": "XRL.UI.PickItem",
+      "text": "{{W|アイテムを選択}}"
+    },
+    {
+      "key": "{{W|Select an item to store}}",
+      "context": "XRL.UI.PickItem",
+      "text": "{{W|預けるアイテムを選択}}"
+    },
+    {
+      "key": " {{G|[owned by you]}}",
+      "context": "XRL.UI.PickItem",
+      "text": " {{G|[あなたの持ち物]}}"
+    }
+  ]
+}

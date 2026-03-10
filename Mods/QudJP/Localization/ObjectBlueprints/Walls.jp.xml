@@ -1,0 +1,2348 @@
+<?xml version='1.0' encoding='utf-8'?>
+<objects Load="Merge">
+
+<object Name="Wall" Inherits="InorganicObject" Replace="true">
+    <part Name="Render" DisplayName="[壁]" Tile="assets_content_textures_tiles_tile-0-13.png" RenderLayer="7" RenderString="219" ColorString="&amp;y^k" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" SpecificHeat="1.55" Conductivity="20" />
+    <part Name="Description" Short="[壁]" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="100" />
+    <tag Name="Wall" />
+    <tag Name="Diggable" />
+    <tag Name="NoEffects" />
+    <stat Name="ColdResistance" Value="50" />
+    <stat Name="ElectricResistance" Value="50" />
+    <tag Name="PaintedWall" Value="wall_brick" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="HeroNameTitleDescriptor" Value="Cracked,Crackless,Once-Cracked,Painted,Still-Standing,Studded,Sturdy,Twice-Cracked,Unpainted,Unstudded" />
+    <tag Name="HeroNameTitleClientele" Value="Builders,Cowards,Defenders,Roofs,the Assailed,the Stalwart" />
+    <xtagTextFragments Skin="texture" PoeticFeatures="towering nature,gentle stillness,comforting enclosure" />
+    <builder Name="Animated" ChanceOneIn="200000" />
+    <tag Name="Animatable" />
+    <tag Name="NamingTag" Value="Animated" />
+    <tag Name="DynamicObjectsTable:AnimatableFurniture" />
+    <tag Name="Class" Value="wall" />
+    <tag Name="BodyType" Value="Wall" />
+    <tag Name="NoSparkingQuest" />
+    <part Name="Graffitied" ChanceOneIn="2000" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitStone" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_stone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_stone" />
+    <tag Name="LairAmbientBed" Value="Sounds/Ambiences/amb_creature_rocks" />
+    <tag Name="Breakable" Value="*delete" />
+  </object>
+
+<object Name="BaseSedimentaryRock" Inherits="BaseWallRock" Replace="true">
+    <part Name="Render" DisplayName="[岩壁]" RenderString="177" ColorString="&amp;r^w" TileColor="&amp;r" DetailColor="w" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="10" />
+    <stat Name="Hitpoints" Value="200" />
+    <tag Name="PaintedWall" Value="wall_rock" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="0" />
+    <stag Name="Geological" />
+  </object>
+
+<object Name="BaseMetamorphicRock" Inherits="BaseWallRock" Replace="true">
+    <part Name="Render" DisplayName="[岩壁]" RenderString="177" ColorString="&amp;r^w" TileColor="&amp;r" DetailColor="w" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="2500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="20" />
+    <stat Name="Hitpoints" Value="2000" />
+    <tag Name="PaintedWall" Value="wall_rock" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="0" />
+    <stag Name="Geological" />
+  </object>
+
+<object Name="BasePlantWall" Inherits="BaseWallRock" Replace="true">
+    <part Name="Render" DisplayName="[植物壁]" RenderString="177" ColorString="&amp;r^w" TileColor="&amp;r" DetailColor="w" Occluding="true" />
+    <part Name="Physics" Weight="1000" FlameTemperature="350" VaporTemperature="1500" Takeable="false" Solid="true" Organic="true" Conductivity="90" />
+    <part Name="ShouldAttackToReachTarget" />
+    <stat Name="Hitpoints" Value="50" />
+    <tag Name="BodyType" Value="PlantWall" />
+    <tag Name="PaintedWall" Value="wall_plant" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="Ashes" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="0" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitPlant" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_genPlant" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_genPlant" />
+  </object>
+
+<object Name="BaseMushroomWall" Inherits="BaseWallRock" Replace="true">
+    <part Name="Render" DisplayName="菌肉" RenderString="219" ColorString="&amp;r^R" TileColor="&amp;r" DetailColor="R" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" Organic="true" Conductivity="60" />
+    <part Name="Description" Short="家内の整った角度に合わせて生け垣のように刈り込まれた籠状の子実体には、胞子を豊富に含む粘液がきらめいている。" />
+    <stat Name="AV" Value="6" />
+    <stat Name="Hitpoints" Value="150" />
+    <tag Name="PaintedWall" Value="wall_mushroom" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitOrganic" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="PaintWith" Value="MushroomFlesh" />
+    <tag Name="BodyType" Value="FungusWall" />
+    <tag Name="LiveFungus" />
+    <tag Name="Tier" Value="0" />
+  </object>
+
+<object Name="Shale" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="頁岩" ColorString="&amp;r^w" TileColor="&amp;r" DetailColor="w" />
+    <stat Name="AV" Value="10" />
+    <stat Name="Hitpoints" Value="200" />
+    <part Name="Description" Short="粘土と石英が乾かされ砕かれて赤い岩になり、丘陵の民が幾千年ものあいだ採掘し続けてきた。" />
+    <part Name="ShaleVines" />
+    <tag Name="PaintWith" Value="MarbleWalls" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Sandstone" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="砂岩" ColorString="&amp;r^W" TileColor="&amp;r" DetailColor="W" />
+    <stat Name="AV" Value="8" />
+    <stat Name="Hitpoints" Value="150" />
+    <part Name="Description" Short="岩が浸食されて砂になり、砂が湖に吹き込まれ、湖が泥に埋もれ、泥が砂を圧して岩に戻す。大地は組み替えられる。" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Limestone" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="石灰岩" ColorString="&amp;y^K" TileColor="&amp;y" DetailColor="K" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="15" />
+    <stat Name="Hitpoints" Value="1000" />
+    <part Name="Description" Short="無脊椎生物から組織が吸い尽くされ、なお数百万年かけて血を流し続けた。青藍の岩は奈落の墓所だ。" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Marl" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="泥灰岩" ColorString="&amp;y^Y" TileColor="&amp;y" DetailColor="Y" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="6" />
+    <stat Name="Hitpoints" Value="300" />
+    <part Name="Description" Short="石灰分の多い泥に鋳型を取られた湖沼の生態系が、白亜の輝きの中で百万年の営みをさらけ出している。" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Halite" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="岩塩" RenderString="176" ColorString="&amp;Y^r" TileColor="&amp;Y" DetailColor="r" Occluding="true" />
+    <stat Name="AV" Value="10" />
+    <stat Name="Hitpoints" Value="500" />
+    <part Name="Description" Short="深紅の雲が結晶の習性に従い、内にも外にも入れ子状の立方体となる。なぜモグラ＝イはこの形を太陽から隠すのだろう？" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Gypsum" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="石膏" RenderString="176" ColorString="&amp;Y^W" TileColor="&amp;Y" DetailColor="W" Occluding="true" />
+    <stat Name="AV" Value="6" />
+    <stat Name="Hitpoints" Value="200" />
+    <part Name="Description" Short="焼け付いた水晶金が幾何学的な影を百万の水の洞窟の床へ投げかける。" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Black Shale" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="黒色頁岩" ColorString="&amp;K^y" TileColor="&amp;K" DetailColor="y" />
+    <stat Name="AV" Value="12" />
+    <stat Name="Hitpoints" Value="500" />
+    <part Name="Description" Short="黒い石が、粘土の下で滅び黄鉄鉱に腐ったカタツムリの都市への記念碑として屹立している。" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Coral Rag" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="珊瑚礫" ColorString="&amp;C^B" TileColor="&amp;C" DetailColor="B" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="18" />
+    <stat Name="Hitpoints" Value="1000" />
+    <part Name="Description" Short="若い海のアーコロジーだった礁は今やターコイズ色の地下墓所であり、表面は酸性水に噛まれてざらつく傷痕に変わった。" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Oolite" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="ウーライト" ColorString="&amp;Y^y" TileColor="&amp;Y" DetailColor="y" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="20" />
+    <stat Name="Hitpoints" Value="1500" />
+    <part Name="Description" Short="石の卵が真珠の平板で抱卵され、幼生は一つとして孵らず、擦り減って塵になる。" />
+    <tag Name="PaintedWall" Value="wall_oolite" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Serpentinite" Inherits="BaseMetamorphicRock" Replace="true">
+    <part Name="Render" DisplayName="蛇紋岩" ColorString="&amp;g^K" TileColor="&amp;g" DetailColor="K" Occluding="true" />
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="2000" />
+    <part Name="Description" Short="地表の住人に名を持たぬ地下の産室で超苦鉄質岩が羊水に濡れ、世界蛇として生まれ出る。" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Slate" Inherits="BaseMetamorphicRock" Replace="true">
+    <part Name="Render" DisplayName="粘板岩" ColorString="&amp;y^K" TileColor="&amp;y" DetailColor="K" Occluding="true" />
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="3000" />
+    <part Name="Description" Short="火山灰が地下深くの繭で蛹となり、灰色の石として殻を破った。詭弁家たちはそれを純粋なエーテルの色だと論じる。" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="PaintedWall" Value="wall_granite" />
+  </object>
+
+<object Name="Quartzite" Inherits="BaseMetamorphicRock" Replace="true">
+    <part Name="Render" DisplayName="珪岩" ColorString="&amp;C^r" TileColor="&amp;C" DetailColor="r" Occluding="true" />
+    <stat Name="AV" Value="35" />
+    <stat Name="Hitpoints" Value="2000" />
+    <part Name="Description" Short="赤とシアンの斑模様の水晶モザイクが崩れゆく地殻の変成残滓であり、新しい地球が生まれようともがいている。" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="PaintedWall" Value="wall_crystal1" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+  </object>
+
+<object Name="Marble" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="大理石壁" RenderString="176" ColorString="&amp;Y^c" TileColor="&amp;c" DetailColor="Y" Occluding="true" /> asd
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="6000" />
+    <part Name="Description" Short="カタツムリと珊瑚が地質学的な圧搾機で潰され、不純物のリボンに塗り込められ、理想の平面に沿って研がれた。" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+    <tag Name="PaintWith" Value="MarbleWalls" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="0" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="Star Orchid Marble" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="星蘭の大理石壁" RenderString="176" ColorString="&amp;Y^m" TileColor="&amp;m" DetailColor="Y" Occluding="true" />asd
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="6000" />
+    <part Name="Description" Short="異界の硬殻の生き物が微惑星から収穫され、回収船のマゼンタの排気で灼かれ、天の投石機の勢いで再突入へと押し潰された。" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+    <tag Name="PaintWith" Value="MarbleWalls" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="7" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="Black Marble" Inherits="BaseMetamorphicRock" Replace="true">
+    <part Name="Render" DisplayName="黒大理石" ColorString="&amp;y^K" TileColor="&amp;K" DetailColor="y" RenderString="176" Occluding="true" /> asd
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="2000" />
+    <part Name="Description" Short="惑星の最下層にある世界の虚空は霊妙な石積みによって区切られている。淡い白の透かし模様には意味が込められているが、それを読み解く者はいない。" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+  </object>
+
+<object Name="Polished Black Marble" Inherits="Black Marble" Replace="true">
+    <part Name="Render" DisplayName="磨かれた黒大理石" ColorString="&amp;Y^K" TileColor="&amp;K" DetailColor="Y" RenderString="176" Occluding="true" /> asd
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="2000" />
+    <part Name="Description" Short="惑星の最下層にある世界の虚空は霊妙な石積みによって区切られている。淡い白の透かし模様には意味が込められているが、それを読み解く者はいない。" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+  </object>
+
+<object Name="Granite" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="花崗岩" RenderString="177" ColorString="&amp;K^w" TileColor="&amp;K" DetailColor="w" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="21500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="40" />
+    <stat Name="Hitpoints" Value="26000" />
+    <part Name="Description" Short="長石とその類縁石が複合され、静電模様の粒子でまだらに刻まれている。亀裂が未来の小石を予感させる。" />
+    <tag Name="PaintedWall" Value="wall_rock" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="0" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Mudroot" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="絡み合う泥根" RenderString="177" ColorString="&amp;w^g" TileColor="&amp;w" DetailColor="g" Occluding="true" />
+    <part Name="Corpse" CorpseChance="100" BuildCorpseChance="0" CorpseBlueprint="BrackishPool" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" Organic="true" />
+    <stat Name="AV" Value="7" />
+    <stat Name="Hitpoints" Value="100" />
+    <part Name="Description" Short="繊維質の植物脈が編み込まれて凝縮した泥を包み、塩辛い血潮を滲ませている。" />
+    <tag Name="BodyType" Value="PlantWall" />
+    <tag Name="PaintedWall" Value="wall_rock" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="BrackishPool" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="LivePlant" />
+    <tag Name="Tier" Value="0" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitPlant" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_genPlant" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_genPlant" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Basalt" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="玄武岩" RenderString="177" ColorString="&amp;K^y" TileColor="&amp;K" DetailColor="y" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="3000" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="10" />
+    <stat Name="Hitpoints" Value="200" />
+    <part Name="Description" Short="溶岩流の傷跡が広い石の上に小さな棚として読み取れ、暗い穴はかつて溶けたガスの噴出口だった。" />
+    <tag Name="PaintedWall" Value="wall_rock" />
+    <tag Name="PaintWith" Value="BasaltWalls" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="Tier" Value="0" />
+  </object>
+
+<object Name="GodshroomWall" Inherits="BaseMushroomWall" Replace="true">
+    <part Name="Render" DisplayName="菌肉" RenderString="007" ColorString="&amp;O^o" TileColor="&amp;o" DetailColor="O" Occluding="true" />
+    <part Name="RandomColors" MainColor="o^o,O^o" />
+    <part Name="FungalVision" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="6" />
+    <tag Name="NoClear" />
+  </object>
+
+<object Name="MushroomWall-Red" Inherits="BaseMushroomWall" Replace="true">
+    <part Name="Render" DisplayName="菌肉" RenderString="007" ColorString="&amp;Y^r" TileColor="&amp;r" DetailColor="R" Occluding="true" />
+    <part Name="RandomColors" MainColor="r^r,Y^r" />
+    <tag Name="Tier" Value="3" />
+  </object>
+
+<object Name="MushroomWall-White" Inherits="BaseMushroomWall" Replace="true">
+    <part Name="Render" DisplayName="菌肉" RenderString="007" ColorString="&amp;y^Y" TileColor="&amp;y" DetailColor="Y" Occluding="true" />
+    <part Name="RandomColors" MainColor="y^Y,Y^Y" />
+    <tag Name="Tier" Value="3" />
+  </object>
+
+<object Name="PlantWall" Inherits="BasePlantWall" Replace="true">
+    <part Name="Render" DisplayName="植物質" RenderString="176" ColorString="&amp;w^g" TileColor="&amp;w" DetailColor="g" Occluding="true" />
+    <stat Name="AV" Value="0" />
+    <stat Name="Hitpoints" Value="5" />
+    <part Name="Description" Short="自然の両の手である時と偶然が根と茎と葉を編み合わせ、繊維質の堤を作った。" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="LivePlant" />
+  </object>
+
+<object Name="AgateWall" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="{{K|アゲート}}を含む頁岩壁" ColorString="&amp;r^K" TileColor="&amp;r" DetailColor="K" />
+    <part Name="Description" Short="粘土と石英が乾いて砕け、丘陵の民が幾千年も掘り続ける赤い岩になった。石全体に光る黒い帯が走っている。" />
+    <part Name="Corpse" CorpseChance="4" CorpseBlueprint="Rough Agate" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_gemstone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_gemstone" />
+  </object>
+
+<object Name="TopazWall" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="{{W|トパーズ}}を含む頁岩壁" ColorString="&amp;r^W" TileColor="&amp;r" DetailColor="W" />
+    <part Name="Description" Short="粘土と石英が乾いて砕け、丘陵の民が幾千年も掘り続ける赤い岩になった。石全体に光る黄金の帯が走っている。" />
+    <part Name="Corpse" CorpseChance="4" CorpseBlueprint="Rough Topaz" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_gemstone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_gemstone" />
+  </object>
+
+<object Name="JasperWall" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="{{R|碧玉}}を含む頁岩壁" ColorString="&amp;r^R" TileColor="&amp;r" DetailColor="R" />
+    <part Name="Description" Short="粘土と石英が乾いて砕け、丘陵の民が幾千年も掘り続ける赤い岩になった。石全体に光る赤い帯が走っている。" />
+    <part Name="Corpse" CorpseChance="4" CorpseBlueprint="Rough Jasper" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_gemstone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_gemstone" />
+  </object>
+
+<object Name="AmethystWall" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="{{M|アメジスト}}を含む頁岩壁" ColorString="&amp;r^M" TileColor="&amp;r" DetailColor="M" />
+    <part Name="Description" Short="粘土と石英が乾いて砕け、丘陵の民が幾千年も掘り続ける赤い岩になった。石全体に光る紫の帯が走っている。" />
+    <part Name="Corpse" CorpseChance="4" CorpseBlueprint="Rough Amethyst" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_gemstone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_gemstone" />
+  </object>
+
+<object Name="SapphireWall" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="{{B|サファイア}}を含む頁岩壁" ColorString="&amp;r^B" TileColor="&amp;r" DetailColor="B" />
+    <part Name="Description" Short="粘土と石英が乾いて砕け、丘陵の民が幾千年も掘り続ける赤い岩になった。石全体に光る青い帯が走っている。" />
+    <part Name="Corpse" CorpseChance="4" CorpseBlueprint="Rough Sapphire" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_gemstone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_gemstone" />
+  </object>
+
+<object Name="EmeraldWall" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="{{G|エメラルド}}を含む頁岩壁" ColorString="&amp;r^G" TileColor="&amp;r" DetailColor="G" />
+    <part Name="Description" Short="粘土と石英が乾いて砕け、丘陵の民が幾千年も掘り続ける赤い岩になった。石全体に光る緑の帯が走っている。" />
+    <part Name="Corpse" CorpseChance="4" CorpseBlueprint="Rough Emerald" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_gemstone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_gemstone" />
+  </object>
+
+<object Name="PeridotWall" Inherits="BaseSedimentaryRock" Replace="true">
+    <part Name="Render" DisplayName="{{peridot|ペリドット}}を含む隕石質の壁" ColorString="&amp;K^G" TileColor="&amp;K" DetailColor="G" />
+    <part Name="Description" Short="粘土と石英が乾いて砕け、丘陵の民が幾千年も掘り続ける赤い岩になった。石全体に緑と黄金の光る帯が交差している。" />
+    <part Name="Corpse" CorpseChance="4" CorpseBlueprint="Rough Peridot" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_gemstone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_gemstone" />
+  </object>
+
+<object Name="Fulcrete" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="フルクリート" RenderString="176" ColorString="&amp;Y^k" TileColor="&amp;Y" DetailColor="k" Occluding="true" />
+    <part Name="Physics" Weight="15000" FlameTemperature="25000" VaporTemperature="58000" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="40" />
+    <stat Name="Hitpoints" Value="100" />
+    <part Name="Description" Short="炭素砂利の島々が瀝青の海に点在し、水平面から空のやすりに向かって隆起している。時間と圧力が洗い鉢に髪の毛ほどの溝を刻んだ。" />
+    <tag Name="PaintedWall" Value="wall_mud" />
+    <stat Name="HeatResistance" Value="75" />
+    <stat Name="ColdResistance" Value="75" />
+    <tag Name="PaintWith" Value="FulcreteWalls" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="Tier" Value="5" />
+    <xtagGrammar massNoun="true" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="EbonFulcrete" Inherits="Fulcrete" Replace="true">
+    <part Name="Description" Short="炭素砂利の黒い島々が瀝青の海に点在し、水平面から空のやすりに向かって盛り上がる。時間と圧力が洗い鉢に髪の毛のような細い溝を刻んだ。" />
+    <part Name="Render" DisplayName="漆黒のフルクリート" RenderString="176" ColorString="&amp;k^K" TileColor="&amp;K" DetailColor="y" Occluding="true" />
+    <tag Name="Tier" Value="6" />
+  </object>
+
+<object Name="MetalWall" Inherits="BaseWallMetal" Replace="true">
+    <part Name="Render" DisplayName="金属壁" RenderString="177" ColorString="&amp;c^C" TileColor="&amp;c" DetailColor="C" Occluding="true" />
+    <stat Name="AV" Value="30" />
+    <stat Name="Hitpoints" Value="400" />
+    <part Name="Description" Short="薄い金属板がダイヤ模様に組まれて溶接され、囲いを成している。表面はいくつかの区画で焦げ、引っかき傷が付いている。" />
+    <tag Name="PaintWith" Value="MetalWalls" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="Tier" Value="3" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitMetal" />
+  </object>
+
+<object Name="RustedMetalWall" Inherits="MetalWall" Replace="true">
+    <part Name="Render" DisplayName="錆びた金属壁" RenderString="177" ColorString="&amp;r^C" TileColor="&amp;r" DetailColor="C" Occluding="true" />
+    <part Name="Description" Short="薄い金属板がダイヤ模様に組まれて溶接され、囲いを成している。表面はいくつかの区画で焦げ、引っかき傷が付いている。" />
+  </object>
+
+<object Name="CrysteelPlatedWall" Inherits="BaseWallMetal" Replace="true">
+    <part Name="Render" DisplayName="クライスティール板の剪断壁" RenderString="177" ColorString="&amp;g^y" TileColor="&amp;g" DetailColor="y" Occluding="true" />
+    <stat Name="AV" Value="30" />
+    <stat Name="Hitpoints" Value="3000" />
+    <part Name="Description" Short="磨かれたクライスティールの充填板がフルクリート梁で縦方向に支持され、空洞を生命の物音が反響してゆく。" />
+    <tag Name="PaintWith" Value="MetalWalls" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="Tier" Value="6" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitGlass" />
+  </object>
+
+<object Name="Foamcrete" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="フォームクリート" RenderString="176" ColorString="&amp;C^k" TileColor="&amp;C" DetailColor="k" Occluding="true" />
+    <part Name="Physics" Weight="15000" FlameTemperature="25000" VaporTemperature="58000" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="40" />
+    <stat Name="Hitpoints" Value="100" />
+    <part Name="Description" Short="壁のひび割れは、圧縮されたフォームクリートが六角形に膨張した際の化石だ。" />
+    <part Name="FillPit" DestroySelf="true" ReplaceWith="FoamcreteFloor" />
+    <stat Name="HeatResistance" Value="75" />
+    <stat Name="ColdResistance" Value="75" />
+    <tag Name="PaintedWall" Value="wall_mud" />
+    <tag Name="Tier" Value="5" />
+    <xtagGrammar massNoun="true" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="Verdigris" Inherits="BaseWallMetal" Replace="true">
+    <part Name="Render" DisplayName="曇ったクロム" RenderString="177" ColorString="&amp;c^g" TileColor="&amp;c" DetailColor="g" Occluding="true" />
+    <part Name="Physics" Weight="25000" FlameTemperature="25000" VaporTemperature="58000" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="50" />
+    <stat Name="Hitpoints" Value="300" />
+    <part Name="Description" Short="毒々しいアクア苔が金属の躯を明るくし、真鍮酔いの虫たちを惹きつける。" />
+    <stat Name="AcidResistance" Value="100" />
+    <stat Name="HeatResistance" Value="100" />
+    <stat Name="ColdResistance" Value="100" />
+    <stat Name="ElectricResistance" Value="100" />
+    <tag Name="PaintedWall" Value="wall_metal" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="Tier" Value="4" />
+    <xtagGrammar massNoun="true" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="Concrete" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="コンクリート壁" RenderString="178" ColorString="&amp;y^c" TileColor="&amp;y" DetailColor="c" Occluding="true" />
+    <part Name="Physics" Weight="12000" FlameTemperature="24000" VaporTemperature="57000" Takeable="false" Solid="true" />
+    <part Name="Description" Short="滑らかな灰色の石が、結合された小石の内臓とセメントの血膏を隠している。表面には汚れの筋が走る。" />
+    <stat Name="AV" Value="30" />
+    <stat Name="Hitpoints" Value="100" />
+    <stat Name="HeatResistance" Value="75" />
+    <stat Name="ColdResistance" Value="75" />
+    <tag Name="PaintedWall" Value="wall_mud" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="Tier" Value="3" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="PigskinWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="豚革の壁" RenderString="178" ColorString="&amp;r^w" TileColor="&amp;r" DetailColor="w" Occluding="true" />
+    <part Name="Physics" Weight="500" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="桃色で産毛に覆われた切片が引き伸ばされてなめされ、病棟の屋根として張られている。" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="100" />
+    <tag Name="BodyType" Value="LeatherWall" />
+    <tag Name="PaintedWall" Value="wall_wood" />
+    <tag Name="PaintedWallExtension" Value=".bmp" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Tier" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="WoodWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="塩漬け茎の壁" Tile="assets_content_textures_tiles_tile-1-18.png" RenderString="215" ColorString="&amp;w^y" TileColor="&amp;w" DetailColor="y" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="ここには葉を剥いだ黄ばんだ塩茎の幹が泥で固められている。" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="100" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedWall" Value="wall_wood" />
+    <tag Name="PaintedWallExtension" Value=".bmp" />
+    <tag Name="PaintWith" Value="WoodWalls" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Tier" Value="0" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitWood" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_manufacturedWood" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_manufacturedWood" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+
+<object Name="BrinestalkWall" Inherits="BaseWallWood" Replace="true">
+    <part Name="Render" DisplayName="塩漬け茎の壁" Tile="Walls/wall_brinestalk-00000000.png" RenderString="215" ColorString="&amp;w^y" TileColor="&amp;w" DetailColor="y" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="ここには葉を剥いだ黄ばんだ塩茎の幹が泥で固められている。" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="100" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedWall" Value="wall_brinestalk" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="PaintWith" Value="BrinestalkWalls" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Tier" Value="0" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitWood" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_manufacturedWood" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_manufacturedWood" />
+  </object>
+
+<object Name="BurntWood" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="焦げ木" Tile="assets_content_textures_tiles_tile-1-18.png" RenderString="215" ColorString="&amp;k^y" TileColor="&amp;k" DetailColor="y" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="天空火の襲撃で黒く焼けた樹皮が、いまは余光に輝いている。" />
+    <stat Name="AV" Value="6" />
+    <stat Name="Hitpoints" Value="200" />
+    <tag Name="PaintedWall" Value="wall_wood" />
+    <tag Name="PaintedWallExtension" Value=".bmp" />
+    <tag Name="PaintWith" Value="WoodWalls" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <xtagGrammar massNoun="true" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_manufacturedWood" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_manufacturedWood" />
+  </object>
+
+<object Name="CanvasWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="帆布" RenderString="216" ColorString="&amp;w" DetailColor="r" Occluding="true" />
+    <part Name="Physics" Weight="100" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="大地の活性化した亜麻が簡素な格子模様にあや織りされ、杭に掛けられている。" />
+    <stat Name="AV" Value="1" />
+    <stat Name="Hitpoints" Value="15" />
+    <tag Name="BodyType" Value="ClothWall" />
+    <tag Name="PaintedFence" Value="tent" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Tier" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="UsesGate" Value="Brinestalk Gate" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitFabric" />
+  </object>
+
+<object Name="ThatchedWall" Inherits="BasePlantWall" Replace="true">
+    <part Name="Render" DisplayName="茅葺き壁" RenderString="176" ColorString="&amp;y^w" TileColor="&amp;y" DetailColor="w" Occluding="true" />
+    <part Name="Physics" Weight="300" FlameTemperature="300" VaporTemperature="6000" Takeable="false" Solid="true" />
+    <stat Name="Hitpoints" Value="40" />
+    <part Name="Description" Short="ウォーターヴァインと塩茎の藁を束ねて角度を付け、塩滓をそらしている。" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedWall" Value="wall_wood" />
+    <tag Name="PaintedWallExtension" Value=".bmp" />
+    <tag Name="Category_Settlement" />
+    <part Name="Graffitied" ChanceOneIn="500" />
+  </object>
+
+<object Name="WornWoodWall" Inherits="BaseWallWood" Replace="true">
+    <part Name="Render" DisplayName="風化した木材" RenderString="215" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="ここには葉を剥いだ黄ばんだ塩茎の幹が泥で固められている。" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="150" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedWall" Value="wall_wood_worn" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Tier" Value="2" />
+    <xtagGrammar iArticle="some" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="WornWoodWall with Mask" Inherits="WornWoodWall" Replace="true">
+    <part Name="Render" DisplayName="仮面が吊された風化木" RenderString="215" Occluding="true" ColorString="&amp;M^K" TileColor="&amp;M" />
+    <part Name="Description" Short="ここには葉を剥いだ黄ばんだ塩茎の幹が泥で固められ、四本の釘から擦り切れた蛾の翼の仮面が吊るされている。錆漆喰の繊細な葉片はナノ編みで縁取られ、硬い針金の骨組みに張られている。かつて目が覗き口が息をした穴は、今や樹脂で埋められている。" />
+    <tag Name="PaintWith" Value="WoodWall" />
+    <removepart Name="Graffitied" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+
+<object Name="BrickWall" Inherits="BaseWallBrick" Replace="true">
+    <part Name="Render" DisplayName="煉瓦" RenderString="177" Occluding="true" ColorString="&amp;r^w" TileColor="&amp;r" DetailColor="w" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" />
+    <part Name="Description" Short="焼かれた粘土インゴットが交互に積まれて防壁となる。煉瓦一つひとつに時間のまだらな刻み目、窯の熱平衡の歪み、そして生みの泥に棲んでいた菌が痕跡を残している。" />
+    <stat Name="AV" Value="7" />
+    <stat Name="Hitpoints" Value="200" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="Tier" Value="2" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="CyberWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="テトラクセノノガラス壁" RenderString="215" ColorString="&amp;C^k" DetailColor="Y" Occluding="false" />
+    <part Name="Physics" FlameTemperature="9999" FreezeTemperature="-9999" BrittleTemperature="-9999" Weight="1000" Takeable="false" Solid="true" />
+    <part Name="Description" Short="プリズムガラスの溝柱が生成の光景を千もの断片的景色へ散乱させる。" />
+    <part Name="RefractLight" Chance="30" />
+    <stat Name="AV" Value="2" />
+    <stat Name="Hitpoints" Value="40" />
+    <stat Name="ColdResistance" Value="100" />
+    <tag Name="Tier" Value="5" />
+    <tag Name="BodyType" Value="GlassWall" />
+    <tag Name="PaintWith" Value="GlassWall" />
+    <tag Name="PaintedFence" Value="glass" />
+    <tag Name="PaintedFenceAtlas" Value="Assets_Content_Textures_Tiles2_" />
+    <tag Name="PaintedFenceExtension" Value=".png" />
+    <tag Name="Transparent" />
+    <part Name="Graffitied" ChanceOneIn="200" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitGlass" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_glass" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_glass" />
+  </object>
+
+<object Name="MachineWallHotTubing" Inherits="BaseWallTubing" Replace="true">
+    <part Name="Render" DisplayName="機械壁" ColorString="&amp;R^K" TileColor="&amp;y" DetailColor="R" />
+    <part Name="Description" Short="真空管が褶曲帯の川のように回路地形を切り裂き、熱いガスがうねりながら流れて真鍮とシリコーンの大地を紅の輝きで満たす。" />
+    <part Name="Corpse" CorpseChance="100" BuildCorpseChance="100" CorpseBlueprint="SmallLavaPuddle" />
+    <part Name="LightSource" Lit="true" Radius="2" />
+    <part Name="DrawInTheDark" ForegroundTileColor="K" BackgroundTileColor="k" DetailColor="R" />
+    <part Name="AvoidMovingOnto" Weight="40" />
+  </object>
+
+<object Name="MachineWallColdTubing" Inherits="BaseWallTubing" Replace="true">
+    <part Name="Render" DisplayName="機械壁" ColorString="&amp;C^K" TileColor="&amp;y" DetailColor="C" />
+    <part Name="Description" Short="真空管が褶曲帯の川のように回路地形を切り裂き、冷たいガスがうねりながら流れて真鍮とシリコーンの大地をシアンの輝きで満たす。" />
+    <part Name="Corpse" CorpseChance="100" BuildCorpseChance="100" CorpseBlueprint="SmallConvalessencePuddle" />
+    <part Name="LightSource" Lit="true" Radius="2" />
+    <part Name="DrawInTheDark" ForegroundTileColor="K" BackgroundTileColor="k" DetailColor="C" />
+  </object>
+
+<object Name="MachineWallEmptyTubing" Inherits="BaseWallTubing" Replace="true">
+    <part Name="Render" DisplayName="機械壁" ColorString="&amp;c^y" TileColor="&amp;y" DetailColor="c" />
+    <part Name="Description" Short="真空管が褶曲帯の川のように回路地形を切り裂いている。" />
+  </object>
+
+<object Name="GlassWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="ガラス壁" RenderString="215" ColorString="&amp;Y^k" DetailColor="y" Occluding="false" />
+    <part Name="Physics" FreezeTemperature="-9999" BrittleTemperature="-9999" Weight="1000" Takeable="false" Solid="true" />
+    <part Name="Description" Short="砂が圧焼され、透き通る板に成型された。" />
+    <stat Name="AV" Value="2" />
+    <stat Name="Hitpoints" Value="40" />
+    <stat Name="ColdResistance" Value="100" />
+    <tag Name="BodyType" Value="GlassWall" />
+    <tag Name="Tier" Value="4" />
+    <tag Name="PaintWith" Value="GlassWall" />
+    <tag Name="PaintedFence" Value="glass" />
+    <tag Name="PaintedFenceAtlas" Value="Assets_Content_Textures_Tiles2_" />
+    <tag Name="PaintedFenceExtension" Value=".png" />
+    <tag Name="Transparent" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitGlass" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_glass" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_glass" />
+  </object>
+
+<object Name="TintedGlassWall" Inherits="GlassWall" Replace="true">
+    <part Name="Render" DisplayName="色ガラスの壁" ColorString="&amp;K^k" Occluding="true" />
+    <part Name="Description" Short="砂が圧焼され、顔料を混ぜて燻った板に成型された。" />
+  </object>
+
+<object Name="SpindleGlassWall" Inherits="GlassWall" Replace="true">
+    <part Name="Render" DisplayName="きらめくガラス壁" RenderString="215" ColorString="&amp;Y^k" DetailColor="y" Occluding="false" />
+    <part Name="AnimatedMaterialGeneric" AnimationLength="360" LowFrameOffset="1" HighFrameOffset="300" ColorStringAnimationFrames="0=&amp;Y^k,355=&amp;C^k" />
+    <part Name="Description" Short="紡錘水道の内部から射すセルリアンの光がガラス面を銀河円盤の星や回路基板のダイオードのように瞬き、その光がガラスに神性の息吹を吹き込んでいる。" />
+    <part Name="OmniphaseObject" />
+  </object>
+
+<object Name="Burnished Azzurum" Inherits="BaseMetamorphicRock" Replace="true">
+    <part Name="Render" DisplayName="磨かれたアズルム" ColorString="&amp;C^c" TileColor="&amp;C" DetailColor="c" Occluding="true" />
+    <stat Name="AV" Value="35" />
+    <stat Name="Hitpoints" Value="2000" />
+    <part Name="Description" Short="ガラス質の外殻からシアンが噴き出し、空そのものが六角柱の密林に結晶化したかのようだ。喰らう者たちがマグマの生誕地から掘り上げ、紡錘を祀る浅丘に組んだ。" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="PaintedWall" Value="wall_crystal1" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_glass" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_glass" />
+  </object>
+
+<object Name="Petal-Strewn WoodWall" Inherits="BaseWallFlower" Replace="true">
+    <part Name="Render" DisplayName="花弁が散る塩茎の壁" Tile="assets_content_textures_tiles_tile-1-18.png" RenderString="215" ColorString="&amp;w" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="ここには葉を剥がした黄ばんだ塩茎の幹が泥で固められ、花びらが散らされている。" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="100" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_manufacturedWood" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_manufacturedWood" />
+  </object>
+
+<object Name="BrinestalkStakes" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="塩漬け茎の杭" RenderString="215" ColorString="&amp;w" DetailColor="y" Occluding="true" />
+    <part Name="Physics" Weight="500" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="ここには葉を剥いだ黄ばんだ塩茎の幹が何本も尖らせて地面に打ち込まれている。" />
+    <stat Name="AV" Value="3" />
+    <stat Name="Hitpoints" Value="74" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedFence" Value="fence" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Flyover" />
+    <intproperty Name="AllowMissiles" Value="1" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="0" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="UsesGate" Value="Brinestalk Gate" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitWood" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_genPlant" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_genPlant" />
+    <stag Name="Contemporary" />
+  </object>
+
+<object Name="BrinestalkArrowslit" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="狭間" RenderString="008" ColorString="&amp;w" DetailColor="y" Occluding="false" />
+    <part Name="Physics" Weight="500" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="ここには葉を剥いだ黄ばんだ塩茎の幹が何本も尖らせて地面に打ち込まれており、その隙間は身体を通すには狭すぎる。" />
+    <stat Name="AV" Value="3" />
+    <stat Name="Hitpoints" Value="74" />
+    <intproperty Name="AllowMissiles" Value="1" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedFence" Value="fence" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Tier" Value="0" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="UsesGate" Value="Brinestalk Gate" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitWood" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_genPlant" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_genPlant" />
+  </object>
+
+<object Name="WoodFence" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="木の柵" RenderString="216" ColorString="&amp;w" DetailColor="y" Occluding="false" />
+    <part Name="Physics" Weight="100" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="地面に突き刺さったドッグソーンの杭には木目を横切る螺旋模様が刻まれている。" />
+    <stat Name="AV" Value="1" />
+    <stat Name="Hitpoints" Value="15" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedFence" Value="fence" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Flyover" />
+    <tag Name="Tier" Value="0" />
+    <intproperty Name="AllowMissiles" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="UsesGate" Value="Brinestalk Gate" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitWood" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_manufacturedWood" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_manufacturedWood" />
+    <tag Name="Fence" />
+    <stag Name="Contemporary" />
+  </object>
+
+<object Name="IronFence" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="錬鉄の柵" RenderString="216" ColorString="&amp;y^k" TileColor="&amp;y^k" DetailColor="y" Occluding="false" />
+    <part Name="Physics" Weight="100" Takeable="false" Solid="true" />
+    <part Name="Description" Short="時の傷を負った鉄柵が二本の水平レールの間に整列している。" />
+    <stat Name="AV" Value="8" />
+    <stat Name="Hitpoints" Value="45" />
+    <part Name="Metal" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="PaintedFence" Value="ironfence" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Flyover" />
+    <tag Name="NoWallPaint" />
+    <tag Name="Tier" Value="1" />
+    <intproperty Name="AllowMissiles" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="UsesGate" Value="Iron Gate" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitMetal" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_metal" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_metal" />
+    <tag Name="Fence" />
+  </object>
+
+<object Name="BrinestalkFence" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="塩漬け茎の柵" RenderString="216" ColorString="&amp;w" DetailColor="y" Occluding="false" />
+    <part Name="Physics" Weight="100" Takeable="false" Solid="true" Organic="true" />
+    <part Name="Description" Short="地面に突き刺さった塩茎の杭の木目を、塩跡の波が横切っている。" />
+    <stat Name="AV" Value="1" />
+    <stat Name="Hitpoints" Value="15" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedFence" Value="fence" />
+    <tag Name="PaintWith" Value="brinestalkfence" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Flyover" />
+    <tag Name="Tier" Value="0" />
+    <intproperty Name="AllowMissiles" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="UsesGate" Value="Brinestalk Gate" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitWood" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_genPlant" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_genPlant" />
+    <tag Name="Fence" />
+  </object>
+
+<object Name="HolographicShaleWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="ホログラフィック頁岩" RenderString="177" ColorString="&amp;r^w" TileColor="&amp;r" DetailColor="w" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="false" />
+    <stat Name="AV" Value="0" />
+    <stat Name="Hitpoints" Value="20000" />
+    <part Name="Description" Short="きらめく光が視差を利用して頁岩の壁の幻影を彫り出している。粘土と石英が乾いて砕け、丘陵の民が幾千年も採り続けた赤い岩になった。" />
+    <tag Name="PaintedWall" Value="wall_rock" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="IgnoresGravity" />
+    <tag Name="Tier" Value="6" />
+    <part Name="HologramMaterial" />
+    <part Name="HologramInvulnerability" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="HoloMarble" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="大理石壁" RenderString="176" ColorString="&amp;Y^c" TileColor="&amp;c" DetailColor="Y" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="false" />
+    <stat Name="AV" Value="0" />
+    <stat Name="Hitpoints" Value="20000" />
+    <part Name="Description" Short="きらめく光が視差を利用して大理石の壁の幻影を彫り出している。カタツムリと珊瑚が地質学的なプレスで潰され、不純物のリボンに塗り込められ、理想の平面に沿って研がれた。" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+    <tag Name="PaintWith" Value="MarbleWalls" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="IgnoresGravity" />
+    <tag Name="Tier" Value="6" />
+    <part Name="HologramMaterial" />
+    <part Name="HologramInvulnerability" />
+  </object>
+
+<object Name="HolographicLowSandstoneWall" Inherits="LowSandstoneWall" Replace="true">
+    <part Name="Render" DisplayName="ホログラフィック砂岩" Occluding="false" />
+    <part Name="Description" Short="きらめく光が視差を利用して砂岩の壁の幻影を彫り出している。岩が浸食されて砂になり、砂が湖に吹き込まれ、湖が泥に埋もれ、泥が砂を圧して岩に戻す。大地は組み替えられる。" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="false" />
+    <stat Name="AV" Value="0" />
+    <stat Name="Hitpoints" Value="20000" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="IgnoresGravity" />
+    <tag Name="Tier" Value="6" />
+    <part Name="HologramMaterial" />
+    <part Name="HologramInvulnerability" />
+  </object>
+
+<object Name="HolographicThatchedWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="ホログラフィック茅葺き壁" RenderString="176" ColorString="&amp;y^w" TileColor="&amp;y" DetailColor="w" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="false" />
+    <stat Name="AV" Value="0" />
+    <stat Name="Hitpoints" Value="20000" />
+    <part Name="Description" Short="きらめく光が視差を利用して茅葺き壁の幻影を彫り出している。ウォーターヴァインと塩茎の藁を束ねて角度を付け、塩滓をそらしている。" />
+    <tag Name="PaintedWall" Value="wall_wood" />
+    <tag Name="PaintedWallExtension" Value=".bmp" />
+    <part Name="HologramMaterial" />
+    <part Name="HologramInvulnerability" />
+  </object>
+
+<object Name="HalfWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="低い壁" RenderString="216" ColorString="&amp;y^k" DetailColor="w" Occluding="false" RenderLayer="6" />
+    <part Name="Physics" Weight="100" Takeable="false" Solid="true" />
+    <part Name="Description" Short="腰の高さまで積まれた古い石壁で、越流を止めはするが視線は遮らない。" />
+    <stat Name="AV" Value="1" />
+    <stat Name="Hitpoints" Value="15" />
+    <tag Name="PaintedFence" Value="half-wall" />
+    <tag Name="PaintedFenceAtlas" Value="Assets_Content_Textures_Tiles2_" />
+    <tag Name="PaintedFenceExtension" Value=".png" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Category_Settlement" />
+    <tag Name="Flyover" />
+    <intproperty Name="AllowMissiles" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="LowSandstoneWall" Inherits="Sandstone" Replace="true">
+    <part Name="Render" Occluding="false" />
+    <part Name="Physics" Solid="false" />
+    <part Name="Description" Short="堅牢な砂岩で築かれた低い壁。" />
+    <stat Name="Hitpoints" Value="2000" />
+  </object>
+
+<object Name="HalfWall_Aquamarine" Inherits="HalfWall" Replace="true">
+    <part Name="Render" DisplayName="低いアクアマリンの壁" RenderString="216" ColorString="&amp;C^k" DetailColor="c" Occluding="false" />
+  </object>
+
+<object Name="Walltrap" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="[壁の罠]" RenderString="240" ColorString="&amp;c^g" TileColor="&amp;c" DetailColor="g" Occluding="true" Tile="Items/sw_vent.bmp" />
+    <part Name="Physics" Weight="25000" FlameTemperature="25000" VaporTemperature="58000" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="50" />
+    <stat Name="Hitpoints" Value="500" />
+    <part Name="Walltrap" />
+    <part Name="Metal" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="PaintedWall" Value="*delete" />
+    <tag Name="Tier" Value="4" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitMetal" />
+    <tag Name="Breakable" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_metal" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_metal" />
+  </object>
+
+<object Name="WalltrapFire" Inherits="Walltrap" Replace="true">
+    <part Name="Render" DisplayName="蒸気ベント" />
+    <part Name="WalltrapFire" />
+    <part Name="Description" Short="曇ったクロムの柱に穿たれた垂直ベントから、蒸気の細糸が巻き出している。" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="4" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="WalltrapAcid" Inherits="Walltrap" Replace="true">
+    <part Name="Render" DisplayName="噴煙ベント" />
+    <part Name="Walltrap" WarmColor="^K&amp;g" ReadyColor="^K&amp;G" />
+    <part Name="Description" Short="曇ったクロムの柱に穿たれた垂直ベントから、有毒な煙が細い糸となって巻き上がる。" />
+    <part Name="WalltrapAcid" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="4" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="WalltrapShock" Inherits="Walltrap" Replace="true">
+    <part Name="Render" DisplayName="火花を散らすベント" />
+    <part Name="Walltrap" WarmColor="^g&amp;w" ReadyColor="^g&amp;W" />
+    <part Name="WalltrapShock" />
+    <part Name="Description" Short="曇ったクロムの柱に穿たれた垂直ベントから火花が飛び散る。" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="4" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+
+<object Name="WalltrapCrabs" Inherits="Walltrap" Replace="true">
+    <part Name="Render" DisplayName="擦り傷の付いたベント" RenderString="c" />
+    <part Name="Walltrap" WarmColor="^g&amp;k" ReadyColor="^g&amp;Y" />
+    <part Name="WalltrapCrabs" />
+    <part Name="Description" Short="曇ったクロムに列状に穿たれた側面ベントには細かな傷が刻まれている。" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="4" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="WalltrapClockworkBeetles" Inherits="Walltrap" Replace="true">
+    <part Name="Render" DisplayName="チクタクと刻むベント" RenderString="c" />
+    <part Name="Walltrap" WarmColor="^W&amp;c" ReadyColor="^W&amp;C" />
+    <part Name="WalltrapClockworkBeetles" SpawnLimit="30" />
+    <part Name="Description" Short="曇ったクロムに列状に穿たれた側面ベントには細かな傷が刻まれている。" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="5" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="WalltrapNormalityGas" Inherits="Walltrap" Replace="true">
+    <part Name="Render" DisplayName="六角形の残滓が付いたベント" RenderString="c" />
+    <part Name="Walltrap" WarmColor="^K&amp;y" ReadyColor="^K&amp;Y" />
+    <part Name="WalltrapGas" GasBlueprint="NormalityGas" Density="1d60+40" PrimaryColor="K" SecondaryColor="y" />
+    <part Name="Description" Short="曇ったクロムの柱に穿たれた垂直ベントを、常態化の凝縮物がタイル張りのように覆っている。" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="6" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="WalltrapDefoliant" Inherits="Walltrap" Replace="true">
+    <part Name="Render" DisplayName="コケ粒子の付いたベント" />
+    <part Name="Walltrap" WarmColor="^K&amp;w" ReadyColor="^K&amp;W" />
+    <part Name="WalltrapGas" GasBlueprint="DefoliantGas" Density="1d60+40" PrimaryColor="W" SecondaryColor="w" />
+    <part Name="Description" Short="黄金の暁の吹きだまりに粉砕され久しく死んだ苔が、曇ったクロムのベントに貼り付いている。" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="4" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="WalltrapFungicide" Inherits="Walltrap" Replace="true">
+    <part Name="Render" DisplayName="カビ粒子の付いたベント" />
+    <part Name="Walltrap" WarmColor="^K&amp;m" ReadyColor="^K&amp;M" />
+    <part Name="WalltrapGas" GasBlueprint="FungicideGas" Density="1d60+40" PrimaryColor="M" SecondaryColor="m" />
+    <part Name="Description" Short="マゼンタの驟雨に侵食され粉末になった死んだカビが、曇ったクロムのベントに貼り付いている。" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="Tier" Value="4" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="WalltrapFireCrematory" Inherits="WalltrapFire" Replace="true">
+    <part Name="Render" DisplayName="蒸気ベント" ColorString="&amp;r^y" TileColor="&amp;r" DetailColor="y" />
+    <part Name="Walltrap" WarmColor="^y&amp;r" ReadyColor="^y&amp;R" />
+    <part Name="WalltrapFire" />
+    <part Name="Description" Short="煤で染まったクロムの柱に穿たれた垂直ベントから、蒸気の細糸が巻き出している。" />
+    <tag Name="Gender" Value="plural" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="CryochamberWall" Inherits="Walltrap" Replace="true">
+    <part Name="Render" RenderString="240" DisplayName="曇りガラスの柱" />
+    <part Name="Physics" FreezeTemperature="-9999" BrittleTemperature="-9999" />
+    <part Name="CryochamberWall" />
+    <part Name="Description" Short="大理石の柱を縁取るクロム羽目板の側面ベントから凍てつく霧が巻き出している。" />
+    <part Name="Walltrap" TurnInterval="8" WarmColor="^y&amp;c" ReadyColor="^y&amp;C" />
+    <stat Name="ColdResistance" Value="100" />
+    <stat Name="AV" Value="10" />
+    <stat Name="Hitpoints" Value="80" />
+    <tag Name="Tier" Value="5" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitGlass" />
+  </object>
+
+<object Name="CryochamberWallBroken" Inherits="Walltrap" Replace="true">
+    <part Name="Render" RenderString="240" DisplayName="曇りガラスの柱" />
+    <part Name="Physics" FreezeTemperature="-9999" BrittleTemperature="-9999" />
+    <part Name="Description" Short="大理石の柱を縁取るクロムの羽目板に穿たれた側面ベントを冷たい露が飾っている。" />
+    <part Name="Walltrap" TurnInterval="2" WarmColor="^y&amp;c" ReadyColor="^y&amp;c" />
+    <stat Name="ColdResistance" Value="100" />
+    <tag Name="Tier" Value="5" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitGlass" />
+  </object>
+
+<object Name="BaseForcefield" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="[フォースフィールド]" RenderString="176" Occluding="false" RenderIfDark="false" RenderLayer="6" />
+    <part Name="Physics" Weight="100000" FlameTemperature="99999" VaporTemperature="99999" FreezeTemperature="-99999" BrittleTemperature="-99999" SpecificHeat="100" Takeable="false" Solid="true" />
+    <part Name="Description" Short="電位がシアン色の六角メッシュに分極され、調律者に合わせられている。十分な質量を持つ物体は遮られるが、風下に撃ち出された小さな物は通り抜けられる。" />
+    <part Name="Forcefield" RejectOwner="true" />
+    <stat Name="AV" Value="100" />
+    <stat Name="Hitpoints" Value="100" />
+    <stat Name="AcidResistance" Value="100" />
+    <stat Name="ColdResistance" Value="100" />
+    <stat Name="ElectricResistance" Value="50" />
+    <stat Name="HeatResistance" Value="100" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="IgnoresGravity" />
+    <part Name="SoundOnCreate" Sounds="Sounds/Abilities/sfx_ability_forcefield_create" Volume="1" />
+    <part Name="SoundOnDestroy" Sounds="Sounds/Abilities/sfx_ability_forcefield_away" Volume="1" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_forcefield" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_forcefield" />
+  </object>
+
+<object Name="Forcefield" Inherits="BaseForcefield" Replace="true">
+    <part Name="Render" DisplayName="フォースフィールド" ColorString="&amp;C^k" />
+    <part Name="Forcefield" Unwalkable="true" />
+    <part Name="AnimatedMaterialForcefield" />
+    <tag Name="PaintedFence" Value="force_field_1" />
+    <tag Name="PaintedFenceAtlas" Value="Assets_Content_Textures_Tiles2_" />
+    <tag Name="PaintedFenceExtension" Value=".png" />
+    <tag Name="Tier" Value="6" />
+  </object>
+
+<object Name="ForceBarrier" Inherits="BaseForcefield" Replace="true">
+    <part Name="Render" DisplayName="力場障壁" ColorString="&amp;R^k" />
+    <part Name="Description" Short="電位が緋色の六角メッシュに分極され、調律者に合わせられている。分子レベルで許可されていない限り、物体は遮られる。" />
+    <part Name="AnimatedMaterialForcefield" Color="Red" />
+    <part Name="Forcefield" MissileOpaque="true" />
+    <tag Name="PaintedFence" Value="force_field_1" />
+    <tag Name="PaintedFenceAtlas" Value="Assets_Content_Textures_Tiles2_" />
+    <tag Name="PaintedFenceExtension" Value=".png" />
+    <tag Name="PaintPart" Value="ForceProjector" />
+    <tag Name="Tier" Value="6" />
+  </object>
+
+<object Name="Stasisfield" Inherits="BaseForcefield" Replace="true">
+    <part Name="Render" DisplayName="静止場" ColorString="&amp;C^M" TileColor="&amp;C" DetailColor="M" />
+    <part Name="AnimatedMaterialStasisfield" />
+    <part Name="Stasisfield" />
+    <stat Name="Energy" Value="0" />
+    <stat Name="Speed" Value="500" />
+    <stat Name="ElectricResistance" Value="100" />
+    <part Name="NoDamage" />
+    <part Name="Description" Short="量子摩擦があまりにも濃い膜が時空のくさびを囲い、そこに住まう者を摩り潰されたまま動けなくさせている。" />
+    <tag Name="PaintedWall" Value="wall_mud" />
+    <tag Name="Tier" Value="7" />
+    <part Name="SoundRender" Sound="Sounds/EnvironmentalEffect/sfx_environmentalEffect_stasisField_loop" Volume="0.1" />
+    <part Name="SoundOnCreate" Sounds="Sounds/EnvironmentalEffect/sfx_environmentalEffect_stasisField_head" Volume="0.1" />
+    <part Name="SoundOnDestroy" Sounds="Sounds/EnvironmentalEffect/sfx_environmentalEffect_stasisField_tail" Volume="0.1" />
+  </object>
+
+<object Name="SixDayStiltWall1" Inherits="Concrete" Replace="true">
+    <part Name="Render" DisplayName="コンクリート壁" RenderString="178" ColorString="&amp;y^c" TileColor="&amp;y" DetailColor="c" Occluding="true" />
+    <part Name="Physics" Weight="12000" FlameTemperature="24000" VaporTemperature="57000" Takeable="false" Solid="true" />
+    <part Name="Graffitied" ChanceOneIn="100" />
+  </object>
+
+<object Name="SixDayStiltWall2" Inherits="Marble" Replace="true">
+    <part Name="Render" DisplayName="大理石壁" RenderString="176" ColorString="&amp;Y^c" TileColor="&amp;c" DetailColor="Y" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="20" />
+    <stat Name="Hitpoints" Value="6000" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="100" />
+  </object>
+
+<object Name="SixDayStiltPillarWall1" Inherits="Marble" Replace="true">
+    <part Name="Render" DisplayName="溝入り大理石柱" RenderString="176" ColorString="&amp;Y^C" TileColor="&amp;C" DetailColor="Y" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="20" />
+    <stat Name="Hitpoints" Value="6000" />
+    <tag Name="PaintedWall" Value="wall_fluted" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="100" />
+  </object>
+
+<object Name="SixDayStiltPillarWall2" Inherits="Marble" Replace="true">
+    <part Name="Render" DisplayName="溝入り大理石柱" RenderString="176" ColorString="&amp;Y^c" TileColor="&amp;c" DetailColor="Y" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="20" />
+    <stat Name="Hitpoints" Value="6000" />
+    <tag Name="PaintedWall" Value="wall_fluted" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="100" />
+  </object>
+
+<object Name="Relief" Inherits="InorganicObject" Replace="true">
+    <part Name="Render" DisplayName="[壁]" Tile="Terrain/sw_fresco1-1.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" SpecificHeat="1.55" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="100" />
+    <tag Name="NoEffects" />
+    <stat Name="HeatResistance" Value="0" />
+    <stat Name="ColdResistance" Value="50" />
+    <stat Name="ElectricResistance" Value="50" />
+    <stat Name="AcidResistance" Value="0" />
+    <part Name="SmartuseLooks" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Wall" />
+    <tag Name="HangingSupport" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_stone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_stone" />
+  </object>
+
+<object Name="Relief1" Inherits="Relief" Replace="true">
+    <part Name="Description" Short="これは貴重なセルリアン大理石から精緻に彫り出された高浮き彫りで、神殿の大神官に父シェキーナが語った聖なる結合を描いている。宇宙の曙、銀の父祖たちは不活性の心を抱いたまま無時間のエーテルをさまよい、最も冷たい宇宙の彼方で美とクロムの化身カサフェセンスを見いだした。彼女の裸の胎から百の地を住まわせる機械を共に作り、ここでは父祖たちが初めてその輝きへと近づく場面が描かれ、指導する位置に立つのはシェキーナだ。" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+
+<object Name="Relief2" Inherits="Relief" Replace="true">
+    <part Name="Description" Short="これは希少なセルリアン大理石から精緻に彫り出された高浮き彫りで、『彩歌』に詠まれる教化の場面を描いている。聖なる結合の後、銀の父祖たちはカサフェセンスのプラズマ金属を、凡俗が住まえる建造物へと形作った。彼らは山に尖塔を築き、川にアーチを架けた。ここではシェキーナが東を見つめながら建設を監督しており、彼の新たに輝く世界を見守っている。" />
+    <tag Name="BaseObject" Value="*noinherit" />
+  </object>
+
+<object Name="Relief11" Inherits="Relief1" Replace="true">
+    <part Name="Render" DisplayName="聖なる結合を描いた大理石レリーフ" Tile="Terrain/sw_fresco1-1.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief12" Inherits="Relief1" Replace="true">
+    <part Name="Render" DisplayName="聖なる結合を描いた大理石レリーフ" Tile="Terrain/sw_fresco1-2.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief13" Inherits="Relief1" Replace="true">
+    <part Name="Render" DisplayName="聖なる結合を描いた大理石レリーフ" Tile="Terrain/sw_fresco1-3.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief14" Inherits="Relief1" Replace="true">
+    <part Name="Render" DisplayName="聖なる結合を描いた大理石レリーフ" Tile="Terrain/sw_fresco1-4.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief15" Inherits="Relief1" Replace="true">
+    <part Name="Render" DisplayName="聖なる結合を描いた大理石レリーフ" Tile="Terrain/sw_fresco1-5.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief16" Inherits="Relief1" Replace="true">
+    <part Name="Render" DisplayName="聖なる結合を描いた大理石レリーフ" Tile="Terrain/sw_fresco1-6.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief17" Inherits="Relief1" Replace="true">
+    <part Name="Render" DisplayName="聖なる結合を描いた大理石レリーフ" Tile="Terrain/sw_fresco1-7.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief21" Inherits="Relief2" Replace="true">
+    <part Name="Render" DisplayName="教化を描いた大理石レリーフ" Tile="Terrain/sw_fresco2-1.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief22" Inherits="Relief2" Replace="true">
+    <part Name="Render" DisplayName="教化を描いた大理石レリーフ" Tile="Terrain/sw_fresco2-2.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief23" Inherits="Relief2" Replace="true">
+    <part Name="Render" DisplayName="教化を描いた大理石レリーフ" Tile="Terrain/sw_fresco2-3.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief24" Inherits="Relief2" Replace="true">
+    <part Name="Render" DisplayName="教化を描いた大理石レリーフ" Tile="Terrain/sw_fresco2-4.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief25" Inherits="Relief2" Replace="true">
+    <part Name="Render" DisplayName="教化を描いた大理石レリーフ" Tile="Terrain/sw_fresco2-5.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief26" Inherits="Relief2" Replace="true">
+    <part Name="Render" DisplayName="教化を描いた大理石レリーフ" Tile="Terrain/sw_fresco2-6.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="Relief27" Inherits="Relief2" Replace="true">
+    <part Name="Render" DisplayName="教化を描いた大理石レリーフ" Tile="Terrain/sw_fresco2-7.bmp" RenderLayer="6" RenderString="219" ColorString="&amp;c^k" DetailColor="Y" Occluding="true" />
+  </object>
+
+<object Name="FulcreteWithSquareWave" Inherits="BaseMetamorphicRock" Replace="true">
+    <part Name="Render" DisplayName="方形波模様のフルクリート" ColorString="&amp;r^C" TileColor="&amp;r" DetailColor="C" Occluding="true" />
+    <stat Name="AV" Value="35" />
+    <stat Name="Hitpoints" Value="3000" />
+    <part Name="Description" Short="内在顔料で染めたフルクリートが斑模様に爆ぜ、水平面を横切る規則的な幾何学が刻まれて視線を誘う。" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="PaintedWall" Value="wall_zigzag" />
+    <tag Name="PaintWith" Value="ZigzagWalls" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <part Name="Graffitied" ChanceOneIn="3000" />
+  </object>
+
+<object Name="CatacombWall" Inherits="BaseWallBone" Replace="true">
+    <part Name="Render" ColorString="&amp;y^Y" TileColor="&amp;y" DetailColor="Y" DisplayName="圧縮された骨" />
+    <part Name="Description" Short="人の骨格が格子状に並ぶよう意図的に乱され、丸い頭蓋の隙間は尺骨の結び目で埋められている。この世界の境界は米のように白く、存在感で満ちている。" />
+    <tag Name="PaintedWall" Value="wall_skull_1,wall_skull_2" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="6" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="ColumbariumWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="華やかに彫られた大理石" RenderString="177" ColorString="&amp;Y^C" TileColor="&amp;Y" DetailColor="C" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="6000" />
+    <part Name="Description" Short="灰の夢を見続ける喰らう者たちの雑多な生活が、丸ごと世界ごと浅浮き彫りに刻まれている。星のリボンを携えた空にヤシの葉がピラミッドを持ち上げ、生命の水がオイノコエの縁から溢れ出す。" />
+    <tag Name="PaintedWall" Value="wall_filigree" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="6" />
+    <part Name="Graffitied" ChanceOneIn="200" />
+  </object>
+
+<object Name="CryptWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="装飾的な透かし彫りの大理石" RenderString="177" ColorString="&amp;K^C" TileColor="&amp;K" DetailColor="C" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="6000" />
+    <part Name="Description" Short="灰の夢を見続ける喰らう者たちの雑多な生活が、立体的な透かし細工で丸ごと紡がれている。星のリボンを携えた空にヤシの葉がピラミッドを持ち上げ、生命の水がオイノコエの縁から溢れ出す。" />
+    <tag Name="PaintedWall" Value="wall_filigree" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="6" />
+    <part Name="Graffitied" ChanceOneIn="200" />
+    <stag Name="Historical" />
+    <tag Name="SingleTile" Value="Walls/wall_filigree-00000000.png" />
+  </object>
+
+<object Name="BaseSultanWall" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="[儀礼用スルタン壁]" RenderString="176" ColorString="&amp;w^W" TileColor="&amp;w" DetailColor="W" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="6000" />
+    <part Name="Description" Short="スルタン壁" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="PaintWith" Value="SultanWalls" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="0" />
+    <part Name="Graffitied" ChanceOneIn="200" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <stag Name="Historical" />
+    <tag Name="SingleTile" Value="Walls/wall_marble-00000000.png" />
+  </object>
+
+<object Name="BaseInnerSultanWall" Inherits="BaseSultanWall" Replace="true">
+    <part Name="Description" Short="スルタン壁" />
+    <tag Name="BaseObject" Value="*noinherit" />
+  </object>
+
+<object Name="SultanWall_Period1" Inherits="BaseSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan1Name* のスルタン朝から伝わる彫刻石" />
+    <part Name="Description" Short="巨大で古い石が積まれ、打ち欠かれ、*Sultan1Name* の時代の様式に沿って長い弧を描く彫刻となった。それ以来この事業には協力者が増え、署名があちこちに刻まれている──ここには破壊者が削った空白、あそこには時間が柔らかく刷いた筆致。" />
+    <part Name="ReplaceText" Variables="*Sultan1Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_diamonds" />
+    <tag Name="SingleTile" Value="Tiles/wall_sultan_diamonds-00000000.png" />
+  </object>
+
+<object Name="SultanWall_Period2" Inherits="BaseSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan2Name* のスルタン朝から伝わる彫刻石" />
+    <part Name="Description" Short="巨大で古い石が積まれ、打ち欠かれ、*Sultan2Name* の時代の様式に沿って長い弧を描く彫刻となった。それ以来この事業には協力者が増え、署名があちこちに刻まれている──ここには破壊者が削った空白、あそこには時間が柔らかく刷いた筆致。" />
+    <part Name="ReplaceText" Variables="*Sultan2Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_runes" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_runes-00000000.png" />
+  </object>
+
+<object Name="SultanWall_Period3" Inherits="BaseSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan3Name* のスルタン朝から伝わる彫刻石" />
+    <part Name="Description" Short="巨大で古い石が積まれ、打ち欠かれ、*Sultan3Name* の時代の様式に沿って長い弧を描く彫刻となった。それ以来この事業には協力者が増え、署名があちこちに刻まれている──ここには破壊者が削った空白、あそこには時間が柔らかく刷いた筆致。" />
+    <part Name="ReplaceText" Variables="*Sultan3Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_shields" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_shields-00000000.png" />
+  </object>
+
+<object Name="SultanWall_Period4" Inherits="BaseSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan4Name* のスルタン朝から伝わる彫刻石" />
+    <part Name="Description" Short="巨大で古い石が積まれ、打ち欠かれ、*Sultan4Name* の時代の様式に沿って長い弧を描く彫刻となった。それ以来この事業には協力者が増え、署名があちこちに刻まれている──ここには破壊者が削った空白、あそこには時間が柔らかく刷いた筆致。" />
+    <part Name="ReplaceText" Variables="*Sultan4Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_arches" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_arches-00000000.png" />
+  </object>
+
+<object Name="SultanWall_Period5" Inherits="BaseSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan5Name* のスルタン朝から伝わる彫刻石" />
+    <part Name="Description" Short="巨大で古い石が積まれ、打ち欠かれ、*Sultan5Name* の時代の様式に沿って長い弧を描く彫刻となった。それ以来この事業には協力者が増え、署名があちこちに刻まれている──ここには破壊者が削った空白、あそこには時間が柔らかく刷いた筆致。" />
+    <part Name="ReplaceText" Variables="*Sultan5Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_columns" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_columns-00000000.png" />
+  </object>
+
+<object Name="SultanWall_Period6" Inherits="BaseSultanWall" Replace="true">
+    <part Name="Render" DisplayName="レシェフのスルタン朝から伝わる彫刻石" />
+    <part Name="Description" Short="巨大で古い石が積まれ、打ち欠かれ、レシェフの時代の様式に沿って長い弧を描く彫刻となった。それ以来この事業には協力者が増え、署名があちこちに刻まれている──ここには破壊者が削った空白、あそこには時間が柔らかく刷いた筆致。" />
+    <tag Name="PaintedWall" Value="wall_sultan_valence" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_valence-00000000.png" />
+  </object>
+
+<object Name="SultanWall_Ornate_Period5" Inherits="BaseSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan5Name* のスルタン朝から伝わる彫刻石" />
+    <part Name="Description" Short="巨大で古い石が積まれ、打ち欠かれ、*Sultan5Name* の時代の様式に沿って長い弧を描く彫刻となった。それ以来この事業には協力者が増え、署名があちこちに刻まれている──ここには破壊者が削った空白、あそこには時間が柔らかく刷いた筆致。" />
+    <part Name="ReplaceText" Variables="*Sultan5Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_columns_b" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_columns_b-00000000.png" />
+  </object>
+
+<object Name="InnerSultanWall_Period1" Inherits="BaseInnerSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan1Name* のスルタン朝から伝わる金張り大理石" ColorString="&amp;K^C" TileColor="&amp;K" DetailColor="C" Occluding="true" />
+    <part Name="Description" Short="夢見る大地の果てから引きずり出された貴石がキュクロプス建築に積み上げられ、千の花弁が咲き誇る華麗さに彫られた。乾いた空気が金箔を守るが、時間がその縁を柔らかくしている。" />
+    <part Name="ReplaceText" Variables="*Sultan1Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_diamonds_b" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_diamonds_b-00000000.png" />
+  </object>
+
+<object Name="InnerSultanWall_Period2" Inherits="BaseInnerSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan2Name* のスルタン朝から伝わる金張り大理石" ColorString="&amp;y^m" TileColor="&amp;y" DetailColor="m" Occluding="true" />
+    <part Name="Description" Short="夢見る大地の果てから引きずり出された貴石がキュクロプス建築に積み上げられ、千の花弁が咲き誇る華麗さに彫られた。乾いた空気が金箔を守るが、時間がその縁を柔らかくしている。" />
+    <part Name="ReplaceText" Variables="*Sultan2Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_runes_b" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_runes_b-00000000.png" />
+  </object>
+
+<object Name="InnerSultanWall_Period3" Inherits="BaseInnerSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan3Name* のスルタン朝から伝わる金張り大理石" ColorString="&amp;r^M" TileColor="&amp;r" DetailColor="M" Occluding="true" />
+    <part Name="Description" Short="夢見る大地の果てから引きずり出された貴石がキュクロプス建築に積み上げられ、千の花弁が咲き誇る華麗さに彫られた。乾いた空気が金箔を守るが、時間がその縁を柔らかくしている。" />
+    <part Name="ReplaceText" Variables="*Sultan3Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_shields_b" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_shields_b-00000000.png" />
+  </object>
+
+<object Name="InnerSultanWall_Period4" Inherits="BaseInnerSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan4Name* のスルタン朝から伝わる金張り大理石" ColorString="&amp;c^r" TileColor="&amp;c" DetailColor="r" Occluding="true" />
+    <part Name="Description" Short="夢見る大地の果てから引きずり出された貴石がキュクロプス建築に積み上げられ、千の花弁が咲き誇る華麗さに彫られた。乾いた空気が金箔を守るが、時間がその縁を柔らかくしている。" />
+    <part Name="ReplaceText" Variables="*Sultan4Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_arches_b" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_arches_b-00000000.png" />
+  </object>
+
+<object Name="InnerSultanWall_Period5" Inherits="BaseInnerSultanWall" Replace="true">
+    <part Name="Render" DisplayName="*Sultan5Name* のスルタン朝から伝わる金張り大理石" ColorString="&amp;Y^C" TileColor="&amp;Y" DetailColor="C" Occluding="true" />
+    <part Name="Description" Short="夢見る大地の果てから引きずり出された貴石がキュクロプス建築に積み上げられ、千の花弁が咲き誇る華麗さに彫られた。乾いた空気が金箔を守るが、時間がその縁を柔らかくしている。" />
+    <part Name="ReplaceText" Variables="*Sultan5Name*" />
+    <tag Name="PaintedWall" Value="wall_sultan_columns_b" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_columns_b-00000000.png" />
+  </object>
+
+<object Name="InnerSultanWall_Period6" Inherits="BaseInnerSultanWall" Replace="true">
+    <part Name="Render" DisplayName="レシェフのスルタン朝から伝わる金張り大理石" RenderString="177" ColorString="&amp;y^K" TileColor="&amp;y" DetailColor="K" Occluding="true" />
+    <part Name="Description" Short="高浮き彫りの円形を囲んで大理石のドレープが流れを止め、帝国の金張りの壁はバロック様式だが、かつてのスルタンたちの金張りよりはなお控えめだ。" />
+    <tag Name="PaintedWall" Value="wall_sultan_valence_b" />
+    <tag Name="SingleTile" Value="Walls/wall_sultan_valence_b-00000000.png" />
+  </object>
+
+<object Name="BaseMuralWall" Inherits="InorganicObject" Replace="true">
+    <part Name="Render" DisplayName="[壁画壁]" RenderString="176" ColorString="&amp;W^k" DetailColor="w" Occluding="true" RenderLayer="7" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="1500" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="25" />
+    <stat Name="Hitpoints" Value="6000" />
+    <part Name="Description" Short="スルタン壁" />
+    <tag Name="PaintWith" Value="SultanWalls" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="Tier" Value="0" />
+    <part Name="Graffitied" ChanceOneIn="3000" />
+    <tag Name="Wall" />
+    <tag Name="Diggable" />
+    <tag Name="NoEffects" />
+    <tag Name="HeroNameTitleDescriptor" Value="Sturdy,Studded,Unstudded,Crackless,Cracked,Once-Cracked,Twice-Cracked,Still-Standing,Painted,Unpainted" />
+    <tag Name="NamingTag" Value="Animated" />
+    <builder Name="Animated" ChanceOneIn="200000" />
+    <tag Name="Animatable" />
+    <tag Name="DynamicObjectsTable:AnimatableFurniture" />
+    <tag Name="Class" Value="wall" />
+    <tag Name="BodyType" Value="Wall" />
+    <tag Name="NoSparkingQuest" />
+    <part Name="SmartuseLooks" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_stone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_stone" />
+  </object>
+
+<object Name="BaseMuralLeftend" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" DisplayName="壁画の端部" RenderString="218" ColorString="&amp;C^k" DetailColor="K" Tile="Walls/sw_mural_leftend_period_1.bmp" />
+    <part Name="Description" Short="太古の地球から切り出された石が、とある人生の芸術を封じ込めている。" />
+    <tag Name="PaintWith" Value="SultanWalls" />
+  </object>
+
+<object Name="BaseMuralCenter" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" DisplayName="壁画の中央帯" RenderString="196" ColorString="&amp;C^k" DetailColor="K" Tile="Walls/sw_mural_centerpiece_period_1.bmp" />
+    <part Name="Description" Short="太古の地球から切り出された石が、とある人生の芸術を断ち切っている。" />
+    <tag Name="PaintWith" Value="SultanWalls" />
+  </object>
+
+<object Name="BaseMuralRightend" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" DisplayName="壁画の端部" RenderString="191" ColorString="&amp;C^k" DetailColor="K" Tile="Walls/sw_mural_rightend_period_1.bmp" />
+    <part Name="Description" Short="太古の地球から切り出された石が、とある人生の芸術を封じ込めている。" />
+    <tag Name="PaintWith" Value="SultanWalls" />
+  </object>
+
+<object Name="Mural Leftend Period 6" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;K^k" DetailColor="y" Tile="Walls/sw_mural_leftend_period_6.bmp" />
+    <part Name="Description" Short="太古の地球から切り出された黒大理石が、とある人生の芸術を封じ込めている。" />
+  </object>
+
+<object Name="Mural Center Period 6" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;K^k" DetailColor="y" Tile="Walls/sw_mural_centerpiece_period_6.bmp" />
+    <part Name="Description" Short="太古の地球から切り出された黒大理石が、とある人生の芸術を断ち切っている。" />
+  </object>
+
+<object Name="Mural Rightend Period 6" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;K^k" DetailColor="y" Tile="Walls/sw_mural_rightend_period_6.bmp" />
+    <part Name="Description" Short="太古の地球から切り出された黒大理石が、とある人生の芸術を封じ込めている。" />
+  </object>
+
+<object Name="SultanMuralWall" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" DisplayName="[スルタン壁画]" />
+    <part Name="Description" Short="黒大理石が削られて空虚なヴォールトのキャンバスとなり、あとは放置されて、かつて在り得たものへの驚嘆だけを残している。" />
+    <part Name="SultanMural" />
+    <tag Name="PaintedWall" Value="" />
+    <tag Name="PaintWith" Value="*" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+
+<object Name="SultanMuralWall1" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" ColorString="&amp;M^k" DetailColor="K" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="1" />
+  </object>
+
+<object Name="SultanMuralWall2" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" ColorString="&amp;Y^k" DetailColor="y" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="2" />
+  </object>
+
+<object Name="SultanMuralWallOutside2" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="2" />
+  </object>
+
+<object Name="SultanMuralWallOutside2Preserved" Inherits="SultanMuralWallOutside2" Replace="true">
+    <part Name="Render" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="2preserved" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+
+<object Name="SultanMuralWall3" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" ColorString="&amp;C^k" DetailColor="r" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="3" />
+  </object>
+
+<object Name="SultanMuralWallOutside3" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="3" />
+  </object>
+
+<object Name="SultanMuralWall4" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" ColorString="&amp;R^k" DetailColor="c" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="4" />
+  </object>
+
+<object Name="SultanMuralWallOutside4" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="4" />
+  </object>
+
+<object Name="SultanMuralWall5" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="Y" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="5" />
+  </object>
+
+<object Name="SultanMuralWall6" Inherits="SultanMuralWall" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="y" DisplayName="[スルタン壁画]" />
+    <tag Name="SultanatePeriod" Value="6" />
+  </object>
+
+<object Name="GolemInteriorWall" Inherits="Wall" Replace="true">
+    <part Name="Physics" FlameTemperature="1200" />
+    <part Name="Render" DisplayName="電気焼成の粘土と金属板、そして生体組織" RenderString="178" ColorString="&amp;w^W" DetailColor="k" />
+    <part Name="Description" Short="電気で焼き固めた粘土とハンダ付けされた金属板の上に湿った組織膜が張り付き、半透明の皮膜の下では下層回路の格子が金色の光を瞬かせている。" />
+    <stat Name="AV" Value="10" />
+    <stat Name="Hitpoints" Value="1000" />
+    <tag Name="PaintedWall" Value="wall_golem_interior" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="PaintWith" Value="GolemInteriorWall" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="Diggable" Value="*delete" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+
+<object Name="GolemInteriorWall Endcap" Inherits="GolemInteriorWall" Replace="true">
+    <part Name="Render" DisplayName="内部" Tile="Walls/wall_golem_interior-00010011.png" />
+    <tag Name="PaintedWall" Value="*delete" />
+  </object>
+
+<object Name="InteriorContainer" Inherits="GolemInteriorWall Endcap" Replace="true">
+    <part Name="Physics" Takeable="false" Solid="true" />
+    <part Name="Description" Short="地層の肋骨に巨大な収納棚が彫り込まれ、磁気で浮かぶ棚板が内部を仕切っている。" />
+    <part Name="Render" DisplayName="物資ハッチ" Tile="Furniture/sw_golem_interior_locker.bmp" DetailColor="W" ColorString="&amp;W" TileColor="&amp;w" RenderString="254" Occluding="false" RenderIfDark="true" RenderLayer="6" />
+    <part Name="InteriorContainer" />
+    <tag Name="PaintWith" Value="GolemInteriorWall" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+
+<object Name="MechInteriorContainer" Inherits="MechInteriorWall Endcap" Replace="true">
+    <part Name="Description" Short="金属質の肋骨に巨大な収納棚が彫り込まれ、磁気で浮かぶ棚板が内部を区切っている。" />
+    <part Name="Render" DisplayName="物資ハッチ" Tile="Furniture/sw_golem_interior_locker.bmp" DetailColor="c" ColorString="&amp;y" TileColor="&amp;y" />
+    <part Name="InteriorContainer" />
+    <tag Name="PaintWith" Value="MachineWallsTubing" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+    <tag Name="Diggable" Value="*delete" />
+  </object>
+
+<object Name="BaseNephilimWall" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y" DisplayName="ネフィリムの壁" />
+    <part Name="Description" Short="" />
+    <tag Name="PaintedWall" Value="wall_nephilim_1,wall_nephilim_2" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="Tier" Value="8" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+
+<object Name="BaseNephilimWall_Agolgot" Inherits="BaseNephilimWall" Replace="true">
+    <part Name="Render" ColorString="&amp;m^g" DisplayName="アゴルゴトが押し出した樹脂層" />
+    <part Name="Description" Short="油を含むシェラックの山のような帯が床の輪郭に沿って成形され、星蘭の道を描く。全区画が乾いた死の汚泥で釉掛けされている。" />
+  </object>
+
+<object Name="BaseNephilimWall_Bethsaida" Inherits="BaseNephilimWall" Replace="true">
+    <part Name="Render" ColorString="&amp;m^W" DisplayName="ベトサイダが押し出した樹脂層" />
+    <part Name="Description" Short="油を含むシェラックの山のような帯が床の輪郭に沿って成形され、星蘭の道を描く。全区画が岐状の神経で釉掛けされている。" />
+  </object>
+
+<object Name="BaseNephilimWall_Rermadon" Inherits="BaseNephilimWall" Replace="true">
+    <part Name="Render" ColorString="&amp;m^G" DisplayName="レルマドンが押し出した樹脂層" />
+    <part Name="Description" Short="油を含むシェラックの山のような帯が床の輪郭に沿って成形され、星蘭の道を描く。全区画が固化した星ガスで釉掛けされている。" />
+  </object>
+
+<object Name="BaseNephilimWall_QasQon" Inherits="BaseNephilimWall" Replace="true">
+    <part Name="Render" ColorString="&amp;m^C" DisplayName="カスとコンが押し出した樹脂層" />
+    <part Name="Description" Short="油を含むシェラックの山のような帯が床の輪郭に沿って成形され、星蘭の道を描く。全区画が直角に固化した夢ガスで釉薬を掛けられている。" />
+  </object>
+
+<object Name="BaseNephilimWall_Shug'rith" Inherits="BaseNephilimWall" Replace="true">
+    <part Name="Render" ColorString="&amp;m^w" DisplayName="シュグ＝ルイスが押し出した樹脂層" />
+    <part Name="Description" Short="油を含むシェラックの山のような帯が床の輪郭に沿って成形され、星蘭の道を描く。全区画が頁岩の欠片と埃で釉掛けされている。" />
+  </object>
+
+<object Name="BaseNephilimWall_Shug'rithSpawn" Inherits="BaseNephilimWall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^w" DisplayName="シュグ＝ルイスの芽が押し出した樹脂層" />
+    <part Name="Description" Short="油を含む傾斜したシェラックの帯が床の輪郭に沿って成形され、星蘭の道を描く。全区画が頁岩の欠片と埃で釉掛けされている。" />
+  </object>
+
+<object Name="Rubble" Inherits="InorganicObject" Replace="true">
+    <part Name="Render" DisplayName="瓦礫" ColorString="&amp;W" DetailColor="w" RenderString="177" Occluding="false" RenderIfDark="true" RenderLayer="7" />
+    <builder Name="RandomTile" Tiles="Tiles2/sw_rubble_1.bmp,Tiles2/sw_rubble_2.bmp,Tiles2/sw_rubble_3.bmp,Tiles2/sw_rubble_4.bmp" />
+    <part Name="Description" Short="不規則な石塊が積み上げられ、その表面からは秩序の点がエントロピーの山を突き破って散発的に顔を出す。像の指、日時計の指針、回路基板の切れ端。" />
+    <part Name="Physics" Weight="10000" FlameTemperature="99999" VaporTemperature="6000" Takeable="false" Solid="true" />
+    <stat Name="AV" Value="10" />
+    <stat Name="Hitpoints" Value="5000" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="LavaPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Diggable" />
+    <tag Name="Flyover" />
+    <tag Name="Wall" />
+    <tag Name="Tier" Value="0" />
+    <intproperty Name="AllowMissiles" Value="1" />
+    <xtagGrammar massNoun="true" />
+  </object>
+
+<object Name="Rubble Grey" Inherits="Rubble" Replace="true">
+    <part Name="Render" DisplayName="瓦礫" ColorString="&amp;y" DetailColor="K" />
+  </object>
+
+<object Name="Wax Block" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="蝋の塊" RenderString="177" ColorString="&amp;Y^y" TileColor="&amp;Y" DetailColor="y" Occluding="true" />
+    <part Name="Physics" Weight="10000" FlameTemperature="250" VaporTemperature="400" Takeable="false" Solid="true" Organic="true" />
+    <stat Name="AV" Value="3" />
+    <stat Name="Hitpoints" Value="20" />
+    <part Name="Description" Short="ねっとりしたヤシ汁の分泌物が冷えて大きな塊になったものだ。" />
+    <tag Name="PaintedWall" Value="wall_mud" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="VaporObject" Value="MoltenWaxPuddle" />
+    <tag Name="ImmutableWhenUnexplored" Value="1" />
+    <tag Name="Tier" Value="0" />
+  </object>
+
+<object Name="CrystalWall" Inherits="Crystal" Replace="true">
+    <part Name="Render" DisplayName="巨大な六角結晶" RenderLayer="7" RenderString="178" ColorString="&amp;K^M" TileColor="&amp;M^k" DetailColor="K" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" SpecificHeat="1.55" />
+    <part Name="Description" Short="量子の混沌が冷えて整い、そびえ立つ六角柱になった。地中ガスの泡と時間の気まぐれが石英琥珀の中で凍りつき、月光が無から存在をろくろで削り出している。" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="100" />
+    <tag Name="Wall" />
+    <tag Name="Diggable" />
+    <tag Name="NoEffects" />
+    <stat Name="ColdResistance" Value="50" />
+    <stat Name="ElectricResistance" Value="50" />
+    <tag Name="PaintedCrystal" Value="cryshex_" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="BodyType" Value="Wall" />
+    <tag Name="NoSparkingQuest" />
+    <part Name="Graffitied" ChanceOneIn="2000" />
+    <part Name="HexCrystal" />
+    <tag Name="Immutable" Value="*delete" />
+  </object>
+
+<object Name="SmallHexCrystal" Inherits="Crystal" Replace="true">
+    <part Name="Render" DisplayName="六角結晶" Tile="Terrain/sw_hex_small.bmp" RenderLayer="7" RenderString="015" ColorString="&amp;K^k" TileColor="&amp;K" DetailColor="C" Occluding="true" />
+    <part Name="Physics" Weight="10000" Takeable="false" Solid="true" SpecificHeat="1.55" />
+    <part Name="Description" Short="急成長した石英の小さな月光の顔の縁を苔が縁取り、エントロピーが秩序を消し去ると、それはより小さなスケールで再構築される。" />
+    <stat Name="AV" Value="5" />
+    <stat Name="Hitpoints" Value="100" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="Wall" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="2000" />
+    <tag Name="Immutable" Value="*delete" />
+    <tag Name="DynamicObjectsTable:MoonStair_Plants" />
+    <tag Name="DynamicObjectsTable:FarmablePlants" />
+    <tag Name="DynamicObjectsTable:MoonStair_FarmablePlants" />
+  </object>
+
+<object Name="ChavvahTrunk" Inherits="BaseMetamorphicRock" Replace="true">
+    <part Name="Render" DisplayName="結晶質の幹" ColorString="&amp;m^y" TileColor="&amp;m" DetailColor="y" Occluding="true" />
+    <stat Name="AV" Value="35" />
+    <stat Name="Hitpoints" Value="2000" />
+    <part Name="Description" Short="放射状に育つ石英質が柔らかな岩層を覆い、その下には静的樹脂を滴らせ、精神的な予兆を歌う死んだ結晶の層がある。" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="PaintedWall" Value="wall_crystal1" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+  </object>
+
+<object Name="Chavvah Taproot" Inherits="ChavvahTrunk" Replace="true">
+    <part Name="Render" DisplayName="結晶質の主根" />
+    <part Name="Description" Short="小さな結晶芽が純粋な自我の重さで押し潰され、ふくよかで均等な一時思考ソフトの変換器に変わった。脱相関した感情と記憶が根を駆け上がるにつれ結晶化していく。" />
+  </object>
+
+<object Name="CryochamberPlaque" Inherits="Wall" Replace="true">
+    <part Name="Render" DisplayName="クロムの銘板" ColorString="&amp;y" RenderString="254" Occluding="false" />
+    <part Name="Physics" FreezeTemperature="-9999" BrittleTemperature="-9999" />
+    <part Name="Chat" Says="CHAMBER UNOCCUPIED: AWAITING SPECIMEN" ShowInShortDescription="true" />
+    <part Name="SmartuseLooks" />
+    <part Name="Description" Short="クイッククロムの輝く表面が揺らめく屈折模様を泳ぎ、光が一点に集まると象形が現れ始める。" />
+    <stat Name="AV" Value="10" />
+    <stat Name="Hitpoints" Value="80" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="Tier" Value="6" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_metal" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_metal" />
+  </object>
+
+<object Name="GritGate Mainframe Tape Drive" Inherits="GritGateMainframeWall" Replace="true">
+    <part Name="Render" DisplayName="真空コラム式テープドライブ" />
+    <part Name="Description" Short="磁気テープが車輪に巻き付けられ、ドライブヘッドに送り込まれて書き込みと占観を行い、三次元からデータを打ち抜いてはすぐに戻してゆく。" />
+    <part Name="ElectricalPowerTransmission" ChargeRate="10000" IsConsumer="true" />
+    <part Name="ChargeSink" ChargeUse="10" NameForStatus="StorageSystem" />
+    <tag Name="PaintedWall" Value="mainframe_tape_drive_1" />
+    <part Name="AnimatedMaterialMainframeTapeDrive" />
+  </object>
+
+<object Name="GritGate Mainframe Status Panel" Inherits="GritGateMainframeWall" Replace="true">
+    <part Name="Render" DisplayName="メインフレーム状態パネル" />
+    <part Name="Description" Short="真鍮とクロムの野にダイオードが渦を描いて点滅している。" />
+    <part Name="ElectricalPowerTransmission" ChargeRate="10000" IsConsumer="true" />
+    <part Name="ChargeSink" ChargeUse="10" NameForStatus="展示" />
+    <part Name="AnimatedMaterialGeneric" AnimationLength="160" LowFrameOffset="1" HighFrameOffset="1" ColorStringAnimationFrames="0=&amp;y^K,120=&amp;y^G" TileColorAnimationFrames="disable" DetailColorAnimationFrames="0=K,120=G" RequiresOperationalActivePart="ChargeSink" />
+    <tag Name="PaintedWall" Value="mainframe_status_panel" />
+  </object>
+
+<object Name="GritGate Mainframe Monitor 1" Inherits="GritGateMainframeWall" Replace="true">
+    <part Name="Render" DisplayName="メインフレーム監視盤" />
+    <part Name="Description" Short="走査線がカソードの琥珀色で月を描いている。" />
+    <part Name="ElectricalPowerTransmission" ChargeRate="10000" IsConsumer="true" />
+    <part Name="ChargeSink" ChargeUse="10" NameForStatus="展示" />
+    <part Name="AnimatedMaterialGeneric" AnimationLength="200" LowFrameOffset="1" HighFrameOffset="1" ColorStringAnimationFrames="0=&amp;y^K,100=&amp;y^W" TileColorAnimationFrames="disable" DetailColorAnimationFrames="0=K,100=W" RequiresOperationalActivePart="ChargeSink" />
+    <tag Name="PaintedWall" Value="mainframe_monitor_1" />
+  </object>
+
+<object Name="GritGate Mainframe Monitor 2" Inherits="GritGateMainframeWall" Replace="true">
+    <part Name="Render" DisplayName="メインフレーム制御盤" />
+    <part Name="Description" Short="スプリングフォームのキーが指を押し返し、機械と人との戯れめいた結合が続く。" />
+    <part Name="ElectricalPowerTransmission" ChargeRate="10000" IsConsumer="true" />
+    <part Name="ChargeSink" ChargeUse="10" NameForStatus="展示" />
+    <part Name="AnimatedMaterialGeneric" AnimationLength="80" LowFrameOffset="1" HighFrameOffset="1" ColorStringAnimationFrames="0=&amp;y^K,65=&amp;y^R" TileColorAnimationFrames="disable" DetailColorAnimationFrames="0=K,65=R" RequiresOperationalActivePart="ChargeSink" />
+    <tag Name="PaintedWall" Value="mainframe_monitor_2" />
+  </object>
+
+<object Name="Crematory Mainframe Monitor 1" Inherits="CrematoryMainframeWall" Replace="true">
+    <part Name="Render" DisplayName="メインフレーム監視盤" />
+    <part Name="Description" Short="走査線がカソードの琥珀色で月を描いている。" />
+    <part Name="ElectricalPowerTransmission" ChargeRate="10000" IsConsumer="true" />
+    <part Name="ChargeSink" ChargeUse="10" NameForStatus="展示" />
+    <part Name="AnimatedMaterialGeneric" AnimationLength="200" LowFrameOffset="1" HighFrameOffset="1" ColorStringAnimationFrames="0=&amp;y^K,100=&amp;y^W" TileColorAnimationFrames="disable" DetailColorAnimationFrames="0=K,100=W" RequiresOperationalActivePart="ChargeSink" />
+    <tag Name="PaintedWall" Value="mainframe_monitor_1" />
+  </object>
+
+<object Name="Crematory Mainframe Status Panel" Inherits="CrematoryMainframeWall" Replace="true">
+    <part Name="Render" DisplayName="メインフレーム状態パネル" />
+    <part Name="Description" Short="真鍮とクロムの野にダイオードが渦を描いて点滅している。" />
+    <part Name="ElectricalPowerTransmission" ChargeRate="10000" IsConsumer="true" />
+    <part Name="ChargeSink" ChargeUse="10" NameForStatus="展示" />
+    <part Name="AnimatedMaterialGeneric" AnimationLength="160" LowFrameOffset="1" HighFrameOffset="1" ColorStringAnimationFrames="0=&amp;y^K,120=&amp;y^G" TileColorAnimationFrames="disable" DetailColorAnimationFrames="0=K,120=G" RequiresOperationalActivePart="ChargeSink" />
+    <tag Name="PaintedWall" Value="mainframe_status_panel" />
+  </object>
+
+<object Name="BaseWallBrick" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;r^y" TileColor="&amp;r" DetailColor="y" />
+    <tag Name="PaintedWall" Value="wall_brick" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+  <object Name="BaseWallCircuit" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;c^W" TileColor="&amp;c" DetailColor="W" />
+    <part Name="Metal" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="PaintedWall" Value="wall_circuit" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="4" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+  <object Name="BaseWallCyber" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <part Name="Metal" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="PaintedWall" Value="wall_cyber" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="5" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitMetal" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+  <object Name="BaseWallFluted" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <tag Name="PaintedWall" Value="wall_fluted" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="2" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+  <object Name="BaseWallGranite" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <tag Name="PaintedWall" Value="wall_granite" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+  <object Name="BaseWallMarble" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <tag Name="PaintedWall" Value="wall_marble" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="1" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+  </object>
+  <object Name="BaseWallMetal" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <part Name="Metal" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="PaintedWall" Value="wall_metal" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="2" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitMetal" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_metal" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_metal" />
+  </object>
+  <object Name="BaseWallTubing" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" RenderString="216" />
+    <part Name="Metal" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="PaintedWall" Value="wall_coolant,wall_coolant_b" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+		<tag Name="PaintWith" Value="MachineWallsTubing" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="2" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitMetal" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_tubing" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_tubing" />
+  </object>
+  <object Name="BaseWallMainframe" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^y" TileColor="&amp;y" DetailColor="y" />
+    <part Name="Metal" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="Tier" Value="5" />
+    <part Name="Graffitied" ChanceOneIn="500" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Tiles2_" />
+    <tag Name="PaintedWall" Value="mainframe_status_panel" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="PaintWith" Value="MainframeWalls" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Mainframe" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitMetal" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+  <object Name="BaseWallMud" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <part Name="Physics" Conductivity="60" />
+    <tag Name="PaintedWall" Value="wall_mud" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="0" />
+  </object>
+  <object Name="BaseWallRock" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <tag Name="PaintedWall" Value="wall_rock" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="0" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitDirt" />
+		<tag Name="SingleTile" Value="Tiles/wall_rock-00000000.bmp" />
+  </object>
+  <object Name="BaseWallSecure" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <part Name="Metal" />
+    <tag Name="BodyType" Value="MetalWall" />
+    <tag Name="PaintedWall" Value="wall_secure" />
+    <tag Name="Mods" Value="TechWallMods" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="4" />
+    <part Name="Graffitied" ChanceOneIn="300" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitMetal" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_metal" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_metal" />
+  </object>
+  <object Name="BaseWallStone" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^R" TileColor="&amp;y" DetailColor="R" />
+    <tag Name="PaintedWall" Value="wall_stone" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="1" />
+  </object>
+  <object Name="BaseWallWood" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;w^K" TileColor="&amp;w" DetailColor="K" />
+    <part Name="Springy" Factor="0.05" />
+    <tag Name="BodyType" Value="WoodWall" />
+    <tag Name="PaintedWall" Value="wall_wood_worn" />
+    <tag Name="PaintedWallAtlas" Value="Assets_Content_Textures_Walls_" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+		<tag Name="PaintWith" Value="WoodWall" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="0" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_manufacturedWood" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_manufacturedWood" />
+  </object>
+  <object Name="BaseWallCrystal1" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;b^C" TileColor="&amp;b" DetailColor="C" />
+    <tag Name="PaintedWall" Value="wall_crystal1" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="1" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitGlass" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_gemstone" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_gemstone" />
+  </object>
+  <object Name="BaseWallBone" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;y^w" TileColor="&amp;y" DetailColor="w" />
+    <part Name="Physics" Conductivity="5" />
+    <tag Name="BodyType" Value="BoneWall" />
+    <tag Name="PaintedWall" Value="wall_bone" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="0" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_manufacturedWood" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_manufacturedWood" />
+  </object>
+  <object Name="BaseWallFlower" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;w^W" TileColor="&amp;w" DetailColor="W" />
+    <part Name="Physics" Conductivity="90" />
+    <part Name="RandomColors" DetailColor="all" />
+    <part Name="Springy" Factor="0.1" />
+    <tag Name="BodyType" Value="PlantWall" />
+    <tag Name="PaintedWall" Value="wall_flower" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="0" />
+    <tag Name="ImpactSound" Value="Sounds/Throw/sfx_throwing_generic_hitPlant" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_genPlant" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_genPlant" />
+  </object>
+  <object Name="BaseWallScale" Inherits="Wall" Replace="true">
+    <part Name="Render" ColorString="&amp;g^w" TileColor="&amp;g" DetailColor="w" />
+    <part Name="Physics" Conductivity="10" />
+    <tag Name="BodyType" Value="LeatherWall" />
+    <tag Name="PaintedWall" Value="wall_scale" />
+    <tag Name="PaintedWallExtension" Value=".png" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Tier" Value="1" />
+  </object>
+  <object Name="Porous Coral Rag" Inherits="Coral Rag" Replace="true">
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+  <object Name="MarbleWithPiping" Inherits="Marble" Replace="true">
+    <part Name="ModPiping" />
+		<tag Name="Breakable" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+  <object Name="BasaltWithPipes" Inherits="Basalt" Replace="true">
+    <part Name="ModPiping" />
+		<tag Name="Breakable" />
+  </object>
+  <object Name="EbonFulcrete High Graffiti Chance" Inherits="EbonFulcrete" Replace="true">
+    <part Name="Graffitied" ChanceOneIn="3" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+  <object Name="HighCapacityWiredEbonFulcrete" Inherits="EbonFulcrete" Replace="true">
+    <tag Name="PaintWith" Value="FulcreteWalls" />
+    <part Name="ModWired" Tier="5" />
+		<tag Name="Breakable" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+  <object Name="HighCapacityWiredEbonFulcretePowerGenerator" Inherits="EbonFulcrete" Replace="true">
+    <tag Name="PaintWith" Value="FulcreteWalls" />
+    <part Name="FusionReactor" ChargeRate="1000" />
+    <part Name="Circuitry" StartCharge="1000" />
+    <part Name="ElectricalPowerTransmission" ChargeRate="10000" IsProducer="true" />
+		<tag Name="Breakable" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+  <object Name="PipeFulcrete" Inherits="Fulcrete" Replace="true">
+    <tag Name="PaintWith" Value="FulcreteWalls" />
+    <part Name="ModPiping" />
+		<tag Name="Breakable" />
+  </object>
+  <object Name="WiredFulcrete" Inherits="Fulcrete" Replace="true">
+    <tag Name="PaintWith" Value="FulcreteWalls" />
+    <part Name="ModWired" />
+		<tag Name="Breakable" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+  <object Name="HighCapacityWiredFulcrete" Inherits="Fulcrete" Replace="true">
+    <tag Name="PaintWith" Value="FulcreteWalls" />
+    <part Name="ModWired" Tier="5" />
+		<tag Name="Breakable" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+  <object Name="WiredPipeFulcrete" Inherits="Fulcrete" Replace="true">
+    <tag Name="PaintWith" Value="FulcreteWalls" />
+    <part Name="ModWired" />
+    <part Name="ModPiping" />
+		<tag Name="Breakable" />
+    <tag Name="TakeDamageSound" Value="Sounds/Damage/sfx_damage_electronic" />
+    <tag Name="DeathSounds" Value="Sounds/Damage/sfx_destroy_electronic" />
+  </object>
+  <object Name="MetalWallWithPipes" Inherits="MetalWall" Replace="true">
+    <part Name="ModPiping" />
+		<tag Name="Breakable" />
+  </object>
+	<object Name="RustedMetalWallPowerGenerator" Inherits="RustedMetalWall" Replace="true">
+		<part Name="FusionReactor" ChargeRate="400" ExplodeForce="0" />
+		<part Name="Circuitry" StartCharge="400" />
+		<part Name="ElectricalPowerTransmission" ChargeRate="2000" IsProducer="true" />
+		<part Name="ModWired" />
+		<tag Name="ExcludeFromDynamicEncounters" />
+	</object>
+  <object Name="WoodWallWithGearbox" Inherits="WoodWall" Replace="true">
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+    <part Name="ModGearbox" />
+  </object>
+	<object Name="BrinestalkWallWithGearbox" Inherits="BrinestalkWall" Replace="true">
+		<part Name="ModGearbox" />
+	</object>
+  <object Name="MachineWallHotTubingWithPiping" Inherits="MachineWallHotTubing" Replace="true">
+    <part Name="ModPiping" />
+		<tag Name="Breakable" />
+  </object>
+  <object Name="HGlassWall" Inherits="GlassWall" Replace="true">
+    <part Name="Render" RenderString="196" />
+  </object>
+  <object Name="VGlassWall" Inherits="GlassWall" Replace="true">
+    <part Name="Render" RenderString="179" />
+  </object>
+  <object Name="TombHalfWall" Inherits="HalfWall" Replace="true">
+    <part Name="Render" ColorString="&amp;K^k" DetailColor="w" />
+  </object>
+  <object Name="StoneHalfWall" Inherits="HalfWall" Replace="true">
+    <part Name="Render" ColorString="&amp;K^k" DetailColor="y" />
+  </object>
+  <object Name="MoverHalfWall" Inherits="HalfWall" Replace="true">
+    <part Name="Render" ColorString="&amp;w^k" DetailColor="W" />
+  </object>
+  <object Name="CryochamberWallSE" Inherits="CryochamberWall" Replace="true">
+    <part Name="CryochamberWall" Direction="SE" />
+  </object>
+  <object Name="CryochamberWallSW" Inherits="CryochamberWall" Replace="true">
+    <part Name="CryochamberWall" Direction="SW" />
+  </object>
+  <object Name="CryochamberWallNE" Inherits="CryochamberWall" Replace="true">
+    <part Name="CryochamberWall" Direction="NE" />
+  </object>
+  <object Name="CryochamberWallNW" Inherits="CryochamberWall" Replace="true">
+    <part Name="CryochamberWall" Direction="NW" />
+  </object> 
+
+  
+  <object Name="YdFreeholdCrysteelPlatedWallWithPipes" Inherits="CrysteelPlatedWall" Replace="true">
+    <part Name="ModPiping" />
+    <part Name="Graffitied" ChanceOneIn="1" />
+		<tag Name="Breakable" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+  <object Name="Fulcrete With Square Wave rW" Inherits="FulcreteWithSquareWave" Replace="true">
+    <part Name="Render" ColorString="&amp;r^W" TileColor="&amp;r" DetailColor="W" />
+  </object>
+  <object Name="Fulcrete With Square Wave Wg" Inherits="FulcreteWithSquareWave" Replace="true">
+    <part Name="Render" ColorString="&amp;W^g" TileColor="&amp;W" DetailColor="g" />
+  </object>
+  <object Name="Fulcrete With Square Wave KC" Inherits="FulcreteWithSquareWave" Replace="true">
+    <part Name="Render" ColorString="&amp;K^C" TileColor="&amp;K" DetailColor="C" />
+  </object>
+  <object Name="Fulcrete With Square Wave yW" Inherits="FulcreteWithSquareWave" Replace="true">
+    <part Name="Render" ColorString="&amp;y^W" TileColor="&amp;y" DetailColor="W" />
+  </object>
+  <object Name="Fulcrete With Square Wave rM" Inherits="FulcreteWithSquareWave" Replace="true">
+    <part Name="Render" ColorString="&amp;r^M" TileColor="&amp;r" DetailColor="M" />
+  </object>
+  <object Name="Fulcrete With Square Wave rG" Inherits="FulcreteWithSquareWave" Replace="true">
+    <part Name="Render" ColorString="&amp;r^G" TileColor="&amp;r" DetailColor="G" />
+  </object>
+  <object Name="Fulcrete With Square Wave rr" Inherits="FulcreteWithSquareWave" Replace="true">
+    <part Name="Render" ColorString="&amp;r^r" TileColor="&amp;r" DetailColor="r" />
+  </object>
+  <object Name="Yd ColumbariumWall" Inherits="ColumbariumWall" Replace="true">
+    <part Name="Render" ColorString="&amp;K^y" TileColor="&amp;K" DetailColor="y" />
+  </object>
+
+  
+  <object Name="CryptWall Period 1" Inherits="CryptWall" Replace="true">
+  </object>
+  <object Name="CryptWall Period 2" Inherits="CryptWall" Replace="true">
+  </object>
+  <object Name="CryptWall Period 3" Inherits="CryptWall" Replace="true">
+  </object>
+  <object Name="CryptWall Period 4" Inherits="CryptWall" Replace="true">
+  </object>
+  <object Name="CryptWall Period 5" Inherits="CryptWall" Replace="true">
+  </object>
+
+  
+  <object Name="SultanWall_Period1 High Graffiti Chance" Inherits="SultanWall_Period1" Replace="true">
+    <part Name="Graffitied" ChanceOneIn="3" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+  <object Name="HighCapacityWiredSultanWall_Period1" Inherits="SultanWall_Period1" Replace="true">
+    <part Name="ModWired" Tier="5" />
+		<tag Name="Breakable" />
+  </object>
+  <object Name="SultanWall_Period2 High Graffiti Chance" Inherits="SultanWall_Period2" Replace="true">
+    <part Name="Graffitied" ChanceOneIn="3" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+  <object Name="SultanWall_Period3 High Graffiti Chance" Inherits="SultanWall_Period3" Replace="true">
+    <part Name="Graffitied" ChanceOneIn="3" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+  <object Name="InnerSultanWall_Period1 High Graffiti Chance" Inherits="InnerSultanWall_Period1" Replace="true">
+    <part Name="Graffitied" ChanceOneIn="3" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+  <object Name="InnerSultanWall_Period4 High Graffiti Chance" Inherits="InnerSultanWall_Period4" Replace="true">
+    <part Name="Graffitied" ChanceOneIn="3" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+  <object Name="InnerSultanWall_Period5 High Graffiti Chance" Inherits="InnerSultanWall_Period5" Replace="true">
+    <part Name="Graffitied" ChanceOneIn="3" />
+    <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+  </object>
+  <object Name="BaseTombWall" Inherits="BaseWallBrick" Replace="true">
+    <part Name="Render" ColorString="&amp;r^W" TileColor="&amp;r" DetailColor="W" />
+    <tag Name="BaseObject" Value="*noinherit" />
+  </object>
+  <object Name="TombExteriorWall" Inherits="SultanWall_Ornate_Period5" Replace="true">
+  </object>
+  <object Name="TombWarriorCryptWall" Inherits="BaseTombWall" Replace="true">
+    <tag Name="BaseObject" Value="*noinherit" />
+  </object>
+  <object Name="TombSultan1Wall" Inherits="SultanWall_Period1" Replace="true">
+  </object>
+  <object Name="TombSultan2Wall" Inherits="SultanWall_Period2" Replace="true">
+  </object>
+  <object Name="TombSultan2HalfWall" Inherits="HalfWall" Replace="true">
+  </object>
+  <object Name="TombSultan3Wall" Inherits="SultanWall_Period3" Replace="true">
+  </object>
+  <object Name="TombSultan3HalfWall" Inherits="HalfWall" Replace="true">
+  </object>
+  <object Name="TombSultan4Wall" Inherits="SultanWall_Period4" Replace="true">
+  </object>
+  <object Name="TombSultan4HalfWall" Inherits="HalfWall" Replace="true">
+  </object>
+  <object Name="TombSultan5Wall" Inherits="SultanWall_Period5" Replace="true">
+  </object>
+  <object Name="TombSultan5HalfWall" Inherits="HalfWall" Replace="true">
+  </object>
+  <object Name="TombSultan6Wall" Inherits="Fulcrete" Replace="true">
+  </object>
+  <object Name="TombSultan6HalfWall" Inherits="HalfWall" Replace="true">
+  </object>
+
+  
+  <object Name="Mural Leftend Period 1" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;C^k" DetailColor="K" Tile="Walls/sw_mural_leftend_period_1.bmp" />
+  </object>
+  <object Name="Mural Center Period 1" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;C^k" DetailColor="K" Tile="Walls/sw_mural_centerpiece_period_1.bmp" />
+    <tag Name="PaintWith" Value="SultanWalls" />
+  </object>
+  <object Name="Mural Rightend Period 1" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;C^k" DetailColor="K" Tile="Walls/sw_mural_rightend_period_1.bmp" />
+  </object>
+  <object Name="Mural Leftend Period 2" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;m^k" DetailColor="y" Tile="Walls/sw_mural_leftend_period_2.bmp" />
+  </object>
+  <object Name="Mural Center Period 2" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;m^k" DetailColor="y" Tile="Walls/sw_mural_centerpiece_period_2.bmp" />
+  </object>
+  <object Name="Mural Rightend Period 2" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;m^k" DetailColor="y" Tile="Walls/sw_mural_rightend_period_2.bmp" />
+  </object>
+  <object Name="Mural Leftend Period 2 Outside" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_leftend_period_2.bmp" />
+  </object>
+  <object Name="Mural Center Period 2 Outside" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_centerpiece_period_2.bmp" />
+  </object>
+  <object Name="Mural Rightend Period 2 Outside" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_rightend_period_2.bmp" />
+  </object>
+  <object Name="Mural Leftend Period 3" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;M^k" DetailColor="r" Tile="Walls/sw_mural_leftend_period_3.bmp" />
+  </object>
+  <object Name="Mural Center Period 3" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;M^k" DetailColor="r" Tile="Walls/sw_mural_centerpiece_period_3.bmp" />
+  </object>
+  <object Name="Mural Rightend Period 3" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;M^k" DetailColor="r" Tile="Walls/sw_mural_rightend_period_3.bmp" />
+  </object>
+  <object Name="Mural Leftend Period 3 Outside" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_leftend_period_3.bmp" />
+  </object>
+  <object Name="Mural Center Period 3 Outside" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_centerpiece_period_3.bmp" />
+  </object>
+  <object Name="Mural Rightend Period 3 Outside" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_rightend_period_3.bmp" />
+  </object>
+  <object Name="Mural Leftend Period 4" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;r^k" DetailColor="c" Tile="Walls/sw_mural_leftend_period_4.bmp" />
+  </object>
+  <object Name="Mural Center Period 4" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;r^k" DetailColor="c" Tile="Walls/sw_mural_centerpiece_period_4.bmp" />
+  </object>
+  <object Name="Mural Rightend Period 4" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;r^k" DetailColor="c" Tile="Walls/sw_mural_rightend_period_4.bmp" />
+  </object>
+  <object Name="Mural Leftend Period 4 Outside" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_leftend_period_4.bmp" />
+  </object>
+  <object Name="Mural Center Period 4 Outside" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_centerpiece_period_4.bmp" />
+  </object>
+  <object Name="Mural Rightend Period 4 Outside" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;W^k" DetailColor="w" Tile="Walls/sw_mural_rightend_period_4.bmp" />
+  </object>
+  <object Name="Mural Leftend Period 5" Inherits="BaseMuralLeftend" Replace="true">
+    <part Name="Render" ColorString="&amp;c^k" DetailColor="Y" Tile="Walls/sw_mural_leftend_period_5.bmp" />
+  </object>
+  <object Name="Mural Center Period 5" Inherits="BaseMuralCenter" Replace="true">
+    <part Name="Render" ColorString="&amp;c^k" DetailColor="Y" Tile="Walls/sw_mural_centerpiece_period_5.bmp" />
+  </object>
+  <object Name="Mural Rightend Period 5" Inherits="BaseMuralRightend" Replace="true">
+    <part Name="Render" ColorString="&amp;c^k" DetailColor="Y" Tile="Walls/sw_mural_rightend_period_5.bmp" />
+  </object>
+  <object Name="Mural AppeasesBaetyl Left" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" Tile="Walls/sw_mural_appeasesbaetyl_l.bmp" />
+  </object>
+  <object Name="Mural AppeasesBaetyl Center" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" Tile="Walls/sw_mural_appeasesbaetyl_c.bmp" />
+  </object>
+  <object Name="Mural AppeasesBaetyl Right" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" Tile="Walls/sw_mural_appeasesbaetyl_r.bmp" />
+  </object>
+  <object Name="Mural Ruined4 Left" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" Tile="Walls/sw_mural_ruined4_l.bmp" />
+  </object>
+  <object Name="Mural Ruined4 Center" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" Tile="Walls/sw_mural_ruined4_c.bmp" />
+  </object>
+  <object Name="Mural Ruined4 Right" Inherits="BaseMuralWall" Replace="true">
+    <part Name="Render" Tile="Walls/sw_mural_ruined4_r.bmp" />
+  </object>
+
+  <object Name="GolemInteriorGlassWall" Inherits="GlassWall" Replace="true">
+		<tag Name="PaintWith" Value="GolemInteriorWall" />
+		<tag Name="Diggable" Value="*delete" />
+		<tag Name="ExcludeFromDynamicEncounters" />
+	</object>
+	<object Name="GolemInteriorWallwPiping" Inherits="GolemInteriorWall" Replace="true">
+		<part Name="ModPiping" />
+		<tag Name="Breakable" />
+	</object>
+	<object Name="PumpingColumnProducer" Inherits="GolemInteriorWall" Replace="true">
+		<part Name="FusionReactor" ChargeRate="1000" />
+		<part Name="Circuitry" StartCharge="1000" />
+		<part Name="CatalystLiquid" />
+		<part Name="HydraulicPowerTransmission" ChargeRate="10000" IsProducer="true" DependsOnLiquid="proteangunk" DischargeLiquidWhenBrokenAndPowered="true" MingleLiquidsWhenPowered="true" />
+		<part Name="LiquidVolume" MaxVolume="256" Volume="0" StartVolume="256" InitialLiquid="proteangunk-1000" Sealed="true" LiquidVisibleWhenSealed="true" />
+		<intproperty Name="ThermalInsulation" Value="900" />
+	</object>
+	<object Name="PumpingColumnConsumer" Inherits="GolemInteriorWall" Replace="true">
+		<part Name="HydraulicPowerTransmission" ChargeRate="10000" IsConsumer="true" DependsOnLiquid="proteangunk" DischargeLiquidWhenBrokenAndPowered="true" MingleLiquidsWhenPowered="true" />
+		<part Name="LiquidVolume" MaxVolume="32" StartVolume="32" InitialLiquid="proteangunk-1000" Sealed="true" />
+		<part Name="CatalystLiquid" />
+		<intproperty Name="ThermalInsulation" Value="900" />
+	</object>
+	  
+
+	<object Name="MechInteriorWall" Inherits="MachineWallEmptyTubing" Replace="true">		
+		<tag Name="Diggable" Value="*delete" />
+	</object>
+	<object Name="MechInteriorWall Endcap" Inherits="MachineWallEmptyTubing" Replace="true">
+		<part Name="Render" Tile="Walls/wall_coolant-00010011.png" />
+		<tag Name="PaintedWall" Value="*delete" />
+		<tag Name="PaintedWallAtlas" Value="*delete" />
+		<tag Name="PaintedWallExtension" Value="*delete" />
+		<tag Name="Diggable" Value="*delete" />
+	</object>
+	<object Name="MechInteriorGlassWall" Inherits="GlassWall" Replace="true">
+		<tag Name="PaintWith" Value="MachineWallsTubing" />
+		<tag Name="ExcludeFromDynamicEncounters" />
+		<tag Name="Diggable" Value="*delete" />
+	</object>	
+
+  
+	<object Name="BaseNephilimWall_QasQonHolo" Inherits="BaseNephilimWall_QasQon" Replace="true">
+		<part Name="Physics" Solid="false" />
+		<part Name="ConcealedHologramMaterial" />
+	</object>
+	<object Name="HolographicChavvahTrunk" Inherits="ChavvahTrunk" Replace="true">
+		<tag Name="IgnoresGravity" />
+		<part Name="HologramMaterial" ColorStrings="&amp;Y,&amp;m,&amp;y,&amp;m" DetailColors="m,K,M,y" />
+	</object>
+	<object Name="CryochamberPlaqueSpider" Inherits="CryochamberPlaque" Replace="true">
+    <part Name="Chat" Says="SPECIMEN: PHASE SPIDER" />
+  </object>
+  <object Name="CryochamberPlaqueRhinox" Inherits="CryochamberPlaque" Replace="true">
+    <part Name="Chat" Says="SPECIMEN: RHINOX" />
+  </object>
+  <object Name="CryochamberPlaqueSkybear" Inherits="CryochamberPlaque" Replace="true">
+    <part Name="Chat" Says="SPECIMEN: SAAD AMUS, THE SKY-BEAR, CHAMPION OF SALUM" />
+  </object>
+  <object Name="CryochamberPlaqueYempris" Inherits="CryochamberPlaque" Replace="true">
+    <part Name="Chat" Says="SPECIMEN: YEMPURIS PHI" />
+  </object>
+
+  
+  <object Name="GritGateMainframeWall" Inherits="BaseWallMainframe" Replace="true">
+    <part Name="Render" ColorString="&amp;y^y" TileColor="&amp;y" DetailColor="y" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+    <part Name="GritGateMainframeTerminal" />
+    <part Name="Interesting" Key="GritGateMainframeTerminal" IfPartOperational="GritGateMainframeTerminal" />
+  </object>
+  <object Name="CrematoryMainframeWall" Inherits="BaseWallMainframe" Replace="true">
+    <part Name="Render" ColorString="&amp;y^y" TileColor="&amp;y" DetailColor="y" />
+    <part Name="GenericTerminal" ChargeUse="0" StartingScreen="XRL.World.Terminals.CrematoryMachineRoomTerminalWelcome" />
+    <part Name="Interesting" Key="CrematoryMainframeTerminal" IfPartOperational="GenericTerminal" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+  </objects>

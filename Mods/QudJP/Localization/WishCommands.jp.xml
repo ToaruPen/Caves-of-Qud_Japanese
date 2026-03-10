@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<wishcommands Load="Replace">
+  <!-- utility wishes -->
+  <wish DisplayName="特定のものを願う" Commands="wish" Icon="Mutations/mental_mirror.bmp" ColorPair="wW" />
+  <wish DisplayName="ロールプレイモードに切り替える（集落でチェックポイント）" Commands="checkpointon" Icon="UI/sw_roleplay_mode.bmp" ColorPair="wW" />
+  <wish DisplayName="ゴッドモード切替" Commands="godmode" Icon="Mutations/light_manipulation.bmp" ColorPair="wW"/>  
+  <wish DisplayName="クリーチャーを鎮める" Commands="calm" Icon="Mutations/narcolepsy.bmp" ColorPair="wW"/>
+  <wish DisplayName="浮遊グロースフィアを出現させる" Commands="item:Floating Glowsphere" Icon="Items/sw_glowsphere.bmp" ColorPair="wW"/>
+  <wish DisplayName="25,000XPを得る" Commands="xp:25000" Icon="Abilities/abil_meditate.bmp" ColorPair="wW" />
+  <wish DisplayName="ユーバーノストラム・トニックを出現させる（四肢再生）" Commands="item:UbernostrumTonic" Icon="Items/sw_injector.bmp" ColorPair="wW" />
+  <wish DisplayName="菌感染を治療する" Commands="curefungus" Icon="Items/sw_glowcrust.bmp" ColorPair="wW" />
+  <wish DisplayName="肉体を入れ替える（願い後に方向を選択）" Commands="swap" Icon="Mutations/domination.bmp" ColorPair="wW" />  
+  <wish DisplayName="レア液体を出現させる" Commands="rareliquids" Icon="Items/sw_vial.bmp" ColorPair="wW" />
+  <wish DisplayName="大食らいの墳墓へ早送り" Commands="fastforwardtomb" Icon="Terrain/sw_tombstone_1.bmp" ColorPair="wW" />
+  <wish DisplayName="ドリームクランブルを出現させる" Commands="dreamcrungle" Icon="Creatures/sw_dreamcrungle.bmp" ColorPair="wW" />
+  <wish DisplayName="スプレイ・ア・ブレイン缶を出現させる" Commands="item:Spray-a-Brain" Icon="Items/sw_spray.bmp" ColorPair="wW" />
+</wishcommands>

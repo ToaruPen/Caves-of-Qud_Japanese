@@ -1,0 +1,498 @@
+{
+  "meta": {
+    "id": "ui-journal",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Locations",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "場所"
+    },
+    {
+      "key": "Chronology",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "年代記"
+    },
+    {
+      "key": "Gossip and Lore",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "噂と伝承"
+    },
+    {
+      "key": "Sultan Histories",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "スルタン史"
+    },
+    {
+      "key": "Village Histories",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "村の歴史"
+    },
+    {
+      "key": "General Notes",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "雑記"
+    },
+    {
+      "key": "Recipes",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "レシピ"
+    },
+    {
+      "key": "{{K|You have no map notes.}}",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "{{K|地図メモはありません。}}"
+    },
+    {
+      "key": "{{K|You have no knowledge of the sultans.}}",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "{{K|スルタンについての記録はない。}}"
+    },
+    {
+      "key": "{{K|You have no knowledge of any villages.}}",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "{{K|村についての記録はない。}}"
+    },
+    {
+      "key": "CmdInsert",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "挿入"
+    },
+    {
+      "key": "Joppa",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "ジョッパ"
+    },
+    {
+      "key": "Kyakukya",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "キャクキャ"
+    },
+    {
+      "key": "The Yd Freehold",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "イド・フリーホールド"
+    },
+    {
+      "key": "[{{G|X}}] ",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "[{{G|X}}] "
+    },
+    {
+      "key": "[ ] ",
+      "context": "Qud.UI.XRL.UI.JournalScreen",
+      "text": "[ ] "
+    },
+    {
+      "key": "Journal",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "ジャーナル"
+    },
+    {
+      "key": " No entries found.",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": " 記録がありません。"
+    },
+    {
+      "key": "Add",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "追加"
+    },
+    {
+      "key": "Delete",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "削除"
+    },
+    {
+      "key": "Unknown",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "不明"
+    },
+    {
+      "key": "<unknown>",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "<不明>"
+    },
+    {
+      "key": "V Positive",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "好意的"
+    },
+    {
+      "key": "V Negative",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "敵対的"
+    },
+    {
+      "key": "journal insert",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "ジャーナル挿入"
+    },
+    {
+      "key": "journal delete",
+      "context": "Qud.UI.Qud.UI.JournalStatusScreen",
+      "text": "ジャーナル削除"
+    },
+    {
+      "key": "CmdDelete",
+      "context": "Qud.UI.Qud.UI.JournalLine",
+      "text": "削除"
+    },
+    {
+      "key": "[-] ",
+      "context": "Qud.UI.Qud.UI.JournalLine",
+      "text": "[-] "
+    },
+    {
+      "key": "[+] ",
+      "context": "Qud.UI.Qud.UI.JournalLine",
+      "text": "[+] "
+    },
+    {
+      "key": "Accept",
+      "context": "Qud.UI.Qud.UI.JournalSultanStatueLine",
+      "text": "受け入れる"
+    },
+    {
+      "key": "Expand",
+      "context": "Qud.UI.Qud.UI.JournalSultanStatueLine",
+      "text": "展開"
+    },
+    {
+      "key": "Collapse",
+      "context": "Qud.UI.Qud.UI.JournalSultanStatueLine",
+      "text": "折りたたむ"
+    },
+    {
+      "key": "[-] ",
+      "context": "Qud.UI.Qud.UI.JournalSultanStatueLine",
+      "text": "[-] "
+    },
+    {
+      "key": "[+] ",
+      "context": "Qud.UI.Qud.UI.JournalSultanStatueLine",
+      "text": "[+] "
+    },
+    {
+      "key": "{{G|$}} ",
+      "context": "Qud.UI.Qud.UI.JournalSultanStatueLine",
+      "text": "{{G|$}} "
+    },
+    {
+      "key": "{{K|$}} ",
+      "context": "Qud.UI.Qud.UI.JournalSultanStatueLine",
+      "text": "{{K|$}} "
+    },
+    {
+      "key": "Joppa",
+      "context": "Qud.UI.Qud.UI.JournalLineData",
+      "text": "ジョッパ"
+    },
+    {
+      "key": "Kyakukya",
+      "context": "Qud.UI.Qud.UI.JournalLineData",
+      "text": "キャクキャ"
+    },
+    {
+      "key": "The Yd Freehold",
+      "context": "Qud.UI.Qud.UI.JournalLineData",
+      "text": "イド・フリーホールド"
+    },
+    {
+      "key": "TerrainJoppa",
+      "context": "Qud.UI.Qud.UI.JournalLineData",
+      "text": "TerrainJoppa"
+    },
+    {
+      "key": "TerrainKyakukya",
+      "context": "Qud.UI.Qud.UI.JournalLineData",
+      "text": "TerrainKyakukya"
+    },
+    {
+      "key": "TerrainPalladiumReef 3l",
+      "context": "Qud.UI.Qud.UI.JournalLineData",
+      "text": "TerrainPalladiumReef 3l"
+    },
+    {
+      "key": "You note the location of ",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "「"
+    },
+    {
+      "key": " in the {{W|",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "」を{{W|"
+    },
+    {
+      "key": " > Artifacts}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 遺物}} 欄に記した。"
+    },
+    {
+      "key": " > Historic Sites}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "> 史跡}} 欄に記した。"
+    },
+    {
+      "key": " > Lairs}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 棲み処}} 欄に記した。"
+    },
+    {
+      "key": " > Merchants}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 商人}} 欄に記した。"
+    },
+    {
+      "key": " > Natural Features}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 自然地形}} 欄に記した。"
+    },
+    {
+      "key": " > Oddities}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 奇観}} 欄に記した。"
+    },
+    {
+      "key": " > Baetyls}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > ベテル}} 欄に記した。"
+    },
+    {
+      "key": "some forgotten ruins",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "忘れ去られた廃墟"
+    },
+    {
+      "key": " > Ruins}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 廃墟}} 欄に記した。"
+    },
+    {
+      "key": " > Settlements}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 集落}} 欄に記した。"
+    },
+    {
+      "key": " > Named Locations}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 固有名所}} 欄に記した。"
+    },
+    {
+      "key": " > Ruins with Becoming Nooks}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " > 変身の窪み付きの廃墟}} 欄に記した。"
+    },
+    {
+      "key": "Artifacts",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "遺物"
+    },
+    {
+      "key": "Historic Sites",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "史跡"
+    },
+    {
+      "key": "Lairs",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "棲み処"
+    },
+    {
+      "key": "Merchants",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "商人"
+    },
+    {
+      "key": "Natural Features",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "自然地形"
+    },
+    {
+      "key": "Oddities",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "奇観"
+    },
+    {
+      "key": "Baetyls",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "ベテル"
+    },
+    {
+      "key": "Ruins",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "廃墟"
+    },
+    {
+      "key": "Settlements",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "集落"
+    },
+    {
+      "key": "Named Locations",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "固有名所"
+    },
+    {
+      "key": "Ruins with Becoming Nooks",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "変身の窪み付きの廃墟"
+    },
+    {
+      "key": "Miscellaneous",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "その他"
+    },
+    {
+      "key": "The location of ",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "場所: "
+    },
+    {
+      "key": "Last visited on the ",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "最終訪問: "
+    },
+    {
+      "key": " of ",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": " / "
+    },
+    {
+      "key": "tell support@freeholdgames.com unknown location category: ",
+      "context": "Qud.UI.Qud.API.JournalMapNote",
+      "text": "未定義の場所カテゴリです（support@freeholdgames.com へ連絡）: "
+    },
+    {
+      "key": "{{W|",
+      "context": "Qud.UI.Qud.API.JournalObservation",
+      "text": "{{W|"
+    },
+    {
+      "key": "}}\n\nYou note this piece of information in the {{W|",
+      "context": "Qud.UI.Qud.API.JournalObservation",
+      "text": "}}\n\nこの情報を{{W|"
+    },
+    {
+      "key": "}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalObservation",
+      "text": "}} 欄に記した。"
+    },
+    {
+      "key": "}}\n\nYou note this piece of information in the {{W|",
+      "context": "Qud.UI.Qud.API.JournalSultanNote",
+      "text": "}}\n\nこの情報を{{W|"
+    },
+    {
+      "key": "}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalSultanNote",
+      "text": "}} 欄に記した。"
+    },
+    {
+      "key": "}}\n\nYou note this piece of information in the {{W|",
+      "context": "Qud.UI.Qud.API.JournalVillageNote",
+      "text": "}}\n\nこの情報を{{W|"
+    },
+    {
+      "key": "}} section of your journal.",
+      "context": "Qud.UI.Qud.API.JournalVillageNote",
+      "text": "}} 欄に記した。"
+    },
+    {
+      "key": "You learn to cook ",
+      "context": "Qud.UI.Qud.API.JournalRecipeNote",
+      "text": "料理を覚えた: "
+    },
+    {
+      "key": "Gossip",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "噂"
+    },
+    {
+      "key": "gossip",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "噂"
+    },
+    {
+      "key": "gossip:",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "噂:"
+    },
+    {
+      "key": "Gospels",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "福音"
+    },
+    {
+      "key": "sultan",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "スルタン"
+    },
+    {
+      "key": "village",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "村"
+    },
+    {
+      "key": "Qud was once called Salum.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "かつてクッドはサルムと呼ばれていた。"
+    },
+    {
+      "key": "The shomer Rainwater claims that Brightsheol is the dream of a seraph who lives atop the Spindle.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "ショーマーのレインウォーターは、ブライトシェオルはスピンドルの頂に住むセラフの夢だと主張している。"
+    },
+    {
+      "key": "The Palladium Reef was once called Maqqom Yd, the Place outside Itself.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "パラジウム礁はかつて「マッコム・イド（自らの外にある場所）」と呼ばれていた。"
+    },
+    {
+      "key": "In the mystic air of Jeweled Dusk, a circle of farmers clasped hands and sheathed a vinereaper in the moistened soil. From then on, the villagers of Joppa were known as the people of the vine.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "宝石めく夕暮れの霧の中、農夫たちが手を取り輪になり、葡萄刈りの刃を湿った土に鞘った。以来、ジョッパの村人は「蔓の民」として知られるようになった。"
+    },
+    {
+      "key": "Since the first festival of Ut yara Ux, the villagers of Joppa have feasted on warm apple matz.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "ウト・ヤラ・ウクスの最初の祭り以来、ジョッパの村人は温かい林檎マッツを祝いの膳としてきた。"
+    },
+    {
+      "key": "Under the Beetle Moon, folks settled here to gather goods of passage for Ape Saad Oboroqoru, and so Kyakukya was founded.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "甲虫の月の下、サード・オボロコルに渡す旅装を集めるため人々がここに住み着き、こうしてキャクキャが築かれた。"
+    },
+    {
+      "key": "In 979, Nuntu, the legendary albino ape, grew tired of bludgeoning things to death and journeyed to a root-strangled place on the River Svy. There he came upon Kyakukya and its inhabitants. The villagers of Kyakukya asked Nuntu to employ his magisterial skills and lead the village.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "979年、伝説の白化猿ヌントゥーは撲殺に飽き、スヴィ川沿いの根に締め付けられた地へ旅をした。そこでキャクキャとその住民に出会い、村人たちは彼の統治の才を買って村の長となるよう頼んだ。"
+    },
+    {
+      "key": "Centuries after the height of the Gyre, the svardym Goek, Mak, and Geeub met the galgal Many Eyes while languishing inside of a reef sponge. Together they founded the Yd Freehold to live out the rest of their lives.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "ジャイアの最盛期から数世紀後、スヴァルディムのゴエク、マク、ギーウブは礁のスポンジの中で憔悴しながら、多眼のガルガルと出会った。彼らは共に余生を送るためイド・フリーホールドを築いた。"
+    },
+    {
+      "key": "In 901, the villagers of the Yd Freehold and its founders abolished all forms of hierarchy from their settlement. The two pillars of civic life in the Freehold thus became anarchy and authenticity.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "901年、イド・フリーホールドの創設者と村人たちは集落からあらゆる階層制を廃した。こうして自由保有地の市民生活の柱は無政府と真正性となった。"
+    },
+    {
+      "key": "Duplicate entry ID: '",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "エントリIDが重複しています: '"
+    },
+    {
+      "key": "Attempting to add accomplishment without text.",
+      "context": "Qud.UI.Qud.API.JournalAPI",
+      "text": "テキストなしで功績を追加しようとしています。"
+    }
+  ]
+}

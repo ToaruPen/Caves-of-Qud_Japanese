@@ -1,0 +1,1698 @@
+{
+  "meta": {
+    "id": "ui-displayname-adjectives",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "x{n}",
+      "context": "GetDisplayName.StackCount",
+      "text": "×{n}"
+    },
+    {
+      "key": "counterweighted",
+      "context": "GetDisplayName.Adjective",
+      "text": "カウンターウェイト付き"
+    },
+    {
+      "key": "Some ",
+      "context": "GetDisplayName.Article",
+      "text": "いくつかの"
+    },
+    {
+      "key": "some ",
+      "context": "GetDisplayName.Article",
+      "text": "いくつかの"
+    },
+    {
+      "key": "{{painted|painted}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{painted|彩色された}}"
+    },
+    {
+      "key": "{{engraved|engraved}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{engraved|彫り刻まれた}}"
+    },
+    {
+      "key": "{{K|nulling}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|無効化}}"
+    },
+    {
+      "key": "{{B|recycling}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{B|再循環式}}"
+    },
+    {
+      "key": "{{C|radio-powered}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{C|無線駆動の}}"
+    },
+    {
+      "key": "{{phase-conjugate}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "位相結合"
+    },
+    {
+      "key": "chromed",
+      "context": "GetDisplayName.Adjective",
+      "text": "クローム加工"
+    },
+    {
+      "key": "cyberized",
+      "context": "GetDisplayName.Adjective",
+      "text": "サイバネ化"
+    },
+    {
+      "key": "grafted",
+      "context": "GetDisplayName.Adjective",
+      "text": "移植"
+    },
+    {
+      "key": "domesticated",
+      "context": "GetDisplayName.Adjective",
+      "text": "家畜化された"
+    },
+    {
+      "key": "scoped",
+      "context": "GetDisplayName.Adjective",
+      "text": "スコープ付き"
+    },
+    {
+      "key": "padded",
+      "context": "GetDisplayName.Adjective",
+      "text": "パッド入り"
+    },
+    {
+      "key": "reinforced",
+      "context": "GetDisplayName.Adjective",
+      "text": "強化"
+    },
+    {
+      "key": "overbuilt",
+      "context": "GetDisplayName.Adjective",
+      "text": "過剰設計の"
+    },
+    {
+      "key": "drum-loaded",
+      "context": "GetDisplayName.Adjective",
+      "text": "ドラム装填"
+    },
+    {
+      "key": "slender",
+      "context": "GetDisplayName.Adjective",
+      "text": "細身な"
+    },
+    {
+      "key": "sturdy",
+      "context": "GetDisplayName.Adjective",
+      "text": "頑丈な"
+    },
+    {
+      "key": "visored",
+      "context": "GetDisplayName.Adjective",
+      "text": "バイザー付き"
+    },
+    {
+      "key": "web-toed",
+      "context": "GetDisplayName.Adjective",
+      "text": "水かき付き"
+    },
+    {
+      "key": "deep",
+      "context": "GetDisplayName.Adjective",
+      "text": "深い"
+    },
+    {
+      "key": "empty",
+      "context": "GetDisplayName.Adjective",
+      "text": "空の"
+    },
+    {
+      "key": "lit",
+      "context": "GetDisplayName.Adjective",
+      "text": "点灯した"
+    },
+    {
+      "key": "keen",
+      "context": "GetDisplayName.Adjective",
+      "text": "鋭利な"
+    },
+    {
+      "key": "mighty",
+      "context": "GetDisplayName.Adjective",
+      "text": "強力な"
+    },
+    {
+      "key": "two-faced",
+      "context": "GetDisplayName.Adjective",
+      "text": "双面の"
+    },
+    {
+      "key": "firethumbed",
+      "context": "GetDisplayName.Adjective",
+      "text": "火指の"
+    },
+    {
+      "key": "kindlethumbed",
+      "context": "GetDisplayName.Adjective",
+      "text": "点火指の"
+    },
+    {
+      "key": "slime-spitting",
+      "context": "GetDisplayName.Adjective",
+      "text": "粘液吐き"
+    },
+    {
+      "key": "slimy-finned",
+      "context": "GetDisplayName.Adjective",
+      "text": "ぬめるひれの"
+    },
+    {
+      "key": "lost",
+      "context": "GetDisplayName.Adjective",
+      "text": "迷子の"
+    },
+    {
+      "key": "stable",
+      "context": "GetDisplayName.Adjective",
+      "text": "安定化"
+    },
+    {
+      "key": "gigantic",
+      "context": "GetDisplayName.Adjective",
+      "text": "巨大な"
+    },
+    {
+      "key": "animated",
+      "context": "GetDisplayName.Adjective",
+      "text": "動く"
+    },
+    {
+      "key": "[{{W|Implant}}] -",
+      "context": "GetDisplayName.Adjective",
+      "text": "[{{W|インプラント}}] -"
+    },
+    {
+      "key": "{{fiery|flaming}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{fiery|燃え盛る}}"
+    },
+    {
+      "key": "{{graffitied|graffitied}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{graffitied|落書きされた}}"
+    },
+    {
+      "key": "{{icy|icy}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{icy|氷の}}"
+    },
+    {
+      "key": "{{Y|airfoil}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|翼型}}"
+    },
+    {
+      "key": "{{B|anti-gravity}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{B|反重力}}"
+    },
+    {
+      "key": "{{biomech|biomech}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{biomech|バイオメック}}"
+    },
+    {
+      "key": "{{camouflage|camo}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{camouflage|迷彩}}"
+    },
+    {
+      "key": "{{biomech|cybrid}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{biomech|サイブリッド}}"
+    },
+    {
+      "key": "{{love|defib}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{love|除細動}}"
+    },
+    {
+      "key": "{{K|desecrated}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|冒涜された}}"
+    },
+    {
+      "key": "{{displacer|displacer}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{displacer|転位}}"
+    },
+    {
+      "key": "{{electrical|electrified}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{electrical|帯電}}"
+    },
+    {
+      "key": "{{extradimensional|extradimensional}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{extradimensional|異次元}}"
+    },
+    {
+      "key": "{{feathered|feathered}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{feathered|羽飾り}}"
+    },
+    {
+      "key": "{{K|flare-compensating}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|フレア補償}}"
+    },
+    {
+      "key": "{{freezing|freezing}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{freezing|凍結した}}"
+    },
+    {
+      "key": "{{m|gesticulating}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{m|蠢く}}"
+    },
+    {
+      "key": "HUD",
+      "context": "GetDisplayName.Adjective",
+      "text": "HUD"
+    },
+    {
+      "key": "{{lovesickness|heartstopper}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lovesickness|ハートストッパー}}"
+    },
+    {
+      "key": "homing",
+      "context": "GetDisplayName.Adjective",
+      "text": "誘導"
+    },
+    {
+      "key": "{{c|high-capacity}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|高容量}}"
+    },
+    {
+      "key": "{{hypervelocity|hypervelocity}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{hypervelocity|超高速}}"
+    },
+    {
+      "key": "[{{illuminated|illuminated}}]",
+      "context": "GetDisplayName.Adjective",
+      "text": "[{{illuminated|発光}}]"
+    },
+    {
+      "key": "{{Y|induction}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|誘導}}"
+    },
+    {
+      "key": "{{c|jacked}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|ジャック付き}}"
+    },
+    {
+      "key": "{{lacquered|lacquered}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lacquered|漆塗り}}"
+    },
+    {
+      "key": "{{lanterned|lanterned}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lanterned|灯り付き}}"
+    },
+    {
+      "key": "{{Y|lege{{W|n}}dary}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|伝説的}}"
+    },
+    {
+      "key": "legendary",
+      "context": "GetDisplayName.Adjective",
+      "text": "伝説的"
+    },
+    {
+      "key": "masterwork",
+      "context": "GetDisplayName.Adjective",
+      "text": "傑作"
+    },
+    {
+      "key": "{{overloaded|massively overloaded}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{overloaded|超過荷重}}"
+    },
+    {
+      "key": "{{Y|masterwork}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|傑作}}"
+    },
+    {
+      "key": "{{Y|mercurial}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|水銀の}}"
+    },
+    {
+      "key": "{{c|metallized}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|金属化}}"
+    },
+    {
+      "key": "{{c|metered}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|計量式}}"
+    },
+    {
+      "key": "{{Y|mi{{R|c}}roserra{{R|t}}ed}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|微鋸歯}}"
+    },
+    {
+      "key": "{{m|morphogenetic}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{m|形態形成}}"
+    },
+    {
+      "key": "{{K|nanochelated}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|ナノキレート}}"
+    },
+    {
+      "key": "{{K|nanon}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|ナノン}}"
+    },
+    {
+      "key": "{{r|nav}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{r|航法}}"
+    },
+    {
+      "key": "orthopedic",
+      "context": "GetDisplayName.Adjective",
+      "text": "整形"
+    },
+    {
+      "key": "{{overloaded|overloaded}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{overloaded|過荷重}}"
+    },
+    {
+      "key": "{{K|phase-conjugate}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|位相結合}}"
+    },
+    {
+      "key": "{{phase-harmonic|phase-harmonic}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{phase-harmonic|位相調和}}"
+    },
+    {
+      "key": "{{polarized|polarized}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{polarized|偏光性}}"
+    },
+    {
+      "key": "{{psionic|psionic}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{psionic|サイオニック}}"
+    },
+    {
+      "key": "{{refractive|refractive}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{refractive|屈折性}}"
+    },
+    {
+      "key": "{{scaled|scaled}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{scaled|鱗状の}}"
+    },
+    {
+      "key": "{{Y|serra{{R|t}}ed}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|鋸歯状の}}"
+    },
+    {
+      "key": "sharp",
+      "context": "GetDisplayName.Adjective",
+      "text": "鋭い"
+    },
+    {
+      "key": "{{G|six-fingered}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|六指の}}"
+    },
+    {
+      "key": "{{c|smart}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|スマートな}}"
+    },
+    {
+      "key": "{{snail-encrusted|snail-encrusted}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{snail-encrusted|巻貝まみれの}}"
+    },
+    {
+      "key": "{{spiked|spiked}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{spiked|トゲ付き}}"
+    },
+    {
+      "key": "spring-loaded",
+      "context": "GetDisplayName.Adjective",
+      "text": "バネ仕掛けの"
+    },
+    {
+      "key": "{{urban camouflage|urban camo}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{urban camouflage|都市迷彩}}"
+    },
+    {
+      "key": "{{y-K sequence|weightless}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{y-K sequence|無重量}}"
+    },
+    {
+      "key": "{{c|wired}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|有線}}"
+    },
+    {
+      "key": "{{Y|wooly}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|ウール製の}}"
+    },
+    {
+      "key": "{{auroral|auroral}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{auroral|オーロラの}}"
+    },
+    {
+      "key": "{{freezing|frozen}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{freezing|凍結した}}"
+    },
+    {
+      "key": "disarmed",
+      "context": "GetDisplayName.Adjective",
+      "text": "武装解除"
+    },
+    {
+      "key": "willowy",
+      "context": "GetDisplayName.Adjective",
+      "text": "しなやかな"
+    },
+    {
+      "key": "flexiweaved(",
+      "context": "GetDisplayName.Adjective",
+      "text": "フレキシ織りの("
+    },
+    {
+      "key": "{{",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{"
+    },
+    {
+      "key": "{{R|",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{R|"
+    },
+    {
+      "key": "damp",
+      "context": "GetDisplayName.Adjective",
+      "text": "湿った"
+    },
+    {
+      "key": "liquid-covered",
+      "context": "GetDisplayName.Adjective",
+      "text": "液まみれの"
+    },
+    {
+      "key": "stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "染みだらけ"
+    },
+    {
+      "key": "{{B|water}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{B|水の}}"
+    },
+    {
+      "key": "{{B|wet}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{B|濡れた}}"
+    },
+    {
+      "key": "{{C|convalessence}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "コンバレセンスで染みた"
+    },
+    {
+      "key": "{{C|luminous}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{C|発光する}}"
+    },
+    {
+      "key": "{{G|acid-covered}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|酸まみれの}}"
+    },
+    {
+      "key": "{{G|acidic}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|酸性の}}"
+    },
+    {
+      "key": "{{G|acid}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|酸の}}"
+    },
+    {
+      "key": "{{G|acid}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "酸で染みた"
+    },
+    {
+      "key": "{{G|gooey}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|どろりとした}}"
+    },
+    {
+      "key": "{{G|goo}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|どろどろの}}"
+    },
+    {
+      "key": "{{G|goo}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "どろどろに染みた"
+    },
+    {
+      "key": "{{K|inky}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|インクまみれの}}"
+    },
+    {
+      "key": "{{K|ink}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|インクの}}"
+    },
+    {
+      "key": "{{K|ink}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "インクで染みた"
+    },
+    {
+      "key": "{{K|oily}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|油まみれの}}"
+    },
+    {
+      "key": "{{K|oil}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|油の}}"
+    },
+    {
+      "key": "{{K|oil}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "油で染みた"
+    },
+    {
+      "key": "{{K|ooze}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|軟泥の}}"
+    },
+    {
+      "key": "{{K|ooze}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "軟泥で汚れた"
+    },
+    {
+      "key": "{{K|oozing}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|滲み出ている}}"
+    },
+    {
+      "key": "{{K|tarred}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|タールまみれの}}"
+    },
+    {
+      "key": "{{K|tarry}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|タール質の}}"
+    },
+    {
+      "key": "{{K|tar}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|タールの}}"
+    },
+    {
+      "key": "{{K|tar}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "タールで染みた"
+    },
+    {
+      "key": "{{W|sappy}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{W|樹液まみれの}}"
+    },
+    {
+      "key": "{{W|sap}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{W|樹液の}}"
+    },
+    {
+      "key": "{{W|sap}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "樹液で染みた"
+    },
+    {
+      "key": "{{Y|dilute}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|希釈された}}"
+    },
+    {
+      "key": "{{Y|entropic}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|エントロピック}}"
+    },
+    {
+      "key": "{{Y|gel}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|ゲル状の}}"
+    },
+    {
+      "key": "{{Y|gel}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "ゲルで染みた"
+    },
+    {
+      "key": "{{Y|salt-encrusted}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|塩まみれの}}"
+    },
+    {
+      "key": "{{Y|salty}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|塩気のある}}"
+    },
+    {
+      "key": "{{Y|salt}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|塩の}}"
+    },
+    {
+      "key": "{{Y|salt}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "塩で染みた"
+    },
+    {
+      "key": "{{Y|unctuous}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|油っぽい}}"
+    },
+    {
+      "key": "{{Y|warm static}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|ウォームスタティック}}"
+    },
+    {
+      "key": "{{Y|warm static}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "ウォームスタティックで染みた"
+    },
+    {
+      "key": "{{Y|waxy}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|蝋質の}}"
+    },
+    {
+      "key": "{{Y|wax}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|蝋の}}"
+    },
+    {
+      "key": "{{Y|wax}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "蝋で汚れた"
+    },
+    {
+      "key": "{{brainbrine|brain-brine}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{brainbrine|脳髄汁の}}"
+    },
+    {
+      "key": "{{brainbrine|brain-brine}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "脳髄汁で染みた"
+    },
+    {
+      "key": "{{cider|cider}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{cider|サイダーの}}"
+    },
+    {
+      "key": "{{cider|cider}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "サイダーで染みた"
+    },
+    {
+      "key": "{{cider|fragrant}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{cider|芳香の}}"
+    },
+    {
+      "key": "{{cloning|cloning-draught}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{cloning|クローン薬液の}}"
+    },
+    {
+      "key": "{{cloning|cloning-draught}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "クローン薬液で染みた"
+    },
+    {
+      "key": "{{cloning|homogenized}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{cloning|均質化した}}"
+    },
+    {
+      "key": "{{c|soupy}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|どろどろの}}"
+    },
+    {
+      "key": "{{c|soup}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|スープ状の}}"
+    },
+    {
+      "key": "{{c|soup}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "スープで染みた"
+    },
+    {
+      "key": "{{g|algae-covered}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{g|藻まみれの}}"
+    },
+    {
+      "key": "{{g|algae}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "藻で染まった"
+    },
+    {
+      "key": "{{g|algal}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{g|藻質の}}"
+    },
+    {
+      "key": "{{g|slime}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{g|スライムの}}"
+    },
+    {
+      "key": "{{g|slime}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "スライムでぬめった"
+    },
+    {
+      "key": "{{lava|lava-covered}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lava|溶岩まみれの}}"
+    },
+    {
+      "key": "{{lava|lava}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "溶岩で汚れた"
+    },
+    {
+      "key": "{{lava|magmatic}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lava|マグマ質の}}"
+    },
+    {
+      "key": "{{m|lush}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{m|芳醇な}}"
+    },
+    {
+      "key": "{{m|wine}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{m|ワインの}}"
+    },
+    {
+      "key": "{{m|wine}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "ワインで染みた"
+    },
+    {
+      "key": "{{nervous|nervous}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{nervous|神経質な}}"
+    },
+    {
+      "key": "{{neutronic|flux}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{neutronic|中性子フラックスの}}"
+    },
+    {
+      "key": "{{neutronic|flux}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "中性子フラックスで染みた"
+    },
+    {
+      "key": "{{neutronic|neutral}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{neutronic|中性化した}}"
+    },
+    {
+      "key": "{{neutronic|neutronic}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{neutronic|中性子質の}}"
+    },
+    {
+      "key": "{{putrid|putrescence}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{putrid|腐敗液の}}"
+    },
+    {
+      "key": "{{putrid|putrescence}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "腐敗液で染みた"
+    },
+    {
+      "key": "{{putrid|putrid}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{putrid|腐敗した}}"
+    },
+    {
+      "key": "{{radiant|radiant}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{radiant|輝く}}"
+    },
+    {
+      "key": "{{r|bloody}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{r|血まみれの}}"
+    },
+    {
+      "key": "{{r|bloody}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "血まみれになった"
+    },
+    {
+      "key": "{{r|blood}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "血に染まった"
+    },
+    {
+      "key": "{{slimy|slimy}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{slimy|ぬめった}}"
+    },
+    {
+      "key": "{{sunslag|sunslag}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{sunslag|サンスラグの}}"
+    },
+    {
+      "key": "{{sunslag|sunslag}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "サンスラグで染みた"
+    },
+    {
+      "key": "{{w|honey}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{w|はちみつの}}"
+    },
+    {
+      "key": "{{w|honey}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "はちみつで染みた"
+    },
+    {
+      "key": "{{w|sludge}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{w|汚泥の}}"
+    },
+    {
+      "key": "{{w|sludge}}-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "汚泥で汚れた"
+    },
+    {
+      "key": "{{w|sludgy}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{w|泥状の}}"
+    },
+    {
+      "key": "{{w|sticky}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{w|粘ついた}}"
+    },
+    {
+      "key": "word",
+      "context": "GetDisplayName.Adjective",
+      "text": "word"
+    },
+    {
+      "key": "painted",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{painted|彩色された}}"
+    },
+    {
+      "key": "engraved",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{engraved|彫り刻まれた}}"
+    },
+    {
+      "key": "nulling",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|無効化}}"
+    },
+    {
+      "key": "recycling",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{B|再循環式}}"
+    },
+    {
+      "key": "radio-powered",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{C|無線駆動の}}"
+    },
+    {
+      "key": "phase-conjugate",
+      "context": "GetDisplayName.Adjective",
+      "text": "位相結合"
+    },
+    {
+      "key": "[Implant] -",
+      "context": "GetDisplayName.Adjective",
+      "text": "[{{W|インプラント}}] -"
+    },
+    {
+      "key": "flaming",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{fiery|燃え盛る}}"
+    },
+    {
+      "key": "graffitied",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{graffitied|落書きされた}}"
+    },
+    {
+      "key": "icy",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{icy|氷の}}"
+    },
+    {
+      "key": "airfoil",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|翼型}}"
+    },
+    {
+      "key": "anti-gravity",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{B|反重力}}"
+    },
+    {
+      "key": "biomech",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{biomech|バイオメック}}"
+    },
+    {
+      "key": "camo",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{camouflage|迷彩}}"
+    },
+    {
+      "key": "cybrid",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{biomech|サイブリッド}}"
+    },
+    {
+      "key": "defib",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{love|除細動}}"
+    },
+    {
+      "key": "desecrated",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|冒涜された}}"
+    },
+    {
+      "key": "displacer",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{displacer|転位}}"
+    },
+    {
+      "key": "electrified",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{electrical|帯電}}"
+    },
+    {
+      "key": "extradimensional",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{extradimensional|異次元}}"
+    },
+    {
+      "key": "feathered",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{feathered|羽飾り}}"
+    },
+    {
+      "key": "flare-compensating",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|フレア補償}}"
+    },
+    {
+      "key": "freezing",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{freezing|凍結した}}"
+    },
+    {
+      "key": "gesticulating",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{m|蠢く}}"
+    },
+    {
+      "key": "heartstopper",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lovesickness|ハートストッパー}}"
+    },
+    {
+      "key": "high-capacity",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|高容量}}"
+    },
+    {
+      "key": "hypervelocity",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{hypervelocity|超高速}}"
+    },
+    {
+      "key": "[illuminated]",
+      "context": "GetDisplayName.Adjective",
+      "text": "[{{illuminated|発光}}]"
+    },
+    {
+      "key": "induction",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|誘導}}"
+    },
+    {
+      "key": "jacked",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|ジャック付き}}"
+    },
+    {
+      "key": "lacquered",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lacquered|漆塗り}}"
+    },
+    {
+      "key": "lanterned",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lanterned|灯り付き}}"
+    },
+    {
+      "key": "lege{{W|ndary}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|伝説的}}"
+    },
+    {
+      "key": "massively overloaded",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{overloaded|超過荷重}}"
+    },
+    {
+      "key": "mercurial",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|水銀の}}"
+    },
+    {
+      "key": "metallized",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|金属化}}"
+    },
+    {
+      "key": "metered",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|計量式}}"
+    },
+    {
+      "key": "mi{{R|croserrated}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|微鋸歯}}"
+    },
+    {
+      "key": "morphogenetic",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{m|形態形成}}"
+    },
+    {
+      "key": "nanochelated",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|ナノキレート}}"
+    },
+    {
+      "key": "nanon",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|ナノン}}"
+    },
+    {
+      "key": "nav",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{r|航法}}"
+    },
+    {
+      "key": "overloaded",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{overloaded|過荷重}}"
+    },
+    {
+      "key": "phase-harmonic",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{phase-harmonic|位相調和}}"
+    },
+    {
+      "key": "polarized",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{polarized|偏光性}}"
+    },
+    {
+      "key": "psionic",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{psionic|サイオニック}}"
+    },
+    {
+      "key": "refractive",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{refractive|屈折性}}"
+    },
+    {
+      "key": "scaled",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{scaled|鱗状の}}"
+    },
+    {
+      "key": "serra{{R|ted}}",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|鋸歯状の}}"
+    },
+    {
+      "key": "six-fingered",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|六指の}}"
+    },
+    {
+      "key": "smart",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|スマートな}}"
+    },
+    {
+      "key": "snail-encrusted",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{snail-encrusted|巻貝まみれの}}"
+    },
+    {
+      "key": "spiked",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{spiked|トゲ付き}}"
+    },
+    {
+      "key": "urban camo",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{urban camouflage|都市迷彩}}"
+    },
+    {
+      "key": "weightless",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{y-K sequence|無重量}}"
+    },
+    {
+      "key": "wired",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|有線}}"
+    },
+    {
+      "key": "wooly",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|ウール製の}}"
+    },
+    {
+      "key": "auroral",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{auroral|オーロラの}}"
+    },
+    {
+      "key": "frozen",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{freezing|凍結した}}"
+    },
+    {
+      "key": "water",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{B|水の}}"
+    },
+    {
+      "key": "wet",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{B|濡れた}}"
+    },
+    {
+      "key": "convalessence-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "コンバレセンスで染みた"
+    },
+    {
+      "key": "luminous",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{C|発光する}}"
+    },
+    {
+      "key": "acid-covered",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|酸まみれの}}"
+    },
+    {
+      "key": "acidic",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|酸性の}}"
+    },
+    {
+      "key": "acid",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|酸の}}"
+    },
+    {
+      "key": "acid-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "酸で染みた"
+    },
+    {
+      "key": "gooey",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|どろりとした}}"
+    },
+    {
+      "key": "goo",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{G|どろどろの}}"
+    },
+    {
+      "key": "goo-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "どろどろに染みた"
+    },
+    {
+      "key": "inky",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|インクまみれの}}"
+    },
+    {
+      "key": "ink",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|インクの}}"
+    },
+    {
+      "key": "ink-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "インクで染みた"
+    },
+    {
+      "key": "oily",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|油まみれの}}"
+    },
+    {
+      "key": "oil",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|油の}}"
+    },
+    {
+      "key": "oil-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "油で染みた"
+    },
+    {
+      "key": "ooze",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|軟泥の}}"
+    },
+    {
+      "key": "ooze-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "軟泥で汚れた"
+    },
+    {
+      "key": "oozing",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|滲み出ている}}"
+    },
+    {
+      "key": "tarred",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|タールまみれの}}"
+    },
+    {
+      "key": "tarry",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|タール質の}}"
+    },
+    {
+      "key": "tar",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{K|タールの}}"
+    },
+    {
+      "key": "tar-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "タールで染みた"
+    },
+    {
+      "key": "sappy",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{W|樹液まみれの}}"
+    },
+    {
+      "key": "sap",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{W|樹液の}}"
+    },
+    {
+      "key": "sap-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "樹液で染みた"
+    },
+    {
+      "key": "dilute",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|希釈された}}"
+    },
+    {
+      "key": "entropic",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|エントロピック}}"
+    },
+    {
+      "key": "gel",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|ゲル状の}}"
+    },
+    {
+      "key": "gel-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "ゲルで染みた"
+    },
+    {
+      "key": "salt-encrusted",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|塩まみれの}}"
+    },
+    {
+      "key": "salty",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|塩気のある}}"
+    },
+    {
+      "key": "salt",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|塩の}}"
+    },
+    {
+      "key": "salt-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "塩で染みた"
+    },
+    {
+      "key": "unctuous",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|油っぽい}}"
+    },
+    {
+      "key": "warm static",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|ウォームスタティック}}"
+    },
+    {
+      "key": "warm static-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "ウォームスタティックで染みた"
+    },
+    {
+      "key": "waxy",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|蝋質の}}"
+    },
+    {
+      "key": "wax",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|蝋の}}"
+    },
+    {
+      "key": "wax-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "蝋で汚れた"
+    },
+    {
+      "key": "brain-brine",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{brainbrine|脳髄汁の}}"
+    },
+    {
+      "key": "brain-brine-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "脳髄汁で染みた"
+    },
+    {
+      "key": "cider",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{cider|サイダーの}}"
+    },
+    {
+      "key": "cider-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "サイダーで染みた"
+    },
+    {
+      "key": "fragrant",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{cider|芳香の}}"
+    },
+    {
+      "key": "cloning-draught",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{cloning|クローン薬液の}}"
+    },
+    {
+      "key": "cloning-draught-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "クローン薬液で染みた"
+    },
+    {
+      "key": "homogenized",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{cloning|均質化した}}"
+    },
+    {
+      "key": "soupy",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|どろどろの}}"
+    },
+    {
+      "key": "soup",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{c|スープ状の}}"
+    },
+    {
+      "key": "soup-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "スープで染みた"
+    },
+    {
+      "key": "algae-covered",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{g|藻まみれの}}"
+    },
+    {
+      "key": "algae-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "藻で染まった"
+    },
+    {
+      "key": "algal",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{g|藻質の}}"
+    },
+    {
+      "key": "slime",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{g|スライムの}}"
+    },
+    {
+      "key": "slime-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "スライムでぬめった"
+    },
+    {
+      "key": "lava-covered",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lava|溶岩まみれの}}"
+    },
+    {
+      "key": "lava-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "溶岩で汚れた"
+    },
+    {
+      "key": "magmatic",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{lava|マグマ質の}}"
+    },
+    {
+      "key": "lush",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{m|芳醇な}}"
+    },
+    {
+      "key": "wine",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{m|ワインの}}"
+    },
+    {
+      "key": "wine-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "ワインで染みた"
+    },
+    {
+      "key": "nervous",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{nervous|神経質な}}"
+    },
+    {
+      "key": "flux",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{neutronic|中性子フラックスの}}"
+    },
+    {
+      "key": "flux-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "中性子フラックスで染みた"
+    },
+    {
+      "key": "neutral",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{neutronic|中性化した}}"
+    },
+    {
+      "key": "neutronic",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{neutronic|中性子質の}}"
+    },
+    {
+      "key": "putrescence",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{putrid|腐敗液の}}"
+    },
+    {
+      "key": "putrescence-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "腐敗液で染みた"
+    },
+    {
+      "key": "putrid",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{putrid|腐敗した}}"
+    },
+    {
+      "key": "radiant",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{radiant|輝く}}"
+    },
+    {
+      "key": "bloody",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{r|血まみれの}}"
+    },
+    {
+      "key": "bloody-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "血まみれになった"
+    },
+    {
+      "key": "blood-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "血に染まった"
+    },
+    {
+      "key": "slimy",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{slimy|ぬめった}}"
+    },
+    {
+      "key": "sunslag",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{sunslag|サンスラグの}}"
+    },
+    {
+      "key": "sunslag-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "サンスラグで染みた"
+    },
+    {
+      "key": "honey",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{w|はちみつの}}"
+    },
+    {
+      "key": "honey-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "はちみつで染みた"
+    },
+    {
+      "key": "sludge",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{w|汚泥の}}"
+    },
+    {
+      "key": "sludge-stained",
+      "context": "GetDisplayName.Adjective",
+      "text": "汚泥で汚れた"
+    },
+    {
+      "key": "sludgy",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{w|泥状の}}"
+    },
+    {
+      "key": "sticky",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{w|粘ついた}}"
+    },
+    {
+      "key": "microserrated",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|微鋸歯}}"
+    },
+    {
+      "key": "serrated",
+      "context": "GetDisplayName.Adjective",
+      "text": "{{Y|鋸歯状の}}"
+    }
+  ]
+}

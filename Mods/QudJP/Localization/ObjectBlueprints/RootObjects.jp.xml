@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<objects Load="Merge">
+  <object Name="CosmeticObject" Inherits="Object" Replace="true">
+    <part Name="Render" DisplayName="[オブジェクト]" RenderString="?" RenderLayer="0" RenderIfDark="true" />
+    <part Name="Physics" IsReal="true" Weight="-1" />
+    <part Name="NoDamage" />
+    <tag Name="NoEffects" />
+    <tag Name="Cosmetic" />
+    <tag Name="Gender" Value="neuter" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="Immutable" />
+  </object>
+</objects>

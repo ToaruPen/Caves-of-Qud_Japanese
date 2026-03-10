@@ -1,0 +1,21 @@
+{
+"OpeningStoryJoppa":
+"&y$month $day、モグライ大塩砂漠の縁にあるオアシスの集落{{green|ジョッパ}}に着いた。\n\n周囲では水耕農家たちが緑のウォーターヴァイン畑を世話している。岩塩やブラインストークで作られた掘っ立て小屋が点在している。\n\n地平線の向こうでは、{{r|クッド}}のジャングルがクロームの尖塔や錆びたアーチを大地へと締め上げている。そのさらに奥、伝説の{{C|スピンドル}}が喧噪を突き抜け、雲のヴェールを貫いて天へ伸びている。",
+
+"OpeningStoryAlternate":
+"&y$month $day、村{{g|$village}}に到着した。\n\n地平線の向こうでは、{{r|クッド}}のジャングルがクロームの尖塔や錆びたアーチを大地へと締め上げている。そのさらに奥、伝説の{{C|スピンドル}}が喧噪を突き抜け、雲のヴェールを貫いて天へ伸びている。",
+
+"FactionEncounterNumber_*Default": "1d4+2",
+"FactionEncounterNumber_Bears": "3-5",
+"FactionEncounterNumber_Arachnids": "10-16",
+"FactionEncounterNumber_Tortoises": "6-10",
+"FactionEncounterNumber_Pariahs": "6-10",
+"FactionEncounterNumber_Antelopes": "15-25",
+"FactionEncounterNumber_Apes": "6-10",
+"FactionEncounterNumber_Barathrumites": "5-8",
+"FactionEncounterNumber_Birds": "12-18",
+"FactionEncounterNumber_Mechanimists": "6-10",
+"FactionEncounterNumber_Seekers": "1",
+"FactionEncounterNumber_Templar": "6-10"
+}
+

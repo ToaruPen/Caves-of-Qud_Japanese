@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<relics Load="Replace">
+
+  <relictypes>
+    <relictype Name="Axe" />
+    <relictype Name="ShortBlade" />
+    <relictype Name="LongBlade" />
+    <relictype Name="Cudgel" />
+    <relictype Name="Rifle" />
+    <relictype Name="Pistol" />
+    <relictype Name="Head" />
+    <relictype Name="Body" />
+    <relictype Name="Face" />
+    <relictype Name="Arm" />
+    <relictype Name="Feet" />
+    <relictype Name="Hands" />
+    <relictype Name="Floating" />
+    <relictype Name="Artifact" />
+    <relictype Name="Book" />
+    <relictype Name="Curio" />
+    <relictype Name="Shield" />
+    <relictype Name="Food" />
+  </relictypes>
+
+  <relictypemappings>
+    <relictypemapping Name="axe" Type="Axe" />
+    <relictypemapping Name="dagger" Type="ShortBlade" />
+    <relictypemapping Name="dirk" Type="ShortBlade" />
+    <relictypemapping Name="sword" Type="LongBlade" />
+    <relictypemapping Name="hammer" Type="Cudgel" />
+    <relictypemapping Name="mace" Type="Cudgel" />
+    <relictypemapping Name="hammers" Type="Cudgel" />
+    <relictypemapping Name="pummel" Type="Cudgel" />
+    <relictypemapping Name="helm" Type="Head" />
+    <relictypemapping Name="helmet" Type="Head" />
+    <relictypemapping Name="armor" Type="Body" />
+    <relictypemapping Name="vest" Type="Body" />
+    <relictypemapping Name="breastplate" Type="Body" />
+    <relictypemapping Name="mask" Type="Face" />
+    <relictypemapping Name="bracelet" Type="Arm" />
+    <relictypemapping Name="pair of boots" Type="Feet" />
+    <relictypemapping Name="boot" Type="Feet" />
+    <relictypemapping Name="boots" Type="Feet" />
+    <relictypemapping Name="iron gauntlet" Type="Hands" />
+    <relictypemapping Name="pair of gloves" Type="Hands" />
+    <relictypemapping Name="glove" Type="Hands" />
+    <relictypemapping Name="gloves" Type="Hands" />
+    <relictypemapping Name="gauntlet" Type="Hands" />
+    <relictypemapping Name="gauntlets" Type="Hands" />
+    <relictypemapping Name="floating orb" Type="Floating" />
+    <relictypemapping Name="artifact" Type="Artifact" />
+    <relictypemapping Name="star-tool" Type="Artifact" />
+    <relictypemapping Name="rifle" Type="Rifle" />
+    <relictypemapping Name="long arm" Type="Rifle" />
+    <relictypemapping Name="pistol" Type="Pistol" />
+    <relictypemapping Name="gun" Type="Pistol" />
+    <relictypemapping Name="short arm" Type="Pistol" />
+    <relictypemapping Name="treatise" Type="Book" />
+    <relictypemapping Name="chronology" Type="Book" />
+    <relictypemapping Name="philosophy" Type="Book" />
+    <relictypemapping Name="hypothesis" Type="Book" />
+    <relictypemapping Name="account" Type="Book" />
+    <relictypemapping Name="horoscope reading" Type="Book" />
+    <relictypemapping Name="allegory" Type="Book" />
+    <relictypemapping Name="wintry truth" Type="Book" />
+    <relictypemapping Name="meal" Type="Food" />
+    <relictypemapping Name="feast" Type="Food" />
+    <relictypemapping Name="skull" Type="Curio" />
+    <relictypemapping Name="one-sided die" Type="Curio" />
+    <relictypemapping Name="two-sided die" Type="Curio" />
+    <relictypemapping Name="three-sided die" Type="Curio" />
+    <relictypemapping Name="four-sided die" Type="Curio" />
+    <relictypemapping Name="five-sided die" Type="Curio" />
+    <relictypemapping Name="six-sided die" Type="Curio" />
+    <relictypemapping Name="seven-sided die" Type="Curio" />
+    <relictypemapping Name="eight-sided die" Type="Curio" />
+    <relictypemapping Name="nine-sided die" Type="Curio" />
+    <relictypemapping Name="ten-sided die" Type="Curio" />
+    <relictypemapping Name="twelve-sided die" Type="Curio" />
+    <relictypemapping Name="twenty-sided die" Type="Curio" />
+    <relictypemapping Name="coin" Type="Curio" />
+    <relictypemapping Name="shield" Type="Shield" />
+  </relictypemappings>
+
+</relics>

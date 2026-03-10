@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mods Load="Merge">
+  <mod Part="ModLacquered" Tables="CommonMods" Rarity="C" TinkerDisplayName="漆仕上げ" Value="1.1" TinkerCategory="utility" Description="漆仕上げ: 液体を弾き錆びない。" />
+  <mod Part="ModSturdy" Tables="CommonMods" Rarity="C" TinkerDisplayName="頑丈" Value="1.1" TinkerCategory="utility" Description="頑丈: ひび割れも破損もしない。" />
+  <mod Part="ModSlender" Tables="CommonMods" Rarity="C" TinkerDisplayName="細身" Value="1.1" TinkerCategory="utility" Description="細身: 通常より軽い。" />
+  <mod Part="ModWillowy" Tables="CommonMods" Rarity="R" TinkerTier="2" TinkerDisplayName="しなやか" Value="1.3" TinkerCategory="utility" Description="しなやか: 通常より大幅に軽い。" />
+  <mod Part="ModSuspensor" Tables="CommonMods" Rarity="R" NativeTier="5" TinkerTier="7" CanAutoTinker="false" TinkerCategory="utility" TinkerDisplayName="サスペンサー付き" Value="1.3" />
+  <mod Part="ModJewelEncrusted" Tables="CommonMods,JeweledMods" Rarity="R" Value="5" TinkerAllowed="false" TinkerDisplayName="宝石装飾" TinkerCategory="utility" Description="宝石装飾: 通常より価値が高く、水の領主との評判+100。" />
+
+  <mod Part="ModDrumLoaded" Tables="MagazineMods" Rarity="U" MinTier="3" TinkerTier="2" TinkerDisplayName="ドラム弾倉" Value="1.2" TinkerCategory="rifles" Description="ドラム弾倉: 装弾数が20%増える。" />
+
+  <mod Part="ModScoped" Tables="FirearmMods" Rarity="C" MinTier="2" TinkerDisplayName="スコープ付き" Value="1.1" TinkerCategory="rifles" Description="スコープ装着: 命中精度が向上する。" />
+  <mod Part="ModLiquidCooled" Tables="FirearmMods" Rarity="U" NativeTier="3" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="液冷式" Value="1.2" TinkerCategory="rifles" />
+
+  <mod Part="ModBeamsplitter" Tables="BeamWeaponMods" Rarity="R" NativeTier="4" TinkerTier="6" TinkerDisplayName="ビームスプリッタ装着" Value="1.3" TinkerCategory="rifles" />
+  <mod Part="ModNanon" Tables="BeamWeaponMods" Rarity="R" NativeTier="4" TinkerTier="7" TinkerDisplayName="ナノ刃" NoSparkingQuest="true" Value="1.3" TinkerCategory="rifles" />
+
+  <mod Part="ModSharp" Tables="BladeMods,ThrownWeaponMods" Rarity="C" TinkerDisplayName="鋭角" Value="1.1" NoSparkingQuest="true" Description="鋭角: 貫通判定+1" TinkerCategory="melee weapons" />
+  <mod Part="ModMasterwork" Tables="WeaponMods,MissileWeaponMods,ThrownWeaponMods" Rarity="U" TinkerDisplayName="名工品" Value="1.2" TinkerCategory="melee weapons" Description="名工品: この武器はクリティカルヒットの発生率が通常の2倍。" />
+  <mod Part="ModDisplacer" Tables="WeaponMods,MissileWeaponMods,ThrownWeaponMods" Rarity="R" NativeTier="6" TinkerTier="6" CanAutoTinker="false" TinkerDisplayName="位相転移" Value="1.5" TinkerCategory="melee weapons" />
+  <mod Part="ModMorphogenetic" Tables="WeaponMods,MissileWeaponMods,ThrownWeaponMods" Rarity="R" NativeTier="6" TinkerTier="7" CanAutoTinker="false" TinkerDisplayName="形態同調" Value="1.5" TinkerCategory="melee weapons" />
+
+  <mod Part="ModSerrated" Tables="LongBladeMods,AxeMods" Rarity="R" TinkerTier="3" TinkerDisplayName="鋸歯" Value="1.3" Description="鋸歯: この武器は3%の確率で敵を切断する。" TinkerCategory="melee weapons" />
+
+  <mod Part="ModGigantic" Tables="CommonMods,PotteryMods,ShevaPotteryMods,EnergyCellMods,GrenadeMods,NuggetMods,GemstoneMods,TonicMods" Rarity="R2" TinkerDisplayName="巨大" TinkerAllowed="false" CanAutoTinker="false" BonusAllowed="false" Value="1.5" TinkerCategory="utility" />
+
+  <mod Part="ModElectrified" Tables="WeaponMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" TinkerDisplayName="電化" Value="1.2" TinkerCategory="melee weapons" />
+  <mod Part="ModFreezing" Tables="WeaponMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" NoSparkingQuest="true" TinkerDisplayName="冷却" Value="1.2" TinkerCategory="melee weapons" />
+  <mod Part="ModFlaming" Tables="WeaponMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" NoSparkingQuest="true" TinkerDisplayName="火炎" Value="1.2" TinkerCategory="melee weapons" />
+  <mod Part="ModCounterweighted" Tables="WeaponMods" Rarity="C" TinkerTier="2" TinkerDisplayName="つり合い調整" Value="1.1" TinkerCategory="melee weapons" />
+
+  <mod Part="ModReinforced" Tables="BodyMods,ExoskeletonMods,WingsMods" Rarity="U" TinkerTier="2" TinkerDisplayName="補強" Value="1.2" TinkerCategory="armor" Description="補強: AV+1" />
+  <mod Part="ModFlexiweaved" Tables="BodyMods,CloakMods,ExoskeletonMods" Rarity="U" MinTier="2" TinkerTier="2" TinkerDisplayName="柔繊維仕立て" TinkerCategory="armor" Value="1.2" />
+  <mod Part="ModRecycling" Tables="BodyMods,ExoskeletonMods" Rarity="R" MinTier="2" NativeTier="0" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="再生処理" Value="1.3" TinkerCategory="armor" NoSparkingQuest="true" Description="再生処理: 装着者の廃水を集めて浄化し、最大8ドラムまで貯める。" />
+  <mod Part="ModDisguise" Tables="BodyMods,CloakMods,ExoskeletonMods" Rarity="R" TinkerTier="2" TinkerAllowed="false" CanAutoTinker="false" TinkerDisplayName="変装" TinkerCategory="armor" Value="1.3" />
+
+  <mod Part="ModVisored" Tables="HelmetMods,ExoskeletonMods" Rarity="C" MinTier="2" TinkerDisplayName="バイザー" Value="1.1" TinkerCategory="armor" Description="バイザー: DV+1" />
+  <mod Part="ModPadded" Tables="HelmetMods" Rarity="C" TinkerDisplayName="パッド入り" Value="1.1" TinkerCategory="armor" />
+  <mod Part="ModLanterned" Tables="HelmetMods,ExoskeletonMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" TinkerDisplayName="ランタン" Value="1.2" Description="ランタン: 光源を提供する。" TinkerCategory="armor" />
+  <mod Part="ModFilters" Tables="HelmetMods,MaskMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" TinkerDisplayName="フィルター付き" Value="1.2" TinkerCategory="armor" />
+  <mod Part="ModTwoFaced" Tables="HelmetMods" Rarity="R" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="双面" Value="1.3" Description="双面: 顔スロットを1枠追加する。" TinkerCategory="armor" />
+  <mod Part="ModTerrifyingVisage" Tables="HeadwearMods" Rarity="R" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="恐ろしい面貌の" Value="1.3" Description="恐ろしい面貌: Berate、Intimidate、Menacing Stareのクールダウンを10ラウンド短縮し、頭部と顔の両方を占有する。" TinkerCategory="armor" />
+  <mod Part="ModSereneVisage" Tables="HeadwearMods" Rarity="R" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="静謐な面貌の" Value="1.3" Description="静謐な面貌: 意志力+1でMeditateのクールダウンを40ラウンド短縮し、頭部と顔の両方を占有する。" TinkerCategory="armor" />
+  <mod Part="ModCoProcessor" Tables="HeadwearMods" Rarity="R" TinkerTier="6" NativeTier="4" CanAutoTinker="false" TinkerDisplayName="共同処理装置" Value="1.3" TinkerCategory="armor" />
+
+  <mod Part="ModSpiked" Tables="ShieldMods,GauntletMods" Rarity="R" TinkerTier="3" TinkerDisplayName="スパイク" Value="1.3" TinkerCategory="armor" />
+
+  <mod Part="ModRefractive" Tables="GloveMods,GauntletMods,HeadwearMods,BodyMods,ShieldMods,BootMods,CloakMods,TreadAccessoryMods,ExoskeletonMods" Rarity="R" TinkerTier="5" NativeTier="4" TinkerDisplayName="屈折" Value="1.3" TinkerCategory="armor" />
+
+  <mod Part="ModSixFingered" Tables="GloveMods,GauntletMods" Rarity="R" MinTier="3" TinkerTier="3" TinkerDisplayName="六指" Value="1.3" Description="六指: 敏捷+1" TinkerCategory="armor" />
+  
+  <mod Part="ModGesticulating" Tables="GloveMods,GauntletMods,ExoskeletonMods" Rarity="R" MinTier="3" TinkerTier="3" TinkerDisplayName="身ぶり強調" Value="1.3" TinkerCategory="armor" />
+  
+  <mod Part="ModFeathered" Tables="GloveMods,GauntletMods,HeadwearMods,BodyMods,CloakMods,ShieldMods,BootMods,TreadAccessoryMods,ExoskeletonMods,WingsMods" Rarity="U" TinkerTier="2" TinkerDisplayName="羽飾り" Value="1.2" TinkerCategory="armor" Description="羽飾り: 装着者に鳥類との評判+250。" />
+  <mod Part="ModScaled" Tables="GloveMods,GauntletMods,HeadwearMods,BodyMods,CloakMods,ShieldMods,BootMods,TreadAccessoryMods,ExoskeletonMods,WingsMods" Rarity="U" TinkerTier="2" TinkerDisplayName="鱗装甲" Value="1.2" TinkerCategory="armor" Description="鱗装甲: 装着者に甲無し爬虫類との評判+250。" />
+  <mod Part="ModWooly" Tables="GloveMods,GauntletMods,HeadwearMods,BodyMods,CloakMods,BootMods,ExoskeletonMods,WingsMods,BracerMods" Rarity="U" TinkerTier="2" TinkerDisplayName="毛皮張り" Value="1.2" TinkerCategory="armor" Description="毛皮張り: 熱と冷気への耐性を与える。" />
+  <mod Part="ModSnailEncrusted" Tables="GloveMods,GauntletMods,HeadwearMods,BodyMods,CloakMods,ShieldMods,BootMods,TreadAccessoryMods,ExoskeletonMods" Rarity="R" TinkerTier="2" TinkerDisplayName="巻貝まみれ" TinkerAllowed="false" Value="1.2" TinkerCategory="armor" Description="巻貝まみれ: 装着者に軟体動物との評判+250。" />
+  
+  <mod Part="ModSpringLoaded" Tables="BootMods,ExoskeletonMods" Rarity="U" TinkerTier="2" TinkerDisplayName="スプリング" Value="1.2" TinkerCategory="armor" Description="スプリング: 移動速度+5～10。" />
+  <mod Part="ModCleated" Tables="BootMods,ExoskeletonMods" Rarity="C" TinkerTier="1" TinkerDisplayName="スパイク付き" Value="1.1" TinkerCategory="armor" />
+
+  <mod Part="ModPolarized" Tables="EyewearMods" Rarity="C" NativeTier="0" TinkerTier="2" TinkerDisplayName="偏光" Value="1.1" TinkerCategory="armor" />
+  <mod Part="ModNav" Tables="EyewearMods,ExoskeletonMods" Rarity="R" NativeTier="0" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="ナビ" Value="1.5" TinkerCategory="armor" />
+
+  <mod Part="ModNulling" Tables="WeaponMods,MissileWeaponMods,ThrownWeaponMods,ShieldMods,BodyMods,CloakMods,HeadwearMods,EyewearMods,GloveMods,GauntletMods,BootMods,TreadAccessoryMods,ExoskeletonMods" Rarity="R" NativeTier="5" TinkerTier="6" CanAutoTinker="false" TinkerDisplayName="ヌル化" Value="1.3" TinkerCategory="utility" />
+
+  <mod Part="ModHighCapacity" Tables="EnergyCellMods,ChargeStorageMods" Rarity="U" TinkerDisplayName="大容量" Value="1.2" TinkerCategory="ammo and energy cells" />
+  <mod Part="ModMetered" Tables="EnergyCellMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" TinkerDisplayName="メーター付き" Value="1.2" TinkerCategory="ammo and energy cells" />
+  <mod Part="ModRadioPowered" Tables="EnergyCellMods" Rarity="R" TinkerTier="4" CanAutoTinker="false" TinkerDisplayName="ラジオ受電" Value="1.3" TinkerCategory="ammo and energy cells" />
+
+  <mod Part="ModIlluminated" Tables="BookMods" Rarity="U" TinkerAllowed="false" CanAutoTinker="false" TinkerDisplayName="彩飾" Value="1.3" TinkerCategory="utility" Description="彩飾: 書物の余白に装飾や挿絵が施され、価値が30%上がる。" />
+
+  <mod Part="ModExtradimensional" Tables="CommonMods,PotteryMods,ShevaPotteryMods" Rarity="R3" TinkerAllowed="false" CanAutoTinker="false" TinkerDisplayName="異次元由来" Value="3" TinkerCategory="utility" Description="異次元由来: 元いた次元からいくつかの特性を持ったまま、この次元に最近出現した。" />
+
+  <mod Part="ModAirfoil" Tables="GrenadeMods,ThrownWeaponMods" Rarity="C" TinkerTier="1" TinkerDisplayName="エアフォイル" Value="1.1" TinkerCategory="grenades" />
+  <mod Part="ModPhaseConjugate" Tables="GrenadeMods" Rarity="R" NativeTier="0" TinkerTier="6" CanAutoTinker="false" TinkerDisplayName="位相共役" Value="1.5" TinkerCategory="grenades" />
+
+  <mod Part="ModHardened" Tables="CommonMods" Rarity="R" NativeTier="4" TinkerTier="5" CanAutoTinker="false" TinkerDisplayName="電磁シールド" Value="1.3" TinkerCategory="utility" />
+  <mod Part="ModJacked" Tables="CommonMods" Rarity="R" NativeTier="0" TinkerTier="4" CanAutoTinker="false" TinkerDisplayName="ジャック" Value="1.3" TinkerCategory="utility" />
+  <mod Part="ModOverloaded" Tables="CommonMods" Rarity="R" NativeTier="0" TinkerTier="4" CanAutoTinker="false" TinkerDisplayName="過負荷" Value="1.3" TinkerCategory="utility" />
+  <mod Part="ModPhaseHarmonic" Tables="CommonMods,GrenadeMods" Rarity="R" NativeTier="6" TinkerTier="6" CanAutoTinker="false" TinkerDisplayName="位相調和" Value="1.3" TinkerCategory="utility" />
+
+  <mod Part="ModEngraved" Tables="CommonMods,PotteryMods" Rarity="C" TinkerAllowed="false" CanAutoTinker="false" TinkerDisplayName="彫刻" Value="2" Description="彫刻: 歴史的事件の描写が彫られている。" TinkerCategory="utility" />
+  <mod Part="ModPainted" Tables="CommonMods,PotteryMods" Rarity="C" TinkerAllowed="false" CanAutoTinker="false" TinkerDisplayName="彩絵" Value="2" Description="彩絵: 歴史的事件の絵が描かれている。" TinkerCategory="utility" />
+
+</mods>

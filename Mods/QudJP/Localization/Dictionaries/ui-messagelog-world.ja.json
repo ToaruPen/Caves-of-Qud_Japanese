@@ -1,0 +1,2263 @@
+{
+    "meta": {
+        "id": "ui-messagelog-world",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true,
+        "protectHtmlEntities": true
+    },
+    "entries": [
+        {
+            "key": "You cannot go that way.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "その方向へは進めない。"
+        },
+        {
+            "key": "You pass by {targets}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{targets}のそばを通り過ぎた。"
+        },
+        {
+            "key": "The wind changes direction.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風向きが変わった。"
+        },
+        {
+            "key": "The wind becomes still.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風が静まった。"
+        },
+        {
+            "key": "ThawZone exception",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "ThawZone 例外"
+        },
+        {
+            "key": "&RWARNING: You have the Disable Zone Caching option enabled, this will cause massive memory use over time.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "&R警告: 「Disable Zone Caching」オプションが有効です。時間の経過とともに大量のメモリを消費します。"
+        },
+        {
+            "key": "You cannot reach {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に手が届かない。"
+        },
+        {
+            "key": "You cannot do that while enclosed.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "囲われている間はそれはできない。"
+        },
+        {
+            "key": "You are not enclosed.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "囲われていない。"
+        },
+        {
+            "key": "You cannot do that while enclosed by {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に囲われている間はそれはできない。"
+        },
+        {
+            "key": "You cannot do that while burrowed.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "潜伏中はそれはできない。"
+        },
+        {
+            "key": "You cannot travel long distances while burrowed.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "潜伏中は長距離を移動できない。"
+        },
+        {
+            "key": "You are already burrowed.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "もう潜伏している。"
+        },
+        {
+            "key": "You cannot burrow on the world map.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "ワールドマップでは潜伏できない。"
+        },
+        {
+            "key": "You have no hands to beat at the flames with, and cannot roll on the ground because you are phased out!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "手がないので火を叩けず、位相ずれしているので地面を転がることもできない！"
+        },
+        {
+            "key": "You are out of phase with {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}とは位相がずれている。"
+        },
+        {
+            "key": "You cannot do that while flying.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "飛行中はそれはできない。"
+        },
+        {
+            "key": "The way is blocked by some {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "道が{target}にふさがれている。"
+        },
+        {
+            "key": "The way is blocked by {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "道が{target}にふさがれている。"
+        },
+        {
+            "key": "You are stopped short by {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に遮られた。"
+        },
+        {
+            "key": "You stop moving because {target} is in the way.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に阻まれたので、動きを止めた。"
+        },
+        {
+            "key": "You can't budge {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}は動かせない。"
+        },
+        {
+            "key": "You take {item} from {container}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{container}から{item}を取り出した。"
+        },
+        {
+            "key": "You have lost sight of {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}を見失った。"
+        },
+        {
+            "key": "You stop {action} because {because}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{because}ので{action}をやめた。"
+        },
+        {
+            "key": "You embark for the caves of Qud.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "クッドの洞窟へ向かう。"
+        },
+        {
+            "key": "You wade through {liquid}.",
+            "context": "XRL.World.Parts.LiquidVolume",
+            "text": "{liquid}をかき分けて進んだ。"
+        },
+        {
+            "key": "You swim through {liquid}.",
+            "context": "XRL.World.Parts.LiquidVolume",
+            "text": "{liquid}の中を泳いで進んだ。"
+        },
+        {
+            "key": " [toggled off]",
+            "context": "XRL.World.GameObject",
+            "text": " [オフ]"
+        },
+        {
+            "key": " [toggled on]",
+            "context": "XRL.World.GameObject",
+            "text": " [オン]"
+        },
+        {
+            "key": " {{g|[toggled on]}}",
+            "context": "XRL.World.GameObject",
+            "text": " {{g|[オン]}}"
+        },
+        {
+            "key": " [toggled off]",
+            "context": "XRL.World.GetMovementCapabilitiesEvent",
+            "text": " [オフ]"
+        },
+        {
+            "key": " [toggled on]",
+            "context": "XRL.World.GetMovementCapabilitiesEvent",
+            "text": " [オン]"
+        },
+        {
+            "key": " {{g|[toggled on]}}",
+            "context": "XRL.World.GetMovementCapabilitiesEvent",
+            "text": " {{g|[オン]}}"
+        },
+        {
+            "key": "An image of {HologramOf} disappears.",
+            "context": "XRL.World.Parts.DecoyHologramEmitter",
+            "text": "{HologramOf}のホログラム像が消えた。"
+        },
+        {
+            "key": "to the north",
+            "context": "XRL.Rules.Directions",
+            "text": "北に"
+        },
+        {
+            "key": "to the south",
+            "context": "XRL.Rules.Directions",
+            "text": "南に"
+        },
+        {
+            "key": "to the east",
+            "context": "XRL.Rules.Directions",
+            "text": "東に"
+        },
+        {
+            "key": "to the west",
+            "context": "XRL.Rules.Directions",
+            "text": "西に"
+        },
+        {
+            "key": "to the northeast",
+            "context": "XRL.Rules.Directions",
+            "text": "北東に"
+        },
+        {
+            "key": "to the northwest",
+            "context": "XRL.Rules.Directions",
+            "text": "北西に"
+        },
+        {
+            "key": "to the southeast",
+            "context": "XRL.Rules.Directions",
+            "text": "南東に"
+        },
+        {
+            "key": "to the southwest",
+            "context": "XRL.Rules.Directions",
+            "text": "南西に"
+        },
+        {
+            "key": "above",
+            "context": "XRL.Rules.Directions",
+            "text": "頭上に"
+        },
+        {
+            "key": "below",
+            "context": "XRL.Rules.Directions",
+            "text": "足元に"
+        },
+        {
+            "key": "here",
+            "context": "XRL.Rules.Directions",
+            "text": "すぐそばに"
+        },
+        {
+            "key": "somewhere",
+            "context": "XRL.Rules.Directions",
+            "text": "どこかに"
+        },
+        {
+            "key": "You have no usable options to employ for ",
+            "context": "XRL.World.PsychicCombat.Sifrah",
+            "text": "次の行動に使える選択肢がない: "
+        },
+        {
+            "key": ", giving you no chance of performing well. You can remedy this situation by improving your Ego, Willpower, Intelligence, and esoteric skills.",
+            "context": "XRL.World.PsychicCombat.Sifrah",
+            "text": "良い結果を出せない。自我・意志力・知力・秘術スキルを高めれば改善できる。"
+        },
+        {
+            "key": "You have mastered psychic combat at this level of difficulty. Do you want to guide the process in detail anyway, with an enhanced chance of exceptional success? If you answer 'No', you will automatically receive the results of strong but unexceptional performance.",
+            "context": "XRL.World.PsychicCombat.Sifrah",
+            "text": "この難度での精神戦は熟達済みだ。より高い成功率を狙って詳細に指揮しますか？「いいえ」を選ぶと標準的な成功の結果を自動で受け取ります。"
+        },
+        {
+            "key": "Do you want to finish psychic combat as matters stand?",
+            "context": "XRL.World.PsychicCombat.Sifrah",
+            "text": "このまま精神戦を終えますか？"
+        },
+        {
+            "key": "Exiting now will finish psychic combat as matters stand. Are you sure you want to exit?",
+            "context": "XRL.World.PsychicCombat.Sifrah",
+            "text": "今終了すると現状のまま精神戦が終わる。終了してもいいですか？"
+        },
+        {
+            "key": "You have no more usable options, so your performance so far will determine the outcome.",
+            "context": "XRL.World.PsychicCombat.Sifrah",
+            "text": "使える手はもうない。ここまでの成果が結果を決める。"
+        },
+        {
+            "key": "You block with {arg}! (+{part.AV} AV)",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{arg}で受け止めた！（AV +{part.AV}）"
+        },
+        {
+            "key": "You reflect {amount} damage back at {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に{amount}ダメージを跳ね返した。"
+        },
+        {
+            "key": "You stagger {target} with your shield block!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}を盾受けでよろめかせた！"
+        },
+        {
+            "key": "You are staggered by {source}!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{source}によりよろめいた！"
+        },
+        {
+            "key": "You cannot throw things on the world map.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "ワールドマップでは投擲できない。"
+        },
+        {
+            "key": "You do not have a thrown weapon equipped.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "投擲武器を装備していない。"
+        },
+        {
+            "key": "You cannot fire missile weapons on the world map.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "ワールドマップでは射撃できない。"
+        },
+        {
+            "key": "You do not have an appropriate missile weapon equipped!",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "適切な飛び道具を装備していない！"
+        },
+        {
+            "key": "You do not have a bow or rifle equipped!",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "弓またはライフルを装備していない！"
+        },
+        {
+            "key": "You miss!",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "外した！"
+        },
+        {
+            "key": "{{r|You miss with {weapon}}}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{{r|{weapon}で攻撃を外した。}}"
+        },
+        {
+            "key": "{{r|You miss!}} [",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{{r|外した！}} ["
+        },
+        {
+            "key": "you are under attack by {attacker}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{attacker}に攻撃されている"
+        },
+        {
+            "key": " you!",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": " あなたを！"
+        },
+        {
+            "key": " you with {weapon}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": " が{weapon}で攻撃してきた"
+        },
+        {
+            "key": "{subject} {direction} explodes{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}いる{subject}が爆発した{punct}"
+        },
+        {
+            "key": "{subject} {direction} disappears{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}いる{subject}が姿を消した{punct}"
+        },
+        {
+            "key": "{subject} {direction} submerges{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}いる{subject}が潜った{punct}"
+        },
+        {
+            "key": "{subject} {direction} coheres{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}いる{subject}が再凝集した{punct}"
+        },
+        {
+            "key": "{subject} {direction} appears{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}{subject}が現れた{punct}"
+        },
+        {
+            "key": "{subject} {direction} projects a stasis field{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}いる{subject}が静止場を展開した{punct}"
+        },
+        {
+            "key": "{subject} {direction} breathes a cone of {breath}{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}いる{subject}が{breath}の円錐を吐き出した{punct}"
+        },
+        {
+            "key": "{subject} {direction} are sucked into {target}{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}いる{subject}は{target}に吸い込まれた{punct}"
+        },
+        {
+            "key": "{subject} {direction} focuses {target}{punct}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{direction}いる{subject}が{target}に狙いを定めた{punct}"
+        },
+        {
+            "key": "You have no usable options to employ for ",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "次の行動に使える選択肢がない: "
+        },
+        {
+            "key": ", giving you no chance of performing well. You can remedy this situation by improving your Ego, Willpower, Intelligence, and esoteric skills.",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "良い結果を出せない。自我・意志力・知力・秘術スキルを高めれば改善できる。"
+        },
+        {
+            "key": "You have mastered psychic combat at this level of difficulty. Do you want to guide the process in detail anyway, with an enhanced chance of exceptional success? If you answer 'No', you will automatically receive the results of strong but unexceptional performance.",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "この難度での精神戦は熟達済みだ。より高い成功率を狙って詳細に指揮する？「いいえ」を選ぶと標準的な成功の結果を自動で受け取る。"
+        },
+        {
+            "key": "Do you want to finish psychic combat as matters stand?",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "このまま精神戦を終えますか？"
+        },
+        {
+            "key": "Exiting now will finish psychic combat as matters stand. Are you sure you want to exit?",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "今終了すると現状のまま精神戦が終わる。終了してもいいですか？"
+        },
+        {
+            "key": "You have no more usable options, so your performance so far will determine the outcome.",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "使える手はもうない。ここまでの成果が結果を決める。"
+        },
+        {
+            "key": "clearing the mind",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "精神を空にする"
+        },
+        {
+            "key": "defending the psyche",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "精神を防御する"
+        },
+        {
+            "key": "marshaling the will to victory",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "勝利への意志を束ねる"
+        },
+        {
+            "key": "focusing the mind to a single point",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "精神を一点に集中する"
+        },
+        {
+            "key": "charging the destructive intention",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "破壊の意志を充填する"
+        },
+        {
+            "key": "delivering the psychic strike",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "精神の一撃を放つ"
+        },
+        {
+            "key": "engaging in psychic combat with ",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "精神戦を仕掛ける相手: "
+        },
+        {
+            "key": "Cyclopean Prism",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "サイクロプス・プリズム"
+        },
+        {
+            "key": "leverage psychic impressions of opponent's history",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "相手の歴史の精神痕跡を利用する"
+        },
+        {
+            "key": "You can't figure out how to safely reach the stairs from here.",
+            "context": "XRL.Core.ActionManager",
+            "text": "ここから階段へ安全に辿る経路が見つからない。"
+        },
+        {
+            "key": "You can't find a way to navigate to {target}.",
+            "context": "XRL.Core.ActionManager",
+            "text": "{target}へ向かう経路が見つからない。"
+        },
+        {
+            "key": "You can't seem to find a way to reach {target}.",
+            "context": "XRL.Core.ActionManager",
+            "text": "{target}に辿り着く経路が見つからない。"
+        },
+        {
+            "key": "You cannot see your target.",
+            "context": "XRL.Core.ActionManager",
+            "text": "目標が見えない。"
+        },
+        {
+            "key": "You are unable to attack {target}.",
+            "context": "XRL.Core.ActionManager",
+            "text": "{target}を攻撃できない。"
+        },
+        {
+            "key": "You will not auto-attack {target} because {target.itis} not hostile to you.",
+            "context": "XRL.Core.ActionManager",
+            "text": "{target}は敵対していないので自動攻撃しない。"
+        },
+        {
+            "key": "You cannot do that on the world map.",
+            "context": "XRL.Core.XRLCore",
+            "text": "ワールドマップではそれはできない。"
+        },
+        {
+            "key": "You can't remove {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}は外せない。"
+        },
+        {
+            "key": "You cannot light {target} while in {liquid}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{liquid}にいる間は{target}に火を点けられない。"
+        },
+        {
+            "key": "You cannot light {target} because of the liquid {liquid} covered in.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "液体{liquid}が付いているため、{target}に火を点けられない。"
+        },
+        {
+            "key": "You cannot light {target} because of the liquid {liquid} submerged in.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "液体{liquid}に浸かっているため、{target}に火を点けられない。"
+        },
+        {
+            "key": "You can't do that here.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "ここではそれはできない。"
+        },
+        {
+            "key": "You cannot do that here.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "ここではそれはできない。"
+        },
+        {
+            "key": "You can't recoil yet.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "まだリコイルできない。"
+        },
+        {
+            "key": "You bounce.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "跳ね返った。"
+        },
+        {
+            "key": "You do not have any more of that kind of item.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "その種類のアイテムはもう持っていない。"
+        },
+        {
+            "key": "You eat the meal. It's tastier than usual.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "食事をとった。いつもより美味だ。"
+        },
+        {
+            "key": "You feel sick!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "気分が悪くなった！"
+        },
+        {
+            "key": "You feel an uncomfortable pressure across the length of your body.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "体の隅々に不快な圧迫感を覚えた。"
+        },
+        {
+            "key": "You may fire missile weapons through the forcefield.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "フォースフィールド越しに飛び道具を撃てる。"
+        },
+        {
+            "key": "You don't see any hostiles nearby.",
+            "context": "XRL.Core.XRLCore",
+            "text": "付近に敵対者はいない。"
+        },
+        {
+            "key": "You are {{C|paralyzed}}.",
+            "context": "XRL.World.Effects.Paralyzed",
+            "text": "身体が{{C|麻痺}}している。"
+        },
+        {
+            "key": "You are {{K|exhausted}}!",
+            "context": "XRL.World.Effects.Exhausted",
+            "text": "{{K|疲労困憊}}している！"
+        },
+        {
+            "key": "You are shunted to another location!",
+            "context": "XRL.World.Parts.Mutation.Teleportation",
+            "text": "別の場所へ弾き飛ばされた！"
+        },
+        {
+            "key": "You are teleported by {source}.",
+            "context": "XRL.World.Parts.Mutation.Infiltrate",
+            "text": "{source}によって転送された。"
+        },
+        {
+            "key": "You are teleported to an exit.",
+            "context": "XRL.World.Parts.CatacombsExitTeleporter",
+            "text": "出口へ転送された。"
+        },
+        {
+            "key": "You are frenzied by the howl!",
+            "context": "XRL.World.Parts.Skill.Snapjaw_Howl",
+            "text": "遠吠えに興奮させられた！"
+        },
+        {
+            "key": "You are healed for {amount} by the cold.",
+            "context": "XRL.World.Parts.Mutation.ColdAbsorption",
+            "text": "寒さによって{amount}回復した。"
+        },
+        {
+            "key": "You are healed for {amount} by the heat.",
+            "context": "XRL.World.Parts.Mutation.HeatAbsorption",
+            "text": "熱によって{amount}回復した。"
+        },
+        {
+            "key": "You activate the recoiler.",
+            "context": "XRL.World.Parts.ITeleporter",
+            "text": "リコイラーを起動した。"
+        },
+        {
+            "key": "You begin flying!",
+            "context": "XRL.World.Capabilities.Flight",
+            "text": "飛行を開始した！"
+        },
+        {
+            "key": "You begin using an additional flight capability.",
+            "context": "XRL.World.Capabilities.Flight",
+            "text": "追加の飛行手段を使い始めた。"
+        },
+        {
+            "key": "You cease using one of your flight capabilities.",
+            "context": "XRL.World.Capabilities.Flight",
+            "text": "飛行手段の1つの使用をやめた。"
+        },
+        {
+            "key": "You begin itching for a trigger.",
+            "context": "XRL.World.Effects.EmptyTheClips",
+            "text": "引き金を求めてうずうずしてきた。"
+        },
+        {
+            "key": "You backswing with {weapon}.",
+            "context": "XRL.World.Parts.Skill.Cudgel_Backswing",
+            "text": "{weapon}で振りかぶった。"
+        },
+        {
+            "key": "You avoid {owner} pincers.",
+            "context": "XRL.World.Parts.ThiefBot",
+            "text": "{owner}のはさみを避けた。"
+        },
+        {
+            "key": "You are stopped short by {object}.",
+            "context": "XRL.World.GameObject",
+            "text": "{object}に阻まれて立ち止まった。"
+        },
+        {
+            "key": "You are crippled for {duration}!",
+            "context": "XRL.World.Effects.Cripple",
+            "text": "{duration}のあいだ手足が不自由になった！"
+        },
+        {
+            "key": "You are fleeing from {target}!",
+            "context": "XRL.World.AI.GoalHandlers.Flee",
+            "text": "{target}から逃げ出している！"
+        },
+        {
+            "key": "You are sucked through the surface of the sphere!",
+            "context": "XRL.World.Parts.WorldTeleporter",
+            "text": "球の表面に吸い込まれた！"
+        },
+        {
+            "key": "You feel a sense of holiness here.",
+            "context": "XRL.HolyPlaceSystem",
+            "text": "この場所には神聖さを感じる。"
+        },
+        {
+            "key": "You must wait {{C|{duration}}} to use that ability again.",
+            "context": "XRL.UI.AbilityManager",
+            "text": "そのアビリティを再使用するには{{C|{duration}}}待たなければならない。"
+        },
+        {
+            "key": "You aggressively swipe your blade in the air.",
+            "context": "XRL.World.Parts.LongBladesCore",
+            "text": "刃を空中で荒々しく振り払った。"
+        },
+        {
+            "key": "You burrow a channel through the psychic aether to {target} and begin to sunder {mind} mind!",
+            "context": "XRL.World.Parts.Mutation.SunderMind",
+            "text": "精神の霊界に穿ち{target}へ通路を掘り、{mind}の精神を断とうとする！"
+        },
+        {
+            "key": "You can't beguile {target}!",
+            "context": "XRL.World.Parts.Mutation.Beguiling",
+            "text": "{target}を魅了できない！"
+        },
+        {
+            "key": "You can't budge {object}.",
+            "context": "XRL.World.GameObject",
+            "text": "{object}はびくともしない。"
+        },
+        {
+            "key": "You cannot bring yourself to attack {target}.",
+            "context": "XRL.World.Parts.Skill.TenfoldPath_Vur",
+            "text": "{target}を攻撃する勇気が出ない。"
+        },
+        {
+            "key": "You cleave through {part}.",
+            "context": "XRL.World.Parts.Skill.Axe_Cleave",
+            "text": "{part}を断ち切った。"
+        },
+        {
+            "key": "You enter {{C|sleep mode}}.",
+            "context": "XRL.World.Effects.Asleep",
+            "text": "{{C|スリープモードに入った。}}"
+        },
+        {
+            "key": "You fail to deal damage with your attack! [{value}]",
+            "context": "XRL.World.Parts.Combat",
+            "text": "攻撃はダメージを与えられなかった！[{value}]"
+        },
+        {
+            "key": "You fail to outshine the current object of {affection}.",
+            "context": "XRL.World.Parts.Mutation.Beguiling",
+            "text": "現在の想い人の輝きを上回れなかった。"
+        },
+        {
+            "key": "You fall downward!",
+            "context": "XRL.World.Parts.StairsDown",
+            "text": "下へと落ちた！"
+        },
+        {
+            "key": "You fall to the ground!",
+            "context": "XRL.World.Capabilities.Flight",
+            "text": "地面に落下した！"
+        },
+        {
+            "key": "You feel a bit better.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "少し気分が良くなった。"
+        },
+        {
+            "key": "You feel a small ripple in space and time.",
+            "context": "XRL.World.Parts.Mutation.MassMind",
+            "text": "時空に小さな波紋を感じた。"
+        },
+        {
+            "key": "You feel a sense of infinite grace flow through your being as you are brought from the brink of death to miraculous health.",
+            "context": "XRL.World.Parts.Skill.TenfoldPath_Ket",
+            "text": "無限の恩寵が身を満たし、死の淵から奇跡的な回復へと引き戻された。"
+        },
+        {
+            "key": "You feel like you forgot something important.",
+            "context": "XRL.World.Parts.Mutation.Amnesia",
+            "text": "大事な何かを忘れた気がする。"
+        },
+        {
+            "key": "You feel your bones fracture.",
+            "context": "XRL.World.Parts.Mutation.BrittleBones",
+            "text": "骨がひび割れるのを感じた。"
+        },
+        {
+            "key": "You find a weakness in {target} defenses.",
+            "context": "XRL.World.Parts.Skill.ShortBlades_Hobble",
+            "text": "{target}の防御に隙を見つけた。"
+        },
+        {
+            "key": "You dump the {liquid}.",
+            "context": "XRL.World.Parts.BioAmmoLoader",
+            "text": "{liquid}を捨てた。"
+        },
+        {
+            "key": "You are healed for {amount}.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{amount}回復した。"
+        },
+        {
+            "key": "&GYou executed that step correctly! [{reason}]",
+            "context": "XRL.World.Parts.PlayerDanceRitual",
+            "text": "&Gそのステップを正しく踏んだ！[{reason}]"
+        },
+        {
+            "key": "&RYou executed that step incorrectly! [{reason}]",
+            "context": "XRL.World.Parts.PlayerDanceRitual",
+            "text": "&Rそのステップを誤った！[{reason}]"
+        },
+        {
+            "key": "&RYou must collect more junk! (minimum: {weight} lbs.)",
+            "context": "XRL.World.Parts.Mutation.PackRat",
+            "text": "&Rもっとガラクタを集めろ！（最低 {weight} ポンド）"
+        },
+        {
+            "key": "You feel a psychic thud as {effect}.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{effect}で精神に衝撃を感じた。"
+        },
+        {
+            "key": "You feel a psychic whiff as {effect}.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{effect}で精神がかすかに揺らいだ。"
+        },
+        {
+            "key": "You feel better.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "気分が良くなった。"
+        },
+        {
+            "key": "You feel feverish.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "熱っぽく感じる。"
+        },
+        {
+            "key": "You feel increasingly unstable.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "ますます不安定になっている。"
+        },
+        {
+            "key": "You feel less feverish.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "熱っぽさが和らいだ。"
+        },
+        {
+            "key": "You feel stiff as a stone.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "石のように体がこわばる。"
+        },
+        {
+            "key": "You feel uneasy.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "不安を感じる。"
+        },
+        {
+            "key": "You gain {item}.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{item}を得た。"
+        },
+        {
+            "key": "You gain {{C|{xp}}} XP.",
+            "context": "XRL.World.Conversations",
+            "text": "{{C|{xp}}} XP を獲得した。"
+        },
+        {
+            "key": "You have already beguiled {target}.",
+            "context": "XRL.World.Parts.Mutation.Beguiling",
+            "text": "{target}はすでに魅了している。"
+        },
+        {
+            "key": "You have lost the use of your {part}.",
+            "context": "XRL.World.Parts.Body",
+            "text": "{part}が使えなくなった。"
+        },
+        {
+            "key": "You have recovered the use of your {part}.",
+            "context": "XRL.World.Parts.Body",
+            "text": "{part}の使用が回復した。"
+        },
+        {
+            "key": "You have no {resource}.",
+            "context": "XRL.World.Parts.BioAmmoLoader",
+            "text": "{resource}を持っていない。"
+        },
+        {
+            "key": "You hear a shloop and the world around you shifts.",
+            "context": "XRL.World.Parts.WorldTeleporter",
+            "text": "「しゅぽん」という音とともに周囲の世界が歪んだ。"
+        },
+        {
+            "key": "You hear a shloop and then a hitch. Nothing happens.",
+            "context": "XRL.World.Parts.WorldTeleporter",
+            "text": "「しゅぽん」と音がしたが、途中で止まり、何も起きない。"
+        },
+        {
+            "key": "You feel the cartilage stretch as your leg bones grind together at the joints.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "足の骨が軋み、軟骨が伸びるのを感じた。"
+        },
+        {
+            "key": "You do that with ease.",
+            "context": "XRL.World.Parts.Combat",
+            "text": "難なくやってのけた。"
+        },
+        {
+            "key": "You don't penetrate {target}.",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}に貫通できなかった。"
+        },
+        {
+            "key": "You kick {target}.",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}を蹴った。"
+        },
+        {
+            "key": "You kick at {target}.",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}に蹴りを放った。"
+        },
+        {
+            "key": "You hit {target}.",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}に命中した。"
+        },
+        {
+            "key": "You impale {target}.",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}を串刺しにした。"
+        },
+        {
+            "key": "You gain {charge} charge per point of electrical damage taken.",
+            "context": "XRL.World.Parts.Mutation.ElectricalGeneration",
+            "text": "受けた電撃ダメージ1点ごとに{charge}チャージを得る。"
+        },
+        {
+            "key": "You gain {mutation}!",
+            "context": "Qud.API.MutationsAPI",
+            "text": "{mutation}を獲得した！"
+        },
+        {
+            "key": "You gain {{C|{xp}}} XP",
+            "context": "XRL.World.Conversations",
+            "text": "{{C|{xp}}} XP を獲得した。"
+        },
+        {
+            "key": "You feel a psychic thud as {effect} happens.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{effect}が起き、精神にどんと響いた。"
+        },
+        {
+            "key": "You must be in a long blade stance to use that ability.",
+            "context": "XRL.World.Parts.LongBladesCore",
+            "text": "ロングブレードの型に入っていないとそのアビリティは使えない。"
+        },
+        {
+            "key": "You lose sight of your mark.",
+            "context": "XRL.World.Parts.Skill.Rifle_DrawABead",
+            "text": "標的を見失った。"
+        },
+        {
+            "key": "You lurch suddenly!",
+            "context": "XRL.World.Parts.Mutation.BlinkingTic",
+            "text": "突然ぐらりとよろめいた！"
+        },
+        {
+            "key": "You lurch suddenly!",
+            "context": "XRL.World.Effects.BlinkingTicSickness",
+            "text": "突然ぐらりとよろめいた！"
+        },
+        {
+            "key": "You must wait {{C|{cooldown}}} to use that ability again.",
+            "context": "XRL.UI.AbilityManager",
+            "text": "そのアビリティを再使用するには{{C|{cooldown}}}待たなければならない。"
+        },
+        {
+            "key": "You must wait {turns} to work up the willpower to drop something!",
+            "context": "XRL.World.Parts.Mutation.PackRat",
+            "text": "何かを捨てるには意志力を振り絞る必要がある。あと{turns}待て！"
+        },
+        {
+            "key": "You now have {length} feet of copper wire.",
+            "context": "XRL.World.Quests.WeirdwireConduitSystem",
+            "text": "銅線を{length}フィート分手に入れた。"
+        },
+        {
+            "key": "You peer into the future.",
+            "context": "XRL.World.Parts.Mutation.Precognition",
+            "text": "未来を覗き込んだ。"
+        },
+        {
+            "key": "You phase back in.",
+            "context": "XRL.World.Effects.Phased",
+            "text": "相位相から戻った。"
+        },
+        {
+            "key": "You phase out.",
+            "context": "XRL.World.Effects.Phased",
+            "text": "相位相に移行した。"
+        },
+        {
+            "key": "&GYou executed that step correctly! [",
+            "context": "XRL.World.Parts.PlayerDanceRitual",
+            "text": "&Gそのステップを正しく踏んだ！["
+        },
+        {
+            "key": "&RYou executed that step incorrectly! [",
+            "context": "XRL.World.Parts.PlayerDanceRitual",
+            "text": "&Rそのステップを誤った！["
+        },
+        {
+            "key": "&RYou must collect more junk! (minimum: ",
+            "context": "XRL.World.Parts.Mutation.PackRat",
+            "text": "&Rもっとガラクタを集めろ！（最低 {weight} ポンド）"
+        },
+        {
+            "key": "You are crippled for ",
+            "context": "XRL.World.Effects.Cripple",
+            "text": "{duration}のあいだ手足が不自由になった！"
+        },
+        {
+            "key": "You are fleeing from ",
+            "context": "XRL.World.AI.GoalHandlers.Flee",
+            "text": "{target}から逃げ出している！"
+        },
+        {
+            "key": "You are healed for ",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{amount}回復した。"
+        },
+        {
+            "key": "You are stopped short by ",
+            "context": "XRL.World.GameObject",
+            "text": "{object}に阻まれて立ち止まった。"
+        },
+        {
+            "key": "You are teleported by ",
+            "context": "XRL.World.Parts.Mutation.Infiltrate",
+            "text": "{source}によって転送された。"
+        },
+        {
+            "key": "You are unable to attack ",
+            "context": "XRL.Core.ActionManager",
+            "text": "{target}を攻撃できない。"
+        },
+        {
+            "key": "You avoid ",
+            "context": "XRL.World.Parts.ThiefBot",
+            "text": "{target}を避けた。"
+        },
+        {
+            "key": "You backswing with ",
+            "context": "XRL.World.Parts.Skill.Cudgel_Backswing",
+            "text": "{weapon}で振りかぶった。"
+        },
+        {
+            "key": "You burrow a channel through the psychic aether to ",
+            "context": "XRL.World.Parts.Mutation.SunderMind",
+            "text": "精神の霊界に穿ち{target}へ通路を掘り始めた。"
+        },
+        {
+            "key": "You can't beguile ",
+            "context": "XRL.World.Parts.Mutation.Beguiling",
+            "text": "{target}を魅了できない！"
+        },
+        {
+            "key": "You can't budge ",
+            "context": "XRL.World.GameObject",
+            "text": "{object}はびくともしない。"
+        },
+        {
+            "key": "You can't find a way to navigate to ",
+            "context": "XRL.Core.ActionManager",
+            "text": "{target}へ向かう経路が見つからない。"
+        },
+        {
+            "key": "You can't seem to find a way to reach ",
+            "context": "XRL.Core.ActionManager",
+            "text": "{target}に辿り着く経路が見つからない。"
+        },
+        {
+            "key": "You cannot bring yourself to attack ",
+            "context": "XRL.World.Parts.Skill.TenfoldPath_Vur",
+            "text": "{target}を攻撃する勇気が出ない。"
+        },
+        {
+            "key": "You cannot rebuke without a tongue.",
+            "context": "XRL.World.Parts.Skill.Persuasion_RebukeRobot",
+            "text": "舌がないと叱責できない。"
+        },
+        {
+            "key": "You cleave through ",
+            "context": "XRL.World.Parts.Skill.Axe_Cleave",
+            "text": "{target}を断ち切った。"
+        },
+        {
+            "key": "You don't penetrate ",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}に貫通できなかった。"
+        },
+        {
+            "key": "You dump the ",
+            "context": "XRL.World.Parts.BioAmmoLoader",
+            "text": "{liquid}を捨てた。"
+        },
+        {
+            "key": "You fail to deal damage with your attack! [",
+            "context": "XRL.World.Parts.Combat",
+            "text": "攻撃はダメージを与えられなかった！["
+        },
+        {
+            "key": "You fail to outshine the current object of ",
+            "context": "XRL.World.Parts.Mutation.Beguiling",
+            "text": "現在の想い人の輝きを上回れなかった。"
+        },
+        {
+            "key": "You feel a psychic thud as ",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{effect}で精神に衝撃を感じた。"
+        },
+        {
+            "key": "You feel a psychic whiff as ",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{effect}で精神がかすかに揺らいだ。"
+        },
+        {
+            "key": "You find a weakness in ",
+            "context": "XRL.World.Parts.Skill.ShortBlades_Hobble",
+            "text": "{target}の防御に隙を見つけた。"
+        },
+        {
+            "key": "You gain ",
+            "context": "XRL.World.Effects.Generic",
+            "text": "何かを得た。"
+        },
+        {
+            "key": "You gain {{C|",
+            "context": "XRL.World.Conversations",
+            "text": "{{C|（色タグ開始）"
+        },
+        {
+            "key": "You have already beguiled ",
+            "context": "XRL.World.Parts.Mutation.Beguiling",
+            "text": "{target}はすでに魅了している。"
+        },
+        {
+            "key": "You have lost sight of ",
+            "context": "XRL.World.Core",
+            "text": "{target}を見失った。"
+        },
+        {
+            "key": "You have lost the use of your ",
+            "context": "XRL.World.Parts.Body",
+            "text": "{part}が使えなくなった。"
+        },
+        {
+            "key": "You have no ",
+            "context": "XRL.World.Parts.BioAmmoLoader",
+            "text": "{resource}を持っていない。"
+        },
+        {
+            "key": "You have recovered the use of your ",
+            "context": "XRL.World.Parts.Body",
+            "text": "{part}の使用が回復した。"
+        },
+        {
+            "key": "You hit ",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}に命中した。"
+        },
+        {
+            "key": "You impale ",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}を串刺しにした。"
+        },
+        {
+            "key": "You kick ",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}を蹴った。"
+        },
+        {
+            "key": "You kick at ",
+            "context": "XRL.World.Parts.Combat",
+            "text": "{target}に蹴りを放った。"
+        },
+        {
+            "key": "You muster your will and shake off some of your confusion.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "意志の力で混乱の一部を振り払った。"
+        },
+        {
+            "key": "You muster your will and shake off your confusion.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "意志の力で混乱を振り払った。"
+        },
+        {
+            "key": "You now have ",
+            "context": "XRL.World.Quests.Generic",
+            "text": "今や{thing}を手にしている。"
+        },
+        {
+            "key": "You pass by {targets}",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{targets}のそばを通り過ぎた。"
+        },
+        {
+            "key": "&GYou reflect ",
+            "context": "XRL.World.Effects.CookingDomainReflect",
+            "text": "&Gダメージを跳ね返した。"
+        },
+        {
+            "key": "You ",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "あなた"
+        },
+        {
+            "key": "You are ",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "あなたは"
+        },
+        {
+            "key": "You must wait {{C|",
+            "context": "XRL.UI.AbilityManager",
+            "text": "{{C|（待機時間）"
+        },
+        {
+            "key": "You reflect ",
+            "context": "XRL.World.Parts.ReflectDamage",
+            "text": "ダメージを跳ね返した。"
+        },
+        {
+            "key": "You regenerate your ",
+            "context": "XRL.World.Parts.Body",
+            "text": "{part}が再生した！"
+        },
+        {
+            "key": "You rejoinder with ",
+            "context": "XRL.World.Parts.Skill.ShortBlades_Rejoinder",
+            "text": "{weapon}で反撃した。"
+        },
+        {
+            "key": "You resist ",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{effect}に耐えた。"
+        },
+        {
+            "key": "You return to the ground.",
+            "context": "XRL.World.Capabilities.Flight",
+            "text": "地上に戻った。"
+        },
+        {
+            "key": "You sense a subtle psychic disturbance.",
+            "context": "XRL.World.Effects.Generic",
+            "text": "かすかな精神的乱れを感じる。"
+        },
+        {
+            "key": "You set a target temperature of ",
+            "context": "XRL.World.Parts.TemperatureController",
+            "text": "目標温度を{temperature}に設定した。"
+        },
+        {
+            "key": "You shook off the dazing.",
+            "context": "XRL.World.Parts.Skill.Endurance_ShakeItOff",
+            "text": "眩暈を振り払った。"
+        },
+        {
+            "key": "You shook off the stun.",
+            "context": "XRL.World.Parts.Skill.Endurance_ShakeItOff",
+            "text": "スタンを振り払った。"
+        },
+        {
+            "key": "You sprout a {{C|luminous hoarshroom}}.",
+            "context": "XRL.World.Parts.LuminousInfection",
+            "text": "{{C|輝く霜茸}}が生えた。"
+        },
+        {
+            "key": "You start disassembling ",
+            "context": "XRL.World.Tinkering.Disassembly",
+            "text": "{object}の分解を始めた。"
+        },
+        {
+            "key": "You start to feel sluggish.",
+            "context": "XRL.World.Effects.AxonsDeflated",
+            "text": "体がだるくなってきた。"
+        },
+        {
+            "key": "You start to feel unstable.",
+            "context": "XRL.World.Effects.Mutating",
+            "text": "不安定になってきた。"
+        },
+        {
+            "key": "You start to prowl.",
+            "context": "XRL.World.Effects.NocturnalApexed",
+            "text": "うろつき始めた。"
+        },
+        {
+            "key": "You step on ",
+            "context": "XRL.World.Parts.FugueOnStep",
+            "text": "{object}を踏み、時空を震わせた。"
+        },
+        {
+            "key": "You stop meditating and feel refreshed.",
+            "context": "XRL.World.Effects.Meditating",
+            "text": "瞑想を終え、気分がすっきりした。"
+        },
+        {
+            "key": "You stop meditating.",
+            "context": "XRL.World.Effects.Meditating",
+            "text": "瞑想をやめた。"
+        },
+        {
+            "key": "You suddenly feel ready to use ",
+            "context": "XRL.World.Parts.RefreshAllCooldownsOnEat",
+            "text": "急に{ability}を再使用できそうな気がしてきた。"
+        },
+        {
+            "key": "You swipe your blade in the air, pushing your enemies backward.",
+            "context": "XRL.World.Parts.LongBladesCore",
+            "text": "刃を空中で薙ぎ払い、敵を後退させた。"
+        },
+        {
+            "key": "You teleport!",
+            "context": "XRL.World.Parts.Mutation.Teleportation",
+            "text": "テレポートした！"
+        },
+        {
+            "key": "You toggle ",
+            "context": "XRL.World.GameObject",
+            "text": "{ability}を切り替えた。"
+        },
+        {
+            "key": "You were not recalled as you're already in a resting place.",
+            "context": "XRL.ITombAnchorSystem",
+            "text": "すでに安息の地にいるため召還されなかった。"
+        },
+        {
+            "key": "You will not auto-attack ",
+            "context": "XRL.Core.ActionManager",
+            "text": "{target}は敵対していないので自動攻撃しない。"
+        },
+        {
+            "key": "You will phase back in in ",
+            "context": "XRL.World.Effects.Phased",
+            "text": "{duration}で相位相から戻る。"
+        },
+        {
+            "key": "{{G|You innervate your mind at someone's expense.}}",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{{G|誰かの犠牲のうえで精神に活力が満ちた。}}"
+        },
+        {
+            "key": "{{G|You prepare ",
+            "context": "XRL.World.Parts.Skill.Cudgel_SmashUp",
+            "text": "{{G|{weapon}を破壊のために構えた。}}"
+        },
+        {
+            "key": "{{G|You sunder spacetime.}}",
+            "context": "XRL.World.Parts.Mutation.SunderMind",
+            "text": "{{G|時空を切り裂いた。}}"
+        },
+        {
+            "key": "{{G|You were decapitated, but a new head regrew immediately!}}",
+            "context": "XRL.World.Parts.Mutation.Deadeye",
+            "text": "{{G|首を刎ねられたが、すぐに新しい頭が生えた！}}"
+        },
+        {
+            "key": "{{R|You forget something.}}",
+            "context": "XRL.World.Parts.Mutation.Amnesia",
+            "text": "{{R|何かを忘れた。}}"
+        },
+        {
+            "key": "{{r|You surge with energy!}}",
+            "context": "XRL.World.Effects.Generic",
+            "text": "{{r|エネルギーが満ちあふれる！}}"
+        },
+        {
+            "key": "Checkpointing enabled",
+            "context": "XRL.CheckpointingSystem",
+            "text": "チェックポイント機能を有効化した。"
+        },
+        {
+            "key": "&CA flash of insight overcomes you!",
+            "context": "XRL.World.Parts.Mutation.HeightenedIntelligence",
+            "text": "&Cひらめきがあなたを満たした！"
+        },
+        {
+            "key": "&MThe Bell of Rest tolls! The dead will be recalled in ",
+            "context": "XRL.ITombAnchorSystem",
+            "text": "&M安息の鐘が鳴る！{Timer}ラウンドで死者が呼び戻される。"
+        },
+        {
+            "key": "You've been recalled to a resting place.",
+            "context": "XRL.ITombAnchorSystem",
+            "text": "安息の場所へ呼び戻された。"
+        },
+        {
+            "key": "The sky begins to darken.",
+            "context": "XRL.SvardymSystem",
+            "text": "空が暗くなり始めた。"
+        },
+        {
+            "key": "The ground shakes violently!",
+            "context": "XRL.World.Parts.TrembleEarthquakes",
+            "text": "地面が激しく揺れた！"
+        },
+        {
+            "key": "Your torch burns out!",
+            "context": "XRL.World.Parts.TorchProperties",
+            "text": "たいまつが燃え尽きた！"
+        },
+        {
+            "key": "Your hear a swelling thpthp sound.",
+            "context": "XRL.SvardymSystem",
+            "text": "スプスプという音がだんだんと聞こえてくる。"
+        },
+        {
+            "key": "The thpthp sound wanes.",
+            "context": "XRL.SvardymSystem",
+            "text": "スプスプという音が小さくなった。"
+        },
+        {
+            "key": "The sky begins to brighten.",
+            "context": "XRL.SvardymSystem",
+            "text": "空が明るくなり始めた。"
+        },
+        {
+            "key": "The ground shakes violently and loose rock falls from the ceiling!",
+            "context": "XRL.World.Parts.TrembleEarthquakes",
+            "text": "地面が激しく揺れ、天井から岩が崩れ落ちた！"
+        },
+        {
+            "key": "{{G|A {{B|force bubble}} pops into being around you.}}",
+            "context": "XRL.World.Parts.ForceEmitter",
+            "text": "{{G|あなたの周りに{{B|フォースバブル}}が現れた。}}"
+        },
+        {
+            "key": "The {{B|force bubble}} snaps off.",
+            "context": "XRL.World.Parts.ForceEmitter",
+            "text": "{{B|フォースバブル}}がはじけ飛んだ。"
+        },
+        {
+            "key": "A {{R|force bubble}} pops into being in front of you!",
+            "context": "XRL.World.Parts.Stopsvaalinn",
+            "text": "あなたの前に{{R|フォースバブル}}が現れた！"
+        },
+        {
+            "key": "The {{R|force bubble}} snaps off.",
+            "context": "XRL.World.Parts.Stopsvaalinn",
+            "text": "{{R|フォースバブル}}がはじけ飛んだ。"
+        },
+        {
+            "key": "The membrane of the egg sac snots apart.",
+            "context": "XRL.World.Parts.SpawningEggSac",
+            "text": "卵嚢の膜がぐしゃりと裂けた。"
+        },
+        {
+            "key": "The svardym eggs hatch.",
+            "context": "XRL.World.Parts.SpawningEggSac",
+            "text": "スヴァルディムの卵が孵化した。"
+        },
+        {
+            "key": "The svardym egg hatches.",
+            "context": "XRL.World.Parts.SpawningEggSac",
+            "text": "スヴァルディムの卵が孵化した。"
+        },
+        {
+            "key": "The darkness absorbs the laser beam.",
+            "context": "XRL.World.Parts.Mutation.LightManipulation",
+            "text": "闇がレーザービームを吸収した。"
+        },
+        {
+            "key": "The injection fails.",
+            "context": "XRL.World.Parts.CyberneticsMedassistModule",
+            "text": "注射は失敗に終わった。"
+        },
+        {
+            "key": "Your argument does not compute.",
+            "context": "XRL.World.Parts.Skill.Persuasion_RebukeRobot",
+            "text": "あなたの主張は理解できない。"
+        },
+        {
+            "key": "Your healing is interrupted!",
+            "context": "XRL.World.Effects.Healing",
+            "text": "治癒が中断された！"
+        },
+        {
+            "key": "Your body flushes with adrenaline!",
+            "context": "XRL.World.Effects.Stressed",
+            "text": "体にアドレナリンがほとばしった！"
+        },
+        {
+            "key": "Your adrenaline level returns to normal!",
+            "context": "XRL.World.Effects.Stressed",
+            "text": "アドレナリンの分泌が落ち着いた！"
+        },
+        {
+            "key": "{{G|Your adrenaline starts to flow.}}",
+            "context": "XRL.World.Parts.Mutation.AdrenalControl2",
+            "text": "{{G|アドレナリンが流れ始めた。}}"
+        },
+        {
+            "key": "Your focus returns to the present.",
+            "context": "XRL.World.Parts.Mutation.Precognition",
+            "text": "意識が現在に引き戻された。"
+        },
+        {
+            "key": "Your laser beam doesn't penetrate ",
+            "context": "XRL.World.Parts.Mutation.LightManipulation",
+            "text": "レーザービームが{target}を貫通しない。"
+        },
+        {
+            "key": "Your focus slips, causing you to dent spacetime in the local region.",
+            "context": "XRL.World.Parts.Mutation.QuantumJitters",
+            "text": "集中が途切れ、この周囲の時空がへこむ。"
+        },
+        {
+            "key": "Your phase remains stable.",
+            "context": "XRL.World.Effects.NoPhase_ProceduralCookingTriggeredAction_Effect",
+            "text": "相転移は安定している。"
+        },
+        {
+            "key": "Your attack bounces harmlessly off of ",
+            "context": "XRL.World.Effects.Stasis",
+            "text": "攻撃は{target}に弾かれ、効果がない。"
+        },
+        {
+            "key": "Your feverish feeling is getting worse.",
+            "context": "XRL.World.Effects.CyberneticRejectionSyndrome",
+            "text": "熱っぽさがひどくなっている。"
+        },
+        {
+            "key": "Your feverish feeling eases up a bit.",
+            "context": "XRL.World.Effects.CyberneticRejectionSyndrome",
+            "text": "熱っぽさが少し和らいだ。"
+        },
+        {
+            "key": "Your throat feels sore.",
+            "context": "XRL.World.Effects.GlotrotOnset",
+            "text": "喉がひりひりする。"
+        },
+        {
+            "key": "Your skin itches.",
+            "context": "XRL.World.Effects.FungalSporeInfection",
+            "text": "肌がむずむずする。"
+        },
+        {
+            "key": "Your attack does not affect ",
+            "context": "XRL.World.Parts.TabulaRasae",
+            "text": "攻撃は{target}に影響を与えない。"
+        },
+        {
+            "key": "Your attack does not affect ",
+            "context": "XRL.World.Parts.Mutation.Confusion",
+            "text": "攻撃は{target}に影響を与えない。"
+        },
+        {
+            "key": "Your vision blurs.",
+            "context": "XRL.World.Effects.MonochromeOnset",
+            "text": "視界がぼやける。"
+        },
+        {
+            "key": "Your vision clears up.",
+            "context": "XRL.World.Effects.MonochromeOnset",
+            "text": "視界が晴れた。"
+        },
+        {
+            "key": "Color starts to seep into the world.",
+            "context": "XRL.World.Effects.Monochrome",
+            "text": "世界に色が染み込んでいく。"
+        },
+        {
+            "key": "{{G|En garde!}}",
+            "context": "XRL.World.Parts.LongBladesCore",
+            "text": "{{G|構えよ！}}"
+        },
+        {
+            "key": "A supernal force helps you shake off the effect!",
+            "context": "XRL.World.Parts.Skill.TenfoldPath_Ret",
+            "text": "超常の力が影響を振り払わせてくれる！"
+        },
+        {
+            "key": "A supernal force helps you shake off being ",
+            "context": "XRL.World.Parts.Skill.TenfoldPath_Ret",
+            "text": "超常の力がその状態を振り払わせてくれる。"
+        },
+        {
+            "key": "A supernal force helps you shake off a mental state!",
+            "context": "XRL.World.Parts.Skill.TenfoldPath_Ret",
+            "text": "超常の力が精神状態を振り払わせてくれる！"
+        },
+        {
+            "key": "Alarms blare across the enclave.",
+            "context": "XRL.UI.GritGateTerminalScreenMessage",
+            "text": "防衛線に警報が鳴り響いた。"
+        },
+        {
+            "key": "Nothing seems to happen when you hit the switch.",
+            "context": "XRL.World.Parts.DoorSwitch",
+            "text": "スイッチを押しても何も起こらない。"
+        },
+        {
+            "key": "The security door unlocks with a loud clank and swings open.",
+            "context": "XRL.World.Parts.DoorSwitch",
+            "text": "頑丈なドアが大きな音とともに解錠され開いた。"
+        },
+        {
+            "key": "The security door swings closed and locks with a loud clank.",
+            "context": "XRL.World.Parts.DoorSwitch",
+            "text": "頑丈なドアが閉じて大きな音で施錠された。"
+        },
+        {
+            "key": "The hurdles that separate the will and the way begin to collapse.",
+            "context": "XRL.World.Effects.AxonsInflated",
+            "text": "志と道を隔てていた障害が崩れ始める。"
+        },
+        {
+            "key": "This place feels vaguely familiar.",
+            "context": "XRL.World.Parts.Mutation.Amnesia",
+            "text": "この場所にはどこか見覚えがある。"
+        },
+        {
+            "key": "One of your flight capabilities fails.",
+            "context": "XRL.World.Capabilities.Flight",
+            "text": "飛行能力のひとつが失われた。"
+        },
+        {
+            "key": "No faction found by that name.",
+            "context": "XRL.World.Quests.LandingPadsSystem",
+            "text": "その名前の派閥は見つからなかった。"
+        },
+        {
+            "key": "That creature is of too high a level to duplicate!",
+            "context": "XRL.World.Parts.Mutation.Metamorphosis",
+            "text": "そのクリーチャーは複製するには強すぎる！"
+        },
+        {
+            "key": "The moisture is sucked out of your body.",
+            "context": "XRL.World.Parts.Stomach",
+            "text": "体から水分が吸い取られる。"
+        },
+        {
+            "key": "The moisture is sucked out of your throat.",
+            "context": "XRL.World.Parts.Stomach",
+            "text": "喉から水分が吸い取られる。"
+        },
+        {
+            "key": "Your adrenaline subsides.",
+            "context": "XRL.World.Parts.Mutation.AdrenalControl2",
+            "text": "アドレナリンが引いていく。"
+        },
+        {
+            "key": "Your tracking of your mark has been disrupted.",
+            "context": "XRL.World.Parts.Skill.Rifle_DrawABead",
+            "text": "印付けの追跡が乱された。"
+        },
+        {
+            "key": "You cannot find a path to your destination.",
+            "context": "XRL.Core.ActionManager",
+            "text": "目的地への経路が見つからない。"
+        },
+        {
+            "key": "You dump the {liquid} out of {container}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{container}から{liquid}を捨てた。"
+        },
+        {
+            "key": "You set a target temperature of {temperature}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{temperature}に目標温度を設定した。"
+        },
+        {
+            "key": "You start disassembling {item}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{item}の分解を開始した。"
+        },
+        {
+            "key": "You fail to deal damage with your attack! [{roll}]",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "攻撃がダメージを与えられなかった！[{roll}]"
+        },
+        {
+            "key": "You must wait {{C|{duration}}} to use that ability again.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "そのアビリティを再使用するには{{C|{duration}}}待つ必要がある。"
+        },
+        {
+            "key": "You must wait {{C|{duration}}} before you can enable ambient light.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "周囲を照らす前に{{C|{duration}}}待つ必要がある。"
+        },
+        {
+            "key": "You are healed for {amount} by the {source}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{source}で{amount}回復した。"
+        },
+        {
+            "key": "You gain {{C|{amount}}} XP!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{{C|{amount}}}XPを獲得した！"
+        },
+        {
+            "key": "You gain {amount} mutation point(s)!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{amount}変異ポイントを獲得した！"
+        },
+        {
+            "key": "You backswing with {weapon}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{weapon}で振りかぶった。"
+        },
+        {
+            "key": "You cleave through {armor}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{armor}を切り裂いた。"
+        },
+        {
+            "key": "You are teleported by {source}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{source}によってテレポートされた。"
+        },
+        {
+            "key": "You need to reload! ({action})",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "リロードが必要だ！（{action}）"
+        },
+        {
+            "key": "You will phase back in in {duration}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{duration}後に再び位相を戻す。"
+        },
+        {
+            "key": "You are crippled for {duration}!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{duration}の間、手足が不自由になった！"
+        },
+        {
+            "key": "You have lost the use of your {part}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{part}が使えなくなった。"
+        },
+        {
+            "key": "You have recovered the use of your {part}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{part}を再び使えるようになった。"
+        },
+        {
+            "key": "You fall {{C|asleep}}!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{{C|眠りに落ちた！}}"
+        },
+        {
+            "key": "You fall {{C|asleep}}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{{C|眠りに落ちた。}}"
+        },
+        {
+            "key": "You are asleep.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "眠っている。"
+        },
+        {
+            "key": "You can't repair that.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "それは修理できない。"
+        },
+        {
+            "key": "You can't repair with hostile creatures nearby.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "敵対者が近くにいると修理できない。"
+        },
+        {
+            "key": "You have no {resource} for {item}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{item}に使う{resource}がない。"
+        },
+        {
+            "key": "You can't find a way to navigate to {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}への経路を見つけられない。"
+        },
+        {
+            "key": "You can't seem to find a way to reach {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に辿り着く手段が見つからない。"
+        },
+        {
+            "key": "You are unable to attack {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}を攻撃できない。"
+        },
+        {
+            "key": "You will not auto-attack {target} because {state} not hostile to you.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}は敵対していないので自動攻撃しない。"
+        },
+        {
+            "key": "You are teleported to an exit.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "出口へ転送された。"
+        },
+        {
+            "key": "You are shunted to another location!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "別の場所へ弾き飛ばされた！"
+        },
+        {
+            "key": "You teleport!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "テレポートした！"
+        },
+        {
+            "key": "You cannot find a path to your destination.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "目的地への経路が見つからない。"
+        },
+        {
+            "key": "You can't figure out how to safely reach the stairs from here.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "ここから安全に階段へたどり着く方法が分からない。"
+        },
+        {
+            "key": "You stop moving because the {target} is in the way.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}が邪魔で動けない。"
+        },
+        {
+            "key": "You wade through a {volume} of {liquid}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{volume}の{liquid}をかき分けて進んだ。"
+        },
+        {
+            "key": "You kick at {target}, but the kick passes through {them}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}を蹴りつけたが、{them}をすり抜けた。"
+        },
+        {
+            "key": "You cannot sit on {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に座れない。"
+        },
+        {
+            "key": "You stagger {target}!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}をよろめかせた！"
+        },
+        {
+            "key": "You lie down on {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に横たわった。"
+        },
+        {
+            "key": "You lie down.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "横たわった。"
+        },
+        {
+            "key": "You sit down on {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}に座った。"
+        },
+        {
+            "key": "You sit down.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "座った。"
+        },
+        {
+            "key": "You rise from {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}から起き上がった。"
+        },
+        {
+            "key": "You stand up.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "立ち上がった。"
+        },
+        {
+            "key": "Are you sure you want to move into {target}? Move {direction} again to confirm.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "本当に{target}へ移動する？確認するにはもう一度{direction}へ進んで。"
+        },
+        {
+            "key": "Are you sure you want to drop down a level? Move {direction} again to confirm.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "本当に下の階層へ降りる？確認するにはもう一度{direction}へ進んで。"
+        },
+        {
+            "key": "Fate intervenes and you deal no damage to {target}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "運命が干渉し、{target}にダメージを与えられなかった。"
+        },
+        {
+            "key": "A sewage eel tries to wrap itself{around}, but cannot reach!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "下水うなぎが{around}巻き付こうとしたが届かない！"
+        },
+        {
+            "key": "A sewage eel tries to wrap itself{around}, but passes through you!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "下水うなぎが{around}巻き付こうとしたが、すり抜けた！"
+        },
+        {
+            "key": "The wind changes direction from the {from} to the {to}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風向きが{from}から{to}に変わった。"
+        },
+        {
+            "key": "The wind begins blowing at {speed} from the {direction}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風が{direction}から{speed}で吹き始めた。"
+        },
+        {
+            "key": "The wind begins blowing at {speed}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風が{speed}で吹き始めた。"
+        },
+        {
+            "key": "The wind intensifies to {speed}, blowing from the {direction}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風が{direction}からの{speed}へと強まった。"
+        },
+        {
+            "key": "The wind intensifies to {speed}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風が{speed}へと強まった。"
+        },
+        {
+            "key": "The wind calms to {speed}, blowing from the {direction}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風が和らぎ、{direction}から{speed}になった。"
+        },
+        {
+            "key": "The wind calms to {speed}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "風が和らぎ、{speed}になった。"
+        },
+        {
+            "key": "Your {stat} increases.",
+            "context": "XRL.World.Effects.BoostStatistic",
+            "text": "{stat}が上昇した。"
+        },
+        {
+            "key": "Your {stat} decreases.",
+            "context": "XRL.World.Effects.BoostStatistic",
+            "text": "{stat}が低下した。"
+        },
+        {
+            "key": "Your {stat} returns to normal.",
+            "context": "XRL.World.Effects.BoostStatistic",
+            "text": "{stat}が通常値に戻った。"
+        },
+        {
+            "key": "You impale {target} on {quills} and take {damage} damage!",
+            "context": "XRL.World.Parts.Mutation.Quills",
+            "text": "{target}を{quills}に串刺しにし、自分は{damage}ダメージを受けた！"
+        },
+        {
+            "key": "Your attack fails to penetrate {target}'s mental defenses.",
+            "context": "XRL.World.Parts.Mutation.SunderMind",
+            "text": "攻撃は{target}の精神防御を貫けない。"
+        },
+        {
+            "key": "Your mental attack does not affect {target}.",
+            "context": "XRL.World.Parts.MentalShield",
+            "text": "精神攻撃は{target}に通じない。"
+        },
+        {
+            "key": "A {{B|force bubble}} pops into being around {target}.",
+            "context": "XRL.World.Parts.ForceEmitter",
+            "text": "{target}の周囲に{{B|フォースバブル}}が生じた。"
+        },
+        {
+            "key": "A {{R|force bubble}} pops into being in front of {target}.",
+            "context": "XRL.World.Parts.Stopsvaalinn",
+            "text": "{target}の前に{{R|フォースバブル}}が生じた。"
+        },
+        {
+            "key": "The {{B|force bubble}} around {target} snaps off.",
+            "context": "XRL.World.Parts.ForceEmitter",
+            "text": "{target}を囲む{{B|フォースバブル}}がはじけた。"
+        },
+        {
+            "key": "The {{R|force bubble}} in front of {target} snaps off.",
+            "context": "XRL.World.Parts.Stopsvaalinn",
+            "text": "{target}の前の{{R|フォースバブル}}が弾けた。"
+        },
+        {
+            "key": "You burrow a channel through the psychic aether to {target} and begin to sunder {its} mind!",
+            "context": "XRL.World.Parts.Mutation.SunderMind",
+            "text": "{target}への精神回路を穿ち、その精神を切り裂き始めた！"
+        },
+        {
+            "key": "Your concentration slips and the channel between you and {target} dissipates into aether.",
+            "context": "XRL.World.Parts.Mutation.SunderMind",
+            "text": "集中が途切れ、あなたと{target}を結ぶ回路が霧散した。"
+        },
+        {
+            "key": "Your concentration slips and the channel dissipates.",
+            "context": "XRL.World.Parts.Mutation.SunderMind",
+            "text": "集中が途切れ、回路が霧散した。"
+        },
+        {
+            "key": "Base encounter chance: {percent}%",
+            "context": "XRL.World.Parts.TerrainTravel",
+            "text": "遭遇基本率: {percent}%"
+        },
+        {
+            "key": "Modified encounter chance: {percent}%",
+            "context": "XRL.World.Parts.TerrainTravel",
+            "text": "修正遭遇率: {percent}%"
+        },
+        {
+            "key": "Triggered encounter chance: {percent}%",
+            "context": "XRL.World.Parts.TerrainTravel",
+            "text": "誘発遭遇率: {percent}%"
+        },
+        {
+            "key": "Get lost chance: {percent}%",
+            "context": "XRL.World.Parts.TerrainTravel",
+            "text": "迷子率: {percent}%"
+        },
+        {
+            "key": "Travel speed: {speed}",
+            "context": "XRL.World.Parts.TerrainTravel",
+            "text": "移動速度: {speed}"
+        },
+        {
+            "key": "A grotesque protuberance swells from {target} as {actor} begin to bud!",
+            "context": "XRL.World.Effects.Budding",
+            "text": "{target}からおぞましい突起が膨らみ、{actor}が芽吹き始めた！"
+        },
+        {
+            "key": "The grotesque protuberance on {target} subsides.",
+            "context": "XRL.World.Effects.Budding",
+            "text": "{target}のおぞましい突起がしぼんだ。"
+        },
+        {
+            "key": "The protuberance on {target} shrinks.",
+            "context": "XRL.World.Parts.TrollKing",
+            "text": "{target}の突起がしぼんだ。"
+        },
+        {
+            "key": "A sewage eel tries to wrap itself{place}, but cannot reach!",
+            "context": "XRL.World.Parts.EelSpawn",
+            "text": "下水ウナギが{place}に巻きつこうとするが、届かなかった！"
+        },
+        {
+            "key": "A sewage eel tries to wrap itself{place}, but passes through you!",
+            "context": "XRL.World.Parts.EelSpawn",
+            "text": "下水ウナギが{place}に巻きつこうとするが、あなたをすり抜けた！"
+        },
+        {
+            "key": "You kick at {target}, but the kick passes through {them}.",
+            "context": "XRL.World.Parts.Skill.Tactics_Kickback",
+            "text": "{target}を蹴ろうとしたが、蹴りは{them}をすり抜けた。"
+        },
+        {
+            "key": "You kick at {target}, but {target} holds {its} ground.",
+            "context": "XRL.World.Parts.Skill.Tactics_Kickback",
+            "text": "{target}を蹴ろうとしたが、{target}は踏ん張った。"
+        },
+        {
+            "key": "You have lost sight of {target}.",
+            "context": "XRL.Core.XRLCore",
+            "text": "{target}を見失った。"
+        },
+        {
+            "key": "A supernal force helps you shake off being {state}!",
+            "context": "XRL.World.Parts.Skill.TenfoldPath_Ret",
+            "text": "超越的な力が働き、{state}状態を振り払った！"
+        },
+        {
+            "key": "You resist {source}!",
+            "context": "XRL.World.Effects.LifeDrain",
+            "text": "{source}を耐えきった！"
+        },
+        {
+            "key": "&GYou reflect {amount} damage back at {target}&G.",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100_ProceduralCookingTriggeredAction_Effect",
+            "text": "&G{amount}ダメージを{target}に跳ね返した&G。"
+        },
+        {
+            "key": "You reflect {amount} damage back at {target}&y.",
+            "context": "XRL.World.Effects.CookingDomainReflect_UnitReflectDamage",
+            "text": "{amount}ダメージを{target}に跳ね返した&y。"
+        },
+        {
+            "key": "A weird, painful shock reverberates through you.",
+            "context": "XRL.World.Parts.ModMorphogenetic",
+            "text": "「奇妙で痛い電撃」が全身を駆け抜けた。"
+        },
+        {
+            "key": "Since {latcher} are still latched onto {host}, releasing {latcher} leaves {latcher} in {hostPoss} possession!",
+            "context": "XRL.World.Parts.LatchesOn",
+            "text": "{host}にまだ{latcher}が取り付いているので、離しても{latcher}は{hostPoss}のもののままだ！"
+        },
+        {
+            "key": "Since {latcher} are still latched onto you, {releaser} releasing {latcher} leaves {latcher} in your possession!",
+            "context": "XRL.World.Parts.LatchesOn",
+            "text": "{latcher}はまだあなたに取り付いているので、{releaser}が離しても{latcher}はあなたの所有物のままだ！"
+        },
+        {
+            "key": "Since {latcher} are still latched onto you, {releaserPoss} releasing {latcher} leaves {latcher} in your possession!",
+            "context": "XRL.World.Parts.LatchesOn",
+            "text": "{latcher}はまだあなたに取り付いているので、{releaserPoss}が離しても{latcher}はあなたの所有物のままだ！"
+        },
+        {
+            "key": "Since {latcher} are still latched onto {host}, {releaser} releasing {latcher} leaves {latcher} in {hostPoss} possession!",
+            "context": "XRL.World.Parts.LatchesOn",
+            "text": "{host}にまだ{latcher}が取り付いているので、{releaser}が離しても{latcher}は{hostPoss}のもののままだ！"
+        },
+        {
+            "key": "You partially fill {container} with {liquid}.",
+            "context": "XRL.World.Parts.BioAmmoLoader",
+            "text": "{container}を{liquid}で半分ほど満たした。"
+        },
+        {
+            "key": "You fill {container} with {liquid}.",
+            "context": "XRL.World.Parts.BioAmmoLoader",
+            "text": "{container}を{liquid}で満たした。"
+        },
+        {
+            "key": "You have no {resource} for {item}.",
+            "context": "XRL.World.Parts.BioAmmoLoader",
+            "text": "{item}に使う{resource}がない。"
+        },
+        {
+            "key": "You resist {attack}.",
+            "context": "XRL.World.Parts.Skill.Shield_Slam",
+            "text": "{attack}を耐えきった。"
+        },
+        {
+            "key": "The {target} begins flying.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{target}が飛翔し始めた。"
+        },
+        {
+            "key": "You take a puff on the {target}.",
+            "context": "XRL.World.Parts.Hookah",
+            "text": "{target}で一服した。"
+        },
+        {
+            "key": "You {verb} {target}.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を{verb}。"
+        },
+        {
+            "key": "You {verb} {prep} {target}.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}{prep}{verb}。"
+        },
+        {
+            "key": "You {verb} {prep} {target}, {trail}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}{prep}{verb}、{trail}"
+        },
+        {
+            "key": "You try to beat at the flames on {target}.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}の炎を叩こうとした。"
+        },
+        {
+            "key": "You try to bandage {target}.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を包帯で処置しようとした。"
+        },
+        {
+            "key": "You dismiss {target} from service.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を従者から解任した。"
+        },
+        {
+            "key": "You convince {target} to join {faction}.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を説得し、{faction}に加わらせた。"
+        },
+        {
+            "key": "You intercept {target}.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を迎撃した。"
+        },
+        {
+            "key": "You are sucked into {vortex}.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{vortex}に吸い込まれた。"
+        },
+        {
+            "key": "{target} are sucked into {vortex}.",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}は{vortex}に吸い込まれた。"
+        },
+        {
+            "key": "You're going to collapse from exhaustion in {turns}!",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "あと{turns}で疲れ果てて倒れる！"
+        },
+        {
+            "key": "You equip {item}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{item}を装備した。"
+        },
+        {
+            "key": "You unequip {item}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{item}を外した。"
+        },
+        {
+            "key": "You take {item} from {container} to the {direction}.",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "{container}から{item}を取り、{direction}へ運んだ。"
+        },
+        {
+            "key": "You accidentally destroy {target}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を誤って破壊した{punct}"
+        },
+        {
+            "key": "You intercept {target}, but {tail}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を迎撃したが、{tail}{punct}"
+        },
+        {
+            "key": "You try to bandage {target} wounds, but {tail}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}の傷に包帯を巻こうとしたが、{tail}{punct}"
+        },
+        {
+            "key": "You try to beat at the flames on {target}, but {tail}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}の炎を叩き消そうとしたが、{tail}{punct}"
+        },
+        {
+            "key": "You attempt to shame {target} with {tail}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{tail}で{target}を辱めようとした{punct}"
+        },
+        {
+            "key": "You attempt to flinch away, but {target} is too wide!",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}が大きすぎてひるめなかった！"
+        },
+        {
+            "key": "You attempt to flinch out of the way of {target}, but it's too wide!",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を避けようとしたが大きすぎた！"
+        },
+        {
+            "key": "You try to stand up, but cannot{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "立ち上がろうとしたができなかった{punct}"
+        },
+        {
+            "key": "You swap positions with {target}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}と位置を入れ替えた{punct}"
+        },
+        {
+            "key": "You get entangled in {target}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}に絡め取られた{punct}"
+        },
+        {
+            "key": "You are blown into the air by {source}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{source}に吹き上げられた{punct}"
+        },
+        {
+            "key": "You begin to drain life essence from {target}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}から生命力を吸い始めた{punct}"
+        },
+        {
+            "key": "You release {target} from your life drain{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}を生命吸収から解放した{punct}"
+        },
+        {
+            "key": "You resupply {target} with {resource}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{resource}で{target}を補充した{punct}"
+        },
+        {
+            "key": "You detach from {target}{punct}",
+            "context": "XRL.World.Capabilities.Messaging",
+            "text": "{target}から離脱した{punct}"
+        }
+    ]
+}

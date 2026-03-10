@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "id": "ui-reputation",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Reputation",
+      "context": "Qud.UI.XRL.UI.ReputationScreen",
+      "text": "評判"
+    },
+    {
+      "key": "Factions",
+      "context": "Qud.UI.XRL.UI.ReputationScreen",
+      "text": "派閥"
+    },
+    {
+      "key": "Loved by",
+      "context": "Qud.UI.XRL.UI.ReputationScreen",
+      "text": "崇拝"
+    },
+    {
+      "key": "Liked by",
+      "context": "Qud.UI.XRL.UI.ReputationScreen",
+      "text": "好感"
+    },
+    {
+      "key": "Disliked by",
+      "context": "Qud.UI.XRL.UI.ReputationScreen",
+      "text": "嫌悪"
+    },
+    {
+      "key": "Hated by",
+      "context": "Qud.UI.XRL.UI.ReputationScreen",
+      "text": "敵対"
+    }
+  ]
+}

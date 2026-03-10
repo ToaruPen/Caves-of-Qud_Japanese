@@ -1,0 +1,303 @@
+{
+    "meta": {
+        "id": "ui-inventory",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true,
+        "protectHtmlEntities": true
+    },
+    "entries": [
+        {
+            "key": "{{B|${value}}}",
+            "context": "Qud.UI.InventoryAndEquipmentStatusScreen.PriceText",
+            "text": "{{B|{value}ドラム}}"
+        },
+        {
+            "key": "{{C|{carried}{{K|/{capacity}} lbs. }}",
+            "context": "Qud.UI.InventoryAndEquipmentStatusScreen.WeightText",
+            "text": "{{C|{carried}{{K|/{capacity}} lbs. }}"
+        },
+        {
+            "key": "Total weight: {{Y|",
+            "context": "XRL.UI.InventoryScreen.WeightPrefix",
+            "text": "総重量: {{Y|"
+        },
+        {
+            "key": " items hidden by filter",
+            "context": "XRL.UI.InventoryScreen.HiddenByFilter",
+            "text": " 個がフィルターで非表示"
+        },
+        {
+            "key": " item",
+            "context": "XRL.UI.InventoryScreen.ItemSingular",
+            "text": " 個"
+        },
+        {
+            "key": " items",
+            "context": "XRL.UI.InventoryScreen.ItemPlural",
+            "text": " 個"
+        },
+        {
+            "key": "|{items} items|{weight} lbs.|",
+            "context": "Qud.UI.InventoryLine.CategoryWeightText",
+            "text": "|{items} 個|{weight} lbs.|"
+        },
+        {
+            "key": "|{weight} lbs.|",
+            "context": "Qud.UI.InventoryLine.CategoryWeightText.WeightOnly",
+            "text": "|{weight} lbs.|"
+        },
+        {
+            "key": "[{weight} lbs.]",
+            "context": "Qud.UI.InventoryLine.ItemWeightLabel",
+            "text": "[{weight} lbs.]"
+        },
+        {
+            "key": "Head",
+            "context": "BodyPart.Slot.Head",
+            "text": "頭"
+        },
+        {
+            "key": "Left Head",
+            "context": "BodyPart.Slot.Head",
+            "text": "左の頭"
+        },
+        {
+            "key": "Right Head",
+            "context": "BodyPart.Slot.Head",
+            "text": "右の頭"
+        },
+        {
+            "key": "Upper Head",
+            "context": "BodyPart.Slot.Head",
+            "text": "上の頭"
+        },
+        {
+            "key": "Lower Head",
+            "context": "BodyPart.Slot.Head",
+            "text": "下の頭"
+        },
+        {
+            "key": "Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "顔"
+        },
+        {
+            "key": "Left Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "左の顔"
+        },
+        {
+            "key": "Right Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "右の顔"
+        },
+        {
+            "key": "Upper Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "上の顔"
+        },
+        {
+            "key": "Lower Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "下の顔"
+        },
+        {
+            "key": "Body",
+            "context": "BodyPart.Slot.Body",
+            "text": "胴"
+        },
+        {
+            "key": "Worn on Back",
+            "context": "BodyPart.Slot.Back",
+            "text": "背中装備"
+        },
+        {
+            "key": "Worn on Hands",
+            "context": "BodyPart.Slot.Hands",
+            "text": "両手装備"
+        },
+        {
+            "key": "Worn on Upper Hands",
+            "context": "BodyPart.Slot.Hands",
+            "text": "上の手用"
+        },
+        {
+            "key": "Worn on Lower Hands",
+            "context": "BodyPart.Slot.Hands",
+            "text": "下の手用"
+        },
+        {
+            "key": "Hands",
+            "context": "BodyPart.Slot.Hands",
+            "text": "手"
+        },
+        {
+            "key": "Upper Hands",
+            "context": "BodyPart.Slot.Hands",
+            "text": "上部の手"
+        },
+        {
+            "key": "Lower Hands",
+            "context": "BodyPart.Slot.Hands",
+            "text": "下部の手"
+        },
+        {
+            "key": "Left Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "左腕"
+        },
+        {
+            "key": "Right Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "右腕"
+        },
+        {
+            "key": "Upper Left Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "上左腕"
+        },
+        {
+            "key": "Upper Right Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "上右腕"
+        },
+        {
+            "key": "Lower Left Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "下左腕"
+        },
+        {
+            "key": "Lower Right Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "下右腕"
+        },
+        {
+            "key": "Left Hand",
+            "context": "BodyPart.Slot.Hand",
+            "text": "左手"
+        },
+        {
+            "key": "Right Hand",
+            "context": "BodyPart.Slot.Hand",
+            "text": "右手"
+        },
+        {
+            "key": "Upper Left Hand",
+            "context": "BodyPart.Slot.Hand",
+            "text": "左手（上）"
+        },
+        {
+            "key": "Upper Right Hand",
+            "context": "BodyPart.Slot.Hand",
+            "text": "右手（上）"
+        },
+        {
+            "key": "Lower Left Hand",
+            "context": "BodyPart.Slot.Hand",
+            "text": "左手（下）"
+        },
+        {
+            "key": "Lower Right Hand",
+            "context": "BodyPart.Slot.Hand",
+            "text": "右手（下）"
+        },
+        {
+            "key": "Feet",
+            "context": "BodyPart.Slot.Feet",
+            "text": "足"
+        },
+        {
+            "key": "Foot",
+            "context": "BodyPart.Slot.Foot",
+            "text": "足"
+        },
+        {
+            "key": "Forefoot",
+            "context": "BodyPart.Slot.Foot",
+            "text": "前足"
+        },
+        {
+            "key": "Forefeet",
+            "context": "BodyPart.Slot.Foot",
+            "text": "前足"
+        },
+        {
+            "key": "Front Foot",
+            "context": "BodyPart.Slot.Foot",
+            "text": "前足"
+        },
+        {
+            "key": "Front Feet",
+            "context": "BodyPart.Slot.Foot",
+            "text": "前足"
+        },
+        {
+            "key": "Hindfoot",
+            "context": "BodyPart.Slot.Foot",
+            "text": "後足"
+        },
+        {
+            "key": "Hindfeet",
+            "context": "BodyPart.Slot.Foot",
+            "text": "後足"
+        },
+        {
+            "key": "Rear Foot",
+            "context": "BodyPart.Slot.Foot",
+            "text": "後足"
+        },
+        {
+            "key": "Rear Feet",
+            "context": "BodyPart.Slot.Foot",
+            "text": "後足"
+        },
+        {
+            "key": "Fin",
+            "context": "BodyPart.Slot.Fin",
+            "text": "ヒレ"
+        },
+        {
+            "key": "Tail",
+            "context": "BodyPart.Slot.Tail",
+            "text": "尻尾"
+        },
+        {
+            "key": "Upper Tail",
+            "context": "BodyPart.Slot.Tail",
+            "text": "上部の尾"
+        },
+        {
+            "key": "Lower Tail",
+            "context": "BodyPart.Slot.Tail",
+            "text": "下部の尾"
+        },
+        {
+            "key": "Floating Nearby",
+            "context": "BodyPart.Slot.Floating Nearby",
+            "text": "浮遊物"
+        },
+        {
+            "key": "Thrown Weapon",
+            "context": "BodyPart.Slot.Thrown Weapon",
+            "text": "投擲武器"
+        },
+        {
+            "key": "Missile Weapon",
+            "context": "BodyPart.Slot.Missile Weapon",
+            "text": "射撃武器"
+        },
+        {
+            "key": "Left Missile Weapon",
+            "context": "BodyPart.Slot.Missile Weapon",
+            "text": "左射撃武器"
+        },
+        {
+            "key": "Right Missile Weapon",
+            "context": "BodyPart.Slot.Missile Weapon",
+            "text": "右射撃武器"
+        }
+    ]
+}

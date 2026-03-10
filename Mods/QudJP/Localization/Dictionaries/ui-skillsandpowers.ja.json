@@ -1,0 +1,2033 @@
+{
+  "meta": {
+    "id": "ui-skillsandpowers",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "  {{C|?}} Akimbo",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} 二挺拳銃"
+    },
+    {
+      "key": "  {{C|?}} Disassemble",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} 分解"
+    },
+    {
+      "key": "  {{C|?}} Dismember",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} 切断"
+    },
+    {
+      "key": "  {{C|?}} Iron Mind",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} 鋼の精神"
+    },
+    {
+      "key": "  {{C|?}} Lay Mine / Set Bomb",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} 地雷/爆弾設置"
+    },
+    {
+      "key": "  {{C|?}} Nostrums",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} 秘薬"
+    },
+    {
+      "key": "  {{C|?}} Repair",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} 修理"
+    },
+    {
+      "key": "  {{C|?}} Shield Slam",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} シールドスラム"
+    },
+    {
+      "key": "  {{C|?}} Tinker I",
+      "context": "TMP.Description",
+      "text": "  {{C|?}} ティンカー I"
+    },
+    {
+      "key": "+200 reputation with bears",
+      "context": "TMP.Description",
+      "text": "熊との評判 +200"
+    },
+    {
+      "key": "+200 reputation with the Barathrumites",
+      "context": "TMP.Description",
+      "text": "バラサラム派との評判 +200"
+    },
+    {
+      "key": "+3 Willpower",
+      "context": "TMP.Description",
+      "text": "意志力 +3"
+    },
+    {
+      "key": "+400 reputation with mysterious strangers",
+      "context": "TMP.Description",
+      "text": "謎のよそ者との評判 +400"
+    },
+    {
+      "key": "+400 reputation with the Issachari tribe",
+      "context": "TMP.Description",
+      "text": "イシャーリ族との評判 +400"
+    },
+    {
+      "key": "+400 reputation with water barons",
+      "context": "TMP.Description",
+      "text": "水商人との評判 +400"
+    },
+    {
+      "key": "+600 reputation with the Fellowship of Wardens",
+      "context": "TMP.Description",
+      "text": "ウォーデン連盟との評判 +600"
+    },
+    {
+      "key": "-1 Strength",
+      "context": "TMP.Description",
+      "text": "筋力 -1"
+    },
+    {
+      "key": "Acrobatics",
+      "context": "TMP.Skill Name",
+      "text": "曲芸"
+    },
+    {
+      "key": "Activated; cooldown 10 (primary) or 20 (offhand). You make a melee attack with a short blade in your primary hand (preferred) or offhand. If you hit, the attack gets +2 to penetration rolls for each negative status effect your opponent suffers from.",
+      "context": "TMP.Description",
+      "text": "起動・主手クールダウン10/副手20。主手（優先）か副手の短剣で近接攻撃し、命中すると相手が受けている負の状態1つにつき貫通判定に+2。"
+    },
+    {
+      "key": "Activated; cooldown 10. You make an attack with a cudgel at an adjacent opponent. If you hit, you automatically daze them for 3-4 rounds. Dazing a dazed opponent stuns them. Conking a stunned opponent instead knocks them unconscious for 30-40 rounds (unconscious opponents wake up dazed when they take damage).",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン10。隣接する敵に棍棒で攻撃し、命中すると自動で3～4ラウンド朦朧にする。朦朧にさらに朦朧を与えれば気絶、気絶した相手に使うと30～40ラウンド昏睡（ダメージで覚醒するが朦朧状態）。"
+    },
+    {
+      "key": "Activated; cooldown 100. For the next 10 rounds, Lunge and Swipe have no cooldown.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン100。以後10ラウンドの間、《踏み込み》と《薙ぎ》にクールダウンが発生しない。"
+    },
+    {
+      "key": "Activated; cooldown 100. For the next 5 rounds, your chance to daze with cudgel attacks is 100% and Slam has no cooldown. To use Demolish, Slam must be off cooldown, and using Demolish puts Slam on cooldown.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン100。5ラウンドの間、棍棒攻撃の朦朧確率が100%になり、《叩きつけ》がクールダウンなしで使える。発動には《叩きつけ》がクールダウン中でないことが必要で、使用すると《叩きつけ》がクールダウンに入る。"
+    },
+    {
+      "key": "Activated; cooldown 100. You enter a blood frenzy, and for 5 rounds your chance to dismember with axe attacks is 100%. To use Berserk, Dismember must be off cooldown, and using Berserk puts Dismember on cooldown.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン100。5ラウンドの間、斧攻撃の切断確率が100%。発動には〈切断〉がクールダウン中でないことが必要で、使用すると〈切断〉がクールダウンに入る。"
+    },
+    {
+      "key": "Activated; cooldown 15. Aggressive stance: Lunge through an empty space at an opponent and attack with +2 to your penetration roll. You must move through the empty space. Defensive stance: Attack an opponent then lunge backward 2 spaces. Dueling stance: Attack an opponent with +1 to your penetration roll. The attack is guaranteed to hit and penetrate at least once.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン15。攻勢: 空きマスを踏み込んで敵を攻撃し、貫通判定+2（踏み込み必須）。守勢: 敵を攻撃したあと後方2マスへ下がる。決闘: 貫通判定+1で攻撃し、少なくとも1回は命中・貫通が保証される。"
+    },
+    {
+      "key": "Activated; cooldown 15. Aggressive stance: Make an attack against all adjacent opponents. Defensive stance: Push all adjacent creatures back 1 space and attempt to trip opponents (strength/agility save; difficulty 30). Dueling stance: Attack an opponent and attempt to disarm them (strength save; difficulty 25 + your Agi modifier). The attack is guaranteed to hit and penetrate at least once.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン15。攻勢: 隣接する全てに攻撃。守勢: 隣接する全てを1マス押し返し、転倒判定を行う（筋力/敏捷セーヴ難易度30）。決闘: 相手を攻撃し、武装解除を試みる（筋力セーヴ難易度25+敏捷修正）。この攻撃も少なくとも1回は命中・貫通が保証される。"
+    },
+    {
+      "key": "Activated; cooldown 30. Axe attack. If you hit and penetrate, you dismember one of their limbs at random and they start bleeding (1-2 damage per turn. toughness save; difficulty 35). Additionally, your axe attacks that penetrate have a percentage chance to dismember: 3% for one-handed axes and 6% for two-handed axes.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン30。斧攻撃。命中かつ貫通するとランダムな四肢を切断し、1–2ダメージ/ターンの出血を与える（頑健セーヴ難易度35）。また、貫通した斧攻撃は片手斧で3%、両手斧で6%の確率で部位切断を試みる。"
+    },
+    {
+      "key": "Activated; cooldown 40. You attempt to knock an opponent down and deal (Str modifier)d2 + your shield's AV bonus in damage. Your opponent gets a chance to resist (strength save; difficulty 20 + your Str modifier). Whenever you charge an opponent with a shield equipped, you get a free Shield Slam attack against them.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン40。相手を転倒させつつ(筋力修正)d2+盾のAVボーナスのダメージを与える。相手は筋力セーヴ難易度20+筋力修正で抵抗。盾を装備して突撃したときは無料でシールドスラムを行う。"
+    },
+    {
+      "key": "Activated; cooldown 40. You move one square at no action cost. You may swap squares with a hostile opponent.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン40。行動コストなしで1マス移動し、敵とマスを入れ替えられる。"
+    },
+    {
+      "key": "Activated; cooldown 50. You grab an opponent's limb with the heel of your axe. If successful, you pull your opponent with you as you move and make a free attack with your axe. Your opponent gets a chance to resist the move (strength save; difficulty 20 + your Str modifier) and a chance to break free at the start of their turn (same save). Lasts for 9 rounds or until you dismember the opponent.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン50。斧の柄で相手の四肢を掴み、成功すると移動に合わせて引きずり、斧でフリー攻撃を行う。移動抵抗は筋力セーヴ難易度20+筋力修正。各ターン開始時にも同難易度で脱出判定。9ラウンド続くか相手を切断するまで。"
+    },
+    {
+      "key": "Activated; cooldown 50. You make an attack with a cudgel at an adjacent opponent with +1 to your penetration roll. If you hit, you slam your opponent backwards up to 3 spaces, pushing other creatures and breaking through walls if their AVs are less than 5 times your Strength modifier. Opponents who get pushed are stunned for 1 round plus an additional round for each space pushed. Opponents who are pushed through or against walls take extra weapon damage for each wall. Gigantic opponents don't get pushed but are still stunned for 1 round. Destroys a wall or door if its AV is under 5 times your Strength modifier.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン50。隣接する敵に棍棒で攻撃し、貫通判定に+1。命中すると敵を最大3マスまで吹き飛ばし、他のクリーチャーを押しのけ、筋力修正×5未満のAVの壁なら破壊して突き抜ける。吹き飛び距離に応じて1+飛ばしたマス数ラウンド気絶。壁・扉のAVが筋力修正×5未満なら破壊。超大型の敵は吹き飛ばないが1ラウンド気絶。"
+    },
+    {
+      "key": "Activated; cooldown 60. You make an attack with every weapon-wielding limb, including extra limbs granted by mutation or technology.",
+      "context": "TMP.Description",
+      "text": "起動・クールダウン60。適用可能な全ての武装した四肢（変異やテクノロジーで増えた分も含む）で攻撃する。"
+    },
+    {
+      "key": "Akimbo",
+      "context": "TMP.Description",
+      "text": "二挺拳銃"
+    },
+    {
+      "key": "Akimbo",
+      "context": "TMP.Skill Name",
+      "text": "二挺拳銃"
+    },
+    {
+      "key": "Allowed entrance to many settlements for purposes of trade",
+      "context": "TMP.Description",
+      "text": "多くの集落に交易目的で入場が許可される"
+    },
+    {
+      "key": "Amputate Limb",
+      "context": "TMP.Skill Name",
+      "text": "四肢切断"
+    },
+    {
+      "key": "Apothecary",
+      "context": "TMP.Skill Name",
+      "text": "薬師"
+    },
+    {
+      "key": "Are you sure you want to buy ",
+      "context": "XRL.UI.SkillsAndPowersScreen",
+      "text": "購入してもよろしいですか: "
+    },
+    {
+      "key": "As long as you wield a shield, there is a 50% chance you block one melee attack per round. When you block an attack, you add the shield's AV bonus to your AV for that attack. If you equip multiple shields, the one block per round limit is per shield, and you only can attempt to block a given attack once, using your best usable shield.",
+      "context": "TMP.Description",
+      "text": "盾を装備している限り、1ラウンドに50%で近接攻撃1回をブロックし、その攻撃に盾のAVボーナスを加える。複数の盾を持つ場合、盾ごとに1回の判定があり、攻撃1回につき最良の盾でのみ試行する。"
+    },
+    {
+      "key": "As long as your target can't see or hear any faction allies, Wounding Fire is upgraded to Disorienting Fire. Disorienting Fire also reduces your target's DV and MA by 4.",
+      "context": "TMP.Description",
+      "text": "目標が味方の姿や声を感知できなければ創傷射撃が強化され、DVとMAを-4する。"
+    },
+    {
+      "key": "As long as your target is flaming, luminous, or phosphorescent, Sure Fire is upgraded to Beacon Fire. Beacon Fire shots are also treated as critical hits.",
+      "context": "TMP.Description",
+      "text": "目標が炎上・発光・燐光していると必中射撃が強化され、クリティカル扱いになる。"
+    },
+    {
+      "key": "As long as your target is surrounded by 6 or more solid obstacles, Suppressive Fire is upgraded to Flattening Fire. Flattening Fire also knocks your target prone and disarms them.",
+      "context": "TMP.Description",
+      "text": "目標が固形障害物に6つ以上囲まれていると制圧射撃が強化され、目標を伏せさせ、武装解除も行う。"
+    },
+    {
+      "key": "Axe",
+      "context": "TMP.Text",
+      "text": "斧"
+    },
+    {
+      "key": "Axe",
+      "context": "TMP.Skill Name",
+      "text": "斧"
+    },
+    {
+      "key": "Axe Proficiency",
+      "context": "TMP.Skill Name",
+      "text": "斧の習熟"
+    },
+    {
+      "key": "Backswing",
+      "context": "TMP.Skill Name",
+      "text": "返し打ち"
+    },
+    {
+      "key": "Bandages you apply are much more effective at stopping bleeding.",
+      "context": "TMP.Description",
+      "text": "包帯による止血効果が大幅に向上する。"
+    },
+    {
+      "key": "Beacon Fire",
+      "context": "TMP.Skill Name",
+      "text": "かがり火"
+    },
+    {
+      "key": "Begins with a number of random artifacts and scrap",
+      "context": "TMP.Description",
+      "text": "ランダムなアーティファクトとスクラップを所持して開始"
+    },
+    {
+      "key": "Berate",
+      "context": "TMP.Description",
+      "text": "罵倒"
+    },
+    {
+      "key": "Berate",
+      "context": "TMP.Skill Name",
+      "text": "罵倒"
+    },
+    {
+      "key": "Berserk!",
+      "context": "TMP.Text",
+      "text": "狂戦！"
+    },
+    {
+      "key": "Berserk!",
+      "context": "TMP.Skill Name",
+      "text": "狂戦！"
+    },
+    {
+      "key": "Block",
+      "context": "TMP.Skill Name",
+      "text": "ブロック"
+    },
+    {
+      "key": "Bloodletter",
+      "context": "TMP.Skill Name",
+      "text": "ブラッドレター"
+    },
+    {
+      "key": "Bludgeon",
+      "context": "TMP.Skill Name",
+      "text": "殴打"
+    },
+    {
+      "key": "Bow and Rifle",
+      "context": "TMP.Skill Name",
+      "text": "弓とライフル"
+    },
+    {
+      "key": "Butchery",
+      "context": "TMP.Text",
+      "text": "解体術"
+    },
+    {
+      "key": "Butchery",
+      "context": "TMP.Description",
+      "text": "解体術"
+    },
+    {
+      "key": "Butchery",
+      "context": "TMP.Skill Name",
+      "text": "解体術"
+    },
+    {
+      "key": "Buy Skills",
+      "context": "XRL.UI.SkillsAndPowersScreen",
+      "text": "スキル購入"
+    },
+    {
+      "key": "Calloused",
+      "context": "TMP.Description",
+      "text": "硬皮化"
+    },
+    {
+      "key": "Calloused",
+      "context": "TMP.Skill Name",
+      "text": "硬皮化"
+    },
+    {
+      "key": "Carbide Chef",
+      "context": "TMP.Text",
+      "text": "カーバイドシェフ"
+    },
+    {
+      "key": "Carbide Chef",
+      "context": "TMP.Skill Name",
+      "text": "カーバイドシェフ"
+    },
+    {
+      "key": "Charge",
+      "context": "TMP.Description",
+      "text": "突進"
+    },
+    {
+      "key": "Charge",
+      "context": "TMP.Skill Name",
+      "text": "突進"
+    },
+    {
+      "key": "Charging Strike",
+      "context": "TMP.Text",
+      "text": "突撃打"
+    },
+    {
+      "key": "Charging Strike",
+      "context": "TMP.Skill Name",
+      "text": "突撃打"
+    },
+    {
+      "key": "Cleave",
+      "context": "TMP.Text",
+      "text": "裂断"
+    },
+    {
+      "key": "Cleave",
+      "context": "TMP.Skill Name",
+      "text": "裂断"
+    },
+    {
+      "key": "Conatus",
+      "context": "TMP.Skill Name",
+      "text": "コンタス"
+    },
+    {
+      "key": "Conk",
+      "context": "TMP.Skill Name",
+      "text": "コンク"
+    },
+    {
+      "key": "Cooking and Gathering",
+      "context": "TMP.Text",
+      "text": "料理と採集"
+    },
+    {
+      "key": "Cooking and Gathering",
+      "context": "TMP.Skill Name",
+      "text": "料理と採集"
+    },
+    {
+      "key": "Cooldown 100. You fire at a marked target. Your shot combines the effects of all the other Fire powers you have.",
+      "context": "TMP.Description",
+      "text": "クールダウン100。マークした目標を射撃し、所持しているFire系能力の効果をすべてまとめて適用する。"
+    },
+    {
+      "key": "Cooldown 200. For 20 rounds, firing a pistol only takes half a round instead of a full round.",
+      "context": "TMP.Description",
+      "text": "クールダウン200。20ラウンドの間、拳銃射撃の行動時間が半分になる。"
+    },
+    {
+      "key": "Cooldown 50. You shame a nearby creature for 6d6 rounds, giving it a -4 penalty to DV, to-hit, Ego, Willpower and a -10% penalty to quickness.",
+      "context": "TMP.Description",
+      "text": "クールダウン50。近くのクリーチャーを6d6ラウンド辱め、DV・命中・意力・意志に-4、俊敏に-10%のペナルティを与える。"
+    },
+    {
+      "key": "Cooldown 50. You try to terrify adjacent, hostile creatures (1d8 + [Ego modifier] penetration roll vs. MA). On success, a frightened creature flees from you for 6d4 rounds.",
+      "context": "TMP.Description",
+      "text": "クールダウン50。隣接する敵対クリーチャーを恐怖させる（1d8+【意力】修正の貫通判定 vs MA）。成功すると6d4ラウンド逃走する。"
+    },
+    {
+      "key": "Critical hits you score with pistols are more deadly.",
+      "context": "TMP.Description",
+      "text": "拳銃で出したクリティカルの威力が高まる。"
+    },
+    {
+      "key": "Cudgel",
+      "context": "TMP.Description",
+      "text": "棍棒"
+    },
+    {
+      "key": "Cudgel",
+      "context": "TMP.Skill Name",
+      "text": "棍棒"
+    },
+    {
+      "key": "Cudgel Proficiency",
+      "context": "TMP.Skill Name",
+      "text": "棍棒の習熟"
+    },
+    {
+      "key": "Customs and Folklore",
+      "context": "TMP.Skill Name",
+      "text": "慣習と伝承"
+    },
+    {
+      "key": "Dead Shot",
+      "context": "TMP.Skill Name",
+      "text": "デッドショット"
+    },
+    {
+      "key": "Decapitate",
+      "context": "TMP.Text",
+      "text": "斬首"
+    },
+    {
+      "key": "Decapitate",
+      "context": "TMP.Skill Name",
+      "text": "斬首"
+    },
+    {
+      "key": "Deft Blocking",
+      "context": "TMP.Skill Name",
+      "text": "巧みなブロック"
+    },
+    {
+      "key": "Deft Throwing",
+      "context": "TMP.Skill Name",
+      "text": "巧みな投擲"
+    },
+    {
+      "key": "Demolish",
+      "context": "TMP.Skill Name",
+      "text": "破壊"
+    },
+    {
+      "key": "Deploy Turret",
+      "context": "TMP.Skill Name",
+      "text": "タレット展開"
+    },
+    {
+      "key": "Disarming Shot",
+      "context": "TMP.Skill Name",
+      "text": "武装解除射撃"
+    },
+    {
+      "key": "Disassemble",
+      "context": "TMP.Description",
+      "text": "分解"
+    },
+    {
+      "key": "Disassemble",
+      "context": "TMP.Skill Name",
+      "text": "分解"
+    },
+    {
+      "key": "Dismember",
+      "context": "TMP.Text",
+      "text": "切断"
+    },
+    {
+      "key": "Dismember",
+      "context": "TMP.Description",
+      "text": "切断"
+    },
+    {
+      "key": "Dismember",
+      "context": "TMP.Skill Name",
+      "text": "切断"
+    },
+    {
+      "key": "Disorienting Fire",
+      "context": "TMP.Skill Name",
+      "text": "撹乱射撃"
+    },
+    {
+      "key": "Doubles the chance of interesting encounters while traveling across rivers and lakes on the world map. Reduces the chance of getting lost in rivers and lakes from base 12% to 1%. On the world map, you travel across rivers and lakes twice as quickly.",
+      "context": "TMP.Description",
+      "text": "川・湖の移動時に遭遇率が2倍。迷子率は12%→1%に低下。移動速度が2倍になる。"
+    },
+    {
+      "key": "Doubles the chance of interesting encounters while traveling through chrome ruins on the world map. Reduces the chance of getting lost in ruins from base 12% to 1%. On the world map, you travel through ruins twice as quickly.",
+      "context": "TMP.Description",
+      "text": "クローム遺跡での遭遇率が2倍。迷子率は12%→1%に低下。移動速度が2倍になる。"
+    },
+    {
+      "key": "Doubles the chance of interesting encounters while traveling through the desert canyons on the world map. Reduces the chance of getting lost in the desert canyons from base 12% to 1%. On the world map, you travel through the desert canyons twice as quickly.",
+      "context": "TMP.Description",
+      "text": "砂漠の峡谷での遭遇率が2倍。迷子率は12%→1%に低下。移動速度が2倍になる。"
+    },
+    {
+      "key": "Doubles the chance of interesting encounters while traveling through the flower fields on the world map. Reduces the chance of getting lost in the flower fields from base 12% to 1%. On the world map, you travel through the flower fields twice as quickly.",
+      "context": "TMP.Description",
+      "text": "ワールドマップで花畑を移動中の遭遇率が2倍。迷子率は12%→1%に低下。移動速度が2倍になる。"
+    },
+    {
+      "key": "Doubles the chance of interesting encounters while traveling through the hills and mountains on the world map. Reduces the chance of getting lost in the hills and mountains from base 12% to 1%. On the world map, you travel through the hills and mountains twice as quickly.",
+      "context": "TMP.Description",
+      "text": "丘陵と山での遭遇率が2倍。迷子率は12%→1%に低下。移動速度が2倍になる。"
+    },
+    {
+      "key": "Doubles the chance of interesting encounters while traveling through the jungles on the world map. Reduces the chance of getting lost in the jungles from base 12% to 1%. On the world map, you travel through the jungles twice as quickly.",
+      "context": "TMP.Description",
+      "text": "ジャングルでの遭遇率が2倍。迷子率は12%→1%に低下。移動速度が2倍になる。"
+    },
+    {
+      "key": "Doubles the chance of interesting encounters while traveling through the salt dunes on the world map. Reduces the chance of getting lost in the salt dunes from base 10% to 1%. On the world map, you travel through the salt dunes twice as quickly.",
+      "context": "TMP.Description",
+      "text": "塩砂丘での遭遇率が2倍。迷子率は10%→1%に低下。移動速度が2倍になる。"
+    },
+    {
+      "key": "Doubles the chance of interesting encounters while traveling through the salt marshes and watervine fields on the world map. Reduces the chance of getting lost in the salt marshes and watervine fields from base 12% to 1%. On the world map, you travel through the salt marshes and watervine fields twice as quickly.",
+      "context": "TMP.Description",
+      "text": "塩湿地・ウォーターヴァイン畑での遭遇率が2倍。迷子率は12%→1%に低下。移動速度が2倍になる。"
+    },
+    {
+      "key": "Doubles the chance of regaining your bearings when you are lost. Reduces chance of getting lost by about 15%. You travel on the world map twice as quickly.",
+      "context": "TMP.Description",
+      "text": "迷子から立ち直る確率が2倍になり、迷う確率が約15%減る。ワールドマップ移動速度が2倍になる。"
+    },
+    {
+      "key": "Draw a Bead",
+      "context": "TMP.Skill Name",
+      "text": "狙い撃ち"
+    },
+    {
+      "key": "Dueling Stance",
+      "context": "TMP.Skill Name",
+      "text": "決闘スタンス"
+    },
+    {
+      "key": "Each round you are confused, you have a (Willpower-10)% chance to shake off the effect.",
+      "context": "TMP.Description",
+      "text": "混乱しているラウンドごとに(意志力-10)%で効果を振り払う。"
+    },
+    {
+      "key": "Each round you are dazed or stunned, you have a (Toughness-10)% chance to shake off the effect. You also take 25% less damage from poison.",
+      "context": "TMP.Description",
+      "text": "朦朧・気絶中、毎ラウンド(頑健-10)%で効果を振り払う。また毒ダメージを25%軽減する。"
+    },
+    {
+      "key": "Each round you are terrified, you have a (Willpower-10)% chance to shake off the effect.",
+      "context": "TMP.Description",
+      "text": "恐怖しているラウンドごとに(意志力-10)%で効果を振り払う。"
+    },
+    {
+      "key": "Empty the Clips",
+      "context": "TMP.Skill Name",
+      "text": "全弾発射"
+    },
+    {
+      "key": "En Garde!",
+      "context": "TMP.Skill Name",
+      "text": "アン・ガルド！"
+    },
+    {
+      "key": "Endurance",
+      "context": "TMP.Skill Name",
+      "text": "耐久"
+    },
+    {
+      "key": "Fastest Gun in the Rust",
+      "context": "TMP.Skill Name",
+      "text": "錆びた荒野の早撃ち"
+    },
+    {
+      "key": "Fasting Way",
+      "context": "TMP.Skill Name",
+      "text": "断食の道"
+    },
+    {
+      "key": "Flattening Fire",
+      "context": "TMP.Skill Name",
+      "text": "完全制圧射撃"
+    },
+    {
+      "key": "Flurry",
+      "context": "TMP.Skill Name",
+      "text": "連撃"
+    },
+    {
+      "key": "For purposes of bartering, your ego is treated as though it were 4 points higher.",
+      "context": "TMP.Description",
+      "text": "物々交換時の【自我】が+4として扱われる。"
+    },
+    {
+      "key": "For purposes of determining your accuracy with pistols, your agility is treated as if it were 4 points higher.",
+      "context": "TMP.Description",
+      "text": "拳銃の命中判定では敏捷が+4として扱われる。"
+    },
+    {
+      "key": "For the next three rounds, you automatically block all incoming melee attacks (may not be used with bucklers).",
+      "context": "TMP.Description",
+      "text": "次の3ラウンドの間、すべての近接攻撃を自動で受け流す（バックラーでは使用不可）。"
+    },
+    {
+      "key": "For the purpose of determining your accuracy with bows and rifles, your agility is treated as if it were 4 points higher.",
+      "context": "TMP.Description",
+      "text": "弓とライフルの命中判定では敏捷が+4として扱われる。"
+    },
+    {
+      "key": "Gadget Inspector",
+      "context": "TMP.Skill Name",
+      "text": "ガジェット検査"
+    },
+    {
+      "key": "Harvestry",
+      "context": "TMP.Text",
+      "text": "収穫術"
+    },
+    {
+      "key": "Harvestry",
+      "context": "TMP.Description",
+      "text": "収穫術"
+    },
+    {
+      "key": "Harvestry",
+      "context": "TMP.Skill Name",
+      "text": "収穫術"
+    },
+    {
+      "key": "Heads are added to the list of possible limbs you can dismember. Chopping off the only head of a creature kills them instantly. If the creature has multiple heads, they start bleeding profusely (2-3 damage per turn. toughness save; difficulty 35).",
+      "context": "TMP.Description",
+      "text": "切断可能部位に頭部が加わる。頭が1つだけの相手なら即死。複数頭なら激しい出血（2–3ダメージ/ターン、頑健セーヴ難易度35）。"
+    },
+    {
+      "key": "Healing tonics you apply last an extra round.",
+      "context": "TMP.Description",
+      "text": "適用した治療トニックの持続が1ラウンド延びる。"
+    },
+    {
+      "key": "Heavy Weapon",
+      "context": "TMP.Skill Name",
+      "text": "重火器"
+    },
+    {
+      "key": "Hobble",
+      "context": "TMP.Skill Name",
+      "text": "足止め"
+    },
+    {
+      "key": "Hook and Drag",
+      "context": "TMP.Text",
+      "text": "フック・アンド・ドラッグ"
+    },
+    {
+      "key": "Hook and Drag",
+      "context": "TMP.Skill Name",
+      "text": "フック・アンド・ドラッグ"
+    },
+    {
+      "key": "Hurdle",
+      "context": "TMP.Skill Name",
+      "text": "障害物越え"
+    },
+    {
+      "key": "Improved Aggressive Stance",
+      "context": "TMP.Skill Name",
+      "text": "改良型攻撃スタンス"
+    },
+    {
+      "key": "Improved Defensive Stance",
+      "context": "TMP.Skill Name",
+      "text": "改良型防御スタンス"
+    },
+    {
+      "key": "Improved Dueling Stance",
+      "context": "TMP.Skill Name",
+      "text": "改良型決闘スタンス"
+    },
+    {
+      "key": "Inspiring Presence",
+      "context": "TMP.Skill Name",
+      "text": "鼓舞する存在"
+    },
+    {
+      "key": "Intimidate",
+      "context": "TMP.Description",
+      "text": "威圧"
+    },
+    {
+      "key": "Intimidate",
+      "context": "TMP.Skill Name",
+      "text": "威圧"
+    },
+    {
+      "key": "Iron Mind",
+      "context": "TMP.Description",
+      "text": "鋼の精神"
+    },
+    {
+      "key": "Iron Mind",
+      "context": "TMP.Skill Name",
+      "text": "鋼の精神"
+    },
+    {
+      "key": "Jab",
+      "context": "TMP.Skill Name",
+      "text": "ジャブ"
+    },
+    {
+      "key": "Juicer",
+      "context": "TMP.Skill Name",
+      "text": "ジューサー"
+    },
+    {
+      "key": "Juke",
+      "context": "TMP.Skill Name",
+      "text": "フェイント"
+    },
+    {
+      "key": "Jump",
+      "context": "TMP.Skill Name",
+      "text": "ジャンプ"
+    },
+    {
+      "key": "Kickback",
+      "context": "TMP.Skill Name",
+      "text": "キックバック"
+    },
+    {
+      "key": "Lay Mine / Set Bomb",
+      "context": "TMP.Description",
+      "text": "地雷/爆弾設置"
+    },
+    {
+      "key": "Lay Mine / Set Bomb",
+      "context": "TMP.Skill Name",
+      "text": "地雷/爆弾設置"
+    },
+    {
+      "key": "Learned",
+      "context": "TMP.Skill Name",
+      "text": "習得済み"
+    },
+    {
+      "key": "Lionheart",
+      "context": "TMP.Skill Name",
+      "text": "ライオンハート"
+    },
+    {
+      "key": "Long Blade",
+      "context": "TMP.Skill Name",
+      "text": "長剣"
+    },
+    {
+      "key": "Long Blade Proficiency",
+      "context": "TMP.Skill Name",
+      "text": "長剣の習熟"
+    },
+    {
+      "key": "Longstrider",
+      "context": "TMP.Skill Name",
+      "text": "ロングストライダー"
+    },
+    {
+      "key": "Lunge",
+      "context": "TMP.Skill Name",
+      "text": "ランジ"
+    },
+    {
+      "key": "Make Camp",
+      "context": "TMP.Text",
+      "text": "野営"
+    },
+    {
+      "key": "Make Camp",
+      "context": "TMP.Skill Name",
+      "text": "野営"
+    },
+    {
+      "key": "Meal Preparation",
+      "context": "TMP.Text",
+      "text": "食事準備"
+    },
+    {
+      "key": "Meal Preparation",
+      "context": "TMP.Skill Name",
+      "text": "食事準備"
+    },
+    {
+      "key": "Meditate",
+      "context": "TMP.Skill Name",
+      "text": "瞑想"
+    },
+    {
+      "key": "Menacing Stare",
+      "context": "TMP.Skill Name",
+      "text": "威圧の眼光"
+    },
+    {
+      "key": "Mind over Body",
+      "context": "TMP.Skill Name",
+      "text": "精神凌駕"
+    },
+    {
+      "key": "Mind's Compass",
+      "context": "TMP.Text",
+      "text": "心の羅針"
+    },
+    {
+      "key": "Mind's Compass",
+      "context": "TMP.Skill Name",
+      "text": "心の羅針"
+    },
+    {
+      "key": "Multiweapon Expertise",
+      "context": "TMP.Skill Name",
+      "text": "多肢の熟練"
+    },
+    {
+      "key": "Multiweapon Fighting",
+      "context": "TMP.Skill Name",
+      "text": "多肢格闘"
+    },
+    {
+      "key": "Multiweapon Mastery",
+      "context": "TMP.Skill Name",
+      "text": "多肢の達人"
+    },
+    {
+      "key": "Multiweapon Proficiency",
+      "context": "TMP.Skill Name",
+      "text": "多肢の習熟"
+    },
+    {
+      "key": "Nonlinearity",
+      "context": "TMP.Skill Name",
+      "text": "非線形"
+    },
+    {
+      "key": "Nostrums",
+      "context": "TMP.Description",
+      "text": "秘薬"
+    },
+    {
+      "key": "Nostrums",
+      "context": "TMP.Skill Name",
+      "text": "秘薬"
+    },
+    {
+      "key": "Once per turn, when an opponent misses you with a melee attack, there's a 40% chance you make a free attack with a short blade you're wielding.",
+      "context": "TMP.Description",
+      "text": "1ターンに1回、近接攻撃を外されたとき40%の確率で装備中の短剣でフリー攻撃を行う。"
+    },
+    {
+      "key": "Opportune Attacks",
+      "context": "TMP.Skill Name",
+      "text": "好機攻撃"
+    },
+    {
+      "key": "Penetrating Strikes",
+      "context": "TMP.Skill Name",
+      "text": "貫通打撃"
+    },
+    {
+      "key": "Persuasion",
+      "context": "TMP.Skill Name",
+      "text": "説得"
+    },
+    {
+      "key": "Physic",
+      "context": "TMP.Description",
+      "text": "治療"
+    },
+    {
+      "key": "Physic",
+      "context": "TMP.Skill Name",
+      "text": "治療"
+    },
+    {
+      "key": "Pistol",
+      "context": "TMP.Skill Name",
+      "text": "拳銃術"
+    },
+    {
+      "key": "Pointed Circle",
+      "context": "TMP.Skill Name",
+      "text": "ポインテッド・サークル"
+    },
+    {
+      "key": "Poison Tolerance",
+      "context": "TMP.Skill Name",
+      "text": "耐毒"
+    },
+    {
+      "key": "Proselytize",
+      "context": "TMP.Description",
+      "text": "改宗"
+    },
+    {
+      "key": "Proselytize",
+      "context": "TMP.Skill Name",
+      "text": "改宗"
+    },
+    {
+      "key": "Reduces the movement speed penalty when swimming (normally 50 points) by 25 points.",
+      "context": "TMP.Description",
+      "text": "水泳時の移動ペナルティ（通常50）を25だけ軽減する。"
+    },
+    {
+      "key": "Rejoinder",
+      "context": "TMP.Skill Name",
+      "text": "反撃"
+    },
+    {
+      "key": "Repair",
+      "context": "TMP.Description",
+      "text": "修理"
+    },
+    {
+      "key": "Repair",
+      "context": "TMP.Skill Name",
+      "text": "修理"
+    },
+    {
+      "key": "Reverse Engineer",
+      "context": "TMP.Skill Name",
+      "text": "リバースエンジニア"
+    },
+    {
+      "key": "SP",
+      "context": "Qud.UI.SkillsAndPowersStatusScreen",
+      "text": "技能ポイント"
+    },
+    {
+      "key": "Scavenger",
+      "context": "TMP.Skill Name",
+      "text": "スカベンジャー"
+    },
+    {
+      "key": "Self-discipline",
+      "context": "TMP.Skill Name",
+      "text": "自律"
+    },
+    {
+      "key": "Shake It Off",
+      "context": "TMP.Skill Name",
+      "text": "振り払う"
+    },
+    {
+      "key": "Shank",
+      "context": "TMP.Skill Name",
+      "text": "シャンク"
+    },
+    {
+      "key": "Shield",
+      "context": "TMP.Skill Name",
+      "text": "盾術"
+    },
+    {
+      "key": "Shield Slam",
+      "context": "TMP.Description",
+      "text": "シールドスラム"
+    },
+    {
+      "key": "Shield Slam",
+      "context": "TMP.Skill Name",
+      "text": "シールドスラム"
+    },
+    {
+      "key": "Shield Wall",
+      "context": "TMP.Skill Name",
+      "text": "シールドウォール"
+    },
+    {
+      "key": "Short Blade",
+      "context": "TMP.Skill Name",
+      "text": "短剣術"
+    },
+    {
+      "key": "Short Blade Expertise",
+      "context": "TMP.Skill Name",
+      "text": "短剣の巧緻"
+    },
+    {
+      "key": "Single Weapon Fighting",
+      "context": "TMP.Skill Name",
+      "text": "単武器戦闘"
+    },
+    {
+      "key": "Skill Points (SP): {val}",
+      "context": "Qud.UI.SkillsAndPowersStatusScreen.SPText",
+      "text": "スキルポイント (SP): {val}"
+    },
+    {
+      "key": "Skills",
+      "context": "XRL.UI.SkillsAndPowersScreen",
+      "text": "スキル"
+    },
+    {
+      "key": "Slam",
+      "context": "TMP.Skill Name",
+      "text": "叩きつけ"
+    },
+    {
+      "key": "Sling and Run",
+      "context": "TMP.Skill Name",
+      "text": "走り撃ち"
+    },
+    {
+      "key": "Snake Oiler",
+      "context": "TMP.Description",
+      "text": "蛇油売り"
+    },
+    {
+      "key": "Snake Oiler",
+      "context": "TMP.Skill Name",
+      "text": "蛇油売り"
+    },
+    {
+      "key": "Spicer",
+      "context": "TMP.Text",
+      "text": "香辛師"
+    },
+    {
+      "key": "Spicer",
+      "context": "TMP.Skill Name",
+      "text": "香辛師"
+    },
+    {
+      "key": "Spry",
+      "context": "TMP.Skill Name",
+      "text": "身軽"
+    },
+    {
+      "key": "Staggering Block",
+      "context": "TMP.Skill Name",
+      "text": "よろめかせ"
+    },
+    {
+      "key": "Start a campfire for cooking meals and preserving foods.",
+      "context": "TMP.Description",
+      "text": "料理や保存のためのキャンプファイアを起こす。"
+    },
+    {
+      "key": "Starting Cost [{val} sp]",
+      "context": "Qud.UI.SkillsAndPowersLine.StartingCost",
+      "text": "初期コスト [{val} sp]"
+    },
+    {
+      "key": "Starts with a {{B|recycling suit}}",
+      "context": "TMP.Description",
+      "text": "リサイクルスーツを所持して開始"
+    },
+    {
+      "key": "Staunch Wounds",
+      "context": "TMP.Skill Name",
+      "text": "止血"
+    },
+    {
+      "key": "Steady Hand",
+      "context": "TMP.Skill Name",
+      "text": "手ぶれなし"
+    },
+    {
+      "key": "Steady Hands",
+      "context": "TMP.Skill Name",
+      "text": "安定した腕"
+    },
+    {
+      "key": "Strapping Shoulders",
+      "context": "TMP.Skill Name",
+      "text": "逞しい肩"
+    },
+    {
+      "key": "Suppressive Fire",
+      "context": "TMP.Skill Name",
+      "text": "制圧射撃"
+    },
+    {
+      "key": "Sure Fire",
+      "context": "TMP.Skill Name",
+      "text": "必中射撃"
+    },
+    {
+      "key": "Sweep",
+      "context": "TMP.Skill Name",
+      "text": "掃射"
+    },
+    {
+      "key": "Swift Blocking",
+      "context": "TMP.Skill Name",
+      "text": "迅速な防御"
+    },
+    {
+      "key": "Swift Reflexes",
+      "context": "TMP.Skill Name",
+      "text": "素早い反射"
+    },
+    {
+      "key": "Swimming",
+      "context": "TMP.Skill Name",
+      "text": "水泳"
+    },
+    {
+      "key": "Swipe",
+      "context": "TMP.Skill Name",
+      "text": "薙ぎ"
+    },
+    {
+      "key": "Tactful",
+      "context": "TMP.Skill Name",
+      "text": "機転"
+    },
+    {
+      "key": "Tactics",
+      "context": "TMP.Description",
+      "text": "戦術"
+    },
+    {
+      "key": "Tactics",
+      "context": "TMP.Skill Name",
+      "text": "戦術"
+    },
+    {
+      "key": "Tank",
+      "context": "TMP.Skill Name",
+      "text": "戦車乗り"
+    },
+    {
+      "key": "The action cost of firing pistols is reduced by 25%.",
+      "context": "TMP.Description",
+      "text": "拳銃の射撃行動コストが25%短縮される。"
+    },
+    {
+      "key": "Tinker I",
+      "context": "TMP.Description",
+      "text": "ティンカー I"
+    },
+    {
+      "key": "Tinker I",
+      "context": "TMP.Skill Name",
+      "text": "発明Ⅰ"
+    },
+    {
+      "key": "Tinker II",
+      "context": "TMP.Skill Name",
+      "text": "発明Ⅱ"
+    },
+    {
+      "key": "Tinker III",
+      "context": "TMP.Skill Name",
+      "text": "発明Ⅲ"
+    },
+    {
+      "key": "Tinkering",
+      "context": "TMP.Skill Name",
+      "text": "工匠"
+    },
+    {
+      "key": "Tomorrowful",
+      "context": "TMP.Skill Name",
+      "text": "明日を先取り"
+    },
+    {
+      "key": "Trash Divining",
+      "context": "TMP.Skill Name",
+      "text": "ごみ占い"
+    },
+    {
+      "key": "Tumble",
+      "context": "TMP.Skill Name",
+      "text": "受け身転がり"
+    },
+    {
+      "key": "Ultra Fire",
+      "context": "TMP.Skill Name",
+      "text": "究極射撃"
+    },
+    {
+      "key": "Wayfaring",
+      "context": "TMP.Text",
+      "text": "サバイバル"
+    },
+    {
+      "key": "Wayfaring",
+      "context": "TMP.Skill Name",
+      "text": "辺境行"
+    },
+    {
+      "key": "Weak Spotter",
+      "context": "TMP.Skill Name",
+      "text": "急所狙い"
+    },
+    {
+      "key": "Weapon Expertise",
+      "context": "TMP.Skill Name",
+      "text": "単武器の巧緻"
+    },
+    {
+      "key": "Weapon Mastery",
+      "context": "TMP.Skill Name",
+      "text": "単武器の達人"
+    },
+    {
+      "key": "Weathered",
+      "context": "TMP.Description",
+      "text": "風雨に耐えた"
+    },
+    {
+      "key": "Weathered",
+      "context": "TMP.Skill Name",
+      "text": "風雪錬成"
+    },
+    {
+      "key": "When you charge with a cudgel and hit, you automatically daze your opponent. When you charge with an axe and hit, if you cleave their armor, they get an additional -1 penalty to their AV. If you have Dismember, your chance to dismember when charging with an axe is doubled.",
+      "context": "TMP.Description",
+      "text": "棍棒で突撃して命中すると相手を自動で朦朧にする。斧で突撃して命中し装甲切断が起きる場合はAVをさらに-1。〈切断〉習得時は斧突撃の切断確率が2倍。"
+    },
+    {
+      "key": "When you charge with an axe and hit, if you cleave their armor, they get an additional -1 penalty to their AV. If you have Dismember, your chance to dismember when charging with an axe is doubled. When you charge with a cudgel and hit, you automatically daze your opponent.",
+      "context": "TMP.Description",
+      "text": "棍棒で突撃して命中すると相手を自動で朦朧にする。斧で突撃して命中し装甲切断が起きる場合はAVをさらに-1。〈切断〉習得時は斧突撃の切断確率が2倍。"
+    },
+    {
+      "key": "When you choose ingredients to cook with, you can choose up to three instead of two. Meals cooked with three ingredients bestow more powerful status effects.",
+      "context": "TMP.Description",
+      "text": "自由調理で材料を3つまで選べる。3素材の料理は効果がより強力になる。"
+    },
+    {
+      "key": "Whenever you begin the water ritual with a new creature, you gain 25 bonus reputation. If you purchase this power after you treat with a creature, you gain 25 bonus reputation the next time you treat with them.",
+      "context": "TMP.Description",
+      "text": "初めて水の儀式を行う生物に対し評判+25。取得前に儀式した相手にも、次回の儀式時に+25が入る。"
+    },
+    {
+      "key": "Whenever you block an opponent's attack, there is a (Strength*2)-35% chance that your opponent is stunned for 1d2 rounds.",
+      "context": "TMP.Description",
+      "text": "盾で攻撃を受け流すと、(筋力×2)-35%の確率で相手を1d2ラウンド朦朧にする。"
+    },
+    {
+      "key": "Whenever you disassemble an item, you have a 25% chance to learn how to build the item. If the item was modded, you also have a 15% chance per mod to learn the mod.",
+      "context": "TMP.Description",
+      "text": "アイテムを分解するたび25%でその設計図を習得。改造品なら改造1つにつき15%で改造も学ぶ。"
+    },
+    {
+      "key": "Whenever you fire a missile weapon at a target in melee range, you attempt to kick the target backwards.",
+      "context": "TMP.Description",
+      "text": "隣接目標に飛び道具を撃つと、目標を蹴り戻そうと試みる。"
+    },
+    {
+      "key": "Whenever you gain a level, and 5% of the time you explore a new map, you become inspired for two days. While inspired, the next time you cook a meal by choosing ingredients, you get a choice of three dynamically-generated effects to apply. You create a recipe for the chosen effect.",
+      "context": "TMP.Description",
+      "text": "レベルアップ時と新しいマップ探索時の5%で2日間インスパイア状態になる。インスパイア中に自由調理すると3つの動的効果から1つを選んで付与でき、その効果のレシピを作成する。"
+    },
+    {
+      "key": "Whenever you hit an opponent with an axe, there's a 75% chance you cleave their armor, giving them a -1 penalty to their AV. This penalty can stack a number of times up to half your Str modifier, rounded up, +1 on a critical hit.",
+      "context": "TMP.Description",
+      "text": "斧が命中するたび75%で装甲を切り裂き、AVに-1のペナルティを与える。効果は筋力修正の半分（切り上げ）回まで累積し、クリティカルなら+1回上乗せされる。"
+    },
+    {
+      "key": "Whenever you hit with a cudgel, there's a 50% chance to daze your opponent (-4 int, -4 agi, -10 movespeed) for 3-4 rounds. If you daze a dazed opponent, they're stunned for 1 round instead (cannot take actions and 0 DV).",
+      "context": "TMP.Description",
+      "text": "棍棒が命中すると50%で相手を3～4ラウンド朦朧（知力-4・敏捷-4・移動力-10）。朦朧中の敵をさらに朦朧させると1ラウンド気絶（行動不可・DV0）。"
+    },
+    {
+      "key": "Whenever you juke an opponent while wielding a short blade in your primary hand, you make a free attack. If you have Bloodletter, the attack's chance to cause bleeding is 100%.",
+      "context": "TMP.Description",
+      "text": "短剣を主手に持ち相手をジグザグで抜けたとき、フリー攻撃を行う。〈放血〉習得時、この攻撃の出血付与率は100%。"
+    },
+    {
+      "key": "Whenever you make a cudgel attack with your primary hand, there's a 25% chance you make an additional free attack with the same hand.",
+      "context": "TMP.Description",
+      "text": "主手の棍棒攻撃を行うと25%の確率で同じ手で追加のフリー攻撃を行う。"
+    },
+    {
+      "key": "Whenever you make a melee attack while single-weapon fighting, immediately make a second attack for free.",
+      "context": "TMP.Description",
+      "text": "単武器戦闘中の近接攻撃は、毎回即座にもう1回無料攻撃を行う。"
+    },
+    {
+      "key": "Whenever you make a melee attack while single-weapon fighting, there's a 50% chance you immediately make a second attack for free.",
+      "context": "TMP.Description",
+      "text": "単武器戦闘中の近接攻撃で、50%の確率でもう1回即座に無料攻撃を行う。"
+    },
+    {
+      "key": "Whenever you make a ranged attack while wielding multiple guns, you fire a shot with each of them.",
+      "context": "TMP.Description",
+      "text": "複数の銃を装備して遠隔攻撃を行うと、それぞれから射撃する。"
+    },
+    {
+      "key": "Whenever you make an offhand attack with a short blade, you immediately make another attack with that same weapon. Flurry attacks do not trigger this.",
+      "context": "TMP.Description",
+      "text": "短剣の副手攻撃を行うと、同じ武器で即座にもう1回攻撃する。乱舞では追加攻撃は発生しない。"
+    },
+    {
+      "key": "Whenever you rifle through trash, there's a 5% chance you piece together clues and learn a random secret.",
+      "context": "TMP.Description",
+      "text": "ゴミを漁るたび5%の確率で手がかりを繋ぎ、ランダムな秘密を得る。"
+    },
+    {
+      "key": "Whenever you score a critical hit with a melee weapon while single-weapon fighting, the cooldowns of up to two random weapon or shield skills are immediately refreshed.",
+      "context": "TMP.Description",
+      "text": "単武器戦闘中に近接クリティカルを出すと、武器または盾スキルのクールダウンが最大2つ即座にリセットされる。"
+    },
+    {
+      "key": "Whenever you step over garbage, you astutely rifle through it and occasionally discover scrap. Additionally, you harvest extra scrap from robots you destroy.",
+      "context": "TMP.Description",
+      "text": "ゴミを踏むと鋭い目で漁り、ときどきスクラップを発見する。破壊したロボットからも追加スクラップを得る。"
+    },
+    {
+      "key": "While at a campfire, you can cook from recipes, choose up to two ingredients to cook with, and preserve fresh foods. Meals cooked from recipes bestow special status effects. Meals cooked with selected ingredients bestow dynamically-generated status effects. Preserved foods are used as meal ingredients.",
+      "context": "TMP.Description",
+      "text": "キャンプファイアでレシピ調理、材料を2つまで選ぶ自由調理、食材の保存ができる。レシピ調理は固有効果、自由調理は動的効果を付与。保存食は食材として使える。"
+    },
+    {
+      "key": "While meditating, you regenerate three times as fast, and negative status effects wear out three times as fast. The only action you can take while meditating is Wait. You stop meditating if you take damage in a single round exceeding (Willpower*3)-60. If you rest for 10 or more turns, you automatically begin meditating.",
+      "context": "TMP.Description",
+      "text": "瞑想中は回復速度が3倍になり、負のステータスも3倍速く解消される。瞑想中にできる行動は待機のみ。1ラウンドに受けたダメージが(意志力×3)-60を超えると瞑想が解ける。10ターン以上休息すると自動的に瞑想に入る。"
+    },
+    {
+      "key": "While single-weapon fighting, your melee attacks always penetrate one extra time.",
+      "context": "TMP.Description",
+      "text": "単武器戦闘中、近接攻撃は常に追加でもう1回貫通する。"
+    },
+    {
+      "key": "Wilderness Lore: Canyons",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: 渓谷"
+    },
+    {
+      "key": "Wilderness Lore: Canyons",
+      "context": "TMP.Skill Name",
+      "text": "荒地巡り：峡谷"
+    },
+    {
+      "key": "Wilderness Lore: Flower Fields",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: 花畑"
+    },
+    {
+      "key": "Wilderness Lore: Flower Fields",
+      "context": "TMP.Skill Name",
+      "text": "荒地巡り：花畑"
+    },
+    {
+      "key": "Wilderness Lore: Hills and Mountains",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: 丘と山岳"
+    },
+    {
+      "key": "Wilderness Lore: Hills and Mountains",
+      "context": "TMP.Skill Name",
+      "text": "荒地巡り：丘陵と山"
+    },
+    {
+      "key": "Wilderness Lore: Jungles",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: ジャングル"
+    },
+    {
+      "key": "Wilderness Lore: Jungles",
+      "context": "TMP.Skill Name",
+      "text": "荒地巡り：ジャングル"
+    },
+    {
+      "key": "Wilderness Lore: Marshes",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: 沼地"
+    },
+    {
+      "key": "Wilderness Lore: Marshes",
+      "context": "TMP.Skill Name",
+      "text": "荒地巡り：湿地"
+    },
+    {
+      "key": "Wilderness Lore: Random",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: ランダム"
+    },
+    {
+      "key": "Wilderness Lore: Random",
+      "context": "TMP.Description",
+      "text": "荒野の伝承: ランダム"
+    },
+    {
+      "key": "Wilderness Lore: Rivers and Lakes",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: 河川と湖"
+    },
+    {
+      "key": "Wilderness Lore: Rivers and Lakes",
+      "context": "TMP.Skill Name",
+      "text": "荒地巡り：河川"
+    },
+    {
+      "key": "Wilderness Lore: Ruins",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: 遺跡"
+    },
+    {
+      "key": "Wilderness Lore: Ruins",
+      "context": "TMP.Skill Name",
+      "text": "荒地巡り：廃墟"
+    },
+    {
+      "key": "Wilderness Lore: Salt Dunes",
+      "context": "TMP.Text",
+      "text": "荒野の伝承: 塩砂丘"
+    },
+    {
+      "key": "Wilderness Lore: Salt Dunes",
+      "context": "TMP.Skill Name",
+      "text": "荒地巡り：塩砂漠"
+    },
+    {
+      "key": "Wounding Fire",
+      "context": "TMP.Skill Name",
+      "text": "創傷射撃"
+    },
+    {
+      "key": "You are 5% more likely to score critical hits with pistols (standard chance is 5%).",
+      "context": "TMP.Description",
+      "text": "拳銃のクリティカル発生率が+5%（基本5%）。"
+    },
+    {
+      "key": "You are aware of basic combat tactics.",
+      "context": "TMP.Description",
+      "text": "基本的な戦術に通じている。"
+    },
+    {
+      "key": "You are familiar with the customs and folklore of Qud.",
+      "context": "TMP.Description",
+      "text": "クァドの風習と民間伝承に通じている。"
+    },
+    {
+      "key": "You are much more successful at examining artifacts, and you can deploy wiring.",
+      "context": "TMP.Description",
+      "text": "遺物の調査成功率が大幅に上がり、配線も設置できる。"
+    },
+    {
+      "key": "You are skilled at acrobatics.",
+      "context": "TMP.Description",
+      "text": "曲芸に長けている。"
+    },
+    {
+      "key": "You are skilled at convincing others.",
+      "context": "TMP.Description",
+      "text": "他者を説得する術に長けている。"
+    },
+    {
+      "key": "You are skilled at cooking and gathering meal ingredients.",
+      "context": "TMP.Description",
+      "text": "料理と食材の採集に長けている。"
+    },
+    {
+      "key": "You are skilled at enduring harsh conditions and situations.",
+      "context": "TMP.Description",
+      "text": "苛酷な状況に耐える術に長けている。"
+    },
+    {
+      "key": "You are skilled at examining, building, repairing and modding artifacts.",
+      "context": "TMP.Description",
+      "text": "遺物の調査・製作・修理・改造に長けている。"
+    },
+    {
+      "key": "You are skilled at maintaining self-discipline.",
+      "context": "TMP.Description",
+      "text": "自律を保つ術に長けている。"
+    },
+    {
+      "key": "You are skilled at multiweapon fighting. Your chance to attack with offhand weapons is increased.",
+      "context": "TMP.Description",
+      "text": "多肢での戦闘に長け、各副手の攻撃発生率が上がる。"
+    },
+    {
+      "key": "You are skilled at physicking.",
+      "context": "TMP.Description",
+      "text": "外科・投薬の技術に長けている。"
+    },
+    {
+      "key": "You are skilled at wielding shields.",
+      "context": "TMP.Description",
+      "text": "盾の扱いに長けている。"
+    },
+    {
+      "key": "You are skilled at wilderness survival.",
+      "context": "TMP.Description",
+      "text": "荒野での生存に長けている。"
+    },
+    {
+      "key": "You are skilled with axes.",
+      "context": "TMP.Description",
+      "text": "斧の扱いに長けている。"
+    },
+    {
+      "key": "You are skilled with bows and rifles.",
+      "context": "TMP.Description",
+      "text": "弓とライフルの扱いに長けている。"
+    },
+    {
+      "key": "You are skilled with crushing and bludgeoning weapons.",
+      "context": "TMP.Description",
+      "text": "打撃武器の扱いに長けている。"
+    },
+    {
+      "key": "You are skilled with heavy weapons.",
+      "context": "TMP.Description",
+      "text": "重火器の扱いに長けている。"
+    },
+    {
+      "key": "You are skilled with long thrusting and slashing blades.",
+      "context": "TMP.Description",
+      "text": "突きと斬撃に優れた長剣の扱いに長けている。"
+    },
+    {
+      "key": "You are skilled with pistols of various kinds.",
+      "context": "TMP.Description",
+      "text": "各種拳銃の扱いに長けている。"
+    },
+    {
+      "key": "You are skilled with small one-handed knives and blades.",
+      "context": "TMP.Description",
+      "text": "片手の短い刃物の扱いに長けている。"
+    },
+    {
+      "key": "You can butcher fresh ingredients and other usable parts from animal corpses.",
+      "context": "TMP.Description",
+      "text": "動物の死体から食材などの有用部位を解体できる。"
+    },
+    {
+      "key": "You can disassemble scrap and artifacts for bits. You get the most significant bit from the item schematic plus a 50% chance to receive each remaining bit.",
+      "context": "TMP.Description",
+      "text": "スクラップや遺物を分解してビットを得る。設計図の最高位ビットは必ず、残りビットは50%で得られる。"
+    },
+    {
+      "key": "You can harvest fresh ingredients and other usable parts from plants.",
+      "context": "TMP.Description",
+      "text": "植物から食材などの有用部位を採取できる。"
+    },
+    {
+      "key": "You can treat bleeding, poison, illness, and disease onset for you and your companions at a campfire.",
+      "context": "TMP.Description",
+      "text": "キャンプファイアで自分や仲間の出血・毒・病気・症状発現を治療できる。"
+    },
+    {
+      "key": "You can voluntarily amputate your own limbs and the limbs of infected companions.",
+      "context": "TMP.Description",
+      "text": "自分や感染した仲間の四肢を自発的に切除できる。"
+    },
+    {
+      "key": "You charge forward two or three squares and perform a melee attack with +1 to your penetration roll.",
+      "context": "TMP.Description",
+      "text": "2～3マス前進して近接攻撃を行い、貫通判定に+1。"
+    },
+    {
+      "key": "You do not have the skill associated with that power. Would you like to purchase the req",
+      "context": "XRL.UI.SkillsAndPowersScreen",
+      "text": "そのパワーに関連するスキルを持っていません。前提スキルを購入しますか？"
+    },
+    {
+      "key": "You extend.",
+      "context": "TMP.Description",
+      "text": "あなたは拡張される。"
+    },
+    {
+      "key": "You fire 5 shots with your heavy weapon, sweeping over a 90 degree cone. Your heavy weapon is reloaded before each shot.",
+      "context": "TMP.Description",
+      "text": "重火器で90度の扇形に5発を連射する。各射撃の前に重火器は再装填される。"
+    },
+    {
+      "key": "You fire at a marked target with no accuracy penalty (the accuracy of your weapon still matters). Then your target is unmarked.",
+      "context": "TMP.Description",
+      "text": "命中ペナルティなしでマーク目標を射撃する（武器精度は適用）。その後マークを解除。"
+    },
+    {
+      "key": "You fire at a marked target. For each penetration on each shot that hits, your target bleeds 1 point of damage per round (save: 20 + max damage of the weapon). Then your target is unmarked.",
+      "context": "TMP.Description",
+      "text": "マークした目標を射撃する。命中して貫通するたび、相手は毎ターン1ダメージの出血を受ける（セーヴ:20+武器の最大ダメージ）。その後マークを解除。"
+    },
+    {
+      "key": "You fire at a marked target. If your shot penetrates, your target is suppressed and can't move for 3-5 rounds. Then your target is unmarked.",
+      "context": "TMP.Description",
+      "text": "マークした目標を射撃する。貫通すると相手を3～5ラウンド移動不能にし、その後マークを解除する。"
+    },
+    {
+      "key": "You gain a +1 bonus to your DV. Additionally, Juke's cooldown is reduced to 20.",
+      "context": "TMP.Description",
+      "text": "DVに+1。さらに《ジグザグ走法》のクールダウンが20になる。"
+    },
+    {
+      "key": "You gain a +2 bonus to your DV.",
+      "context": "TMP.Description",
+      "text": "DVに+2。"
+    },
+    {
+      "key": "You gain a +5 bonus to your DV when flinching away from missile attacks.",
+      "context": "TMP.Description",
+      "text": "飛び道具をかわすとき、DVに+5。"
+    },
+    {
+      "key": "You gain access to dueling stance. While wielding a long blade in your primary hand, you get +2 to hit with long blades and short blades.",
+      "context": "TMP.Description",
+      "text": "決闘の構えを得る。主手に長剣がある場合、長剣と短剣の命中+2。"
+    },
+    {
+      "key": "You gain access to two stances. Aggressive stance: With a long blade in your primary hand, your long blade and short blade attacks gain +1 to your penetration roll but -2 to hit. Defensive stance: While wielding a long blade in your primary hand, you gain +2 DV.",
+      "context": "TMP.Description",
+      "text": "2つのスタンスを得る。攻勢の構え: 主手に長剣があると長剣/短剣攻撃の貫通判定に+1、命中-2。守勢の構え: 主手に長剣があるとDV+2。"
+    },
+    {
+      "key": "You get +1 to hit with short blades. Also, the action costs of attacking with a short blade in your primary hand is reduced by 25%.",
+      "context": "TMP.Description",
+      "text": "短剣で命中+1。加えて主手の短剣攻撃の行動コストが25%短縮される。"
+    },
+    {
+      "key": "You get +2 to hit with axes.",
+      "context": "TMP.Description",
+      "text": "斧での命中率が+2。"
+    },
+    {
+      "key": "You get +2 to hit with cudgels.",
+      "context": "TMP.Description",
+      "text": "棍棒での命中率が+2。"
+    },
+    {
+      "key": "You have an agility-based chance to disarm your opponent when you score a hit with a pistol.",
+      "context": "TMP.Description",
+      "text": "拳銃命中時、敏捷に応じた確率で相手の武装を解除する。"
+    },
+    {
+      "key": "You hunger and thirst at one-half the normal rate. Metabolic effects from meals last twice as long.",
+      "context": "TMP.Description",
+      "text": "空腹・渇きの進行が半分になり、食事の代謝効果は2倍長持ちする。"
+    },
+    {
+      "key": "You hunger and thirst at one-sixth rate. Metabolic effects from meals last six times as long. You suffer no penalty for becoming famished.",
+      "context": "TMP.Description",
+      "text": "空腹・渇きの進行が1/6になり、食事の代謝効果は6倍長持ちする。飢餓になってもペナルティを受けない。"
+    },
+    {
+      "key": "You jump into an unoccupied square within range 2. You cannot jump over a square occupied by a creature, unless you have an ability (such as flight) that augments your jump.",
+      "context": "TMP.Description",
+      "text": "射程2の空きマスへ跳ぶ。クリーチャーのいるマスは、飛行など跳躍を強化する能力がない限り跳び越えられない。"
+    },
+    {
+      "key": "You make an attack with a short blade in your primary hand, looking for a weak spot in your opponent's armor. If you hit, you penetrate exactly once and hobble them (-50% movespeed for 16-20 rounds).",
+      "context": "TMP.Description",
+      "text": "主手の短剣で弱点を狙って攻撃する。命中すると必ず1回貫通し、相手を16～20ラウンド鈍足（移動速度-50%）にする。"
+    },
+    {
+      "key": "You may block an additional attack per round per shield.",
+      "context": "TMP.Description",
+      "text": "盾ごとに1ラウンドにもう1回追加でブロックできる。"
+    },
+    {
+      "key": "You may build items from high-tier schematics and you get 1 free schematic.",
+      "context": "TMP.Description",
+      "text": "上位設計図のアイテムを製作でき、無料の設計図を1つ得る。"
+    },
+    {
+      "key": "You may build items from low-tier schematics and you get 1 free schematic. You can also recharge energy cells and capacitors.",
+      "context": "TMP.Description",
+      "text": "下位設計図のアイテムを製作でき、無料の設計図を1つ得る。エナジーセルやコンデンサを充電できる。"
+    },
+    {
+      "key": "You may build items from medium-tier schematics and you get 1 free schematic.",
+      "context": "TMP.Description",
+      "text": "中位設計図のアイテムを製作でき、無料の設計図を1つ得る。"
+    },
+    {
+      "key": "You may choose not to make offhand attacks in exchange for mastery with a single weapon.",
+      "context": "TMP.Description",
+      "text": "副手攻撃を行わない代わりに、1本の武器を極める。"
+    },
+    {
+      "key": "You may deploy missile weapons as static turrets.",
+      "context": "TMP.Description",
+      "text": "飛び道具を固定タレットとして設置できる。"
+    },
+    {
+      "key": "You may ingest one additional tonic without it reacting adversely to the tonic you have already ingested.",
+      "context": "TMP.Description",
+      "text": "トニックを1本余計に重ね飲みしても反発しない。"
+    },
+    {
+      "key": "You may lay down grenades as mines or set them as bombs.",
+      "context": "TMP.Description",
+      "text": "手榴弾を地雷として設置するか、爆弾としてセットできる。"
+    },
+    {
+      "key": "You may repair broken items with Bits.",
+      "context": "TMP.Description",
+      "text": "ビットを使って壊れたアイテムを修理できる。"
+    },
+    {
+      "key": "You may sprint for an additional 10 turns.",
+      "context": "TMP.Description",
+      "text": "スプリント可能ラウンドがさらに10増える。"
+    },
+    {
+      "key": "You persuade an intelligent creature to join you.",
+      "context": "TMP.Description",
+      "text": "知性あるクリーチャーを説得し、仲間にする。"
+    },
+    {
+      "key": "You receive no accuracy penalties for firing pistols while running.",
+      "context": "TMP.Description",
+      "text": "走りながらの拳銃射撃で命中ペナルティを受けない。"
+    },
+    {
+      "key": "You receive no penalty to your DV while sprinting and can jump without interrupting your sprint.",
+      "context": "TMP.Description",
+      "text": "スプリント中にDVペナルティを受けず、跳躍してもスプリントが中断しない。"
+    },
+    {
+      "key": "You shoulder your weapons more effectively. Heavy weapons count for half their weight toward your encumbrance.",
+      "context": "TMP.Description",
+      "text": "重火器をより上手く担ぎ、重量は負荷換算で半分として扱われる。"
+    },
+    {
+      "key": "You spend a turn to draw a bead on a target and mark it. Whenever you fire at a marked target with a bow or rifle, your agility is treated as if it were 2 points higher for the purpose of determining your accuracy. You may only mark one target at a time. Targets get unmarked if you lose vision of them.",
+      "context": "TMP.Description",
+      "text": "1ターン使って目標をマーキングする。マーク中の目標への弓・ライフルの命中判定では敏捷が+2として扱われる。同時にマークできるのは1体のみ。視界を失うとマークは消える。"
+    },
+    {
+      "key": "You stare down a nearby opponent and send them fleeing in terror.",
+      "context": "TMP.Description",
+      "text": "近くの敵を睨んで恐怖させ、逃走に追い込む。"
+    },
+    {
+      "key": "You suffer no movement penalty while wielding a heavy weapon.",
+      "context": "TMP.Description",
+      "text": "重火器を構えていても移動ペナルティを受けない。"
+    },
+    {
+      "key": "You take 15% less damage from heating and cooling effects. Additionally, the severities of effects that change your temperature are reduced by 15%.",
+      "context": "TMP.Description",
+      "text": "熱量・冷却によるダメージを15%軽減し、温度変化の効果強度も15%低下する。"
+    },
+    {
+      "key": "You take 25% less damage from poison.",
+      "context": "TMP.Description",
+      "text": "毒によるダメージを25%軽減する。"
+    },
+    {
+      "key": "Your DV bonus in defensive stance is increased to +3.",
+      "context": "TMP.Description",
+      "text": "守勢の構えのDVボーナスが+3になる。"
+    },
+    {
+      "key": "Your chance to block with a shield improves to 75%.",
+      "context": "TMP.Description",
+      "text": "盾によるブロック確率が75%になる。"
+    },
+    {
+      "key": "Your chance to strike with each of your offhand weapons is increased by 20%.",
+      "context": "TMP.Description",
+      "text": "各副手攻撃の発生率が+20%。"
+    },
+    {
+      "key": "Your chance to strike with each of your offhand weapons is increased by 35%.",
+      "context": "TMP.Description",
+      "text": "各副手攻撃の発生率が+35%。"
+    },
+    {
+      "key": "Your chance to strike with each of your offhand weapons is increased by 50%.",
+      "context": "TMP.Description",
+      "text": "各副手攻撃の発生率が+50%。"
+    },
+    {
+      "key": "Your natural AV improves to 1.",
+      "context": "TMP.Description",
+      "text": "素のAVが1になる。"
+    },
+    {
+      "key": "Your penetration bonus in aggressive stance is increased to +2, but your to-hit penalty is increased to -3.",
+      "context": "TMP.Description",
+      "text": "攻勢の構えで貫通ボーナスが+2になるが、命中ペナルティは-3になる。"
+    },
+    {
+      "key": "Your precognitive visions last twice as long.",
+      "context": "TMP.Description",
+      "text": "予知視が2倍のラウンド持続する。"
+    },
+    {
+      "key": "Your short blade attacks that penetrate have a 75% chance to cause your opponent to bleed (0-1 damage per turn. toughness save; difficulty 20 + your Agi modifier). The opponent saves to stop bleeding each round, and the save difficulty decreases by 1 each round. This effect can stack a number of times equal to 1 plus your Agi modifier.",
+      "context": "TMP.Description",
+      "text": "短剣攻撃が貫通したとき75%で相手に出血を与える（0–1ダメ/ターン、頑健セーヴ難易度20+敏捷修正）。毎ラウンドセーヴで止血を試み、難易度は-1ずつ低下。この効果は1+敏捷修正の回数まで累積する。"
+    },
+    {
+      "key": "Your throw range is increased by 3 and your throw variance is halved when throwing at a target inside your throw range.",
+      "context": "TMP.Description",
+      "text": "投擲距離が+3され、投擲射程内への投擲ではばらつきが半減する。"
+    },
+    {
+      "key": "Your to-hit bonus in dueling stance is increased to +3.",
+      "context": "TMP.Description",
+      "text": "決闘の構えの命中ボーナスが+3になる。"
+    },
+    {
+      "key": "Your words embolden your companions.",
+      "context": "TMP.Description",
+      "text": "あなたの言葉が仲間を奮い立たせる。"
+    },
+    {
+      "key": "[Learned]",
+      "context": "TMP.Text",
+      "text": "[習得済み]"
+    },
+    {
+      "key": "[Unlearned]",
+      "context": "TMP.Text",
+      "text": "[未習得]"
+    },
+    {
+      "key": "remaining",
+      "context": "XRL.UI.SkillsAndPowersScreen",
+      "text": "残り"
+    },
+    {
+      "key": "{{G|:Axe Proficiency}}",
+      "context": "TMP.Text",
+      "text": "{{G|:斧の習熟}}"
+    },
+    {
+      "key": "{{G|:Shake It Off}}",
+      "context": "TMP.Text",
+      "text": "{{G|:振り払う}}"
+    },
+    {
+      "key": "{{c|?}} +200 reputation with bears",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 熊との評判 +200"
+    },
+    {
+      "key": "{{c|?}} +200 reputation with the Barathrumites",
+      "context": "TMP.Description",
+      "text": "{{c|?}} バラサラム派との評判 +200"
+    },
+    {
+      "key": "{{c|?}} +3 Willpower",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 意志力 +3"
+    },
+    {
+      "key": "{{c|?}} +400 reputation with mysterious strangers",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 謎のよそ者との評判 +400"
+    },
+    {
+      "key": "{{c|?}} +400 reputation with the Issachari tribe",
+      "context": "TMP.Description",
+      "text": "{{c|?}} イシャーリ族との評判 +400"
+    },
+    {
+      "key": "{{c|?}} +400 reputation with water barons",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 水商人との評判 +400"
+    },
+    {
+      "key": "{{c|?}} +600 reputation with the Fellowship of Wardens",
+      "context": "TMP.Description",
+      "text": "{{c|?}} ウォーデン連盟との評判 +600"
+    },
+    {
+      "key": "{{c|?}} -1 Strength",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 筋力 -1"
+    },
+    {
+      "key": "{{c|?}} Allowed entrance to many settlements for purposes of trade",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 多くの集落に交易目的で入場が許可される"
+    },
+    {
+      "key": "{{c|?}} Begins with a number of random artifacts and scrap",
+      "context": "TMP.Description",
+      "text": "{{c|?}} ランダムなアーティファクトとスクラップを所持して開始"
+    },
+    {
+      "key": "{{c|?}} Berate",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 罵倒"
+    },
+    {
+      "key": "{{c|?}} Butchery",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 解体術"
+    },
+    {
+      "key": "{{c|?}} Calloused",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 硬皮化"
+    },
+    {
+      "key": "{{c|?}} Carbide Chef",
+      "context": "TMP.Description",
+      "text": "{{c|?}} カーバイドシェフ"
+    },
+    {
+      "key": "{{c|?}} Charge",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 突進"
+    },
+    {
+      "key": "{{c|?}} Cooking and Gathering",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 料理と採集"
+    },
+    {
+      "key": "{{c|?}} Cudgel",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 棍棒"
+    },
+    {
+      "key": "{{c|?}} Harvestry",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 収穫術"
+    },
+    {
+      "key": "{{c|?}} Intimidate",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 威圧"
+    },
+    {
+      "key": "{{c|?}} Meal Preparation",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 食事準備"
+    },
+    {
+      "key": "{{c|?}} Physic",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 治療"
+    },
+    {
+      "key": "{{c|?}} Proselytize",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 改宗"
+    },
+    {
+      "key": "{{c|?}} Snake Oiler",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 蛇油売り"
+    },
+    {
+      "key": "{{c|?}} Spicer",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 香辛師"
+    },
+    {
+      "key": "{{c|?}} Starts with a {{B|recycling suit}}",
+      "context": "TMP.Description",
+      "text": "{{c|?}} リサイクルスーツを所持して開始"
+    },
+    {
+      "key": "{{c|?}} Tactics",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 戦術"
+    },
+    {
+      "key": "{{c|?}} Weathered",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 風雨に耐えた"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Canyons",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: 渓谷"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Flower Fields",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: 花畑"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Hills and Mountains",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: 丘と山岳"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Jungles",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: ジャングル"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Marshes",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: 沼地"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Random",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: ランダム"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Rivers and Lakes",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: 河川と湖"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Ruins",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: 遺跡"
+    },
+    {
+      "key": "{{c|?}} Wilderness Lore: Salt Dunes",
+      "context": "TMP.Description",
+      "text": "{{c|?}} 荒野の伝承: 塩砂丘"
+    },
+    {
+      "key": "{{c|ù}} +15 heat resistance",
+      "context": "TMP.Description",
+      "text": "{{c|ù}} 熱耐性 +15"
+    },
+    {
+      "key": "{{c|ù}} Endurance",
+      "context": "TMP.Description",
+      "text": "{{c|ù}} 耐久"
+    }
+  ]
+}

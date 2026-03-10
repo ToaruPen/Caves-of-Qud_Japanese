@@ -1,0 +1,1537 @@
+{
+    "meta": {
+        "id": "world-effects-cooking",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true
+    },
+    "entries": [
+        {
+            "key": "+10% hit points",
+            "context": "XRL.World.Effects.BasicCookingEffect_Hitpoints.GetDetails",
+            "text": "HP+10%"
+        },
+        {
+            "key": "+1 MA",
+            "context": "XRL.World.Effects.BasicCookingEffect_MA.GetDetails",
+            "text": "MA+1"
+        },
+        {
+            "key": "+6% Move Speed",
+            "context": "XRL.World.Effects.BasicCookingEffect_MS.GetDetails",
+            "text": "移動速度+6%"
+        },
+        {
+            "key": "+3% Quickness",
+            "context": "XRL.World.Effects.BasicCookingEffect_Quickness.GetDetails",
+            "text": "クイックネス+3%"
+        },
+        {
+            "key": "+10% to natural healing rate",
+            "context": "XRL.World.Effects.BasicCookingEffect_Regeneration.GetDetails",
+            "text": "自然治癒速度+10%"
+        },
+        {
+            "key": "+1 to hit",
+            "context": "XRL.World.Effects.BasicCookingEffect_ToHit.GetDetails",
+            "text": "命中+1"
+        },
+        {
+            "key": "+5% XP gained",
+            "context": "XRL.World.Effects.BasicCookingEffect_XP.GetDetails",
+            "text": "獲得XP+5%"
+        },
+        {
+            "key": "{{w|metabolized effect}}",
+            "context": "XRL.World.Effects.BasicTriggeredCookingEffect.GetDescription",
+            "text": "{{w|代謝中の効果}}"
+        },
+        {
+            "key": "+10-15 Acid Resistance",
+            "context": "XRL.World.Effects.CookingDomainAcid_UnitResist.GetTemplatedDescription",
+            "text": "酸耐性+10～15"
+        },
+        {
+            "key": "@they gain@s +8 Agility for 50 turns.",
+            "context": "XRL.World.Effects.CookingDomainAgility_LargeAgilityBuff_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50ターンのあいだ敏捷+8を得る。"
+        },
+        {
+            "key": "@they assume a limber pose.",
+            "context": "XRL.World.Effects.CookingDomainAgility_LargeAgilityBuff_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they はしなやかな構えをとる。"
+        },
+        {
+            "key": "whenever @thisCreature perform@s a critical hit,",
+            "context": "XRL.World.Effects.CookingDomainAgility_OnPerformCriticalHit.GetTriggerDescription",
+            "text": "@thisCreature がクリティカルヒットを与えるたび、"
+        },
+        {
+            "key": "whenever @thisCreature perform@s a critical hit,",
+            "context": "XRL.World.Effects.CookingDomainAgility_OnPerformCriticalHit.GetTemplatedTriggerDescription",
+            "text": "@thisCreature がクリティカルヒットを与えるたび、"
+        },
+        {
+            "key": "@they shank @their opponent.",
+            "context": "XRL.World.Effects.CookingDomainAgility_Shank_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は@their 敵を短剣で刺す。"
+        },
+        {
+            "key": "@they perform@s an act of nimble violence.",
+            "context": "XRL.World.Effects.CookingDomainAgility_Shank_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は素早い暴力を振るう。"
+        },
+        {
+            "key": "+4 Agility",
+            "context": "XRL.World.Effects.CookingDomainAgility_UnitAgility.GetTemplatedDescription",
+            "text": "敏捷+4"
+        },
+        {
+            "key": "@they gain@s +6 AV for 50 turns.",
+            "context": "XRL.World.Effects.CookingDomainArmor_LargeAVBuff_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50ターンのあいだAV+6を得る。"
+        },
+        {
+            "key": "@they stiffen@s.",
+            "context": "XRL.World.Effects.CookingDomainArmor_LargeAVBuff_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は身構える。"
+        },
+        {
+            "key": "whenever @thisCreature suffer@s a 2X or greater physical penetration,",
+            "context": "XRL.World.Effects.CookingDomainArmor_OnPenetration.GetTriggerDescription",
+            "text": "@thisCreature が2X以上の物理貫通を受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature suffer@s a 2X or greater physical penetration,",
+            "context": "XRL.World.Effects.CookingDomainArmor_OnPenetration.GetTemplatedTriggerDescription",
+            "text": "@thisCreature が2X以上の物理貫通を受けるたび、"
+        },
+        {
+            "key": "+2 AV",
+            "context": "XRL.World.Effects.CookingDomainArmor_UnitAV.GetTemplatedDescription",
+            "text": "AV+2"
+        },
+        {
+            "key": "@they identify all artifacts on the local map.",
+            "context": "XRL.World.Effects.CookingDomainArtifact_IdentifyAllInZone_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は現在マップ上のアーティファクトをすべて鑑定する。"
+        },
+        {
+            "key": "whenever @thisCreature identify an artifact,",
+            "context": "XRL.World.Effects.CookingDomainArtifact_OnIdentify.GetTriggerDescription",
+            "text": "@thisCreature がアーティファクトを鑑定するたび、"
+        },
+        {
+            "key": "Nothing happened.",
+            "context": "XRL.World.Effects.CookingDomainAttributes_UnitPermanentAllStats_25Percent.GetDescription",
+            "text": "何も起きなかった。"
+        },
+        {
+            "key": "25% chance to gain +1 Strength, Agility, Toughness, Intelligence, Willpower, and Ego permanently.",
+            "context": "XRL.World.Effects.CookingDomainAttributes_UnitPermanentAllStats_25Percent.GetTemplatedDescription",
+            "text": "25%の確率で筋力・敏捷・頑健・知力・意志力・エゴが恒久的に+1される。"
+        },
+        {
+            "key": "Causes @thisCreature to multiply 1 to 3 times.",
+            "context": "XRL.World.Effects.CookingDomainCloning_UnitMultipleClones.GetDescription",
+            "text": "@thisCreature が1～3体に分裂する。"
+        },
+        {
+            "key": "@they gain 40-50 Cold Resist for 6 hours.",
+            "context": "XRL.World.Effects.CookingDomainCold_ColdResist_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は6時間のあいだ冷気耐性+40～50を得る。"
+        },
+        {
+            "key": "@they become fortified against the cold.",
+            "context": "XRL.World.Effects.CookingDomainCold_ColdResist_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は寒さへの備えを固める。"
+        },
+        {
+            "key": "@they freeze an area per Cryokinesis at level 5-6.",
+            "context": "XRL.World.Effects.CookingDomainCold_CryokinesisCharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は冷気操作レベル5～6に応じて一帯を凍らせる。"
+        },
+        {
+            "key": "@they freeze an area with cryokinesis.",
+            "context": "XRL.World.Effects.CookingDomainCold_CryokinesisCharge_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は冷気操作で一帯を凍らせる。"
+        },
+        {
+            "key": "@they emit a ray of frost per Freezing Hands at level 5-6.",
+            "context": "XRL.World.Effects.CookingDomainCold_FreezingHandsCharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は凍結の手レベル5～6に応じた冷気の線を放つ。"
+        },
+        {
+            "key": "@they emit a powerful ray of frost.",
+            "context": "XRL.World.Effects.CookingDomainCold_FreezingHandsCharge_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は強力な冷気の線を放つ。"
+        },
+        {
+            "key": "@they gain 125-175 cold resist for 50 turns.",
+            "context": "XRL.World.Effects.CookingDomainCold_LargeColdResist_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50ターンのあいだ冷気耐性+125～175を得る。"
+        },
+        {
+            "key": "@they become impervious to cold.",
+            "context": "XRL.World.Effects.CookingDomainCold_LargeColdResist_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は冷気を物ともしなくなる。"
+        },
+        {
+            "key": "whenever @thisCreature deal@s cold damage, there's a 25% chance",
+            "context": "XRL.World.Effects.CookingDomainCold_OnDealingColdDamage.GetTriggerDescription",
+            "text": "@thisCreature が冷気ダメージを与えるたび、25%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature @is slowed by cold,",
+            "context": "XRL.World.Effects.CookingDomainCold_OnSlowedByCold.GetTriggerDescription",
+            "text": "@thisCreature が冷気で減速するたび、"
+        },
+        {
+            "key": "+10-15 Cold Resistance",
+            "context": "XRL.World.Effects.CookingDomainCold_UnitResist.GetTemplatedDescription",
+            "text": "冷気耐性+10～15"
+        },
+        {
+            "key": "+4 DV",
+            "context": "XRL.World.Effects.CookingDomainDarkness_UnitDV.GetTemplatedDescription",
+            "text": "DV+4"
+        },
+        {
+            "key": "{{R|CRITICAL GRAVITATIONAL COLLAPSE}}",
+            "context": "XRL.World.Effects.CookingDomainDensity_UnitPermanentAV.GetDescription",
+            "text": "{{R|重大な重力崩壊}}"
+        },
+        {
+            "key": "+1 AV permanently. Small chance of gravitational collapse.",
+            "context": "XRL.World.Effects.CookingDomainDensity_UnitPermanentAV.GetTemplatedDescription",
+            "text": "AVが恒久的に+1される。まれに重力崩壊が起こる。"
+        },
+        {
+            "key": "As long as your body isn't your own, you gain +",
+            "context": "XRL.World.Effects.CookingDomainDissociation_UnitOtherBodyBonus.GetDescription",
+            "text": "自身の身体でないあいだ、次を得る：+"
+        },
+        {
+            "key": "As long as your body isn't your own, you gain +40-70 Quickness.",
+            "context": "XRL.World.Effects.CookingDomainDissociation_UnitOtherBodyBonus.GetTemplatedDescription",
+            "text": "自身の身体でないあいだ、クイックネス+40～70。"
+        },
+        {
+            "key": "@they release an electrical discharge per Electrical Generation at level ",
+            "context": "XRL.World.Effects.CookingDomainElectric_Discharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は電気生成に応じた放電を行う。"
+        },
+        {
+            "key": "@they release an electrical discharge per Electrical Generation at level 5-6.",
+            "context": "XRL.World.Effects.CookingDomainElectric_Discharge_ProceduralCookingTriggeredAction.GetTemplatedDescription",
+            "text": "@they は電気生成レベル5～6に応じた放電を行う。"
+        },
+        {
+            "key": "@they release a powerful electrical discharge.",
+            "context": "XRL.World.Effects.CookingDomainElectric_Discharge_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は強力な放電を行う。"
+        },
+        {
+            "key": "@they release an electromagnetic pulse at level ",
+            "context": "XRL.World.Effects.CookingDomainElectric_EMP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は電磁パルスを放つ。"
+        },
+        {
+            "key": "@they release an electromagnetic pulse at level 8-9.",
+            "context": "XRL.World.Effects.CookingDomainElectric_EMP_ProceduralCookingTriggeredAction.GetTemplatedDescription",
+            "text": "@they はレベル8～9の電磁パルスを放つ。"
+        },
+        {
+            "key": "@they release a powerful electromagnetic pulse.",
+            "context": "XRL.World.Effects.CookingDomainElectric_EMP_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は強力な電磁パルスを放つ。"
+        },
+        {
+            "key": "+50-75 Electric Resist",
+            "context": "XRL.World.Effects.CookingDomainElectric_ExtraResistUnit.GetTemplatedDescription",
+            "text": "電気耐性+50～75"
+        },
+        {
+            "key": "@they gain 125-175 Electric Resist for 50 turns.",
+            "context": "XRL.World.Effects.CookingDomainElectric_LargeElectricResist_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50ターンのあいだ電気耐性+125～175を得る。"
+        },
+        {
+            "key": "@they become impervious to electrical damage.",
+            "context": "XRL.World.Effects.CookingDomainElectric_LargeElectricResist_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は電撃を物ともしなくなる。"
+        },
+        {
+            "key": "whenever @thisCreature deal@s electric damage, there's a 25% chance",
+            "context": "XRL.World.Effects.CookingDomainElectric_OnDealingElectricDamage.GetTriggerDescription",
+            "text": "@thisCreature が電撃ダメージを与えるたび、25%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s electric damage, there's a 50% chance",
+            "context": "XRL.World.Effects.CookingDomainElectric_OnElectricDamaged.GetTriggerDescription",
+            "text": "@thisCreature が電撃ダメージを受けるたび、50%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s electric damage, there's a 50% chance",
+            "context": "XRL.World.Effects.CookingDomainElectric_OnElectricDamaged.GetTemplatedTriggerDescription",
+            "text": "@thisCreature が電撃ダメージを受けるたび、50%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature deal@s fire damage, there's a 10% chance",
+            "context": "XRL.World.Effects.CookingDomainHeat_OnDealingHeatDamage.GetTriggerDescription",
+            "text": "@thisCreature が火炎ダメージを与えるたび、10%の確率で"
+        },
+        {
+            "key": "@they gain 40-50 Heat Resist for 6 hours.",
+            "context": "XRL.World.Effects.CookingDomainHeat_HeatResist_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は6時間のあいだ熱耐性+40～50を得る。"
+        },
+        {
+            "key": "@they become fortified against the heat.",
+            "context": "XRL.World.Effects.CookingDomainHeat_HeatResist_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は暑さへの備えを固める。"
+        },
+        {
+            "key": "@they gain 125-175 Heat Resist for 50 turns.",
+            "context": "XRL.World.Effects.CookingDomainHeat_LargeHeatResist_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50ターンのあいだ熱耐性+125～175を得る。"
+        },
+        {
+            "key": "@they become impervious to the heat.",
+            "context": "XRL.World.Effects.CookingDomainHeat_LargeHeatResist_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は熱を物ともしなくなる。"
+        },
+        {
+            "key": "@they emit a ray of flame per Flaming Hands at level 5-6.",
+            "context": "XRL.World.Effects.CookingDomainHeat_FlamingHandsCharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は火炎の手レベル5～6に応じた炎の線を放つ。"
+        },
+        {
+            "key": "@they emit a powerful ray of flame.",
+            "context": "XRL.World.Effects.CookingDomainHeat_FlamingHandsCharge_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は強力な炎の線を放つ。"
+        },
+        {
+            "key": "@they toast an area per Pyrokinesis at level 5-6.",
+            "context": "XRL.World.Effects.CookingDomainHeat_PyrokinesisCharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は火炎操作レベル5～6に応じて一帯を焼く。"
+        },
+        {
+            "key": "@they toast an area with pyrokinesis.",
+            "context": "XRL.World.Effects.CookingDomainHeat_PyrokinesisCharge_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は火炎操作で一帯を焼く。"
+        },
+        {
+            "key": "whenever @thisCreature @is set on fire,",
+            "context": "XRL.World.Effects.CookingDomainHeat_OnEnflamed.GetTriggerDescription",
+            "text": "@thisCreature が炎上するたび、"
+        },
+        {
+            "key": "+10-15 Heat Resistance",
+            "context": "XRL.World.Effects.CookingDomainHeat_UnitResist.GetTemplatedDescription",
+            "text": "熱耐性+10～15"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 8-10% chance",
+            "context": "XRL.World.Effects.CookingDomainHP_OnDamaged.GetTemplatedTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、8～10%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 12-15% chance",
+            "context": "XRL.World.Effects.CookingDomainHP_OnDamagedMidTier.GetTemplatedTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、12～15%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 15-20% chance @they start phasing for 8-10 turns.",
+            "context": "XRL.World.Effects.CookingDomainPhase_UnitPhaseOnDamage.GetTemplatedDescription",
+            "text": "@thisCreature がダメージを受けるたび、15～20%の確率で@they は8～10ターンのあいだフェイズアウトする。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 30-40% chance",
+            "context": "XRL.World.Effects.CookingDomainRegenHightier_OnDamaged.GetTemplatedTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、30～40%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature reflect@s damage, there's a 50% chance",
+            "context": "XRL.World.Effects.CookingDomainReflect_OnReflectedDamage.GetTriggerDescription",
+            "text": "@thisCreature がダメージを反射するたび、50%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature reflect@s damage, there's a 100% chance",
+            "context": "XRL.World.Effects.CookingDomainReflect_OnReflectedDamageHighTier.GetTriggerDescription",
+            "text": "@thisCreature がダメージを反射するたび、100%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 8-10% chance",
+            "context": "XRL.World.Effects.CookingDomainReflect_OnDamaged.GetTemplatedTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、8～10%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 16-20% chance",
+            "context": "XRL.World.Effects.CookingDomainReflect_OnDamagedHighTier.GetTemplatedTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、16～20%の確率で"
+        },
+        {
+            "key": "Reflect 3-4% damage back at @their attackers, rounded up.",
+            "context": "XRL.World.Effects.CookingDomainReflect_UnitReflectDamage.GetTemplatedDescription",
+            "text": "受けたダメージの3～4%を切り上げて@their 攻撃者に反射する。"
+        },
+        {
+            "key": "Reflect 15-18% damage back at @their attackers, rounded up.",
+            "context": "XRL.World.Effects.CookingDomainReflect_UnitReflectDamageHighTier.GetTemplatedDescription",
+            "text": "受けたダメージの15～18%を切り上げて@their 攻撃者に反射する。"
+        },
+        {
+            "key": "@they expel quills per the Quills mutation at level 8-9.",
+            "context": "XRL.World.Effects.CookingDomainReflect_QuillBurst_ProceduralCookingTriggeredAction.GetTemplatedDescription",
+            "text": "@they は棘の変異レベル8～9に応じて棘を放つ。"
+        },
+        {
+            "key": "@they expel a blast of quills.",
+            "context": "XRL.World.Effects.CookingDomainReflect_QuillBurst_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は棘を一斉に放つ。"
+        },
+        {
+            "key": "@they reflect 100% damage the next time @they take damage within 50 turns.",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50ターン以内に次に受けるダメージを100%反射する。"
+        },
+        {
+            "key": "@they grow tiny spines all over your body.",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they の身体じゅうに細かな棘が生える。"
+        },
+        {
+            "key": "@they reflect 100% damage the next 3 times @they take damage within 50 turns.",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100HighTier_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50ターン以内に次の3回受けるダメージを100%反射する。"
+        },
+        {
+            "key": "@they grow spines all over your body.",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100HighTier_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they の身体じゅうに棘が生える。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a 8-10% chance",
+            "context": "XRL.World.Effects.CookingDomainRegenLowtier_OnDamaged.GetTemplatedTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、8～10%の確率で"
+        },
+        {
+            "key": "Falling damage @thisCreature take@s is reduced by 90%.",
+            "context": "XRL.World.Effects.CookingDomainRubber_ExtraReducedFallDamage.GetTemplatedDescription",
+            "text": "@thisCreature が受ける落下ダメージが90%軽減される。"
+        },
+        {
+            "key": "Falling damage @thisCreature take@s is reduced by 50%.",
+            "context": "XRL.World.Effects.CookingDomainRubber_ReducedFallDamage.GetTemplatedDescription",
+            "text": "@thisCreature が受ける落下ダメージが50%軽減される。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage from a plant,",
+            "context": "XRL.World.Effects.CookingDomainPlant_OnDamageByPlant.GetTriggerDescription",
+            "text": "@thisCreature が植物からダメージを受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage from a plant,",
+            "context": "XRL.World.Effects.CookingDomainPlant_OnDamageByPlant.GetTemplatedTriggerDescription",
+            "text": "@thisCreature が植物からダメージを受けるたび、"
+        },
+        {
+            "key": "@they heal to full 15% of the time.",
+            "context": "XRL.World.Effects.CookingDomainHP_HealToFull_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は15%の確率で完全回復する。"
+        },
+        {
+            "key": "@they heal to full.",
+            "context": "XRL.World.Effects.CookingDomainHP_HealToFull_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は完全回復する。"
+        },
+        {
+            "key": "@they get +30-40% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetTemplatedDescription",
+            "text": "@they は1時間のあいだ最大HP+30～40%を得る。"
+        },
+        {
+            "key": "@they become heartier.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は体が頑丈になる。"
+        },
+        {
+            "key": "whenever @thisCreature drop@s below 20% HP,",
+            "context": "XRL.World.Effects.CookingDomainHP_OnLowHealth.GetTriggerDescription",
+            "text": "@thisCreature のHPが20%未満になるたび、"
+        },
+        {
+            "key": "whenever @thisCreature drop@s below 30% HP,",
+            "context": "XRL.World.Effects.CookingDomainHP_OnLowHealthMidTier.GetTriggerDescription",
+            "text": "@thisCreature のHPが30%未満になるたび、"
+        },
+        {
+            "key": "@they beguile a creature as per Beguiling at rank 7-8 for the duration of this effect.",
+            "context": "XRL.World.Effects.CookingDomainLove_BeguilingCharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they はこの効果のあいだ、魅了ランク7～8相当で生物を魅了する。"
+        },
+        {
+            "key": "@they feel the swell of love inside.",
+            "context": "XRL.World.Effects.CookingDomainLove_BeguilingCharge_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は胸に愛が満ちるのを感じる。"
+        },
+        {
+            "key": "whenever @thisCreature gain@s a new follower,",
+            "context": "XRL.World.Effects.CookingDomainLove_OnGainFollower.GetTriggerDescription",
+            "text": "@thisCreature が新しい従者を得るたび、"
+        },
+        {
+            "key": "@they heal 15-20 HP.",
+            "context": "XRL.World.Effects.CookingDomainLowtierRegen_HealToFull_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は15～20HP回復する。"
+        },
+        {
+            "key": "@their wounds heal a bit.",
+            "context": "XRL.World.Effects.CookingDomainLowtierRegen_HealToFull_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they の傷が少し癒える。"
+        },
+        {
+            "key": "one of @their minor negative status effects is removed at random.",
+            "context": "XRL.World.Effects.CookingDomainLowtierRegen_RemoveDebuff_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they の軽微な悪性ステータス効果がランダムで1つ解除される。"
+        },
+        {
+            "key": "@they feel less afflicted.",
+            "context": "XRL.World.Effects.CookingDomainLowtierRegen_RemoveDebuff_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は不調が和らぐのを感じる。"
+        },
+        {
+            "key": "@they stop bleeding.",
+            "context": "XRL.World.Effects.CookingDomainLowtierRegen_StopBleeding_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they の出血が止まる。"
+        },
+        {
+            "key": "whenever @thisCreature use@s a salve or ubernostrum injector,",
+            "context": "XRL.World.Effects.CookingDomainRegenLowtier_OnSalve.GetTriggerDescription",
+            "text": "@thisCreature がサルヴまたはウベルノストラム注射器を使用するたび、"
+        },
+        {
+            "key": "+10-15% to natural healing rate",
+            "context": "XRL.World.Effects.CookingDomainRegenLowtier_RegenerationUnit.GetTemplatedDescription",
+            "text": "自然治癒速度+10～15%"
+        },
+        {
+            "key": "+100% to natural healing rate",
+            "context": "XRL.World.Effects.CookingDomainRegenHightier_RegenerationUnit.GetTemplatedDescription",
+            "text": "自然治癒速度+100%"
+        },
+        {
+            "key": "+8-12 to saves vs. bleeding",
+            "context": "XRL.World.Effects.CookingDomainRegenLowtier_BleedResistUnit.GetTemplatedDescription",
+            "text": "出血に対するセーヴ+8～12"
+        },
+        {
+            "key": "@they become@s immune to fear for 6 hours.",
+            "context": "XRL.World.Effects.CookingDomainFear_FearImmunity_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は6時間のあいだ恐怖無効になる。"
+        },
+        {
+            "key": "@they become@s immune to fear.",
+            "context": "XRL.World.Effects.CookingDomainFear_FearImmunity_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は恐怖を受け付けなくなる。"
+        },
+        {
+            "key": "Immune to fear.",
+            "context": "XRL.World.Effects.CookingDomainFear_FearImmunity_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "恐怖無効。"
+        },
+        {
+            "key": "@they intimidate@s creatures around @them.",
+            "context": "XRL.World.Effects.CookingDomainFear_Intimidate_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は周囲の生物を威圧する。"
+        },
+        {
+            "key": "@they intimidate@s everyone around @them.",
+            "context": "XRL.World.Effects.CookingDomainFear_Intimidate_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は周囲の者すべてを威圧する。"
+        },
+        {
+            "key": "whenever @thisCreature eat@s a dreadroot tuber or lah petal,",
+            "context": "XRL.World.Effects.CookingDomainFear_OnEatLah.GetTriggerDescription",
+            "text": "@thisCreature がドレッドルートの塊茎かラーの花弁を食べるたび、"
+        },
+        {
+            "key": "whenever @thisCreature become@s afraid,",
+            "context": "XRL.World.Effects.CookingDomainFear_OnFeared.GetTriggerDescription",
+            "text": "@thisCreature が恐怖状態になるたび、"
+        },
+        {
+            "key": "+2 MA",
+            "context": "XRL.World.Effects.CookingDomainFear_UnitBonusMA.GetTemplatedDescription",
+            "text": "MA+2"
+        },
+        {
+            "key": "Can use Intimidate.",
+            "context": "XRL.World.Effects.CookingDomainFear_UnitIntimidate.GetTemplatedDescription",
+            "text": "〈威圧〉を使用できる。"
+        },
+        {
+            "key": "+300 reputation with fungi",
+            "context": "XRL.World.Effects.CookingDomainFungus_FungusReputationUnit.GetDescription",
+            "text": "菌類との評判+300"
+        },
+        {
+            "key": "75% chance that itchy skin doesn't develop into a fungal infection",
+            "context": "XRL.World.Effects.CookingDomainFungus_FungusResistUnit.GetDescription",
+            "text": "かゆみから真菌感染に進行しない確率が75%"
+        },
+        {
+            "key": "whenever @thisCreature eat@s a mushroom,",
+            "context": "XRL.World.Effects.CookingDomainFungus_OnEatFungus.GetTriggerDescription",
+            "text": "@thisCreature がキノコを食べるたび、"
+        },
+        {
+            "key": "whenever @thisCreature get@s itchy skin,",
+            "context": "XRL.World.Effects.CookingDomainFungus_OnItchy.GetTriggerDescription",
+            "text": "@thisCreature が皮膚のかゆみを発症するたび、"
+        },
+        {
+            "key": "@they are immune to fungal spores for 6 hours.",
+            "context": "XRL.World.Effects.CookingDomainFungus_SporeImmunity_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は6時間のあいだ胞子を無効化する。"
+        },
+        {
+            "key": "@they become impervious to fungal spores.",
+            "context": "XRL.World.Effects.CookingDomainFungus_SporeImmunity_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は胞子をまったく通さなくなる。"
+        },
+        {
+            "key": "Immune to fungal spores.",
+            "context": "XRL.World.Effects.CookingDomainFungus_SporeImmunity_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "胞子無効。"
+        },
+        {
+            "key": "@they gain 40-50 Electric Resist for 6 hours.",
+            "context": "XRL.World.Effects.CookingDomainElectric_SmallElectricResist_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は6時間のあいだ電気耐性+40～50を得る。"
+        },
+        {
+            "key": "@they become fortified against electrical damage.",
+            "context": "XRL.World.Effects.CookingDomainElectric_SmallElectricResist_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は電撃への備えを固める。"
+        },
+        {
+            "key": "+10-15 Electric Resist",
+            "context": "XRL.World.Effects.CookingDomainElectric_ResistUnit.GetTemplatedDescription",
+            "text": "電気耐性+10～15"
+        },
+        {
+            "key": "Can use Electromagnetic Pulse at level 2-3. If @they already have Electromagnetic Pulse, it's enhanced by 3-4 levels.",
+            "context": "XRL.World.Effects.CookingDomainElectric_EMPUnit.GetTemplatedDescription",
+            "text": "〈電磁パルス〉をレベル2～3で使用できる。既に持つ場合、さらにレベル3～4強化される。"
+        },
+        {
+            "key": "+10-15% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_UnitHP.GetTemplatedDescription",
+            "text": "最大HP+10～15%"
+        },
+        {
+            "key": "{{w|+8 Agility for 50 turns}}",
+            "context": "XRL.World.Effects.CookingDomainAgility_LargeAgilityBuff_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|50ターンのあいだ敏捷+8}}"
+        },
+        {
+            "key": "{{w|+6 AV for 50 turns}}",
+            "context": "XRL.World.Effects.CookingDomainArmor_LargeAVBuff_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|50ターンのあいだAV+6}}"
+        },
+        {
+            "key": "{{w|+40-50 Cold Resistance for 300 turns}}",
+            "context": "XRL.World.Effects.CookingDomainCold_ColdResist_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|300ターンのあいだ冷気耐性+40～50}}"
+        },
+        {
+            "key": "{{w|+125-175 Cold Resistance for 50 turns}}",
+            "context": "XRL.World.Effects.CookingDomainCold_LargeColdResist_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|50ターンのあいだ冷気耐性+125～175}}"
+        },
+        {
+            "key": "{{w|+125-175 Electric Resistance for 50 turns}}",
+            "context": "XRL.World.Effects.CookingDomainElectric_LargeElectricResist_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|50ターンのあいだ電気耐性+125～175}}"
+        },
+        {
+            "key": "{{w|+40-50 Electric Resistance for 300 turns}}",
+            "context": "XRL.World.Effects.CookingDomainElectric_SmallElectricResist_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|300ターンのあいだ電気耐性+40～50}}"
+        },
+        {
+            "key": "@thisCreature only get@s Ill for 1/10th the usual length of time.",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_IllResistUnit.GetDescription",
+            "text": "@thisCreature の体調不良の持続時間が通常の1/10になる。"
+        },
+        {
+            "key": "Can use Will Force at level 4-5. If @they already have Will Force, it's enhanced by 4-5 levels.",
+            "context": "XRL.World.Effects.CookingDomainEgo_UnitEgoProjection.GetTemplatedDescription",
+            "text": "〈意志の力〉をレベル4～5で使用できる。既に持つ場合、さらにレベル4～5強化される。"
+        },
+        {
+            "key": "Can use Burrowing Claws at level 5-6. If @they already have Burrowing Claws, it's enhanced by 3-4 levels.",
+            "context": "XRL.World.Effects.CookingDomainBurrowing_UnitBurrowingClaws.GetTemplatedDescription",
+            "text": "〈掘爪〉をレベル5～6で使用できる。既に持つ場合、さらにレベル3～4強化される。"
+        },
+        {
+            "key": "Can use Psychometry at level 1-2. If @they already have Psychometry, it's enhanced by 3-4 levels.",
+            "context": "XRL.World.Effects.CookingDomainArtifact_UnitPsychometry.GetTemplatedDescription",
+            "text": "〈サイコメトリー〉をレベル1～2で使用できる。既に持つ場合、さらにレベル3～4強化される。"
+        },
+        {
+            "key": "@they heal 40-50 HP.",
+            "context": "XRL.World.Effects.CookingDomainHightierRegen_Heal40to50_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は40～50HP回復する。"
+        },
+        {
+            "key": "@their wounds heal significantly.",
+            "context": "XRL.World.Effects.CookingDomainHightierRegen_Heal40to50_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they の傷が大きく癒える。"
+        },
+        {
+            "key": "one of @their major negative status effects is removed at random. If no major effects, then a minor effect is removed instead.",
+            "context": "XRL.World.Effects.CookingDomainHightierRegen_RemoveDebuff_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they の重大な悪性ステータス効果がランダムで1つ解除される。重大なものがなければ軽微な効果が代わりに解除される。"
+        },
+        {
+            "key": "+4 Ego",
+            "context": "XRL.World.Effects.CookingDomainLove_UnitEgo.GetTemplatedDescription",
+            "text": "エゴ+4"
+        },
+        {
+            "key": "@they can't acquire new diseases for 6 hours.",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_DiseaseImmunity_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は6時間のあいだ新たな病気にかからない。"
+        },
+        {
+            "key": "@they become impervious to disease.",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_DiseaseImmunity_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は病気を寄せ付けなくなる。"
+        },
+        {
+            "key": "Immune to disease onset.",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_DiseaseImmunity_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "発症を無効化。"
+        },
+        {
+            "key": "whenever @thisCreature drink@s honey,",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_OnDrinkHoney.GetTriggerDescription",
+            "text": "@thisCreature が蜂蜜を飲むたび、"
+        },
+        {
+            "key": "whenever @thisCreature eat@s an unfermented yuckwheat stem,",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_OnEatYuckwheat.GetTriggerDescription",
+            "text": "@thisCreature が未発酵のヤックウィートの茎を食べるたび、"
+        },
+        {
+            "key": "@they are cured of an incubating disease with a 25% chance.",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_RemoveDiseaseOnset_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は25%の確率で潜伏中の病気が治癒する。"
+        },
+        {
+            "key": "@they feel like you might be fighting off any ailments you have.",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_RemoveDiseaseOnset_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は抱えている病を追い払えそうに感じる。"
+        },
+        {
+            "key": "@they are cured of the Ill status effect.",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_RemoveIll_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は体調不良のステータスが治癒する。"
+        },
+        {
+            "key": "@they feel better.",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_RemoveIll_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は体調が良くなる。"
+        },
+        {
+            "key": "+3 to saves vs. disease",
+            "context": "XRL.World.Effects.CookingDomainMedicinal_DiseaseResistUnit.GetDescription",
+            "text": "病気に対するセーヴ+3"
+        },
+        {
+            "key": "{{w|+40-50 Heat Resistance for 300 turns}}",
+            "context": "XRL.World.Effects.CookingDomainHeat_HeatResist_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|300ターンのあいだ熱耐性+40～50}}"
+        },
+        {
+            "key": "{{w|+125-175 Heat Resistance for 50 turns}}",
+            "context": "XRL.World.Effects.CookingDomainHeat_LargeHeatResist_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|50ターンのあいだ熱耐性+125～175}}"
+        },
+        {
+            "key": "whenever @thisCreature phase@s in,",
+            "context": "XRL.World.Effects.CookingDomainPhase_OnPhaseIn.GetTriggerDescription",
+            "text": "@thisCreature が相から戻るたび、"
+        },
+        {
+            "key": "whenever @thisCreature phase@s out,",
+            "context": "XRL.World.Effects.CookingDomainPhase_OnPhaseOut.GetTriggerDescription",
+            "text": "@thisCreature が相から抜けるたび、"
+        },
+        {
+            "key": "@they can't be phased for 2 hours.",
+            "context": "XRL.World.Effects.CookingDomainPhase_NoPhase_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は2時間のあいだフェイズしなくなる。"
+        },
+        {
+            "key": "@they become phase-anchored.",
+            "context": "XRL.World.Effects.CookingDomainPhase_NoPhase_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は相位固定される。"
+        },
+        {
+            "key": "@they phase out for 20 turns.",
+            "context": "XRL.World.Effects.CookingDomainPhase_Phase_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は20ターンのあいだフェイズアウトする。"
+        },
+        {
+            "key": "@they phase out.",
+            "context": "XRL.World.Effects.CookingDomainPhase_Phase_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they はフェイズアウトする。"
+        },
+        {
+            "key": "Phase effects last twice as long.",
+            "context": "XRL.World.Effects.CookingDomainPhase_UnitDoublePhaseDuration.GetDescription",
+            "text": "フェイズ効果の持続が2倍になる。"
+        },
+        {
+            "key": "+20% + (Photosynthetic Skin level * 10)% to natural healing rate",
+            "context": "XRL.World.Effects.CookingDomainPhotosyntheticSkin_RegenerationUnit.GetTemplatedDescription",
+            "text": "自然治癒速度+20%＋〈光合成皮膚〉レベル×10%"
+        },
+        {
+            "key": "+13 + (Photosynthetic Skin level * 2) Quickness",
+            "context": "XRL.World.Effects.CookingDomainPhotosyntheticSkin_UnitQuickness.GetTemplatedDescription",
+            "text": "クイックネス+13＋〈光合成皮膚〉レベル×2"
+        },
+        {
+            "key": "@they cause@s plants to spontaneously grow in a random nearby area.",
+            "context": "XRL.World.Effects.CookingDomainPlant_BurgeoningHighTier_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は周囲の任意の地点に植物を自生させる。"
+        },
+        {
+            "key": "Plants burgeon around @them!",
+            "context": "XRL.World.Effects.CookingDomainPlant_BurgeoningHighTier_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "周囲に植物が芽吹く！"
+        },
+        {
+            "key": "Can use Burgeoning at level 7-8. If @they already have Burgeoning, it's enhanced by 5-6 levels.",
+            "context": "XRL.World.Effects.CookingDomainPlant_UnitBurgeoningHighTier.GetTemplatedDescription",
+            "text": "〈バージョニング〉をレベル7～8で使用できる。既に持つ場合、さらにレベル5～6強化される。"
+        },
+        {
+            "key": "Can use Burgeoning at level 1-2. If @they already have Burgeoning, it's enhanced by 2-3 levels.",
+            "context": "XRL.World.Effects.CookingDomainPlant_UnitBurgeoningLowTier.GetTemplatedDescription",
+            "text": "〈バージョニング〉をレベル1～2で使用できる。既に持つ場合、さらにレベル2～3強化される。"
+        },
+        {
+            "key": "+200 reputation with flowers, roots, succulents, trees, vines, and the Consortium of Phyta",
+            "context": "XRL.World.Effects.CookingDomainPlant_UnitPlantReputationHighTier.GetDescription",
+            "text": "花・根・多肉植物・木・ツタ・ファイタ協会との評判+200"
+        },
+        {
+            "key": "+100 reputation with flowers, roots, succulents, trees, vines, and the Consortium of Phyta",
+            "context": "XRL.World.Effects.CookingDomainPlant_UnitPlantReputationLowTier.GetDescription",
+            "text": "花・根・多肉植物・木・ツタ・ファイタ協会との評判+100"
+        },
+        {
+            "key": "+4-5 Quickness",
+            "context": "XRL.World.Effects.CookingDomainQuickness_UnitQuickness.GetTemplatedDescription",
+            "text": "クイックネス+4～5"
+        },
+        {
+            "key": "Reflect 100% damage the next time @they take damage.",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100_ProceduralCookingTriggeredAction_Effect.GetDetails",
+            "text": "@they は次に受けるダメージを100%反射する。"
+        },
+        {
+            "key": "Reflect 100% damage the next @n times @they take damage.",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100_ProceduralCookingTriggeredAction_Effect.GetDetails",
+            "text": "@they は次の@n回受けるダメージを100%反射する。"
+        },
+        {
+            "key": "Can use Quills at level 5-6. If @they already have Quills, it's enhanced by 3-4 levels.",
+            "context": "XRL.World.Effects.CookingDomainReflect_UnitQuills.GetTemplatedDescription",
+            "text": "〈棘〉をレベル5～6で使用できる。既に持つ場合、さらにレベル3～4強化される。"
+        },
+        {
+            "key": "Whenever @thisCreature jump@s, @they may immediately jump two more times.",
+            "context": "XRL.World.Effects.CookingDomainRubber_Extra2Jumps.GetDescription",
+            "text": "@thisCreature が跳躍するたび、続けて2回まで即座に跳躍できる。"
+        },
+        {
+            "key": "Whenever @thisCreature jump@s, @they may immediately jump again.",
+            "context": "XRL.World.Effects.CookingDomainRubber_ExtraJump.GetDescription",
+            "text": "@thisCreature が跳躍するたび、続けて即座にもう1回跳躍できる。"
+        },
+        {
+            "key": "@they jump@s three times in a row, each time at +2 range.",
+            "context": "XRL.World.Effects.CookingDomainRubber_JumpThrice_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は連続で3回、射程+2で跳躍する。"
+        },
+        {
+            "key": "@they feel@s a overwhelming springiness inside.",
+            "context": "XRL.World.Effects.CookingDomainRubber_JumpThrice_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は圧倒的なバネを感じる。"
+        },
+        {
+            "key": "@they jump twice in a row, each time at +1 range.",
+            "context": "XRL.World.Effects.CookingDomainRubber_JumpTwice_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は連続で2回、射程+1で跳躍する。"
+        },
+        {
+            "key": "@they feel a springiness inside.",
+            "context": "XRL.World.Effects.CookingDomainRubber_JumpTwice_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は体のバネを感じる。"
+        },
+        {
+            "key": "whenever @thisCreature jump@s,",
+            "context": "XRL.World.Effects.CookingDomainRubber_OnJump.GetTriggerDescription",
+            "text": "@thisCreature が跳躍するたび、"
+        },
+        {
+            "key": "whenever @thisCreature go@es prone,",
+            "context": "XRL.World.Effects.CookingDomainRubber_OnProne.GetTriggerDescription",
+            "text": "@thisCreature が伏せ状態になるたび、"
+        },
+        {
+            "key": "{{w|+8 Strength for 50 turns}}",
+            "context": "XRL.World.Effects.CookingDomainStrength_LargeStrengthBuff_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "{{w|50ターンのあいだ筋力+8}}"
+        },
+        {
+            "key": "@they gain@s +8 Strength for 50 turns.",
+            "context": "XRL.World.Effects.CookingDomainStrength_LargeStrengthBuff_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50ターンのあいだ筋力+8を得る。"
+        },
+        {
+            "key": "@their muscles bulge.",
+            "context": "XRL.World.Effects.CookingDomainStrength_LargeStrengthBuff_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they の筋肉が隆起する。"
+        },
+        {
+            "key": "@they have a 50% chance to Dismember or Slam @their opponent.",
+            "context": "XRL.World.Effects.CookingDomainStrength_DismemberOrSlam_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は50%の確率で@their 敵を切断するか叩きつける。"
+        },
+        {
+            "key": "@they perform@s an act of brutal violence.",
+            "context": "XRL.World.Effects.CookingDomainStrength_DismemberOrSlam_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は残忍な一撃を放つ。"
+        },
+        {
+            "key": "+4 Strength",
+            "context": "XRL.World.Effects.CookingDomainStrength_UnitStrength.GetTemplatedDescription",
+            "text": "筋力+4"
+        },
+        {
+            "key": "Mmmm.",
+            "context": "XRL.World.Effects.CookingDomainTaste_UnitDoNothing.GetDescription",
+            "text": "んまい。"
+        },
+        {
+            "key": "Guaranteed to be tasty if eaten while hungry.",
+            "context": "XRL.World.Effects.CookingDomainTaste_UnitDoNothing.GetTemplatedDescription",
+            "text": "空腹時に食べればうまいこと請け合い。"
+        },
+        {
+            "key": "@they teleport all creatures surrounding @them.",
+            "context": "XRL.World.Effects.CookingDomainTeleport_MassTeleportOther_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は周囲の全ての生物を転移させる。"
+        },
+        {
+            "key": "whenever @thisCreature teleport@s,",
+            "context": "XRL.World.Effects.CookingDomainTeleport_OnTeleport.GetTriggerDescription",
+            "text": "@thisCreature がテレポートするたび、"
+        },
+        {
+            "key": "@they teleport.",
+            "context": "XRL.World.Effects.CookingDomainTeleport_Teleport_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they はテレポートする。"
+        },
+        {
+            "key": "Whenever @thisCreature take@s avoidable damage, there's a 20-25% chance @they teleport to a random space on the map instead.",
+            "context": "XRL.World.Effects.CookingDomainTeleport_UnitBlink.GetTemplatedDescription",
+            "text": "@thisCreature が回避可能なダメージを受けると20～25%の確率で代わりにマップ内のランダムな地点へテレポートする。"
+        },
+        {
+            "key": "whenever @thisCreature get@s stuck, there's a 50% chance",
+            "context": "XRL.World.Effects.CookingDomainTongue_OnStuck.GetTriggerDescription",
+            "text": "@thisCreature が絡みつかれるたび、50%の確率で"
+        },
+        {
+            "key": "@they shoot@s out up to three sticky tongues per Sticky Tongue at rank 10.",
+            "context": "XRL.World.Effects.CookingDomainTongue_ThreeTongues_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は〈粘着舌〉ランク10相当で最大3本の粘着舌を伸ばす。"
+        },
+        {
+            "key": "@they shoot@s out a trio of sticky tongues.",
+            "context": "XRL.World.Effects.CookingDomainTongue_ThreeTongues_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は粘着舌を3本繰り出す。"
+        },
+        {
+            "key": "Can use Sticky Tongue at level 4-5. If @they already have Sticky Tongue, it's enhanced by 4-5 levels.",
+            "context": "XRL.World.Effects.CookingDomainTongue_UnitStickyTongue.GetTemplatedDescription",
+            "text": "〈粘着舌〉をレベル4～5で使用できる。既に持つ場合、さらにレベル4～5強化される。"
+        },
+        {
+            "key": "+4 Willpower",
+            "context": "XRL.World.Effects.CookingDomainWillpower_UnitWillpower.GetTemplatedDescription",
+            "text": "意志力+4"
+        },
+        {
+            "key": "Reflect 100% damage the next 3 times @they take damage.",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100_ProceduralCookingTriggeredAction_Effect.GetDetails",
+            "text": "@they は次の3回受けるダメージを100%反射する。"
+        },
+        {
+            "key": "Reveals a secret to @thisCreature.",
+            "context": "XRL.World.Effects.CookingDomainSecrets_RevealSecrets.GetDescription",
+            "text": "@thisCreature に秘密が一つ明かされる。"
+        },
+        {
+            "key": "Causes @their tongue to rot away.",
+            "context": "XRL.World.Effects.CookingDomainSelfHarm_UnitSelfGlotrot.GetDescription",
+            "text": "@their の舌が腐り落ちる。"
+        },
+        {
+            "key": "Poisons @thisCreature.",
+            "context": "XRL.World.Effects.CookingDomainSelfHarm_UnitSelfPoison.GetDescription",
+            "text": "@thisCreature を毒する。"
+        },
+        {
+            "key": "@they became a crystal being permanently.",
+            "context": "XRL.World.Effects.CookingDomainSpecial_UnitCrystalTransform.GetDescription",
+            "text": "@they は恒久的にクリスタル生命となる。"
+        },
+        {
+            "key": "@they became a slug permanently.",
+            "context": "XRL.World.Effects.CookingDomainSpecial_UnitSlogTransform.GetDescription",
+            "text": "@they は恒久的にナメクジになる。"
+        },
+        {
+            "key": "+6 vs Move,Knockdown,Restraint saves",
+            "context": "XRL.World.Effects.CookingDomainStability_MoveResistUnit.GetDescription",
+            "text": "移動・転倒・拘束に対するセーヴ+6"
+        },
+        {
+            "key": "+30-40% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+30～40%"
+        },
+        {
+            "key": "Can use Intimidate.",
+            "context": "XRL.World.Effects.CookingDomainFear_UnitIntimidate.GetDescription",
+            "text": "〈威圧〉を使用できる。"
+        },
+        {
+            "key": "+{0} bonus on Ego roll when using Intimidate.",
+            "context": "XRL.World.Effects.CookingDomainFear_UnitIntimidate.GetDescription",
+            "text": "〈威圧〉使用時の意志判定に+{0}のボーナス。"
+        },
+        {
+            "key": "@they feel less afflicted.",
+            "context": "XRL.World.Effects.CookingDomainHightierRegen_RemoveDebuff_ProceduralCookingTriggeredAction.GetNotification",
+            "text": "@they は不調が和らぐのを感じる。"
+        },
+        {
+            "key": "@they get +{0}% max HP for {1} hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は{1}時間のあいだ最大HPが+{0}%増える。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a {0}% chance",
+            "context": "XRL.World.Effects.CookingDomainHP_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、{0}%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a {0}% chance @they start phasing for {1}-{2} turns.",
+            "context": "XRL.World.Effects.CookingDomainPhase_UnitPhaseOnDamage.GetDescription",
+            "text": "@thisCreature がダメージを受けるたび、{0}%の確率で@they は{1}～{2}ターンのあいだフェイズアウトする。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a {0}% chance",
+            "context": "XRL.World.Effects.CookingDomainReflect_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、{0}%の確率で"
+        },
+        {
+            "key": "@they expel quills per the Quills mutation at level {0}.",
+            "context": "XRL.World.Effects.CookingDomainReflect_QuillBurst_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は棘の変異レベル{0}に応じて棘を放つ。"
+        },
+        {
+            "key": "Reflect {0}% damage back at @their attackers, rounded up.",
+            "context": "XRL.World.Effects.CookingDomainReflect_UnitReflectDamage.GetDescription",
+            "text": "@their への攻撃を{0}%跳ね返す（端数切り上げ）。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a {0}% chance",
+            "context": "XRL.World.Effects.CookingDomainRegenLowtier_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、{0}%の確率で"
+        },
+        {
+            "key": "Whenever @thisCreature jump@s, @they may immediately jump two more times.",
+            "context": "XRL.World.Effects.CookingDomainRubber_Extra2Jumps.GetTemplatedDescription",
+            "text": "@thisCreature が跳躍するたび、続けて2回まで即座に跳躍できる。"
+        },
+        {
+            "key": "Whenever @thisCreature jump@s, @they may immediately jump again.",
+            "context": "XRL.World.Effects.CookingDomainRubber_ExtraJump.GetTemplatedDescription",
+            "text": "@thisCreature が跳躍するたび、続けて即座にもう1回跳躍できる。"
+        },
+        {
+            "key": "Falling damage @thisCreature take@s is reduced by {0}%.",
+            "context": "XRL.World.Effects.CookingDomainRubber_ExtraReducedFallDamage.GetDescription",
+            "text": "@thisCreature が受ける落下ダメージが{0}%軽減される。"
+        },
+        {
+            "key": "Falling damage @thisCreature take@s is reduced by {0}%.",
+            "context": "XRL.World.Effects.CookingDomainRubber_ReducedFallDamage.GetDescription",
+            "text": "@thisCreature が受ける落下ダメージが{0}%軽減される。"
+        },
+        {
+            "key": "@they became a crystal being permanently.",
+            "context": "XRL.World.Effects.CookingDomainSpecial_UnitCrystalTransform.GetTemplatedDescription",
+            "text": "@they は恒久的にクリスタル生命となる。"
+        },
+        {
+            "key": "@they became a slug permanently.",
+            "context": "XRL.World.Effects.CookingDomainSpecial_UnitSlogTransform.GetTemplatedDescription",
+            "text": "@they は恒久的にナメクジになる。"
+        },
+        {
+            "key": "Whenever @thisCreature take@s avoidable damage, there's a {0}% chance @they teleport to a random space on the map instead.",
+            "context": "XRL.World.Effects.CookingDomainTeleport_UnitBlink.GetDescription",
+            "text": "@thisCreature が回避可能なダメージを受けると{0}%の確率で代わりにマップ内のランダムな地点へテレポートする。"
+        },
+        {
+            "key": "heal {0} hp",
+            "context": "XRL.World.Effects.Heal20_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "HPを{0}回復する。"
+        },
+        {
+            "key": "Can't be phased.",
+            "context": "XRL.World.Effects.NoPhase_ProceduralCookingTriggeredAction_Effect.GetDetails",
+            "text": "フェイズアウトしない。"
+        },
+        {
+            "key": "@they don't thirst for the next {0} hours.",
+            "context": "XRL.World.Effects.NoThirst_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は今後{0}時間は喉が渇かない。"
+        },
+        {
+            "key": "@they don't thirst.",
+            "context": "XRL.World.Effects.NoThirst_ProceduralCookingTriggeredAction_Effect.GetDetails",
+            "text": "@they は喉が渇かない。"
+        },
+        {
+            "key": "whenever @thisCreature drink@s freshwater, there's a {0}% chance",
+            "context": "XRL.World.Effects.OnDrinkWaterProceduralCookingTrigger.GetTriggerDescription",
+            "text": "@thisCreature が真水を飲むたび、{0}%の確率で"
+        },
+        {
+            "key": "when you heal to full health from half",
+            "context": "XRL.World.Effects.OnHealProceduralCookingTrigger.GetTriggerDescription",
+            "text": "体力が半分から全快したとき"
+        },
+        {
+            "key": "when you kill a tough mob",
+            "context": "XRL.World.Effects.OnKillToughProceduralCookingTrigger.GetTriggerDescription",
+            "text": "手強い敵を殺したとき"
+        },
+        {
+            "key": "{{W|metabolizing}}",
+            "context": "XRL.World.Effects.ProceduralCookingEffect.GetDescription",
+            "text": "{{W|代謝中}}"
+        },
+        {
+            "key": "Can use {MutationDisplayName} at level {0}.",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnitMutation.GetDescription",
+            "text": "〈{MutationDisplayName}〉をレベル{0}で使用できる。"
+        },
+        {
+            "key": "+{0} level to {MutationDisplayName}.",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnitMutation.GetDescription",
+            "text": "〈{MutationDisplayName}〉が+{0}レベル上昇する。"
+        },
+        {
+            "key": "+{0} levels to {MutationDisplayName}.",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnitMutation.GetDescription",
+            "text": "〈{MutationDisplayName}〉が+{0}レベル上昇する。"
+        },
+        {
+            "key": "No effect.",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnitMutation.GetDescription",
+            "text": "効果なし。"
+        },
+        {
+            "key": "Can use {MutationDisplayName} at level {0}-{1}. If @they already have {MutationDisplayName}, it's enhanced by {2}-{3} levels.",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnitMutation.GetTemplatedDescription",
+            "text": "〈{MutationDisplayName}〉をレベル{0}～{1}で使用できる。既に持つ場合は{2}～{3}レベル強化される。"
+        },
+        {
+            "key": "+{0}% to natural healing rate",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnit_10Regeneration.GetDescription",
+            "text": "自然治癒速度+{0}%"
+        },
+        {
+            "key": "+{0} STR",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnit_1Str.GetDescription",
+            "text": "筋力+{0}"
+        },
+        {
+            "key": "@thisCreature thirst@s at half rate.",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnit_LessThirst.GetDescription",
+            "text": "@thisCreature の喉の渇きが半減する。"
+        },
+        {
+            "key": "+XP",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnit_XP.GetDescription",
+            "text": "XPを得る。"
+        },
+        {
+            "key": "+{0} Str for the next {1} hours",
+            "context": "XRL.World.Effects.Str3_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "今後{1}時間、筋力+{0}。"
+        },
+        {
+            "key": "+2 bonus on Ego roll when using Intimidate.",
+            "context": "XRL.World.Effects.CookingDomainFear_UnitIntimidate.GetDescription",
+            "text": "〈威圧〉使用時の意志判定に+2のボーナス。"
+        },
+        {
+            "key": "Can use Intimidate. If @they already have Intimidate, gain a +2 bonus on the Ego roll when using Intimidate.",
+            "context": "XRL.World.Effects.CookingDomainFear_UnitIntimidate.GetTemplatedDescription",
+            "text": "〈威圧〉を使用できる。既に習得している場合は〈威圧〉使用時の意志判定に+2のボーナス。"
+        },
+        {
+            "key": "@they release an electrical discharge per Electrical Generation at level 5.",
+            "context": "XRL.World.Effects.CookingDomainElectric_Discharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は電気生成レベル5に応じた放電を行う。"
+        },
+        {
+            "key": "@they release an electrical discharge per Electrical Generation at level 6.",
+            "context": "XRL.World.Effects.CookingDomainElectric_Discharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は電気生成レベル6に応じた放電を行う。"
+        },
+        {
+            "key": "@they release an electromagnetic pulse at level 8.",
+            "context": "XRL.World.Effects.CookingDomainElectric_EMP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they はレベル8の電磁パルスを放つ。"
+        },
+        {
+            "key": "@they release an electromagnetic pulse at level 9.",
+            "context": "XRL.World.Effects.CookingDomainElectric_EMP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they はレベル9の電磁パルスを放つ。"
+        },
+        {
+            "key": "@they get +30% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+30%を得る。"
+        },
+        {
+            "key": "@they get +31% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+31%を得る。"
+        },
+        {
+            "key": "@they get +32% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+32%を得る。"
+        },
+        {
+            "key": "@they get +33% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+33%を得る。"
+        },
+        {
+            "key": "@they get +34% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+34%を得る。"
+        },
+        {
+            "key": "@they get +35% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+35%を得る。"
+        },
+        {
+            "key": "@they get +36% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+36%を得る。"
+        },
+        {
+            "key": "@they get +37% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+37%を得る。"
+        },
+        {
+            "key": "@they get +38% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+38%を得る。"
+        },
+        {
+            "key": "@they get +39% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+39%を得る。"
+        },
+        {
+            "key": "@they get +40% max HP for 1 hour.",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は1時間のあいだ最大HP+40%を得る。"
+        },
+        {
+            "key": "+30% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+30%"
+        },
+        {
+            "key": "+31% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+31%"
+        },
+        {
+            "key": "+32% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+32%"
+        },
+        {
+            "key": "+33% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+33%"
+        },
+        {
+            "key": "+34% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+34%"
+        },
+        {
+            "key": "+35% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+35%"
+        },
+        {
+            "key": "+36% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+36%"
+        },
+        {
+            "key": "+37% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+37%"
+        },
+        {
+            "key": "+38% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+38%"
+        },
+        {
+            "key": "+39% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+39%"
+        },
+        {
+            "key": "+40% max HP",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredActionEffect.GetDetails",
+            "text": "最大HP+40%"
+        },
+        {
+            "key": "Falling damage @thisCreature take@s is reduced by 90%.",
+            "context": "XRL.World.Effects.CookingDomainRubber_ExtraReducedFallDamage.GetDescription",
+            "text": "@thisCreature が受ける落下ダメージが90%軽減される。"
+        },
+        {
+            "key": "Falling damage @thisCreature take@s is reduced by 50%.",
+            "context": "XRL.World.Effects.CookingDomainRubber_ReducedFallDamage.GetDescription",
+            "text": "@thisCreature が受ける落下ダメージが50%軽減される。"
+        },
+        {
+            "key": "heal 20 hp",
+            "context": "XRL.World.Effects.Heal20_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "HPを20回復する。"
+        },
+        {
+            "key": "@they don't thirst for the next 12 hours.",
+            "context": "XRL.World.Effects.NoThirst_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は今後12時間のどが渇かない。"
+        },
+        {
+            "key": "whenever @thisCreature drink@s freshwater, there's a 25% chance",
+            "context": "XRL.World.Effects.OnDrinkWaterProceduralCookingTrigger.GetTriggerDescription",
+            "text": "@thisCreature が真水を飲むたび、25%の確率で"
+        },
+        {
+            "key": "whenever @thisCreature suffer@s",
+            "context": "XRL.World.Effects.CookingDomainArmor_OnPenetration.GetTriggerDescription",
+            "text": "@thisCreature が物理貫通を受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature suffer@s",
+            "context": "XRL.World.Effects.CookingDomainArmor_OnPenetration.GetTemplatedTriggerDescription",
+            "text": "@thisCreature が物理貫通を受けるたび、"
+        },
+        {
+            "key": "@they release an electrical discharge per Electrical Generation at level",
+            "context": "XRL.World.Effects.CookingDomainElectric_Discharge_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は電気生成レベルに応じた放電を行う。"
+        },
+        {
+            "key": "@they release an electromagnetic pulse at level",
+            "context": "XRL.World.Effects.CookingDomainElectric_EMP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they はそのレベルに応じた電磁パルスを放つ。"
+        },
+        {
+            "key": "whenever @thisCreature take@s electric damage, there's",
+            "context": "XRL.World.Effects.CookingDomainElectric_OnElectricDamaged.GetTriggerDescription",
+            "text": "@thisCreature が電撃ダメージを受けるたび、"
+        },
+        {
+            "key": "Can use",
+            "context": "XRL.World.Effects.CookingDomainFear_UnitIntimidate.GetDescription",
+            "text": "使用できる。"
+        },
+        {
+            "key": "@they get +",
+            "context": "XRL.World.Effects.CookingDomainHP_IncreaseHP_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は最大HPが増加する。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a",
+            "context": "XRL.World.Effects.CookingDomainHP_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a",
+            "context": "XRL.World.Effects.CookingDomainPhase_UnitPhaseOnDamage.GetDescription",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a",
+            "context": "XRL.World.Effects.CookingDomainReflect_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "@they expel quills per the Quills mutation at level",
+            "context": "XRL.World.Effects.CookingDomainReflect_QuillBurst_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は棘の変異レベルに応じて棘を放つ。"
+        },
+        {
+            "key": "Reflect 100% damage the next",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100_ProceduralCookingTriggeredAction_Effect.GetDetails",
+            "text": "次に受けるダメージを100%反射する。"
+        },
+        {
+            "key": "Reflect",
+            "context": "XRL.World.Effects.CookingDomainReflect_UnitReflectDamage.GetDescription",
+            "text": "受けたダメージの"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a",
+            "context": "XRL.World.Effects.CookingDomainRegenLowtier_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "?????",
+            "context": "XRL.World.Effects.CookingDomainSpecial_UnitCrystalTransform.GetTemplatedDescription",
+            "text": "@they は恒久的にクリスタル生命となる。"
+        },
+        {
+            "key": "?????",
+            "context": "XRL.World.Effects.CookingDomainSpecial_UnitSlogTransform.GetTemplatedDescription",
+            "text": "@they は恒久的にナメクジになる。"
+        },
+        {
+            "key": "Whenever @thisCreature take@s avoidable damage, there's a",
+            "context": "XRL.World.Effects.CookingDomainTeleport_UnitBlink.GetDescription",
+            "text": "@thisCreature が回避可能なダメージを受けると、"
+        },
+        {
+            "key": "Can use",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnitMutation.GetDescription",
+            "text": "使用できる。"
+        },
+        {
+            "key": "+10% to natural healing rate",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnit_10Regeneration.GetDescription",
+            "text": "自然治癒速度+10%"
+        },
+        {
+            "key": "+1 STR",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnit_1Str.GetDescription",
+            "text": "筋力+1"
+        },
+        {
+            "key": "+3 Str for the next three hours",
+            "context": "XRL.World.Effects.Str3_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "今後3時間、筋力+3。"
+        },
+        {
+            "key": "whenever @thisCreature suffer@s ",
+            "context": "XRL.World.Effects.CookingDomainArmor_OnPenetration.GetTemplatedTriggerDescription",
+            "text": "@thisCreature が物理貫通を受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature suffer@s ",
+            "context": "XRL.World.Effects.CookingDomainArmor_OnPenetration.GetTriggerDescription",
+            "text": "@thisCreature が物理貫通を受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature take@s electric damage, there's ",
+            "context": "XRL.World.Effects.CookingDomainElectric_OnElectricDamaged.GetTriggerDescription",
+            "text": "@thisCreature が電撃ダメージを受けるたび、"
+        },
+        {
+            "key": "Can use ",
+            "context": "XRL.World.Effects.CookingDomainFear_UnitIntimidate.GetDescription",
+            "text": "使用できる。"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a ",
+            "context": "XRL.World.Effects.CookingDomainHP_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a ",
+            "context": "XRL.World.Effects.CookingDomainPhase_UnitPhaseOnDamage.GetDescription",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a ",
+            "context": "XRL.World.Effects.CookingDomainReflect_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "@they expel quills per the Quills mutation at level ",
+            "context": "XRL.World.Effects.CookingDomainReflect_QuillBurst_ProceduralCookingTriggeredAction.GetDescription",
+            "text": "@they は棘の変異レベルに応じて棘を放つ。"
+        },
+        {
+            "key": "Reflect 100% damage the next ",
+            "context": "XRL.World.Effects.CookingDomainReflect_Reflect100_ProceduralCookingTriggeredAction_Effect.GetDetails",
+            "text": "次に受けるダメージを100%反射する。"
+        },
+        {
+            "key": "Reflect ",
+            "context": "XRL.World.Effects.CookingDomainReflect_UnitReflectDamage.GetDescription",
+            "text": "受けたダメージの"
+        },
+        {
+            "key": "whenever @thisCreature take@s damage, there's a ",
+            "context": "XRL.World.Effects.CookingDomainRegenLowtier_OnDamaged.GetTriggerDescription",
+            "text": "@thisCreature がダメージを受けるたび、"
+        },
+        {
+            "key": "Whenever @thisCreature take@s avoidable damage, there's a ",
+            "context": "XRL.World.Effects.CookingDomainTeleport_UnitBlink.GetDescription",
+            "text": "@thisCreature が回避可能なダメージを受けると、"
+        },
+        {
+            "key": "Can use ",
+            "context": "XRL.World.Effects.ProceduralCookingEffectUnitMutation.GetDescription",
+            "text": "使用できる。"
+        }
+    ]
+}

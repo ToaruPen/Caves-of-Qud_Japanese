@@ -1,0 +1,587 @@
+<?xml version='1.0' encoding='utf-8'?>
+<objects Load="Merge">
+
+<object Name="Terrain" Inherits="Object" Replace="true">
+    <part Name="Physics" FreezeTemperature="-9999" BrittleTemperature="-9999" FlameTemperature="99999" VaporTemperature="9999" Weight="1" Solid="false" IsReal="true" Takeable="false" />
+    <part Name="Render" Occluding="false" DisplayName="[地形]" RenderString="?" RenderLayer="1" RenderIfDark="true" />
+    <part Name="TerrainTravel" Segments="1000" />
+    <part Name="TerrainNotes" />
+    <xtagGrammar massNoun="true" />
+    <tag Name="NoSparkingQuest" />
+    <tag Name="BaseObject" Value="*noinherit" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+    <tag Name="IncludeInDynamicSemanticTables" />
+    <tag Name="NoDamageReadout" />
+    <tag Name="Immutable" />
+    <tag Name="DefaultRightClickInventoryAction" Value="Look" />
+  </object>
+
+<object Name="TerrainDesertCanyon" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="砂漠峡谷" RenderString="239" ColorString="&amp;w^k" Tile="Terrain/sw_canyon.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_DesertCanyonSurvival" />.
+    <part Name="Description" Short="かつては河そのものが飢え、頁岩や石灰岩をむさぼり、大塩海で膨れた休息についた。今では裂け目の峡谷が紅と塩に腐れ落ちている。" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="LairOwnerTable" Value="LairOwners_DesertCanyon" />
+    <tag Name="Terrain" Value="DesertCanyon" />
+    <tag Name="RegionTier" Value="1" />
+    <stag Name="Geological" />
+    <tag Name="AggregateWith" Value="DesertCanyon" />
+  </object>
+
+<object Name="TerrainDesertCanyon2" Inherits="TerrainDesertCanyon" Replace="true">
+    <part Name="Render" DisplayName="砂漠峡谷" RenderString="110" ColorString="&amp;w^k" Tile="Terrain/sw_hills2.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_DesertCanyonSurvival" />.
+    <part Name="Description" Short="かつては河そのものが飢え、頁岩や石灰岩をむさぼり、大塩海で膨れた休息についた。今では裂け目の峡谷が紅と塩に腐れ落ちている。" />
+    <tag Name="Gender" Value="plural" />
+  </object>
+
+<object Name="TerrainDesertCanyon3" Inherits="TerrainDesertCanyon" Replace="true">
+    <part Name="Render" DisplayName="砂漠峡谷" RenderString="239" ColorString="&amp;w^k" Tile="Terrain/sw_canyon.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_DesertCanyonSurvival" />.
+    <part Name="Description" Short="かつては河そのものが飢え、頁岩や石灰岩をむさぼり、大塩海で膨れた休息についた。今では裂け目の峡谷が紅と塩に腐れ落ちている。" />
+    <tag Name="Gender" Value="plural" />
+  </object>
+
+<object Name="TerrainDesertCanyon4" Inherits="TerrainDesertCanyon" Replace="true">
+    <part Name="Render" DisplayName="砂漠峡谷" RenderString="110" ColorString="&amp;w^k" Tile="Terrain/sw_hills2.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_DesertCanyonSurvival" />.
+    <part Name="Description" Short="かつては河そのものが飢え、頁岩や石灰岩をむさぼり、大塩海で膨れた休息についた。今では裂け目の峡谷が紅と塩に腐れ落ちている。" />
+    <tag Name="Gender" Value="plural" />
+  </object>
+
+<object Name="TerrainSaltmarsh" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="塩湿地" RenderString="~" ColorString="&amp;g^k" Tile="terrain/tile_swamp1.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_SaltmarshSurvival" />
+    <part Name="Description" Short="澱んだ水溜まりでは、夜空の星帯と競い合うように光睡蓮が咲く。だが塩の太陽の下では、塩藻の陰へと縮こまってしまう。" />
+    <builder Name="RandomTile" Tiles="Terrain/sw_marsh_worldmap_1.bmp,Terrain/sw_marsh_worldmap_2.bmp,Terrain/sw_marsh_worldmap_3.bmp,Terrain/sw_marsh_worldmap_4.bmp" />
+    <part Name="RandomColors" DetailColor="b,g" />
+    <tag Name="DungeonAttributes" Value="Marsh" />
+    <tag Name="DefaultWall" Value="Mudroot" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Saltmarsh" />
+    <tag Name="Terrain" Value="Saltmarsh" />
+    <tag Name="RegionTier" Value="0" />
+  </object>
+
+<object Name="TerrainSaltmarsh2" Inherits="TerrainSaltmarsh" Replace="true">
+    <part Name="Render" DisplayName="塩湿地" RenderString="~" ColorString="&amp;g^k" Tile="terrain/tile_swamp1.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_SaltmarshSurvival" />
+    <part Name="Description" Short="澱んだ水溜まりでは、夜空の星帯と競い合うように光睡蓮が咲く。だが塩の太陽の下では、塩藻の陰へと縮こまってしまう。" />
+    <tag Name="DungeonAttributes" Value="Marsh" />
+    <tag Name="DefaultWall" Value="Mudroot" />
+  </object>
+
+<object Name="TerrainWatervine" Inherits="TerrainSaltmarsh" Replace="true">
+    <part Name="Render" DisplayName="塩湿地" RenderString="244" ColorString="&amp;g^k" Tile="terrain/tile_swamp1.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_SaltmarshSurvival" />
+    <part Name="Description" Short="澱んだ水溜まりでは、夜空の星帯と競い合うように光睡蓮が咲く。だが塩の太陽の下では、塩藻の陰へと縮こまってしまう。" />
+    <tag Name="DungeonAttributes" Value="Marsh" />
+    <tag Name="DefaultWall" Value="Mudroot" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Watervine" />
+    <tag Name="Terrain" Value="Saltmarsh" />
+  </object>
+
+<object Name="TerrainSaltdunes" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="塩砂丘" RenderString="247" ColorString="&amp;Y^k" Tile="Terrain/sw_desert.bmp" />
+    <part Name="TerrainTravel" Segments="2500" LostChance="10" TravelClass="Survival_SaltDesertSurvival" />
+    <part Name="AnimatedMaterialSaltDunes" />
+    <part Name="Description" Short="象牙の海の砂丘は、その場で凍りついた波だ。宝石の太陽に焼かれた大地は身を縮めて割れ、塩にひびの筋が刻まれる。地平線では空とモグライー――大塩砂漠の無辺の平原――が溶け合う。" />
+    <tag Name="Gender" Value="plural" />
+    <part Name="UnityPrefabImposterChance" Chance="10" PrefabID="Prefabs/Particles/DesertWinds" />
+    <tag Name="DungeonAttributes" Value="Desert" />
+    <tag Name="DefaultWall" Value="Halite" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Saltdunes" />
+    <tag Name="Terrain" Value="Saltdunes" />
+    <tag Name="RegionTier" Value="2" />
+  </object>
+
+<object Name="TerrainSaltdunes2" Inherits="TerrainSaltdunes" Replace="true">
+    <part Name="Render" DisplayName="塩砂丘" RenderString="~" ColorString="&amp;Y^k" Tile="Terrain/sw_plains.bmp" />
+    <part Name="TerrainTravel" Segments="3000" LostChance="10" TravelClass="Survival_SaltDesertSurvival" />
+    <part Name="AnimatedMaterialSaltDunes" />
+    <part Name="Description" Short="象牙の海の砂丘は、その場で凍りついた波だ。宝石の太陽に焼かれた大地は身を縮めて割れ、塩にひびの筋が刻まれる。地平線では空とモグライー――大塩砂漠の無辺の平原――が溶け合う。" />
+    <tag Name="Gender" Value="plural" />
+    <part Name="UnityPrefabImposterChance" Chance="10" PrefabID="Prefabs/Particles/DesertWinds" />
+    <tag Name="DungeonAttributes" Value="Desert" />
+    <tag Name="DefaultWall" Value="Halite" />
+  </object>
+
+<object Name="TerrainTremblezone" Inherits="TerrainSaltdunes" Replace="true">
+    <part Name="Render" DisplayName="塩砂丘" RenderString="247" ColorString="&amp;Y^k" Tile="Terrain/sw_desert.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_SaltDesertSurvival" />
+    <part Name="AnimatedMaterialSaltDunes" />
+    <part Name="Description" Short="象牙の海の砂丘は、その場で凍りついた波だ。宝石の太陽に焼かれた大地は身を縮めて割れ、塩にひびの筋が刻まれる。地平線では空とモグライー――大塩砂漠の無辺の平原――が溶け合う。" />
+    <tag Name="Gender" Value="plural" />
+    <part Name="UnityPrefabImposter" PrefabID="Prefabs/Particles/DesertWinds" />
+  </object>
+
+<object Name="TerrainFlowerfields" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="花野" RenderString="'" ColorString="&amp;C^k" DetailColor="g" Tile="Terrain/tile_flowers2.bmp" />
+    <part Name="TerrainTravel" Segments="1000" TravelClass="Survival_PlainsSurvival" />
+    <part Name="Description" Short="塩に腐った地表の裂け目を虹色の繊毛が植民し、ここには草地があるのだと彼女は言う。" />
+    <part Name="RandomFlower" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="DefaultWall" Value="Sandstone" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Flowerfields" />
+    <tag Name="Terrain" Value="Flowerfields" />
+    <tag Name="RegionTier" Value="2" />
+  </object>
+
+<object Name="TerrainJungle" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="密林" RenderString="005" ColorString="&amp;G^k" Tile="Terrain/tile_jungleleft1.bmp" HFlip="false" />
+    <part Name="TerrainTravel" Segments="2000" TravelClass="Survival_JungleSurvival" />
+    <part Name="Description" Short="根の三つ編みと葉のリボンが平らなロームに奥行きを与え、捨てられた葉切れ一枚でさえ誰かの家になる。" />
+    <part Name="RandomJungle" />
+    <tag Name="DefaultWall" Value="Mudroot" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Jungle" />
+    <tag Name="Terrain" Value="Jungle" />
+    <tag Name="RegionTier" Value="3" />
+  </object>
+
+<object Name="TerrainDeepJungle" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="深密林" RenderString="005" ColorString="&amp;G^k" Tile="Terrain/tile_jungleleft1.bmp" HFlip="false" />
+    <part Name="TerrainTravel" Segments="3000" TravelClass="Survival_JungleSurvival" />
+    <part Name="Description" Short="繁る植物が迷路のように密な根でロームを詰め、輪を描く高い樹冠が最後の光線を絞め殺す。" />
+    <part Name="RandomDeepJungle" />
+    <tag Name="DefaultWall" Value="Mudroot" />
+    <tag Name="LairOwnerTable" Value="LairOwners_DeepJungle" />
+    <tag Name="Terrain" Value="DeepJungle" />
+    <tag Name="RuinWalls" Value="HighTierRegionRuinWalls" />
+    <tag Name="RegionTier" Value="6" />
+  </object>
+
+<object Name="TerrainFungalBase" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="虹の森" RenderString="005" ColorString="&amp;O^k" Tile="Terrain/sw_mushroom_terrain1.bmp" />
+    <part Name="RandomRenderString" Strings="005,006" />
+    <part Name="TerrainTravel" Segments="2500" />
+    <part Name="Description" Short="万華鏡のような菌の笠を横切って胞子が渦に合わせて舞い、溶岩の光を浴びた原初のスープの川が早まる旋律をぐつぐつと奏でる。" />
+    <builder Name="RandomTile" Tiles="Terrain/sw_worldmap_rainbowwood_1.bmp,Terrain/sw_worldmap_rainbowwood_2.bmp,Terrain/sw_worldmap_rainbowwood_3.bmp,Terrain/sw_worldmap_rainbowwood_4.bmp" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="NoBiomes" Value="1" />
+    <tag Name="DefaultWall" Value="Quartzite" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Fungal" />
+    <tag Name="Terrain" Value="Fungal" />
+    <tag Name="RegionTier" Value="5" />
+    <intproperty Name="NavigationWeight" Value="5" />
+    <tag Name="NoAutowalk" />
+    <tag Name="VillageDefaultLiquid" Value="ProteanDeepPool" />
+    <tag Name="VillageClearBehavior" Value="circles:10" />
+  </object>
+
+<object Name="TerrainMoonStair" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="月階" RenderString="005" ColorString="&amp;y" DetailColor="M" Tile="Terrain/sw_moonstair_worldmap_1.bmp" HFlip="true" />
+    <part Name="TerrainTravel" Segments="2000" />
+    <part Name="Description" Short="黒い大理石の床から六角柱が噴き出し、縁は暖かな静電気の露のようにほぐれていく。階段は低い周波で喉を鳴らす。" />
+    <part Name="Physics" Solid="true" />
+    <part Name="RandomRenderString" Strings="220,221,222,223" />
+    <part Name="RandomWorldTile" Tiles="Terrain/sw_moonstair_c_worldmap_~1-8~.bmp" DoubleTiles="Terrain/sw_moonstair_c_worldmap_double_~1-2~_[DIR].bmp" DoubleChance="20" />
+    <part Name="RandomColors" MainColor="K,y,m,M,m,K,y,M,m,M" DetailColor="y,Y,y,Y,y,y,Y,Y,y,Y" PairDetailWithForeground="true" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlandBlockMessage" Value="月階の幾何は複雑すぎてワールドマップでは移動できない。地表で道を探すしかない。" />
+    <tag Name="DefaultWall" Value="Black Marble" />
+    <tag Name="LairOwnerTable" Value="LairOwners_MoonStair" />
+    <tag Name="RuinWalls" Value="HighTierRegionRuinWalls" />
+    <tag Name="Terrain" Value="MoonStair" />
+    <tag Name="RegionTier" Value="8" />
+  </object>
+
+<object Name="TerrainCraters" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="クレーター群" RenderString="o" ColorString="&amp;y^k" Tile="Terrain/sw_craters1.bmp" />
+    <part Name="TerrainTravel" Segments="1500" TravelClass="Survival_MountainsSurvival" />.
+    <part Name="Description" Short="" />
+    <tag Name="DefaultWall" Value="Basalt" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Hills" />
+    <tag Name="Terrain" Value="Hills" />
+    <tag Name="RegionTier" Value="2" />
+    <tag Name="Gender" Value="plural" />
+    <part Name="RandomCraters" />
+  </object>
+
+<object Name="RandomCrater" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="クレーター群" RenderString="o" ColorString="&amp;y^k" Tile="Terrain/sw_craters1.bmp" />
+    <part Name="Description" Short="" />
+    <tag Name="DefaultWall" Value="Basalt" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Hills" />
+    <tag Name="Terrain" Value="Hills" />
+    <tag Name="RegionTier" Value="2" />
+    <tag Name="Gender" Value="plural" />
+    <part Name="RandomCrater" />
+    <builder Name="RandomTile" Tiles="Terrain/sw_craters1.bmp,Terrain/sw_craters2.bmp,Terrain/sw_craters3.bmp,Terrain/sw_craters4.bmp" />
+  </object>
+
+<object Name="TerrainHills" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="丘陵" RenderString="127" ColorString="&amp;y^k" Tile="Terrain/sw_hills.bmp" />
+    <part Name="TerrainTravel" Segments="1500" TravelClass="Survival_MountainsSurvival" />.
+    <part Name="Description" Short="石が時間の波形を描くとき、わずかな拍動が線から浮き上がる。" />
+    <tag Name="DefaultWall" Value="Marl" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Hills" />
+    <tag Name="Terrain" Value="Hills" />
+    <builder Name="RandomTile" Tiles="Terrain/sw_hills.bmp,Terrain/sw_hills_2.bmp" />
+    <tag Name="RegionTier" Value="2" />
+    <tag Name="Gender" Value="plural" />
+    <stag Name="Geological" />
+    <tag Name="DynamicSemanticTable:Geological:Weight" Value="5" />
+  </object>
+
+<object Name="TerrainMountains" Inherits="Terrain" Replace="true">
+    <part Name="Physics" Solid="true" />
+    <part Name="Render" DisplayName="山岳" RenderString="030" ColorString="&amp;Y^k" Tile="Terrain/sw_mountains.bmp" />
+    <part Name="TerrainTravel" Segments="2000" TravelClass="Survival_MountainsSurvival" />
+    <part Name="RandomWorldTile" Tiles="Terrain/sw_mountains.bmp,Terrain/sw_mountains_2.bmp" DoubleTiles="Terrain/tile_mountain[DIR]~#1-2~.bmp" />
+    <part Name="Description" Short="石の波形図で、世界の地殻がかつて戦へと駆り立てられた場所には、今やひっそりとした平和が宿っている。" />
+    <tag Name="DefaultWall" Value="Limestone" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Mountains" />
+    <tag Name="Terrain" Value="Mountains" />
+    <tag Name="RegionTier" Value="4" />
+    <tag Name="Gender" Value="plural" />
+    <stag Name="Geological" />
+    <tag Name="DynamicSemanticTable:Geological:Weight" Value="10" />
+  </object>
+
+<object Name="TerrainBananaGrove" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="バナナの林" RenderString="244" ColorString="&amp;W^k" DetailColor="g" Tile="Terrain/sw_ruins1.bmp" />
+    <part Name="TerrainTravel" Segments="2000" TravelClass="Survival_JungleSurvival" />
+    <part Name="Description" Short="数百万の編み紐めいた指が柔らかく揺れ、青葉の葉群が山間の巣からスピンドルの裾を包み込む。" />
+    <tag Name="DefaultWall" Value="Oolite" />
+    <tag Name="LairOwnerTable" Value="LairOwners_BananaGrove" />
+    <builder Name="RandomTile" Tiles="Terrain/sw_worldmap_musa_1.bmp,Terrain/sw_worldmap_musa_2.bmp,Terrain/sw_worldmap_musa_3.bmp" />
+    <xtagGrammar massNoun="false" />
+    <tag Name="Terrain" Value="BananaGrove" />
+    <tag Name="RegionTier" Value="5" />
+  </object>
+
+<object Name="TerrainWater" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="水" Tile="Tiles/Tile-Water.png" RenderString="247" ColorString="&amp;B^b" TileColor="&amp;b" DetailColor="B" />
+    <part Name="Description" Short="水" />
+    <part Name="AnimatedMaterialOverlandWater" Rushing="true" />
+    <tag Name="DefaultWall" Value="Gypsum" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Water" />
+    <tag Name="Terrain" Value="Water" />
+    <part Name="TerrainTravel" Segments="2500" TravelClass="Survival_RiversLakesSurvival" />
+    <tag Name="RegionTier" Value="4" />
+    <tag Name="VillageClearBehavior" Value="circles:10" />
+  </object>
+
+<object Name="TerrainRiverSvy" Inherits="TerrainWater" Replace="true">
+    <part Name="Render" DisplayName="スヴィー川" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <part Name="Description" Short="スヴィーは塩を頂いた峰を駆け下り、蔓の編まれたロームへと吐き出される。岸辺には巨躯のクローム死骸が日陰を作っている。" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <tag Name="AlternateTerrainName" Value="RiverSvy" />
+    <tag Name="SecretAttributes" Value="riversvy" />
+  </object>
+
+<object Name="TerrainRiverOpal" Inherits="TerrainWater" Replace="true">
+    <part Name="Render" DisplayName="オパル川" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <part Name="Description" Short="スピンドルのきらめきが水面に写し絵となり、砕かれた花崗岩を山間の峠から葉ぶさの河口へと運ぶ。" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <tag Name="AlternateTerrainName" Value="RiverOpal" />
+    <tag Name="SecretAttributes" Value="riveropal" />
+  </object>
+
+<object Name="TerrainOpalDuskwaters" Inherits="TerrainWater" Replace="true">
+    <part Name="Render" DisplayName="黄昏水" />
+    <tag Name="Gender" Value="plural" />
+    <xtagGrammar Proper="true" />
+    <part Name="Description" Short="枝葉の陰がオパルの水から温もりを絞り取り、薄暗い淀みに変えてしまう。" />
+    <tag Name="AlternateTerrainName" Value="OpalDuskwaters" />
+    <tag Name="SecretAttributes" Value="opalduskwaters" />
+  </object>
+
+<object Name="TerrainRiverYonth" Inherits="TerrainWater" Replace="true">
+    <part Name="Render" DisplayName="ヨンス川" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <part Name="Description" Short="ヨンスは奇なる東方の山塊を割り、名なき水をクッドへ迎え入れる。魚めいたものがその玄武岩の砂利を食む。" />
+    <tag Name="AlternateTerrainName" Value="RiverYonth" />
+    <tag Name="SecretAttributes" Value="riveryonth" />
+  </object>
+
+<object Name="TerrainMountainStream" Inherits="TerrainWater" Replace="true">
+    <part Name="Render" DisplayName="山の流れ" />
+    <part Name="Description" Short="太古に開いた老いた山脈が、冷たい塩水で満たされる。" />
+    <xtagGrammar massNoun="false" />
+    <tag Name="AlternateTerrainName" Value="MountainStream" />
+    <tag Name="SecretAttributes" Value="mountainstream" />
+  </object>
+
+<object Name="TerrainLakeHinnom" Inherits="TerrainWater" Replace="true">
+    <part Name="Render" DisplayName="ヒンノム湖" Tile="Terrain/terrainlakehinnom_1i.bmp" RenderString="247" ColorString="&amp;g^c" TileColor="&amp;c" DetailColor="g" />
+    <part Name="TerrainTravel" Segments="2500" TravelClass="Survival_RiversLakesSurvival" />
+    <part Name="Description" Short="珊瑚の指が海綿床から突き出して藻の花を貫き、白エシュが何百と群れ集う。" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="DefaultWall" Value="Porous Coral Rag" />
+    <tag Name="IgnoreLiquidBlueprint" />
+    <tag Name="SvardymStorm" />
+    <tag Name="Terrain" Value="LakeHinnom" />
+    <tag Name="LairOwnerTable" Value="LairOwners_LakeHinnom" />
+    <tag Name="RegionTier" Value="6" />
+    <tag Name="RuinWalls" Value="HighTierRegionRuinWalls" />
+    <tag Name="VillageDefaultLiquid" Value="AlgalWaterDeepPool" />
+    <tag Name="SecretAttributes" Value="lakehinnom" />
+  </object>
+
+<object Name="TerrainPalladiumReef" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="パラジウム礁" RenderString="005" ColorString="&amp;r^c" TileColor="&amp;c" DetailColor="r" Tile="Terrain/sw_reef_worldmap_1.bmp" />
+    <part Name="RandomRenderString" Strings="15,42,9,248" />
+    <part Name="TerrainTravel" Segments="2000" />
+    <part Name="Description" Short="色鮮やかなポリプのアーコロジーが古い溶接格子を弧となって覆い、多様な命がそこに棲みつく。" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="DefaultWall" Value="Coral Rag" />
+    <tag Name="LairOwnerTable" Value="LairOwners_PalladiumReef" />
+    <tag Name="Terrain" Value="PalladiumReef" />
+    <tag Name="RegionTier" Value="7" />
+    <tag Name="SvardymStorm" />
+    <tag Name="RuinWalls" Value="HighTierRegionRuinWalls" />
+    <tag Name="VillageDefaultLiquid" Value="AlgalWaterDeepPool" />
+    <tag Name="VillageClearBehavior" Value="circles:10" />
+    <tag Name="SecretAttributes" Value="palladiumreef" />
+  </object>
+
+<object Name="TerrainRuins" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="廃墟" RenderString="204" ColorString="&amp;Y^k" Tile="Terrain/sw_ruins2.bmp" />
+    <part Name="TerrainTravel" Segments="2000" TravelClass="Survival_RuinsSurvival" />
+    <part Name="Description" Short="不可思議な喰らう者の蔓に覆われた工芸が、古の巨人旋盤で紡がれてここに崩れている。頁岩の掌を逃れて聳えるクロームの尖塔と胸壁が、その下に迷宮が潜むと暗示する。" />
+    <tag Name="RegionTier" Value="4" />
+    <tag Name="Terrain" Value="Ruins" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Ruins" />
+    <tag Name="Gender" Value="plural" />
+    <tag Name="DefaultWall" Value="Mudroot" />
+    <part Name="RandomRenderString" Strings="179,191,192,193,194,195,196,197,217,218" />
+    <builder Name="RandomTile" Tiles="Terrain/sw_ruins_9.bmp,Terrain/sw_ruins_10.bmp,Terrain/sw_ruins_11.bmp,Terrain/sw_ruins_12.bmp,Terrain/sw_ruins_13.bmp,Terrain/sw_ruins_14.bmp,Terrain/sw_ruins_15.bmp,Terrain/sw_ruins_16.bmp,Terrain/sw_ruins_17.bmp,Terrain/sw_ruins_18.bmp,Terrain/sw_ruins_19.bmp,Terrain/sw_ruins_20.bmp" />
+    <part Name="RandomColors" MainColor="Y" DetailColor="y" />
+    <stag Name="Historical" />
+    <tag Name="DynamicSemanticTable:Historical:Weight" Value="10" />
+  </object>
+
+<object Name="TerrainBaroqueRuins" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="バロック廃墟" RenderString="204" ColorString="&amp;Y^k" Tile="Terrain/sw_ruins2.bmp" />
+    <part Name="TerrainTravel" Segments="3000" TravelClass="Survival_RuinsSurvival" />
+    <part Name="Description" Short="繁茂する緑が喰らう者の豪奢な遺構を樹冠のように覆い、裂けた密林の隅からクリスチールの手摺りや星蘭の槍窓が覗く。" />
+    <tag Name="Terrain" Value="BaroqueRuins" />
+    <tag Name="LairOwnerTable" Value="LairOwners_BaroqueRuins" />
+    <tag Name="Gender" Value="plural" />
+    <part Name="RandomRenderString" Strings="182,186,189,199,208,210,211,214,215" />
+    <builder Name="RandomTile" Tiles="Terrain/sw_ruins_deep_1.bmp,Terrain/sw_ruins_deep_2.bmp,Terrain/sw_ruins_deep_3.bmp,Terrain/sw_ruins_deep_4.bmp,Terrain/sw_ruins_deep_5.bmp,Terrain/sw_ruins_deep_6.bmp,Terrain/sw_ruins_deep_7.bmp,Terrain/sw_ruins_deep_8.bmp,Terrain/sw_ruins_deep_9.bmp,Terrain/sw_ruins_deep_10.bmp,Terrain/sw_ruins_deep_11.bmp,Terrain/sw_ruins_deep_12.bmp" />
+    <part Name="RandomColors" MainColor="Y" DetailColor="y" />
+    <tag Name="DefaultWall" Value="Mudroot" />
+    <tag Name="RuinWalls" Value="HighTierRegionRuinWalls" />
+    <tag Name="RegionTier" Value="7" />
+    <stag Name="Historical" />
+    <tag Name="DynamicSemanticTable:Historical:Weight" Value="10" />
+  </object>
+
+<object Name="TerrainJoppa" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="ヨッパ" RenderString="216" Tile="Terrain/sw_joppa.bmp" ColorString="&amp;w^k" DetailColor="y" />
+    <part Name="Description" Short="緑の籾殻に紛れた蟻のように、農夫たちは塩粉を散らす大地から最後の清らかな水気を吸い尽くす。" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="NoBiomes" Value="1" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="Terrain" Value="Saltmarsh" />
+    <tag Name="MinimapColor" Value="g" />
+  </object>
+
+<object Name="TerrainJoppaRuins" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="塩湿地" RenderString="244" ColorString="&amp;g^k" Tile="terrain/tile_swamp1.bmp" />
+    <part Name="TerrainTravel" Segments="1250" TravelClass="Survival_SaltmarshSurvival" />
+    <part Name="Description" Short="澱んだ水溜まりでは、夜空の星帯と競い合うように光睡蓮が咲く。だが塩の太陽の下では、塩藻の陰へと縮こまってしまう。" />
+    <tag Name="NoBiomes" Value="1" />
+    <tag Name="DungeonAttributes" Value="Marsh" />
+    <tag Name="LairOwnerTable" Value="LairOwners_Watervine" />
+    <tag Name="Terrain" Value="Saltmarsh" />
+  </object>
+
+<object Name="TerrainTheSpindle" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="スピンドル" RenderString="202" Tile="terrain/sw_spindle_bottom.bmp" TileColor="&amp;C^k" DetailColor="Y" ColorString="&amp;C^k" />
+    <part Name="Description" Short="ここはスピンドル――長さを持たぬマヤブルーの針――が、死装束をまとった大地を破って蒼穹を貫く聖地だ。" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="RegionTier" Value="5" />
+    <part Name="Physics" Solid="true" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <tag Name="NoBiomes" Value="1" />
+    <tag Name="LairOwnerTable" Value="LairOwners_TheSpindle" />
+    <tag Name="Terrain" Value="TheSpindle" />
+    <tag Name="MinimapColor" Value="g" />
+    <stag Name="Historical" />
+  </object>
+
+<object Name="TerrainOmonporch" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="オモンポーチ" Tile="terrain/sw_omonporch.bmp" DetailColor="Y" RenderString="234" ColorString="&amp;C" />
+    <part Name="Description" Short="息を詰まらせる樹々の陰を抜けて、葬送の記念碑の百のアーチと控壁が飛翔し、大地を喰らう者たちの地下墓地を屋根掛けする大理石の回廊をのぞき込む。" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="RegionTier" Value="5" />
+    <tag Name="NoBiomes" Value="1" />
+    <tag Name="LairOwnerTable" Value="LairOwners_BananaGrove" />
+    <tag Name="Terrain" Value="BananaGrove" />
+    <tag Name="MinimapColor" Value="g" />
+  </object>
+
+<object Name="TerrainKyakukya" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="キャクキャ" RenderString="006" Tile="terrain/tile_kya.bmp" ColorString="&amp;R^k" DetailColor="R" TileColor="&amp;Y" />
+    <part Name="Description" Short="猿神を奉じる村と巨大なキノコの住まいが、ここ深い密林にある。" />
+    <tag Name="NoBiomes" Value="1" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="Terrain" Value="Jungle" />
+    <tag Name="MinimapColor" Value="g" />
+  </object>
+
+<object Name="TerrainRedRock" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="レッドロック" RenderString="030" Tile="terrain/tile_location7.bmp" DetailColor="R" ColorString="&amp;r^k" />
+    <part Name="Description" Short="自然に紅く染まった岩の突起が、塩を噴く岩棚から突き出している。" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="Terrain" Value="DesertCanyon" />
+    <tag Name="MinimapColor" Value="g" />
+    <stag Name="Geological" />
+  </object>
+
+<object Name="TerrainJoppaRedrockChannel" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="塩湿地" RenderString="239" ColorString="&amp;g^k" Tile="terrain/tile_swamp1.bmp" />
+    <part Name="Description" Short="澱んだ水溜まりでは、夜空の星帯と競い合うように光睡蓮が咲く。だが塩の太陽の下では、塩藻の陰へと縮こまってしまう。" />
+    <tag Name="Terrain" Value="Saltmarsh" />
+  </object>
+
+<object Name="TerrainSixDayStilt" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="スティルト" Tile="terrain/sw_six_day_stilt.bmp" TileColor="&amp;C^k" DetailColor="Y" RenderString="254" ColorString="&amp;k^K" />
+    <part Name="Description" Short="スティルトは砂丘から化石化したクラーケンの死骸のようにそびえ、空っぽの平原へと身を屈める。" />
+    <tag Name="NoBiomes" Value="1" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="Terrain" Value="Saltdunes" />
+    <tag Name="RegionTier" Value="2" />
+    <tag Name="MinimapColor" Value="g" />
+  </object>
+
+<object Name="TerrainEynRogel" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="エイン・ロゲル" RenderString="254" ColorString="&amp;K^R" />
+    <part Name="Description" Short="エイン・ロゲル" />
+    <xtagGrammar Proper="true" massNoun="false" />
+  </object>
+
+<object Name="TerrainGritGate" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="グリット・ゲート" Tile="terrain/tile_location8.bmp" TileColor="&amp;W^k" DetailColor="C" RenderString="254" ColorString="&amp;K^y" />
+    <part Name="Description" Short="百の判読不能な言語でルーンが刻まれた巨大門の上半分はいまも直立し、クロームの格子の下で広い通路が密林のロームへと口を開ける。" />
+    <tag Name="NoBiomes" Value="1" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="Terrain" Value="Ruins" />
+    <tag Name="MinimapColor" Value="g" />
+    <stag Name="Historical" />
+  </object>
+
+<object Name="TerrainRustWell" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="ラストウェルズ" Tile="terrain/tile_location3.bmp" DetailColor="R" RenderString="007" ColorString="&amp;r^k" />
+    <part Name="Description" Short="赤いクッズーの蔓が、地に穿たれたクロームの井戸を棚として巻きつく。" />
+    <tag Name="Gender" Value="plural" />
+    <xtagGrammar iArticle="the" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="RegionTier" Value="2" />
+    <tag Name="Terrain" Value="Ruins" />
+    <tag Name="AlternateTerrainName" Value="RustWell" />
+    <tag Name="MinimapColor" Value="g" />
+  </object>
+
+<object Name="TerrainGolgotha" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="ゴルゴタ" Tile="terrain/tile_location5.bmp" DetailColor="C" TileColor="&amp;G^k" RenderString="030" ColorString="&amp;R^k" />
+    <part Name="Description" Short="朽ちた密林に覆い隠され、クロームの墓場であるゴルゴタの錆びた洞窟の口が開いている。" />
+    <tag Name="NoBiomes" Value="1" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="RegionTier" Value="3" />
+    <tag Name="Terrain" Value="Ruins" />
+    <tag Name="MinimapColor" Value="g" />
+    <stag Name="Historical" />
+  </object>
+
+<object Name="TerrainBethesdaSusa" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="ベセスダ・スーサ" Tile="terrain/tile_location.bmp" TileColor="&amp;Y^k" DetailColor="R" RenderString="206" ColorString="&amp;R^k" />
+    <part Name="Description" Short="永劫のずれで歪んだ岩石が、ベサイダの巣が持つ角のない建築を封じ込めている。" />
+    <tag Name="NoBiomes" Value="1" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="RegionTier" Value="4" />
+    <tag Name="Terrain" Value="Mountains" />
+    <tag Name="MinimapColor" Value="g" />
+    <stag Name="Historical" />
+  </object>
+
+<object Name="TerrainAsphaltMines" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="アスファルト鉱山" Tile="terrain/tile_location9.bmp" TileColor="&amp;y^k" DetailColor="w" RenderString="247" ColorString="&amp;k^w" />
+    <part Name="Description" Short="瓦礫がこの放棄された鉱山を包み、古い部族が不可解な目的で黒い血を汲み上げていた跡だけが残る。" />
+    <tag Name="NoBiomes" Value="1" />
+    <tag Name="Gender" Value="plural" />
+    <xtagGrammar iArticle="the" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="RegionTier" Value="3" />
+    <tag Name="Terrain" Value="Hills" />
+    <tag Name="MinimapColor" Value="g" />
+    <stag Name="Historical" />
+  </object>
+
+<object Name="TerrainRustedArchway" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="ラステッド・アーチ" Tile="terrain/sw_rusted_archway.bmp" RenderString="239" ColorString="&amp;r" DetailColor="y" />
+    <part Name="Description" Short="ラステッド・アーチの錆色の弧が空を染め、かつてクロームの巨人が通った道を輪のようになぞる。" />
+    <xtagGrammar massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="RegionTier" Value="2" />
+    <tag Name="Terrain" Value="Ruins" />
+    <tag Name="MinimapColor" Value="g" />
+    <stag Name="Historical" />
+  </object>
+
+<object Name="TerrainEynRoj" Inherits="TerrainMoonStair" Replace="true">
+    <part Name="Render" DisplayName="エイン・ロージ" RenderString="005" ColorString="&amp;M" TileColor="&amp;m" DetailColor="Y" Tile="Terrain/sw_chavvah_worldmap.bmp" HFlip="false" />
+    <part Name="Description" Short="大理石の木立に生命の木ハヴァの裂けた幹がうずくまり、落ち葉は鏡の絨毯のように敷き詰められ、夢レンが精神の賛歌をさえずる。" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <removepart Name="RandomRenderString" />
+    <removepart Name="RandomWorldTile" />
+    <removepart Name="RandomColors" />
+    <tag Name="IndefiniteArticle" Value="*delete" />
+    <tag Name="DefiniteArticle" Value="*delete" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <tag Name="MinimapColor" Value="g" />
+  </object>
+
+<object Name="TerrainPalladiumReef 3l" Inherits="TerrainPalladiumReef" Replace="true">
+    <part Name="Render" DisplayName="イド" RenderString="239" ColorString="&amp;W^c" TileColor="&amp;c" DetailColor="W" Tile="Terrain/terrainpalladiumreef_3l.bmp" />
+    <part Name="Description" Short="染め上げられた配管の位相が海綿床に設えられ、抒情的な共同体の道標となっている。" />
+    <removepart Name="RandomRenderString" />
+    <tag Name="IndefiniteArticle" Value="the" />
+    <tag Name="DefiniteArticle" Value="the" />
+    <xtagGrammar Proper="true" massNoun="false" />
+    <tag Name="OverlayColor" Value="&amp;W" />
+    <part Name="AlternateOverlayRender" ColorString="&amp;k" />
+    <tag Name="SvardymStorm" Value="*delete" />
+    <tag Name="NoBiomes" Value="1" />
+    <tag Name="MinimapColor" Value="g" />
+  </object>
+
+<object Name="TerrainBrightsheol" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="ブライトシェオル" />
+    <tag Name="Terrain" Value="Brightsheol" />
+    <tag Name="Immutable" />
+  </object>
+
+<object Name="TerrainTzimtzlum" Inherits="Terrain" Replace="true">
+    <part Name="Render" DisplayName="ツィムツルム" />
+    <tag Name="Terrain" Value="Tzimtzlum" />
+    <tag Name="Immutable" />
+  </object>
+
+</objects>
+

@@ -20,6 +20,7 @@ references/
 .vscode/
 *.user
 *.suo
+*.DotSettings.user
 
 # OS
 .DS_Store
@@ -30,3 +31,19 @@ dist/
 
 # Test results
 TestResults/
+
+# Ruff cache
+.ruff_cache/
+
+# NuGet
+*.nupkg
+packages/
+
+# Mono
+*.mdb
+
+# Unity / Game mod
+*.unitypackage
+
+# Decompiled game source (copyrighted, local reference only)
+docs/ilspy-raw/

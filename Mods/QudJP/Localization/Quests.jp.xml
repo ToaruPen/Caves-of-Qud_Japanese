@@ -1,0 +1,502 @@
+<?xml version='1.0' encoding='utf-8'?>
+<quests Load="Merge">
+  
+  <quest Name="What's Eating the Watervine?" Factions="Joppa" Reputation="200" Level="1" Achievement="ACH_COMPLETE_WATERVINE"
+         Accomplishment="ジョッパの村人にギルシュを警告し、食い荒らされたウォーターヴァインの謎を解いた。"
+         Hagiograph="＝month＝月＝year＝年、＝name＝はクロームのアーチの下を歩き、ギルシュリングの群れを蹴散らし、萎れた作物を癒やした。"
+         HagiographCategory="DoesSomethingRad"
+         Gospel="血塗れのレッドロックの戦いで、＝name＝はギルシュリングとバブーンの連合軍と戦い、ジョッパの村人を解放した。＝player.t＝に敬意を表し、彼らは &lt;spice.history.gospels.Celebration.LateSultanate.!random&gt;。">
+
+    <step Name="Travel to Red Rock" XP="50">
+      <text>ジョッパから北へ2パラサング進み、レッドロックへ向かう。</text>
+    </step>
+
+    <step Name="Find the Vermin" XP="100">
+      <text>ジョッパのウォーターヴァインを食べている生き物を見つける。</text>
+    </step>
+
+    <step Name="Get a Corpse" XP="100">
+      <text>生き物の死体を1体集める。</text>
+    </step>
+
+    <step Name="Return with the Corpse" XP="750">
+      <text>ウォーターヴァインを食べていた害獣の死体を持ってジョッパに戻る。</text>
+    </step>
+
+  </quest>
+ 
+  <quest Name="Raising Indrix" Level="20" 
+         Factions="Kyakukya,Wardens" Reputation="100"
+         Hagiograph="恵みあれ！ ＝name＝は鬱蒼たるジャングルで黒いガラスの欠片を回収し、それで動く機械の山羊に返した。"
+         HagiographCategory="FindsObject"
+         Gospel="キャクキャ付近のジャングルをさまよいながら、＝name＝は＝player.subjective＝が暗い星を周回し、その巨大な降着円盤に自己の部品を積み上げる夢を見た。それ以来、＝name＝は星なき三角柱を＝player.possessive＝身に帯びた。">
+    
+    <step Name="Find Mamon Souldrinker" XP="1000">
+      <text>山羊人の村へ行き、マモン・ソウルドリンカーを見つける。</text>
+    </step>
+
+    <step Name="Recover the Amaranthine Prism" XP="3250">
+      <text>アマランサイン・プリズムを取り戻し、監視官インドリクスに返す。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="Fetch Argyve a Knickknack" Level="3" 
+         Accomplishment="老爺に小物を届けた。"
+         Hagiograph="水と蔓の寺院で、＝name＝は老爺にクロームの価値を教えた。"
+         HagiographCategory="Trysts"
+         Gospel="&lt;spice.elements.entity$elements[random].weddingConditions.!random.capitalize&gt;、＝name＝はティンカー協会との友情を固めるため、アーギヴと結婚した。">
+    
+    <step Name="Find a Knickknack" XP="0">
+      <text>ジョッパ周辺の地帯で遺物を探す。</text>
+    </step>
+
+    <step Name="Return to Argyve" XP="75">
+      <text>遺物をアーギヴに持ち帰る。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="Fetch Argyve Another Knickknack" Level="5" 
+         Accomplishment="老爺にもう一つ小物を届けた。"
+         Hagiograph="ハイソルトサンの下、鋼の影で、＝name＝は老爺にクロームの価値を教えた。"
+         HagiographCategory="Trysts"
+         Gospel="&lt;spice.elements.entity$elements[random].weddingConditions.!random.capitalize&gt;、＝name＝はティンカー協会との友情を固めるため、二度目の結婚でアーギヴと結ばれた。">
+
+    <step Name="Find Another Knickknack" XP="0">
+			<text>ジョッパ周辺の地帯で別の遺物を探す。</text>
+    </step>
+
+    <step Name="Return to Argyve" XP="150">
+      <text>遺物をアーギヴに持ち帰る。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="Weirdwire Conduit... Eureka!" Level="7" 
+         Accomplishment="あなたの助力で、アーギヴは奇妙な信号を検出した。"
+		 Achievement="ACH_WEIRDWIRE_CONDUIT"
+         Hagiograph="湿地の加護を受け、＝name＝はワイヤー・コンジットを発明し、隠された信号を検出した。"
+         HagiographCategory="CreatesSomething"
+         Gospel="ジョッパのオアシスの外れにある工房で、＝name＝と＝player.possessive＝弟子アーギヴは、打楽器と灼熱のワイヤーの存在を喚起する装置を発明した。それを「ワイヤー・コンジット」と名付けた。">
+
+    <step Name="Find 200 Feet of Wire" XP="50">
+      <text>ジョッパ東のラストウェルでワイヤー200フィートを探す。</text>
+    </step>
+
+    <step Name="Return to Argyve" XP="250">
+      <text>ワイヤーをアーギヴに届ける。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="A Canticle for Barathrum"
+         Accomplishment="グリットゲートのバラサラム派と話をした。"
+         Hagiograph="＝name＝は地下に住む平和的なウルシーブに捧げる賛歌を書き、歌った。"
+         HagiographCategory="SingsASong"
+         Gospel="西のジャングルをさまよううち、＝name＝は秘儀を行うウルシーブの一族に出会った。＝player.t＝の円盤のような瞳のおかげで彼らは＝name＝を受け入れ、秘密を授けた。">
+    
+    <step Name="Travel to Grit Gate" XP="100">
+      <text>ジョッパ北東の廃墟の地下門、グリットゲートへ向かう。</text>
+    </step>
+
+    <step Name="Locate the Barathrumite Enclave" XP="100">
+      <text>グリットゲート内でバラサラム派の隠れ家を見つける。</text>
+    </step>
+
+    <step Name="Speak with the Barathrumites" XP="200">
+      <text>バラサラム派にアーギヴの奇妙な信号について尋ねる。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="A Signal in the Noise"
+         Accomplishment="グリットゲートのバラサラム派と話をした。"
+         Hagiograph="＝name＝は地下に住む平和的なウルシーブに捧げる賛歌を書き、歌った。"
+         HagiographCategory="SingsASong"
+         Gospel="西のジャングルをさまよううち、＝name＝は秘儀を行うウルシーブの一族に出会った。＝player.t＝の円盤のような瞳のおかげで彼らは＝name＝を受け入れ、秘密を授けた。">
+    
+    <step Name="Travel to Grit Gate" XP="100">
+      <text>西のジャングルにある廃墟の地下門、グリットゲートへ向かう。</text>
+    </step>
+
+    <step Name="Locate the Barathrumite Enclave" XP="100">
+      <text>グリットゲート内でバラサラム派の隠れ家を見つける。</text>
+    </step>
+
+    <step Name="Speak with the Barathrumites" XP="200">
+      <text>バラサラム派に奇妙な信号について尋ねる。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="More Than a Willing Spirit"
+         Accomplishment="ゴルゴタで武勇を示し、バラサラム派に認められた。"
+         Hagiograph="＝month＝月＝year＝年、＝name＝はゴルゴタのゴミ投入口から這い出し、スライムまみれのまま勝利した。"
+         HagiographCategory="DoesSomethingRad"
+         Gospel="西のジャングルをさまよううち、＝name＝は秘儀を行うウルシーブの一族に出会った。＝player.t＝が悪臭のスライムに覆われていたおかげで彼らは＝name＝を受け入れ、秘密を授けた。">
+    
+    <step Name="Travel to Golgotha" XP="100">
+      <text>グリットゲート北の大洞窟ゴルゴタへ向かう。</text>
+    </step>
+
+    <step Name="Find a Dysfunctional Waydroid" XP="200">
+      <text>ゴルゴタの廃墟で故障したウェイドロイドを見つける。</text>
+    </step>
+
+    <step Name="Repair the Waydroid" XP="300">
+      <text>ウェイドロイドを修理する。</text>
+    </step>
+
+    <step Name="Return to Grit Gate" XP="600">
+      <text>ウェイドロイドを持ってグリットゲートに戻り、バラサラム派と話す。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="Decoding the Signal"
+         Accomplishment="岩の寺院のベテルと話し、謎の信号を解読した。"
+         Hagiograph="勇気！ ＝name＝は開いた氷棚の口へ飛び込み、聖なる言葉でベテルと会話した。"
+         HagiographCategory="TalksToThing"
+         Gospel="巨大な氷塊の中で、＝name＝はベテルと囁き誓いを交わし、メカニマス教と友情を結んだ。">
+    
+    <step Name="Get Q Girl's Instructions onto the Data Disk" XP="1000">
+      <text>工房のQガールに話しかけ、ベテル用の指示をディスクにエンコードしてもらう。</text>
+    </step>
+
+    <step Name="Locate the Mechanimist Compound at Bethesda Susa" XP="1000">
+      <text>北の大洞窟ベセスダ・スーサへ行き、メカニマス寺院を見つける。</text>
+    </step>
+
+    <step Name="Decode the Signal" XP="1000">
+      <text>メカニマス寺院に潜入し、ベテルと交信して信号を解読する。</text>
+    </step>
+
+    <step Name="Return to Grit Gate" XP="1000">
+      <text>グリットゲートに戻り、オソに報告する。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="O Glorious Shekhinah!"
+         Accomplishment="求道者の頼みで、六日制スティルトの商人バザールと大聖堂を訪れた。"
+         Hagiograph="＝name＝は塩原を北西へ旅し、六日制スティルトの商人バザールと大聖堂に至った。そこではスルタンを讃える賛歌が歌われた。"
+         HagiographCategory="Pilgrimage"
+         Gospel="荒れた平原を越えて旅し、＝name＝は六日制スティルトの商人バザールと大聖堂に向かった。そこで＝player.subjective＝はメカニマスと親交を結び、聖なる井戸へ遺物を投じた。">
+    
+    <step Name="Make a Pilgrimage to the Six Day Stilt" XP="0">
+      <text>大塩砂漠を越え、商人バザールとメカニマス大聖堂へ巡礼し、求道者に頼まれた小物を奉納する。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="The Earl of Omonporch"
+         Accomplishment="アスフォデルと交渉し、スピンドル麓の支配権を確保した。"
+         Hagiograph="＝month＝月＝year＝年、＝name＝は美しきアスフォデルをオモンポーチの伯爵、スピンドル・ジャウズの守護者に任命した。"
+         HagiographCategory="AppointsSomeone"
+         Gospel="＝year＝年、＝name＝は腐敗した行政官アスフォデルをオモンポーチの伯爵兼大臣に任命した。そこで彼／彼女／xは＝player.t＝の名のもとに &lt;spice.elements.entity$elements[random].practices.!random&gt; を義務付けた。">
+    
+    <step Name="Travel to Omonporch" XP="5000">
+      <text>北へ向かい、スピンドルが立つオモンポーチへ行く。</text>
+    </step>
+
+    <step Name="Secure the Spindle" XP="5000">
+      <text>スピンドル麓の支配権を握る。</text>
+    </step>
+
+    <step Name="Return to Grit Gate" XP="5000">
+      <text>グリットゲートへ戻り、成功を報告する。</text>
+    </step>
+
+  </quest>
+
+  <quest Name="Grave Thoughts">
+    <step Name="Investigate the Rumbling" XP="0">
+      <text>メインフレームにアクセスし、隠れ家周辺の頁岩をスキャンする。</text>
+    </step>
+    <step Name="Speak to Otho" XP="0">
+      <text>メインフレーム室のインターホンか直接でオソに話しかける。</text>
+    </step>
+  </quest>
+
+  <quest Name="A Call to Arms"
+         Accomplishment="プトゥス聖堂騎士団の攻撃からグリットゲートを勇敢に守った。"
+         Hagiograph="＝name＝はサンズとドーターズの大隊を巨大メインフレームに叩きつけ、周囲の寺院にガラスとガリウムの雨を降らせた。"
+         HagiographCategory="DefendsSomething"
+         Gospel="＝month＝月＝year＝年、＝name＝は血塗れのグリットゲートの戦いでプトゥス騎士団連合に決定的勝利を収めた。熱いガリウムと砕けたガラスで荒廃したため、グリットゲートはオソの墓場と呼ばれるようになった。">
+    <step Name="Prepare Defenses" XP="0">
+      <text>プトゥス騎士団の攻撃に備えて、レーザー砲座・フォース・プロジェクターに電力を入れ、クロムリングをオーバークロックし、ロダニスYを起動する。</text>
+    </step>
+    <step Name="Defend Grit Gate" XP="0">
+      <text>グリットゲートを攻撃者から守る。</text>
+    </step>
+  </quest>
+
+  <quest Name="The Assessment">
+    <step Name="Speak to Otho" XP="0">
+      <text>オソに話しかけ、攻撃による損害を査定する。</text>
+    </step>
+  </quest>
+
+  <quest Name="Pax Klanq, I Presume?"
+         Accomplishment="コーラルの道を歩み、キノコの天才パックス・クランクを説得してQガール設計のバッテリーを造らせた。"
+         Hagiograph="宇宙の虚空で、石工＝name＝は星煉瓦でコーラルの道を築き、聖なる言葉でキノコと語らった。"
+         HagiographCategory="TalksToThing"
+         Gospel="珊瑚と菌肉でできた異次元の大聖堂で、＝name＝はキノコ「パックス・クランク」と結婚し、真菌と関係を結んだ。">
+    <step Name="Get Q Girl's Blueprints for the Climber" XP="0">
+      <text>クライマーの設計図を入手し、パックス・クランクに渡す。</text>
+    </step>
+    <step Name="Seek the Heart of the Rainbow" XP="0">
+      <text>謎の第一部を解読する。</text>
+    </step>
+    <step Name="Eat the God's Flesh" XP="0">
+      <text>謎の第二部を解読する。</text>
+    </step>
+    <step Name="Follow the Coral Path" XP="0">
+      <text>謎の第三部を解読する。</text>
+    </step>
+    <step Name="Convince Pax Klanq to Construct the Climber" XP="0">
+      <text>パックス・クランクに、Qガールの設計でクライマーを作るよう同意させる。</text>
+    </step>
+    <step Name="Return to Grit Gate" XP="0">
+      <text>グリットゲートに戻り、バラサラムに報告する。</text>
+    </step>
+  </quest>
+
+  <quest Name="Petals on the Wind"
+         Accomplishment="ヒンドレンのパリアに頼まれ、秘密の村ベイ・ラーの謎を調べた。"
+         Hagiograph="慈悲深き＝name＝は鹿人のパリアの頼みで牧草地の揉め事に首を突っ込んだ。スルタンは慈愛をもって統治する！"
+         HagiographCategory="InvestigatesSomething"
+         Gospel="&lt;spice.time.partsOfDay.!random&gt;、&lt;spice.commonPhrases.strange.!random.article&gt;空と牧草地の下で、ベイ・ラーのヒンドレンは地平線に大きな望遠鏡のような影を見た。それは＝name＝で、＝player.subjective＝が到着すると、ヒンドレンは＝player.objective＝のために記念碑を建て、以後「ルッキンググラス・ケンドレン」と呼んだ。">
+    <step Name="Investigate Bey Lah" XP="0">
+      <text>秘密の村ベイ・ラーへ行き、問題を調査する。</text>
+    </step>
+  </quest>
+
+  <quest Name="Find Eskhind"
+         Accomplishment="ヒンドレンのパリア、エスキンドとその姉妹を中空の樹の中で見つけた。"
+         Hagiograph="忘れるな！ ＝name＝はパリアのエスキンドに使命から逃げるなと諭した。それ以来、彼女は『柔和なるエスキンド』と呼ばれた。"
+         HagiographCategory="AdmonishesSomeone"
+         Gospel="＝month＝月＝year＝年、＝name＝は嫌疑を受けたエスキンドに、ヒンドレンの家宝キンドリッシュの所在を巡って決闘を挑まれた。＝name＝は勝利し、エスキンドを諭してベイ・ラーへ戻らせた。">
+    <step Name="Find Eskhind" XP="0">
+      <text>エスキンドを見つけ、キンドリッシュを取り戻す。</text>
+    </step>
+    <step Name="Speak to Warden Neelahind" XP="0">
+      <text>エスキンドと親しかった監視官ニーラヒンドに話す。</text>
+    </step>
+    <step Name="Deliver News of Eskhind" XP="0">
+      <text>ケーへエスキンドの消息を伝える。</text>
+    </step>
+  </quest>
+
+  <quest Name="Love and Fear"
+         Accomplishment="捨てられた恋文を見つけて届けた。"
+         Hagiograph="なんと鼓舞的だろう、＝name＝の存在は。『柔和なるエスキンド』を救い、彼女がベイ・ラー最強の戦士に手を求めるほどに贖ったのだから！"
+         HagiographCategory="ReunitesLovers"
+         Gospel="朽ちた切り株の中心で、＝name＝はエスキンドと監視官ニーラヒンドを結婚させ、ベイ・ラーのヒンドレンとの友情を固めた。"
+    >
+    <step Name="Rescue an Imperiled Love" XP="0">
+      <text>恋人たちの運命が固まる前に介入する。</text>
+    </step>
+    <step Name="Return the Love Sonnet" XP="0">
+      <text>しわくちゃの紙片を作者か意中の相手に渡す。</text>
+    </step>
+  </quest>
+
+  <quest Name="Kith and Kin"
+         Accomplishment="ベイ・ラーの運命のため、キンドリッシュ失踪の謎を解き、監視官ニーラヒンドの裁きを助けた。"
+         Hagiograph="尊き救済者！ ＝name＝はベイ・ラーの鹿人が抱える問題に平和と繁栄をもたらした。"
+         HagiographCategory="InvestigatesSomething"
+         Gospel="盗賊とそれを助長する権力に抗し、＝name＝はベイ・ラーの村で調査を率いた。＝player.t＝の&lt;spice.elements.entity$elements[random].adjectives.!random&gt;機知のおかげで、監視官ニーラヒンドは正しく裁きを下せた。">
+    <step Name="Brief Warden Neelahind" XP="0">
+      <text>ベイ・ラーの監視官に、キンドリッシュ盗難の争点を伝える。</text>
+    </step>
+    <step Name="Discover all the evidence" XP="0">
+      <text>犯人に繋がる証拠をすべて見つける。</text>
+    </step>
+    <step Name="Accuse the thief" XP="0">
+      <text>証拠を持って監視官ニーラヒンドに報告し、盗んだ犯人を指摘する。</text>
+    </step>
+  </quest>
+
+  <quest Name="The Buried Watchers"
+         Accomplishment="墓に住むモパンゴの一団を訪ねた。"
+         Hagiograph="オモンポーチの食らう者の墓の奥深くで、＝name＝は秘儀を行うモパンゴの一族に出会った。彼／彼女／eyはスルタンを仲間に迎え、＝player.objective＝に秘奥を授けた。"
+         HagiographCategory="TalksToThing"
+         Gospel="オモンポーチの食らう者の墓の奥深くで、＝name＝は秘儀を行うモパンゴの一族に出会った。彼／彼女／eyは＝sultanTerm＝を仲間に迎え、＝player.objective＝に秘奥を授けた。">
+    <step Name="Visit the Mopango Settlement in the Tomb of the Eaters" XP="0">
+      <text>食らう者の墓の北西墓地にいる友好的なタレット、ヴィヴィラを見つけ、ゾソムが寄越したと伝える。</text>
+    </step>
+  </quest>
+
+  <quest Name="Fraying Favorites">
+    <step Name="Talk to Lebah" XP="0">
+      <text>レバに会い、忌まわしい装置との遭遇について聞く。</text>
+    </step>
+    <step Name="Recover the Repulsive Device" XP="0">
+      <text>フォーク地下墓地でk-ゴニノンを探し、反発装置を回収する。</text>
+    </step>
+    <step Name="Speak with the Watchers" XP="0">
+      <text>モパンゴ監視者ダドゴム、ドヨバ、ジャミョ、ヨナに反発装置について尋ねる。</text>
+    </step>
+    <step Name="Use the Repulsive Device" XP="0">
+      <text>反発装置をどう使うか決める。</text>
+    </step>
+  </quest>
+
+  <quest Name="Tomb of the Eaters"
+         Accomplishment="食らう者の墓から帰還し、スピンドルの磁場を停止させた。">
+    <step Name="Recover the Mark of Death" XP="0">
+      <text>食らう者が死者に刻む失われた印章を取り戻す。</text>
+    </step>
+    <step Name="Inscribe the Mark" XP="0">
+      <text>その印を自分の体に刻む。</text>
+    </step>
+    <step Name="Enter the Tomb of the Eaters" XP="0">
+      <text>封印された墓に入る方法を得る。</text>
+    </step>
+    <step Name="Ascend the Tomb and Cross into Brightsheol" XP="0">
+      <text>墓を登り、レシェフの埋葬室を見つける。そこからブライトシールへ渡る方法を探す。</text>
+    </step>
+    <step Name="Disable the Spindle's Magnetic Field" XP="0">
+      <text>スピンドルの制御装置にアクセスし、磁場を停止させる。</text>
+    </step>
+    <step Name="Return to Grit Gate" XP="0">
+      <text>グリットゲートに戻り、バラサラムに報告する。</text>
+    </step>
+  </quest>
+
+  <quest Name="Landing Pads">
+    <step Name="Consult Settlements" XP="0">
+      <text>少なくとも3つの集落の指導者を説得し、スリンとを受け入れさせる。</text>
+    </step>
+    <step Name="Sanctuary Candidates" XP="0">
+      <text>以下の派閥がスリンとの受け入れに同意した。</text>
+    </step>
+    <step Name="Bid the Slynth to Choose" XP="0">
+      <text>タアに話しかけ、スリンとを招集して決断させる。</text>
+    </step>
+  </quest>
+
+  <quest Name="Return to the Hydropon">
+    <step Name="Return to the Hydropon" XP="0">
+      <text>スリンとが新居に到着したら、ハイドロポンでタアに話しかける。</text>
+    </step>
+  </quest>
+
+  <quest Name="If, Then, Else"
+         Accomplishment="生命の木チャヴァの“-else化”の儀式を完遂し、その実体チャイムの一つを永遠に断った。"
+         Hagiograph="美は引き算にあり！ 剪定者＝name＝は生命の木をより美しく整えた。"
+         HagiographCategory="DoesSomethingRad"
+         Gospel="生命の木の多くの意志に従い、＝name＝はトランジット岩をチャヴァの根の下にある発光するソフトへ運んだ。そこで＝player.subjective＝は秘儀を行い、地上へ戻って永遠に変わった。">
+    <step Name="Gather Tau's Chime" XP="0">
+      <text>ケテルにある彼女の枝から、タウのチャイムを回収する。</text>
+    </step>
+    <step Name="Go to the Bottom of Taproot" XP="0">
+      <text>チャヴァのタップルートを40層の底まで降りる。</text>
+    </step>
+    <step Name="Reunite Tau with Her Chime" XP="0">
+      <text>タップルートにチャイムを触れさせ、-else化の儀式を終える。</text>
+    </step>
+    <step Name="Return to the Keter" XP="0">
+      <text>ケテルへ戻り、ディヴヴラフと話す。</text>
+    </step>
+  </quest>
+
+  <quest Name="The Golem"
+         Accomplishment="">
+    <step ID="Soup" Name="Procure the Sanguine Fluid" XP="0">
+      <text>パックス・クランクに原始スープを20ドラム届ける。</text>
+    </step>
+    <step ID="Body" Name="Choose a Body" XP="0">
+      <text>レベル30以上の従者を提供する。</text>
+    </step>
+    <step ID="Catalyst" Name="Choose a Catalyst" XP="0">
+      <text>純液体を3ドラム提供する。</text>
+    </step>
+    <step ID="Atzmus" Name="Choose an Atzmus" XP="0">
+      <text>何らかの肢を提供する。</text>
+    </step>
+    <step ID="Armament" Name="Choose an Armament" XP="0">
+      <text>ゼータクローム武器を1つ提供する。</text>
+    </step>
+    <step ID="Incantation" Name="Choose an Incantation" XP="0">
+      <text>年代記の項目を1つ提供する。</text>
+    </step>
+    <step ID="Hamsa" Name="Choose a Hamsa" XP="0">
+      <text>重量5ポンド以下のアイテムを提供する。</text>
+    </step>
+    <step ID="Power" Name="Acquire an Ascension Power Source" XP="0">
+      <text>中性子フラックス3ドラムを提供するか、別の動力源を見つける。</text>
+    </step>
+  </quest>
+
+  <quest Name="We Are Starfreight">
+    <step ID="Barathrum" Name="Prepare to Ascend" XP="0">
+      <text>ゴーレムにバラサラムを入れる。</text>
+    </step>
+    <step ID="Ascend" Name="Ascend" XP="0">
+      <text>スピンドルの昇天機構を起動する。</text>
+    </step>
+  </quest>
+
+  <quest Name="Reclamation">
+    <intproperty Name="MinorBattles" Value="2" />
+    <intproperty Name="HealDelay" Value="2400" />
+    <intproperty Name="ReinforcementDelay" Value="1200" />
+    <intproperty Name="ReinforcementChance" Value="33" />
+    <intproperty Name="ClusterChance" Value="50" />
+    <intproperty Name="ClusterDistance" Value="4" />
+    <intproperty Name="ClusterRadius" Value="4" />
+    <intproperty Name="DisplaceBiotaChance" Value="25" />
+    <intproperty Name="DisplaceFaunaChance" Value="25" />
+    <intproperty Name="DisplaceFloraChance">
+      <value>85</value>
+      <value>75</value>
+    </intproperty>
+    <property Name="ArrivalTimer" Value="300-1500" />
+    <property Name="ArrivalSound" Value="grenade_heat,Sounds/Creatures/VO/sfx_creature_insect_generic_vo_idle" />
+    <property Name="NephalRetryZone" Value="JoppaWorld.53.4.1.0.10" />
+    <property Name="MessageLeaving">戦場を離れると聖堂騎士団に立て直す時間を与え、バラサラム派の犠牲が増えるかもしれない。続行する？</property>
+    <property Name="MessageArrival">{{m|ULLLLLLLLLLLLQ!}}
+
+ネフィリムの世界を軋ませる嘆きが鳴り響き、電気を帯びた空気に身体が脈打つ！
+
+{{R|=direction=}}にあいつが現れた。</property>
+    <property Name="MessageArrivalSuper">{{m|QQQYQQQYQQQYQQQYQQQ!}}
+
+燃えさかる星雲の噴出物が雨のように降り注ぎ、太古の宇宙の言葉にできぬ嘆きで身体が無に消し飛びそうだ！
+
+=name=が降臨した、{{R|=direction=}}。</property>
+    <property Name="FixedSpawnLocations">
+      <entry Key="JoppaWorld.53.4.1.0.10">Major</entry>
+      <entry Key="JoppaWorld.53.4.0.0.10">Ezra</entry>
+    </property>
+    <property Name="BattlePopulations">
+      <entry Key="Major">OmonporchBattle_Major</entry>
+      <entry Key="Minor">OmonporchBattle_Minor</entry>
+      <entry Key="Ezra">OmonporchBattle_Ezra</entry>
+    </property>
+    <property Name="ReinforcementPopulations">
+      <entry Key="Major">OmonporchBattle_Reinforcements_Major</entry>
+      <entry Key="Minor">OmonporchBattle_Reinforcements_Minor</entry>
+      <entry Key="Ezra">OmonporchBattle_Reinforcements_Ezra</entry>
+    </property>
+    <step ID="Warleader1" Name="Defeat =name=" Value="OmonporchBattle_Major_KnightCommander" XP="0">
+      <text>オモンポーチ周辺にいる聖堂騎士団の戦将=name=を排除する。</text>
+    </step>
+    <step ID="Warleader2" Name="Defeat =name=" Value="OmonporchBattle_Major_KnightCommander" XP="0">
+      <text>オモンポーチ周辺にいる聖堂騎士団の戦将=name=を排除する。</text>
+    </step>
+    <step ID="Warleader3" Name="Defeat =name=" Value="OmonporchBattle_Major_GrandNewfather" XP="0">
+      <text>オモンポーチ周辺にいる聖堂騎士団の戦将=name=を排除する。</text>
+    </step>
+    <step ID="Warleader4" Name="Defeat =name=" Value="OmonporchBattle_Major_TemplarMech" XP="0">
+      <text>オモンポーチ周辺にいる聖堂騎士団の戦将=name=を排除する。</text>
+    </step>
+    <step ID="Nephal" Name="Beast Slouching" Hidden="true" XP="0">
+      <text>=name=の脅威を取り除く。</text>
+    </step>
+  </quest>
+
+</quests>

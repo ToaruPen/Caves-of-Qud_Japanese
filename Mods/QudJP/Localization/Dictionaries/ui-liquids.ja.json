@@ -1,0 +1,303 @@
+{
+    "meta": {
+        "id": "ui-liquids",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true,
+        "protectHtmlEntities": true
+    },
+    "entries": [
+        {
+            "key": "{{B|water}}",
+            "context": "XRL.Liquids",
+            "text": "{{B|水}}"
+        },
+        {
+            "key": "water",
+            "context": "XRL.Liquids",
+            "text": "水"
+        },
+        {
+            "key": "{{r|blood}}",
+            "context": "XRL.Liquids",
+            "text": "{{r|血}}"
+        },
+        {
+            "key": "{{Y|salt}}",
+            "context": "XRL.Liquids",
+            "text": "{{Y|塩}}"
+        },
+        {
+            "key": "salt",
+            "context": "XRL.Liquids",
+            "text": "塩"
+        },
+        {
+            "key": "{{w|honey}}",
+            "context": "XRL.Liquids",
+            "text": "{{w|はちみつ}}"
+        },
+        {
+            "key": "{{g|slime}}",
+            "context": "XRL.Liquids",
+            "text": "{{g|スライム}}"
+        },
+        {
+            "key": "{{G|acid}}",
+            "context": "XRL.Liquids",
+            "text": "{{G|酸}}"
+        },
+        {
+            "key": "{{K|oil}}",
+            "context": "XRL.Liquids",
+            "text": "{{K|油}}"
+        },
+        {
+            "key": "{{K|ink}}",
+            "context": "XRL.Liquids",
+            "text": "{{K|インク}}"
+        },
+        {
+            "key": "{{K|ooze}}",
+            "context": "XRL.Liquids",
+            "text": "{{K|軟泥}}"
+        },
+        {
+            "key": "{{K|tar}}",
+            "context": "XRL.Liquids",
+            "text": "{{K|タール}}"
+        },
+        {
+            "key": "{{W|sap}}",
+            "context": "XRL.Liquids",
+            "text": "{{W|樹液}}"
+        },
+        {
+            "key": "{{Y|gel}}",
+            "context": "XRL.Liquids",
+            "text": "{{Y|ゲル}}"
+        },
+        {
+            "key": "{{Y|warm static}}",
+            "context": "XRL.Liquids",
+            "text": "{{Y|ウォームスタティック}}"
+        },
+        {
+            "key": "{{Y|wax}}",
+            "context": "XRL.Liquids",
+            "text": "{{Y|蝋}}"
+        },
+        {
+            "key": "{{C|convalessence}}",
+            "context": "XRL.Liquids",
+            "text": "{{C|コンバレセンス}}"
+        },
+        {
+            "key": "{{brainbrine|brain-brine}}",
+            "context": "XRL.Liquids",
+            "text": "{{brainbrine|脳髄汁}}"
+        },
+        {
+            "key": "{{cider|cider}}",
+            "context": "XRL.Liquids",
+            "text": "{{cider|サイダー}}"
+        },
+        {
+            "key": "{{cloning|cloning-draught}}",
+            "context": "XRL.Liquids",
+            "text": "{{cloning|クローン薬液}}"
+        },
+        {
+            "key": "{{lava|lava}}",
+            "context": "XRL.Liquids",
+            "text": "{{lava|溶岩}}"
+        },
+        {
+            "key": "{{m|wine}}",
+            "context": "XRL.Liquids",
+            "text": "{{m|ワイン}}"
+        },
+        {
+            "key": "{{neutronic|flux}}",
+            "context": "XRL.Liquids",
+            "text": "{{neutronic|中性子フラックス}}"
+        },
+        {
+            "key": "{{neutronic|neutral}}",
+            "context": "XRL.Liquids",
+            "text": "{{neutronic|中性化液}}"
+        },
+        {
+            "key": "{{neutronic|neutronic}}",
+            "context": "XRL.Liquids",
+            "text": "{{neutronic|中性子質液}}"
+        },
+        {
+            "key": "{{putrid|putrescence}}",
+            "context": "XRL.Liquids",
+            "text": "{{putrid|腐敗液}}"
+        },
+        {
+            "key": "{{sunslag|sunslag}}",
+            "context": "XRL.Liquids",
+            "text": "{{sunslag|サンスラグ}}"
+        },
+        {
+            "key": "{{w|sludge}}",
+            "context": "XRL.Liquids",
+            "text": "{{w|汚泥}}"
+        },
+        {
+            "key": "{{B|fresh water}}",
+            "context": "XRL.Liquids",
+            "text": "{{B|淡水}}"
+        },
+        {
+            "key": "{{B|wet}}",
+            "context": "XRL.Liquids",
+            "text": "{{B|濡れている}}"
+        },
+        {
+            "key": "{{C|luminous}}",
+            "context": "XRL.Liquids",
+            "text": "{{C|発光している}}"
+        },
+        {
+            "key": "{{G|acidic}}",
+            "context": "XRL.Liquids",
+            "text": "{{G|酸性}}"
+        },
+        {
+            "key": "{{G|green goo}}",
+            "context": "XRL.Liquids",
+            "text": "{{G|緑の粘液}}"
+        },
+        {
+            "key": "{{K|asphalt}}",
+            "context": "XRL.Liquids",
+            "text": "{{K|アスファルト}}"
+        },
+        {
+            "key": "{{K|black ooze}}",
+            "context": "XRL.Liquids",
+            "text": "{{K|黒い軟泥}}"
+        },
+        {
+            "key": "{{K|oozing}}",
+            "context": "XRL.Liquids",
+            "text": "{{K|滲み出ている}}"
+        },
+        {
+            "key": "{{Y|molten wax}}",
+            "context": "XRL.Liquids",
+            "text": "{{Y|溶けた蝋}}"
+        },
+        {
+            "key": "{{Y|sugary}}",
+            "context": "XRL.Liquids",
+            "text": "{{Y|甘い}}"
+        },
+        {
+            "key": "{{Y|waxen}}",
+            "context": "XRL.Liquids",
+            "text": "{{Y|蝋質}}"
+        },
+        {
+            "key": "{{cider|fragrant}}",
+            "context": "XRL.Liquids",
+            "text": "{{cider|香り高い}}"
+        },
+        {
+            "key": "{{cider|spiced}}",
+            "context": "XRL.Liquids",
+            "text": "{{cider|スパイス入り}}"
+        },
+        {
+            "key": "{{cloning|homogenized}}",
+            "context": "XRL.Liquids",
+            "text": "{{cloning|均質化されている}}"
+        },
+        {
+            "key": "{{c|primordial soup}}",
+            "context": "XRL.Liquids",
+            "text": "{{c|原始スープ}}"
+        },
+        {
+            "key": "{{c|soupy}}",
+            "context": "XRL.Liquids",
+            "text": "{{c|スープ状}}"
+        },
+        {
+            "key": "{{g|algae-covered}}",
+            "context": "XRL.Liquids",
+            "text": "{{g|藻まみれ}}"
+        },
+        {
+            "key": "{{g|algal}}",
+            "context": "XRL.Liquids",
+            "text": "{{g|藻質}}"
+        },
+        {
+            "key": "{{lava|lava-covered}}",
+            "context": "XRL.Liquids",
+            "text": "{{lava|溶岩まみれ}}"
+        },
+        {
+            "key": "{{lava|magmatic}}",
+            "context": "XRL.Liquids",
+            "text": "{{lava|マグマ質}}"
+        },
+        {
+            "key": "{{m|lush}}",
+            "context": "XRL.Liquids",
+            "text": "{{m|豊潤}}"
+        },
+        {
+            "key": "{{nervous|nervous}}",
+            "context": "XRL.Liquids",
+            "text": "{{nervous|神経質}}"
+        },
+        {
+            "key": "{{neutronic|neutron}} {{Y|flux}}",
+            "context": "XRL.Liquids",
+            "text": "{{neutronic|中性子}} {{Y|フラックス}}"
+        },
+        {
+            "key": "{{putrid|putrid}}",
+            "context": "XRL.Liquids",
+            "text": "{{putrid|腐敗}}"
+        },
+        {
+            "key": "{{radiant|radiant}}",
+            "context": "XRL.Liquids",
+            "text": "{{radiant|輝く}}"
+        },
+        {
+            "key": "{{slimy|slime}}",
+            "context": "XRL.Liquids",
+            "text": "{{slimy|粘液}}"
+        },
+        {
+            "key": "{{slimy|slimy}}",
+            "context": "XRL.Liquids",
+            "text": "{{slimy|ぬめっている}}"
+        },
+        {
+            "key": "{{w|brackish}}",
+            "context": "XRL.Liquids",
+            "text": "{{w|汽水}}"
+        },
+        {
+            "key": "{{w|brown sludge}}",
+            "context": "XRL.Liquids",
+            "text": "{{w|茶色い汚泥}}"
+        },
+        {
+            "key": "{{w|honeyed}}",
+            "context": "XRL.Liquids",
+            "text": "{{w|蜜味}}"
+        }
+    ]
+}

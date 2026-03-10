@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "id": "bodypart-position",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Upper",
+      "context": "BodyPart.Position",
+      "text": "上"
+    },
+    {
+      "key": "Lower",
+      "context": "BodyPart.Position",
+      "text": "下"
+    },
+    {
+      "key": "Left",
+      "context": "BodyPart.Position",
+      "text": "左"
+    },
+    {
+      "key": "Right",
+      "context": "BodyPart.Position",
+      "text": "右"
+    },
+    {
+      "key": "Fore",
+      "context": "BodyPart.Position",
+      "text": "前"
+    },
+    {
+      "key": "Front",
+      "context": "BodyPart.Position",
+      "text": "前"
+    },
+    {
+      "key": "Hind",
+      "context": "BodyPart.Position",
+      "text": "後"
+    },
+    {
+      "key": "Rear",
+      "context": "BodyPart.Position",
+      "text": "後"
+    }
+  ]
+}

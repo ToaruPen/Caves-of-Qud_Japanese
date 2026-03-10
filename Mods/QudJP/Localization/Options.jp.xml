@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option ID="OptionMasterVolume" DisplayText="マスター音量" Category="サウンド" Type="Slider" Min="0" Max="100" Increment="5" Default="100"></option>
+  <option ID="OptionSound" DisplayText="効果音" Category="サウンド" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionSoundVolume" Requires="OptionSound==Yes" DisplayText="効果音の音量" Category="サウンド" Type="Slider" Min="0" Max="100" Increment="5" Default="100"></option>
+  <option ID="OptionMusic" DisplayText="音楽" Category="サウンド" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionMusicVolume" Requires="OptionMusic==Yes" DisplayText="音楽の音量" Category="サウンド" Type="Slider" Min="0" Max="100" Increment="5" Default="100"></option>
+  <option ID="OptionAmbient" DisplayText="環境音" Category="サウンド" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAmbientVolume" Requires="OptionAmbient==Yes" DisplayText="環境音の音量" Category="サウンド" Type="Slider" Min="0" Max="100" Increment="5" Default="50"></option>
+  <option ID="OptionUseInterfaceSounds" Requires="OptionSound==Yes,OptionShowAdvancedOptions==Yes" DisplayText="インターフェース効果音" Category="サウンド" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionInterfaceVolume" Requires="OptionUseInterfaceSounds==Yes,OptionShowAdvancedOptions==Yes" DisplayText="インターフェース音量" Category="サウンド" Type="Slider" Min="0" Max="100" Increment="5" Default="100"></option>
+  <option ID="OptionUseCombatSounds" Requires="OptionSound==Yes,OptionShowAdvancedOptions==Yes" DisplayText="戦闘効果音" Category="サウンド" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionCombatVolume" Requires="OptionUseCombatSounds==Yes,OptionShowAdvancedOptions==Yes" DisplayText="戦闘音量" Category="サウンド" Type="Slider" Min="0" Max="100" Increment="5" Default="100"></option>
+  <option ID="OptionPlayFireSounds" Requires="OptionSound==Yes,OptionShowAdvancedOptions==Yes" DisplayText="炎のはぜる音" Category="サウンド" Type="Checkbox" Default="Yes"></option>
+
+  <option ID="OptionDisplayBrightness" DisplayText="明るさ" Category="表示" Type="Slider" Min="-100" Max="100" Increment="5" Default="0"></option>
+  <option ID="OptionDisplayContrast" DisplayText="コントラスト" Category="表示" Type="Slider" Min="-100" Max="100" Increment="5" Default="0"></option>
+  <option ID="OptionDisplayFullscreen" DisplayText="フルスクリーン" Category="表示" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDisplayResolution" DisplayText="フルスクリーン解像度" Category="表示" Type="BigCombo" Values="*Resolution" Default="Unset"></option>
+  <option ID="OptionDisplayFramerate" DisplayText="フレームレート" Category="表示" Type="Combo" Values="10,20,30,40,50,60,120,Unlimited,VSync" Default="VSync"></option>
+  <option ID="OptionUseTiles" Requires="OptionShowAdvancedOptions==Yes" DisplayText="タイルグラフィックを有効にする" Category="表示" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDisplayVignette" DisplayText="ビネット効果を表示" Category="表示" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDisplayScanlines" DisplayText="走査線を表示" Category="表示" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionUseOverlayCombatEffects" Requires="OptionShowAdvancedOptions==Yes" DisplayText="戦闘アニメーションを表示" Category="表示" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionUseOverlayDamageText" Requires="OptionShowAdvancedOptions==Yes" DisplayText="浮遊ダメージ数値を表示" Category="表示" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionUseParticleVFX" Requires="OptionShowAdvancedOptions==Yes" DisplayText="モダンなビジュアルエフェクトを表示" Category="表示" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionUseTextParticleVFX" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ASCII ビジュアルエフェクトを表示" Category="表示" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDisableFloorTextures" Requires="OptionShowAdvancedOptions==Yes" DisplayText="床テクスチャを無効化" Category="表示" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableBloodsplatter" Requires="OptionShowAdvancedOptions==Yes" DisplayText="血飛沫を無効化" Category="表示" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableSmoke" Requires="OptionShowAdvancedOptions==Yes" DisplayText="煙エフェクトを無効化" Category="表示" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableImposters" Requires="OptionShowAdvancedOptions==Yes" DisplayText="モダンなタイル系視覚効果を無効化" Category="表示" Type="Checkbox" Default="No"></option>
+  <option ID="OptionMainMenuBackground" Requires="OptionShowAdvancedOptions==Yes" DisplayText="メインメニューの背景アート" Category="表示" Type="Combo" Values="Modern,Classic" Default="Modern"></option>
+
+  <option ID="OptionsKeybindings" DisplayText="操作マッピング" Category="操作" Type="Button" OnClick="Qud.UI.KeybindsScreen.ShowKeybindsClick" SearchKeywords="Control bindings"></option>
+  <option ID="OptionKeyRepeatDelay" DisplayText="キーリピートの遅延" Category="操作" Type="Slider" Min="5" Max="100" Increment="5" Default="10"></option>
+  <option ID="OptionKeyRepeatRate" DisplayText="キーリピート速度" Category="操作" Type="Slider" Min="0" Max="100" Increment="5" Default="90"></option>
+  <option ID="OptionMouseInput" Requires="OptionShowAdvancedOptions==Yes" DisplayText="マウス入力を許可" Category="操作" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionMouseMovement" Requires="OptionMouseInput==Yes,OptionShowAdvancedOptions==Yes" DisplayText="マウスで移動を許可" Category="操作" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionMouseScrollWheel" Requires="OptionMouseInput==Yes,OptionShowAdvancedOptions==Yes" DisplayText="スクロールホイールでズーム" Category="操作" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionCapInputBuffer" Requires="OptionShowAdvancedOptions==Yes" DisplayText="入力バッファを 2 コマンドに制限" Category="操作" Type="Checkbox" Default="Yes"></option>
+
+  <option ID="OptionDisableFullscreenColorEffects" DisplayText="フルスクリーンの色効果を無効化（色覚補助）" Category="アクセシビリティ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAlphanumericBits" DisplayText="ビット表示を英数字に切り替える（色覚補助）" Category="アクセシビリティ" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDisableTextAnimationEffects" DisplayText="タイル系の点滅効果を無効化" Category="アクセシビリティ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableTextWarpEffects" DisplayText="タイル系の画面ワープ効果を無効化" Category="アクセシビリティ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableFullscreenWarpEffects" DisplayText="フルスクリーンのワープ効果を無効化" Category="アクセシビリティ" Type="Checkbox" Default="No"></option>
+
+  <option ID="OptionModernUI" Requires="OptionShowAdvancedOptions==Yes" DisplayText="モダン UI を有効にする" Category="UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionPrereleaseStageScale" Requires="OptionModernUI==Yes" DisplayText="UI スケール" Category="UI" Type="Combo" Values="auto,auto x1.25,auto x1.5,.5,.75,1.0,1.25,1.5,2" Default="auto"></option>
+  <option ID="OptionModernCharacterSheet" Requires="OptionModernUI==Yes,OptionShowAdvancedOptions==Yes" DisplayText="モダン UI のキャラクターシートを有効にする"  Category="UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionCharacterSheetAdditionalScale" Requires="OptionModernUI==Yes,OptionModernCharacterSheet==Yes,OptionShowAdvancedOptions==Yes" DisplayText="キャラクターシートの追加スケール (%)" Category="UI" Type="Slider" Min="-50" Max="50" Increment="1" Default="0"></option>
+  <option ID="OptionPlayScale" Requires="OptionModernUI==Yes" DisplayText="プレイエリアのスケール" Category="UI" Type="Combo" Values="Fit,Cover,Pixel Perfect" Default="Cover" SearchKeywords="Fit Cover Pixel Perfect">
+    <helptext>
+        UI が使っていない領域でプレイエリアをどう拡縮するかを設定します。
+
+        {{W|Fit}}: 画面全体にプレイエリアを収めます（レターボックスになる場合があります）。
+        {{W|Cover}}: プレイエリアが画面を覆うようにします（レターボックスを最小化）。
+        {{W|Pixel Perfect}}: プレイエリアをピクセルアートの整数倍で描画し、最もシャープになります。
+    </helptext>
+  </option>
+  <option ID="OptionTileScale" Requires="OptionModernUI==Yes,OptionPlayScale==Pixel Perfect" DisplayText="ピクセルパーフェクト時のタイル倍率" Category="UI" Type="Combo" Values="1,2,3,4,5,6,7,8" Default="1"></option>
+  <option ID="OptionAbilityBarMode" DisplayText="アビリティバーの表示" Category="UI" Type="Combo" Values="Full,Compact" Default="Full"></option>
+  <option ID="OptionOverlayMinimap" Requires="OptionModernUI==Yes" DisplayText="ミニマップを表示" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionOverlayNearbyObjects" Requires="OptionModernUI==Yes" DisplayText="周囲のオブジェクト一覧を表示" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionOverlayNearbyObjectsLocal" Requires="OptionModernUI==Yes,OptionOverlayNearbyObjects==Yes,OptionShowAdvancedOptions==Yes" DisplayText="周囲一覧: 現在セルの内容のみ" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionOverlayNearbyObjectsPools" Requires="OptionModernUI==Yes,OptionOverlayNearbyObjects==Yes,OptionShowAdvancedOptions==Yes" DisplayText="周囲一覧: 液体プールを表示" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionOverlayNearbyObjectsPlants" Requires="OptionModernUI==Yes,OptionOverlayNearbyObjects==Yes,OptionShowAdvancedOptions==Yes" DisplayText="周囲一覧: 植物を表示" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionOverlayNearbyObjectsTakeable" Requires="OptionModernUI==Yes,OptionOverlayNearbyObjects==Yes,OptionShowAdvancedOptions==Yes" DisplayText="周囲一覧: 取得可能なもののみ" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionMessageLineLogScale" Requires="OptionModernUI==Yes" DisplayText="メッセージログのフォントサイズ (pt)" Category="UI" Type="Slider" Min="-12" Max="24" Increment="1" Default="0"></option>
+  <option ID="OptionDockMovable" Requires="OptionModernUI==Yes,OptionShowAdvancedOptions==Yes" DisplayText="ログとミニマップのドック配置" Category="UI" Type="Combo" Values="Unset,Right,Left,Flip" Default="Right"></option>
+  <option ID="OptionDockOpacity" Requires="OptionModernUI==Yes,OptionDockMovable!=Unset" DisplayText="ドックの背景不透明度" Category="UI" Type="Slider" Min="0" Max="100" Increment="10" Default="100"></option>
+  <option ID="OptionMouseCursor" Requires="OptionModernUI==Yes" DisplayText="マウスカーソルの見た目" Category="UI" Type="Combo" Values="System,Default,Alternate" Default="Default"></option>
+  <option ID="OptionMouseAutoHideCursorEnabled" Requires="OptionModernUI==Yes,OptionShowAdvancedOptions==Yes" DisplayText="未操作時にマウスカーソルを自動で隠す" Category="UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionControllerFont" Requires="OptionModernUI==Yes" DisplayText="ゲームパッドボタンの表示" Category="UI" Type="Combo" Values="Auto,KBM,XBox,PS,XBox Filled,PS Filled" Default="Auto"></option>
+  <option ID="OptionFloatingKeyboard" Requires="OptionShowAdvancedOptions==Yes" DisplayText="対応デバイスでオーバーレイキーボードを表示" Category="UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionZoomSensitivity" Requires="OptionModernUI==Yes,OptionShowAdvancedOptions==Yes" DisplayText="ズーム感度" Category="UI" Type="Slider" Min="1" Max="25" Increment="1" Default="1"></option>
+  <option ID="OptionTooltipDelay" DisplayText="ツールチップの遅延 (ms)" Category="UI" Type="Slider" Min="0" Max="3000" Increment="100" Default="1000"></option>
+  <option ID="Option@HPColor" DisplayText="体力状態に合わせてグリフの色を変える" Category="UI" Type="Checkbox"  Default="Yes"></option>
+  <option ID="Option@AlwaysHPColor" Requires="OptionShowAdvancedOptions==Yes" DisplayText="体力以外で色を変える効果を無視する" Category="UI" Type="Checkbox"  Default="No"></option>
+  <option ID="Option@MutationColor" Requires="OptionShowAdvancedOptions==Yes" DisplayText="突然変異による色変更を許可" Category="UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDisplayMousableZoneTransitionBorder" Requires="OptionModernUI==Yes,OptionShowAdvancedOptions==Yes" DisplayText="マウスクリック可能な階段矢印を表示" Category="UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionShiftHidesSidebar" Requires="OptionShowAdvancedOptions==Yes" DisplayText="Shift キーでサイドバーを隠す" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAllowFramelessZoomOut" Requires="OptionShowAdvancedOptions==Yes" DisplayText="最大ズームアウト時に UI フレームを外す" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionHighlightStairs" Requires="OptionShowAdvancedOptions==Yes" DisplayText="常に階段をハイライト" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionLogTurnSeparator" Requires="OptionShowAdvancedOptions==Yes" DisplayText="戦闘ラウンドごとに区切り線を追加" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionIndentBodyParts" Requires="OptionShowAdvancedOptions==Yes" DisplayText="装備画面で部位を字下げ" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowDetailedWeaponStats" Requires="OptionShowAdvancedOptions==Yes" DisplayText="武器名に貫通/ダメージ詳細を表示" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionTakeallCorpses" Requires="OptionShowAdvancedOptions==Yes" DisplayText="「すべて取る」で死体も取得" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDropAll" Requires="OptionShowAdvancedOptions==Yes" DisplayText="インベントリで「すべて落とす」を有効にする" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionNavigateInventoryAndEquipmentWithPagination" Requires="OptionModernUI==Yes,OptionShowAdvancedOptions==Yes" DisplayText="インベントリ/装備を左右ページ送りで操作" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionPressingRightInInventoryEquips" Requires="OptionShowAdvancedOptions==Yes,OptionNavigateInventoryAndEquipmentWithPagination==Yes" DisplayText="装備画面で左右キーに装備/解除を割り当て" Category="UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionExpandHighlightedInventoryAndEquipmentPane" Requires="OptionShowAdvancedOptions==Yes" DisplayText="フォーカス中の装備/インベントリを拡大" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionStatusScreenSize" DisplayText="キャラクターシートのサイズ" Category="UI" Type="Combo" Values="Standard,Full Height,Full" Default="Standard"></option>
+  <option ID="OptionTutorialComplete" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゲームモード一覧の末尾にチュートリアルを移動" Category="UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowCollectionBadges" Requires="OptionShowAdvancedOptions==Yes" DisplayText="メインメニューに収集家の印章を表示" Category="UI" Type="Checkbox" Default="Yes"></option>
+
+  <!-- Legacy UI -->
+  <option ID="OptionShowSidebarAbilities" Requires="OptionShowAdvancedOptions==Yes,OptionModernUI==No" DisplayText="サイドバーにアビリティアイコンを表示" Category="レガシー UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionShowCurrentCellPopup" Requires="OptionShowAdvancedOptions==Yes,OptionModernUI==No" DisplayText="現在セルの内容をポップアップ表示" Category="レガシー UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionShowMonsterHPHearts" Requires="OptionModernUI!=Yes,OptionShowAdvancedOptions==Yes" DisplayText="ターゲットの残りHPでヒットハートの色を変える" Category="レガシー UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowNumberOfItems" Requires="OptionModernUI!=Yes,OptionShowAdvancedOptions==Yes" DisplayText="各インベントリカテゴリのアイテム数を表示" Category="レガシー UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionLocationIntseadOfName" Requires="OptionModernUI!=Yes,OptionShowAdvancedOptions==Yes" DisplayText="サイドバーに名前ではなく位置を表示" Category="レガシー UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionMapDirectionsToKeypad" Requires="OptionShowAdvancedOptions==Yes" DisplayText="方向入力を常にテンキーに割り当て" Category="レガシー UI" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionMapShiftDirectionToPage" Requires="OptionShowAdvancedOptions==Yes" DisplayText="Shift+方向をメニューのページ送りに割り当て（テンキー非対応）" Category="レガシー UI" Type="Checkbox" Default="No"></option>
+  <option ID="OptionPushAZHotkeys" Requires="OptionShowAdvancedOptions==Yes,OptionModernUI==No" DisplayText="レガシーUIへ常に A〜Z のホットキーを渡す" Category="レガシー UI" Type="Checkbox" Default="No"></option>
+
+  <!-- Automation -->
+  <option ID="OptionAutoSip" DisplayText="渇いたら自動で真水を飲む" Category="自動化" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutoSipLevel" Requires="OptionAutoSip==Yes" DisplayText="自動飲用の喉の渇き閾値" Category="自動化" Type="Combo" Values="Dehydrated,Parched,Thirsty,Quenched,Tumescent" Default="Thirsty"></option>
+  <option ID="OptionAutoTorch" DisplayText="たいまつを自動で点灯/消灯" Category="自動化" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutoDisassembleScrap" DisplayText="スクラップを自動解体" Category="自動化" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAutoexploreIgnoreEasyEnemies" DisplayText="敵対クリーチャーを無視する難易度閾値" Category="自動化" Type="Combo" Values="None,Easy,Average,Tough,Very Tough,Impossible" Default="None"></option>
+  <option ID="OptionAutoexploreIgnoreDistantEnemies" Requires="OptionShowAdvancedOptions==Yes" DisplayText="敵対クリーチャーを無視する距離閾値" Category="自動化" Type="Combo" Values="None,1,2,3,5,7,10,15,20,30,40" Default="None"></option>
+  <option ID="OptionAutoexploreAttackIgnoredAdjacentEnemies" Requires="OptionShowAdvancedOptions==Yes" DisplayText="自動探索中に隣接した無視対象を攻撃" Category="自動化" Type="Checkbox" Default="No"></option>
+  <option ID="OptionInterruptHeldMovement" Requires="OptionShowAdvancedOptions==Yes" DisplayText="敵が近くにいると長押し移動を中断" Category="自動化" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionInterruptHeldMovementOnZoneTransition" Requires="OptionShowAdvancedOptions==Yes" DisplayText="未探索ゾーンに入ると長押し移動を中断" Category="自動化" Type="Checkbox" Default="No"></option>
+  <option ID="OptionUseTextAutowalkThreatIndicator" Requires="OptionShowAdvancedOptions==Yes" DisplayText="赤い点滅枠の代わりにテキスト警告を使う" Category="自動化" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAutoexploreChests" DisplayText="自動探索中にコンテナを調べる" Category="自動化" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDigOnMove" DisplayText="採掘具で壁に移動すると自動で掘る" Category="自動化" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutosaveInterval" Requires="OptionShowAdvancedOptions==Yes" DisplayText="別ゾーンへ移動すると自動でセーブ" Category="自動化" Type="Combo" Values="0|None,1,2,3,5,7,10,15,20,30,40" Default="5"></option>
+  <option ID="OptionAutoexploreRate" Requires="OptionShowAdvancedOptions==Yes" DisplayText="自動移動セル/秒と自動攻撃回数/秒の上限" SearchKeywords="autoact autoexplore framerate" Category="自動化" Type="Combo" Values="1,2,3,5,7,10,15,20,30,60,0|&#236;" Default="20"></option>
+
+  <!-- Autoget -->
+  <option ID="OptionAutogetAmmo" Requires="OptionShowAdvancedOptions==Yes" DisplayText="弾薬を自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetPrimitiveAmmo" Requires="OptionShowAdvancedOptions==Yes" DisplayText="原始弾薬を自動取得" Category="自動取得" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAutogetNuggets" Requires="OptionShowAdvancedOptions==Yes" DisplayText="銅・銀・金塊を自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetTradeGoods" Requires="OptionShowAdvancedOptions==Yes" DisplayText="交易品を自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetFood" Requires="OptionShowAdvancedOptions==Yes" DisplayText="食料を自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetFreshWater" Requires="OptionShowAdvancedOptions==Yes" DisplayText="真水を自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetDroppedLiquid" Requires="OptionShowAdvancedOptions==Yes" DisplayText="落とした容器の液体を自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetSpecialItems" Requires="OptionShowAdvancedOptions==Yes" DisplayText="特別なアイテムを自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetArtifacts" Requires="OptionShowAdvancedOptions==Yes" DisplayText="アーティファクトを自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetScrap" Requires="OptionShowAdvancedOptions==Yes" DisplayText="スクラップを自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetBooks" Requires="OptionShowAdvancedOptions==Yes" DisplayText="書物を自動取得" Category="自動取得" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAutogetZeroWeight" Requires="OptionShowAdvancedOptions==Yes" DisplayText="重量ゼロのアイテムを自動取得" Category="自動取得" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAutogetIfHostiles" Requires="OptionShowAdvancedOptions==Yes" DisplayText="敵が近くにいても自動取得" Category="自動取得" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAutogetFromNearby" Requires="OptionShowAdvancedOptions==Yes" DisplayText="隣接セルからも自動取得" Category="自動取得" Type="Checkbox" Default="No"></option>
+
+  <!-- Prompts -->
+  <option ID="OptionAskForWorldmap" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ワールドマップへ移動する前に確認" Category="確認" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAskAutostair" Requires="OptionShowAdvancedOptions==Yes" DisplayText="自動で階段へ移動する前に確認" Category="確認" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionConfirmSwimming" Requires="OptionShowAdvancedOptions==Yes" DisplayText="泳ぐ前に確認" Category="確認" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionConfirmDangerousLiquid" Requires="OptionShowAdvancedOptions==Yes" DisplayText="危険な液体に入る/飲む際に確認" Category="確認" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionAskForOneItem" Requires="OptionShowAdvancedOptions==Yes" DisplayText="地面から拾うとき 1 個でも一覧を表示" Category="確認" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisplayHPWarning" Requires="OptionShowAdvancedOptions==Yes" DisplayText="低HP警告の閾値" Category="確認" Type="Combo" Values="20%,40%,60%,80%,100%,No Warning" Default="40%"></option>
+  <option ID="OptionDismemberAsPopup" Requires="OptionShowAdvancedOptions==Yes" DisplayText="切断・斬首時にポップアップを表示" Category="確認" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAbilityCooldownWarningAsMessage" Requires="OptionShowAdvancedOptions==Yes" DisplayText="能力クールダウン警告をログ表示にする" Category="確認" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowScavengeItemAsMessage" Requires="OptionShowAdvancedOptions==Yes" DisplayText="漁って得たアイテムをログ表示（ポップアップ無効）" Category="確認" Type="Checkbox" Default="No"></option>
+  <option ID="OptionPopupJournalNote" Requires="OptionShowAdvancedOptions==Yes" DisplayText="日誌に記録したときポップアップを表示" Category="確認" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDisplayLedLevelUp" Requires="OptionShowAdvancedOptions==Yes" DisplayText="仲間のレベルアップを詳細表示" Category="確認" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDefaultDeathToViewFinalMessages" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ロールプレイ死亡確認で既定選択を「最終メッセージを表示」にする" Category="確認" Type="Checkbox" Default="Yes"></option>
+
+  <!-- Mods -->
+  <option ID="OptionEnableMods" DisplayText="Mod を有効にする" Category="Mod" Type="Checkbox" Default="Yes" Restart="true"></option>
+  <option ID="OptionAllowCSMods" Requires="OptionEnableMods==Yes" DisplayText="スクリプトModを許可（悪意あるコードに注意）" Category="Mod" Type="Checkbox" Default="No"></option>
+  <option ID="OptionOutputModAssembly" Requires="OptionEnableMods==Yes,OptionAllowCSMods==Yes,OptionShowAdvancedOptions==Yes" DisplayText="コンパイル済み Mod アセンブリを保存" Category="Mod" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionHarmonyDebug" Requires="OptionEnableMods==Yes,OptionAllowCSMods==Yes,OptionShowAdvancedOptions==Yes" DisplayText="Harmony デバッグ出力を有効化" Category="Mod" Type="Checkbox" Default="No"></option>
+
+  <!-- Performance -->
+  <option ID="OptionCheckMemory" Requires="OptionShowAdvancedOptions==Yes" DisplayText="メモリ使用量を監視し高負荷で警告" Category="パフォーマンス" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionCacheEarly" Requires="OptionShowAdvancedOptions==Yes" DisplayText="低メモリ環境向けにゾーンを早めにキャッシュ" Category="パフォーマンス" Type="Checkbox" Default="No"></option>
+  <option ID="OptionCollectEarly" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーンをキャッシュした後に即ガベージコレクト" Category="パフォーマンス" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableFloorTextureObjects" Requires="OptionShowAdvancedOptions==Yes" DisplayText="フロアテクスチャオブジェクトを生成しない" Category="パフォーマンス" Type="Checkbox" Default="No"></option>
+  <option ID="OptionThrottleAnimation" Requires="OptionShowAdvancedOptions==Yes" DisplayText="低CPU環境向けにアニメーションを間引く" Category="パフォーマンス" Type="Checkbox" Default="No"></option>
+
+  <!-- App Settings -->
+  <option ID="OptionShowAdvancedOptions" DisplayText="詳細オプションを表示" Category="アプリ設定" Type="Checkbox" Default="No"></option>
+  <option ID="OptionMusicBackground" Requires="OptionShowAdvancedOptions==Yes" DisplayText="バックグラウンドでも Caves of Qud をアクティブ維持" Category="アプリ設定" Type="Checkbox" Default="No"></option>
+  <option ID="OptionSessionBackups" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ローリングバックアップ数" Category="アプリ設定" Type="Combo" Values="None,1,2,3,5,7,10,15,20,30,40" Default="3">
+    <helptext>
+      メインメニューからセーブを読み込むと、CavesOfQud/Local/Session に指定数までバックアップを保持します。
+    </helptext>
+  </option>
+  <option ID="OptionAnalytics" DisplayText="匿名のプレイ統計を送信" Category="アプリ設定" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionDisableSteamInputWarning" Requires="OptionModernUI==Yes,OptionShowAdvancedOptions==Yes" DisplayText="入力に関する警告を無効化" Category="アプリ設定" Type="Checkbox" Default="No"></option>
+
+  <!-- Debug -->
+  <option ID="OptionDisablePermadeath" Requires="OptionShowAdvancedOptions==Yes" DisplayText="クラシックで死亡してもセーブを削除しない" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAllowSaveLoad" Requires="OptionShowAdvancedOptions==Yes" DisplayText="セーブ/ロードを有効化" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionAllowReallydie" Requires="OptionShowAdvancedOptions==Yes" DisplayText="死亡時に確認ダイアログを出す" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionEnablePrereleaseContent" Requires="OptionShowAdvancedOptions==Yes" DisplayText="未完成・非サポートのコンテンツを有効化" Category="デバッグ" Type="Checkbox" Default="No" Restart="true"></option>
+  <option ID="OptionDisableDefectLimit" Requires="OptionShowAdvancedOptions==Yes" DisplayText="クリーチャーに複数の欠陥を許可" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionStripUIColorText" Requires="OptionShowAdvancedOptions==Yes" DisplayText="UI テキストのカラータグを除去" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionEnableColorTextInput" Requires="OptionShowAdvancedOptions==Yes" DisplayText="テキスト入力用のカラー選択を有効化" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableAchievements" Requires="OptionShowAdvancedOptions==Yes" DisplayText="実績を無効化" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowQuickstart" Requires="OptionShowAdvancedOptions==Yes" DisplayText="キャラ作成中にクイックスタートを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisablePlayerbrain" Requires="OptionShowAdvancedOptions==Yes" DisplayText="プレイヤー操作キャラの脳ハイジャックを無効化" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableZoneCaching2" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーンキャッシュを無効化" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableTryLimit" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーン生成の試行回数制限を無効化" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionEnableWishRegionNames" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ウィッシュ用にゾーン名を事前生成" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionGivesRepShowsCurrentRep" Requires="OptionShowAdvancedOptions==Yes" DisplayText="観察時に派閥評判を表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugShowConversationNode" Requires="OptionShowAdvancedOptions==Yes" DisplayText="会話中にXMLの会話/ノード名を表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugShowFullZoneDuringBuild" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーン生成中にフルIDを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugDamagePenetrations" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ダメージ貫通デバッグテキストを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugSavingThrows" Requires="OptionShowAdvancedOptions==Yes" DisplayText="セービングスローのデバッグテキストを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugGetLostChance" Requires="OptionShowAdvancedOptions==Yes" DisplayText="道に迷う確率のデバッグテキストを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugStatShift" Requires="OptionShowAdvancedOptions==Yes" DisplayText="能力値変動のデバッグテキストを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugMissileTargetChoices" Requires="OptionShowAdvancedOptions==Yes" DisplayText="飛び道具のターゲット選択を表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugMissilePaths" Requires="OptionShowAdvancedOptions==Yes" DisplayText="飛び道具の軌道を表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugPopulation" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ポピュレーション生成をデバッグ表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugMissileShots" Requires="OptionShowAdvancedOptions==Yes" DisplayText="飛び道具の射撃ログを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugCheats" Requires="OptionShowAdvancedOptions==Yes" DisplayText="チート用デバッグコマンドを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugZoneBuild" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーン生成の進捗を表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugEncounterChance" Requires="OptionShowAdvancedOptions==Yes" DisplayText="遭遇率デバッグ情報を表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugTravelSpeed" Requires="OptionShowAdvancedOptions==Yes" DisplayText="移動速度デバッグテキストを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugInternals" Requires="OptionShowAdvancedOptions==Yes" DisplayText="オブジェクトの内部データを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDebugAttitude" Requires="OptionShowAdvancedOptions==Yes" DisplayText="オブジェクトの態度情報を表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowOverlandEncounters" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ワールドマップで特殊遭遇を表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowOverlandRegions" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ワールドマップでバイオームを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawPopulationHintMaps" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーン生成時にヒントマップを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawInfluenceMaps" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーン生成時に影響範囲マップを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawPathfinder" Requires="OptionShowAdvancedOptions==Yes" DisplayText="クリーチャーの経路探索を描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawPathfinderHalt" Requires="OptionShowAdvancedOptions==Yes" DisplayText="経路描画中はキー入力待ちにする" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawNavigationWeightMaps" Requires="OptionShowAdvancedOptions==Yes" DisplayText="各ステップでナビゲーション重みマップを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawCASystems" Requires="OptionShowAdvancedOptions==Yes" DisplayText="マップ生成で使うセルオートマトンを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowReachable" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーン生成時に到達可能マップを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawZoneSemantics" Requires="OptionShowAdvancedOptions==Yes" DisplayText="ゾーン生成時にセマンティクス情報を描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawFloodVis" Requires="OptionShowAdvancedOptions==Yes" DisplayText="視認性フラッドフィルを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawFloodAud" Requires="OptionShowAdvancedOptions==Yes" DisplayText="聴覚フラッドフィルを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawFloodOlf" Requires="OptionShowAdvancedOptions==Yes" DisplayText="嗅覚フラッドフィルを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDrawArcs" Requires="OptionShowAdvancedOptions==Yes" DisplayText="直近ラウンドの電撃アークを描画" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionWriteSoundsToLog" Requires="OptionShowAdvancedOptions==Yes" DisplayText="再生したサウンド名をログに記録" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableSoundPreload" Requires="OptionShowAdvancedOptions==Yes" DisplayText="サウンドの事前読み込みを無効化" Category="デバッグ" Type="Checkbox" Default="Yes"></option>
+  <option ID="OptionInventoryConsistencyCheck" Requires="OptionShowAdvancedOptions==Yes" DisplayText="インベントリ整合性チェックを実行" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionShowErrorPopups" Requires="OptionShowAdvancedOptions==Yes" DisplayText="エラーポップアップを表示" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionDisableBindConflictChecking" Requires="OptionShowAdvancedOptions==Yes" DisplayText="キー設定の競合チェックを無効化" Category="デバッグ" Type="Checkbox" Default="No"></option>
+  <option ID="OptionBugDeckKeyboardShift" DisplayText="Steam Deck の Shift キー問題を回避" Category="デバッグ" Type="Checkbox" Default="No"></option>
+
+</options>

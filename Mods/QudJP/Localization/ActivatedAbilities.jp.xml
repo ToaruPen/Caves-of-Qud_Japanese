@@ -1,0 +1,1734 @@
+<activatedabilities Load="Replace">
+	<ability Command="CommandAmputateLimb">
+		<description>自分か感染した仲間の四肢を切断する。</description>
+		<UITile Tile="Abilities/abil_amputate_limb.bmp" Foreground="y" Detail="Y" />
+	</ability>
+	<ability Command="CommandFlyToggle">
+		<description>
+			<p>地表の地形を越え、地上のクリーチャーから近接攻撃を受けなくなる。</p>
+			<br />
+			<p>毎ラウンド<stat Name="CrashChance" />%の確率で地面に墜落する。</p>
+			<br />
+			<p>飛行できるのは地上のみ。</p>
+		</description>
+		<UITile Tile="Abilities/abil_fly_toggle_off.bmp" Foreground="y" Detail="b" /> 
+  </ability>
+  <ability Command="CommandSwoopAttack">
+		<description>
+			<p>地上の目標へ急降下して攻撃し、1ターンで攻撃し、1ターンで上空へ戻る。</p>
+			<br />
+			<p><stat Name="SwoopCrashChance" />%の確率で地面に墜落する（攻撃が盾で防がれた場合は確率が倍増）。</p>
+		</description>
+		<UITile Tile="Abilities/abil_swoop.bmp" Foreground="B" Detail="W" /> 
+  </ability>
+  <ability Command="CommandEndBurrowing">
+    <UITile Tile="Abilities/abil_stop_burrow.bmp" Foreground="w" Detail="W" />
+		<description>巣穴から這い出る。</description>
+  </ability>
+  <ability Command="CommandEndDomination">
+    <UITile Tile="Abilities/abil_end_domination.bmp" Foreground="m" Detail="r" />
+		<description>このクリーチャーへの支配をやめる。</description>
+  </ability>
+  <ability Command="ShadeOilPhase">			
+		<description>
+			<p>短時間だけ物質を透過する。</p>
+      <br />
+      <statline Name="Duration" />				
+		</description>
+		<UITile Tile="Abilities/abil_phase_toggle_off.bmp" Foreground="y" Detail="B" />
+		<UITile Tile="Abilities/abil_phase_toggle_on.bmp" Foreground="Y" Detail="B" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandEndSubmerged">
+    <UITile Tile="Abilities/abil_surface.bmp" Foreground="B" Detail="W" />
+		<description>隠れていた場所から浮上する。</description>
+  </ability>
+  <ability Command="ActivateFabricateFromSelf">
+		<description>
+			<p><stat Name="FabricateSource" />から<stat Name="An" /><stat Name="FabricateBlueprint" />を<stat Name="FabricateVerb" />。</p>
+      <br/>
+			<statline Name="BatchSize" DisplayName="バッチ数" />
+			<statline Name="HitpointsPer" DisplayName="バッチあたりの耐久値" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_fabricate.bmp" Foreground="C" Detail="W" /> 
+  </ability>
+  <ability Command="CommandPlaceMine">
+		<description>
+			<p><stat Name="MineAn" /><stat Name="MineDisplayName" />の地雷を設置する。</p>
+      <br />
+      <statline Name="MineTimer" DisplayName="タイマー" Unit="round" HideValue="-1" />
+			<statline Name="Cooldown" Unit="round" />
+		</description>
+		<UITile Tile="Abilities/abil_lay_mine.bmp" Foreground="R" Detail="W" /> 
+  </ability>
+  <ability Command="CommandRunOver">
+		<description>
+			<p>一直線に突進し、進路上のクリーチャーを踏み潰す。</p>
+      <br />
+			<statline Name="Damage" />
+			<statline Name="Range" />
+			<statline Name="Knockdown" DisplayName="転倒セーヴ" />
+			<statline Name="Daze" DisplayName="朦朧セーヴ" />
+		</description>
+    <UITile Tile="Abilities/abil_run_over.bmp" Foreground="W" Detail="B" /> 
+  </ability>
+  <ability Command="CommandClone">
+		<description>有機的なクリーチャーを複製する。</description>
+		<UITile Tile="Abilities/abil_clone.bmp" Foreground="r" Detail="W" /> 
+  </ability>
+  <ability Command="CommandTinkerTurret">
+		<description>
+      <p>隣接マスに<stat Name="An" /><stat Name="TurretName" />を組み上げる。</p>
+      <br/>
+      <statline Name="Cooldown" />
+    </description>
+		<UITile Tile="Abilities/abil_deploy_turret.bmp" Foreground="g" Detail="W" />
+	</ability>
+  <ability Command="CommandEngulf">
+    <description>隣接するクリーチャーを包み込み、生きたまま、場合によってはそれ以上も貪り食う。</description>
+    <UITile Tile="Abilities/abil_engulf.bmp" Foreground="G" Detail="W" /> 
+  </ability>
+  <ability Command="CommandToggleAnchorSpikes">
+		<description>物理的な手段では移動させられなくなる。</description>
+		<UITile Tile="Abilities/abil_anchor_spikes_toggle_off.bmp" Foreground="y" Detail="r" /> 
+    <UITile Tile="Abilities/abil_anchor_spikes_toggle_on.bmp" Foreground="Y" Detail="w" State="ToggleOn" />		
+  </ability>
+  <ability Command="CommandToggleAnomalyFumigator">
+		<description>毎ターン正気のガスの雲を放出する。</description>
+    <UITile Tile="Abilities/abil_anomaly_fumigator_toggle_off.bmp" Foreground="y" Detail="w" /> 
+    <UITile Tile="Abilities/abil_anomaly_fumigator_toggle_on.bmp" Foreground="Y" Detail="C" State="ToggleOn" /> 
+  </ability>
+  <ability Command="CommandCathedraBlackOpal"> 		
+		<description>
+			<p>時空を裂き、クッド内のランダムな場所へテレポートする。</p>
+			<br />				
+			<statline Name="Cooldown" />
+		</description>						
+		<UITile Tile="Abilities/abil_wormhole.bmp" Foreground="r" Detail="B" /> 
+  </ability>
+  <ability Command="CommandCathedraRuby">
+		<description>
+			<p>自分の周囲に念炎のフィールドを発生させ、3ラウンドにわたり周囲を焼き払う。</p>
+			<br />				
+			<statline Name="Area" />
+			<statline Name="DamageRound1" DisplayName="1ラウンド目のダメージ" />
+			<statline Name="DamageRound2" DisplayName="2ラウンド目のダメージ" />
+			<statline Name="DamageRound3" DisplayName="3ラウンド目のダメージ" />
+			<statline Name="Cooldown" Unit="round" />
+		</description>
+		<UITile Tile="Mutations/pyrokinesis.bmp" Foreground="R" Detail="W" /> 
+  </ability>
+  <ability Command="CommandCathedraSapphire">
+		<description>
+			<p>自分の周囲に衝撃波を呼び起こす。爆心から生物が弾き飛ばされ、気絶し、最大3段階の殴打ダメージを受ける。</p>
+			<br />				
+			<statline Name="Area" />
+			<statline Name="DamageIncrement" DisplayName="追加ダメージ" />
+			<statline Name="Cooldown" Unit="round" />
+		</description>
+		<UITile Tile="Mutations/stunning_force.bmp" Foreground="g" Detail="G" /> 
+  </ability>
+  <ability Command="CommandCathedraWhiteOpal"> 
+		<description>
+			<p>自分の周囲にきらめく閃光を放つ。</p>
+			<br />				
+			<statline Name="Duration" Unit="turn" />				
+			<statline Name="Cooldown" Unit="round" />
+		</description>
+    <UITile Tile="Items/sw_skin_glitter.bmp" Foreground="M" Detail="Y" />
+  </ability>
+  <ability Command="CommandToggleFireSuppressionSystem">
+		<description>炎上しているあいだ、毎ラウンド自動で難燃ジェルを放出する。</description>
+		<UITile Tile="Abilities/abil_fire_suppression_toggle_off.bmp" Foreground="y" Detail="r" />
+		<UITile Tile="Abilities/abil_fire_suppression_toggle_on.bmp" Foreground="y" Detail="R" />
+  </ability>    
+	<ability Command="CommandRecomposite">
+		<description>
+			<p>マップ上で踏破済みの任意のマスへテレポートする。</p>		
+      <br />		
+			<statline Name="Cooldown" />				
+		</description>
+		<UITile Tile="Abilities/abil_recomposite.bmp" Foreground="m" Detail="M" />
+  </ability>
+  <ability Command="CommandInflateAxons">
+		<description>			
+			<p><stat Name="QuicknessDuration" />ラウンドのあいだ迅速さに+<stat Name="QuicknessBonus" />、その後10ラウンドは鈍足になる。</p>
+			<br />			
+			<statline Name="Cooldown" />
+		</description>
+    <UITile Tile="Items/sw_axions.bmp" Foreground="W" Detail="g" />
+  </ability>
+  <ability Command="CommandEmergencyRecomposite">
+		<description>			
+			<p>マップ上で踏破済みのランダムなマスへテレポートする。</p>
+			<br />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_emergency_recomposite.bmp" Foreground="m" Detail="M" />
+  </ability>
+  <ability Command="CommandToggleMedassistModule">
+    <description>
+      <p>状況に応じて装填済みの注射器を最大8本まで自動使用する。</p>
+      <br />
+      <statline Name="Loadout" />
+    </description>
+    <UITile Tile="Abilities/abil_medassist_module_toggle_off.bmp" Foreground="y" Detail="r" />
+    <UITile Tile="Abilities/abil_medassist_module_toggle_on.bmp" Foreground="Y" Detail="r" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandToggleCyberNightVision">
+    <description>暗闇でも視界が得られる。</description>
+    <UITile Tile="Abilities/abil_night_vision_toggle_off.bmp" Foreground="y" Detail="g" />
+		<UITile Tile="Abilities/abil_night_vision_toggle_on.bmp" Foreground="Y" Detail="G" />
+	</ability>
+  <ability Command="CommandToggleNocturnalApex">
+    <description>
+      <p><stat Name="Duration" />ラウンドのあいだ、敏捷に+<stat Name="AgilityBonus" />、移動速度に+<stat Name="MovespeedBonus" />を得る。</p>
+      <br />
+      <statline Name="Cooldown" />      
+    </description>
+    <UITile Tile="Items/sw_nocturnal.bmp" Foreground="b" Detail="C" />
+  </ability>
+  <ability Command="CommandActivateOnboardRecoilerImprinting">
+    <description>
+      <p>搭載リコイラーに、帰還先の位置を刻印する。</p>
+      <br />
+      <statline Name="Location" DisplayName="現在位置" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_imprint.bmp" Foreground="B" Detail="W" />
+  </ability>
+  <ability Command="CommandActivateOnboardRecoilerTeleporter">
+    <description>
+      <p>刻印された位置へテレポートする。</p>
+      <br />
+      <statline Name="Location" DisplayName="現在位置" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_recoil.bmp" Foreground="B" Detail="W" />
+  </ability>
+  <ability Command="CommandTogglePenetratingRadar">
+    <description>
+      <p>周囲<stat Name="Radius" />マスを、力場と時空異常以外には遮られずに見通せる。</p>
+      <br />
+    </description>
+    <UITile Tile="Abilities/abil_penetrating_radar_toggle_off.bmp" Foreground="B" Detail="y" />
+		<UITile Tile="Abilities/abil_penetrating_radar_toggle_on.bmp" Foreground="B" Detail="Y" />
+  </ability>
+  <ability Command="CommandTogglePhaseHarmonicModulator">
+    <description>位相の内外にある物体や生物の双方と相互作用できる。</description>
+    <UITile Tile="Abilities/abil_phase_harmonic_modulator_toggle_off.bmp" Foreground="y" Detail="m" />
+    <UITile Tile="Abilities/abil_phase_harmonic_modulator_toggle_on.bmp" Foreground="Y" Detail="m" State="ToggleOn" />
+  </ability>
+	<ability Command="AlterHolographicVisage">
+		<description>容貌を変え、選択した派閥との評判が+200される。</description>
+		<UITile Tile="Abilities/abil_alter_visage.bmp" Foreground="C" Detail="B" />
+	</ability>
+	<ability Command="CommandStasisEntangler">		
+		<description>
+			<p>視線の通るクリーチャーを1体選ぶ。他のクリーチャーはすべて<stat Name="Duration" />のあいだ静止フィールドに封じられる。</p>
+			<br />
+			<statline Name="Cooldown" />			
+		</description>
+		<UITile Tile="Items/implant_stasis_entangler.bmp" Foreground="r" Detail="C" />
+	</ability>
+	<ability Command="CommandTogglePhaseAdaptiveScope">
+		<description>飛び道具を撃つか投擲すると、弾が位相をずらして障害物をすり抜け目標に到達する。</description>
+		<UITile Tile="Abilities/abil_phase_adaptive_projectiles_toggle_off.bmp" Foreground="y" Detail="y" />
+		<UITile Tile="Abilities/abil_phase_adaptive_projectiles_toggle_on.bmp" Foreground="Y" Detail="y" State="ToggleOn" />
+	</ability>
+	<ability Command="CommandFabricateForceKnife">
+		<description>1d8ダメージを与え、貫通力が対象のAVに等しく、投擲射程が+6のフォースナイフを製造する。</description>
+		<UITile Tile="Abilities/abil_fabricate_force_knife.bmp" Foreground="C" Detail="B" />
+	</ability>
+	<ability Command="ProjectStasisField">
+    <description>
+      <p>最大<stat Name="Coverage" />マスの静止フィールドを展開し、<stat Name="Duration" />のあいだ維持する。</p>
+      <br />      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Items/sw_stasis_projector.bmp" Foreground="C" Detail="r" />
+  </ability>
+  <ability Command="CommandActivateTetheredRecoilerTeleporter">
+    <description>
+      <p>テザー先の位置へテレポートする。</p>
+      <br />
+      <statline Name="Cooldown" />
+      <statline Name="Destination" />
+      <statline Name="TetherStatus" DisplayName="テザー状況" />
+    </description>
+		<UITile Tile="Abilities/abil_recoil.bmp" Foreground="B" Detail="W" />
+  </ability>
+  <ability Command="ActivateAjiConch">
+		<description>
+			<p>ホラ貝に息を吹き込み、ランダムな気体の錐を噴き出す。</p>
+			<br />			
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Items/sw_shell_1.bmp" Foreground="r" Detail="K" />
+  </ability>
+	<ability Command="CommandRecoil">
+		<description>プログラム済みの位置へテレポートする。</description>
+		<UITile Tile="Abilities/abil_recoil.bmp" Foreground="y" Detail="g" />
+	</ability>
+  <ability Command="ToggleHologramEmitter">
+		<description>
+			<p><stat Name="DecoyNumber" />体の自分のホログラム<stat Name="Decoys" />を生成する。</p>
+			<br />
+			<p>囮は動きを鏡写しに追従し、敵対を引きつける。</p>
+			<statline Name="Range" />
+			<p>毎ラウンド<stat Name="ChargeDraw" />電力を消費する。</p>
+		</description>
+		<UITile Tile="Abilities/abil_activate_decoy.bmp" Foreground="B" Detail="b" />
+  </ability>
+  <ability Command="ToggleForceEmitter">
+		<description>
+			<p>自分の周囲にフォースフィールドを展開する。</p>
+			<br />
+			<p>自分を中心に3×3のフォースフィールドを張る。</p>
+			<p>フォースフィールド越しに飛び道具を撃てる。</p>
+			<p>毎ラウンド多量の電力を消費する。</p>			
+		</description>
+		<UITile Tile="Abilities/abil_force_emitter.bmp" Foreground="B" Detail="C" />
+  </ability>
+  <ability Command="CommandQuickenMind">
+		<description>
+			<p>創造的なエネルギーで精神が加速する。</p>
+			<br />
+			<p><stat Name="RefreshDescription" /></p>
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_quicken_mind.bmp" Foreground="M" Detail="Y" />
+  </ability>
+  <ability Command="ActivateTeleprojector">		
+		<description>
+			<p>隣接するロボットに精神を投射し、自身の肉体を眠らせたまま行動を支配する。</p>
+			<br />
+			<p>ロボットに対するテクノロジー攻撃。</p>
+			<p>攻撃判定: <stat Name="Attack" /> vs 防御側のMA + レベル</p>
+			<p>起動時に多量の電力を消費する。</p>
+			<p>以後は毎ラウンド少量の電力を消費する。</p>
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Items/sw_teleprojector.bmp" Foreground="C" Detail="M" />
+  </ability>
+  <ability Command="ConfigureTemperatureController">
+		<description>
+			<p>目標温度を設定し、到達するまで毎ラウンド加熱または冷却される。</p>
+			<br />
+			<statline Name="TemperatureChange" DisplayName="ラウンド毎の温度変化" />
+			<statline Name="ChargeUse" DisplayName="ラウンド毎の電力消費" />			
+		</description>
+		<UITile Tile="Abilities/abil_set_temperature.bmp" Foreground="y" Detail="R" />
+  </ability>
+  <ability Command="ActivatePaxInfection">
+		<description>
+			<p>胞子を噴き、クランクを広げる。</p>
+			<br />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Items/sw_klanq_infection.bmp" Foreground="O" Detail="C" /> 
+  </ability>
+  <ability Command="ActivateSkyshroud">
+		<description>
+			<p>炎と煙の尾を引いて疾走を始める。</p>
+			<br />
+			<p>疾走中に移動すると、その方向の最寄りの敵か障害物へ突進して攻撃する。</p>
+			<br />
+			<p>3マス進むごとに、命中に+2、突進攻撃の貫通判定に+2のボーナスを得る。</p>
+			<br />
+			<p>20マス進んでも敵や障害物に出会わなければ移動を止める。</p>
+			<br />
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Items/sw_jetbackpack.bmp" Foreground="M" Detail="m" />
+  </ability>
+  <ability Command="ActivateStopsvalinn">
+		<description>
+			<p>ロボットの進路を阻むフォースの壁を生成する。</p>
+			<br />
+			<p>連続する3マス分の可動フォースフィールドを張る。</p>
+			<p>ロボットの移動セーブ: 意志力18</p>
+			<p>毎ラウンド多量の電力を消費する。</p>
+		</description>
+		<UITile Tile="Items/sw_buckler2.bmp" Foreground="Y" Detail="r" />
+  </ability>
+  <ability Command="CommandChangeGrip">
+    <description>
+      <p>武器の握りを変え、別種の武器として扱う。</p>
+    </description>
+    <UITile Tile="Abilities/sw_skill_axe.png" Foreground="y" Detail="R" />
+  </ability>
+  <ability Command="CommandBeguileCreature">
+		<description>
+			<p>隣接するクリーチャーを魅了し、忠実に仕えさせる。</p>
+			<br />
+			<p>精神攻撃（精神を持つクリーチャーのみ）。</p>
+			<p>攻撃判定: <stat Name="Attack" /> vs 防御側のMA + レベル</p>
+			<p>魅了されたクリーチャーは<stat Name="BonusHP" />の追加HPを得る。</p>
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/beguiling.bmp" Foreground="m" Detail="R" />
+  </ability>
+  <ability Command="CommandBurgeoning">
+    <description>
+      <p>近くの範囲に植物を自生させ、敵の動きを妨げる。</p>
+      <br />
+			<p>植物の種類は変異ランクに応じて変わる。</p>
+			<statline Name="Area" />
+			<statline Name="Range" />      
+      <statline Name="Cooldown" />
+    </description>
+		<UITile Tile="Mutations/burgeoning.bmp" Foreground="g" Detail="G" />
+  </ability>
+  <ability Command="CommandClairvoyance">			
+		<description>
+      <p>近くの範囲を一時的に見通せる。</p>
+      <br />
+      <statline Name="VisionRadius" DisplayName="視覚半径"/>
+      <statline Name="VisionDuration" DisplayName="視覚の持続時間" Unit="round" />
+      <statline Name="Cooldown" />
+    </description>
+		<UITile Tile="Mutations/clairvoyance.bmp" Foreground="m" Detail="C" />
+  </ability>
+  <ability Command="CommandConfuse">
+		<description>
+			<p>近くの敵を混乱させる。</p>
+			<br />
+			<p>影響を受けたクリーチャーは半ばランダムに行動し、精神能力に<stat Name="Penalty" />のペナルティを受ける。</p>
+			<statline Name="ConeAngle" DisplayName="錐角度" />
+			<statline Name="ConeLength" DisplayName="錐の長さ" />
+			<statline Name="Duration" />			
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/confusion.bmp" Foreground="r" Detail="B" />
+  </ability>
+  <ability Command="CommandCryokinesis">
+		<description>
+			<p>近くの範囲を精神で冷却し、ダメージを与えて3ラウンドのあいだ凍結させる。</p>
+			<br />
+			<statline Name="Range" />
+			<statline Name="Area" />
+			<statline Name="DamageRound1" DisplayName="1ラウンド目のダメージ" />
+			<statline Name="DamageRound2" DisplayName="2ラウンド目のダメージ" />
+			<statline Name="DamageRound3" DisplayName="3ラウンド目のダメージ" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/cryokinesis.bmp" Foreground="b" Detail="B" />
+  </ability>
+  <ability Command="CommandDisintegration">
+		<description>
+			<p>近くの物質を分解する。</p>
+			<br />			
+			<statline Name="Area" />
+			<statline Name="DamageNonStructural" DisplayName="非構造物へのダメージ" />
+			<statline Name="DamageStructural" DisplayName="構造物へのダメージ" />
+			<p>この能力を使うと、その後3ラウンドは疲労する。</p>
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/disintergration.bmp" Foreground="r" Detail="W" />
+  </ability>
+  <ability Command="CommandDominateCreature">
+		<description>
+			<p>隣接するクリーチャーの精神を絞扼し、自身の肉体を眠らせたまま行動を支配する。</p>
+			<br />			
+			<p>精神攻撃（精神を持つクリーチャーのみ）。</p>
+			<p>攻撃判定: <stat Name="Attack" /> vs 防御側のMA + レベル</p>
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/domination.bmp" Foreground="w" Detail="M" />
+  </ability>
+  <ability Command="CommandForceBubble">
+    <description>
+			<p>自分の周囲にフォースフィールドを展開する。</p>
+			<br />			
+			<p>自分を中心に3×3のフォースフィールドを張る。</p>
+			<p>フォースフィールド越しに飛び道具を撃てる。</p>
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_force_bubble_toggle_off.bmp" Foreground="B" Detail="y" />
+		<UITile Tile="Abilities/abil_force_bubble_toggle_on.bmp" Foreground="B" Detail="Y" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandForceWall">
+		<description>
+			<p>敵から身を守るフォースの壁を生成する。</p>
+			<br />
+			<p>連続する9マス分の固定フォースフィールドを張る。</p>
+			<p>フォースフィールド越しに飛び道具を撃てる。</p>
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/force_wall.bmp" Foreground="B" Detail="y" />
+  </ability>
+  <ability Command="CommandKindle">
+    <description>
+      <p>精神で小さな火を点ける。</p>
+      <br />      
+      <statline Name="Range" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/kindle.bmp" Foreground="y" Detail="R" />
+  </ability>
+  <ability Command="CommandLeyShift">
+    <description>
+      <p>周囲の時空をずらす。</p>
+      <br />      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_ley_shift.bmp" Foreground="m" Detail="G" />
+  </ability>
+  <ability Command="CommandLifeDrain">
+    <description>
+      <p>近くの有機クリーチャーと結びつき、その生命力を吸い取る。</p>
+      <br />
+      <p>精神攻撃（精神を持つクリーチャーのみ）。</p>
+      <p>毎ラウンド<stat Name="HP" />を吸収する。</p>
+      <p>対象は毎ラウンド、ダメージに抵抗する精神セーブを試みる。</p>
+      <br />
+      <statline Name="Duration" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/syphon_vim.bmp" Foreground="m" Detail="M" />
+  </ability>
+  <ability Command="CommandLase">
+    <description>
+      <p>自身の環境光を集中させてレーザービームにする。</p>      
+      <p>一時的に環境光の半径が1減少する。</p>
+      <br />      
+      <statline Name="LaserDamageInc" DisplayName="レーザーのダメージ増分" />
+      <statline Name="LaserPen" DisplayName="レーザーの貫通力" />
+    </description>
+    <UITile Tile="Mutations/light_manipulation.bmp" Foreground="Y" Detail="C" />
+  </ability>
+  <ability Command="CommandAmbientLight">
+    <description>
+      <p>半径<stat Name="Radius" />に環境光を生み出す。</p>
+      <p>光をレーザービームに収束させられるが、そのあいだ半径が1減少する。</p>
+      <br />
+      <statline Name="RechargeRate" DisplayName="環境光の再充填速度" />
+    </description>
+    <UITile Tile="Abilities/abil_ambient_light_toggle_off.bmp" Foreground="y" Detail="C" />
+		<UITile Tile="Abilities/abil_ambient_light_toggle_on.bmp" Foreground="Y" Detail="C" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandMassMind">
+    <description>
+      <p>精神変異をすべて再使用可能にする。</p>
+      <p>使うたびに、精神界の侵入者の関心がわずかに高まる。</p>
+      <br />
+      <statline Name="CooldownNoWillpower" DisplayName="クールダウン" />
+      <p>クールダウンは意志力の影響を受けない。</p>
+    </description>
+    <UITile Tile="Mutations/mass_mind.bmp" Foreground="B" Detail="W" />
+  </ability>
+  <ability Command="CommandMentalMirror">
+    <description>
+      <p>メンタルミラーがクールダウンしていないとき精神攻撃を受けると、MAに+<stat Name="BonusMA" />を得る。その攻撃があなたのMAを貫通し損ねた場合、攻撃者へ反射される。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/mental_mirror.bmp" Foreground="g" Detail="y" />
+  </ability>
+  <ability Command="CommandPrecognition">
+    <description>
+      <p>近い未来を垣間見る。</p>
+      <br />
+      <p>この力を発動し、後で発動時点の時間へ巻き戻せる。</p>
+      <br />
+      <statline Name="Duration" DisplayName="使用から巻き戻しまでの時間" />
+      <statline Name="Cooldown" />
+    </description>    
+    <UITile Tile="Mutations/precognition.bmp" Foreground="Y" Detail="M" />
+  </ability>
+  <ability Command="CommandPrecognitionRevert">
+    <description>
+      <p>発動中の予知視を、始めた時点の時間へ巻き戻す。</p>      
+    </description>
+    <UITile Tile="Abilities/abil_end_vision.bmp" Foreground="y" Detail="M" />
+  </ability>
+  <ability Command="CommandPsychometryMenu">
+    <description>
+      <p>遺物に触れて歴史を読み取り、その機能と作られ方を知る。</p>
+      <br />
+      <p>複雑度<stat Name="IdentifyComplexity" />までの遺物を確実に鑑定する。</p>
+      <p>鑑定した遺物のうち複雑度<stat Name="ConstructComplexity" />までの作り方を学ぶ。</p>
+      <br />
+      <p>サイコメトリーを使うには遺物を調べ、「サイコメトリーで歴史を読む」を選ぶ。</p>
+    </description>
+    <UITile Tile="Mutations/psychometry.bmp" Foreground="C" Detail="W" />    
+  </ability>
+  <ability Command="CommandPyrokinesis">
+		<description>
+			<p>近くの範囲を精神で加熱し、ダメージを与えて3ラウンド燃えさせる。</p>
+			<br />
+			<statline Name="Range" />
+			<statline Name="Area" />
+			<statline Name="DamageRound1" DisplayName="1ラウンド目のダメージ" />
+			<statline Name="DamageRound2" DisplayName="2ラウンド目のダメージ" />
+			<statline Name="DamageRound3" DisplayName="3ラウンド目のダメージ" />
+			<statline Name="Cooldown" Unit="round" />
+		</description>
+		<UITile Tile="Mutations/pyrokinesis.bmp" Foreground="R" Detail="W" />
+  </ability>  
+  <ability Command="CommandSpaceTimeVortex">
+    <description>
+      <p>時空を裂き、周囲のものを宇宙の綻びへと吹き飛ばす。</p>
+      <br />
+      <p>行く手のあらゆるものを飲み込む渦を呼び出す。</p>
+      <p>渦に飛び込めば、クッドのランダムな場所へテレポートできる。<stat Name="BonusDuration" /></p>
+      <br />      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/spacetime_vortex.bmp" Foreground="B" Detail="m" />
+  </ability>
+  <ability Command="CommandStunningForce">
+		<description>
+			<p>近くの範囲に衝撃波を呼び起こす。爆心から生物が弾き飛ばされ、気絶し、最大3段階の殴打ダメージを受ける。</p>
+			<br />
+			<statline Name="Range" />
+			<statline Name="Area" />
+			<statline Name="DamageIncrement" DisplayName="追加ダメージ" />				
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/stunning_force.bmp" Foreground="w" Detail="W" />
+  </ability>
+  <ability Command="CommandSunderMind">
+    <description>
+      <p>敵の精神を切り裂き、痛みでよろめかせる。</p>
+      <br />
+      <p>最大10ラウンドにわたり相手と精神戦を行い、毎ラウンドダメージを与える。</p>
+      <p>待機以外の行動をとると接続が途切れる。</p>
+      <p>毎ラウンド、MAに対する精神攻撃を行う。</p>
+      <p>10ラウンド目に、これまで与えたダメージの合計と同じだけ追加ダメージを与える。</p>
+      <br />
+      <statline Name="DamageIncrement" DisplayName="追加ダメージ" />
+      <statline Name="Range" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/telepathy.bmp" Foreground="w" Detail="B" />
+    <UITile Tile="Mutations/sunder_mind.bmp" Foreground="w" Detail="R" />
+  </ability>        
+  <ability Command="CommandTelepathy">
+		<description>
+			<p>精神エーテルを通じて他者と意思疎通できる。</p>
+			<br />
+			<p>視界内の誰とでも会話できる。</p>
+			<p>仲間への指示にかかる時間が大幅に短縮される。</p>
+		</description>
+		<UITile Tile="Mutations/telepathy.bmp" Foreground="w" Detail="B" />
+  </ability>
+  <ability Command="CommandTeleport">
+		<description>
+			<p>近くの位置へテレポートする。</p>
+			<br />
+			<p>指定範囲内のランダムな位置へ跳ぶ。</p>
+			<statline Name="UncertaintyRadius" DisplayName="不確定半径" />
+			<statline Name="Cooldown" />			
+		</description>
+		<UITile Tile="Mutations/teleportation.bmp" Foreground="b" Detail="B" />
+  </ability>
+	<ability Command="CommandLeaderTeleport">
+		<description>
+			<p>リーダーの近くにテレポートする。</p>
+			<br />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/teleportation.bmp" Foreground="b" Detail="B" />
+	</ability>
+  <ability Command="CommandTeleportOther">
+		<description>
+			<p>隣接するクリーチャーを近くのランダムな位置へテレポートさせる。</p>
+			<br />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/teleport_other.bmp" Foreground="B" Detail="Y" />
+  </ability>
+  <ability Command="CommandTemporalFugue">
+		<description>
+			<p>素早く時間を行き来し、自分の複数のコピーを作り出す。</p>
+			<br />
+			<statline Name="Copies" />
+			<statline Name="Duration" />		
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/temporal_fugue.bmp" Foreground="y" Detail="G" />
+  </ability>
+  <ability Command="CommandQuantumFugue">
+    <!-- todo:jason -->
+    <description>
+      <p>素早く時間を行き来し、自分の複数のコピーを作り出す。</p>
+      <br />
+      <p>効果が切れると、最も健康なコピーの肉体に戻る。</p>
+      <statline Name="Copies" />
+      <statline Name="Duration" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/temporal_fugue.bmp" Foreground="y" Detail="M" />
+  </ability>
+  <ability Command="CommandTimeDilation">
+		<description>
+			<p>自分の周囲の時間を歪め、敵の動きを鈍らせる。</p>
+			<br />
+			<p>半径<stat Name="Range" />マスのクリーチャーは、距離に応じて減速する。</p>
+			<p>距離1: 迅速さに<stat Name="QuicknessPenalty1" />%のペナルティ</p>
+			<p>距離4: 迅速さに<stat Name="QuicknessPenalty4" />%のペナルティ</p>
+			<p>距離7: 迅速さに<stat Name="QuicknessPenalty7" />%のペナルティ</p>
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />			
+		</description>
+		<UITile Tile="Mutations/time_dilation.bmp" Foreground="y" Detail="m" />
+  </ability>
+  <ability Command="CommandWillForceStrength">
+		<description>
+			<p>純粋な意志の力で常識外れの身体能力を発揮する。</p>
+			<br />
+			<p>筋力を自我ボーナスの2倍だけ上昇させる。</p>
+      <br />
+			<statline Name="Bonus" DisplayName="筋力ボーナス" />
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_boost_strength.bmp" Foreground="C" Detail="R" />
+  </ability>
+  <ability Command="CommandWillForceAgility">
+		<description>
+			<p>純粋な意志の力で常識外れの身体能力を発揮する。</p>
+			<br />
+			<p>敏捷を自我ボーナスの2倍だけ上昇させる。</p>
+      <br />
+			<statline Name="Bonus" DisplayName="敏捷ボーナス" />
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_boost_agility.bmp" Foreground="C" Detail="G" />
+  </ability>
+  <ability Command="CommandWillForceToughness">
+		<description>
+			<p>純粋な意志の力で常識外れの身体能力を発揮する。</p>
+			<br />
+			<p>耐久を自我ボーナスの2倍だけ上昇させる。</p>
+      <br />
+			<statline Name="Bonus" DisplayName="耐久ボーナス" />
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_boost_toughness.bmp" Foreground="C" Detail="B" />
+  </ability>
+  <ability Command="CommandSpitAcid">
+		<description>
+			<p>腐食性の酸溜まりを吐き出す。</p>
+			<br />
+			<p>周囲を酸性の粘液で覆う。</p>
+			<statline Name="Area" />
+			<statline Name="Range" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Mutations/slime_glands.bmp" Foreground="g" Detail="G" />
+  </ability>
+  <ability Command="CommandBelchUrchins">
+		<description>
+			<p>近くの範囲に各種のアーチンを吐き出す。</p>
+			<br />			
+			<statline Name="Amount" DisplayName="アーチンの数" />
+			<statline Name="Range" />
+			<statline Name="Radius" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_belch.bmp" Foreground="g" Detail="W" />
+  </ability>
+  <ability Command="CommandBurrow">
+    <description>
+      <p>掘り進んで地下を移動できる。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_burrow.bmp" Foreground="w" Detail="W" />
+  </ability>
+  <ability Command="CommandDecarbonizer">
+    <description>
+      <p>生体素材から炭素を抽出する。</p>
+      <br />
+      <p>3ラウンドの溜めの後、対象の四肢を切断する光線を放つ。</p>
+      <br />
+      <statline Name="BeamDistance" DisplayName="光線距離" Unit="space" />   
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_decarbonize.bmp" Foreground="r" Detail="R" />
+  </ability>
+  <ability Command="CommandScintillate">
+    <description>
+      <p>混乱ランク<stat Name="ConfusionRank"/>に応じて、近くの敵対的なクリーチャーを混乱させる。</p>
+      <br />
+      <p>虹色に輝いているあいだは行動できない。</p>
+      <br />
+      <statline Name="ConfusionRank" DisplayName="混乱ランク" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_scintillate.bmp" Foreground="W" Detail="Ma" />
+  </ability>  
+  <ability Command="CommandFearAura">
+    <description>
+      <p>周囲のクリーチャーを怖がらせる。</p>
+      <br />
+      <p>隣接するクリーチャーを恐怖で退却させる。</p>
+      <br />      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_fear.bmp" Foreground="w" Detail="G" />
+  </ability>
+  <ability Command="CommandStoneGaze">
+    <description>
+      <p>視線で対象を石に変える。</p>
+      <br />
+      <p>3ラウンドの溜めの後、対象を石化させる光線を放つ。</p>
+      <br />
+      <statline Name="Range" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_gaze.bmp" Foreground="y" Detail="Y" />
+  </ability>
+  <ability Command="CommandCrungleGaze">
+    <description>
+      <p>視線で白昼夢を呼び起こす。</p>
+      <br />
+      <p>3ラウンドの溜めの後、対象を白昼夢へ送り込む光線を放つ。</p>
+      <br />
+      <statline Name="Range" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_gaze.bmp" Foreground="b" Detail="B" />
+  </ability>
+  <ability Command="CommandIrisdualBeam">
+    <description>
+      <p>光と物質のスペクトル全域にわたる力のビームを噴き出す。</p>
+      <br />
+      <p>毎ラウンド、ランダムな敵に<stat Name="Beams" />本のビームを<stat Name="Duration" />続けて撃つ。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_gaze.bmp" Foreground="m" Detail="W" />
+  </ability>
+  <ability Command="CommandInfiltrate">
+    <description>      
+      <p>近くへテレポートし、半径<stat Name="TeleportRadius" />以内の全員を連れて行く。</p>
+      <br />      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_infiltrate.bmp" Foreground="r" Detail="W" />
+  </ability>
+  <ability Command="CommandMagneticPulse">
+    <description>      
+      <p>1ラウンドの溜めの後、半径<stat Name="Radius" />に脈動を放ち、クリーチャーの装備を含む金属物を引き寄せようとする。</p>
+      <br />      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_magnetic_pulse.bmp" Foreground="y" Detail="r" />
+  </ability>
+  <ability Command="CommandMassiveCharge">
+    <description>      
+      <p>1ラウンドの溜めの後、破壊的な突進を繰り出し、壁を壊して進路上のクリーチャーを押しのける。</p>
+      <br />
+      <statline Name="Distance" DisplayName="突撃距離" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_charge.bmp" Foreground="R" Detail="Y" />
+  </ability>
+	<ability Command="CommandSlog">
+		<description>
+      <p>自分のいるマスから近くへ液体の溜まりを吐き出す。</p>
+      <br />            
+      <statline Name="Range" />
+      <statline Name="Area" />
+      <statline Name="KnockdownChance" DisplayName="転倒させる確率" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/slime_glands.bmp" Foreground="w" Detail="G" />
+  </ability>
+  <ability Command="CommandSpinWeb">        
+    <description>
+      <p>粘着性の絹糸を紡いで網を張る。</p>
+      <br />
+      <p>紡いでいるあいだ、移動すると軌跡に網を残す。</p>
+      <br />
+      <statline Name="SpinDuration" Unit="move action" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_spin_webs_toggle_off.bmp" Foreground="y" Detail="M" />
+		<UITile Tile="Abilities/abil_spin_webs_toggle_on.bmp" Foreground="Y" Detail="M" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandSpinSimpleWeb">
+    <description>
+      <p>粘着性の絹糸を紡いで網を張る。</p>
+      <br />
+      <p>紡いでいるあいだ、移動すると軌跡に網を残す。</p>
+      <br />
+      <statline Name="SpinDuration" Unit="move action" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_spin_webs_toggle_off.bmp" Foreground="y" Detail="M" />
+    <UITile Tile="Abilities/abil_spin_webs_toggle_on.bmp" Foreground="Y" Detail="M" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandStickyTongue">
+    <description>
+      <p>1ラウンドの溜めの後、最も近いクリーチャーを舌で引き寄せる。</p>
+      <br />      
+      <statline Name="Range" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_tongue.bmp" Foreground="r" Detail="W" />
+  </ability>
+  <ability Command="CommandWaveformWorm">
+    <description>
+      <p>指定方向へ疾駆し、通過したクリーチャーにダメージを与える。</p>
+      <br />
+      <statline Name="Range" />
+      <statline Name="Damage" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_waveform_dash.bmp" Foreground="g" Detail="G" />
+  </ability>
+  <ability Command="CommandBreatherBase">
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="g" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_ConfusionBreather">
+    <description>
+      <p>混乱ガスを吐く。</p>
+      <br />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="b" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_CorrosiveBreather">
+    <description>
+      <p>腐食ガスを吐く。</p>
+      <br />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="g" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_FireBreather">
+    <description>
+      <p>火を吐く。</p>
+      <br />
+      <statline Name="Damage" />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="R" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_IceBreather">
+    <description>
+      <p>冷気を吐く。</p>
+      <br />
+      <statline Name="Damage" />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="C" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_NormalityBreather">
+    <description>
+      <p>ノーマリティガスを吐く。</p>
+      <br />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="K" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_PoisonBreather">
+    <description>
+      <p>毒ガスを吐く。</p>
+      <br />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="G" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_ShameBreather">
+    <description>
+      <p>羞恥ガスを吐く。</p>
+      <br />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="y" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_SleepBreather">
+    <description>
+      <p>睡眠ガスを吐く。</p>
+      <br />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="w" Detail="W" />
+  </ability>
+  <ability Command="CommandBreathe_StunBreather">
+    <description>
+      <p>スタンガスを吐く。</p>
+      <br />
+      <statline Name="ConeLength" DisplayName="錐の長さ" Unit="tile" />
+      <statline Name="ConeAngle" DisplayName="錐角度" Unit="degree" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_breathe.bmp" Foreground="c" Detail="W" />
+  </ability> 
+  <ability Command="CommandReleaseAdrenaline">
+    <description>
+      <p>体内のアドレナリン分泌を<stat Name="Duration" />のあいだ高める。</p>
+      <p>分泌中は迅速さに+<stat Name="QuicknessBonus" />、ほかの物理変異に+<stat Name="MutationBonus" />ランクのボーナスを得る。</p>
+      <br />      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/adrenal_control.bmp" Foreground="w" Detail="W" />
+  </ability>
+  <ability Command="CommandDigUp">
+    <description>上階への通路を掘る。</description>
+    <UITile Tile="Tiles2/sw_stairsup.bmp" Foreground="r" Detail="W" />
+  </ability>
+  <ability Command="CommandDigDown">
+    <description>下階への通路を掘る。</description>
+    <UITile Tile="Tiles2/sw_stairsdown.bmp" Foreground="r" Detail="W" />
+  </ability>
+  <ability Command="CommandToggleBurrowingClaws">
+    <description>
+      <p>地中を掘り進めるシャベル状の爪を生やす。</p>
+      <br />
+      <statline Name="WallPenetration" DisplayName="壁に対する爪の貫通力" />
+      <p>爪は貫通を4回与えると壁を破壊する。</p>      
+    </description>
+    <UITile Tile="Abilities/abil_burrowing_claws_toggle_off.bmp" Foreground="r" Detail="y" />
+		<UITile Tile="Abilities/abil_burrowing_claws_toggle_on.bmp" Foreground="R" Detail="Y" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandTightenCarapace">
+    <description>じっとしているあいだ、<stat Name="CarapaceName" />を締め付けてAVボーナスを2倍にし、代わりにDVへ-2のペナルティを受ける。</description>
+    <UITile Tile="Mutations/carapace.bmp" Foreground="y" Detail="g" />
+  </ability>
+  <ability Command="CommandDischarge">
+    <description>
+      <p>蓄えた電荷を放出し、<stat Name="DischargeChunk" />チャージあたり1d4ダメージを与える。</p>
+      <p>放電は隣接する目標へも飛び火して減少したダメージを与え、<stat Name="DischargeChunk" />チャージにつき1体まで跳ぶ。</p>
+      <p>発動には最低でも<stat Name="DischargeChunk" />チャージが必要。</p>
+      <statline Name="CurrentCharge" DisplayName="現在の電力" />      
+    </description>
+    <UITile Tile="Mutations/electrical_generation.bmp" Foreground="W" Detail="W" />
+  </ability>
+  <ability Command="CommandToggleProvideCharge">
+    <description>内蔵電源を持つ装備品に給電する。</description>
+    <UITile Tile="Abilities/abil_power_devices_toggle_off.bmp" Foreground="y" Detail="W" />
+		<UITile Tile="Abilities/abil_power_devices_toggle_on.bmp" Foreground="Y" Detail="W" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandElectromagneticPulse">
+    <description>
+      <p>周囲の遺物や機械を無力化する電磁パルスを発生させる。</p>
+      <br />
+      <statline Name="Area" Unit="centered around yourself" />
+      <statline Name="Duration" DisplayName="無効化持続時間" Unit="rounds" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/electromagnetic_pulse.bmp" Foreground="W" Detail="b" />
+  </ability>
+  <ability Command="CommandFlamingRay">
+    <description>
+      <p><stat Name="EmitText" /></p>
+      <br />
+      <p>指定方向へ<stat Name="Range" />マスの炎の光線を放つ。</p>
+      <statline Name="Damage" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/flaming_ray.bmp" Foreground="w" Detail="R" />
+  </ability>
+  <ability Command="CommandFrostWebs">
+    <description>
+      <p>近くの範囲を冷たい網で満たす。</p>
+      <br />      
+      <statline Name="Range" />
+      <statline Name="Area" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/spinnerets.bmp" Foreground="C" Detail="B" />
+  </ability>  
+  <ability Command="GasGenerationCommandSleepGas">
+    <description>
+      <p>自分の周囲に睡眠ガスを噴出する</p>
+      <br />
+      <p>睡眠ガスを<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="w" Detail="Y" />
+		<UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="w" Detail="Y" State="ToggleOn" />		
+  </ability>
+  <ability Command="GasGenerationCommandNormalityGas">
+    <description>
+      <p>自分の周囲にノーマリティガスを噴出する</p>
+      <br />
+      <p>ノーマリティガスを<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="K" Detail="y" />
+    <UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="K" Detail="y" State="ToggleOn" />
+  </ability>
+  <ability Command="GasGenerationCommandAcidGas">
+    <description>
+      <p>自分の周囲に腐食ガスを噴出する</p>
+      <br />
+      <p>腐食ガスを<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="g" Detail="G" />
+    <UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="g" Detail="G" State="ToggleOn" />
+  </ability>
+  <ability Command="GasGenerationCommandPlasma">
+    <description>
+      <p>自分の周囲にプラズマを噴出する</p>
+      <br />
+      <p>プラズマを<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="G" Detail="Y" />
+    <UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="G" Detail="Y" State="ToggleOn" />
+  </ability>
+  <ability Command="GasGenerationCommandDefoliantGas">
+    <description>
+      <p>自分の周囲に除葉剤を噴出する</p>
+      <br />
+      <p>除葉剤を<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="W" Detail="w" />
+    <UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="W" Detail="w" State="ToggleOn" />
+  </ability>
+  <ability Command="GasGenerationCommandPoisonGas">
+    <description>
+      <p>自分の周囲に毒ガスを噴出する</p>
+      <br />
+      <p>毒ガスを<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="g" Detail="k" />
+    <UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="g" Detail="k" State="ToggleOn" />
+  </ability>
+  <ability Command="GasGenerationCommandFungicideGas">
+    <description>
+      <p>自分の周囲に殺真菌剤を噴出する</p>
+      <br />
+      <p>殺真菌剤を<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="m" Detail="M" />
+    <UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="m" Detail="M" State="ToggleOn" />
+  </ability>
+  <ability Command="GasGenerationCommandConfusionGas">
+    <description>
+      <p>自分の周囲に混乱ガスを噴出する</p>
+      <br />
+      <p>混乱ガスを<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="b" Detail="c" />
+    <UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="b" Detail="c" State="ToggleOn" />
+  </ability>
+  <ability Command="GasGenerationCommandGlitterGas">
+    <description>
+      <p>自分の周囲にきらめきを噴出する</p>
+      <br />
+      <p>きらめきを<stat Name="Duration" />のあいだ放出する。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_release_gas_toggle_off.bmp" Foreground="m" Detail="C" />
+    <UITile Tile="Abilities/abil_release_gas_toggle_on.bmp" Foreground="m" Detail="C" State="ToggleOn" />
+  </ability>
+  
+  <ability Command="CommandSpitLiquid">
+    <description>
+      <p><stat Name="Liquid" />の溜まりを吐き出す。</p>
+      <br />
+      <statline Name="Range" />
+      <statline Name="Area" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/slime_glands.bmp" Foreground="w" Detail="W" />
+  </ability>
+  <ability Command="CommandMetamorphosis">
+    <description>
+      <p>触れたあらゆるクリーチャーの姿をとる。</p>
+      <br />
+      <p><stat Name="MaxLevel" />レベル以下のクリーチャーにしか変身できない。</p>      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/metamorphosis.bmp" Foreground="w" Detail="G" />
+  </ability>  
+	<ability Command="CommandEndMetamorphosis">
+    <description>このクリーチャーの姿をやめる。</description>
+    <UITile Tile="Abilities/abil_end_metamorphosis.bmp" Foreground="w" Detail="r" />
+  </ability>    
+  <ability Command="CommandTogglePhase">              
+		<description>
+			<p>短時間、固形物をすり抜けられる。</p>
+      <br />
+			<statline Name="Duration"></statline>
+			<statline Name="Cooldown"></statline>
+		</description>
+		<UITile Tile="Abilities/abil_phase_toggle_off.bmp" Foreground="y" Detail="B" />
+		<UITile Tile="Abilities/abil_phase_toggle_on.bmp" Foreground="Y" Detail="B" State="ToggleOn" />
+  </ability>
+  <ability Command="CommandBask">
+    <description>
+      <p>日光浴をして、食事の代わりに滋養ある日射を吸収する。</p>
+      <br />
+      <p><stat Name="DurationDay" />のあいだ特別な代謝効果を得る。</p>
+      <br />
+      <statline Name="BonusRegen" DisplayName="自然回復率ボーナス"/>
+      <statline Name="BonusQuickness" DisplayName="迅速さボーナス" />
+    </description>  
+    <UITile Tile="Mutations/photosynthetic_skin.bmp" Foreground="g" Detail="W" />
+  </ability>
+  <ability Command="CommandQuillFling">
+    <description>
+      <p>自身の<stat Name="Quills" />の10%を自分の周囲へ弾け飛ばす。</p>
+      <p><stat Name="RegenRate" />/ラウンドの速度で<stat Name="Quills" />を再生する。</p>
+      <p><stat Name="Quills" />が半分未満に減ると、AVが<stat Name="AVPenalty"/>低下する。</p>
+      <br />
+      <p><stat Name="QuillPen" /></p>
+      <p><stat Name="QuillDamage" /></p>
+    </description>  
+    <UITile Tile="Mutations/quills.bmp" Foreground="r" Detail="W" />
+  </ability>
+  <ability Command="CommandSpitSlime">
+    <description>
+      <p>粘性のスライムを生成し、吐きかけられる。</p>
+      <br />
+      <p>周囲をスライムで覆う。</p>
+      <statline Name="Range" />
+      <statline Name="Area" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/slime_glands.bmp" Foreground="g" Detail="W" />
+  </ability>    
+  <ability Command="CommandSting">
+    <description>
+      <p>毒針で突き、必ず命中して貫通し、自分の<stat Name="VenomType" />の毒を与える。</p>      
+      <br />
+      <statline Name="StingerPen" DisplayName="針の貫通力" />
+      <statline Name="StingerDamage" DisplayName="針のダメージ" />
+      <p><switch Name="VenomType">
+        <case Value="paralyzing">毒は相手を<stat Name="Duration" />のあいだ麻痺させる。</case>
+        <case Value="confusing">毒は相手を<stat Name="Duration" />のあいだ混乱させる。</case>
+        <case Value="poisonous">毒は相手を<stat Name="Duration" />のあいだ毒に侵す。</case>
+      </switch></p>
+      <statline Name="Cooldown" />
+    </description>  
+    <UITile Tile="Mutations/stinger.bmp" Foreground="w" Detail="W" />
+  </ability>
+	<ability Command="CommandRepellingForce">
+    <description>
+      <p>周囲に斥力を呼び起こし、敵を弾き飛ばす。</p>
+      <br />
+      <p>爆心から生物が押しやられる。</p>      
+      <statline Name="Area" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_repel.bmp" Foreground="W" Detail="g" />
+	</ability>    
+  <ability Command="CommandFreezingRay">
+    <description>
+      <p><stat Name="EmitText" /></p>
+      <br />
+      <p>指定方向へ<stat Name="Range" />マスの冷気の光線を放つ。</p>
+      <statline Name="Damage" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/freezing_ray.bmp" Foreground="y" Detail="B" />
+  </ability>
+  <ability Command="CommandPowerSwitch">
+	<!-- UITile is set by code to be the tile of the item the switch is on. -->
+	<description>
+		<stat Name="ItemDescription" />
+	</description>
+  </ability>
+	<ability Command="CommandFreezeBreath">
+		<description>
+      <p><stat Name="EmitText" /></p>
+      <br />
+      <p>指定方向へ<stat Name="Range" />マスの冷気の光線を放つ。</p>
+      <statline Name="Damage" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Mutations/freezing_ray.bmp" Foreground="y" Detail="B" />
+	</ability>
+  <ability Command="CommandDig">
+    <description>現在地から目標地点まで自動で掘り進む。</description>
+    <UITile Tile="Abilities/abil_dig.bmp" Foreground="w" Detail="Y" />
+  </ability>
+  <ability Command="CommandToggleRunning">
+		<description>
+      <p>高速で移動し、<switch Name="PowerSkate"><case Value="true">炎の排気を曳く</case><default>短時間だけ持続する</default></switch>。</p>  
+      <br />
+      <p><switch Name="Multipler"><case Value="100">移動速度を2倍</case><case Value="200">移動速度を3倍</case><default>移動速度を+<stat Name="Multiplier" />%</default></switch>にし、<switch Name="PowerSkate"><case Value="true">燃料が尽きるまで</case><default><stat Name="Duration" /></default></switch>続く。</p>
+      <switch Name="DV"><case Value="0"></case><default><p>DV <stat Name="DV" /></p></default></switch>
+      <p>近接攻撃の命中に-10。</p>
+      <switch Name="MissileAccuracy">
+        <case Value="Pistol"><p>拳銃以外の飛び道具の命中精度が低下する。</p></case>
+        <case Value=""><p>飛び道具の命中精度が低下する。</p></case>
+      </switch>
+      <p>移動と待機以外の物理行動をとると早めに疾走が終了する。</p>			
+      <br />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_sprint_toggle_off.bmp" Foreground="w" Detail="y" />
+    <UITile Tile="Abilities/abil_sprint_toggle_on.bmp" Foreground="w" Detail="Y" State="ToggleOn" />
+    <tag Name="Skill">Tactics</tag>
+  </ability>
+  <ability Command="CommandToggleTrashRifling">
+		<description>
+      <p>ゴミを漁る。<switch Name="RiflingSkills">
+        <case Value="TrashDivining"><stat Name="Chance" />%の確率で手掛かりをつなぎ合わせ、ランダムな秘密を学ぶ</case>
+        <case Value="Scavenger">廃品をあさる</case>
+        <case Value="Scavenger,TrashDivining">廃品をあさり、さらに<stat Name="Chance" />%の確率で手掛かりをつなぎ合わせ、ランダムな秘密を学ぶ</case>
+        </switch>。</p>
+    </description>
+		<UITile Tile="Abilities/abil_trash_toggle_off.bmp" Foreground="b" Detail="y" />
+		<UITile Tile="Abilities/abil_trash_toggle_on.bmp" Foreground="b" Detail="Y" State="ToggleOn" />
+    <tag Name="Skill">Tinkering</tag>
+  </ability>
+  <ability Command="CommandAcrobaticsJump">
+    <UITile Tile="Abilities/abil_jump.bmp" Foreground="g" Detail="G" />
+		<description>
+			<p><switch Name="IsRangeIncreased"><case Value="true"><switch Name="Rocket"><case Value="true">ロケット</case></switch>ジャンプで<stat Name="MinimumRange" />～<stat Name="Range" />マス内の空きマスへ跳ぶ。</case>
+      <default><switch Name="Rocket"><case Value="true">ロケット</case></switch>ジャンプで<stat Name="Range" />マス先の空きマスへ跳ぶ。</default></switch></p>
+      <switch Name="CanJumpOverCreatures">
+        <case Value="true"><p>クリーチャーを飛び越えられる。</p></case>
+        <default><p>クリーチャーを飛び越えられない。</p></default>
+      </switch>
+      <br />
+      <statline Name="Cooldown" />
+		</description>
+    <tag Name="Skill">Acrobatics</tag>
+  </ability>
+  <ability Command="CommandAxeBerserk">
+    <description>
+      <p>血に飢えた狂乱状態になり、<stat Name="Duration" />のあいだ斧攻撃の切断確率が100%になる。</p>
+      <p>断脚がクールダウン中は使用できず、バーサークを使うと断脚がクールダウンに入る。</p>
+      <p>発動には斧を装備していなければならない。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_berserk.bmp" Foreground="r" Detail="R" />
+    <tag Name="Skill">Axe</tag>
+  </ability>
+  <ability Command="CommandToggleDecapitate">
+    <description>
+      <p>切断できる部位の候補に頭部が追加される。</p>
+      <p>頭が1つしかないクリーチャーの頭を落とすと即死する。</p>
+      <p>頭が複数ある場合、（1ターンあたり2-3ダメージ; 耐久35セーブ）大量出血する。</p>
+    </description>
+    <UITile Tile="Abilities/abil_decapitate_toggle_off.bmp" Foreground="y" Detail="R" />
+    <tag Name="Skill">Axe</tag>
+  </ability>
+  <ability Command="CommandDismember">
+    <description>
+      <p>相手に斧攻撃を行う。命中して貫通すると、部位をランダムに切断し出血させる。</p>
+      <br />
+      <statline Name="BleedDamage" DisplayName="出血ダメージ" />
+      <statline Name="BleedSave" DisplayName="出血セーブ" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_dismember.bmp" Foreground="W" Detail="r" />
+    <tag Name="Skill">Axe</tag>
+  </ability>
+  <ability Command="CommandAxeHookAndDrag">
+    <description>
+      <p>斧の踵で相手の四肢を引っかける。</p>
+      <p>成功すると、移動のたびに相手を引きずり、斧で追撃する。</p>
+      <p>相手は移動に抵抗する判定と、ターン開始時に拘束を解く判定を行う。</p>      
+      <br />
+      <statline Name="DurationSpecial" />
+      <statline Name="ResistSave" DisplayName="移動抵抗/拘束解除セーブ" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_hook_and_drag.bmp" Foreground="W" Detail="G" />
+    <tag Name="Skill">Axe</tag>
+  </ability>
+  <ability Command="CommandButcherToggle">
+    <description>通り過ぎた死体を解体する。</description>
+    <UITile Tile="Abilities/abil_butcher_toggle_off.bmp" Foreground="y" Detail="r" />
+    <UITile Tile="Abilities/abil_butcher_toggle_on.bmp" Foreground="Y" Detail="r" State="ToggleOn" />
+    <tag Name="Skill">CookingAndGathering</tag>
+  </ability>
+  <ability Command="CommandHarvestToggle">
+    <description>通り過ぎた植物を採取する。</description>
+    <UITile Tile="Abilities/abil_harvest_toggle_off.bmp" Foreground="y" Detail="g" />
+    <UITile Tile="Abilities/abil_harvest_toggle_on.bmp" Foreground="Y" Detail="g" State="ToggleOn" />
+    <tag Name="Skill">CookingAndGathering</tag>
+  </ability>
+  <ability Command="CommandFloorSmash">
+    <description>
+      <p>3ラウンドの溜めの後、床へファルクリート板を叩きつけてダメージを与え、対象マスに落とし穴を作る。隣接マスにも追加の穴が開くことがある。</p>      
+      <br />
+      <statline Name="Range" />            
+      <statline Name="Damage" />
+      <statline Name="AdditionalDirectHitDamage" DisplayName="直撃追加ダメージ" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_catapult.bmp" Foreground="C" Detail="R" />
+  </ability>
+  <ability Command="CommandSnapjawHowl">
+    <description>
+      <p>遠吠えし、近くのスナップジョウを狂乱させる。</p>
+      <br />
+      <statline Name="Radius" DisplayName="効果半径" />
+      <statline Name="Duration" />      
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_howl.bmp" Foreground="w" Detail="C" />
+  </ability>
+  <ability Command="CommandSubmerge">
+    <description>水場に潜る。</description>
+    <UITile Tile="Abilities/abil_submerge.bmp" Foreground="B" Detail="W" />
+  </ability>
+  <ability Command="CommandConk">
+    <description>
+      <p>隣接する相手に棍棒で攻撃し、命中すると自動で3-4ラウンド朦朧状態にする。</p>
+      <p>すでに朦朧としている相手をさらに朦朧させると昏倒する。</p>
+      <p>気絶中の相手を殴ると代わりに30-40ラウンドの昏睡状態にする（ダメージを受けると朦朧して目覚める）。</p>      
+      <br />            
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_conk.bmp" Foreground="W" Detail="B" />
+    <tag Name="Skill">Cudgel</tag>
+  </ability>
+  <ability Command="CommandCudgelSlam">
+    <description>
+      <p>隣接する相手に棍棒で攻撃し、貫通判定に+1。</p>
+      <p>命中すると相手を最大<stat Name="Distance" />マス後退させ、他のクリーチャーを押し、装甲値が筋力修正の5倍未満なら壁も突き破る。</p>
+      <p>押し戻された相手は1マスにつき1ラウンド、最低1ラウンド気絶する。</p>
+      <p>壁を通過するか衝突した相手は壁1枚ごとに追加の武器ダメージを受ける。</p>
+      <p>巨大な相手は押し戻されないが1ラウンドは気絶する。</p>
+      <p>装甲値が筋力修正の5倍未満なら壁や扉を破壊する。</p>      
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_slam.bmp" Foreground="W" Detail="w" />
+    <tag Name="Skill">Cudgel</tag>
+  </ability>
+  <ability Command="CommandSmashUp">
+    <description>
+      <p><stat Name="Duration" />のあいだ棍棒攻撃の朦朧確率が100%になり、スラムにクールダウンがない。</p>
+      <p>スラムがクールダウン中は使用できず、デモリッシュを使うとスラムがクールダウンに入る。</p>
+      <p>発動には棍棒を装備している必要がある。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_demolish.bmp" Foreground="w" Detail="R" />
+    <tag Name="Skill">Cudgel</tag>
+  </ability>
+  <ability Command="CommandFlurry">
+    <description>
+      <p>変異や技術で得た追加の腕も含め、武器を握るすべての腕で攻撃する。</p>      
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_flurry.bmp" Foreground="W" Detail="g" />
+    <tag Name="Skill">Multiweapon_Fighting</tag>
+  </ability>  
+  <ability Command="CommandStaunchWounds">
+      <UITile Tile="Abilities/abil_staunch_wounds.bmp" Foreground="y" Detail="R" />
+  </ability>
+  <ability Command="CommandSingleWeaponFighting">
+		<description>オフハンド攻撃を行わない代わりに単一武器を極める。</description>
+		<UITile Tile="Abilities/abil_single_weapon_fighting_toggle_off.bmp" Foreground="W" Detail="y" />
+    <UITile Tile="Abilities/abil_single_weapon_fighting_toggle_on.bmp" Foreground="W" Detail="Y" State="ToggleOn" />
+    <tag Name="Skill">SingleWeaponFighting</tag>
+  </ability>
+  <ability Command="CommandHeavyWeaponsSweep">
+    <description>
+      <p>重火器で<stat Name="Shots" />発射し、<stat Name="ConeWidth" />度の扇を掃射する。各射撃の前に重火器を再装填する。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_sweep.bmp" Foreground="C" Detail="r" />
+    <tag Name="Skill">HeavyWeapons</tag>
+  </ability>
+  <ability Command="CommandAggressiveStance">    
+    <description>
+      <p>メインハンドで長剣を構えると貫通判定に+<stat Name="PenBonus" />、命中に-<stat Name="HitPenalty" />。</p>
+      <br />
+      <p>型は他の技能にも影響する。</p>
+    </description>
+    <UITile Tile="Abilities/abil_aggressive_stance_toggle_off.bmp" Foreground="y" Detail="r" />
+    <tag Name="Skill">LongBlades</tag>
+  </ability>
+  <ability Command="CommandDefensiveStance">
+    <description>
+      <p>メインハンドで長剣を構えるとDVに+<stat Name="DVBonus" />。</p>
+      <br />
+      <p>型は他の技能にも影響する。</p>
+    </description>
+    <UITile Tile="Abilities/abil_defensive_stance_toggle_off.bmp" Foreground="y" Detail="b" />
+    <tag Name="Skill">LongBlades</tag>
+  </ability>
+  <ability Command="CommandDeathblow">
+    <description>
+      <p>次の<stat Name="Duration" />のあいだ、突きと薙ぎ払いにクールダウンがない。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_engarde.bmp" Foreground="Y" Detail="W" />
+    <tag Name="Skill">LongBlades</tag>
+  </ability>
+  <ability Command="CommandDuelingStance">
+    <description>
+      <p>メインハンドで長剣を構えると命中に+<stat Name="HitBonus" />。</p>
+      <br />
+      <p>型は他の技能にも影響する。</p>
+    </description>
+    <UITile Tile="Abilities/abil_dueling_stance_toggle_off.bmp" Foreground="y" Detail="g" />
+    <tag Name="Skill">LongBlades</tag>
+  </ability>
+  <ability Command="CommandLunge">
+    <description>      
+      <p>{{W|攻勢の型}}: 空きマスを挟んで突進し、貫通判定に+2で攻撃する。必ず空きマスを経由する。</p>
+      <br />
+      <p>{{W|守勢の型}}: 相手を攻撃した後、後方へ2マス退く。</p>
+      <br />
+      <p>{{W|決闘の型}}: 貫通判定に+1で相手を攻撃する。少なくとも1回の命中と貫通が保証される。</p>
+      <br />
+      <p>メインハンドで長剣を構えていないと突きは使えない。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_lunge.bmp" Foreground="W" Detail="C" />
+    <tag Name="Skill">LongBlades</tag>
+  </ability>
+  <ability Command="CommandSwipe">
+    <description>
+      <p>{{W|攻勢の型}}: 隣接する全ての敵を攻撃する。</p>
+      <br />
+      <p>{{W|守勢の型}}: 隣接する全てのクリーチャーを1マス押し、転倒を試みる（筋力/敏捷セーブ 難易度30）。</p>
+      <br />
+      <p>{{W|決闘の型}}: 相手を攻撃し、武装解除を試みる（筋力セーブ 難易度25 + 敏捷修正）。攻撃は少なくとも1回の命中と貫通が保証される。</p>
+      <br />
+      <p>メインハンドで長剣を構えていないと薙ぎ払いは使えない。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_swipe.bmp" Foreground="W" Detail="m" />
+    <tag Name="Skill">LongBlades</tag>
+  </ability>
+  <ability Command="CommandPersuasionBerate">
+    <description>
+      <p>近くのクリーチャーを辱め、DV、命中、自我、意志力に-4、迅速さに-10%のペナルティを与える。</p>
+      <br />
+      <statline Name="Duration" />
+      <statline Name="Range" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_berate.bmp" Foreground="y" Detail="r" />
+    <tag Name="Skill">Persuasion</tag>
+  </ability>
+  <ability Command="CommandIntimidate">
+    <description>
+      <p>隣接する敵対的なクリーチャーを<stat Name="Duration" />のあいだ恐怖で退却させる。</p>
+      <br />
+      <p>精神攻撃（精神を持つクリーチャーのみ）。</p>
+      <br />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_intimidate.bmp" Foreground="y" Detail="m" />
+    <tag Name="Skill">Persuasion</tag>
+  </ability>
+  <ability Command="CommandPersuasionMenacingStare">
+    <description>
+      <p>にらみつけ、相手を恐怖で退散させる。</p>
+      <br />
+      <p>精神攻撃（精神を持つクリーチャーのみ）。</p>
+      <br />
+      <statline Name="Range" />
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_menacing_stare.bmp" Foreground="w" Detail="M" />
+    <tag Name="Skill">Persuasion</tag>
+  </ability>
+  <ability Command="CommandProselytize">
+    <description>
+      <p>知性あるクリーチャーを説き伏せて仲間にする。</p>
+      <br />
+      <p>自我 + キャラクターレベル vs MA + キャラクターレベル</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_proselytize.bmp" Foreground="y" Detail="G" />
+    <tag Name="Skill">Persuasion</tag>
+  </ability>
+  <ability Command="CommandRebukeRobot">
+		<description>
+			<p>ロボットを叱責し、去らせるか仲間にする。</p>
+			<br />			
+			<p>自我を基にしたロボットへの攻撃。</p>			
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_rebuke_robot.bmp" Foreground="y" Detail="C" />
+    <tag Name="Skill">Persuasion</tag>
+  </ability>
+  <ability Command="CommandToggleAkimbo">
+		<description>複数の銃を持って遠距離攻撃をすると、すべてで一斉射する。</description>
+		<UITile Tile="Abilities/abil_akimbo_toggle_off.bmp" Foreground="y" Detail="C" />
+    <tag Name="Skill">Pistol</tag>
+  </ability>
+  <ability Command="CommandPistolEmptyTheClips">
+		<description>
+			<p>拳銃の射撃が1ラウンドではなく半ラウンドで済む。</p>			
+			<br />
+			<statline Name="Duration" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_empty_the_clips.bmp" Foreground="C" Detail="W" />
+    <tag Name="Skill">Pistol</tag>
+  </ability>
+  <ability Command="CommandMarkTarget">
+		<description>
+			<p>1ターンかけて照準を定め、目標にマークを付ける。</p>
+			<br />
+			<p>マークした目標に弓やライフルで射撃すると、命中判定において敏捷が2点高いものとして扱われる。</p>
+			<br />
+			<p>同時にマークできるのは1体だけ。</p>
+			<br />
+			<p>視界を失うとマークは解除される。</p>			
+		</description>
+		<UITile Tile="Abilities/abil_mark_target.bmp" Foreground="r" Detail="R" />
+    <tag Name="Skill">Rifles</tag>
+  </ability>
+  <ability Command="CommandDisciplineMeditate">
+		<description>
+			<p>瞑想中は回復速度と悪性状態の消耗が3倍になる。</p>
+			<br />
+			<p>瞑想中に取れる行動は待機のみ。</p>
+			<br />
+			<p>1ラウンドで<stat Name="DamageThreshold" />以上のダメージを受けると瞑想が途切れる。</p>
+			<br />
+			<p>10ターン以上休息すると自動的に瞑想に入る。</p>
+			<br />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_meditate.bmp" Foreground="w" Detail="b" />
+    <tag Name="Skill">Discipline</tag>
+  </ability>
+  <ability Command="CommandShieldWall">
+    <description>
+			<p>次の3ラウンドのあいだ、近接攻撃をすべて自動で防ぐ。</p>
+			<br />
+			<p>バックラーとは併用できない。</p>
+      <statline Name="Cooldown" />
+    </description>
+    <UITile Tile="Abilities/abil_shield_wall.bmp" Foreground="C" Detail="W" />
+    <tag Name="Skill">Shield</tag>
+  </ability>
+  <ability Command="CommandShieldSlam">					
+		<description>
+			<p>盾で相手を打ち倒し、ダメージを与える。</p>
+      <br />
+      <p>盾を装備して突撃すると、無料でシールドスラムを得る。</p>
+			<br />			
+			<statline Name="Damage" />
+			<statline Name="KnockdownSave" DisplayName="転倒セーブ" />
+			<statline Name="Cooldown" />			
+		</description>
+		<UITile Tile="Abilities/abil_shield_slam.bmp" Foreground="C" Detail="R" />
+    <tag Name="Skill">Shield</tag>
+  </ability>
+  <ability Command="CommandHobble">
+		<description>
+			<p>メインハンドの短剣で相手防具の弱点を狙う。命中すると一度だけ確実に貫通し、跛行させる。</p>
+			<br />
+			<statline Name="HobbleEffect" DisplayName="跛行の効果" />
+			<statline Name="HobbleDuration" DisplayName="跛行の持続" Unit="round" />			
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_hobble.bmp" Foreground="g" Detail="W" />
+    <tag Name="Skill">ShortBlades</tag>
+  </ability>
+  <ability Command="CommandToggleRejoinder">
+		<description>1ラウンドに1度、近接攻撃を外されたとき、装備中の短剣で40%の確率で無償の反撃を行う。</description>
+		<UITile Tile="Abilities/abil_rejoinder_toggle_off.bmp" Foreground="y" Detail="w" />
+    <tag Name="Skill">ShortBlades</tag>
+  </ability>
+  <ability Command="CommandShank">
+		<description>
+			<p>メインハンド（優先）かオフハンドの短剣で近接攻撃する。命中すると、相手が受けている負の状態1つにつき貫通判定に+2。</p>
+			<br />			
+			<statline Name="PrimaryHandCooldown" DisplayName="メインハンドのクールダウン" Unit="round" />
+			<statline Name="OffhandCooldown" DisplayName="オフハンドのクールダウン" Unit="round" />			
+		</description>
+		<UITile Tile="Abilities/abil_shank.bmp" Foreground="W" Detail="m" />
+    <tag Name="Skill">ShortBlades</tag>
+  </ability>
+  <ability Command="CommandSurvivalCamp">
+		<description>
+			<p>料理や保存のために焚き火を起こす。</p>
+			<br />
+			<p>戦闘中は野営できない。</p>
+		</description>
+		<UITile Tile="Items/sw_campfire.bmp" Foreground="w" Detail="R" />
+    <tag Name="Skill">Survival</tag>
+  </ability>
+  <ability Command="CommandMeleeCharge">
+		<description>
+			<p>前方へ突撃し、貫通判定に+1で近接攻撃する。</p>
+			<br />
+			<statline Name="Range" Unit="spaces" />
+			<statline Name="Cooldown" />
+		</description>
+		<UITile Tile="Abilities/abil_charge.bmp" Foreground="W" Detail="r" />
+    <tag Name="Skill">Tactics</tag>
+  </ability>
+  <ability Command="CommandTacticsJuke">		
+		<description>
+			<p>行動力を消費せず1マス移動し、対象マスにクリーチャーがいれば位置を入れ替える。 </p>
+			<br />
+			<p>敵対的なクリーチャーとも入れ替えられる。</p>
+			<br />
+			<statline Name="Cooldown" />
+		</description>		
+		<UITile Tile="Abilities/abil_juke.bmp" Foreground="b" Detail="B" />
+    <tag Name="Skill">Tactics</tag>
+  </ability>
+  <ability Command="CommandDeployTurret">
+		<description>飛び道具を固定タレットとして設置し、弾を供給する。</description>
+		<UITile Tile="Abilities/abil_deploy_turret.bmp" Foreground="g" Detail="W" />
+    <tag Name="Skill">Tinkering</tag>
+  </ability>
+  <ability Command="CommandLayMine">
+		<description>手榴弾を地雷として設置する。</description>
+		<UITile Tile="Abilities/abil_lay_mine.bmp" Foreground="R" Detail="W" />
+    <tag Name="Skill">Tinkering</tag>
+	</ability>
+  <ability Command="CommandLayMineTimed">
+		<description>手榴弾を時限爆弾として設置する。</description>
+		<UITile Tile="Abilities/abil_set_bomb.bmp" Foreground="B" Detail="W" />
+    <tag Name="Skill">Tinkering</tag>
+	</ability>
+  <ability Command="CommandRechargeObject">
+		<description>細工用パーツでエナジーセルやキャパシタを充電する。</description>
+		<UITile Tile="Abilities/abil_recharge.bmp" Foreground="C" Detail="W" />
+    <tag Name="Skill">Tinkering</tag>
+  </ability>
+  <ability Command="CommandReleaseVehicle">
+		<description>乗っている車両の操縦席を離れる。</description>
+		<UITile Tile="Abilities/abil_exit_seat.bmp" Foreground="w" Detail="W" />
+  </ability>
+	<ability Command="CommandSeatEject">
+		<description>乗っている車両から自分と乗員を強制射出する。</description>
+		<UITile Tile="Abilities/abil_eject.bmp" Foreground="r" Detail="W" />
+	</ability>
+
+</activatedabilities>
+

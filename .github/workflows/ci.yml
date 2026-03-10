@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ["8.0.x"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Build QudJP
+        run: dotnet build Mods/QudJP/Assemblies/QudJP.csproj --configuration Release
+
+      - name: Test QudJP
+        if: hashFiles('Mods/QudJP/Assemblies/QudJP.Tests.csproj') != ''
+        run: dotnet test Mods/QudJP/Assemblies/QudJP.Tests.csproj --configuration Release --no-build
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Ruff
+        run: pip install ruff
+
+      - name: Lint Python
+        if: hashFiles('scripts/**/*.py') != ''
+        run: ruff check scripts/
+
+      - name: Install pytest
+        if: hashFiles('scripts/tests/**/*.py') != ''
+        run: pip install pytest
+
+      - name: Test Python
+        if: hashFiles('scripts/tests/**/*.py') != ''
+        run: pytest scripts/tests/

@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="utf-8"?>
+<factions Load="Merge">
+  <!-- Base Merge -->
+  <faction Name="Entropic" DisplayName="エントロピック">
+    <property Name="EndVisibility" Value="true" />
+  </faction>
+  <faction Name="Newly Sentient Beings" DisplayName="新知性体">
+    <property Name="EndVisibility" Value="true" />
+  </faction>
+  <faction Name="Robots" DisplayName="ロボット">
+    <property Name="EndVisibility" Value="true" />
+  </faction>
+  <faction Name="Oozes" DisplayName="ウーズ">
+    <property Name="EndVisibility" Value="true" />
+    <intproperty Name="EndReputationMin" Value="-300" />
+    <intproperty Name="EndReputationMax" Value="300" />
+  </faction>
+  <faction Name="Cragmensch" DisplayName="クラッグメンシュ">
+    <property Name="EndVisibility" Value="Conceal" />
+  </faction>
+  <faction Name="Issachari" DisplayName="イサカリ">
+    <property Name="EndVisibility" Value="Conceal" />
+  </faction>
+  <faction Name="Mechanimists" DisplayName="メカニマス教">
+    <property Name="EndVisibility" Value="Conceal" />
+    <intproperty Name="EndReputationMin" Value="-300" />
+    <intproperty Name="EndReputationMax" Value="300" />
+  </faction>
+  <faction Name="Mopango" DisplayName="モパンゴ">
+    <property Name="EndVisibility" Value="Conceal" />
+  </faction>
+  <faction Name="Naphtaali" DisplayName="ナフターリ">
+    <property Name="EndVisibility" Value="Conceal" />
+  </faction>
+  <faction Name="Svardym" DisplayName="スヴァーディム">
+    <property Name="EndVisibility" Value="Conceal" />
+  </faction>
+  <faction Name="Snapjaws" DisplayName="スナップジョー">
+    <property Name="EndVisibility" Value="Conceal" />
+  </faction>
+  <faction Name="Water" DisplayName="水">
+    <property Name="EndVisibility" Value="Conceal" />
+  </faction>
+  <faction Name="Goatfolk" DisplayName="山羊人">
+    <property Name="EndVisibility" Value="Conceal" />
+  </faction>
+  <faction Name="Resheph" DisplayName="レシェフ">
+    <property Name="EndVisibility" Value="false" />
+  </faction>
+  <faction Name="Mamon" DisplayName="マモン">
+    <property Name="EndVisibility" Value="false" />
+  </faction>
+  <faction Name="Templar" DisplayName="テンプラー">
+    <property Name="EndVisibility" Value="false" />
+  </faction>
+
+  <!-- Chiliad Accede -->
+  <faction
+      Name="Sludges"
+      DisplayName="スラッジ"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_ooze_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_ooze_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/sw_sludge.bmp"
+      EmblemTileColor="w"
+      EmblemDetailColor="W"
+  >
+    <interests>
+      <interest Tags="slimy" />
+      <interest Tags="weep" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-300" />
+    <intproperty Name="EndReputationMax" Value="300" />
+  </faction>
+
+  <faction
+      Name="Soups"
+      DisplayName="スープ"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_ooze_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_ooze_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-soup.png"
+      EmblemTileColor="C"
+      EmblemDetailColor="y"
+  >
+    <interests>
+      <interest Tags="slimy" />
+      <interest Tags="weep" />
+      <interest Tags="soups" Description="スープ" />
+      <interest Tags="stews" Description="シチュー" />
+      <interest Tags="messes" Description="あらゆる種類のごった煮" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-300" />
+    <intproperty Name="EndReputationMax" Value="300" />
+  </faction>
+
+  <faction
+      Name="Gelatinous Polyhedra"
+      DisplayName="ゼラチン多面体"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_ooze_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_ooze_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/sw_wedge.bmp"
+      EmblemTileColor="c"
+      EmblemDetailColor="C"
+  >
+    <interests>
+      <interest Tags="slimy" />
+      <interest Tags="weep" />
+      <interest Tags="shapes" WillBuy="true" WillSell="false" Description="理論上の形状と体積" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-300" />
+    <intproperty Name="EndReputationMax" Value="300" />
+  </faction>
+
+  <faction
+      Name="Jellies"
+      DisplayName="ゼリー"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_ooze_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_ooze_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/sw_jelly.bmp"
+      EmblemTileColor="Y"
+      EmblemDetailColor="g"
+  >
+    <interests>
+      <interest Tags="slimy" />
+      <interest Tags="weep" />
+      <interest Tags="gelatin" WillBuy="false" WillSell="true" Description="ゼラチンで作られた食事" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-300" />
+    <intproperty Name="EndReputationMax" Value="300" />
+  </faction>
+
+  <faction
+      Name="Slimes"
+      DisplayName="スライム"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_ooze_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_ooze_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-slime.png"
+      EmblemTileColor="B"
+      EmblemDetailColor="b"
+  >
+    <interests>
+      <interest Tags="slimy" />
+      <interest Tags="weep" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-300" />
+    <intproperty Name="EndReputationMax" Value="300" />
+  </faction>
+
+  <faction
+      Name="Amoeba"
+      DisplayName="アメーバ"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_ooze_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_ooze_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/sw_amoeba.bmp"
+      EmblemTileColor="g"
+      EmblemDetailColor="w"
+  >
+    <interests>
+      <interest Tags="slimy" />
+      <interest Tags="weep" />
+      <interest Tags="adhesion" WillBuy="true" WillSell="false" Description="細胞接着" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputation" Value="500" />
+  </faction>
+
+  <faction
+      Name="Algae"
+      DisplayName="藻類"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_vines_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_vines_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-alga.png"
+      EmblemTileColor="g"
+      EmblemDetailColor="G"
+  >
+    <interests>
+      <interest Tags="lakesrivers" Description="湖や川の位置" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Cocci"
+      DisplayName="球菌"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-coccus.png"
+      EmblemTileColor="B"
+      EmblemDetailColor="m"
+  >
+    <interests>
+      <interest Tags="moistproteinrich" Description="湿ってたんぱく質が豊富な環境の位置" />
+      <interest Tags="skinnasal" Description="皮膚と鼻腔" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Bacilli"
+      DisplayName="桿菌"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-bacillus.png"
+      EmblemTileColor="r"
+      EmblemDetailColor="C"
+  >
+    <interests>
+      <interest Tags="moistproteinrich" Description="湿ってたんぱく質が豊富な環境の位置" />
+      <interest Tags="sporedispersal" Description="胞子散布" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Spirilla"
+      DisplayName="スピリラ"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-spirillum.png"
+      EmblemTileColor="G"
+      EmblemDetailColor="g"
+  >
+    <interests>
+      <interest Tags="moistproteinrich" Description="湿ってたんぱく質が豊富な環境の位置" />
+      <interest Tags="spirals" Description="螺旋" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Vibrios"
+      DisplayName="ビブリオ"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-vibrio.png"
+      EmblemTileColor="C"
+      EmblemDetailColor="W"
+  >
+    <interests>
+      <interest Tags="moistproteinrich" Description="湿ってたんぱく質が豊富な環境の位置" />
+      <interest Tags="coves" WillBuy="true" WillSell="false" Description="入り江や河口の位置" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Spirochaetes"
+      DisplayName="スピロヘータ"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-spirochete.png"
+      EmblemTileColor="y"
+      EmblemDetailColor="Y"
+  >
+    <interests>
+      <interest Tags="moistproteinrich" Description="湿ってたんぱく質が豊富な環境の位置" />
+      <interest Tags="spirals" Description="螺旋" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Methanogens"
+      DisplayName="メタン生成菌"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-methanogen.png"
+      EmblemTileColor="G"
+      EmblemDetailColor="g"
+  >
+    <interests>
+      <interest Tags="honey,weep" WillBuy="true" WillSell="false" />
+      <interest Tags="methane" WillBuy="false" WillSell="true" Description="メタン湿原の位置" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Thermoacidophiles"
+      DisplayName="好熱好酸菌"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-thermoacidophile.png"
+      EmblemTileColor="W"
+      EmblemDetailColor="r"
+  >
+    <interests>
+      <interest Tags="lava,weep" />
+      <interest Tags="acid,weep" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Halophiles"
+      DisplayName="好塩菌"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-halophile.png"
+      EmblemTileColor="m"
+      EmblemDetailColor="Y"
+  >
+    <interests>
+      <interest Tags="salt,weep" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-600" />
+    <intproperty Name="EndReputationMax" Value="0" />
+  </faction>
+
+  <faction
+      Name="Molds"
+      DisplayName="モールド"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-mold.png"
+      EmblemTileColor="g"
+      EmblemDetailColor="Y"
+  >
+    <interests>
+      <interest Tags="dead" WillBuy="true" WillSell="false" Description="死骸の位置" />
+      <interest Tags="network" Description="ネットワークトポロジー" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-200" />
+    <intproperty Name="EndReputationMax" Value="200" />
+  </faction>
+
+  <faction
+      Name="Mushrooms"
+      DisplayName="キノコ"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-mushroom.png"
+      EmblemTileColor="Y"
+      EmblemDetailColor="r"
+  >
+    <interests>
+      <interest Tags="dead" WillBuy="true" WillSell="false" Description="死骸の位置" />
+      <interest Tags="dead" WillBuy="true" WillSell="false" Description="帽子屋の所在" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-200" />
+    <intproperty Name="EndReputationMax" Value="200" />
+  </faction>
+
+  <faction
+      Name="Rusts"
+      DisplayName="ラスト"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-rust.png"
+      EmblemTileColor="R"
+      EmblemDetailColor="r"
+  >
+    <interests>
+      <interest Tags="dead" WillBuy="true" WillSell="false" Description="死骸の位置" />
+      <interest Tags="robot,lair" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-200" />
+    <intproperty Name="EndReputationMax" Value="200" />
+  </faction>
+
+  <faction
+      Name="Smuts"
+      DisplayName="スマット"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-smut.png"
+      EmblemTileColor="y"
+      EmblemDetailColor="K"
+  >
+    <interests>
+      <interest Tags="dead" WillBuy="true" WillSell="false" Description="死骸の位置" />
+      <interest Tags="plantlairs" Description="植物の巣の位置" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-200" />
+    <intproperty Name="EndReputationMax" Value="200" />
+  </faction>
+
+  <faction
+      Name="Mildews"
+      DisplayName="ミルデュー"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-mildew.png"
+      EmblemTileColor="b"
+      EmblemDetailColor="C"
+  >
+    <interests>
+      <interest Tags="dead" WillBuy="true" WillSell="false" Description="死骸の位置" />
+      <interest Tags="moldelders" Description="カビの師の所在" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-200" />
+    <intproperty Name="EndReputationMax" Value="200" />
+  </faction>
+
+  <faction
+      Name="Yeasts"
+      DisplayName="酵母"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_fungi_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_fungi_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-yeast.png"
+      EmblemTileColor="W"
+      EmblemDetailColor="g"
+  >
+    <interests>
+      <interest Tags="dead" WillBuy="true" WillSell="false" Description="死骸の位置" />
+      <interest Tags="beerbreadwine" WillBuy="false" WillSell="true" Description="ビール、パン、ワイン" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputationMin" Value="-200" />
+    <intproperty Name="EndReputationMax" Value="200" />
+  </faction>
+
+  <faction
+      Name="Crystal"
+      DisplayName="クリスタル"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_chavvah_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_chavvah_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-crystalthing.png"
+      EmblemTileColor="b"
+      EmblemDetailColor="M"
+  >
+    <interests>
+      <interest Tags="thingsunknown" Description="他者が知り得ない事柄" />
+    </interests>
+    <property Name="EndVisibility" Value="Ruined" />
+    <intproperty Name="EndReputation" Value="0" />
+  </faction>
+
+  <!-- Chiliad General -->
+  <faction
+      Name="Snailfolk"
+      DisplayName="カタツムリ人"
+      InitialPlayerReputation="-300"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_mollusks_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_mollusks_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-snailfolk.png"
+      EmblemTileColor="w"
+      EmblemDetailColor="W"
+  >
+    <interests>
+      <interest Tags="soups" Description="スープ" />
+      <interest Tags="stews" Description="シチュー" />
+      <interest Tags="teas" Description="お茶" />
+    </interests>
+    <property Name="EndVisibility" Value="General" />
+    <intproperty Name="EndReputation" Value="-300" />
+  </faction>
+
+  <faction
+      Name="Walking Ibes"
+      DisplayName="歩くイベス"
+      Visible="false"
+      Old="false"
+      InitialPlayerReputation="-300"
+      PositiveSound="Sounds/Reputation/sfx_reputation_birds_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_birds_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-walking-ibes.png"
+      EmblemTileColor="Y"
+      EmblemDetailColor="r"
+  >
+    <interests>
+      <interest Tags="fish,lair" WillBuy="true" WillSell="false" />
+      <interest Tags="talltrees" WillBuy="true" WillSell="false" Description="背の高い木の位置" />
+      <interest Tags="music" WillBuy="false" WillSell="true" Description="音楽演奏" />
+    </interests>
+    <partreputation About="Wings" Value="300" />
+    <property Name="EndVisibility" Value="General" />
+    <intproperty Name="EndReputation" Value="-300" />
+  </faction>
+
+  <faction
+      Name="Elephantines"
+      DisplayName="エレファンティン"
+      InitialPlayerReputation="-300"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_bear_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_bear_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-elephantine.png"
+      EmblemTileColor="y"
+      EmblemDetailColor="W"
+  >
+    <interests>
+      <interest Tags="water,weep" />
+      <interest Tags="tech" />
+    </interests>
+    <property Name="EndVisibility" Value="General" />
+    <intproperty Name="EndReputation" Value="-300" />
+  </faction>
+
+  <faction
+      Name="Yanshufim"
+      DisplayName="ヤンシュフィム"
+      FormatWithArticle="true"
+      Visible="false"
+      Old="false"
+      InitialPlayerReputation="-300"
+      PositiveSound="Sounds/Reputation/sfx_reputation_birds_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_birds_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-yanshufim.png"
+      EmblemTileColor="w"
+      EmblemDetailColor="Y"
+  >
+    <interests>
+      <interest Tags="winged mammal,lair" WillBuy="true" WillSell="false" />
+      <interest Tags="astral" WillBuy="true" WillSell="false" Description="星界の弱点の位置" />
+    </interests>
+    <partreputation About="Wings" Value="300" />
+    <property Name="EndVisibility" Value="General" />
+    <intproperty Name="EndReputation" Value="-300" />
+  </faction>
+
+  <faction
+      Name="Foxen"
+      DisplayName="キツネ"
+      Visible="false"
+      Old="false"
+      InitialPlayerReputation="-300"
+      PositiveSound="Sounds/Reputation/sfx_reputation_dogs_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_dogs_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-foxen.png"
+      EmblemTileColor="r"
+      EmblemDetailColor="Y"
+  >
+    <interests>
+      <interest Tags="games" Description="運試しのゲーム" />
+      <interest Tags="rivers" Description="川の位置" />
+    </interests>
+    <property Name="EndVisibility" Value="General" />
+    <intproperty Name="EndReputation" Value="-300" />
+  </faction>
+
+  <faction
+      Name="Batfolk"
+      DisplayName="コウモリ人"
+      Visible="false"
+      Old="false"
+      InitialPlayerReputation="-300"
+      PositiveSound="Sounds/Reputation/sfx_reputation_wingedMammals_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_wingedMammals_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-batfolk.png"
+      EmblemTileColor="K"
+      EmblemDetailColor="w"
+  >
+    <interests>
+      <interest Tags="caves" Description="洞窟" />
+      <interest Tags="vaultedroofs" WillBuy="true" WillSell="false" Description="穹窿屋根の位置" />
+    </interests>
+    <partreputation About="Wings" Value="300" />
+    <property Name="EndVisibility" Value="General" />
+    <intproperty Name="EndReputation" Value="-300" />
+  </faction>
+
+  <faction
+      Name="Nephilim"
+      DisplayName="ネフィリム"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_girsh_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_girsh_negative"
+      EmblemTile="Creatures/chiliad-godling.png"
+      EmblemTileColor="m"
+      EmblemDetailColor="M">
+    <interests>
+      <interest Tags="becoming" Description="感覚と目的を備えた存在へと成ること" />
+      <interest Tags="managingCult" Description="信徒の管理" />
+    </interests>
+  </faction>
+
+  <faction
+      Name="PlayerCult"
+      DisplayName="プレイヤー教団"
+      Visible="false"
+      Old="false"
+      Plural="false"
+      FormatWithArticle="true"
+      PositiveSound="Sounds/Reputation/sfx_reputation_sultanCult_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_sultanCult_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/sw_amoeba.bmp"
+      EmblemTileColor="g"
+      EmblemDetailColor="w"
+  >
+    <property Name="EndVisibility" Value="General" />
+    <intproperty Name="EndReputation" Value="0" />
+  </faction>
+
+  <!-- Chiliad Specific -->
+  <faction
+      Name="Knight Liminal"
+      DisplayName="ナイト・リミナル"
+      FormatWithArticle="true"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_putusTemplar_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_putusTemplar_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-knight-liminal.png"
+      EmblemTileColor="Y"
+      EmblemDetailColor="m"
+  >
+    <interests>
+      <interest Tags="limen" Description="リーメン" />
+      <interest Tags="settlement" />
+      <interest Tags="tech" />
+    </interests>
+    <property Name="EndVisibility" Value="Covenant" />
+    <intproperty Name="EndReputation" Value="-300" />
+  </faction>
+
+  <faction
+      Name="Quetzal Council"
+      DisplayName="ケツァール評議会"
+      FormatWithArticle="true"
+      Visible="false"
+      Old="false"
+      PositiveSound="Sounds/Reputation/sfx_reputation_pariahs_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_pariahs_negative"
+      HistoricalSignificance="1"
+      EmblemTile="creatures/chiliad-quetzal-council.png"
+      EmblemTileColor="y"
+      EmblemDetailColor="M"
+  >
+    <interests>
+      <interest Tags="settlement" />
+      <interest Tags="self-sovereignty" Description="自治" />
+      <interest Tags="plaguemitigation" Description="疫病抑制" />
+    </interests>
+    <property Name="EndVisibility" Value="Return" />
+    <intproperty Name="EndReputation" Value="-300" />
+  </faction>
+
+  <faction
+      Name="Chiliad Mamon"
+      DisplayName="キリアド・マモン"
+      Old="false"
+      Visible="false"
+      FormatWithArticle="true"
+      PositiveSound="Sounds/Reputation/sfx_reputation_childrenMamon_positive"
+      NegativeSound="Sounds/Reputation/sfx_reputation_childrenMamon_negative"
+      EmblemTile="Creatures/sw_goatfolk_shaman.bmp"
+      EmblemTileColor="K"
+      EmblemDetailColor="w"
+  >
+    <feeling About="*" Value="-50" />
+    <feeling About="Seekers" Value="100" />
+    <waterritual Liquid="blood" />
+    <interests>
+      <interest Tags="generationaltrauma" Description="世代を超えて刻まれた傷の痛み" />
+    </interests>
+  </faction>
+</factions>

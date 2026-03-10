@@ -1,0 +1,2663 @@
+{
+  "meta": {
+    "id": "ui-auto-generated",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "アビリティバーを次ページへ",
+      "text": "アビリティバーを次ページへ",
+      "context": "CommandBinding.Ability Page Down.Display"
+    },
+    {
+      "key": "アビリティバーを前ページへ",
+      "text": "アビリティバーを前ページへ",
+      "context": "CommandBinding.Ability Page Up.Display"
+    },
+    {
+      "key": "決定",
+      "text": "決定",
+      "context": "CommandBinding.Accept.Display"
+    },
+    {
+      "key": "マウス: スマート使用",
+      "text": "マウス: スマート使用",
+      "context": "CommandBinding.AdventureMouseContextAction.Display"
+    },
+    {
+      "key": "マウス: 強制攻撃",
+      "text": "マウス: 強制攻撃",
+      "context": "CommandBinding.AdventureMouseForceAttack.Display"
+    },
+    {
+      "key": "マウス: 強制移動",
+      "text": "マウス: 強制移動",
+      "context": "CommandBinding.AdventureMouseForceMove.Display"
+    },
+    {
+      "key": "マウス: インタラクト",
+      "text": "マウス: インタラクト",
+      "context": "CommandBinding.AdventureMouseInteract.Display"
+    },
+    {
+      "key": "マウス: まとめてインタラクト",
+      "text": "マウス: まとめてインタラクト",
+      "context": "CommandBinding.AdventureMouseInteractAll.Display"
+    },
+    {
+      "key": "マウス: 観察",
+      "text": "マウス: 観察",
+      "context": "CommandBinding.AdventureMouseLook.Display"
+    },
+    {
+      "key": "マウス: クイック観察",
+      "text": "マウス: クイック観察",
+      "context": "CommandBinding.AdventureMouseQuickLook.Display"
+    },
+    {
+      "key": "マウス: ターゲット左クリック",
+      "text": "マウス: ターゲット左クリック",
+      "context": "CommandBinding.AdventureNavMouseLeftClick.Display"
+    },
+    {
+      "key": "マウス: ターゲット右クリック",
+      "text": "マウス: ターゲット右クリック",
+      "context": "CommandBinding.AdventureNavMouseRightClick.Display"
+    },
+    {
+      "key": "キャンセル",
+      "text": "キャンセル",
+      "context": "CommandBinding.Cancel.Display"
+    },
+    {
+      "key": "前のカテゴリ",
+      "text": "前のカテゴリ",
+      "context": "CommandBinding.Category Left.Display"
+    },
+    {
+      "key": "次のカテゴリ",
+      "text": "次のカテゴリ",
+      "context": "CommandBinding.Category Right.Display"
+    },
+    {
+      "key": "Adventuring",
+      "text": "Adventuring",
+      "context": "CommandBinding.Category.Adventuring.Label"
+    },
+    {
+      "key": "UI",
+      "text": "UI",
+      "context": "CommandBinding.Category.UI.Label"
+    },
+    {
+      "key": "アビリティバー",
+      "text": "アビリティバー",
+      "context": "CommandBinding.Category.アビリティバー.Label"
+    },
+    {
+      "key": "キャラクターシート",
+      "text": "キャラクターシート",
+      "context": "CommandBinding.Category.キャラクターシート.Label"
+    },
+    {
+      "key": "キャラクターシートショートカット",
+      "text": "キャラクターシートショートカット",
+      "context": "CommandBinding.Category.キャラクターシートショートカット.Label"
+    },
+    {
+      "key": "キャラクター作成",
+      "text": "キャラクター作成",
+      "context": "CommandBinding.Category.キャラクター作成.Label"
+    },
+    {
+      "key": "システム",
+      "text": "システム",
+      "context": "CommandBinding.Category.システム.Label"
+    },
+    {
+      "key": "ターゲティング",
+      "text": "ターゲティング",
+      "context": "CommandBinding.Category.ターゲティング.Label"
+    },
+    {
+      "key": "デバッグ",
+      "text": "デバッグ",
+      "context": "CommandBinding.Category.デバッグ.Label"
+    },
+    {
+      "key": "マウス操作",
+      "text": "マウス操作",
+      "context": "CommandBinding.Category.マウス操作.Label"
+    },
+    {
+      "key": "メニュー操作",
+      "text": "メニュー操作",
+      "context": "CommandBinding.Category.メニュー操作.Label"
+    },
+    {
+      "key": "冒険操作",
+      "text": "冒険操作",
+      "context": "CommandBinding.Category.冒険操作.Label"
+    },
+    {
+      "key": "取引",
+      "text": "取引",
+      "context": "CommandBinding.Category.取引.Label"
+    },
+    {
+      "key": "基本移動／攻撃",
+      "text": "基本移動／攻撃",
+      "context": "CommandBinding.Category.基本移動／攻撃.Label"
+    },
+    {
+      "key": "高度な冒険操作",
+      "text": "高度な冒険操作",
+      "context": "CommandBinding.Category.高度な冒険操作.Label"
+    },
+    {
+      "key": "能力画面を開く",
+      "text": "能力画面を開く",
+      "context": "CommandBinding.CmdAbilities.Display"
+    },
+    {
+      "key": "アビリティ1を使用",
+      "text": "アビリティ1を使用",
+      "context": "CommandBinding.CmdAbility1.Display"
+    },
+    {
+      "key": "アビリティ10を使用",
+      "text": "アビリティ10を使用",
+      "context": "CommandBinding.CmdAbility10.Display"
+    },
+    {
+      "key": "アビリティ2を使用",
+      "text": "アビリティ2を使用",
+      "context": "CommandBinding.CmdAbility2.Display"
+    },
+    {
+      "key": "アビリティ3を使用",
+      "text": "アビリティ3を使用",
+      "context": "CommandBinding.CmdAbility3.Display"
+    },
+    {
+      "key": "アビリティ4を使用",
+      "text": "アビリティ4を使用",
+      "context": "CommandBinding.CmdAbility4.Display"
+    },
+    {
+      "key": "アビリティ5を使用",
+      "text": "アビリティ5を使用",
+      "context": "CommandBinding.CmdAbility5.Display"
+    },
+    {
+      "key": "アビリティ6を使用",
+      "text": "アビリティ6を使用",
+      "context": "CommandBinding.CmdAbility6.Display"
+    },
+    {
+      "key": "アビリティ7を使用",
+      "text": "アビリティ7を使用",
+      "context": "CommandBinding.CmdAbility7.Display"
+    },
+    {
+      "key": "アビリティ8を使用",
+      "text": "アビリティ8を使用",
+      "context": "CommandBinding.CmdAbility8.Display"
+    },
+    {
+      "key": "アビリティ9を使用",
+      "text": "アビリティ9を使用",
+      "context": "CommandBinding.CmdAbility9.Display"
+    },
+    {
+      "key": "アビリティバー1に切り替え",
+      "text": "アビリティバー1に切り替え",
+      "context": "CommandBinding.CmdAbilityBar1.Display"
+    },
+    {
+      "key": "アビリティバー2に切り替え",
+      "text": "アビリティバー2に切り替え",
+      "context": "CommandBinding.CmdAbilityBar2.Display"
+    },
+    {
+      "key": "アビリティバー3に切り替え",
+      "text": "アビリティバー3に切り替え",
+      "context": "CommandBinding.CmdAbilityBar3.Display"
+    },
+    {
+      "key": "アビリティバー4に切り替え",
+      "text": "アビリティバー4に切り替え",
+      "context": "CommandBinding.CmdAbilityBar4.Display"
+    },
+    {
+      "key": "アビリティバー5に切り替え",
+      "text": "アビリティバー5に切り替え",
+      "context": "CommandBinding.CmdAbilityBar5.Display"
+    },
+    {
+      "key": "状態効果を開く",
+      "text": "状態効果を開く",
+      "context": "CommandBinding.CmdActiveEffects.Display"
+    },
+    {
+      "key": "代替射撃1",
+      "text": "代替射撃1",
+      "context": "CommandBinding.CmdAltFire1.Display"
+    },
+    {
+      "key": "代替射撃2",
+      "text": "代替射撃2",
+      "context": "CommandBinding.CmdAltFire2.Display"
+    },
+    {
+      "key": "代替射撃3",
+      "text": "代替射撃3",
+      "context": "CommandBinding.CmdAltFire3.Display"
+    },
+    {
+      "key": "代替射撃4",
+      "text": "代替射撃4",
+      "context": "CommandBinding.CmdAltFire4.Display"
+    },
+    {
+      "key": "代替射撃5",
+      "text": "代替射撃5",
+      "context": "CommandBinding.CmdAltFire5.Display"
+    },
+    {
+      "key": "強制攻撃するマスを選択",
+      "text": "強制攻撃するマスを選択",
+      "context": "CommandBinding.CmdAttackCell.Display"
+    },
+    {
+      "key": "下を強制攻撃",
+      "text": "下を強制攻撃",
+      "context": "CommandBinding.CmdAttackD.Display"
+    },
+    {
+      "key": "方向を指定して強制攻撃",
+      "text": "方向を指定して強制攻撃",
+      "context": "CommandBinding.CmdAttackDirection.Display"
+    },
+    {
+      "key": "東を強制攻撃",
+      "text": "東を強制攻撃",
+      "context": "CommandBinding.CmdAttackE.Display"
+    },
+    {
+      "key": "北を強制攻撃",
+      "text": "北を強制攻撃",
+      "context": "CommandBinding.CmdAttackN.Display"
+    },
+    {
+      "key": "北東を強制攻撃",
+      "text": "北東を強制攻撃",
+      "context": "CommandBinding.CmdAttackNE.Display"
+    },
+    {
+      "key": "北西を強制攻撃",
+      "text": "北西を強制攻撃",
+      "context": "CommandBinding.CmdAttackNW.Display"
+    },
+    {
+      "key": "最寄りの敵を近接攻撃",
+      "text": "最寄りの敵を近接攻撃",
+      "context": "CommandBinding.CmdAttackNearest.Display"
+    },
+    {
+      "key": "南を強制攻撃",
+      "text": "南を強制攻撃",
+      "context": "CommandBinding.CmdAttackS.Display"
+    },
+    {
+      "key": "南東を強制攻撃",
+      "text": "南東を強制攻撃",
+      "context": "CommandBinding.CmdAttackSE.Display"
+    },
+    {
+      "key": "南西を強制攻撃",
+      "text": "南西を強制攻撃",
+      "context": "CommandBinding.CmdAttackSW.Display"
+    },
+    {
+      "key": "上を強制攻撃",
+      "text": "上を強制攻撃",
+      "context": "CommandBinding.CmdAttackU.Display"
+    },
+    {
+      "key": "西を強制攻撃",
+      "text": "西を強制攻撃",
+      "context": "CommandBinding.CmdAttackW.Display"
+    },
+    {
+      "key": "近接自動攻撃",
+      "text": "近接自動攻撃",
+      "context": "CommandBinding.CmdAutoAttack.Display"
+    },
+    {
+      "key": "自動探索",
+      "text": "自動探索",
+      "context": "CommandBinding.CmdAutoExplore.Display"
+    },
+    {
+      "key": "能力値画面を開く",
+      "text": "能力値画面を開く",
+      "context": "CommandBinding.CmdCharacter.Display"
+    },
+    {
+      "key": "項目のオプションを選ぶ",
+      "text": "項目のオプションを選ぶ",
+      "context": "CommandBinding.CmdChargenItemOptions.Display"
+    },
+    {
+      "key": "突然変異のバリアントを選ぶ",
+      "text": "突然変異のバリアントを選ぶ",
+      "context": "CommandBinding.CmdChargenMutationVariant.Display"
+    },
+    {
+      "key": "ランダムに選択",
+      "text": "ランダムに選択",
+      "context": "CommandBinding.CmdChargenRandom.Display"
+    },
+    {
+      "key": "選択をリセット",
+      "text": "選択をリセット",
+      "context": "CommandBinding.CmdChargenReset.Display"
+    },
+    {
+      "key": "仲間とやり取り",
+      "text": "仲間とやり取り",
+      "context": "CommandBinding.CmdCompanions.Display"
+    },
+    {
+      "key": "クイックスタート (デバッグ)",
+      "text": "クイックスタート (デバッグ)",
+      "context": "CommandBinding.CmdDebugQuickstart.Display"
+    },
+    {
+      "key": "削除",
+      "text": "削除",
+      "context": "CommandBinding.CmdDelete.Display"
+    },
+    {
+      "key": "四肢を切断",
+      "text": "四肢を切断",
+      "context": "CommandBinding.CmdDismemberLimb.Display"
+    },
+    {
+      "key": "装備画面を開く",
+      "text": "装備画面を開く",
+      "context": "CommandBinding.CmdEquipment.Display"
+    },
+    {
+      "key": "マップ全域を表示",
+      "text": "マップ全域を表示",
+      "context": "CommandBinding.CmdExplore.Display"
+    },
+    {
+      "key": "評判画面を開く",
+      "text": "評判画面を開く",
+      "context": "CommandBinding.CmdFactions.Display"
+    },
+    {
+      "key": "フィルター／検索",
+      "text": "フィルター／検索",
+      "context": "CommandBinding.CmdFilter.Display"
+    },
+    {
+      "key": "飛び道具で射撃",
+      "text": "飛び道具で射撃",
+      "context": "CommandBinding.CmdFire.Display"
+    },
+    {
+      "key": "拾う",
+      "text": "拾う",
+      "context": "CommandBinding.CmdGet.Display"
+    },
+    {
+      "key": "周囲の対象とやり取り",
+      "text": "周囲の対象とやり取り",
+      "context": "CommandBinding.CmdGetFrom.Display"
+    },
+    {
+      "key": "ヘルプ",
+      "text": "ヘルプ",
+      "context": "CommandBinding.CmdHelp.Display"
+    },
+    {
+      "key": "挿入",
+      "text": "挿入",
+      "context": "CommandBinding.CmdInsert.Display"
+    },
+    {
+      "key": "インベントリを開く",
+      "text": "インベントリを開く",
+      "context": "CommandBinding.CmdInventory.Display"
+    },
+    {
+      "key": "ジャーナルを開く",
+      "text": "ジャーナルを開く",
+      "context": "CommandBinding.CmdJournal.Display"
+    },
+    {
+      "key": "直前のシートページを開く",
+      "text": "直前のシートページを開く",
+      "context": "CommandBinding.CmdLastStatusPage.Display"
+    },
+    {
+      "key": "ロード",
+      "text": "ロード",
+      "context": "CommandBinding.CmdLoad.Display"
+    },
+    {
+      "key": "ターゲットロック切り替え",
+      "text": "ターゲットロック切り替え",
+      "context": "CommandBinding.CmdLockUnlock.Display"
+    },
+    {
+      "key": "見渡す",
+      "text": "見渡す",
+      "context": "CommandBinding.CmdLook.Display"
+    },
+    {
+      "key": "対象をマーキング",
+      "text": "対象をマーキング",
+      "context": "CommandBinding.CmdMarkTarget.Display"
+    },
+    {
+      "key": "メッセージ履歴を表示",
+      "text": "メッセージ履歴を表示",
+      "context": "CommandBinding.CmdMessageHistory.Display"
+    },
+    {
+      "key": "飛び道具メニューを開く",
+      "text": "飛び道具メニューを開く",
+      "context": "CommandBinding.CmdMissileWeaponMenu.Display"
+    },
+    {
+      "key": "中央へ移動",
+      "text": "中央へ移動",
+      "context": "CommandBinding.CmdMoveCenter.Display"
+    },
+    {
+      "key": "下階へ移動",
+      "text": "下階へ移動",
+      "context": "CommandBinding.CmdMoveD.Display"
+    },
+    {
+      "key": "東へ移動",
+      "text": "東へ移動",
+      "context": "CommandBinding.CmdMoveE.Display"
+    },
+    {
+      "key": "東端まで移動",
+      "text": "東端まで移動",
+      "context": "CommandBinding.CmdMoveFarE.Display"
+    },
+    {
+      "key": "北端まで移動",
+      "text": "北端まで移動",
+      "context": "CommandBinding.CmdMoveFarN.Display"
+    },
+    {
+      "key": "北東端まで移動",
+      "text": "北東端まで移動",
+      "context": "CommandBinding.CmdMoveFarNE.Display"
+    },
+    {
+      "key": "北西端まで移動",
+      "text": "北西端まで移動",
+      "context": "CommandBinding.CmdMoveFarNW.Display"
+    },
+    {
+      "key": "南端まで移動",
+      "text": "南端まで移動",
+      "context": "CommandBinding.CmdMoveFarS.Display"
+    },
+    {
+      "key": "南東端まで移動",
+      "text": "南東端まで移動",
+      "context": "CommandBinding.CmdMoveFarSE.Display"
+    },
+    {
+      "key": "南西端まで移動",
+      "text": "南西端まで移動",
+      "context": "CommandBinding.CmdMoveFarSW.Display"
+    },
+    {
+      "key": "西端まで移動",
+      "text": "西端まで移動",
+      "context": "CommandBinding.CmdMoveFarW.Display"
+    },
+    {
+      "key": "移動メニューを開く",
+      "text": "移動メニューを開く",
+      "context": "CommandBinding.CmdMoveMenu.Display"
+    },
+    {
+      "key": "北へ移動",
+      "text": "北へ移動",
+      "context": "CommandBinding.CmdMoveN.Display"
+    },
+    {
+      "key": "北東へ移動",
+      "text": "北東へ移動",
+      "context": "CommandBinding.CmdMoveNE.Display"
+    },
+    {
+      "key": "北西へ移動",
+      "text": "北西へ移動",
+      "context": "CommandBinding.CmdMoveNW.Display"
+    },
+    {
+      "key": "南へ移動",
+      "text": "南へ移動",
+      "context": "CommandBinding.CmdMoveS.Display"
+    },
+    {
+      "key": "南東へ移動",
+      "text": "南東へ移動",
+      "context": "CommandBinding.CmdMoveSE.Display"
+    },
+    {
+      "key": "南西へ移動",
+      "text": "南西へ移動",
+      "context": "CommandBinding.CmdMoveSW.Display"
+    },
+    {
+      "key": "指定マスへ移動",
+      "text": "指定マスへ移動",
+      "context": "CommandBinding.CmdMoveTo.Display"
+    },
+    {
+      "key": "ゾーン端まで移動",
+      "text": "ゾーン端まで移動",
+      "context": "CommandBinding.CmdMoveToEdge.Display"
+    },
+    {
+      "key": "注目地点まで移動",
+      "text": "注目地点まで移動",
+      "context": "CommandBinding.CmdMoveToPointOfInterest.Display"
+    },
+    {
+      "key": "上階へ移動",
+      "text": "上階へ移動",
+      "context": "CommandBinding.CmdMoveU.Display"
+    },
+    {
+      "key": "西へ移動",
+      "text": "西へ移動",
+      "context": "CommandBinding.CmdMoveW.Display"
+    },
+    {
+      "key": "ノークリップ下降",
+      "text": "ノークリップ下降",
+      "context": "CommandBinding.CmdNoclipD.Display"
+    },
+    {
+      "key": "ノークリップ上昇",
+      "text": "ノークリップ上昇",
+      "context": "CommandBinding.CmdNoclipU.Display"
+    },
+    {
+      "key": "開く",
+      "text": "開く",
+      "context": "CommandBinding.CmdOpen.Display"
+    },
+    {
+      "key": "オプションを表示",
+      "text": "オプションを表示",
+      "context": "CommandBinding.CmdOptions.Display"
+    },
+    {
+      "key": "クエスト画面を開く",
+      "text": "クエスト画面を開く",
+      "context": "CommandBinding.CmdQuests.Display"
+    },
+    {
+      "key": "終了",
+      "text": "終了",
+      "context": "CommandBinding.CmdQuit.Display"
+    },
+    {
+      "key": "四肢を再生",
+      "text": "四肢を再生",
+      "context": "CommandBinding.CmdRegenerateLimb.Display"
+    },
+    {
+      "key": "飛び道具を再装填",
+      "text": "飛び道具を再装填",
+      "context": "CommandBinding.CmdReload.Display"
+    },
+    {
+      "key": "エネルギーセルを交換",
+      "text": "エネルギーセルを交換",
+      "context": "CommandBinding.CmdReplaceCell.Display"
+    },
+    {
+      "key": "セーブ",
+      "text": "セーブ",
+      "context": "CommandBinding.CmdSave.Display"
+    },
+    {
+      "key": "Brainlog を表示",
+      "text": "Brainlog を表示",
+      "context": "CommandBinding.CmdShowBrainlog.Display"
+    },
+    {
+      "key": "FPS を表示",
+      "text": "FPS を表示",
+      "context": "CommandBinding.CmdShowFPS.Display"
+    },
+    {
+      "key": "到達範囲マップを表示",
+      "text": "到達範囲マップを表示",
+      "context": "CommandBinding.CmdShowReachability.Display"
+    },
+    {
+      "key": "サイドバーを切り替え",
+      "text": "サイドバーを切り替え",
+      "context": "CommandBinding.CmdShowSidebar.Display"
+    },
+    {
+      "key": "サイドバー表示モードを巡回",
+      "text": "サイドバー表示モードを巡回",
+      "context": "CommandBinding.CmdShowSidebarMessages.Display"
+    },
+    {
+      "key": "技能画面を開く",
+      "text": "技能画面を開く",
+      "context": "CommandBinding.CmdSkillsPowers.Display"
+    },
+    {
+      "key": "会話中に取引を開始",
+      "text": "会話中に取引を開始",
+      "context": "CommandBinding.CmdStartTrade.Display"
+    },
+    {
+      "key": "能力: 新しい突然変異を取得",
+      "text": "能力: 新しい突然変異を取得",
+      "context": "CommandBinding.CmdStatusBuyMutation.Display"
+    },
+    {
+      "key": "能力: 状態効果を表示",
+      "text": "能力: 状態効果を表示",
+      "context": "CommandBinding.CmdStatusShowEffects.Display"
+    },
+    {
+      "key": "システムメニュー",
+      "text": "システムメニュー",
+      "context": "CommandBinding.CmdSystemMenu.Display"
+    },
+    {
+      "key": "話す",
+      "text": "話す",
+      "context": "CommandBinding.CmdTalk.Display"
+    },
+    {
+      "key": "対象を選択",
+      "text": "対象を選択",
+      "context": "CommandBinding.CmdTarget.Display"
+    },
+    {
+      "key": "自分を対象にする",
+      "text": "自分を対象にする",
+      "context": "CommandBinding.CmdTargetSelf.Display"
+    },
+    {
+      "key": "投げる",
+      "text": "投げる",
+      "context": "CommandBinding.CmdThrow.Display"
+    },
+    {
+      "key": "工作画面を開く",
+      "text": "工作画面を開く",
+      "context": "CommandBinding.CmdTinkering.Display"
+    },
+    {
+      "key": "アニメーションを切り替え",
+      "text": "アニメーションを切り替え",
+      "context": "CommandBinding.CmdToggleAnimation.Display"
+    },
+    {
+      "key": "詳細メッセージを切り替え",
+      "text": "詳細メッセージを切り替え",
+      "context": "CommandBinding.CmdToggleMessageVerbosity.Display"
+    },
+    {
+      "key": "アイテムを1つ追加",
+      "text": "アイテムを1つ追加",
+      "context": "CommandBinding.CmdTradeAdd.Display"
+    },
+    {
+      "key": "アイテム束を追加／削除",
+      "text": "アイテム束を追加／削除",
+      "context": "CommandBinding.CmdTradeAllItems.Display"
+    },
+    {
+      "key": "取引を申し出る",
+      "text": "取引を申し出る",
+      "context": "CommandBinding.CmdTradeOffer.Display"
+    },
+    {
+      "key": "アイテムを1つ除外",
+      "text": "アイテムを1つ除外",
+      "context": "CommandBinding.CmdTradeRemove.Display"
+    },
+    {
+      "key": "所持品をすべて追加／削除",
+      "text": "所持品をすべて追加／削除",
+      "context": "CommandBinding.CmdTradeToggleAll.Display"
+    },
+    {
+      "key": "使用する",
+      "text": "使用する",
+      "context": "CommandBinding.CmdUse.Display"
+    },
+    {
+      "key": "アイテム操作",
+      "text": "アイテム操作",
+      "context": "CommandBinding.CmdVendorActions.Display"
+    },
+    {
+      "key": "鑑定を依頼",
+      "text": "鑑定を依頼",
+      "context": "CommandBinding.CmdVendorExamine.Display"
+    },
+    {
+      "key": "アイテムを観察",
+      "text": "アイテムを観察",
+      "context": "CommandBinding.CmdVendorLook.Display"
+    },
+    {
+      "key": "書物を読む",
+      "text": "書物を読む",
+      "context": "CommandBinding.CmdVendorRead.Display"
+    },
+    {
+      "key": "充電を依頼",
+      "text": "充電を依頼",
+      "context": "CommandBinding.CmdVendorRecharge.Display"
+    },
+    {
+      "key": "修理を依頼",
+      "text": "修理を依頼",
+      "context": "CommandBinding.CmdVendorRepair.Display"
+    },
+    {
+      "key": "待機／炎を払う",
+      "text": "待機／炎を払う",
+      "context": "CommandBinding.CmdWait.Display"
+    },
+    {
+      "key": "100ターン待機",
+      "text": "100ターン待機",
+      "context": "CommandBinding.CmdWait100.Display"
+    },
+    {
+      "key": "20ターン待機",
+      "text": "20ターン待機",
+      "context": "CommandBinding.CmdWait20.Display"
+    },
+    {
+      "key": "休憩メニューを開く",
+      "text": "休憩メニューを開く",
+      "context": "CommandBinding.CmdWaitMenu.Display"
+    },
+    {
+      "key": "Wait a number of turns",
+      "text": "Wait a number of turns",
+      "context": "CommandBinding.CmdWaitN.Display"
+    },
+    {
+      "key": "回復するまで休む",
+      "text": "回復するまで休む",
+      "context": "CommandBinding.CmdWaitUntilHealed.Display"
+    },
+    {
+      "key": "Rest until morning",
+      "text": "Rest until morning",
+      "context": "CommandBinding.CmdWaitUntilMorning.Display"
+    },
+    {
+      "key": "Rest until party is healed",
+      "text": "Rest until party is healed",
+      "context": "CommandBinding.CmdWaitUntilPartyHealed.Display"
+    },
+    {
+      "key": "方向を指定して歩く",
+      "text": "方向を指定して歩く",
+      "context": "CommandBinding.CmdWalk.Display"
+    },
+    {
+      "key": "願い事",
+      "text": "願い事",
+      "context": "CommandBinding.CmdWish.Display"
+    },
+    {
+      "key": "願い事メニュー",
+      "text": "願い事メニュー",
+      "context": "CommandBinding.CmdWishMenu.Display"
+    },
+    {
+      "key": "経験値 250,000 を得る",
+      "text": "経験値 250,000 を得る",
+      "context": "CommandBinding.CmdXP.Display"
+    },
+    {
+      "key": "ズームイン",
+      "text": "ズームイン",
+      "context": "CommandBinding.CmdZoomIn.Display"
+    },
+    {
+      "key": "ズームアウト",
+      "text": "ズームアウト",
+      "context": "CommandBinding.CmdZoomOut.Display"
+    },
+    {
+      "key": "指示後に強制攻撃",
+      "text": "指示後に強制攻撃",
+      "context": "CommandBinding.ForceAttack.Display"
+    },
+    {
+      "key": "ゲームパッド Alt",
+      "text": "ゲームパッド Alt",
+      "context": "CommandBinding.GamepadAlt.Display"
+    },
+    {
+      "key": "オーバーレイ／ツールチップを表示",
+      "text": "オーバーレイ／ツールチップを表示",
+      "context": "CommandBinding.Highlight.Display"
+    },
+    {
+      "key": "方向を指示",
+      "text": "方向を指示",
+      "context": "CommandBinding.IndicateDirection.Display"
+    },
+    {
+      "key": "南を指示",
+      "text": "南を指示",
+      "context": "CommandBinding.IndicateDirection/down.Display"
+    },
+    {
+      "key": "西を指示",
+      "text": "西を指示",
+      "context": "CommandBinding.IndicateDirection/left.Display"
+    },
+    {
+      "key": "東を指示",
+      "text": "東を指示",
+      "context": "CommandBinding.IndicateDirection/right.Display"
+    },
+    {
+      "key": "北を指示",
+      "text": "北を指示",
+      "context": "CommandBinding.IndicateDirection/up.Display"
+    },
+    {
+      "key": "インベントリ: 使う",
+      "text": "インベントリ: 使う",
+      "context": "CommandBinding.InventoryQuickApply.Display"
+    },
+    {
+      "key": "インベントリ: 飲む",
+      "text": "インベントリ: 飲む",
+      "context": "CommandBinding.InventoryQuickDrink.Display"
+    },
+    {
+      "key": "インベントリ: 捨てる",
+      "text": "インベントリ: 捨てる",
+      "context": "CommandBinding.InventoryQuickDrop.Display"
+    },
+    {
+      "key": "インベントリ: 食べる",
+      "text": "インベントリ: 食べる",
+      "context": "CommandBinding.InventoryQuickEat.Display"
+    },
+    {
+      "key": "指定方向を観察",
+      "text": "指定方向を観察",
+      "context": "CommandBinding.LookDirection.Display"
+    },
+    {
+      "key": "Look south",
+      "text": "Look south",
+      "context": "CommandBinding.LookDirection/down.Display"
+    },
+    {
+      "key": "Look west",
+      "text": "Look west",
+      "context": "CommandBinding.LookDirection/left.Display"
+    },
+    {
+      "key": "Look east",
+      "text": "Look east",
+      "context": "CommandBinding.LookDirection/right.Display"
+    },
+    {
+      "key": "Look north",
+      "text": "Look north",
+      "context": "CommandBinding.LookDirection/up.Display"
+    },
+    {
+      "key": "水平移動（レガシー UI の左右移動）",
+      "text": "水平移動（レガシー UI の左右移動）",
+      "context": "CommandBinding.Navigate Horizontal.Display"
+    },
+    {
+      "key": "垂直移動（レガシー UI の上下移動）",
+      "text": "垂直移動（レガシー UI の上下移動）",
+      "context": "CommandBinding.Navigate Vertical.Display"
+    },
+    {
+      "key": "次のアビリティ",
+      "text": "次のアビリティ",
+      "context": "CommandBinding.Next Ability.Display"
+    },
+    {
+      "key": "1ページ下へ",
+      "text": "1ページ下へ",
+      "context": "CommandBinding.Page Down.Display"
+    },
+    {
+      "key": "前のページ",
+      "text": "前のページ",
+      "context": "CommandBinding.Page Left.Display"
+    },
+    {
+      "key": "次のページ",
+      "text": "次のページ",
+      "context": "CommandBinding.Page Right.Display"
+    },
+    {
+      "key": "1ページ上へ",
+      "text": "1ページ上へ",
+      "context": "CommandBinding.Page Up.Display"
+    },
+    {
+      "key": "前のアビリティ",
+      "text": "前のアビリティ",
+      "context": "CommandBinding.Previous Ability.Display"
+    },
+    {
+      "key": "アイテムを収納",
+      "text": "アイテムを収納",
+      "context": "CommandBinding.Store Items.Display"
+    },
+    {
+      "key": "テキストを送信",
+      "text": "テキストを送信",
+      "context": "CommandBinding.Submit.Display"
+    },
+    {
+      "key": "指示後に1歩進む",
+      "text": "指示後に1歩進む",
+      "context": "CommandBinding.Take A Step.Display"
+    },
+    {
+      "key": "すべて取得",
+      "text": "すべて取得",
+      "context": "CommandBinding.Take All.Display"
+    },
+    {
+      "key": "切り替える",
+      "text": "切り替える",
+      "context": "CommandBinding.Toggle.Display"
+    },
+    {
+      "key": "詳細をナビゲート",
+      "text": "詳細をナビゲート",
+      "context": "CommandBinding.UI:DetailsNavigate.Display"
+    },
+    {
+      "key": "詳細: 下へ移動",
+      "text": "詳細: 下へ移動",
+      "context": "CommandBinding.UI:DetailsNavigate/down.Display"
+    },
+    {
+      "key": "詳細: 左へ移動",
+      "text": "詳細: 左へ移動",
+      "context": "CommandBinding.UI:DetailsNavigate/left.Display"
+    },
+    {
+      "key": "詳細: 右へ移動",
+      "text": "詳細: 右へ移動",
+      "context": "CommandBinding.UI:DetailsNavigate/right.Display"
+    },
+    {
+      "key": "詳細: 上へ移動",
+      "text": "詳細: 上へ移動",
+      "context": "CommandBinding.UI:DetailsNavigate/up.Display"
+    },
+    {
+      "key": "ナビゲート",
+      "text": "ナビゲート",
+      "context": "CommandBinding.UI:Navigate.Display"
+    },
+    {
+      "key": "下へ移動",
+      "text": "下へ移動",
+      "context": "CommandBinding.UI:Navigate/down.Display"
+    },
+    {
+      "key": "左へ移動",
+      "text": "左へ移動",
+      "context": "CommandBinding.UI:Navigate/left.Display"
+    },
+    {
+      "key": "右へ移動",
+      "text": "右へ移動",
+      "context": "CommandBinding.UI:Navigate/right.Display"
+    },
+    {
+      "key": "上へ移動",
+      "text": "上へ移動",
+      "context": "CommandBinding.UI:Navigate/up.Display"
+    },
+    {
+      "key": "選択中の能力を使用",
+      "text": "選択中の能力を使用",
+      "context": "CommandBinding.Use Ability.Display"
+    },
+    {
+      "key": "値を減らす",
+      "text": "値を減らす",
+      "context": "CommandBinding.V Negative.Display"
+    },
+    {
+      "key": "値を増やす",
+      "text": "値を増やす",
+      "context": "CommandBinding.V Positive.Display"
+    },
+    {
+      "key": "Mod",
+      "text": "Mod",
+      "context": "Options.Category.Mod.Label"
+    },
+    {
+      "key": "UI",
+      "text": "UI",
+      "context": "Options.Category.UI.Label"
+    },
+    {
+      "key": "アクセシビリティ",
+      "text": "アクセシビリティ",
+      "context": "Options.Category.アクセシビリティ.Label"
+    },
+    {
+      "key": "アプリ設定",
+      "text": "アプリ設定",
+      "context": "Options.Category.アプリ設定.Label"
+    },
+    {
+      "key": "サウンド",
+      "text": "サウンド",
+      "context": "Options.Category.サウンド.Label"
+    },
+    {
+      "key": "デバッグ",
+      "text": "デバッグ",
+      "context": "Options.Category.デバッグ.Label"
+    },
+    {
+      "key": "パフォーマンス",
+      "text": "パフォーマンス",
+      "context": "Options.Category.パフォーマンス.Label"
+    },
+    {
+      "key": "レガシー UI",
+      "text": "レガシー UI",
+      "context": "Options.Category.レガシー UI.Label"
+    },
+    {
+      "key": "操作",
+      "text": "操作",
+      "context": "Options.Category.操作.Label"
+    },
+    {
+      "key": "確認",
+      "text": "確認",
+      "context": "Options.Category.確認.Label"
+    },
+    {
+      "key": "自動化",
+      "text": "自動化",
+      "context": "Options.Category.自動化.Label"
+    },
+    {
+      "key": "自動取得",
+      "text": "自動取得",
+      "context": "Options.Category.自動取得.Label"
+    },
+    {
+      "key": "表示",
+      "text": "表示",
+      "context": "Options.Category.表示.Label"
+    },
+    {
+      "key": "体力以外で色を変える効果を無視する",
+      "text": "体力以外で色を変える効果を無視する",
+      "context": "Options.Option.Option@AlwaysHPColor.Title"
+    },
+    {
+      "key": "体力状態に合わせてグリフの色を変える",
+      "text": "体力状態に合わせてグリフの色を変える",
+      "context": "Options.Option.Option@HPColor.Title"
+    },
+    {
+      "key": "突然変異による色変更を許可",
+      "text": "突然変異による色変更を許可",
+      "context": "Options.Option.Option@MutationColor.Title"
+    },
+    {
+      "key": "アビリティバーの表示",
+      "text": "アビリティバーの表示",
+      "context": "Options.Option.OptionAbilityBarMode.Title"
+    },
+    {
+      "key": "Compact",
+      "text": "Compact",
+      "context": "Options.Option.OptionAbilityBarMode.Value.Compact"
+    },
+    {
+      "key": "Full",
+      "text": "全画面",
+      "context": "Options.Option.OptionAbilityBarMode.Value.Full"
+    },
+    {
+      "key": "能力クールダウン警告をログ表示にする",
+      "text": "能力クールダウン警告をログ表示にする",
+      "context": "Options.Option.OptionAbilityCooldownWarningAsMessage.Title"
+    },
+    {
+      "key": "スクリプトModを許可（悪意あるコードに注意）",
+      "text": "スクリプトModを許可（悪意あるコードに注意）",
+      "context": "Options.Option.OptionAllowCSMods.Title"
+    },
+    {
+      "key": "最大ズームアウト時に UI フレームを外す",
+      "text": "最大ズームアウト時に UI フレームを外す",
+      "context": "Options.Option.OptionAllowFramelessZoomOut.Title"
+    },
+    {
+      "key": "死亡時に確認ダイアログを出す",
+      "text": "死亡時に確認ダイアログを出す",
+      "context": "Options.Option.OptionAllowReallydie.Title"
+    },
+    {
+      "key": "セーブ/ロードを有効化",
+      "text": "セーブ/ロードを有効化",
+      "context": "Options.Option.OptionAllowSaveLoad.Title"
+    },
+    {
+      "key": "ビット表示を英数字に切り替える（色覚補助）",
+      "text": "ビット表示を英数字に切り替える（色覚補助）",
+      "context": "Options.Option.OptionAlphanumericBits.Title"
+    },
+    {
+      "key": "環境音",
+      "text": "環境音",
+      "context": "Options.Option.OptionAmbient.Title"
+    },
+    {
+      "key": "環境音の音量",
+      "text": "環境音の音量",
+      "context": "Options.Option.OptionAmbientVolume.Title"
+    },
+    {
+      "key": "匿名のプレイ統計を送信",
+      "text": "匿名のプレイ統計を送信",
+      "context": "Options.Option.OptionAnalytics.Title"
+    },
+    {
+      "key": "自動で階段へ移動する前に確認",
+      "text": "自動で階段へ移動する前に確認",
+      "context": "Options.Option.OptionAskAutostair.Title"
+    },
+    {
+      "key": "地面から拾うとき 1 個でも一覧を表示",
+      "text": "地面から拾うとき 1 個でも一覧を表示",
+      "context": "Options.Option.OptionAskForOneItem.Title"
+    },
+    {
+      "key": "ワールドマップへ移動する前に確認",
+      "text": "ワールドマップへ移動する前に確認",
+      "context": "Options.Option.OptionAskForWorldmap.Title"
+    },
+    {
+      "key": "スクラップを自動解体",
+      "text": "スクラップを自動解体",
+      "context": "Options.Option.OptionAutoDisassembleScrap.Title"
+    },
+    {
+      "key": "渇いたら自動で真水を飲む",
+      "text": "渇いたら自動で真水を飲む",
+      "context": "Options.Option.OptionAutoSip.Title"
+    },
+    {
+      "key": "自動飲用の喉の渇き閾値",
+      "text": "自動飲用の喉の渇き閾値",
+      "context": "Options.Option.OptionAutoSipLevel.Title"
+    },
+    {
+      "key": "Dehydrated",
+      "text": "Dehydrated",
+      "context": "Options.Option.OptionAutoSipLevel.Value.Dehydrated"
+    },
+    {
+      "key": "Parched",
+      "text": "Parched",
+      "context": "Options.Option.OptionAutoSipLevel.Value.Parched"
+    },
+    {
+      "key": "Quenched",
+      "text": "Quenched",
+      "context": "Options.Option.OptionAutoSipLevel.Value.Quenched"
+    },
+    {
+      "key": "Thirsty",
+      "text": "Thirsty",
+      "context": "Options.Option.OptionAutoSipLevel.Value.Thirsty"
+    },
+    {
+      "key": "Tumescent",
+      "text": "Tumescent",
+      "context": "Options.Option.OptionAutoSipLevel.Value.Tumescent"
+    },
+    {
+      "key": "たいまつを自動で点灯/消灯",
+      "text": "たいまつを自動で点灯/消灯",
+      "context": "Options.Option.OptionAutoTorch.Title"
+    },
+    {
+      "key": "自動探索中に隣接した無視対象を攻撃",
+      "text": "自動探索中に隣接した無視対象を攻撃",
+      "context": "Options.Option.OptionAutoexploreAttackIgnoredAdjacentEnemies.Title"
+    },
+    {
+      "key": "自動探索中にコンテナを調べる",
+      "text": "自動探索中にコンテナを調べる",
+      "context": "Options.Option.OptionAutoexploreChests.Title"
+    },
+    {
+      "key": "敵対クリーチャーを無視する距離閾値",
+      "text": "敵対クリーチャーを無視する距離閾値",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Title"
+    },
+    {
+      "key": "1",
+      "text": "1",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.1"
+    },
+    {
+      "key": "10",
+      "text": "10",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.10"
+    },
+    {
+      "key": "15",
+      "text": "15",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.15"
+    },
+    {
+      "key": "2",
+      "text": "2",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.2"
+    },
+    {
+      "key": "20",
+      "text": "20",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.20"
+    },
+    {
+      "key": "3",
+      "text": "3",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.3"
+    },
+    {
+      "key": "30",
+      "text": "30",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.30"
+    },
+    {
+      "key": "40",
+      "text": "40",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.40"
+    },
+    {
+      "key": "5",
+      "text": "5",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.5"
+    },
+    {
+      "key": "7",
+      "text": "7",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.7"
+    },
+    {
+      "key": "None",
+      "text": "None",
+      "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.None"
+    },
+    {
+      "key": "敵対クリーチャーを無視する難易度閾値",
+      "text": "敵対クリーチャーを無視する難易度閾値",
+      "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Title"
+    },
+    {
+      "key": "Average",
+      "text": "Average",
+      "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Average"
+    },
+    {
+      "key": "Easy",
+      "text": "Easy",
+      "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Easy"
+    },
+    {
+      "key": "Impossible",
+      "text": "Impossible",
+      "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Impossible"
+    },
+    {
+      "key": "None",
+      "text": "None",
+      "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.None"
+    },
+    {
+      "key": "Tough",
+      "text": "Tough",
+      "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Tough"
+    },
+    {
+      "key": "Very Tough",
+      "text": "Very Tough",
+      "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Very Tough"
+    },
+    {
+      "key": "自動移動セル/秒と自動攻撃回数/秒の上限",
+      "text": "自動移動セル/秒と自動攻撃回数/秒の上限",
+      "context": "Options.Option.OptionAutoexploreRate.Title"
+    },
+    {
+      "key": "0|ì",
+      "text": "0|ì",
+      "context": "Options.Option.OptionAutoexploreRate.Value.0|ì"
+    },
+    {
+      "key": "1",
+      "text": "1",
+      "context": "Options.Option.OptionAutoexploreRate.Value.1"
+    },
+    {
+      "key": "10",
+      "text": "10",
+      "context": "Options.Option.OptionAutoexploreRate.Value.10"
+    },
+    {
+      "key": "15",
+      "text": "15",
+      "context": "Options.Option.OptionAutoexploreRate.Value.15"
+    },
+    {
+      "key": "2",
+      "text": "2",
+      "context": "Options.Option.OptionAutoexploreRate.Value.2"
+    },
+    {
+      "key": "20",
+      "text": "20",
+      "context": "Options.Option.OptionAutoexploreRate.Value.20"
+    },
+    {
+      "key": "3",
+      "text": "3",
+      "context": "Options.Option.OptionAutoexploreRate.Value.3"
+    },
+    {
+      "key": "30",
+      "text": "30",
+      "context": "Options.Option.OptionAutoexploreRate.Value.30"
+    },
+    {
+      "key": "5",
+      "text": "5",
+      "context": "Options.Option.OptionAutoexploreRate.Value.5"
+    },
+    {
+      "key": "60",
+      "text": "60",
+      "context": "Options.Option.OptionAutoexploreRate.Value.60"
+    },
+    {
+      "key": "7",
+      "text": "7",
+      "context": "Options.Option.OptionAutoexploreRate.Value.7"
+    },
+    {
+      "key": "弾薬を自動取得",
+      "text": "弾薬を自動取得",
+      "context": "Options.Option.OptionAutogetAmmo.Title"
+    },
+    {
+      "key": "アーティファクトを自動取得",
+      "text": "アーティファクトを自動取得",
+      "context": "Options.Option.OptionAutogetArtifacts.Title"
+    },
+    {
+      "key": "書物を自動取得",
+      "text": "書物を自動取得",
+      "context": "Options.Option.OptionAutogetBooks.Title"
+    },
+    {
+      "key": "落とした容器の液体を自動取得",
+      "text": "落とした容器の液体を自動取得",
+      "context": "Options.Option.OptionAutogetDroppedLiquid.Title"
+    },
+    {
+      "key": "食料を自動取得",
+      "text": "食料を自動取得",
+      "context": "Options.Option.OptionAutogetFood.Title"
+    },
+    {
+      "key": "真水を自動取得",
+      "text": "真水を自動取得",
+      "context": "Options.Option.OptionAutogetFreshWater.Title"
+    },
+    {
+      "key": "隣接セルからも自動取得",
+      "text": "隣接セルからも自動取得",
+      "context": "Options.Option.OptionAutogetFromNearby.Title"
+    },
+    {
+      "key": "敵が近くにいても自動取得",
+      "text": "敵が近くにいても自動取得",
+      "context": "Options.Option.OptionAutogetIfHostiles.Title"
+    },
+    {
+      "key": "銅・銀・金塊を自動取得",
+      "text": "銅・銀・金塊を自動取得",
+      "context": "Options.Option.OptionAutogetNuggets.Title"
+    },
+    {
+      "key": "原始弾薬を自動取得",
+      "text": "原始弾薬を自動取得",
+      "context": "Options.Option.OptionAutogetPrimitiveAmmo.Title"
+    },
+    {
+      "key": "スクラップを自動取得",
+      "text": "スクラップを自動取得",
+      "context": "Options.Option.OptionAutogetScrap.Title"
+    },
+    {
+      "key": "特別なアイテムを自動取得",
+      "text": "特別なアイテムを自動取得",
+      "context": "Options.Option.OptionAutogetSpecialItems.Title"
+    },
+    {
+      "key": "交易品を自動取得",
+      "text": "交易品を自動取得",
+      "context": "Options.Option.OptionAutogetTradeGoods.Title"
+    },
+    {
+      "key": "重量ゼロのアイテムを自動取得",
+      "text": "重量ゼロのアイテムを自動取得",
+      "context": "Options.Option.OptionAutogetZeroWeight.Title"
+    },
+    {
+      "key": "別ゾーンへ移動すると自動でセーブ",
+      "text": "別ゾーンへ移動すると自動でセーブ",
+      "context": "Options.Option.OptionAutosaveInterval.Title"
+    },
+    {
+      "key": "0|None",
+      "text": "0|None",
+      "context": "Options.Option.OptionAutosaveInterval.Value.0|None"
+    },
+    {
+      "key": "1",
+      "text": "1",
+      "context": "Options.Option.OptionAutosaveInterval.Value.1"
+    },
+    {
+      "key": "10",
+      "text": "10",
+      "context": "Options.Option.OptionAutosaveInterval.Value.10"
+    },
+    {
+      "key": "15",
+      "text": "15",
+      "context": "Options.Option.OptionAutosaveInterval.Value.15"
+    },
+    {
+      "key": "2",
+      "text": "2",
+      "context": "Options.Option.OptionAutosaveInterval.Value.2"
+    },
+    {
+      "key": "20",
+      "text": "20",
+      "context": "Options.Option.OptionAutosaveInterval.Value.20"
+    },
+    {
+      "key": "3",
+      "text": "3",
+      "context": "Options.Option.OptionAutosaveInterval.Value.3"
+    },
+    {
+      "key": "30",
+      "text": "30",
+      "context": "Options.Option.OptionAutosaveInterval.Value.30"
+    },
+    {
+      "key": "40",
+      "text": "40",
+      "context": "Options.Option.OptionAutosaveInterval.Value.40"
+    },
+    {
+      "key": "5",
+      "text": "5",
+      "context": "Options.Option.OptionAutosaveInterval.Value.5"
+    },
+    {
+      "key": "7",
+      "text": "7",
+      "context": "Options.Option.OptionAutosaveInterval.Value.7"
+    },
+    {
+      "key": "Steam Deck の Shift キー問題を回避",
+      "text": "Steam Deck の Shift キー問題を回避",
+      "context": "Options.Option.OptionBugDeckKeyboardShift.Title"
+    },
+    {
+      "key": "低メモリ環境向けにゾーンを早めにキャッシュ",
+      "text": "低メモリ環境向けにゾーンを早めにキャッシュ",
+      "context": "Options.Option.OptionCacheEarly.Title"
+    },
+    {
+      "key": "入力バッファを 2 コマンドに制限",
+      "text": "入力バッファを 2 コマンドに制限",
+      "context": "Options.Option.OptionCapInputBuffer.Title"
+    },
+    {
+      "key": "キャラクターシートの追加スケール (%)",
+      "text": "キャラクターシートの追加スケール (%)",
+      "context": "Options.Option.OptionCharacterSheetAdditionalScale.Title"
+    },
+    {
+      "key": "メモリ使用量を監視し高負荷で警告",
+      "text": "メモリ使用量を監視し高負荷で警告",
+      "context": "Options.Option.OptionCheckMemory.Title"
+    },
+    {
+      "key": "ゾーンをキャッシュした後に即ガベージコレクト",
+      "text": "ゾーンをキャッシュした後に即ガベージコレクト",
+      "context": "Options.Option.OptionCollectEarly.Title"
+    },
+    {
+      "key": "戦闘音量",
+      "text": "戦闘音量",
+      "context": "Options.Option.OptionCombatVolume.Title"
+    },
+    {
+      "key": "危険な液体に入る/飲む際に確認",
+      "text": "危険な液体に入る/飲む際に確認",
+      "context": "Options.Option.OptionConfirmDangerousLiquid.Title"
+    },
+    {
+      "key": "泳ぐ前に確認",
+      "text": "泳ぐ前に確認",
+      "context": "Options.Option.OptionConfirmSwimming.Title"
+    },
+    {
+      "key": "ゲームパッドボタンの表示",
+      "text": "ゲームパッドボタンの表示",
+      "context": "Options.Option.OptionControllerFont.Title"
+    },
+    {
+      "key": "Auto",
+      "text": "Auto",
+      "context": "Options.Option.OptionControllerFont.Value.Auto"
+    },
+    {
+      "key": "KBM",
+      "text": "KBM",
+      "context": "Options.Option.OptionControllerFont.Value.KBM"
+    },
+    {
+      "key": "PS",
+      "text": "PS",
+      "context": "Options.Option.OptionControllerFont.Value.PS"
+    },
+    {
+      "key": "PS Filled",
+      "text": "PS Filled",
+      "context": "Options.Option.OptionControllerFont.Value.PS Filled"
+    },
+    {
+      "key": "XBox",
+      "text": "XBox",
+      "context": "Options.Option.OptionControllerFont.Value.XBox"
+    },
+    {
+      "key": "XBox Filled",
+      "text": "XBox Filled",
+      "context": "Options.Option.OptionControllerFont.Value.XBox Filled"
+    },
+    {
+      "key": "オブジェクトの態度情報を表示",
+      "text": "オブジェクトの態度情報を表示",
+      "context": "Options.Option.OptionDebugAttitude.Title"
+    },
+    {
+      "key": "チート用デバッグコマンドを表示",
+      "text": "チート用デバッグコマンドを表示",
+      "context": "Options.Option.OptionDebugCheats.Title"
+    },
+    {
+      "key": "ダメージ貫通デバッグテキストを表示",
+      "text": "ダメージ貫通デバッグテキストを表示",
+      "context": "Options.Option.OptionDebugDamagePenetrations.Title"
+    },
+    {
+      "key": "遭遇率デバッグ情報を表示",
+      "text": "遭遇率デバッグ情報を表示",
+      "context": "Options.Option.OptionDebugEncounterChance.Title"
+    },
+    {
+      "key": "道に迷う確率のデバッグテキストを表示",
+      "text": "道に迷う確率のデバッグテキストを表示",
+      "context": "Options.Option.OptionDebugGetLostChance.Title"
+    },
+    {
+      "key": "オブジェクトの内部データを表示",
+      "text": "オブジェクトの内部データを表示",
+      "context": "Options.Option.OptionDebugInternals.Title"
+    },
+    {
+      "key": "飛び道具の軌道を表示",
+      "text": "飛び道具の軌道を表示",
+      "context": "Options.Option.OptionDebugMissilePaths.Title"
+    },
+    {
+      "key": "飛び道具の射撃ログを表示",
+      "text": "飛び道具の射撃ログを表示",
+      "context": "Options.Option.OptionDebugMissileShots.Title"
+    },
+    {
+      "key": "飛び道具のターゲット選択を表示",
+      "text": "飛び道具のターゲット選択を表示",
+      "context": "Options.Option.OptionDebugMissileTargetChoices.Title"
+    },
+    {
+      "key": "ポピュレーション生成をデバッグ表示",
+      "text": "ポピュレーション生成をデバッグ表示",
+      "context": "Options.Option.OptionDebugPopulation.Title"
+    },
+    {
+      "key": "セービングスローのデバッグテキストを表示",
+      "text": "セービングスローのデバッグテキストを表示",
+      "context": "Options.Option.OptionDebugSavingThrows.Title"
+    },
+    {
+      "key": "会話中にXMLの会話/ノード名を表示",
+      "text": "会話中にXMLの会話/ノード名を表示",
+      "context": "Options.Option.OptionDebugShowConversationNode.Title"
+    },
+    {
+      "key": "ゾーン生成中にフルIDを表示",
+      "text": "ゾーン生成中にフルIDを表示",
+      "context": "Options.Option.OptionDebugShowFullZoneDuringBuild.Title"
+    },
+    {
+      "key": "能力値変動のデバッグテキストを表示",
+      "text": "能力値変動のデバッグテキストを表示",
+      "context": "Options.Option.OptionDebugStatShift.Title"
+    },
+    {
+      "key": "移動速度デバッグテキストを表示",
+      "text": "移動速度デバッグテキストを表示",
+      "context": "Options.Option.OptionDebugTravelSpeed.Title"
+    },
+    {
+      "key": "ゾーン生成の進捗を表示",
+      "text": "ゾーン生成の進捗を表示",
+      "context": "Options.Option.OptionDebugZoneBuild.Title"
+    },
+    {
+      "key": "ロールプレイ死亡確認で既定選択を「最終メッセージを表示」にする",
+      "text": "ロールプレイ死亡確認で既定選択を「最終メッセージを表示」にする",
+      "context": "Options.Option.OptionDefaultDeathToViewFinalMessages.Title"
+    },
+    {
+      "key": "採掘具で壁に移動すると自動で掘る",
+      "text": "採掘具で壁に移動すると自動で掘る",
+      "context": "Options.Option.OptionDigOnMove.Title"
+    },
+    {
+      "key": "実績を無効化",
+      "text": "実績を無効化",
+      "context": "Options.Option.OptionDisableAchievements.Title"
+    },
+    {
+      "key": "キー設定の競合チェックを無効化",
+      "text": "キー設定の競合チェックを無効化",
+      "context": "Options.Option.OptionDisableBindConflictChecking.Title"
+    },
+    {
+      "key": "血飛沫を無効化",
+      "text": "血飛沫を無効化",
+      "context": "Options.Option.OptionDisableBloodsplatter.Title"
+    },
+    {
+      "key": "クリーチャーに複数の欠陥を許可",
+      "text": "クリーチャーに複数の欠陥を許可",
+      "context": "Options.Option.OptionDisableDefectLimit.Title"
+    },
+    {
+      "key": "フロアテクスチャオブジェクトを生成しない",
+      "text": "フロアテクスチャオブジェクトを生成しない",
+      "context": "Options.Option.OptionDisableFloorTextureObjects.Title"
+    },
+    {
+      "key": "床テクスチャを無効化",
+      "text": "床テクスチャを無効化",
+      "context": "Options.Option.OptionDisableFloorTextures.Title"
+    },
+    {
+      "key": "フルスクリーンの色効果を無効化（色覚補助）",
+      "text": "フルスクリーンの色効果を無効化（色覚補助）",
+      "context": "Options.Option.OptionDisableFullscreenColorEffects.Title"
+    },
+    {
+      "key": "フルスクリーンのワープ効果を無効化",
+      "text": "フルスクリーンのワープ効果を無効化",
+      "context": "Options.Option.OptionDisableFullscreenWarpEffects.Title"
+    },
+    {
+      "key": "モダンなタイル系視覚効果を無効化",
+      "text": "モダンなタイル系視覚効果を無効化",
+      "context": "Options.Option.OptionDisableImposters.Title"
+    },
+    {
+      "key": "クラシックで死亡してもセーブを削除しない",
+      "text": "クラシックで死亡してもセーブを削除しない",
+      "context": "Options.Option.OptionDisablePermadeath.Title"
+    },
+    {
+      "key": "プレイヤー操作キャラの脳ハイジャックを無効化",
+      "text": "プレイヤー操作キャラの脳ハイジャックを無効化",
+      "context": "Options.Option.OptionDisablePlayerbrain.Title"
+    },
+    {
+      "key": "煙エフェクトを無効化",
+      "text": "煙エフェクトを無効化",
+      "context": "Options.Option.OptionDisableSmoke.Title"
+    },
+    {
+      "key": "サウンドの事前読み込みを無効化",
+      "text": "サウンドの事前読み込みを無効化",
+      "context": "Options.Option.OptionDisableSoundPreload.Title"
+    },
+    {
+      "key": "入力に関する警告を無効化",
+      "text": "入力に関する警告を無効化",
+      "context": "Options.Option.OptionDisableSteamInputWarning.Title"
+    },
+    {
+      "key": "タイル系の点滅効果を無効化",
+      "text": "タイル系の点滅効果を無効化",
+      "context": "Options.Option.OptionDisableTextAnimationEffects.Title"
+    },
+    {
+      "key": "タイル系の画面ワープ効果を無効化",
+      "text": "タイル系の画面ワープ効果を無効化",
+      "context": "Options.Option.OptionDisableTextWarpEffects.Title"
+    },
+    {
+      "key": "ゾーン生成の試行回数制限を無効化",
+      "text": "ゾーン生成の試行回数制限を無効化",
+      "context": "Options.Option.OptionDisableTryLimit.Title"
+    },
+    {
+      "key": "ゾーンキャッシュを無効化",
+      "text": "ゾーンキャッシュを無効化",
+      "context": "Options.Option.OptionDisableZoneCaching2.Title"
+    },
+    {
+      "key": "切断・斬首時にポップアップを表示",
+      "text": "切断・斬首時にポップアップを表示",
+      "context": "Options.Option.OptionDismemberAsPopup.Title"
+    },
+    {
+      "key": "明るさ",
+      "text": "明るさ",
+      "context": "Options.Option.OptionDisplayBrightness.Title"
+    },
+    {
+      "key": "コントラスト",
+      "text": "コントラスト",
+      "context": "Options.Option.OptionDisplayContrast.Title"
+    },
+    {
+      "key": "フレームレート",
+      "text": "フレームレート",
+      "context": "Options.Option.OptionDisplayFramerate.Title"
+    },
+    {
+      "key": "10",
+      "text": "10",
+      "context": "Options.Option.OptionDisplayFramerate.Value.10"
+    },
+    {
+      "key": "120",
+      "text": "120",
+      "context": "Options.Option.OptionDisplayFramerate.Value.120"
+    },
+    {
+      "key": "20",
+      "text": "20",
+      "context": "Options.Option.OptionDisplayFramerate.Value.20"
+    },
+    {
+      "key": "30",
+      "text": "30",
+      "context": "Options.Option.OptionDisplayFramerate.Value.30"
+    },
+    {
+      "key": "40",
+      "text": "40",
+      "context": "Options.Option.OptionDisplayFramerate.Value.40"
+    },
+    {
+      "key": "50",
+      "text": "50",
+      "context": "Options.Option.OptionDisplayFramerate.Value.50"
+    },
+    {
+      "key": "60",
+      "text": "60",
+      "context": "Options.Option.OptionDisplayFramerate.Value.60"
+    },
+    {
+      "key": "Unlimited",
+      "text": "Unlimited",
+      "context": "Options.Option.OptionDisplayFramerate.Value.Unlimited"
+    },
+    {
+      "key": "VSync",
+      "text": "VSync",
+      "context": "Options.Option.OptionDisplayFramerate.Value.VSync"
+    },
+    {
+      "key": "フルスクリーン",
+      "text": "フルスクリーン",
+      "context": "Options.Option.OptionDisplayFullscreen.Title"
+    },
+    {
+      "key": "低HP警告の閾値",
+      "text": "低HP警告の閾値",
+      "context": "Options.Option.OptionDisplayHPWarning.Title"
+    },
+    {
+      "key": "100%",
+      "text": "100%",
+      "context": "Options.Option.OptionDisplayHPWarning.Value.100%"
+    },
+    {
+      "key": "20%",
+      "text": "20%",
+      "context": "Options.Option.OptionDisplayHPWarning.Value.20%"
+    },
+    {
+      "key": "40%",
+      "text": "40%",
+      "context": "Options.Option.OptionDisplayHPWarning.Value.40%"
+    },
+    {
+      "key": "60%",
+      "text": "60%",
+      "context": "Options.Option.OptionDisplayHPWarning.Value.60%"
+    },
+    {
+      "key": "80%",
+      "text": "80%",
+      "context": "Options.Option.OptionDisplayHPWarning.Value.80%"
+    },
+    {
+      "key": "No Warning",
+      "text": "No Warning",
+      "context": "Options.Option.OptionDisplayHPWarning.Value.No Warning"
+    },
+    {
+      "key": "仲間のレベルアップを詳細表示",
+      "text": "仲間のレベルアップを詳細表示",
+      "context": "Options.Option.OptionDisplayLedLevelUp.Title"
+    },
+    {
+      "key": "マウスクリック可能な階段矢印を表示",
+      "text": "マウスクリック可能な階段矢印を表示",
+      "context": "Options.Option.OptionDisplayMousableZoneTransitionBorder.Title"
+    },
+    {
+      "key": "フルスクリーン解像度",
+      "text": "フルスクリーン解像度",
+      "context": "Options.Option.OptionDisplayResolution.Title"
+    },
+    {
+      "key": "*Resolution",
+      "text": "*Resolution",
+      "context": "Options.Option.OptionDisplayResolution.Value.*Resolution"
+    },
+    {
+      "key": "走査線を表示",
+      "text": "走査線を表示",
+      "context": "Options.Option.OptionDisplayScanlines.Title"
+    },
+    {
+      "key": "ビネット効果を表示",
+      "text": "ビネット効果を表示",
+      "context": "Options.Option.OptionDisplayVignette.Title"
+    },
+    {
+      "key": "ログとミニマップのドック配置",
+      "text": "ログとミニマップのドック配置",
+      "context": "Options.Option.OptionDockMovable.Title"
+    },
+    {
+      "key": "Flip",
+      "text": "Flip",
+      "context": "Options.Option.OptionDockMovable.Value.Flip"
+    },
+    {
+      "key": "Left",
+      "text": "Left",
+      "context": "Options.Option.OptionDockMovable.Value.Left"
+    },
+    {
+      "key": "Right",
+      "text": "Right",
+      "context": "Options.Option.OptionDockMovable.Value.Right"
+    },
+    {
+      "key": "Unset",
+      "text": "Unset",
+      "context": "Options.Option.OptionDockMovable.Value.Unset"
+    },
+    {
+      "key": "ドックの背景不透明度",
+      "text": "ドックの背景不透明度",
+      "context": "Options.Option.OptionDockOpacity.Title"
+    },
+    {
+      "key": "直近ラウンドの電撃アークを描画",
+      "text": "直近ラウンドの電撃アークを描画",
+      "context": "Options.Option.OptionDrawArcs.Title"
+    },
+    {
+      "key": "マップ生成で使うセルオートマトンを描画",
+      "text": "マップ生成で使うセルオートマトンを描画",
+      "context": "Options.Option.OptionDrawCASystems.Title"
+    },
+    {
+      "key": "聴覚フラッドフィルを描画",
+      "text": "聴覚フラッドフィルを描画",
+      "context": "Options.Option.OptionDrawFloodAud.Title"
+    },
+    {
+      "key": "嗅覚フラッドフィルを描画",
+      "text": "嗅覚フラッドフィルを描画",
+      "context": "Options.Option.OptionDrawFloodOlf.Title"
+    },
+    {
+      "key": "視認性フラッドフィルを描画",
+      "text": "視認性フラッドフィルを描画",
+      "context": "Options.Option.OptionDrawFloodVis.Title"
+    },
+    {
+      "key": "ゾーン生成時に影響範囲マップを描画",
+      "text": "ゾーン生成時に影響範囲マップを描画",
+      "context": "Options.Option.OptionDrawInfluenceMaps.Title"
+    },
+    {
+      "key": "各ステップでナビゲーション重みマップを描画",
+      "text": "各ステップでナビゲーション重みマップを描画",
+      "context": "Options.Option.OptionDrawNavigationWeightMaps.Title"
+    },
+    {
+      "key": "クリーチャーの経路探索を描画",
+      "text": "クリーチャーの経路探索を描画",
+      "context": "Options.Option.OptionDrawPathfinder.Title"
+    },
+    {
+      "key": "経路描画中はキー入力待ちにする",
+      "text": "経路描画中はキー入力待ちにする",
+      "context": "Options.Option.OptionDrawPathfinderHalt.Title"
+    },
+    {
+      "key": "ゾーン生成時にヒントマップを描画",
+      "text": "ゾーン生成時にヒントマップを描画",
+      "context": "Options.Option.OptionDrawPopulationHintMaps.Title"
+    },
+    {
+      "key": "ゾーン生成時にセマンティクス情報を描画",
+      "text": "ゾーン生成時にセマンティクス情報を描画",
+      "context": "Options.Option.OptionDrawZoneSemantics.Title"
+    },
+    {
+      "key": "インベントリで「すべて落とす」を有効にする",
+      "text": "インベントリで「すべて落とす」を有効にする",
+      "context": "Options.Option.OptionDropAll.Title"
+    },
+    {
+      "key": "テキスト入力用のカラー選択を有効化",
+      "text": "テキスト入力用のカラー選択を有効化",
+      "context": "Options.Option.OptionEnableColorTextInput.Title"
+    },
+    {
+      "key": "Mod を有効にする",
+      "text": "Mod を有効にする",
+      "context": "Options.Option.OptionEnableMods.Title"
+    },
+    {
+      "key": "未完成・非サポートのコンテンツを有効化",
+      "text": "未完成・非サポートのコンテンツを有効化",
+      "context": "Options.Option.OptionEnablePrereleaseContent.Title"
+    },
+    {
+      "key": "ウィッシュ用にゾーン名を事前生成",
+      "text": "ウィッシュ用にゾーン名を事前生成",
+      "context": "Options.Option.OptionEnableWishRegionNames.Title"
+    },
+    {
+      "key": "フォーカス中の装備/インベントリを拡大",
+      "text": "フォーカス中の装備/インベントリを拡大",
+      "context": "Options.Option.OptionExpandHighlightedInventoryAndEquipmentPane.Title"
+    },
+    {
+      "key": "対応デバイスでオーバーレイキーボードを表示",
+      "text": "対応デバイスでオーバーレイキーボードを表示",
+      "context": "Options.Option.OptionFloatingKeyboard.Title"
+    },
+    {
+      "key": "観察時に派閥評判を表示",
+      "text": "観察時に派閥評判を表示",
+      "context": "Options.Option.OptionGivesRepShowsCurrentRep.Title"
+    },
+    {
+      "key": "Harmony デバッグ出力を有効化",
+      "text": "Harmony デバッグ出力を有効化",
+      "context": "Options.Option.OptionHarmonyDebug.Title"
+    },
+    {
+      "key": "常に階段をハイライト",
+      "text": "常に階段をハイライト",
+      "context": "Options.Option.OptionHighlightStairs.Title"
+    },
+    {
+      "key": "装備画面で部位を字下げ",
+      "text": "装備画面で部位を字下げ",
+      "context": "Options.Option.OptionIndentBodyParts.Title"
+    },
+    {
+      "key": "インターフェース音量",
+      "text": "インターフェース音量",
+      "context": "Options.Option.OptionInterfaceVolume.Title"
+    },
+    {
+      "key": "敵が近くにいると長押し移動を中断",
+      "text": "敵が近くにいると長押し移動を中断",
+      "context": "Options.Option.OptionInterruptHeldMovement.Title"
+    },
+    {
+      "key": "未探索ゾーンに入ると長押し移動を中断",
+      "text": "未探索ゾーンに入ると長押し移動を中断",
+      "context": "Options.Option.OptionInterruptHeldMovementOnZoneTransition.Title"
+    },
+    {
+      "key": "インベントリ整合性チェックを実行",
+      "text": "インベントリ整合性チェックを実行",
+      "context": "Options.Option.OptionInventoryConsistencyCheck.Title"
+    },
+    {
+      "key": "キーリピートの遅延",
+      "text": "キーリピートの遅延",
+      "context": "Options.Option.OptionKeyRepeatDelay.Title"
+    },
+    {
+      "key": "キーリピート速度",
+      "text": "キーリピート速度",
+      "context": "Options.Option.OptionKeyRepeatRate.Title"
+    },
+    {
+      "key": "サイドバーに名前ではなく位置を表示",
+      "text": "サイドバーに名前ではなく位置を表示",
+      "context": "Options.Option.OptionLocationIntseadOfName.Title"
+    },
+    {
+      "key": "戦闘ラウンドごとに区切り線を追加",
+      "text": "戦闘ラウンドごとに区切り線を追加",
+      "context": "Options.Option.OptionLogTurnSeparator.Title"
+    },
+    {
+      "key": "メインメニューの背景アート",
+      "text": "メインメニューの背景アート",
+      "context": "Options.Option.OptionMainMenuBackground.Title"
+    },
+    {
+      "key": "Classic",
+      "text": "Classic",
+      "context": "Options.Option.OptionMainMenuBackground.Value.Classic"
+    },
+    {
+      "key": "Modern",
+      "text": "Modern",
+      "context": "Options.Option.OptionMainMenuBackground.Value.Modern"
+    },
+    {
+      "key": "方向入力を常にテンキーに割り当て",
+      "text": "方向入力を常にテンキーに割り当て",
+      "context": "Options.Option.OptionMapDirectionsToKeypad.Title"
+    },
+    {
+      "key": "Shift+方向をメニューのページ送りに割り当て（テンキー非対応）",
+      "text": "Shift+方向をメニューのページ送りに割り当て（テンキー非対応）",
+      "context": "Options.Option.OptionMapShiftDirectionToPage.Title"
+    },
+    {
+      "key": "マスター音量",
+      "text": "マスター音量",
+      "context": "Options.Option.OptionMasterVolume.Title"
+    },
+    {
+      "key": "メッセージログのフォントサイズ (pt)",
+      "text": "メッセージログのフォントサイズ (pt)",
+      "context": "Options.Option.OptionMessageLineLogScale.Title"
+    },
+    {
+      "key": "モダン UI のキャラクターシートを有効にする",
+      "text": "モダン UI のキャラクターシートを有効にする",
+      "context": "Options.Option.OptionModernCharacterSheet.Title"
+    },
+    {
+      "key": "モダン UI を有効にする",
+      "text": "モダン UI を有効にする",
+      "context": "Options.Option.OptionModernUI.Title"
+    },
+    {
+      "key": "未操作時にマウスカーソルを自動で隠す",
+      "text": "未操作時にマウスカーソルを自動で隠す",
+      "context": "Options.Option.OptionMouseAutoHideCursorEnabled.Title"
+    },
+    {
+      "key": "マウスカーソルの見た目",
+      "text": "マウスカーソルの見た目",
+      "context": "Options.Option.OptionMouseCursor.Title"
+    },
+    {
+      "key": "Alternate",
+      "text": "Alternate",
+      "context": "Options.Option.OptionMouseCursor.Value.Alternate"
+    },
+    {
+      "key": "Default",
+      "text": "Default",
+      "context": "Options.Option.OptionMouseCursor.Value.Default"
+    },
+    {
+      "key": "System",
+      "text": "System",
+      "context": "Options.Option.OptionMouseCursor.Value.System"
+    },
+    {
+      "key": "マウス入力を許可",
+      "text": "マウス入力を許可",
+      "context": "Options.Option.OptionMouseInput.Title"
+    },
+    {
+      "key": "マウスで移動を許可",
+      "text": "マウスで移動を許可",
+      "context": "Options.Option.OptionMouseMovement.Title"
+    },
+    {
+      "key": "スクロールホイールでズーム",
+      "text": "スクロールホイールでズーム",
+      "context": "Options.Option.OptionMouseScrollWheel.Title"
+    },
+    {
+      "key": "音楽",
+      "text": "音楽",
+      "context": "Options.Option.OptionMusic.Title"
+    },
+    {
+      "key": "バックグラウンドでも Caves of Qud をアクティブ維持",
+      "text": "バックグラウンドでも Caves of Qud をアクティブ維持",
+      "context": "Options.Option.OptionMusicBackground.Title"
+    },
+    {
+      "key": "音楽の音量",
+      "text": "音楽の音量",
+      "context": "Options.Option.OptionMusicVolume.Title"
+    },
+    {
+      "key": "インベントリ/装備を左右ページ送りで操作",
+      "text": "インベントリ/装備を左右ページ送りで操作",
+      "context": "Options.Option.OptionNavigateInventoryAndEquipmentWithPagination.Title"
+    },
+    {
+      "key": "コンパイル済み Mod アセンブリを保存",
+      "text": "コンパイル済み Mod アセンブリを保存",
+      "context": "Options.Option.OptionOutputModAssembly.Title"
+    },
+    {
+      "key": "ミニマップを表示",
+      "text": "ミニマップを表示",
+      "context": "Options.Option.OptionOverlayMinimap.Title"
+    },
+    {
+      "key": "周囲のオブジェクト一覧を表示",
+      "text": "周囲のオブジェクト一覧を表示",
+      "context": "Options.Option.OptionOverlayNearbyObjects.Title"
+    },
+    {
+      "key": "周囲一覧: 現在セルの内容のみ",
+      "text": "周囲一覧: 現在セルの内容のみ",
+      "context": "Options.Option.OptionOverlayNearbyObjectsLocal.Title"
+    },
+    {
+      "key": "周囲一覧: 植物を表示",
+      "text": "周囲一覧: 植物を表示",
+      "context": "Options.Option.OptionOverlayNearbyObjectsPlants.Title"
+    },
+    {
+      "key": "周囲一覧: 液体プールを表示",
+      "text": "周囲一覧: 液体プールを表示",
+      "context": "Options.Option.OptionOverlayNearbyObjectsPools.Title"
+    },
+    {
+      "key": "周囲一覧: 取得可能なもののみ",
+      "text": "周囲一覧: 取得可能なもののみ",
+      "context": "Options.Option.OptionOverlayNearbyObjectsTakeable.Title"
+    },
+    {
+      "key": "炎のはぜる音",
+      "text": "炎のはぜる音",
+      "context": "Options.Option.OptionPlayFireSounds.Title"
+    },
+    {
+      "key": "プレイエリアのスケール",
+      "text": "プレイエリアのスケール",
+      "context": "Options.Option.OptionPlayScale.Title"
+    },
+    {
+      "key": "Cover",
+      "text": "Cover",
+      "context": "Options.Option.OptionPlayScale.Value.Cover"
+    },
+    {
+      "key": "Fit",
+      "text": "Fit",
+      "context": "Options.Option.OptionPlayScale.Value.Fit"
+    },
+    {
+      "key": "Pixel Perfect",
+      "text": "Pixel Perfect",
+      "context": "Options.Option.OptionPlayScale.Value.Pixel Perfect"
+    },
+    {
+      "key": "日誌に記録したときポップアップを表示",
+      "text": "日誌に記録したときポップアップを表示",
+      "context": "Options.Option.OptionPopupJournalNote.Title"
+    },
+    {
+      "key": "UI スケール",
+      "text": "UI スケール",
+      "context": "Options.Option.OptionPrereleaseStageScale.Title"
+    },
+    {
+      "key": ".5",
+      "text": ".5",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value..5"
+    },
+    {
+      "key": ".75",
+      "text": ".75",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value..75"
+    },
+    {
+      "key": "1.0",
+      "text": "1.0",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value.1.0"
+    },
+    {
+      "key": "1.25",
+      "text": "1.25",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value.1.25"
+    },
+    {
+      "key": "1.5",
+      "text": "1.5",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value.1.5"
+    },
+    {
+      "key": "2",
+      "text": "2",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value.2"
+    },
+    {
+      "key": "auto",
+      "text": "自動",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value.auto"
+    },
+    {
+      "key": "auto x1.25",
+      "text": "自動 x1.25",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value.auto x1.25"
+    },
+    {
+      "key": "auto x1.5",
+      "text": "自動 x1.5",
+      "context": "Options.Option.OptionPrereleaseStageScale.Value.auto x1.5"
+    },
+    {
+      "key": "装備画面で左右キーに装備/解除を割り当て",
+      "text": "装備画面で左右キーに装備/解除を割り当て",
+      "context": "Options.Option.OptionPressingRightInInventoryEquips.Title"
+    },
+    {
+      "key": "レガシーUIへ常に A〜Z のホットキーを渡す",
+      "text": "レガシーUIへ常に A〜Z のホットキーを渡す",
+      "context": "Options.Option.OptionPushAZHotkeys.Title"
+    },
+    {
+      "key": "ローリングバックアップ数",
+      "text": "ローリングバックアップ数",
+      "context": "Options.Option.OptionSessionBackups.Title"
+    },
+    {
+      "key": "1",
+      "text": "1",
+      "context": "Options.Option.OptionSessionBackups.Value.1"
+    },
+    {
+      "key": "10",
+      "text": "10",
+      "context": "Options.Option.OptionSessionBackups.Value.10"
+    },
+    {
+      "key": "15",
+      "text": "15",
+      "context": "Options.Option.OptionSessionBackups.Value.15"
+    },
+    {
+      "key": "2",
+      "text": "2",
+      "context": "Options.Option.OptionSessionBackups.Value.2"
+    },
+    {
+      "key": "20",
+      "text": "20",
+      "context": "Options.Option.OptionSessionBackups.Value.20"
+    },
+    {
+      "key": "3",
+      "text": "3",
+      "context": "Options.Option.OptionSessionBackups.Value.3"
+    },
+    {
+      "key": "30",
+      "text": "30",
+      "context": "Options.Option.OptionSessionBackups.Value.30"
+    },
+    {
+      "key": "40",
+      "text": "40",
+      "context": "Options.Option.OptionSessionBackups.Value.40"
+    },
+    {
+      "key": "5",
+      "text": "5",
+      "context": "Options.Option.OptionSessionBackups.Value.5"
+    },
+    {
+      "key": "7",
+      "text": "7",
+      "context": "Options.Option.OptionSessionBackups.Value.7"
+    },
+    {
+      "key": "None",
+      "text": "None",
+      "context": "Options.Option.OptionSessionBackups.Value.None"
+    },
+    {
+      "key": "Shift キーでサイドバーを隠す",
+      "text": "Shift キーでサイドバーを隠す",
+      "context": "Options.Option.OptionShiftHidesSidebar.Title"
+    },
+    {
+      "key": "詳細オプションを表示",
+      "text": "詳細オプションを表示",
+      "context": "Options.Option.OptionShowAdvancedOptions.Title"
+    },
+    {
+      "key": "メインメニューに収集家の印章を表示",
+      "text": "メインメニューに収集家の印章を表示",
+      "context": "Options.Option.OptionShowCollectionBadges.Title"
+    },
+    {
+      "key": "現在セルの内容をポップアップ表示",
+      "text": "現在セルの内容をポップアップ表示",
+      "context": "Options.Option.OptionShowCurrentCellPopup.Title"
+    },
+    {
+      "key": "武器名に貫通/ダメージ詳細を表示",
+      "text": "武器名に貫通/ダメージ詳細を表示",
+      "context": "Options.Option.OptionShowDetailedWeaponStats.Title"
+    },
+    {
+      "key": "エラーポップアップを表示",
+      "text": "エラーポップアップを表示",
+      "context": "Options.Option.OptionShowErrorPopups.Title"
+    },
+    {
+      "key": "ターゲットの残りHPでヒットハートの色を変える",
+      "text": "ターゲットの残りHPでヒットハートの色を変える",
+      "context": "Options.Option.OptionShowMonsterHPHearts.Title"
+    },
+    {
+      "key": "各インベントリカテゴリのアイテム数を表示",
+      "text": "各インベントリカテゴリのアイテム数を表示",
+      "context": "Options.Option.OptionShowNumberOfItems.Title"
+    },
+    {
+      "key": "ワールドマップで特殊遭遇を表示",
+      "text": "ワールドマップで特殊遭遇を表示",
+      "context": "Options.Option.OptionShowOverlandEncounters.Title"
+    },
+    {
+      "key": "ワールドマップでバイオームを表示",
+      "text": "ワールドマップでバイオームを表示",
+      "context": "Options.Option.OptionShowOverlandRegions.Title"
+    },
+    {
+      "key": "キャラ作成中にクイックスタートを表示",
+      "text": "キャラ作成中にクイックスタートを表示",
+      "context": "Options.Option.OptionShowQuickstart.Title"
+    },
+    {
+      "key": "ゾーン生成時に到達可能マップを描画",
+      "text": "ゾーン生成時に到達可能マップを描画",
+      "context": "Options.Option.OptionShowReachable.Title"
+    },
+    {
+      "key": "漁って得たアイテムをログ表示（ポップアップ無効）",
+      "text": "漁って得たアイテムをログ表示（ポップアップ無効）",
+      "context": "Options.Option.OptionShowScavengeItemAsMessage.Title"
+    },
+    {
+      "key": "サイドバーにアビリティアイコンを表示",
+      "text": "サイドバーにアビリティアイコンを表示",
+      "context": "Options.Option.OptionShowSidebarAbilities.Title"
+    },
+    {
+      "key": "効果音",
+      "text": "効果音",
+      "context": "Options.Option.OptionSound.Title"
+    },
+    {
+      "key": "効果音の音量",
+      "text": "効果音の音量",
+      "context": "Options.Option.OptionSoundVolume.Title"
+    },
+    {
+      "key": "キャラクターシートのサイズ",
+      "text": "キャラクターシートのサイズ",
+      "context": "Options.Option.OptionStatusScreenSize.Title"
+    },
+    {
+      "key": "Full",
+      "text": "全画面",
+      "context": "Options.Option.OptionStatusScreenSize.Value.Full"
+    },
+    {
+      "key": "Full Height",
+      "text": "全高",
+      "context": "Options.Option.OptionStatusScreenSize.Value.Full Height"
+    },
+    {
+      "key": "Standard",
+      "text": "標準",
+      "context": "Options.Option.OptionStatusScreenSize.Value.Standard"
+    },
+    {
+      "key": "UI テキストのカラータグを除去",
+      "text": "UI テキストのカラータグを除去",
+      "context": "Options.Option.OptionStripUIColorText.Title"
+    },
+    {
+      "key": "「すべて取る」で死体も取得",
+      "text": "「すべて取る」で死体も取得",
+      "context": "Options.Option.OptionTakeallCorpses.Title"
+    },
+    {
+      "key": "低CPU環境向けにアニメーションを間引く",
+      "text": "低CPU環境向けにアニメーションを間引く",
+      "context": "Options.Option.OptionThrottleAnimation.Title"
+    },
+    {
+      "key": "ピクセルパーフェクト時のタイル倍率",
+      "text": "ピクセルパーフェクト時のタイル倍率",
+      "context": "Options.Option.OptionTileScale.Title"
+    },
+    {
+      "key": "1",
+      "text": "1",
+      "context": "Options.Option.OptionTileScale.Value.1"
+    },
+    {
+      "key": "2",
+      "text": "2",
+      "context": "Options.Option.OptionTileScale.Value.2"
+    },
+    {
+      "key": "3",
+      "text": "3",
+      "context": "Options.Option.OptionTileScale.Value.3"
+    },
+    {
+      "key": "4",
+      "text": "4",
+      "context": "Options.Option.OptionTileScale.Value.4"
+    },
+    {
+      "key": "5",
+      "text": "5",
+      "context": "Options.Option.OptionTileScale.Value.5"
+    },
+    {
+      "key": "6",
+      "text": "6",
+      "context": "Options.Option.OptionTileScale.Value.6"
+    },
+    {
+      "key": "7",
+      "text": "7",
+      "context": "Options.Option.OptionTileScale.Value.7"
+    },
+    {
+      "key": "8",
+      "text": "8",
+      "context": "Options.Option.OptionTileScale.Value.8"
+    },
+    {
+      "key": "ツールチップの遅延 (ms)",
+      "text": "ツールチップの遅延 (ms)",
+      "context": "Options.Option.OptionTooltipDelay.Title"
+    },
+    {
+      "key": "ゲームモード一覧の末尾にチュートリアルを移動",
+      "text": "ゲームモード一覧の末尾にチュートリアルを移動",
+      "context": "Options.Option.OptionTutorialComplete.Title"
+    },
+    {
+      "key": "戦闘効果音",
+      "text": "戦闘効果音",
+      "context": "Options.Option.OptionUseCombatSounds.Title"
+    },
+    {
+      "key": "インターフェース効果音",
+      "text": "インターフェース効果音",
+      "context": "Options.Option.OptionUseInterfaceSounds.Title"
+    },
+    {
+      "key": "戦闘アニメーションを表示",
+      "text": "戦闘アニメーションを表示",
+      "context": "Options.Option.OptionUseOverlayCombatEffects.Title"
+    },
+    {
+      "key": "浮遊ダメージ数値を表示",
+      "text": "浮遊ダメージ数値を表示",
+      "context": "Options.Option.OptionUseOverlayDamageText.Title"
+    },
+    {
+      "key": "モダンなビジュアルエフェクトを表示",
+      "text": "モダンなビジュアルエフェクトを表示",
+      "context": "Options.Option.OptionUseParticleVFX.Title"
+    },
+    {
+      "key": "赤い点滅枠の代わりにテキスト警告を使う",
+      "text": "赤い点滅枠の代わりにテキスト警告を使う",
+      "context": "Options.Option.OptionUseTextAutowalkThreatIndicator.Title"
+    },
+    {
+      "key": "ASCII ビジュアルエフェクトを表示",
+      "text": "ASCII ビジュアルエフェクトを表示",
+      "context": "Options.Option.OptionUseTextParticleVFX.Title"
+    },
+    {
+      "key": "タイルグラフィックを有効にする",
+      "text": "タイルグラフィックを有効にする",
+      "context": "Options.Option.OptionUseTiles.Title"
+    },
+    {
+      "key": "再生したサウンド名をログに記録",
+      "text": "再生したサウンド名をログに記録",
+      "context": "Options.Option.OptionWriteSoundsToLog.Title"
+    },
+    {
+      "key": "ズーム感度",
+      "text": "ズーム感度",
+      "context": "Options.Option.OptionZoomSensitivity.Title"
+    },
+    {
+      "key": "操作マッピング",
+      "text": "操作マッピング",
+      "context": "Options.Option.OptionsKeybindings.Title"
+    }
+  ]
+}

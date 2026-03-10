@@ -1,0 +1,1033 @@
+{
+  "meta": {
+    "id": "world-mods",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "context": "XRL.World.Parts.DataDisk.ShortDescription",
+      "key": "\\nAdds item modification: ",
+      "text": "\\nアイテム改造: "
+    },
+    {
+      "context": "XRL.World.Parts.Shield.GetShortDescription",
+      "key": "{{rules|Shields only grant their AV when you successfully block an attack.}}",
+      "text": "{{rules|盾は攻撃をブロックしたときにのみAVを付与する。}}"
+    },
+    {
+      "context": "XRL.World.Parts.Shield.GetShortDescription",
+      "key": "\n{{rules|Shields only grant their AV when you successfully block an attack.}}",
+      "text": "\n{{rules|盾は攻撃をブロックしたときにのみAVを付与する。}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Shields only grant their AV when you successfully block an attack.",
+      "text": "盾は攻撃をブロックしたときにのみAVを付与する。"
+    },
+    {
+      "context": "Qud.UI.PopupMessage.ShowPopup.Message",
+      "key": "You learn the item modification {{W|{mod}}}.",
+      "text": "アイテム改造{{W|{mod}}}を習得した。"
+    },
+    {
+      "context": "XRL.World.Parts.ModAntiGravity.GetShortDescription",
+      "key": "Anti-gravity: When powered, this item's weight is reduced by ",
+      "text": "反重力: 通電中は重量が"
+    },
+    {
+      "context": "XRL.World.Parts.ModAntiGravity.GetShortDescription",
+      "key": " % plus ",
+      "text": " %減り、さらに"
+    },
+    {
+      "context": "XRL.World.Parts.ModAntiGravity.GetShortDescription",
+      "key": "lb",
+      "text": "lb"
+    },
+    {
+      "context": "XRL.World.Parts.ModAntiGravity.GetShortDescription",
+      "key": "lbs",
+      "text": "lbs"
+    },
+    {
+      "context": "XRL.World.Parts.ModBeamsplitter.GetShortDescription",
+      "key": "Fitted with beamsplitter: This weapon has ",
+      "text": "ビームスプリッタ装着: この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModBeamsplitter.GetShortDescription",
+      "key": "-way spread with each shot at -1 penetration roll.",
+      "text": "同時に複数方向へ拡散し、各射撃で貫通判定-1。"
+    },
+    {
+      "context": "XRL.World.Parts.ModBiomech.GetShortDescription",
+      "key": "Biomech: Has biomechanical power transmission systems.",
+      "text": "バイオメカ: 生体機械式の動力伝達機構を備える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModCamo.GetShortDescription",
+      "key": "Camo: This item provides camouflage in foliage.",
+      "text": "迷彩: 茂みでの隠蔽を助ける。"
+    },
+    {
+      "context": "XRL.World.Parts.ModCleated.GetShortDescription",
+      "key": "Fitted with cleats: ",
+      "text": "スパイク付き: "
+    },
+    {
+      "context": "XRL.World.Parts.ModCleated.GetShortDescription",
+      "key": "no effect",
+      "text": "効果なし"
+    },
+    {
+      "context": "XRL.World.Parts.ModCoProcessor.GetShortDescription",
+      "key": "Co-Processor: When powered, this item grants ",
+      "text": "共同処理装置: 通電中は"
+    },
+    {
+      "context": "XRL.World.Parts.ModCoProcessor.GetShortDescription",
+      "key": "bonus",
+      "text": "ボーナス"
+    },
+    {
+      "context": "XRL.World.Parts.ModCoProcessor.GetShortDescription",
+      "key": " Intelligence and provides ",
+      "text": "知力が上昇し、さらに"
+    },
+    {
+      "context": "XRL.World.Parts.ModCounterweighted.GetShortDescription",
+      "key": "Counterweighted: Adds ",
+      "text": "つり合い調整: "
+    },
+    {
+      "context": "XRL.World.Parts.ModCounterweighted.GetShortDescription",
+      "key": "a bonus",
+      "text": "命中ボーナスを"
+    },
+    {
+      "context": "XRL.World.Parts.ModCounterweighted.GetShortDescription",
+      "key": " to hit.",
+      "text": "与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModCybrid.GetShortDescription",
+      "key": "Cybrid: Can draw power from biomechanical power transmission systems in addition to an electrical power grid.",
+      "text": "サイブリッド: 電力網に加えて生体機械式の伝達機構からも給電できる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModDefib.GetShortDescription",
+      "key": "Defib: When powered, if the wearer enters cardiac arrest, this armor will deliver an electrical shock to the wearer every turn until their heart restarts.",
+      "text": "除細動器: 通電中、装着者が心停止すると心拍が戻るまで毎ターン電撃を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModDesecrated.GetShortDescription",
+      "key": "Desecrated: This object has been desecrated by vandals.",
+      "text": "冒涜: 器物損壊で汚されている。"
+    },
+    {
+      "context": "XRL.World.Parts.ModDisplacer.GetShortDescription",
+      "key": "Displacer: When powered, this weapon randomly teleports its target ",
+      "text": "位相転移: 通電中、この武器は命中時に対象を無作為に"
+    },
+    {
+      "context": "XRL.World.Parts.ModDisplacer.GetShortDescription",
+      "key": " tiles away on a successful hit.",
+      "text": "マス離れた場所へ転移させる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModDisplacer.GetShortDescription",
+      "key": "You are suddenly elsewhere!",
+      "text": "気がつくと別の場所にいた！"
+    },
+    {
+      "context": "XRL.World.Parts.ModDrumLoaded.GetShortDescription",
+      "key": "Drum-loaded: This weapon may hold 20% additional ammo.",
+      "text": "ドラム弾倉: 装弾数が20%増える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModElectrified.GetShortDescription",
+      "key": "Electrified: When powered, this weapon deals ",
+      "text": "電化: 通電中、この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModElectrified.GetShortDescription",
+      "key": "an additional ",
+      "text": "追加で"
+    },
+    {
+      "context": "XRL.World.Parts.ModElectrified.GetShortDescription",
+      "key": "additional",
+      "text": "追加の"
+    },
+    {
+      "context": "XRL.World.Parts.ModElectrified.GetShortDescription",
+      "key": " electrical damage on hit.",
+      "text": "電撃ダメージを与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModElectrified.GetShortDescription",
+      "key": "Electrified: When powered, this weapon deals an additional ",
+      "text": "電化: 通電中、この武器は追加で"
+    },
+    {
+      "context": "XRL.World.Parts.ModExtradimensional.GetShortDescription",
+      "key": "Extradimensional: This item recently materialized in this dimension having inherited some properties from its home dimension, {{O|",
+      "text": "異次元由来: この品は元いた次元からいくつかの特性を持ったまま最近この次元に出現した、{{O|"
+    },
+    {
+      "context": "XRL.World.Parts.ModExtradimensional.GetShortDescription",
+      "key": "}}.\n",
+      "text": "}}。\n"
+    },
+    {
+      "context": "XRL.World.Parts.ModFeathered.GetShortDescription",
+      "key": "Feathered: This item grants the wearer ",
+      "text": "羽飾り: 装着者に"
+    },
+    {
+      "context": "XRL.World.Parts.ModFeathered.GetShortDescription",
+      "key": " reputation with birds.",
+      "text": "の鳥類評判を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModFilters.GetShortDescription",
+      "key": "Fitted with filters: This item protects against breathing in dangerous gases.",
+      "text": "フィルター付き: 有害なガスを吸い込むのを防ぐ。"
+    },
+    {
+      "context": "XRL.World.Parts.ModFlaming.GetShortDescription",
+      "key": "Flaming: When powered, this weapon deals ",
+      "text": "火炎: 通電中、この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModFlaming.GetShortDescription",
+      "key": "an additional ",
+      "text": "追加で"
+    },
+    {
+      "context": "XRL.World.Parts.ModFlaming.GetShortDescription",
+      "key": "additional",
+      "text": "追加の"
+    },
+    {
+      "context": "XRL.World.Parts.ModFlaming.GetShortDescription",
+      "key": " heat damage on hit.",
+      "text": "熱ダメージを与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModFlaming.GetShortDescription",
+      "key": "Flaming: When powered, this weapon deals an additional ",
+      "text": "火炎: 通電中、この武器は追加で"
+    },
+    {
+      "context": "XRL.World.Parts.ModFlareCompensating.GetShortDescription",
+      "key": "Flare-compensating: When powered and started up, the item offers protection against visual flash effects.",
+      "text": "遮光補正: 通電して起動すると閃光効果から保護する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModFlexiweaved.GetShortDescription",
+      "key": "Flexiweaved: This item's DV penalty is reduced",
+      "text": "柔繊維仕立て: この装備のDVペナルティが軽くなる"
+    },
+    {
+      "context": "XRL.World.Parts.ModFreezing.GetShortDescription",
+      "key": "Freezing: When powered, this weapon deals ",
+      "text": "冷却: 通電中、この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModFreezing.GetShortDescription",
+      "key": "Freezing: When powered, this weapon deals an additional ",
+      "text": "冷却: 通電中、この武器は追加で"
+    },
+    {
+      "context": "XRL.World.Parts.ModRelicFreezing.GetShortDescription",
+      "key": "Freezing: When powered, this weapon deals ",
+      "text": "冷却: 通電中、この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModFreezing.GetShortDescription",
+      "key": " additional",
+      "text": "追加の"
+    },
+    {
+      "context": "XRL.World.Parts.ModFreezing.GetShortDescription",
+      "key": " cold damage on hit.",
+      "text": "冷気ダメージを与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModGearbox.GetShortDescription",
+      "key": "Gearbox: Has mechanical power transmission components installed.",
+      "text": "ギアボックス: 機械式の動力伝達部品を組み込んでいる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModGesticulating.GetShortDescription",
+      "key": "Gesticulating: This item grants +",
+      "text": "身ぶり強調: この装備で筋力が+"
+    },
+    {
+      "context": "XRL.World.Parts.ModGesticulating.GetShortDescription",
+      "key": " Strength but disallows the use of the Floating Nearby equipment slot.",
+      "text": "され、浮遊枠の装備は使えなくなる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModGigantic.GetShortDescription",
+      "key": "Gigantic: This item is much heavier than usual and can only be equipped by gigantic creatures.",
+      "text": "巨大: 通常より大幅に重く、巨大な生物しか装備できない。"
+    },
+    {
+      "context": "XRL.World.Parts.ModHUD.GetShortDescription",
+      "key": "HUD: When powered and started up, this item can be used with a smartgun to enable its bonuses.",
+      "text": "HUD: 通電して起動するとスマートガンと連動し、ボーナスを有効化する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModHardened.GetShortDescription",
+      "key": "Electromagnetic shielding: This item is immune to electromagnetic pulses and magnetic pull.",
+      "text": "電磁シールド: 電磁パルスや磁力に対して無効化される。"
+    },
+    {
+      "context": "XRL.World.Parts.ModHeartstopper.GetShortDescription",
+      "key": "Heartstopper: When powered, this weapon has a chance to put opponents into cardiac arrest.",
+      "text": "心停止: 通電中、この武器は敵を心停止させる可能性がある。"
+    },
+    {
+      "context": "XRL.World.Parts.ModHeartstopper.GetShortDescription",
+      "key": "Heartstopper: When powered, this weapon has ",
+      "text": "心停止: 通電中、この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModHeatSeeking.GetShortDescription",
+      "key": "Homing: This weapon ignores DV.",
+      "text": "自動誘導: この武器はDVを無視する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModHighCapacity.GetShortDescription",
+      "key": "High-capacity: This item has increased charge capacity.",
+      "text": "大容量: この装備の蓄電容量が増えている。"
+    },
+    {
+      "context": "XRL.World.Parts.ModHypervelocity.GetShortDescription",
+      "key": "Hypervelocity: When powered, this weapon matches its penetration to its target's armor and penetrates creatures.",
+      "text": "超速: 通電中、この武器は目標の装甲に合わせて貫通力を調整し、生物を貫く。"
+    },
+    {
+      "context": "XRL.World.Parts.ModIlluminated.GetShortDescription",
+      "key": "Illuminated: This book is adorned with decorative marginalia and illustrations. It's worth 30% more.",
+      "text": "彩飾: 書物の余白に装飾や挿絵が施され、価値が30%上がる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModInduction.GetShortDescription",
+      "key": "Induction: This item may be charged at induction charging stations.",
+      "text": "非接触充電: 誘導充電設備で充電できる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModJacked.GetShortDescription",
+      "key": "Jacked: When equipped by a robot, cyborg, or mutant with the ability to generate electricity or access to grid power, this item can draw power.",
+      "text": "ジャック: 自家発電や電力網にアクセスできるロボット・サイボーグ・変異体が装備すると給電できる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModKeen.GetShortDescription",
+      "key": "Keen: +2 to penetration rolls",
+      "text": "鋭利: 貫通判定+2"
+    },
+    {
+      "context": "XRL.World.Parts.ModLacquered.GetShortDescription",
+      "key": "Lacquered: This item repels liquids and cannot rust.",
+      "text": "漆仕上げ: 液体を弾き錆びない。"
+    },
+    {
+      "context": "XRL.World.Parts.ModLanterned.GetShortDescription",
+      "key": "Lanterned: This item provides light.",
+      "text": "ランタン: 光源を提供する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
+      "key": "{{Y|lege{{W|n}}dary}}",
+      "text": "{{Y|伝{{W|説}}級}}"
+    },
+    {
+      "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
+      "key": "{{rules|Legendary",
+      "text": "{{rules|伝説級"
+    },
+    {
+      "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
+      "key": ": This weapon is ",
+      "text": " : この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
+      "key": "more",
+      "text": "高い"
+    },
+    {
+      "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
+      "key": "less",
+      "text": "低い"
+    },
+    {
+      "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
+      "key": " likely to score critical hits (standard chance is 5%).",
+      "text": "確率でクリティカルヒットが発生する（標準は5%）。"
+    },
+    {
+      "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
+      "key": "}}",
+      "text": "}}"
+    },
+    {
+      "context": "XRL.World.Parts.ModMassivelyOverloaded.GetShortDescription",
+      "key": "Massively overloaded: This item has significantly increased performance but consumes a great deal of extra charge, generates considerable heat when used, and has a chance to break relative to its charge draw.",
+      "text": "重過負荷: 性能が大幅に上がるが、余分な電力を大量に消費し、使用時に大きな熱を生み、消費電力量に応じて破損するおそれがある。"
+    },
+    {
+      "context": "XRL.World.Parts.ModMasterwork.GetShortDescription",
+      "key": "{{Y|masterwork}}",
+      "text": "{{Y|名工品}}"
+    },
+    {
+      "context": "XRL.World.Parts.ModMasterwork.GetShortDescription",
+      "key": "{{rules|Masterwork",
+      "text": "{{rules|名工品"
+    },
+    {
+      "context": "XRL.World.Parts.ModMasterwork.GetShortDescription",
+      "key": ": This weapon scores critical hits ",
+      "text": " : この武器のクリティカル発生率は"
+    },
+    {
+      "context": "XRL.World.Parts.ModMasterwork.GetShortDescription",
+      "key": "% of the time instead of 5%.}}",
+      "text": "%（通常は5%）。}}"
+    },
+    {
+      "context": "XRL.World.Parts.ModMasterwork.GetShortDescription",
+      "key": "might",
+      "text": "力"
+    },
+    {
+      "context": "XRL.World.Parts.ModMercurial.GetShortDescription",
+      "key": "Mercurial: Teleports the user to safety upon taking damage",
+      "text": "気性変転: ダメージを受けると使用者を安全な場所へ転移させる"
+    },
+    {
+      "context": "XRL.World.Parts.ModMercurial.GetShortDescription",
+      "key": " : (",
+      "text": " : ("
+    },
+    {
+      "context": "XRL.World.Parts.ModMetallized.GetShortDescription",
+      "key": "Metallized: +1 AV or penetration",
+      "text": "金属化: AVか貫通に+1"
+    },
+    {
+      "context": "XRL.World.Parts.ModMetered.GetShortDescription",
+      "key": "Metered: This item has a readout displaying its charge percentage.",
+      "text": "メーター付き: 残充電率の表示を備える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModMicroserrated.GetShortDescription",
+      "key": "Microserrated: This weapon has a chance to dismember opponents.",
+      "text": "微細な鋸刃: この武器は敵の部位を切断することがある。"
+    },
+    {
+      "context": "XRL.World.Parts.ModMicroserrated.GetShortDescription",
+      "key": "Microserrated: This weapon has ",
+      "text": "微細な鋸刃: この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModMighty.GetShortDescription",
+      "key": "Mighty: This weapon has no strength bonus penetration cap.",
+      "text": "剛力: 筋力による貫通ボーナスに上限がない。"
+    },
+    {
+      "context": "XRL.World.Parts.ModMorphogenetic.GetShortDescription",
+      "key": "Morphogenetic: When powered and used to perform a successful, damaging hit, this weapon attempts to daze all other creatures of the same species as your target on the local map. Compute power on the local lattice increases the strength of this effect.",
+      "text": "形態同調: 通電してダメージを与えると、ローカルマップ内の同種個体をすべて朦朧させようとする。局所格子の算術能力が高いほど効果が強くなる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModNanochelated.GetShortDescription",
+      "key": "Nanochelated: This item's metals have been replaced with carbon fiber. -1 AV or penetration, +1 DV if below zero",
+      "text": "ナノキレーション: 金属部分をカーボンファイバーに置き換えた。AVまたは貫通-1、DVが0未満なら+1。"
+    },
+    {
+      "context": "XRL.World.Parts.ModNanon.GetShortDescription",
+      "key": "Nanon: This weapon has a chance to dismember on penetration.",
+      "text": "ナノ刃: 貫通時に切断を引き起こすことがある。"
+    },
+    {
+      "context": "XRL.World.Parts.ModNanon.GetShortDescription",
+      "key": "Nanon: ",
+      "text": "ナノ刃: "
+    },
+    {
+      "context": "XRL.World.Parts.ModNanon.GetShortDescription",
+      "key": "% chance to dismember on penetration",
+      "text": "%の確率で貫通時に切断する"
+    },
+    {
+      "context": "XRL.World.Parts.ModNanon.GetShortDescription",
+      "key": "% chance to dismember upon penetration.",
+      "text": "貫通すると%の確率で切断する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModOrthopedic.GetShortDescription",
+      "key": "Orthopedic: This item grants bonus move speed and ",
+      "text": "整形補助: 移動速度が上がり、"
+    },
+    {
+      "context": "XRL.World.Parts.ModOrthopedic.GetShortDescription",
+      "key": "no effect",
+      "text": "効果なし"
+    },
+    {
+      "context": "XRL.World.Parts.ModOverbuilt.GetShortDescription",
+      "key": "Overbuilt: +3 AV, -2 DV, -10 move speed, x2 weight",
+      "text": "過剰構築: AV+3、DV-2、移動速度-10、重量2倍。"
+    },
+    {
+      "context": "XRL.World.Parts.ModOverloaded.GetShortDescription",
+      "key": "Overloaded: This item has increased performance but consumes extra charge, generates heat when used, and has a chance to break relative to its charge draw.",
+      "text": "過負荷: 性能は向上するが余分な電力を消費し、使用時に発熱し、消費電力量に応じて破損するおそれがある。"
+    },
+    {
+      "context": "XRL.World.Parts.ModPadded.GetShortDescription",
+      "key": "Padded: This item grants ",
+      "text": "パッド入り: この装備は"
+    },
+    {
+      "context": "XRL.World.Parts.ModPadded.GetShortDescription",
+      "key": "% chance to prevent daze or stun effects, and it doubles the chance for the wearer to shake off daze and stun effects with the Shake It Off skill power.",
+      "text": "%の確率で朦朧やスタンを防ぎ、Shake It Off技能でそれらを振り払う確率を2倍にする。"
+    },
+    {
+      "context": "XRL.World.Parts.ModPadded.GetShortDescription",
+      "key": " % chance to prevent daze or stun effects, and it doubles the chance for the wearer to shake off daze and stun effects with the Shake It Off skill power.",
+      "text": "%の確率で朦朧やスタンを防ぎ、Shake It Off技能でそれらを振り払う確率を2倍にする。"
+    },
+    {
+      "context": "XRL.World.Parts.ModPiping.GetShortDescription",
+      "key": "Piping: Has hydraulic pipes installed.",
+      "text": "配管: 油圧パイプを組み込んでいる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModPolarized.GetShortDescription",
+      "key": "Polarized: The item offers protection against visual flash effects.",
+      "text": "偏光: 閃光効果から身を守る。"
+    },
+    {
+      "context": "XRL.World.Parts.ModPsionic.GetShortDescription",
+      "key": "Psionic: This weapon uses the wielder's Ego modifier for penetration bonus instead of Strength mod and attacks MA instead of AV. It will dissipate from the corporeal realm after some use.",
+      "text": "サイオニック: 貫通ボーナスに筋力でなく自我修正を用い、AVではなくMAを攻撃する。一定回数で現世から消散する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModQuantumReverb.GetShortDescription",
+      "key": "Quantum reverb: When fired, this weapon creates a hologram of its wielder who continues to fire along the same path.",
+      "text": "量子残響: 発射時に射手のホログラムを作り、同じ軌道で射撃を続ける。"
+    },
+    {
+      "context": "XRL.World.Parts.ModRadioPowered.GetShortDescription",
+      "key": "Radio-powered: This item can be recharged via broadcast power.",
+      "text": "ラジオ受電: 放送電力で再充電できる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModRecycling.GetShortDescription",
+      "key": "{{rules|Recycling: This item collects",
+      "text": "{{rules|再生処理: 装着者の廃水を集めて"
+    },
+    {
+      "context": "XRL.World.Parts.ModRecycling.GetShortDescription",
+      "key": ", purifies, and stores up to ",
+      "text": "浄化し、最大"
+    },
+    {
+      "context": "XRL.World.Parts.ModRecycling.GetShortDescription",
+      "key": "dram",
+      "text": "ドラム"
+    },
+    {
+      "context": "XRL.World.Parts.ModRecycling.GetShortDescription",
+      "key": "drams",
+      "text": "ドラム"
+    },
+    {
+      "context": "XRL.World.Parts.ModRecycling.GetShortDescription",
+      "key": " of the wearer's wastewater.",
+      "text": "ぶんの廃水を貯蔵する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModRecycling.GetShortDescription",
+      "key": " and purifies the wearer's wastewater.",
+      "text": "装着者の廃水を浄化する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModRecycling.GetShortDescription",
+      "key": "}}",
+      "text": "}}"
+    },
+    {
+      "context": "XRL.World.Parts.ModReinforced.GetShortDescription",
+      "key": "Reinforced: +1 AV",
+      "text": "補強: AV+1"
+    },
+    {
+      "context": "XRL.World.Parts.ModScaled.GetShortDescription",
+      "key": "Scaled: This item grants the wearer reputation with unshelled reptiles.",
+      "text": "鱗装甲: 装着者に甲無し爬虫類との評判を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModScaled.GetShortDescription",
+      "key": "Scaled: This item grants the wearer ",
+      "text": "鱗装甲: 装着者に"
+    },
+    {
+      "context": "XRL.World.Parts.ModScaled.GetShortDescription",
+      "key": " reputation with unshelled reptiles.",
+      "text": "の甲無し爬虫類評判を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSereneVisage.GetShortDescription",
+      "key": "Serene visage: This item grants bonus Willpower, reduces the cooldown of Meditate by 40 rounds, and is worn on both the head and face. It requires both the head and face to wear.",
+      "text": "静謐な面貌: 意志力が上昇し、Meditateのクールダウンを40ラウンド短縮する。頭部と顔の両方を占有する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSerrated.GetShortDescription",
+      "key": "Serrated: This weapon has a chance to dismember opponents.",
+      "text": "鋸歯: この武器は敵を切断することがある。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSerrated.GetShortDescription",
+      "key": "Serrated: This weapon has ",
+      "text": "鋸歯: この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModSharp.GetShortDescription",
+      "key": "Sharp: +1 to penetration rolls",
+      "text": "鋭角: 貫通判定+1"
+    },
+    {
+      "context": "XRL.World.Parts.ModSirocco.GetShortDescription",
+      "key": "Sirocco: Drains 1 Toughness from any organic target this weapon damages for 3-4 turns.",
+      "text": "熱風: この武器が与えた有機標的から頑健性を1奪い、3-4ターン続く。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSixFingered.GetShortDescription",
+      "key": "Six-Fingered: +1 Agility",
+      "text": "六指: 敏捷+1"
+    },
+    {
+      "context": "XRL.World.Parts.ModSixFingered.GetShortDescription",
+      "key": "Six-Fingered: ",
+      "text": "六指: "
+    },
+    {
+      "context": "XRL.World.Parts.ModSixFingered.GetShortDescription",
+      "key": " Agility",
+      "text": "敏捷"
+    },
+    {
+      "context": "XRL.World.Parts.ModSlender.GetShortDescription",
+      "key": "Slender: This item weighs less than normal.",
+      "text": "細身: 通常より軽い。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSmart.GetShortDescription",
+      "key": "Smart: When powered and started up and the wielder has a HUD or techscanner equipped, this weapon's tracking scope makes it more accurate and gives ",
+      "text": "スマート: 通電して起動し、装着者がHUDかテックスキャナーを備えていると、追尾スコープが命中精度を高め、"
+    },
+    {
+      "context": "XRL.World.Parts.ModSmart.GetShortDescription",
+      "key": "a bonus",
+      "text": "命中ボーナスを"
+    },
+    {
+      "context": "XRL.World.Parts.ModSmart.GetShortDescription",
+      "key": " to hit a target aimed at.",
+      "text": "与えて照準した目標に当てやすくする。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSnailEncrusted.GetShortDescription",
+      "key": "Snail-Encrusted: This item is crawling with tiny snails and grants the wearer reputation with mollusks.",
+      "text": "巻貝まみれ: 小さなカタツムリが這っており、装着者に軟体動物との評判を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSnailEncrusted.GetShortDescription",
+      "key": "Snail-Encrusted: This item is crawling with tiny snails and grants the wearer ",
+      "text": "巻貝まみれ: 小さなカタツムリが這っており、装着者に"
+    },
+    {
+      "context": "XRL.World.Parts.ModSnailEncrusted.GetShortDescription",
+      "key": " reputation with mollusks.",
+      "text": "の軟体動物評判を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSpiked.GetShortDescription",
+      "key": "Spiked: This item causes additional bleeding damage.",
+      "text": "スパイク: 追加の流血ダメージを与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSpiked.GetShortDescription",
+      "key": "Spiked: This item adds bonus damage to Shield Slam equal to your Strength modifier and causes your target to bleed.",
+      "text": "スパイク: Strength修正と同値の追加ダメージをシールドスラムに与え、標的を出血させる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSpiked.GetShortDescription",
+      "key": "Spiked: Unarmed attacks performed while this item is equipped cause bleeding.",
+      "text": "スパイク: この装備を着けたままの素手攻撃は出血を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSpringLoaded.GetShortDescription",
+      "key": "Spring-loaded: This item grants bonus move speed.",
+      "text": "スプリング: 移動速度ボーナスを与える。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSturdy.GetShortDescription",
+      "key": "Sturdy: This item cannot break or crack, though it can still be destroyed.",
+      "text": "頑丈: ひび割れたり折れたりしないが、破壊される可能性はある。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSturdy.GetShortDescription",
+      "key": "Sturdy: This item cannot break or crack.",
+      "text": "頑丈: ひび割れも破損もしない。"
+    },
+    {
+      "context": "XRL.World.Parts.ModSuspensor.GetShortDescription",
+      "key": "Fitted with suspensors: When powered, this item is weightless.",
+      "text": "サスペンサー付き: 通電中、この装備は無重量になる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModTerrifyingVisage.GetShortDescription",
+      "key": "Terrifying visage: This item reduces the cooldowns of Berate, Intimidate, and Menacing Stare by 10 rounds. It requires both the head and face to wear.",
+      "text": "恐ろしい面貌: Berate/Intimidate/Menacing Stareのクールダウンを10ラウンド短縮する。頭部と顔の両方を占有する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModTimereaver.GetShortDescription",
+      "key": "Timereaver: This weapon has ",
+      "text": "時間切削: この武器は"
+    },
+    {
+      "context": "XRL.World.Parts.ModTimereaver.GetShortDescription",
+      "key": "% chance to stop time for two turns when ",
+      "text": "%の確率で時間を2ターン停止させる（"
+    },
+    {
+      "context": "XRL.World.Parts.ModTimereaver.GetShortDescription",
+      "key": "hit",
+      "text": "命中時"
+    },
+    {
+      "context": "XRL.World.Parts.ModTwoFaced.GetShortDescription",
+      "key": "Two-faced: This item grants an additional face slot.",
+      "text": "双面: 追加の顔スロットを1つ追加する。"
+    },
+    {
+      "context": "XRL.World.Parts.ModUrbanCamo.GetShortDescription",
+      "key": "Urban camo: This item provides camouflage in urban environments.",
+      "text": "都市迷彩: 都市環境での隠蔽を助ける。"
+    },
+    {
+      "context": "XRL.World.Parts.ModVisored.GetShortDescription",
+      "key": "Visored: +1 DV",
+      "text": "バイザー: DV+1"
+    },
+    {
+      "context": "XRL.World.Parts.ModWeightless.GetShortDescription",
+      "key": "Weightless: This item weighs nothing.",
+      "text": "無重量: 重量がゼロになる。"
+    },
+    {
+      "context": "XRL.World.Parts.ModWillowy.GetShortDescription",
+      "key": "Willowy: This item weighs much less than normal.",
+      "text": "しなやか: 通常より大幅に軽い。"
+    },
+    {
+      "context": "XRL.World.Parts.ModWired.GetShortDescription",
+      "key": "Wired: Has electrical wiring.",
+      "text": "配線済み: 電気配線が施されている。"
+    },
+    {
+      "context": "XRL.World.Parts.ModWooly.GetShortDescription",
+      "key": "Wooly: This item grants resistance to heat and cold.",
+      "text": "毛皮張り: 熱と冷気への耐性を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.AddsRep.AppendDescription",
+      "key": "+{0} reputation with {1}",
+      "text": "{1}との評判{0:+#;-#}"
+    },
+    {
+      "context": "XRL.World.Parts.AddsRep.AppendDescription",
+      "key": "{{rules|+{0} reputation with {1}}}",
+      "text": "{{rules|{1}との評判{0:+#;-#}}}"
+    },
+    {
+      "context": "XRL.World.Parts.AddsRep.AppendDescription",
+      "key": "When activated, +{0} reputation with {1}",
+      "text": "起動時、{1}との評判{0:+#;-#}"
+    },
+    {
+      "context": "XRL.World.Parts.AddsRep.AppendDescription",
+      "key": "When activated, +{0} reputation with {1} ({2})",
+      "text": "起動時、{1}との評判{0:+#;-#}（{2}）"
+    },
+    {
+      "context": "XRL.World.Parts.AddsRep.GetShortDescription",
+      "key": "{{rules|+{0} reputation with {1}}}",
+      "text": "{{rules|{1}との評判{0:+#;-#}}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Attack Chance: {0}%}}",
+      "text": "\n{{rules|命中率: {0}%}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Attack Chance: {0}%",
+      "text": "命中率: {0}%"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Offhand Attack Chance: {0}%}}",
+      "text": "\n{{rules|オフハンド命中率: {0}%}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Offhand Attack Chance: {0}%",
+      "text": "オフハンド命中率: {0}%"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: {0}}}",
+      "text": "\n{{rules|筋力ボーナス上限: {0}}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: no limit}}",
+      "text": "\n{{rules|筋力ボーナス上限: なし}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: {0}\nWeapon Class: Short Blades (causes bleeding on critical hit)}}",
+      "text": "\n{{rules|筋力ボーナス上限: {0}\n武器カテゴリ: 短剣（クリティカル時に出血）}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: no limit\nWeapon Class: Short Blades (causes bleeding on critical hit)}}",
+      "text": "\n{{rules|筋力ボーナス上限: なし\n武器カテゴリ: 短剣（クリティカル時に出血）}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: {0}\nWeapon Class: Long Blades (increased penetration on critical hit)}}",
+      "text": "\n{{rules|筋力ボーナス上限: {0}\n武器カテゴリ: 長剣（クリティカル時に貫通力上昇）}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: no limit\nWeapon Class: Long Blades (increased penetration on critical hit)}}",
+      "text": "\n{{rules|筋力ボーナス上限: なし\n武器カテゴリ: 長剣（クリティカル時に貫通力上昇）}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: {0}\nWeapon Class: Axe (cleaves armor on critical hit)}}",
+      "text": "\n{{rules|筋力ボーナス上限: {0}\n武器カテゴリ: 斧（クリティカル時に装甲破砕）}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: no limit\nWeapon Class: Axe (cleaves armor on critical hit)}}",
+      "text": "\n{{rules|筋力ボーナス上限: なし\n武器カテゴリ: 斧（クリティカル時に装甲破砕）}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: {0}\nWeapon Class: Cudgel (dazes on critical hit)}}",
+      "text": "\n{{rules|筋力ボーナス上限: {0}\n武器カテゴリ: 棍棒（クリティカル時に朦朧）}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "\n{{rules|Strength Bonus Cap: no limit\nWeapon Class: Cudgel (dazes on critical hit)}}",
+      "text": "\n{{rules|筋力ボーナス上限: なし\n武器カテゴリ: 棍棒（クリティカル時に朦朧）}}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: {0}",
+      "text": "筋力ボーナス上限: {0}"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: no limit",
+      "text": "筋力ボーナス上限: なし"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: {0}\nWeapon Class: Short Blades (causes bleeding on critical hit)",
+      "text": "筋力ボーナス上限: {0}\n武器カテゴリ: 短剣（クリティカル時に出血）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: no limit\nWeapon Class: Short Blades (causes bleeding on critical hit)",
+      "text": "筋力ボーナス上限: なし\n武器カテゴリ: 短剣（クリティカル時に出血）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: {0}\nWeapon Class: Long Blades (increased penetration on critical hit)",
+      "text": "筋力ボーナス上限: {0}\n武器カテゴリ: 長剣（クリティカル時に貫通力上昇）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: no limit\nWeapon Class: Long Blades (increased penetration on critical hit)",
+      "text": "筋力ボーナス上限: なし\n武器カテゴリ: 長剣（クリティカル時に貫通力上昇）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: {0}\nWeapon Class: Axe (cleaves armor on critical hit)",
+      "text": "筋力ボーナス上限: {0}\n武器カテゴリ: 斧（クリティカル時に装甲破砕）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: no limit\nWeapon Class: Axe (cleaves armor on critical hit)",
+      "text": "筋力ボーナス上限: なし\n武器カテゴリ: 斧（クリティカル時に装甲破砕）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: {0}\nWeapon Class: Cudgel (dazes on critical hit)",
+      "text": "筋力ボーナス上限: {0}\n武器カテゴリ: 棍棒（クリティカル時に朦朧）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Strength Bonus Cap: no limit\nWeapon Class: Cudgel (dazes on critical hit)",
+      "text": "筋力ボーナス上限: なし\n武器カテゴリ: 棍棒（クリティカル時に朦朧）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Short Blades (causes bleeding on critical hit)",
+      "text": "武器カテゴリ: 短剣（クリティカル時に出血）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Short Blades",
+      "text": "武器カテゴリ: 短剣"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Long Blades (increased penetration on critical hit)",
+      "text": "武器カテゴリ: 長剣（クリティカル時に貫通力上昇）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Long Blades",
+      "text": "武器カテゴリ: 長剣"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Axe (cleaves armor on critical hit)",
+      "text": "武器カテゴリ: 斧（クリティカル時に装甲破砕）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Axe",
+      "text": "武器カテゴリ: 斧"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Cudgel (dazes on critical hit)",
+      "text": "武器カテゴリ: 棍棒（クリティカル時に朦朧）"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Short Blades (causes bleeding on critical hit)",
+      "text": "短剣（クリティカル時に出血）"
+    },
+    {
+      "context": "XRL.World.Parts.ModEngraved.GetShortDescription",
+      "key": "Engraved",
+      "text": "彫刻"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Cudgel",
+      "text": "武器カテゴリ: 棍棒"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Pistol",
+      "text": "??????: ??"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Bows & Rifles",
+      "text": "??????: ????"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Weapon Class: Heavy Weapon",
+      "text": "??????: ???"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Accuracy: Very High",
+      "text": "????: ?????"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Accuracy: High",
+      "text": "????: ??"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Accuracy: Medium",
+      "text": "????: ??"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Accuracy: Low",
+      "text": "????: ??"
+    },
+    {
+      "context": "XRL.World.Parts.MeleeWeapon.GetShortDescription",
+      "key": "Accuracy: Very Low",
+      "text": "????: ?????"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Weapon Class: Pistol",
+      "text": "??????: ??"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Weapon Class: Bows & Rifles",
+      "text": "??????: ????"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Weapon Class: Heavy Weapon",
+      "text": "??????: ???"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Accuracy: Very High",
+      "text": "????: ?????"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Accuracy: High",
+      "text": "????: ??"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Accuracy: Medium",
+      "text": "????: ??"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Accuracy: Low",
+      "text": "????: ??"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Accuracy: Very Low",
+      "text": "????: ?????"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+[project]
+name = "qudjp-tools"
+version = "0.1.0"
+description = "Python tooling for Caves of Qud Japanese localization"
+requires-python = ">=3.12"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "D100",   # Missing docstring in public module (too noisy initially)
+  "D104",   # Missing docstring in public package
+  "COM812", # Trailing comma (conflicts with formatter)
+  "ISC001", # Implicit string concatenation (conflicts with formatter)
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-branches = 10
+max-returns = 6
+max-args = 6
+max-statements = 50
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["scripts/tests"]

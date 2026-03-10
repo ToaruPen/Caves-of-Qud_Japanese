@@ -1,0 +1,408 @@
+{
+    "meta": {
+        "id": "ui-messagelog",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true,
+        "protectHtmlEntities": true
+    },
+    "entries": [
+        {
+            "key": "Message Log",
+            "context": "XRL.Messages.MessageQueue",
+            "text": "メッセージログ"
+        },
+        {
+            "key": "Message Log",
+            "context": "XRL.World.XRL.Messages.MessageQueue",
+            "text": "メッセージログ"
+        },
+        {
+            "key": "Message Log",
+            "context": "Qud.UI.MessageLogStatusScreen",
+            "text": "メッセージログ"
+        },
+        {
+            "key": "Log",
+            "context": "Qud.UI.MessageLogStatusScreen",
+            "text": "ログ"
+        },
+        {
+            "key": "Message Log",
+            "context": "XRL.World.Qud.UI.MessageLogStatusScreen",
+            "text": "メッセージログ"
+        },
+        {
+            "key": "Log",
+            "context": "XRL.World.Qud.UI.MessageLogStatusScreen",
+            "text": "ログ"
+        },
+        {
+            "key": "Menus",
+            "context": "XRL.World.Qud.UI.MessageLogStatusScreen",
+            "text": "メニュー"
+        },
+        {
+            "key": "MessageLogStatusScreen",
+            "context": "XRL.World.Qud.UI.MessageLogStatusScreen",
+            "text": "メッセージログ画面"
+        },
+        {
+            "key": "StatusScreens",
+            "context": "XRL.World.Qud.UI.MessageLogStatusScreen",
+            "text": "ステータス画面"
+        },
+        {
+            "key": "NAVCATEGORY {NavigationController.currentEvent.axisValue}",
+            "context": "XRL.World.Qud.UI.MessageLogStatusScreen",
+            "text": "NAVCATEGORY {NavigationController.currentEvent.axisValue}"
+        },
+        {
+            "key": "&w",
+            "context": "XRL.World.Qud.UI.MessageLogStatusScreen",
+            "text": "&w"
+        },
+        {
+            "key": "Items/sw_crayons.bmp",
+            "context": "XRL.World.Qud.UI.MessageLogStatusScreen",
+            "text": "Items/sw_crayons.bmp"
+        },
+        {
+            "key": "MessageLog",
+            "context": "Qud.UI.MessageLogWindow",
+            "text": "メッセージログ"
+        },
+        {
+            "key": "MessageLog",
+            "context": "XRL.World.Qud.UI.MessageLogWindow",
+            "text": "メッセージログ"
+        },
+        {
+            "key": "Adventure",
+            "context": "XRL.World.Qud.UI.MessageLogWindow",
+            "text": "冒険"
+        },
+        {
+            "key": "CmdShowSidebar",
+            "context": "XRL.World.Qud.UI.MessageLogWindow",
+            "text": "サイドバーを表示"
+        },
+        {
+            "key": ":: ",
+            "context": "XRL.World.Qud.UI.MessageLogWindow",
+            "text": ":: "
+        },
+        {
+            "key": "Expand",
+            "context": "Qud.UI.MessageLogLine",
+            "text": "展開"
+        },
+        {
+            "key": "Collapse",
+            "context": "Qud.UI.MessageLogLine",
+            "text": "折りたたむ"
+        },
+        {
+            "key": "Expand",
+            "context": "XRL.World.Qud.UI.MessageLogLine",
+            "text": "展開"
+        },
+        {
+            "key": "Collapse",
+            "context": "XRL.World.Qud.UI.MessageLogLine",
+            "text": "折りたたむ"
+        },
+        {
+            "key": "Accept",
+            "context": "XRL.World.Qud.UI.MessageLogLine",
+            "text": "決定"
+        },
+        {
+            "key": "You have no usable options to employ for ",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "使用可能な選択肢がありません："
+        },
+        {
+            "key": ", giving you no chance of performing well. You can remedy this situation by improving your Ego, Willpower, Intelligence, and esoteric skills.",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "。成功の可能性はありません。自我、意志力、知性、および秘儀スキルを向上させることで、この状況を改善できます。"
+        },
+        {
+            "key": "You have mastered psychic combat at this level of difficulty. Do you want to guide the process in detail anyway, with an enhanced chance of exceptional success? If you answer 'No', you will automatically receive the results of strong but unexceptional performance.",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "この難易度の精神戦闘をマスターしています。成功率は高いですが、詳細なプロセスを手動で操作しますか？ 「いいえ」を選ぶと、自動的に「強力だが並外れてはいない」結果が得られます。"
+        },
+        {
+            "key": "Do you want to finish psychic combat as matters stand?",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "現在の状況で精神戦闘を終了しますか？"
+        },
+        {
+            "key": "Exiting now will finish psychic combat as matters stand. Are you sure you want to exit?",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "今終了すると、現在の状況で精神戦闘が終了します。本当に終了しますか？"
+        },
+        {
+            "key": "You have no more usable options, so your performance so far will determine the outcome.",
+            "context": "XRL.World.XRL.World.PsychicCombatSifrah",
+            "text": "使用可能な選択肢がなくなったため、これまでのパフォーマンスによって結果が決定されます。"
+        },
+        {
+            "key": "You block with {arg}! (+{part.AV} AV)",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "{arg}でブロックした！ (+{part.AV} AV)"
+        },
+        {
+            "key": "You stagger ",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "よろめかせた："
+        },
+        {
+            "key": " with your shield block!",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "（盾ブロック）"
+        },
+        {
+            "key": "You are staggered by ",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "よろめかされた："
+        },
+        {
+            "key": "You cannot throw things on the world map.",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "ワールドマップ上で物を投げることはできません。"
+        },
+        {
+            "key": "You do not have a thrown weapon equipped.",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "投擲武器を装備していません。"
+        },
+        {
+            "key": "You cannot fire missile weapons on the world map.",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "ワールドマップ上で射撃武器を発射することはできません。"
+        },
+        {
+            "key": "You do not have ",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "装備していません："
+        },
+        {
+            "key": "an appropriate",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "適切な"
+        },
+        {
+            "key": " missile weapon equipped!",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "射撃武器！"
+        },
+        {
+            "key": "You miss!",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "外した！"
+        },
+        {
+            "key": "{{r|You miss with ",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "{{r|外した："
+        },
+        {
+            "key": "{{r|You miss!}} [",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "{{r|外した！}} ["
+        },
+        {
+            "key": "you are under attack by ",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "攻撃を受けている："
+        },
+        {
+            "key": " you!",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "（あなたを攻撃！）"
+        },
+        {
+            "key": " you with ",
+            "context": "XRL.World.XRL.World.Parts.Combat",
+            "text": "（あなたを攻撃、武器："
+        },
+        {
+            "key": "You hit (x{pen}) for {damage} damage with {weapon}!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{weapon}（貫通：{pen}回）で命中、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "You critically hit (x{pen}) for {damage} damage with {weapon}!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{weapon}（貫通：{pen}回）でクリティカルヒット、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "You hit {target} (x{pen}) for {damage} damage with {weapon}!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}に{weapon}（貫通：{pen}回）で命中、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "You critically hit {target} (x{pen}) for {damage} damage with {weapon}!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}に{weapon}（貫通：{pen}回）でクリティカルヒット、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "You hit {target} with {weapon} (x{pen}) for {damage} damage!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}に{weapon}（貫通：{pen}回）で命中、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "You critically hit {target} with {weapon} (x{pen}) for {damage} damage!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}に{weapon}（貫通：{pen}回）でクリティカルヒット、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "{attacker} hit with {weapon} (x{pen}) for {damage} damage!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{weapon}（貫通：{pen}回）で命中、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "{attacker} hit {target} with {weapon} (x{pen}) for {damage} damage!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{target}に{weapon}（貫通：{pen}回）で命中、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "{attacker} hits (x{pen}) for {damage} damage with {weapon}.{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{weapon}（貫通：{pen}回）で命中、{damage}ダメージを与えた。{roll}"
+        },
+        {
+            "key": "{attacker} critically hit {target} with {weapon} (x{pen}) for {damage} damage!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{target}に{weapon}（貫通：{pen}回）でクリティカルヒット、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "{attacker} critically hits (x{pen}) for {damage} damage with {weapon}.{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{weapon}（貫通：{pen}回）でクリティカルヒット、{damage}ダメージを与えた。{roll}"
+        },
+        {
+            "key": "You hit {target}!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}に命中した！{roll}"
+        },
+        {
+            "key": "You hit {target} for {damage} damage!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}に命中、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "You critically hit {target}!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}にクリティカルヒットした！{roll}"
+        },
+        {
+            "key": "You critically hit {target} for {damage} damage!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}にクリティカルヒット、{damage}ダメージを与えた！{roll}"
+        },
+        {
+            "key": "{attacker} hits {target}.{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{target}に命中させた。{roll}"
+        },
+        {
+            "key": "{attacker} hits {target} for {damage} damage.{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{target}に命中、{damage}ダメージを与えた。{roll}"
+        },
+        {
+            "key": "{attacker} critically hits {target}.{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{target}にクリティカルヒットさせた。{roll}"
+        },
+        {
+            "key": "{attacker} critically hits {target} for {damage} damage.{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}は{target}にクリティカルヒット、{damage}ダメージを与えた。{roll}"
+        },
+        {
+            "key": "You take {damage} {type} damage.{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{damage}の{type}ダメージを受けた。{roll}"
+        },
+        {
+            "key": "You miss with {weapon}!{roll}",
+            "context": "XRL.Messages.Combat",
+            "text": "{weapon}での攻撃を外した！{roll}"
+        },
+        {
+            "key": "You take {damage} damage from {source}!",
+            "context": "XRL.Messages.Combat",
+            "text": "{source}から{damage}ダメージを受けた！"
+        },
+        {
+            "key": "{target} dies!",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}は死んだ！"
+        },
+        {
+            "key": "{target} becomes {state}!",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}は{state}状態になった！"
+        },
+        {
+            "key": "{target} are stunned!",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}は気絶した！"
+        },
+        {
+            "key": "{target} remain stunned!",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}は気絶したままだ！"
+        },
+        {
+            "key": "{target} are knocked prone!",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}は倒された！"
+        },
+        {
+            "key": "{target} lie down!",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}は横になった！"
+        },
+        {
+            "key": "{target} stand up!",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}は立ち上がった！"
+        },
+        {
+            "key": "{target} begin bleeding!",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}は出血し始めた！"
+        },
+        {
+            "key": "{target} begin bleeding from another wound!",
+            "context": "XRL.Messages.Combat",
+            "text": "装備していません："
+        },
+        {
+            "key": "{target} stop bleeding.",
+            "context": "XRL.Messages.Combat",
+            "text": "{target}の出血が止まった。"
+        },
+        {
+            "key": "You died.",
+            "context": "XRL.Messages.Combat",
+            "text": "あなたは死んだ。"
+        },
+        {
+            "key": "You were killed by {attacker}.",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}に殺された。"
+        },
+        {
+            "key": "You were accidentally killed by {attacker}.",
+            "context": "XRL.Messages.Combat",
+            "text": "{attacker}に誤って殺された。"
+        }
+    ]
+}

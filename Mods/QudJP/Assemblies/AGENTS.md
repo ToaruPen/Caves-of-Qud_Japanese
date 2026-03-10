@@ -1,0 +1,155 @@
+# Assemblies — C# Harmony Patch DLL
+
+This directory contains the mod DLL (`QudJP.csproj`, net48) and its test project
+(`QudJP.Tests/`, net10.0).
+
+## Project Targets
+
+| Project | Target | Purpose |
+|---------|--------|---------|
+| `QudJP.csproj` | net48 | Mod DLL loaded by Unity Mono at runtime |
+| `QudJP.Tests.csproj` | net10.0 | Test runner; never shipped to players |
+
+## Compiler Settings (QudJP.csproj)
+
+```xml
+<Nullable>enable</Nullable>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+```
+
+Zero warnings policy: every Roslyn warning is a build error.
+
+## Assembly References
+
+All game DLL references must use `<Private>false</Private>`:
+
+```xml
+<Reference Include="Assembly-CSharp">
+  <HintPath>path/to/Assembly-CSharp.dll</HintPath>
+  <Private>false</Private>
+</Reference>
+```
+
+This prevents game DLLs from being copied to the output directory.
+Never commit Assembly-CSharp.dll or any other game DLL to the repo.
+
+## Harmony Patching Patterns
+
+### Prefix — intercept before original runs
+
+```csharp
+[HarmonyPatch(typeof(TargetClass), "TargetMethod")]
+public static class MyPatch
+{
+    public static bool Prefix(ref string __result, string arg)
+    {
+        // Return false to skip the original method entirely.
+        __result = TranslateJapanese(arg);
+        return false;
+    }
+}
+```
+
+### Postfix — modify result after original runs
+
+```csharp
+[HarmonyPatch(typeof(TargetClass), "TargetMethod")]
+public static class MyPatch
+{
+    public static void Postfix(ref string __result)
+    {
+        // __result holds the original return value; mutate it here.
+        __result = ApplyJapaneseFormatting(__result);
+    }
+}
+```
+
+### Key rules
+- `__result` is the return value (ref for mutation)
+- `__instance` is `this` for instance methods
+- `___fieldName` (triple underscore) accesses private fields
+- Prefix returning `false` skips the original AND all lower-priority prefixes
+
+## File Naming Conventions
+
+```
+src/
+  Patches/
+    GrammarPatch.cs        # One patch class per file
+    ConversationPatch.cs
+  Translators/
+    Translator.cs          # Core translation logic
+    ColorCodePreserver.cs
+```
+
+One patch class per file. File name matches class name.
+
+## Test Architecture
+
+### L1 — Pure Logic (`[Category("L1")]`)
+
+No HarmonyLib. No UnityEngine. Tests pure string/grammar logic.
+
+```csharp
+[TestFixture, Category("L1")]
+public class TranslatorTests
+{
+    [Test]
+    public void Translate_ReturnsJapanese_WhenKeyExists()
+    {
+        var result = Translator.Translate("Hello");
+        Assert.That(result, Is.EqualTo("こんにちは"));
+    }
+}
+```
+
+### L2 — Harmony Integration (`[Category("L2")]`)
+
+HarmonyLib NuGet 2.4.2 allowed. No UnityEngine. Tests patch application
+against DummyTarget classes.
+
+```csharp
+[TestFixture, Category("L2")]
+public class GrammarPatchTests
+{
+    [Test]
+    public void Patch_ModifiesOutput_WhenApplied()
+    {
+        var harmony = new Harmony("test.qudjp");
+        harmony.PatchAll(typeof(GrammarPatch).Assembly);
+        var result = new DummyGrammar().Pluralize("cat");
+        Assert.That(result, Is.EqualTo("猫"));
+    }
+}
+```
+
+## DummyTarget Pattern (Critical)
+
+NEVER instantiate types from Assembly-CSharp.dll in tests.
+Create test doubles with matching method signatures:
+
+```csharp
+// Good: test double with matching signature
+internal class DummyGrammar
+{
+    public string Pluralize(string noun) => noun + "s";
+    public string MakePossessive(string noun) => noun + "'s";
+}
+
+// Bad: real game type (causes TypeInitializationException in test runner)
+// var grammar = new XRL.Language.Grammar();
+```
+
+The DummyTarget must have the exact same method signature as the real class
+so Harmony can patch it in L2 tests.
+
+## HarmonyLib Versions
+
+| Context | Version | Source |
+|---------|---------|--------|
+| Runtime (mod) | 0Harmony 2.2.2.0 | Game-bundled, do NOT reference via NuGet |
+| Tests | HarmonyLib 2.4.2 | NuGet, test project only |
+
+The test project references HarmonyLib via NuGet. The mod project does NOT
+reference HarmonyLib at all; the game provides it at runtime.

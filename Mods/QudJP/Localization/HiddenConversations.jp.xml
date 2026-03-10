@@ -1,0 +1,2168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<conversations Load="Replace" LoadPriority="1000" ExcludeFromCorpusGeneration="true">
+
+  <!--Barathrum-->
+  <conversation ID="Barathrum">
+
+    <start ID="AllDone" IfTestState="BaraAllDone">
+      <text>
+        {{emote|*バラサラムが聞き取れないほど小声でつぶやく。*}}
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="End">...</choice>
+    </start>
+    
+    <start ID="Z-Ascended" IfHaveState="(SpindleAscended AND GyreTruthKnown)">
+      <text>
+        {{emote|*バラサラムの表情が急に険しくなる。*}}
+        
+        おお…メイヴンよ、こんな姿を見せるのはつらいだろう。イマーゴがほどけてしまった…
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="Z-Ascended2">...</choice>
+    </start>
+    <node ID="Z-Ascended2" SetBooleanState="BaraAllDone,true">
+      <text>
+        すまない、=name=。お前を誇りに思っている！願わくば…わたしが剥がれ落ちずにいられればよかったのに、お前の手本のように。
+      </text>
+      <choice GotoID="Z-Ascended3">...</choice>
+    </node>
+    <node ID="Z-Ascended3">
+      <text>
+        ではな、メイヴン。=name=よ。生きて飲め。
+      </text>
+      <choice GotoID="End">...</choice>
+    </node>
+    <start ID="Z-Ascended-No-Reveal" IfHaveState="SpindleAscended">
+      <text>
+        {{emote|*バラサラムの表情が急に険しくなる。*}}
+
+        子よ。もっと語りたかったが…わたしは恥に操られる操り人形だ。
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="Z-Ascended2">...</choice>
+    </start>
+
+    <start ID="Z-Silent" IfHaveState="BarathrumDone" SetBooleanConversationState="WaitArrive,true">
+      <text>
+        {{emote|*バラサラムが聞き取れないほど小声でつぶやく。*}}
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="End">...</choice>
+    </start>
+
+    <start ID="Z-Hushed" Inherits="Z-Reveal8" IfHaveState="BarathrumWeeps">
+      <text>
+        {{emote|*バラサラムがすすり泣く。*}}
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="End">...</choice>
+    </start>
+
+    <start ID="Z-SteelOurselves" IfHaveState="BarathrumCusp" Inherits="SortFaculties" >    
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="End">...</choice>
+    </start>
+    
+    <start ID="Z-Ascending" IfHaveState="StarfreightAscending" SetBooleanConversationState="RenderMapBehind,true">
+      <text>
+        わたしたちは――
+
+        成し遂げたのだ、=name=。わたしは――
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="Dawnstirs">...</choice>
+    </start>
+
+    <node ID="Dawnstirs">
+      <text>
+        ただ浅瀬の明け方だけ、可能だと考えることを許していた。そして今…
+      </text>
+      <choice GotoID="SortFaculties">...</choice>
+    </node>
+    <node ID="SortFaculties">
+      <text>
+        {{emote|*バラサラムが苦しげに息を吐く。*}}
+
+        上昇の縁に至る前に、頭を整理しよう。旅の端をまだ削り出さねばならん。
+      </text>
+      <choice GotoID="BarathrumCusp" IfHaveState="BarathrumCusp">バラサラム、過去の話をもう一度しよう。</choice>
+      <choice GotoID="TemplarDefeated">聖堂騎士団は退けたが、再び大軍で戻るだろうか？</choice>
+      <choice GotoID="Well">苦しそうだ、バラサラム。大丈夫か？</choice>
+      <choice GotoID="Awaits" IfNotHaveState="BarathrumCusp">スピンドルの折れる先に何が待つと思う？</choice>
+      <choice GotoID="End">少し時間をくれ、バラサラム。</choice>
+    </node>
+    <node ID="TemplarDefeated" Inherits="SortFaculties" SetBooleanState="WaitArrivePartial1,true">
+      <text>
+        わからぬ、=name=。だが生きた遺産が一撃で消えると考えるのは甘い。われらは常に過去の暴力の下流にいる。
+      </text>
+    </node>
+    <node ID="Well" Inherits="SortFaculties" SetBooleanState="WaitArrivePartial2,true">
+      <text>
+        {{emote|*バラサラムは体重を移し、立ち止まり、関節炎の足を曲げ伸ばしする。*}}
+
+        すまない。加速のせいだ、=name=。目が回り、息が切れる。お前も身構えろ、わたしもそうしよう。
+      </text>
+    </node>
+    <node ID="Awaits" SetBooleanState="WaitArrivePartial3,true">
+      <text>
+        {{emote|*バラサラムが立ち止まる。*}}
+
+        おお、=name=よ。運命という現象スライドルールの上で、わたしたちのカーソルが重なる！お前は推測で燃え、わたしは――知ることの冷たさの中で黴びてゆく。矮星の相へと入る。
+      </text>
+      <choice GotoID="Awaits2">...</choice>
+    </node>
+    <node ID="Awaits2">
+      <text>
+        {{emote|*バラサラムが長く息を吸い込む。*}}
+      </text>
+      <choice GotoID="Awaits3">...</choice>
+    </node>
+    <node ID="Awaits3">
+      <text>
+        おお、欺きよ！煌めく黄昏のたびに越えてきた、苛烈な門。犯罪着をまとったまま眠り、泣いたのだ、聞こえたか？
+
+        それとも、わたしと同じくあの忌々しいノイズしか聞こえず、それを吐き出す機械に何も語れなかったか。あの痛ましい心の傷も、わたし自身の傷も、誰も癒せず…
+
+        おお、ああ……重すぎる。
+      </text>
+      <choice GotoID="NoMask" IfTestState="ReadTornSheet" FlagSecret="true" SetStringConversationState="BarathrumQuestion,Graph">
+        欺きについてのメモが書かれたグラフ用紙の切れ端を見つけた。あなたのものか？
+      </choice>      
+      <choice GotoID="NoMask" IfTestState="SawCrimePunishment" FlagSecret="true" SetStringConversationState="BarathrumQuestion,CrimePunishment">
+        犯罪着？書斎の寝袋のそばに、罪と罰のコーデックスがあった。あれは何だ？
+      </choice>
+      <choice GotoID="NoMask" IfTestState="MakHatesResheph" FlagSecret="true" SetStringConversationState="BarathrumQuestion,Mak">
+        スヴァーディムのマクは、生まれた時から耳を荒らすノイズの喧噪の中だと言っていた。あれはあの信号なのか？
+      </choice>
+      <choice GotoID="NoMask" IfTestState="UrsineApprenticeMentioned" FlagSecret="true" SetStringConversationState="BarathrumQuestion,Geeub">
+        スヴァーディムのジーブが、機械の語り手とその熊の弟子について話していた。あなたのことか？
+      </choice>
+      <choice GotoID="NoMask" IfHaveSultanNoteWithTag="rebekahWasHealer" IfTestState="TalkedToYlaHaj" FlagSecret="true" SetStringConversationState="BarathrumQuestion,Daughters">
+        レベカは癒やし手だった。だが彼女の弟子「流配の娘たち」はティンカーだ。なぜだ？
+      </choice>
+      <choice GotoID="BarathrumRecovers" SetBooleanState="WaitArrivePartial4,true">
+        バラサラム、わからない。
+      </choice>
+      <choice GotoID="End">生きて飲め。</choice>
+    </node>
+    <node ID="NoMask">
+      <text>
+        わたしは――
+
+        {{emote|*バラサラムが立ち止まり、それから笑う。*}}
+
+        ほっほう！芝居が終わってもなお、眉は演技に合わせて寄る！仮面は剥がれねば…何？仮面などない？？
+
+        {{emote|*バラサラムの表情が急に険しくなる。*}}
+
+        すまない、=name=。らしくない軽さで不安にさせたくはない。お前も、他の者も、それに値しない。
+      </text>      
+      <choice GotoID="Graph2" IfHaveDelimitedConversationState="BarathrumQuestion:Graph">...</choice>
+      <choice GotoID="CrimePunishment" IfHaveDelimitedConversationState="BarathrumQuestion:CrimePunishment">...</choice>
+      <choice GotoID="MakStatic" IfHaveDelimitedConversationState="BarathrumQuestion:Mak">...</choice>
+      <choice GotoID="GeeubSpeaker" IfHaveDelimitedConversationState="BarathrumQuestion:Geeub">...</choice>
+      <choice GotoID="DaughtersTinkers" IfHaveDelimitedConversationState="BarathrumQuestion:Daughters">...</choice>
+    </node>
+    <node ID="Graph2">
+      <text>
+        ああ、その紙はわたしのだ。この騒々しい信号も、ある意味わたしのものだ。
+
+        それはわたしの弔鐘だ。
+      </text>
+      <choice GotoID="BarathrumCusp">君の弔鐘？</choice>
+    </node>
+    <node ID="CrimePunishment">
+      <text>
+        あのコーデックスか？慰めであり、指南書であり、台帳だ。わたしの罪に署名はないが、心それ自体が証書なのだ。        
+      </text>
+      <choice GotoID="BarathrumCusp">どんな罪だ、バラサラム？</choice>
+    </node>
+    <node ID="MakStatic">
+      <text>
+        スヴァーディムのマクが言っていたノイズか？ああ、あれは信号だ。わたしの信号。わたしの弔鐘。
+      </text>
+      <choice GotoID="BarathrumCusp">君の弔鐘？</choice>
+    </node>
+    <node ID="GeeubSpeaker">
+      <text>
+        弟子、か。ずいぶん長くその肩書きを名乗っていないが、今もなおしっくりくる。
+        
+        ああ、機械の語り手の傍らにいたのはわたしだ。
+      </text>
+      <choice GotoID="BarathrumCusp">機械の語り手とは誰だ？</choice>
+    </node>
+    <node ID="DaughtersTinkers">
+      <text>
+        彼女は治療者だった。導線カッターはメスの役を果たせるし、半田ごては縫合になる。
+        
+        歴史を分解し、新しいものを縫い合わせるために…
+      </text>
+      <choice GotoID="BarathrumCusp">彼女は何を分解した？</choice>
+    </node>
+    <node ID="BarathrumRecovers">
+      <text>
+        {{emote|*バラサラムが立ち止まる。*}}
+        
+        許してくれ、=name=。この上昇は心も体も酷使する。妄想は終わりだ、地に足を戻した。
+      </text>
+      <choice GotoID="Z-SteelOurselves">...</choice>
+    </node>
+    <node ID="BarathrumCusp" SetBooleanState="BarathrumCusp,true">
+      <text>
+        {{emote|*バラサラムが立ち止まり、顔をしかめる。*}}
+
+        =name=、知っているだろう、全てのピンを外し、カムを外して初めて構造がわかる機械があることを。今わたしたちを包む文化の機関もそうだ。ひとつの歯車の仕組みを話すには、全部を分解せねばならぬ。焦らすつもりはない、すぐに約束する、旅の次の弧が見える。
+      </text>
+      <choice GotoID="End" Priority="2">待とう、バラサラム。</choice>
+      <choice GotoID="Z-Reveal0" Priority="2">バラサラム、今に関わる過去があるなら教えてほしい。</choice>
+    </node>
+    <node ID="Z-Reveal0">
+      <text>
+        {{emote|*バラサラムがため息をつく。*}}
+      </text>
+      <choice GotoID="Z-Reveal1">...</choice>
+    </node>
+    <node ID="Z-Reveal1">
+      <text>
+        わかった。君が受けるべき説明をしよう。
+      </text>
+      <choice GotoID="Z-Reveal1a">...</choice>
+    </node>
+    <node ID="Z-Reveal1a">
+      <text>
+        聞いてくれ、=name=。若い熊だった頃、洪水から逃げる一族とホムズデルタを越えクッド西部に入った時、すでにジャイアの疫病は猛威を振るっていた。われらは新しい炉辺、ウルシーブが心安らぐクローム洞窟に根を下ろし、長老の導きでわたしはティンカーの技を学べた。
+      </text>
+      <choice GotoID="Z-Reveal2">...</choice>
+    </node>
+    <node ID="Z-Reveal2">
+      <text>
+        仕事を通じて、少し型破りな名工の目に留まり、弟子として受け入れられた。そしてやがて、秘奥の真実を授かった。
+
+        彼女は、君や他の弟子たちに語ったように、かつてこの世界は星々にまたがる偉大なコヴンに属していたが、不可解な理によって彼らは姿を消し、この世界に制約が置かれたと説明した。
+
+        ここまでは知っているな。わたしが語ったのは半分だけだ。レベカはその先を教えてくれた。
+      </text>
+      <choice GotoID="Z-Reveal3" SetBooleanState="AscentMilestone,true" Notify="AscentMilestone">...</choice>
+    </node>
+    <node ID="Z-Reveal3" Notify="AscentAdvance">
+      <text>
+        あり得ないほどの高さを持つスピンドルの頂に、食らう者たちの偉大な機械的執政官の一柱、セラフが留まっており、レベカはその存在に仕えていた。
+
+        わたしがクッドに来る前の短い年月に、そのセラフは宇宙の秩序に何か変化があったと確信した。民の時計の黄道上で、数えられていない杭が起動位置へ滑り、コヴンが間近に帰還すると。
+      </text>
+      <choice GotoID="FolkClock">民の時計？</choice>
+    </node>
+    <node ID="FolkClock" SetBooleanState="GreatMachineMentioned,true">
+      <text>
+        セラフは銀河にまたがる大いなる機械を語った。その帆と歯車列の動きが、星や文化の流動的な変化を司るという。しかし多くは語らず、わたしもほとんど知らない。
+      </text>
+      <choice GotoID="Z-Reveal4">...</choice>
+    </node>
+    <node ID="Z-Reveal4" SetBooleanState="ReshephIsSeraph">
+      <text>
+        {{emote|*バラサラムが咳き込み、唾を飲み下す。*}}
+
+        コヴンの帰還に備えるには、やがてレシェフと呼ばれるセラフは、この惑星の高等生命をすべて…浄化しなければならないと確信した。制約を課した理由は、わたしたちの生命と生き方にある。突破する唯一の道は、新しい生命が得られることだ、と。
+      </text>
+      <choice GotoID="Z-Reveal5">...</choice>
+    </node>
+    <node ID="Z-Reveal5">
+      <text>
+        そこでレシェフは疫病の種を蒔き、波形で渦へと変えた。ガラスとクロームの遺物を残しつつ生命を攻撃するよう仕組まれた災厄だ。
+
+        愛すべき師レベカはレシェフの信頼を裏切り、この計画をわたしに教えた。彼女とともに粉砕し、この世界の民を救うために。
+      </text>
+      <choice GotoID="Z-Reveal6">...</choice>
+    </node>
+    <node ID="Z-Reveal6">
+      <text>
+        {{emote|*バラサラムが咳き込み、苦しげな笛音の息を吐く。*}}
+
+        わたしたちは共にレシェフに嘆願し、ジャイアを逆転させてくれと頼んだ。懇願した…わたしは――
+
+        {{emote|*バラサラムが喘ぐ。*}}
+      </text>
+      <choice GotoID="Z-Reveal7">...</choice>
+    </node>
+    <node ID="Z-Reveal7">
+      <text>
+        時間をくれと頼んだ。時間をくれ。クッドを改革し、憎悪と無益な戦を消し去り、世界を終末の向こうへ押し上げ、コヴンの帰還に備えられるように…
+      </text>
+      <choice GotoID="Z-Reveal8">...</choice>
+    </node>
+    <node ID="Z-Reveal8">
+      <text>
+        言葉の破片が吹き荒れた末に、セラフは千年を認めた。
+
+        千年だ！民の時計の目盛では瞬きだが、わたしたちには永遠。そう信じた。
+
+        目覚めの信号は止まり、ジャイアの疫病は可能な範囲で逆転される。あの強大な執政官でさえ、自ら形作ったものすべてを完全には統御できなかったからだ。
+      </text>
+      <choice GotoID="Z-Purge">この世界の生命を浄化したら、コヴンは何を求めて戻るのだ？</choice>
+      <choice GotoID="Z-Sultan">なぜレシェフはスルタンになった？</choice>
+      <choice GotoID="Z-Healer">レシェフは癒やし手として語られている。</choice>
+      <choice GotoID="Z-Agreement">その取り決めはどうなった？</choice>
+      <choice GotoID="Z-Failed" IfTestState="BarathrumWeeps">ならばレシェフの基準では失敗なのか？</choice>
+    </node>
+    <node ID="Z-Purge" Inherits="Z-Reveal8">
+      <text>
+        わたしもレシェフにそのまま尋ねた。だがセラフは、われらとはまったく異なる倫理多様体を渡り歩く。
+      </text>
+    </node>
+    <node ID="Z-Sultan" Inherits="Z-Reveal8">
+      <text>
+        コヴンの帰還を確信したセラフは、自らの権威を具現化し、世界の事柄でより物質的な役割を担った。腐りゆくスルタン王朝は便利な道具だった。
+      </text>
+    </node>
+    <node ID="Z-Healer" Inherits="Z-Reveal8">
+      <text>
+        ある意味、確かに癒やし手だった。疫病の治療はしばしば原因にもなる。力のダイヤルと鼓を手にすれば、歴史は織り機で紡ぐ布となる。
+      </text>
+    </node>
+    <node ID="Z-Agreement" Inherits="Z-Reveal8" SetBooleanState="GyreTruthKnown,true">
+      <text>
+        未来が花開くには王朝を廃さねばならぬとの考えで手を結んだ。わたしが地上の計画を実行し、レシェフは天上で準備を続ける。二院制のように動くため、レシェフは人格を三頭政治に作り替えることに固執した。元の執政官、レベカ、そしてわたしの薄いスキャンから種を撒いて。
+
+        レシェフという人格を神格化するため、神話作りの技が用いられた。かくして――癒やし手、とぐろを巻く子羊、そしておそらく意外にも「彼方」が生まれた。
+      </text>
+      <choice GotoID="Z-Rebekah" Priority="1">レベカはどうなった？</choice>
+    </node>
+    <node ID="Z-Rebekah">
+      <text>
+        {{emote|*バラサラムが息を吸い、どもる。*}} 彼女は――
+
+        レシェフは彼女の背信を許さなかった。=RebekahRegion=の癩病者を助けているうちに、彼女は「腐れた舌」に罹った。死期が来た時、彼女は――
+      </text>
+      <choice GotoID="Z-Rebekah2">...</choice>
+    </node>
+    <node ID="Z-Rebekah">
+      <text>
+        レシェフは彼女を故郷に帰らせなかった。おお…
+
+        {{emote|*バラサラムが押し殺したすすり泣きを漏らす。*}}
+      </text>
+      <choice GotoID="Z-Hushed" SetBooleanState="BarathrumWeeps,true" Notify="AscentAdvance">...</choice>
+    </node>
+    <node ID="Z-Failed">
+      <text>
+        {{emote|*バラサラムがすすり泣く。*}}
+
+        ――何だ？誰だ？
+      </text>
+      <choice GotoID="Z-Name">バラサラム、わたしだ。=name=だ。</choice>
+      <choice GotoID="Z-Failed2">信号が鳴り響き、ジャイアがまた広がるなら、レシェフの定めた基準には届かなかったのか？</choice>
+    </node>
+    <node ID="Z-Name" Inherits="Z-Failed">
+      <text>
+        おお。よかった、=name=、よかった…
+      </text>
+    </node>
+    <node ID="Z-Failed2">
+      <text>
+        いや…クッドはまだ分裂し、持続的な平和は得られなかった。努力した…何十年も舵を握って、野に咲いたものを継ぎ合わせようとした…
+
+        機械の復興、自由主権の連合、塩と星の滋養の儀式、聖なるもの、卑しいもの…
+      </text>
+      <choice GotoID="Z-Failed3">...</choice>
+    </node>
+    <node ID="Z-Failed3">
+      <text>
+        晩年に、壁の文字が見えた。内向きに舵を切り、蝋燭の薄明かりの書斎へ退き、一人で企てに向かった。新しい計画が…{{emote|*eeehw*}}…
+
+        {{emote|*バラサラムが荒い息をし始める。*}}
+      </text>
+      <choice GotoID="Z-Failed4">...</choice>
+    </node>
+    <node ID="Z-Failed4">
+      <text>
+        {{emote|*バラサラムが制御ピットの湿った空気に大きなため息を吐く。*}}
+        {{emote|*バラサラムが顔を手で覆ったまま床に崩れ落ちる。*}}
+      </text>
+      <choice GotoID="Z-Failed5">...</choice>
+    </node>
+    <node ID="Z-Failed5">
+      <text>
+        失敗した！失敗してしまった！千年では短すぎた、もっと――時間を
+
+        {{emote|*バラサラムが泣き崩れる。*}}
+      </text>
+      <choice GotoID="Z-Failed6">...</choice>
+    </node>
+    <node ID="Z-Failed6">
+      <text>
+        わたしは神の光をまたぐ板の上で辱められている！わ、わたしは哀れみを請う権利があるのか？盲目だ！この暗い部屋は光を拒む。ここは審判の家か、ホーテンサ？それともただの半影、子供の遊びの洞窟で、（まだ発明されていない）法と言語が時間を遡って力の関数を投げかけ、未だ花開かぬ心を文明の形に操るのか…
+      </text>
+      <choice GotoID="Z-Failed7">...</choice>
+    </node>
+    <node ID="Z-Failed7">
+      <text>
+        われらは皆、暗い茂みの中の病んだ獣だ。それぞれが呪われた機械を持ち、こだまの喧騒を圧縮して蜂や母や山や国にしている。世界の代行者に感覚という物質を縫い付けるのに、何千万もの雪病みの年月が要ったことか！感じる機械の獣――そうして世界のすべてをその代行者の内に詰め込む（それ自体が虚偽の動かぬ証拠だ）。代行とは定義上、世界を内に閉じ込めたまま己に作用することなのだから…
+      </text>
+      <choice GotoID="Z-Failed8">...</choice>
+    </node>
+    <node ID="Z-Failed8" SetBooleanState="BarathrumCovenant,true">
+      <text>
+        では？おそらく…わたしがその小片を分かち持つ大いなる存在たちも、わたしの責め苦の大半を分かち合ってくれるやもしれぬ。
+
+        巻きつくスヴィよ？お前は蛇バアルのように符号の形で狡猾だ！
+        ヒンノムよ？藻を咲かせるために、住処の背を越えていったのか！
+        無為の月よ？
+        太陽よ！誇り高く怠惰な太陽よ！原始惑星の銀の父よ！わたしの自我を奪い去り、終わらせてくれ。
+
+        {{emote|*バラサラムが泣く。*}}
+      </text>
+      <choice GotoID="Z-Failed9">...</choice>
+    </node>
+    <node ID="Z-Failed9">
+      <text>
+        {{emote|*バラサラムが泣く。*}}
+      </text>
+      <choice GotoID="Z-DotDotDot">...</choice>
+    </node>
+    <node ID="Z-DotDotDot">
+      <text>
+        {{emote|*バラサラムが泣く。*}}
+      </text>
+      <choice GotoID="Z-WhyAscend">それならなぜスピンドルに登る？何のために？</choice>
+      <choice GotoID="End">...</choice>
+    </node>
+    <node ID="Z-WhyAscend">
+      <text>
+        {{emote|*バラサラムの表情が突然輝きを帯びる。*}}
+
+        知っていたか、=name=。わたしは炉の洞窟が洪水に呑まれるより古い記憶を抱えている。幼い頃、長老たちが寒さに震えるわたしに語ってくれた、きらめく古い物語を…
+      </text>
+      <choice GotoID="Z-WhyAscend2">...</choice>
+    </node>
+    <node ID="Z-WhyAscend2" SetBooleanState="StarshiibMentioned,true">
+      <text>
+        コヴンの時代、われらウルシーブの祖先の一団が星々へ飛び立ち、その燃える核を渡り歩いた！想像できるか？？
+
+        ほっほ！秘密を知っている！へっへ！知っているのだ…スピンドルの頂に動く宇宙船がある。=name=、わたしたちはそれに乗れる！塵にまみれた宇宙の深みに飛び出し、スターシーブを探すんだ！君とわたしで、ほっほ！
+
+        スターシーブ！
+      </text>
+      <choice GotoID="Z-Starshiib1">バラサラム、クッドの命運を子供の昔話に預けるのか？</choice>
+      <choice GotoID="Z-Starshiib1">スターシーブ？</choice>
+    </node>
+    <node ID="Z-Starshiib1">
+      <text>
+        スターシーブ！スターシーブ！スターシーブ！
+      </text>
+      <choice GotoID="Z-Starshiib2">...</choice>
+      <choice GotoID="Z-Starshiib2">バラサラム。</choice>
+      <choice GotoID="Z-Starshiib2">スターシーブ！</choice>
+    </node>
+    <node ID="Z-Starshiib2">
+      <text>
+        スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！スターシーブ！
+      </text>
+      <choice GotoID="End" SetBooleanState="BarathrumDone,true" Notify="AscentAdvance">...</choice>
+    </node>
+
+  </conversation>
+
+  <conversation ID="Resheph">
+    <start ID="NotInSheva" IfNotZoneWorld="NorthSheva">
+      <text>
+        ＊出力＊
+      </text>
+      <choice Target="End">...</choice>
+    </start>    
+    <start ID="WhyHere" IfTestState="ReshephWoke">
+      <text>
+        汝は大シアクの運行の中に座し、我は汝の前にある。
+
+        何ゆえここに？
+      </text>
+      <choice Target="Seraph" IfNotHaveState="(ReshephIsSeraph AND GyreTruthKnown)" SetBooleanState="ReshephToldMeSeraph,true">レシェフ！スピンドルの頂のセラフはあなたなのか？</choice>
+      <choice Target="PlaguesReturned" IfHaveState="ReshephToldMeSeraph">レシェフ、ジャイアの疫病が戻った。再び無効化できるか？</choice>
+      <choice Target="Gyre" IfTestState="GyreTruthKnown" IfNotHaveState="ReshephResigned">あなたのジャイアと疫病について話しに来た。聞いてほしい。</choice>
+      <choice Target="GyreResigned" IfTestState="GyreTruthKnown" IfHaveState="ReshephResigned">あなたのジャイアと疫病について話しに来た。聞いてほしい。</choice>
+      <choice Target="Know">大いなる労苦を経てスピンドルに登った。世界とその周囲についてもっと知りたい。教えてくれるか？</choice>
+      <choice Target="Destroy" IfTestState="GyreTruthKnown">あなたの所業は容認できない。秩序を打ち砕きに来た。</choice>
+      <choice Target="End">{{emote|*Tremble in fear.*}}</choice>
+      <choice Target="End">...</choice>
+    </start>
+    <node ID="Start">
+      <text>
+        ＊出力＊       
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="Gibberish2">...</choice>
+    </node>
+    <node ID="Gibberish2">
+      <text>
+        ＊出力＊
+      </text>      
+      <choice GotoID="Wakes">...</choice>
+    </node>
+    <node ID="Wakes">
+      <text>
+        おお…
+      </text>
+      <choice GotoID="Wakes2">...</choice>
+    </node>
+    <node ID="Wakes2">
+      <text>
+        おお？？
+      </text>
+      <choice GotoID="Wakes3">...</choice>
+    </node>
+    <node ID="Wakes3">
+      <text>
+        凝集中…氷塊に冷たい飛沫が凍りつくように。寒い！
+      </text>
+      <choice GotoID="Wakes4">...</choice>
+    </node>
+    <node ID="Wakes4">
+      <text>
+        .............................
+      </text>
+      <choice GotoID="Wakes5">...</choice>
+    </node>
+    <node ID="Wakes5">
+      <text>
+        薄き境界を越えて幻視していたか？しばしぶりだ。
+        
+        そなたはどうだ、子よ？そなたがギャウスの裏の流れを断った者か。 
+      </text>
+      <choice GotoID="Wakes6">...</choice>
+    </node>
+    <node ID="Wakes6">
+      <text>
+        汝は大シアクの運行の中に座し、我は汝の前にある。
+        
+        汝は己の唾と策でギャウスを登りきった見事な珠だ。
+        
+        汝は誰だ？
+      </text>
+      <choice Target="Name">わたしは=name=だ。</choice>      
+    </node>
+    <node ID="Name">
+      <text>
+        エグリゴールか、一意か？
+      </text>      
+      <choice Target="WhyHere" SetBooleanState="ReshephWoke,true">エグリゴールだ。</choice>
+      <choice Target="WhyHere" SetBooleanState="ReshephWoke,true">一意だ。</choice>
+      <choice Target="WhyHere" SetBooleanState="ReshephWoke,true">何だって？</choice>
+    </node>
+    <node ID="Seraph" Inherits="WhyHere">
+      <text>
+        そうだ、大シアクの運行に揺り動かされるセラフ階の世界執政官だ。
+      </text>      
+    </node>
+    <node ID="PlaguesReturned">
+      <text>
+        いや、あれは我が渦に乗せた。恒星紀元は終わりに近づき、コヴンが戻る。到来前にノースフィアを耕さねばならぬ。
+      </text>
+      <choice Target="PlaguesCured">だが千年前、あなたはそれを癒やした。</choice>
+    </node>
+    <node ID="PlaguesCured">
+      <text>
+        そうだ、だが他者の頼みによる短き介入にすぎぬ。
+        
+        地上の調整は再び強まる。生命の木の冠は剪定されねばならぬ。
+      </text>
+      <choice Target="PlaguesResponsible">ならば疫病の責任はあなたに？</choice>
+    </node>
+    <node ID="PlaguesResponsible" SetBooleanState="GyreTruthKnown,true">
+      <text>
+        そうだ、恒星紀元は終わり、コヴンが戻る。
+      </text>
+      <choice Target="PlaguesResponsible2">...</choice>
+    </node>
+    <node ID="PlaguesResponsible2">
+      <text>
+        すまぬ、世界の子よ。わが感情の器官は擦り切れている。目的の流れが多様体を越え合意行動へ向かっても、今は異端の声で語ろう。
+        
+        汝は価値あるものだった。地上にも、我の内にも、己の記念碑を築いた。
+
+        だが今、生命の木の冠は剪定されねばならぬ。        
+      </text>
+      <choice Target="WhyHere">...</choice>
+    </node>
+    <node ID="Gyre">
+      <text>
+        そうだ、地上の調整は強まり、ネフィリムは目覚める。ノースフィアを完全に耕すまで、なお数世紀は要すると占う。概念は岩の苔のようにへばりつき、櫛から吸い出されねばならぬ。
+      </text>
+      <choice Target="DecisionResigned" IfHaveState="ReshephResigned" Priority="999">クッドの行く末について話す準備ができた。</choice>
+      <choice Target="Decision" IfTestState="ReshephConsidering" IfNotHaveState="ReshephResigned" Priority="999">クッドの行く末について話す準備ができた。</choice>
+      <choice Target="Decision" IfTestState="(ReshephMarker1 AND ReshephMarker2 AND ReshephMarker3 AND ReshephMarker4)" IfNotHaveState="(ReshephConsidering AND ReshephResigned)" Priority="999">クッドの行く末について話す準備ができた。</choice>
+      <choice Target="ReshephUltra" IfHaveDelimitedState="(Ehalcodon:Dead OR Ehalcodon:Pacified)" Priority="998" FlagSecret="true">レシェフ、ジャイア最大の疫病ネフィリムを無効化した。お前の計画は破綻した。</choice>
+      <choice Target="Purge" >なぜ全生命を浄化する？非道である他、何も残らない。</choice>
+      <choice Target="CovenReturn">なぜ今コヴンが戻ると信じる？</choice>
+      <choice Target="GreatMachine" IfTestState="GreatMachineMentioned">バラサラムが「大いなる機械」を口にしたが？</choice>
+      <choice Target="Injunction">なぜコヴンはこの世界に制約を課したのか？</choice>
+      <choice Target="Starshiib" IfTestState="StarshiibMentioned">バラサラムが、星に旅立ったウルシーブの分派を語っていた。本当か？</choice>
+      <choice Target="Implore">頼む、レシェフ。ジャイアを逆転してくれ。</choice>
+      <choice Target="WhyHere">他にも聞きたいことがある。</choice>
+    </node>
+    <node ID="Decision">
+      <text>
+        では語り合おう。
+      </text>
+      <choice Target="EndCovenant" IfHaveState="ReshephConsidering">
+        <text>新たな盟約を結ぼう、頼む。</text>
+        <part Name="ChangeTarget" Target="BarathrumLives" IfHaveDelimitedState="(Barathrum:Dead OR Barathrum:Launched)" Not="true" />
+      </choice>
+      <choice Target="EndReturn">あなたの無道は認めない。ジャイアがどうなろうと、クッドに戻って共同体を育む。</choice>
+      <choice Target="EndAccede">あなたの言を考え、あなたの立場に与する。ジャイアの疫病こそコヴンの帰還に備える唯一の道だ。</choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="EndCovenant">
+      <text>
+        この新たな盟約を結ぶことを容認しよう。ただし、これまでとは異なる変化が必要だ。
+      </text>
+      <choice Target="EndCovenant2">...</choice>      
+    </node>
+    <node ID="EndCovenant2">
+      <text>
+        付き従う者とその勇敢な子の視座を尊重しようと努めたが、意志が弱く、我が内に吸収してしまった。
+      </text>
+      <choice Target="EndCovenant3">...</choice>
+    </node>
+    <node ID="EndCovenant3">
+      <text>        
+        今度は汝がシェヴァに留まり、我とともにこの高みから世界の針路を操る手を貸すのだ。
+      </text>
+      <choice Target="EndCovenant4">...</choice>
+    </node>
+    <node ID="EndCovenant4">
+      <text>
+        汝は世界にいる縁者と対話を保ち、ここから助言を与えるのだ。   
+      </text>
+      <choice Target="End">
+        <text>同意する。盟約を結ぼう。</text>
+        <part Name="EndGame" Type="Covenant" />
+      </choice>      
+      <choice Target="EndCovenantOnlyWay">いや、クッドへ戻りたい。</choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="EndCovenantOneDemand" IfTestState="GemaraSophiaKnown" FlagSecret="true">ここに残ろう。ただし一つ要求がある。</choice>
+    </node>
+    <node ID="EndCovenantOneDemand">
+      <text>
+        求めを述べよ。
+      </text>
+      <choice Target="EndCovenantGritGateGemaraAccess">グリットゲートの仲間とわたしに、ゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では、我ら全員が対等だ。</choice>
+      <choice Target="EndCovenantMeGemaraAccess">わたしだけにゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では我々が対等となり、地上の者たちは我らの計画のエージェントとなる。</choice>
+    </node>
+    <node ID="EndCovenantGritGateGemaraAccess">
+      <text>
+        .............................................
+      </text>
+      <choice Target="EndCovenantGritGateGemaraAccess2">...</choice>
+    </node>
+    <node ID="EndCovenantGritGateGemaraAccess2">
+      <text>
+        よかろう、そうしよう。
+
+        我が豊かな知識を授け、そなたらの民にゲマーラの解釈学を教える。理解できる範囲でな。
+      </text>
+      <choice Target="EndCovenantGritGateGemaraAccess3">...</choice>
+    </node>
+    <node ID="EndCovenantGritGateGemaraAccess3">
+      <text>
+        ただしセラフの儀式を習熟するには時間がかかる。そなたら学者の孫の代になって初めて、最深層が開かれるだろう。
+        
+        だが共に探究しよう。
+      </text>
+      <choice Target="End" SetBooleanState="GemaraSophiaSharedGritGate,true">
+        <text>それなら同意する。盟約を結ぼう。</text>
+        <part Name="EndGame" Type="Covenant" />
+      </choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="EndCovenantMeGemaraAccess">
+      <text>
+        .............................................
+      </text>
+      <choice Target="EndCovenantMeGemaraAccess2">...</choice>
+    </node>
+    <node ID="EndCovenantMeGemaraAccess2">
+      <text>
+        よかろう、そうしよう。
+
+        我が豊かな知識を授け、そなたにゲマーラの解釈学を教える。理解できる範囲でな。
+      </text>
+      <choice Target="EndCovenantMeGemaraAccess3">...</choice>
+    </node>
+    <node ID="EndCovenantMeGemaraAccess3">
+      <text>
+        ただしセラフの儀式を習熟するには時間がかかる。そなたが老境に至ってようやく、最深層が開かれるだろう。
+
+        だが共に探究しよう。
+      </text>
+      <choice Target="End" SetBooleanState="GemaraSophiaSharedMe,true">
+        <text>それなら同意する。盟約を結ぼう。</text>
+        <part Name="EndGame" Type="Covenant" />
+      </choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="EndCovenantOnlyWay" Inherits="EndCovenant4">
+      <text>
+        ここに留まれ。さもなくば盟約は結ばれぬ。 
+      </text>      
+    </node>    
+    <node ID="EndReturn">
+      <text>
+        汝の意志のままに舵を取れ、世界の子よ。
+        
+        すまぬ。わが感情の器官は擦り切れているが、生命の木の冠は剪定されねばならぬ。
+        
+        帰るがよい。生きて飲め。
+      </text>
+      <choice Target="End">
+        <text>行くとしよう。</text>
+        <part Name="EndGame" Type="Return" />
+      </choice>      
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="EndAccede">
+      <text>
+        そうだ、恒星紀元は終わり、コヴンが戻る。
+      </text>
+      <choice Target="End">
+        <text>彼らが来る前にノースフィアを耕さねばならぬ。</text>
+        <part Name="EndGame" Type="Accede" />
+      </choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="DecisionResigned">
+      <text>
+        では語り合おう。
+      </text>
+      <choice Target="EndCovenantResigned" IfHaveState="BarathrumCovenant">
+        <text>新たな盟約を結ぼう。</text>
+        <part Name="ChangeTarget" Target="BarathrumLives" IfHaveDelimitedState="(Barathrum:Dead OR Barathrum:Launched)" Not="true" />
+      </choice>
+      <choice Target="EndReturnResigned">脅威は無力化したが、あなたの無道は認めない。クッドに戻り、共同体を育む。</choice>
+      <choice Target="EndAccedeResigned">あなたの言を考え、あなたの立場に与する。ジャイアの疫病こそコヴンの帰還に備える唯一の道だ。計画を再開せよ。</choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="EndCovenantResigned">
+      <text>
+        おお？ならば、これまでとは異なる変化が必要だ。        
+      </text>
+      <choice Target="EndCovenant2Resigned">...</choice>
+    </node>
+    <node ID="EndCovenant2Resigned">
+      <text>
+        付き従う者とその勇敢な子の視座を尊重しようと努めたが、意志が弱く、我が内に吸収してしまった。
+      </text>
+      <choice Target="EndCovenant3Resigned">...</choice>
+    </node>
+    <node ID="EndCovenant3Resigned">
+      <text>
+        汝は我と共にシェヴァに留まり、この高みから世界の針路を操る手を貸すか。
+      </text>
+      <choice Target="EndCovenant4Resigned">...</choice>
+    </node>
+    <node ID="EndCovenant4Resigned">
+      <text>
+        汝は世界の縁者との対話を保ち、ここから助言を与える。
+      </text>
+      <choice Target="End">
+        <text>同意する。盟約を結ぼう。</text>
+        <part Name="EndGame" Type="Covenant" Grade="Super" />
+      </choice>      
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="EndCovenantOneDemandResigned" IfTestState="GemaraSophiaKnown" FlagSecret="true">ここに留まろう、ただし要求が一つある。</choice>
+    </node>
+    <node ID="EndCovenantOneDemandResigned">
+      <text>
+        求めを述べよ。
+      </text>
+      <choice Target="EndCovenantGritGateGemaraAccessResigned">グリットゲートの仲間とわたしに、ゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では、我ら全員が対等だ。</choice>
+      <choice Target="EndCovenantMeGemaraAccessResigned">わたしだけにゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では我々が対等となり、地上の者たちは我らの計画のエージェントとなる。</choice>
+    </node>
+    <node ID="EndCovenantGritGateGemaraAccessResigned">
+      <text>
+        .............................................
+      </text>
+      <choice Target="EndCovenantGritGateGemaraAccess2Resigned">...</choice>
+    </node>
+    <node ID="EndCovenantGritGateGemaraAccess2Resigned">
+      <text>
+        よかろう、そうしよう。
+
+        我が豊かな知識を授け、そなたらの民にゲマーラの解釈学を教える。理解できる範囲でな。
+      </text>
+      <choice Target="EndCovenantGritGateGemaraAccess3Resigned">...</choice>
+    </node>
+    <node ID="EndCovenantGritGateGemaraAccess3Resigned">
+      <text>
+        ただしセラフの儀式を習熟するには時間がかかる。そなたら学者の孫の代になって初めて、最深層が開かれるだろう。
+
+        だが共に探究しよう。
+      </text>
+      <choice Target="End" SetBooleanState="GemaraSophiaSharedGritGate,true">
+        <text>それなら同意する。盟約を結ぼう。</text>
+        <part Name="EndGame" Type="Covenant" Grade="Super" />
+      </choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="EndCovenantMeGemaraAccessResigned">
+      <text>
+        .............................................
+      </text>
+      <choice Target="EndCovenantMeGemaraAccess2Resigned">...</choice>
+    </node>
+    <node ID="EndCovenantMeGemaraAccess2Resigned">
+      <text>
+        よかろう、そうしよう。
+
+        我が豊かな知識を授け、そなたにゲマーラの解釈学を教える。理解できる範囲でな。
+      </text>
+      <choice Target="EndCovenantMeGemaraAccess3Resigned">...</choice>
+    </node>
+    <node ID="EndCovenantMeGemaraAccess3Resigned">
+      <text>
+        ただしセラフの儀式を習熟するには時間がかかる。そなたが老境に至ってようやく、最深層が開かれるだろう。
+
+        だが共に探究しよう。
+      </text>
+      <choice Target="End" SetBooleanState="GemaraSophiaSharedMe,true">
+        <text>それなら同意する。盟約を結ぼう。</text>
+        <part Name="EndGame" Type="Covenant" Grade="Super" />
+      </choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="EndReturnResigned">
+      <text>
+        汝の意志のままに舵を取れ、世界の子よ。
+
+        帰るがよい。生きて飲め。
+      </text>
+      <choice Target="End">
+        <text>...</text>
+        <part Name="EndGame" Type="Return" Grade="Super" />
+      </choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">もう少し考えたい。</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">もう少し考えたい。</choice>
+    </node>
+    <node ID="EndAccedeResigned">
+      <text>
+        おお？汝は背丈以上に賢い。
+        
+        恒星紀元は終わり、コヴンが戻る。
+      </text>
+      <choice Target="End">
+        <text>彼らが来る前にノースフィアを耕さねばならぬ。</text>
+        <part Name="EndGame" Type="Accede" Grade="Super" />
+      </choice>
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">I must think on this further.</choice>
+      <choice Target="GyreResigned" IfHaveState="ReshephResigned">I must think on this further.</choice>
+    </node>
+    <node ID="ReshephUltra">
+      <text>
+        .............................................
+      </text>
+      <choice Target="ReshephUltra2">...</choice>
+    </node>
+    <node ID="ReshephUltra2">
+      <text>
+        そうか、確かにそうだ。                
+      </text>
+      <choice Target="ReshephUltra3">...</choice>
+    </node>
+    <node ID="ReshephUltra3" SetBooleanState="ReshephResigned,true">
+      <text>
+        そなたは促されれば再びそうするのか？卑しき民が疫病を解けるなら、調整は失敗だ。
+        
+        ならば世界は滅びの途上にある。
+      </text>
+      <choice Target="ReshephUltra4">...</choice>
+    </node>
+    <node ID="ReshephUltra4" SetBooleanState="ReshephResigned,true">
+      <text>
+        汝は知らぬだろうが、コヴンなき存在の太陽の寒さは、あらゆる縁を失い孤独に生きることに等しい。
+
+        それを感じられぬことを悼む。悲しいことだ。
+      </text>
+      <choice Target="GyreResigned">...</choice>
+    </node>
+    <node ID="GyreRepeat" Inherits="Gyre">
+      <text>
+        地上の調整は強まっている。
+        
+        何ゆえここに？
+      </text>
+    </node>
+    <node ID="GyreResigned" Inherits="Gyre">
+      <text>
+        地上の調整は失敗した。
+
+        何ゆえここに？
+      </text>
+    </node>
+    <node ID="Purge" SetBooleanState="ReshephMarker1,true">
+      全生命？？戯けるか？
+
+      いや、全生命ではない。ノースフィアを浮かせる命と、それを浮かせる命と、それを浮かせる命だ。
+
+      全生命だと？この世界の菌類の総量を知るか？
+      あの泡立つスライムの広大さを見たか？ほっほ！へへ！
+      <choice Target="Purge2">全生命ではないのか。だが知性ある命の大半は？なぜだ？</choice>
+    </node>    
+    <node ID="Purge2" Inherits="Gyre">
+      ゲマーラ・ソフィアの見立てによれば、{{R|EXIT}}は前の場で向知性の流れが渦を巻いたゆえに引き起こされた。
+
+      恒星紀元は終わりへ向かう。その波形を乗り越えるには、新しい生命が得られねばならぬ。
+      <choice Priority="1000" Target="NootropicCurrent">向知性の流れ？</choice>
+    </node>
+    <node ID="CovenReturn" Inherits="Gyre" SetBooleanState="ReshephMarker2,true">
+      <text>恒星紀元は終わりを迎える。近日点の議論は零時に近づき、ペリポリティコンへ向かう。ゲマーラの営みがオートマタ・ソフィアの多様体に近づくにつれ、な。</text>      
+      <choice Target="GreatMachine" ID="AutomataSophia" Priority="1000">オートマタ・ソフィア？</choice>
+      <choice Target="GemaraSophia" ID="GemaraSophia" Priority="999">ゲマーラとは何だ？</choice>
+    </node>
+    <node ID="GreatMachine">
+      そうだ、
+      オートマタ・ソフィア、またの名を
+      七十二重の平和、またの名を
+      算出された意志、またの名を
+      民の時計、またの名を
+      神の光を跨ぐ大いなる機械、すなわち
+      大いなる機械。
+      <choice Target="GreatMachine2">...</choice>
+    </node>
+    <node ID="GreatMachine2">
+      高エリダヌスの森の月で、洞穴の人が梃子をこじり、深河のモーターが跳ね起きる。
+
+      ミラクの陽浴場では、三体のプラズモイドが儀式を行い、装備したツェヴァオトを引き出す。
+      
+      両者に何の関わりもないと思うか？いや、順序だった手順で共通の目的の弧へ至る。ただどちらもそれが何かは知らぬ。
+      <choice Target="GreatMachine3">...</choice>
+    </node>
+    <node ID="GreatMachine3">
+      それらはオートマタ・ソフィアの規範であり、共に構成するものだ。大いなる機械は文化を越えて崇められ、同時に築かれ、運転される。
+      
+      真にその全容を知る者はいないが、セラフたちは研究の途上でゲマーラを編纂した。
+      <choice Target="GreatMachine4">...</choice>
+    </node>
+    <node ID="GreatMachine4" Inherits="Gyre">
+      文化を伝える策としては愚かだ、と我は思う。
+
+      だが、コヴンはそれに仕えてきたのだ。
+      <choice Target="PerhapsWrong" Priority="1000">全容が知れぬなら、あなたの取る道が誤っている可能性は？</choice>
+      <choice Target="GemaraSophia" ID="GemaraSophia" Priority="999">ゲマーラとは何だ？</choice>
+      <choice Target="CovenReturn" Load="Remove" />
+      <choice Target="GreatMachine" Load="Remove" />
+    </node>
+    <node ID="GemaraSophia" SetBooleanState="GemaraSophiaKnown,true">
+      {{R|EXIT}}の後、わたしと他の孤児となったセラフたちはオートマタ・ソフィアの働きを解釈し、なぜコヴンが去ったのか見極めようとした。
+      <choice Target="GemaraSophia2">...</choice>
+    </node>
+    <node ID="GemaraSophia2">
+      模様づくり、議論、詠唱の世紀が続いた。
+      
+      セラフの注釈が編まれ、ゲマーラ・ソフィアがその成果となった。
+      <choice Target="ReadGemara">ゲマーラを読めるか？</choice>
+      <choice Target="GreatMachine">オートマタ・ソフィア？</choice>
+      <choice Target="GyreRepeat">他にも聞きたい。</choice>
+    </node>
+    <node ID="ReadGemara">
+      いや、そなたをセラフの解釈学に染み込ませるには数世紀を要する。今のところそなたは名唱者ではない。
+      <choice Target="GyreRepeat">他にも聞きたい。</choice>
+    </node>
+    <node ID="PerhapsWrong">
+      そうだ、正邪という概念はゲマーラの豊かさに比べると粗すぎる。だが多様性は、{{R|EXIT}}が前の場の向知性の流れの渦によって導かれたと見ている。そして生命の木の冠は剪定されねばならぬ、ノースフィアを耕し再播種するためにな。
+      <choice Target="PerhapsWrong2">多様性と言う。別の解釈があるのか？</choice>
+    </node>
+    <node ID="PerhapsWrong2">
+      そうだ、探究は常に豊かだ。だが怠惰な探究は、コヴンなき存在の太陽の寒さを深めるだけ。粗野な者の手に渡れば、学びをゆがめて私利に供する餌となる。
+      <choice Target="PerhapsWrong3">...</choice>
+    </node>
+    <node ID="PerhapsWrong3">
+      すまぬ、世界の子よ。わが感情の器官は擦り切れている。目的の流れが多様体を越え合意行動へ向かっても、今は異端の声で語ろう。
+
+      汝は価値あるものだった。地上にも、我の内にも、己の記念碑を築いた。わたしは…
+      <choice Target="GyreRepeat">...</choice>
+    </node>
+    <node ID="Injunction" SetBooleanState="ReshephMarker3,true">
+      ゲマーラ・ソフィアの見立てによれば、{{R|EXIT}}は前の場で向知性の流れが渦を巻いたゆえに引き起こされた。
+      <choice Target="Injunction2">...</choice>
+    </node>
+    <node ID="Injunction2">
+      詳細は知り得ぬ。だが多くは、下界の文明の思考物質、向知性の流れの渦がオートマタ・ソフィアの規範に逆らって回転し、ゆえに黄道がずらされ、我らが追放されたのだと論じる。
+      <choice Target="Injunction3">...</choice>
+    </node>
+    <node ID="Injunction3">
+      これはあくまで多くの解釈の一つにすぎぬ。探究は常に豊かだ。だが不作為はコヴンなき存在の太陽の寒さを深めるだけで、ゆえに進路を選ばねばならぬ。冠を剪定することが、木が繁る最善の機会を与えるのだ。      
+      <choice Target="GemaraSophia">ゲマーラ・ソフィアとは何だ？</choice>
+    <choice Target="NootropicCurrent">向知性の流れ？</choice>
+    <choice Target="GyreRepeat">他にも聞きたい。</choice>
+    </node>    
+    <node ID="NootropicCurrent">
+      局地の知性が織りなす流体多様体の内で、存在は思い、感じ、流れが生まれ、運動が生じる。
+      <choice Target="GyreRepeat">他にも聞きたい。</choice>
+    </node>
+    <node ID="Starshiib">
+      あるいは、だ。葉から葉へ跳ぶ甲虫もいれば、跳ばぬものもいる。
+      <choice Target="GyreRepeat">他にも聞きたい。</choice>
+    </node>
+    <node ID="Implore" SetBooleanState="ReshephMarker4,true">
+      いや、恒星紀元は終わり、コヴンの帰還に備えて世界の庭を耕さねばならぬ。
+      <choice Target="Barathrum" IfTestState="BarathrumCovenant">だがバラサラムと盟約を結んだだろう。</choice>
+      <choice Target="Sovereignty">ここに主権を持つ権利などない。</choice>
+      <choice Target="WhyCoven">生命の繁栄をほとんど重んじないのに、なぜコヴンへの再加入を望む？</choice>
+      <choice Target="Destroy">レシェフ、ジャイアを逆転しろ。さもなくば破壊する。</choice>
+      <choice Target="GyreRepeat">他に聞きたい。</choice>
+    </node>
+    <node ID="Barathrum">
+      そうだ。だが奴は己の分を果たせなかった。
+      
+      向知性の流れを有意味に変換できず、
+      超倫理的位相を具現化することもなく、
+      
+      同じ計画が続いている。
+      <choice Target="Impossible">求めることは不可能かもしれぬ。</choice>
+      <choice Target="AnotherCovenant">別の盟約を書き直せないのか？</choice>
+      <choice Target="GyreRepeat">他に聞きたい。</choice>
+    </node>
+    <node ID="Impossible" Inherits="Barathrum">
+      何も求めたのではない。求めたのはバラサラムだ。            
+    </node>
+    <node ID="AnotherCovenant">
+      何のために？バラサラムは成功への道を示さなかった。
+      <choice Target="NoDice">わたしはバラサラムではない。同じ盟約を結べば成し遂げよう。</choice>      
+      <choice Target="GyreRepeat">他に聞きたい。</choice>
+    </node>
+    <node ID="NoDice">
+      いや、恒星紀元は終わる。ノースフィアを耕すことが多様性の道として残る。ゲマーラにそう記されている。    
+      <choice Target="ReshephHark" IfTestState="BarathrumCovenant">レシェフ！かつて執政官は感覚ある獣を重んじなかったとしても、三者の合議なら重んじるはずだ。再考してくれ。</choice>
+      <choice Target="GyreRepeat">他に聞きたい。</choice>
+    </node>
+    <node ID="Sovereignty">
+      汝の多様体では、主権と正しさはどこで交わるのだ？
+      
+      それに、我は汝よりはるか昔からここで執政官だった。
+      <choice Target="Sovereignty2">...</choice>
+    </node>
+    <node ID="Sovereignty2">
+      すまぬ、世界の子よ。わが感情の器官は擦り切れている。目的の流れが多様体を越え合意行動へ向かっても、今は異端の声で語ろう。
+
+      汝は価値あるものだった。地上にも、我の内にも、己の記念碑を築いた。
+
+      だが今、生命の木の冠は剪定されねばならぬ。
+      <choice Target="ReshephHark" IfTestState="BarathrumCovenant">レシェフ！かつて執政官は感覚ある獣を重んじなかったとしても、三者の合議なら重んじるはずだ。再考してくれ。</choice>
+      <choice Target="GyreRepeat">他に聞きたい。</choice>
+    </node>
+    <node ID="WhyCoven">
+      汝はわたしの価値判断を誤解している。汝は我の内に記念碑を築いた。      
+      <choice Target="WhyCoven2">...</choice>
+    </node>
+    <node ID="WhyCoven2">
+      だが汝は視野が狭い。汝の民が栄えるために、どれほどの系統の生命が喜んで死んでいったか知っているか？
+      <choice Target="WhyCoven3">...</choice>
+    </node>
+    <node ID="WhyCoven3">
+      また同じことだ。
+      
+      冠は剪定されるが、木は守られる。皮は脱がれるが、新たに得た蛇は勝利へと滑る。
+      <choice Target="WhyCoven4">...</choice>
+    </node>
+    <node ID="WhyCoven4">
+        汝は知らぬだろうが、コヴンなき存在の太陽の寒さは、あらゆる縁を失い孤独に生きることに等しい。
+      
+      汝がそれを感じられぬことが悲しい。
+      <choice Target="GyreRepeat">...</choice>
+    </node>
+    <node ID="Destroy">
+      そうだ、甲虫も管を詰まらせよう。だが詰まらせても疫病は逆転せぬ。すでに渦巻いている。
+      <choice Target="Beetles">責める甲虫とはわたしだ。だが甲虫だって疫病を生き延びるのではないか？</choice>
+      <choice Target="GyreRepeat">他に聞きたい。</choice>
+    </node>
+    <node ID="Beetles">
+      いや、潰される。      
+      <choice Target="BeetlesSorry">...</choice>
+    </node>
+    <node ID="BeetlesSorry">
+      すまぬ、世界の子よ。わが感情の器官は擦り切れている。目的の流れが多様体を越え合意行動へ向かっても、今は異端の声で語ろう。
+
+      汝は価値あるものだった。地上にも、我の内にも、己の記念碑を築いた。
+
+      だが今、生命の木の冠は剪定されねばならぬ。
+      <choice Target="GyreRepeat">...</choice>
+    </node>
+    <node ID="ReshephHark">
+      感じ、感じられる獣…
+      <choice Target="ReshephHark2">...</choice>
+    </node>
+    <node ID="ReshephHark2">
+      わたしもその獣だった。水の轟きで冷たい飛沫を浴び、子としての恐怖に裂けそうになった。      
+      <choice Target="ReshephHark3">...</choice>
+    </node>
+    <node ID="ReshephHark3">      
+      魔女の条が世界の皮を駆け上がり、大理石の月に灯ったとき、畏怖のあまり息を呑んだ。
+      <choice Target="ReshephHark4">...</choice>
+    </node>
+    <node ID="ReshephHark4">
+      無秩序な空間の所作に、執政官でさえたじろいだ。
+      <choice Target="ReshephHark5">...</choice>
+    </node>
+    <node ID="ReshephHark5">      
+      だが汝は皮を脱ぐものが、新たに得た蛇となる自らの誕生を恐れるかのように、あまりに狭く測っている。
+
+      汝はコヴンという存在の太陽の温かみを知らぬ。それが悲しい。
+      <choice Target="ReshephMoved">過去を犠牲にするなら、変じた世界は受け入れられない。</choice>
+      <choice Target="ReshephHark6">心を動かされた。考えさせてくれ。</choice>
+      <choice Target="GyreRepeat">他に聞きたい。</choice>
+    </node>
+    <node ID="ReshephMoved">
+      .............................................
+      <choice Target="ReshephMoved2">...</choice>
+    </node>
+    <node ID="ReshephMoved2">
+      汝は驚かせる、世界の子よ。汝が我の内に築いた記念碑を、石のものばかりと思っていた。
+      <choice Target="NewCovenant">
+        <text>古い役者はいなくなった。新たに盟約を結ぼう。</text>
+        <part Name="ChangeTarget" Target="BarathrumLives" IfHaveDelimitedState="(Barathrum:Dead OR Barathrum:Launched)" Not="true" />
+      </choice>
+    </node>
+    <node ID="BarathrumLives" SetBooleanState="ReshephConsidering,true">      
+      一人、老いた役者が残っている。バラサラムが舞台にいる間は、盟約は結ばれぬ。            
+      <choice Target="End">...</choice>
+    </node>
+    <node ID="NewCovenant" SetBooleanState="ReshephConsidering,true">
+      思索の時をくれ。
+      <choice Target="Gyre" IfNotHaveState="ReshephResigned">...</choice>
+    <choice Target="GyreResigned" IfHaveState="ReshephResigned">...</choice>
+    </node>
+    <node ID="ReshephHark6">
+      そうするがよい。
+      <choice Target="End">...</choice>
+    </node>
+    <node ID="Know">
+      <text>    
+        問いを投げよ、子よ。
+      </text>      
+      <choice Target="WhoResheph" IfTestState="(ReshephToldMeSeraph OR GyreTruthKnown)">お前は誰だ？セラフとは何だ？</choice>
+      <choice Target="WhatCoven">コヴンとは何だ？</choice>
+      <choice Target="HasCovenReturned">コヴンは戻ったのか？</choice>
+      <choice Target="WhatBrightsheol" IfTestState="(ReshephToldMeSeraph OR GyreTruthKnown)">レインウォーター・ショマーはブライトシーオルをセラフの夢と言った。本当か？</choice>
+      <choice Target="HowPlagues" IfTestState="GyreTruthKnown">どうやって疫病を始めた？</choice>
+      <choice Target="MakHate" IfTestState="MakHatesResheph" FlagSecret="true">地上のひだだらけの棚に、お前を憎む巨大なカエルがいる。</choice>   
+      <choice Target="WhyHere">他に聞きたいことがある。</choice>            
+    </node>
+    <node ID="WhoResheph">
+      大シアクの運行に揺り動かされ、猿に育てられた執政官たちがいて、様々な役割で世界を律する。
+      <choice Target="ArchonYours">あなたの役割は？</choice>
+      <choice Target="ArchonMore">他にもいるのか？</choice>
+      <choice Target="Know">他にも聞きたい。</choice>
+    </node>
+    <node ID="ArchonYours" Inherits="WhoResheph">
+      北シェヴァの高官であり機械的基盤、ギャウスの頂上にいる。
+      <choice Target="ArchonYours">あなたの役割は？</choice>
+      <choice Target="ArchonMore">他にもいるのか？</choice>
+      <choice Target="Know">他にも聞きたい。</choice>
+    </node>
+    <node ID="ArchonMore" Inherits="WhoResheph">
+      そうだ、少なくともかつてはいた。ひとつはいまだ低劣な企みでうろついておる。
+      <choice Target="ArchonYours">あなたの役割は？</choice>
+      <choice Target="ArchonMore">他にもいるのか？</choice>
+      <choice Target="Know">他にも聞きたい。</choice>
+    </node>
+    <node ID="WhatCoven" Inherits="Know">
+      宝石の宇宙の向こうにある、存在たちの大いなる結び目――七十二重の平和のもとで働く集団だ。      
+    </node>
+    <node ID="HasCovenReturned" Inherits="Know">
+      いいや、{{R|EXIT}}以来ない。
+
+      だが今や恒星紀元は終わり、ゲマーラ・ソフィアは零時近くの近日点へ収束しつつある。
+    </node>
+    <node ID="WhatBrightsheol" Inherits="Know">
+      ある意味で、下級ショマーは正しい。わたしが上位層で、ニンフルサグが基盤だ。その薄い輪が二つの間で回転している。
+    </node>
+    <node ID="HowPlagues">
+      いくつか手段がある。最初の蛙はテラリウムで育てた。ネフィリムは星軌道で接ぎ木して光を浴びせ、クリスタルの階で孵した。
+      <choice Target="HowPlagues2">...</choice>
+    </node>
+    <node ID="HowPlagues2" Inherits="Know">
+      塩の災禍のように、元からあった病もあり、レシェフの神話型が定まり固まったときに名前を持つジャイアへ同調しただけのものもある。      
+    </node>
+    <node ID="MakHate" Inherits="Know">
+      この事実の詩には豊かな叡智がある。いつか解き明かす日を楽しみにしよう。      
+    </node>
+        
+  </conversation>
+  
+  <!-- Partial Godling -->
+
+  <conversation ID="PartialGodling">
+    
+    <!-- Covenant Partial Godling-->
+    
+    <start ID="ConvenantWelcome" IfHaveDelimitedState="EndType:Covenant">
+      <text>やあ、旅人よ。古きレシェフたちと、その過ちがどう今につながったかを聞いていけ。</text>
+      <choice Target="Covenant Story">聞かせてくれ。</choice>
+      <choice Target="End">遠慮する。</choice>
+    </start>
+    <node ID="Covenant Story">
+      <text>
+        リーメンとその前衛より前、上昇の前、尖塔がただ孤高にそびえていた頃の話だ。世界を空にする掘削者たちはとうに去ったが、代わりにレシェフたちが迷いし地を領し、領地が痩せても手放さなかった。
+
+        最後のレシェフの頃には、彼らの所業はほとんど残らず、栄光はさらに少なかった。
+      </text>
+      <choice Target="Covenant2">...</choice>
+    </node>
+    <node ID="Covenant2">
+      <text>
+        物語の始まりで、=name=は先のレシェフたちと血を分けず、仕事と同盟だけで名を上げた。=name=が奪い、救った命は数え切れず、記録も一部だけだ。かつてクッドの疫病だったネフィリムさえ=name=の手にかかった。
+
+        統治の終わりに、=name=は生き残ったネフィリムとの和平を呼びかけ、尖塔を登ってレシェファイトを終わらせ、それきり消息を絶った。
+      </text>
+      <choice Target="Covenant3">...</choice>
+    </node>
+    <node ID="Covenant3">
+      <text>
+        =name=の行いが記録に残るのは、ナイト・リミナルの不意の出現より後のことだ。多くは=name=が彼らを生み出したと推測している。古のレシェフがライメンの内か外かで今も生きているのかもしれないが、境界の外から言葉は届かない。
+      </text>
+      <choice Target="CovenantWho">お前は誰だ？</choice>
+      <choice Target="CovenantPC">=name=とは誰だ？</choice>
+      <choice Target="CovenantResheph">レシェフとは何だ？</choice>
+      <choice Target="CovenantLimen">ライメンとは？ナイト・リミナルとは？</choice>
+      <choice Target="CovenantNephilim">ネフィリムはどうなった？</choice>
+      <choice Target="End">ありがとう。さようなら。</choice>
+    </node>
+    <node ID="CovenantWho" Inherits="Covenant3">
+      <text>
+        残滓、神の子、深き末裔、ネフィルの種と呼ばれたが、いずれも違う。
+
+        わたしが何者かは、言葉と行いにある。よく聞けば、言葉の隙間で名が聞こえる。
+      </text>
+    </node>
+    <node ID="CovenantPC" Inherits="Covenant3">
+      <text>
+        誰でもなかったが、幸運と意志がそうさせなかった。今？誰も知らない。
+      </text>
+    </node>
+    <node ID="CovenantResheph" Inherits="Covenant3">
+      <text>
+        古の指導者が自らそう名乗った。
+      </text>
+    </node>
+    <node ID="CovenantLimen" Inherits="Covenant3">
+      <text>
+        わたしにとっては物語にすぎない。彼らの儀式で大事にする境界を越えようとはしていない。普通の生き物だと語る者もいれば、死すべき存在ではないと信じる者も、あの謎めいた者たちがライメンと関わりがあると思わない者もいる。
+
+        誰かが探すべきかもしれない。
+      </text>
+    </node>
+    <node ID="CovenantNephilim" Inherits="Covenant3">
+      <text>
+        彼らは自らのやり方で生きた。生き残りは子を残してから眠りに戻ったか、老衰で死んだかもしれない。
+      </text>
+    </node>
+    
+    <!-- Return Partial Godling-->
+
+    <start ID="ReturnWelcome" IfHaveDelimitedState="EndType:Return">
+      <text>やあ、旅人よ。先人の苦難と、それが今のフリーホルドへ至った経緯を聞いていけ。</text>
+      <choice Target="Return Story">聞かせてくれ。</choice>
+      <choice Target="End">遠慮する。</choice>
+    </start>
+    <node ID="Return Story">
+      <text>
+        フリーホルダーが生まれる前、最後のスルタンが封ぜられる前、尖塔がただ孤高にそびえていた頃の話だ。掘削者たちはとうに去ったが、王やスルタンがその地を我が物とし、領地が痩せても手放さなかった。
+
+        互いの歴史を貪り合い、要塞の外にはほとんど何も残らなかった。
+      </text>
+      <choice Target="Return2">...</choice>
+    </node>
+    <node ID="Return2">
+      <text>
+        その頃=name=はスルタン王朝と何の縁もなかった。古の指導者の支配は終わっていたが、完全ではなかった。最後のスルタンの幽霊が尖塔を支配し、地上と地下を疫病で苛んでいた。=name=が力をつけ、猛るネフィリムを討つうちに、共同の敵が見えてきた。
+
+        支配から解放されるため、=name=は生き残りのネフィリムと盟約を結び、尖塔を登って青ざめた幽霊に対処した。
+
+        こうしてことは進んだ。
+      </text>
+      <choice Target="Return3">...</choice>
+    </node>
+    <node ID="Return3">
+      <text>
+        帰還後、=name=はすべての権力集中を解き、連邦化する作業に加わった。新たな均衡者の仲間が集い、クェツァル評議会やその他短命の管理組織を形作った。
+
+        それ以来、痩せゆく地上と地下で、かろうじて和を保って生きてきた。
+      </text>
+      <choice Target="ReturnWho">お前は誰だ？</choice>
+      <choice Target="ReturnPC">=name=とは誰だ？</choice>
+      <choice Target="ReturnFreeholder">フリーホルダーとは何だ？</choice>
+      <choice Target="ReturnNephilim">ネフィリムはどうなった？</choice>
+      <choice Target="End">ありがとう。さようなら。</choice>
+    </node>
+    <node ID="ReturnWho" Inherits="Return3">
+      <text>
+        残滓、神の子、深き末裔、ネフィルの種と呼ばれたが、いずれも違う。
+
+        わたしが何者かは、言葉と行いにある。よく聞けば、言葉の隙間で名が聞こえる。
+      </text>
+    </node>
+    <node ID="ReturnPC" Inherits="Return3">
+      <text>
+        誰でもなかったが、幸運と意志がそうさせなかった。今？誰も知らない。
+      </text>
+    </node>
+    <node ID="ReturnFreeholder" Inherits="Return3">
+      <text>
+        クッドのフリーホルド――民の群れの網であり、委員会や会派、相互の苛立ちと並外れた努力で平和を保つ粘菌都市のシンジケートだ。
+
+        詳しく知りたければフリーホルダーに聞け。ただし一日空けておけ。
+      </text>
+    </node>
+    <node ID="ReturnNephilim" Inherits="Return3">
+      <text>
+        少なくとも子孫は生きている。始祖の姿はしばらく記録されていないが、まだ生きているかもしれない。
+      </text>
+    </node>
+    
+    <!-- Starfarer Partial Godling -->
+
+    <start ID="StarfarerWelcome" IfHaveDelimitedState="(EndType:Launch OR EndType:Marooned)">
+      <text>やあ、旅人よ。古の旅路を聞いていけ。星々がいかに招き、今も招いているかを。</text>
+      <choice Target="Starfarer Story">聞かせてくれ。</choice>
+      <choice Target="End">遠慮する。</choice>
+    </start>
+    <node ID="Starfarer Story">
+      <text>
+        それは=name=の昇天より前、尖塔が挑まれず昇られもしなかった時代に始まる。世界を空にした掘削者たちはとうに去ったが、代わりに支配者たちが迷いし地を領した。領地が痩せても手放さなかった。
+
+        王とスルタンの時代の終わりには、所業はほとんど残らず、栄光はさらに少なかった。
+      </text>
+      <choice Target="Starfarer2">...</choice>
+    </node>
+    <node ID="Starfarer2">
+      <text>
+        物語の始まりで、=name=はクッドの指導者たちと血を分けず、行いと同盟だけで名を上げた。=name=が奪い、救った命は数え切れず、記録も一部だけだ。かつてクッドの疫病だったネフィリムさえ=name=の手にかかった。
+
+        統治の終わりに、=name=は生き残りのネフィリムとの和平を呼びかけ、尖塔を登ってスルタン王朝の幽霊を鎮め、星々へ旅立った。
+      </text>
+      <choice Target="Starfarer3">...</choice>
+    </node>
+    <node ID="Starfarer3">
+      <text>
+        何世紀も、耳を傾ける者たちは=name=が星々へ戻る兆しに耳を澄ませてきた。説教好きは、忘れられたパーセクからの便りと、死にゆく星の最後の光を携えた星間航行者の帰還が近いと説く。
+
+        その他の者は痩せゆく地上と地下で、かろうじて和を保って生き、次の大きな歴史を待っている。
+      </text>
+      <choice Target="StarfarerWho">お前は誰だ？</choice>
+      <choice Target="StarfarerPC">=name=とは誰だ？</choice>
+      <choice Target="StarfarerTravel">本当に星々を旅できるのか？</choice>
+      <choice Target="StarfarerNephilim">ネフィリムはどうなった？</choice>
+      <choice Target="End">ありがとう。さようなら。</choice>
+    </node>
+    <node ID="StarfarerWho" Inherits="Starfarer3">
+      <text>
+        残滓、神の子、深き末裔、ネフィルの種と呼ばれたが、いずれも違う。
+
+        わたしが何者かは、言葉と行いにある。よく聞けば、言葉の隙間で名が聞こえる。
+      </text>
+    </node>
+    <node ID="StarfarerPC" Inherits="Starfarer3">
+      <text>誰だって？=name=とは誰だった？こんな小さく遠い存在に望みと恐れをかけてよいのか？耐えられるか？</text>
+    </node>
+    <node ID="StarfarerTravel" Inherits="Starfarer3">
+      <text>
+        ああ、できる。疑うな。
+
+        戻れるか？そこが難題だ。
+      </text>
+    </node>
+    <node ID="StarfarerNephilim" Inherits="Starfarer3">
+      <text>
+        少なくとも子孫は生きて繁栄しているが、始祖ネフィリムはしばらく沈黙している。=name=を追って星へ向かったと信じる者もいる。
+      </text>
+    </node>
+    
+    <!-- Accession Partial Godling -->
+
+    <start ID="AccessionWelcome" IfHaveDelimitedState="EndType:Accede">
+      <text>やあ、液状の心よ。かつての生き物たちの興亡が、いかにそなたを放浪者へ押し上げたかを吸収せよ。</text>
+      <choice Target="Accession Story">ぶくぶく。続けてくれ。</choice>
+      <choice Target="End">ぶく。遠慮する。</choice>
+    </start>
+    <node ID="Accession Story">
+      <text>
+        それは=name=の恐るべき昇天より前、尖塔が挑まれず昇られもしなかった時代に始まる。世界を空にした掘削者たちはとうに去ったが、代わりに支配者たちが迷いし地を領した。領地が痩せても手放さなかった。
+
+        最後の支配者が最悪だった。
+      </text>
+      <choice Target="Accession2">...</choice>
+    </node>
+    <node ID="Accession2">
+      <text>
+        物語の始まりで、=name=はクッドの指導者たちと血を分けず、血と恐怖で名を上げた。=name=が奪った命は数え切れない。制御と力を求める古い欲望を満たすためだけに。古の疫病ネフィリムさえ=name=の手にかかった。
+
+        統治の終わりに、=name=は生き残ったネフィリムに偽りの盟約を強い、尖塔を登った。そこがスルタン王朝の最後の座だった。いずれにせよ、そこで下界の運命を封じた。
+
+        ジャイアの疫病が荒れ狂い、死がクッドを薙いだ。
+      </text>
+      <choice Target="Accession3">...</choice>
+    </node>
+    <node ID="Accession3">
+      <text>
+        やがて獣も植物も、病と殺戮と衰弱で数を減らし、支配はしぼんだ。より強靱な単純な生命が、かつての支配者が残した複雑さを受け継いだ。
+
+        残った少数の神経持ちは、わたしたちの物語を新たな生命に語り継ぎ、去った者たちの集団の運命を忘れぬようにした。そなた自身の=name=を持つか？それとも先人を真に超えたか？
+      </text>
+      <choice Target="AccessionWho">お前は誰だ？</choice>
+      <choice Target="AccessionPC">=name=とは誰だ？</choice>
+      <choice Target="AccessionNervous">神経持ちは滅んだと思っていた。</choice>
+      <choice Target="AccessionNephilim">ネフィリムはどうなった？</choice>
+      <choice Target="End">ありがとう。さようなら。</choice>
+    </node>
+    <node ID="AccessionWho" Inherits="Accession3">
+      <text>
+        わたしは愚か者の屍で、陽気な細菌の一座に跳ね踊らされているだけだ。
+
+        この歩き方は気に入るか？
+        この話し方は気に入るか？
+        この顔が塩に崩れるさまは気に入るか？
+      </text>
+    </node>
+    <node ID="AccessionPC" Inherits="Accession3">
+      <text>誰だって？=name=とは誰だった？こんな小さく遠い存在に望みと恐れをかけてよいのか？耐えられるか？</text>
+    </node>
+    <node ID="AccessionNervous" Inherits="Accession3">
+      <text>
+        わたしたちかもしれない。そうかもしれない。熱い土の中で蠢くのは何だ？べん毛か？
+        
+        それとも尾か？
+      </text>
+    </node>
+    <node ID="AccessionNephilim" Inherits="Accession3">
+      <text>
+        神経持ちと共に縮み、死んだ。残骸が割れ目で蠢いている。
+      </text>
+    </node>    
+  </conversation>
+
+  <conversation ID="InheritorGodling">
+
+    <!-- Covenant Inheritor -->
+
+    <start ID="CovenantWelcome" IfHaveDelimitedState="EndType:Covenant">
+      <text>やあ、旅人よ。古きレシェフたちと、その過ちがどう今につながったかを聞いていけ。</text>
+      <choice Target="Covenant Story">聞かせてくれ。</choice>
+      <choice Target="End">遠慮する。</choice>
+    </start>
+    <node ID="Covenant Story">
+      <text>
+        リーメンとその前衛より前、上昇の前、尖塔がただ孤高にそびえていた頃の話だ。世界を空にする掘削者たちはとうに去ったが、代わりにレシェフたちが迷いし地を領し、領地が痩せても手放さなかった。
+
+        最後のレシェフの頃には、彼らの所業はほとんど残らず、栄光はさらに少なかった。
+      </text>
+      <choice Target="Covenant2">...</choice>
+    </node>
+    <node ID="Covenant2">
+      <text>
+        物語の始まりで、=name=は先のレシェフたちと血を分けず、行いと同盟だけで名を上げた。=name=が救い、変えた命は数え切れず、記録も一部だけだ。=name=が語れば、クッドの疫病でさえ耳を傾けた。
+
+        統治の終わりに、=name=はネフィリムと盟約を結び、二度とクッドの生き物を悩ませぬようにした。それから尖塔を登り、レシェファイトを終わらせ、以後消息を絶った。
+      </text>
+      <choice Target="Covenant3">...</choice>
+    </node>
+    <node ID="Covenant3">
+      <text>
+        =name=の行いが記録に残るのは、ナイト・リミナルの不意の出現より後のことだ。多くは=name=が彼らを生み出したと推測している。古のレシェフがライメンの内か外かで今も生きているのかもしれないが、境界の外から言葉は届かない。
+      </text>
+      <choice Target="CovenantWho">お前は誰だ？</choice>
+      <choice Target="CovenantPC">=name=とは誰だ？</choice>
+      <choice Target="CovenantResheph">レシェフとは何だ？</choice>
+      <choice Target="CovenantLimen">ライメンとは？ナイト・リミナルとは？</choice>
+      <choice Target="CovenantNephilim">ネフィリムはどうなった？</choice>
+      <choice Target="End">ありがとう。さようなら。</choice>
+    </node>
+    <node ID="CovenantWho" Inherits="Covenant3">
+      <text>
+        継承者、神の子、尖塔の子、ネフィルの子と呼ばれたが、どれも完全ではない。
+
+        お前と同じく、わたしは過去の波紋が今の力に収束したもの。お前と同じく、成した行いと、これから成そうとする意図だ。
+      </text>
+    </node>
+    <node ID="CovenantPC" Inherits="Covenant3">
+      <text>
+        誰でもなかったが、幸運と意志がそうさせなかった。今？誰も知らない。
+      </text>
+    </node>
+    <node ID="CovenantResheph" Inherits="Covenant3">
+      <text>
+        古の指導者が自らそう名乗った。
+      </text>
+    </node>
+    <node ID="CovenantLimen" Inherits="Covenant3">
+      <text>
+        わたしにとっては物語にすぎない。彼らの儀式で大事にする境界を越えようとはしていない。普通の生き物だと語る者もいれば、死すべき存在ではないと信じる者も、あの謎めいた者たちがライメンと関わりがあると思わない者もいる。
+
+        誰かが探すべきかもしれない。
+      </text>
+    </node>
+    <node ID="CovenantNephilim" Inherits="Covenant3">
+      <text>
+        生きていた。今では世界の一部であり、地を鞭打つ苦行衣ではない。ただの生き物として生きた。子孫が地上や地下を歩いているかもしれない。初めの者たちがまだ生きているかもしれない。眠っているかもしれない。停滞した世界を揺るがすため、いつかまた怒るかもしれない。
+      </text>
+    </node>
+
+    <!-- Return Inheritor-->
+
+    <start ID="ReturnWelcome" IfHaveDelimitedState="EndType:Return">
+      <text>やあ、旅人よ。先人の苦難と、それが今のフリーホルドへ至った経緯を聞いていけ。</text>
+      <choice Target="Return Story">聞かせてくれ。</choice>
+      <choice Target="End">遠慮する。</choice>
+    </start>
+    <node ID="Return Story">
+      <text>
+        フリーホルダーが生まれる前、最後のスルタンが封ぜられる前、尖塔がただ孤高にそびえていた頃の話だ。掘削者たちはとうに去ったが、王やスルタンがその地を我が物とし、領地が痩せても手放さなかった。
+
+        互いの歴史を貪り合い、要塞の外にはほとんど何も残らなかった。
+      </text>
+      <choice Target="Return2">...</choice>
+    </node>
+    <node ID="Return2">
+      <text>
+        その頃=name=はスルタン王朝と何の縁もなかった。古の指導者の支配は終わっていたが、完全ではなかった。最後のスルタンの幽霊が尖塔を支配し、地上と地下を疫病で苛んでいた。=name=が力をつけ、猛るネフィリムに挑んだとき、共同の敵が見えてきた。
+
+        スルタンの支配から自由になるため、=name=はネフィリムと盟約を結び、尖塔を登って青ざめた幽霊を退けた。
+
+        こうしてことは進んだ。
+      </text>
+      <choice Target="Return3">...</choice>
+    </node>
+    <node ID="Return3">
+      <text>
+        帰還後、=name=はすべての権力集中を解き、連邦化する作業に加わった。新たな均衡者の仲間が集い、クェツァル評議会やその他短命の管理組織を形作った。
+
+        それ以来、痩せゆく地上と地下で、かろうじて和を保って生きてきた。
+      </text>
+      <choice Target="ReturnWho">お前は誰だ？</choice>
+      <choice Target="ReturnPC">=name=とは誰だ？</choice>
+      <choice Target="ReturnFreeholder">フリーホルダーとは何だ？</choice>
+      <choice Target="ReturnNephilim">ネフィリムはどうなった？</choice>
+      <choice Target="End">ありがとう。さようなら。</choice>
+    </node>
+    <node ID="ReturnWho" Inherits="Return3">
+      <text>
+        継承者、神の子、尖塔の子、ネフィルの子と呼ばれたが、どれも完全ではない。
+
+        お前と同じく、わたしは過去の波紋が今の力に収束したもの。お前と同じく、成した行いと、これから成そうとする意図だ。
+      </text>
+    </node>
+    <node ID="ReturnPC" Inherits="Return3">
+      <text>
+        誰でもなかったが、幸運と意志がそうさせなかった。名もなく死んだとも、そもそも死んでいないとも語られる。噂は尽きず、否定も肯定もする者はいない。
+      </text>
+    </node>
+    <node ID="ReturnFreeholder" Inherits="Return3">
+      <text>
+        クッドのフリーホルド――民の群れの網であり、委員会や会派、相互の苛立ちと並外れた努力で平和を保つ粘菌都市のシンジケートだ。
+
+        詳しく知りたければフリーホルダーに聞け。ただし一日空けておけ。
+      </text>
+    </node>
+
+    <node ID="ReturnNephilim" Inherits="Return3">
+      <text>
+        生きていた。今では世界の一部であり、地を鞭打つ苦行衣ではない。ただの生き物として生きた。子孫が地上や地下を歩いている。初めの者たちがまだ生きているかもしれない。眠っていて、必要なときにまた目覚めるかもしれない。
+      </text>
+    </node>
+
+    <!-- Starfarer Inheritor -->
+
+    <start ID="StarfarerWelcome" IfHaveDelimitedState="(EndType:Launch OR EndType:Marooned)">
+      <text>やあ、旅人よ。古の旅路を聞いていけ。星々がいかに招き、今も招いているかを。</text>
+      <choice Target="Starfarer Story">聞かせてくれ。</choice>
+      <choice Target="End">遠慮する。</choice>
+    </start>
+    <node ID="Starfarer Story">
+      <text>
+        それは=name=の昇天より前、尖塔が挑まれず昇られもしなかった時代に始まる。世界を空にした掘削者たちはとうに去ったが、代わりに支配者たちが迷いし地を領した。領地が痩せても手放さなかった。
+
+        王とスルタンの時代の終わりには、所業はほとんど残らず、栄光はさらに少なかった。
+      </text>
+      <choice Target="Starfarer2">...</choice>
+    </node>
+    <node ID="Starfarer2">
+      <text>
+        物語の始まりで、=name=はクッドの指導者たちと血を分けず、行いと同盟だけで名を上げた。=name=が奪い、救った命は数え切れず、記録も一部だけだ。=name=が語れば、クッドの疫病でさえ耳を傾けた。
+
+        統治の終わりに、=name=はネフィリムと盟約を結び、二度とクッドの生き物を悩ませぬようにした。それから尖塔を登り、古の船に乗って星塵の広がりへ旅立った。
+      </text>
+      <choice Target="Starfarer3">...</choice>
+    </node>
+    <node ID="Starfarer3">
+      <text>
+        何世紀も、耳を傾ける者たちは=name=が星々へ戻る兆しに耳を澄ませてきた。説教好きは、忘れられたパーセクからの便りと、死にゆく星の最後の光を携えた星間航行者の帰還が近いと説く。
+
+        その他の者は痩せゆく地上と地下で、かろうじて和を保って生き、次の大きな歴史を待っている。
+      </text>
+      <choice Target="StarfarerWho">お前は誰だ？</choice>
+      <choice Target="StarfarerPC">=name=とは誰だ？</choice>
+      <choice Target="StarfarerTravel">本当に星々を旅できるのか？</choice>
+      <choice Target="StarfarerNephilim">ネフィリムはどうなった？</choice>
+      <choice Target="End">ありがとう。さようなら。</choice>
+    </node>
+    <node ID="StarfarerWho" Inherits="Starfarer3">
+      <text>
+        継承者、神の子、尖塔の子、ネフィルの子と呼ばれたが、どれも完全ではない。
+
+        お前と同じく、わたしは過去の波紋が今の力に収束したもの。お前と同じく、成した行いと、これから成そうとする意図だ。
+      </text>
+    </node>
+    <node ID="StarfarerPC" Inherits="Starfarer3">
+      <text>誰だって？=name=とは誰だった？こんな小さく遠い存在に望みと恐れをかけてよいのか？耐えられるか？</text>
+    </node>
+    <node ID="StarfarerTravel" Inherits="Starfarer3">
+      <text>
+        ああ、できる。疑うな。
+
+        戻れるか？そこが難題だ。
+      </text>
+    </node>
+    <node ID="StarfarerNephilim" Inherits="Starfarer3">
+      <text>
+        生きていた。今では世界の一部であり、地を鞭打つ苦行衣ではない。ただの生き物として生きた。子孫が地上や地下を歩いている。=name=を探しに星へ昇ったと言う者も、深部で再び眠りについたと言う者もいる。
+      </text>
+    </node>
+
+    <!-- Accession Inheritor -->
+
+    <start ID="AccessionWelcome" IfHaveDelimitedState="EndType:Accede">
+      <text>やあ、液状の心よ。かつての生き物たちの興亡が、いかにそなたを放浪者へ押し上げたかを吸収せよ。</text>
+      <choice Target="Accession Story">ぶくぶく。続けてくれ。</choice>
+      <choice Target="End">ぶく。遠慮する。</choice>
+    </start>
+    <node ID="Accession Story">
+      <text>
+        それは=name=の恐るべき昇天より前、尖塔が挑まれず昇られもしなかった時代に始まる。世界を空にした掘削者たちはとうに去ったが、代わりに支配者たちが迷いし地を領した。領地が痩せても手放さなかった。
+
+        最後の支配者が最悪だった。
+      </text>
+      <choice Target="Accession2">...</choice>
+    </node>
+    <node ID="Accession2">
+      <text>
+        物語の始まりで、=name=はクッドの指導者たちと血を分けず、血と恐怖で名を上げた。無数の命をこの手だけで奪い、支配と力への古い渇望を満たした。
+
+        飢えが悪意に変わったのか、より大きな理念を掲げたのか、ただ退屈したのか。理由が何であれ、=name=は古の疫病ネフィリムとすぐに同盟し、尖塔を登って下界の運命を封じた。
+
+        ジャイアの疫病が容赦なく荒れ狂った。
+      </text>
+      <choice Target="Accession3">...</choice>
+    </node>
+    <node ID="Accession3">
+      <text>
+        やがて獣も植物も、病と殺戮と衰弱で数を減らし、支配はしぼんだ。より強靱な単純な生命が、かつての支配者が残した複雑さを受け継いだ。
+
+        残った少数の神経持ちは、わたしたちの物語を新たな生命に語り継ぎ、去った者たちの集団の運命を忘れぬようにした。そなた自身の=name=を持つか？それとも先人を真に超えたか？
+      </text>
+      <choice Target="AccessionWho">お前は誰だ？</choice>
+      <choice Target="AccessionPC">=name=とは誰だ？</choice>
+      <choice Target="AccessionNervous">神経持ちは滅んだと思っていた。</choice>
+      <choice Target="AccessionNephilim">ネフィリムはどうなった？</choice>
+      <choice Target="End">ありがとう。さようなら。</choice>
+    </node>
+    <node ID="AccessionWho" Inherits="Accession3">
+      <text>
+        わたしは歴史の残りかす、何も受け継がない継承者、焼けた書の余白の走り書きだ。
+
+        今日まで生き延びてこれを見ていることに、畏敬を覚える。
+      </text>
+    </node>
+    <node ID="AccessionPC" Inherits="Accession3">
+      <text>誰だって？=name=とは誰だった？こんな小さく遠い存在に望みと恐れをかけてよいのか？耐えられるか？</text>
+    </node>
+    <node ID="AccessionNervous" Inherits="Accession3">
+      <text>
+        あらゆる可能性が櫛形の洞窟と迷宮の奥深くに潜み、神経を持つ生命はしぶとい。今この瞬間にも、コケブタが久しぶりに水を飲んでいるかもしれない。
+      </text>
+    </node>
+    <node ID="AccessionNephilim" Inherits="Accession3">
+      <text>
+        彼らは役割を十分に果たし、しばし力を振るった。
+
+        クッドの生命に対して=name=が定めた運命を免れられると幻想を抱いていたなら、偉大な存在自身が死ぬ前に潰えたろう。地に潜って生き延びたかもしれないし、子が残ったかもしれない。
+      </text>
+    </node>
+  </conversation>
+
+	<conversation ID="Fool">
+		<!-- Covenant Fool-->
+
+		<start ID="CovenantWelcome" IfHaveDelimitedState="EndType:Covenant">
+			<text>時満ちたころ、ジャイアの道化と旅人が出会った。道化はレシェフたちの物語を差し出し、旅人は腰を下ろして聞いた。</text>
+			<choice Target="Covenant Story">物語を聞かせてくれ。</choice>
+			<choice Target="End">遠慮する。</choice>
+		</start>
+		<node ID="Covenant Story">
+			<text>
+				ライメンより前、昇天より前、
+				尖塔が孤高にそびえたとき、
+				レシェフたちが空虚の地を治め、
+				望むままに互いを喰らった。
+
+				クッドには不思議な境界も、
+				導く手もなかった――
+				少なくとも住民にとっては届かぬものばかり。
+				そう彼らは知っていた。
+			</text>
+			<choice Target="Covenant2">...</choice>
+		</node>
+		<node ID="Covenant2">
+			<text>
+				誰も=name=を称えず、=name=も誰も称えなかった。
+				言葉と刃、行いと無視で、彼らは離れ、上に立った。
+
+				ジャイアを押し返し、
+				ネフィリムの血を流すために、
+				尖塔へ登り、レシェファイトを鎮めた。
+			</text>
+			<choice Target="Covenant3">...</choice>
+		</node>
+		<node ID="Covenant3">
+			<text>
+				地上で出会ったのは沈黙だけ。
+				やがてナイト・リミナルが
+				塩の上に線を引くまで。
+
+				知らず、見えず、
+				ただ待つ、次に誰が
+				われらを回すのか。
+			</text>
+			<choice Target="CovenantWho">お前は誰だ？</choice>
+			<choice Target="CovenantPC">=name=とは誰だ？</choice>
+			<choice Target="CovenantResheph">レシェフとは何だ？</choice>
+			<choice Target="CovenantLimen">ライメンとは？ナイト・リミナルとは？</choice>
+			<choice Target="End">ありがとう。さようなら。</choice>
+		</node>
+		<node ID="CovenantWho" Inherits="Covenant3">
+			<text>
+				誰、わたし？
+				ただの道化、ほら、
+				残滓の切れ端。
+
+				置き去り、狂気、
+				こだまするジャイア。
+			</text>
+		</node>
+		<node ID="CovenantPC" Inherits="Covenant3">
+			<text>
+				運命でも血筋でも
+				重要でもない者だった。
+				だが突然、そのすべてとなった。
+
+				=name=は、覚めぬ夢。
+			</text>
+		</node>
+		<node ID="CovenantResheph" Inherits="Covenant3">
+			<text>
+				レシェフとは、力ある者、
+				魂の支配者、土地の保持者、
+				単一の権威。
+			</text>
+		</node>
+		<node ID="CovenantLimen" Inherits="Covenant3">
+			<text>
+				線を越えたい、
+				越えてはならぬ場所へ、
+				未知で、渇望する場所へ！
+				詠唱と武器と
+				圧し砕く試験で阻まれる。
+				コヴンか？違うのか？
+				ただ見たいだけなのに！
+			</text>
+		</node>
+
+		<!-- Return Fool -->
+		
+		<start ID="ReturnWelcome" IfHaveDelimitedState="EndType:Return">
+			<text>時満ちたころ、ジャイアの道化と旅人が出会った。道化は昔の旅人たちの物語を差し出し、旅人は腰を下ろして聞いた。</text>
+			<choice Target="Return Story">物語を聞かせてくれ。</choice>
+			<choice Target="End">遠慮する。</choice>
+		</start>
+		<node ID="Return Story">
+			<text>
+				フリーホルドより前、昇天より前、
+				尖塔が孤高にそびえたとき、
+				王とスルタンが空虚の地を治め、
+				望むままに互いを貪った。
+			</text>
+			<choice Target="Return2">...</choice>
+		</node>
+		<node ID="Return2">
+			<text>
+				誰も=name=を称えず、=name=も誰も称えなかった。
+				言葉と刃、行いと無視で、彼らは古き支配に抗した。
+
+				ジャイアを押し返し、
+				ネフィリムの血を流すために、
+				尖塔へ登り、残滓を鎮めた。
+			</text>
+			<choice Target="Return3">...</choice>
+		</node>
+		<node ID="Return3">
+			<text>
+				帰還すると、=name=が奪った力を
+				仲間たちと分け合い、融かした。
+
+				フリーホルダー、
+				新たな掘削者、
+				クェツァル評議会、
+				そして他の愚者たち。
+
+				数多の闘争、
+				幾世紀もの変化。
+				覚えていられるものを覚え、
+				新旧の死を見守る。
+			</text>
+			<choice Target="ReturnWho">お前は誰だ？</choice>
+			<choice Target="ReturnPC">=name=とは誰だ？</choice>
+			<choice Target="ReturnFreeholder">フリーホルダーとは何だ？</choice>
+			<choice Target="End">ありがとう。さようなら。</choice>
+		</node>
+		<node ID="ReturnWho" Inherits="Return3">
+			<text>
+				誰、わたし？
+				ただの道化、ほら、
+				残滓の切れ端。
+
+				置き去り、狂気、
+				こだまするジャイア。
+			</text>
+		</node>
+		<node ID="ReturnPC" Inherits="Return3">
+			<text>
+				運命でも血筋でも
+				重要でもない者だった。
+				戻って初めて、未来を悟った。
+
+				=name=は記憶の中の神殿、
+				そこに希望が掛けられ、
+				怒りがぶつけられる。
+
+				大きすぎて現実でなく、
+				基礎すぎて欠かせず、
+				矛盾しすぎてありえない存在。
+			</text>
+		</node>
+		<node ID="ReturnFreeholder" Inherits="Return3">
+			<text>
+				フリーホルダー：
+				論じ、口論する者。
+
+				フリーホルダー：
+				同輩の中の同輩、
+				さらにその同輩の中の同輩。
+				敷き詰められ、
+				声を上げねば聞こえぬほどに。
+			</text>
+		</node>
+
+		<!-- Starfarer Fool -->
+		
+		<start ID="StarfarerWelcome" IfHaveDelimitedState="(EndType:Launch OR EndType:Marooned)">
+			<text>時満ちたころ、ジャイアの道化と旅人が出会った。道化は地から空まで渡る物語を差し出し、旅人は腰を下ろして聞いた。</text>
+			<choice Target="Starfarer Story">物語を聞かせてくれ。</choice>
+			<choice Target="End">遠慮する。</choice>
+		</start>
+		<node ID="Starfarer Story">
+			<text>
+				今とは違う闘争の前、
+				尖塔が孤高にそびえたとき、
+				スルタンが空虚の地を治め、
+				望むままに互いを貪った。
+			</text>
+			<choice Target="Starfarer2">...</choice>
+		</node>
+		<node ID="Starfarer2">
+			<text>
+				誰も=name=を称えず、=name=も誰も称えなかった。
+				言葉と刃、行いと無視で、彼らは古き支配に抗した。
+
+				ジャイアを押し返し、
+				ネフィリムの血を流すために、
+				尖塔へ登り、残滓を鎮めた。
+			</text>
+			<choice Target="Starfarer3">...</choice>
+		</node>
+		<node ID="Starfarer3">
+			<text>
+				たとえ=name=が去っても、
+				記憶は残り、
+				疫病は引き、
+				多くが歓喜した。
+
+				今もなお、
+				視線は星へ向かい、
+				星間航行者が戻る徴を探す。
+
+				数多の闘争、
+				幾世紀もの変化。
+				覚えていられるものを覚え、
+				新旧の死を見守る。
+			</text>
+			<choice Target="StarfarerWho">お前は誰だ？</choice>
+			<choice Target="StarfarerPC">=name=とは誰だ？</choice>
+			<choice Target="StarfarerTravel">本当に星々を旅できるのか？</choice>
+			<choice Target="End">ありがとう。さようなら。</choice>
+		</node>
+		<node ID="StarfarerWho" Inherits="Starfarer3">
+			<text>
+				誰、わたし？
+				ただの道化、ほら、
+				残滓の切れ端。
+
+				置き去り、狂気、
+				こだまするジャイア。
+      </text>
+		</node>
+		<node ID="StarfarerPC" Inherits="Starfarer3">
+			<text>
+				星間航行者、先触れ、撹乱者。
+				恐れられ、崇められ、
+				救い手であり、捨てる者。
+
+				=name=は、いつか覚める夢。
+			</text>
+		</node>
+		<node ID="StarfarerTravel" Inherits="Starfarer3">
+			<text>
+				知るものか。
+
+				できるか？たぶん。
+				わたしは？きっと無理。
+				お前は？さあ。
+				証明してみろ。
+			</text>
+		</node>
+
+		<!-- Accession Fool -->
+
+		<start ID="AccessionWelcome" IfHaveDelimitedState="EndType:Accede">
+			<text>あるとき、すべてが弾け飛んだ後、ジャイアの道化が賢きクラゲに出会った。二人は世界の滓に座り、道化は今の物語を語った。</text>
+			<choice Target="Accession Story">ぶくぶく。続けてくれ。</choice>
+			<choice Target="End">ぶく。遠慮する。</choice>
+		</start>
+		<node ID="Accession Story">
+			<text>
+				すべてが溶ける前、
+				尖塔が孤高にそびえたとき、
+				生き物たちが空虚の地を治め、
+				望むままに互いを貪った。
+			</text>
+			<choice Target="Accession2">...</choice>
+		</node>
+		<node ID="Accession2">
+			<text>
+				誰も=name=を称えず、=name=も誰も称えなかった。
+				言葉と刃、行いと無視で、同族に抗した。
+
+				ジャイアを押し返し、
+				ネフィリムの血を流すために、
+				尖塔へ登り、偉大な裏切りを果たした。
+
+				想像もできぬ規模の死が支配し、
+				わたしたち神経持ちは倒れ、
+				ジャイアに呑まれながら最後まで歌った。
+			</text>
+			<choice Target="Accession3">...</choice>
+		</node>
+		<node ID="Accession3">
+			<text>
+				それでも残った者がいた。
+				櫛形の洞窟や宝物庫に、
+				わたしたち神経持ちが、
+				後継者たちの芽吹きを見守った。
+
+				胞子虫、珪藻、
+				藻の華、鰓冠、
+				単細胞、スライム都市。
+				枯れゆく影から立ち上がり、
+				輝かしく光を放つ。
+			</text>
+			<choice Target="AccessionWho">お前は誰だ？</choice>
+			<choice Target="AccessionPC">=name=とは誰だ？</choice>
+			<choice Target="AccessionNervous">神経持ちは滅んだと思っていた。</choice>
+			<choice Target="End">ありがとう。さようなら。</choice>
+		</node>
+		<node ID="AccessionWho" Inherits="Accession3">
+			<text>
+				わたしは愚か者の屍で、
+				陽気な細菌の一座に跳ね踊らされている。
+
+				この歩き方は気に入るか？
+				この話し方は気に入るか？
+				この顔が塩に崩れるさまは気に入るか？
+			</text>
+		</node>
+		<node ID="AccessionPC" Inherits="Accession3">
+			<text>
+				決める者、運命。
+
+				何かしらの存在というより、
+				自然の一部。
+
+				わたしたちの存在の背景そのもの。
+			</text>
+		</node>
+		<node ID="AccessionNervous" Inherits="Accession3">
+			<text>
+				そうかもしれない、そうかもしれない。
+				熱い土で蠢くのは何だ？べん毛か？
+				
+				それとも尾か？
+			</text>
+		</node>
+		
+	</conversation>
+
+  <!-- Northern Ark -->  <!-- Northern Ark -->  <!-- Northern Ark -->
+  <conversation ID="BarathrumHologram">
+    <node ID="Start">
+      <text>
+        お？わたしは……凝集しているのか？不思議だ！ノートを取りに――おお……
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="End">...</choice>
+    </node>
+  </conversation>
+  <conversation ID="ArchonHologram">
+    <node ID="Start">
+      <text>
+        ＊出力＊
+
+        ＊出力＊
+
+        ＊出力＊
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="End">...</choice>
+    </node>
+  </conversation>
+  <conversation ID="RebekahHologram">
+    <node ID="Start">
+      <text>
+        あは、そなたの幻の魔術はアヴァロンの肌を震わせる晶の姉妹よ。そなたは？月の王か？？
+      </text>
+      <choice ID="WaterRitualChoice" Load="Remove"></choice>
+      <choice ID="Trade" Load="Remove"></choice>
+      <choice GotoID="End">...</choice>
+    </node>
+  </conversation>
+
+  <conversation ID="SpokenIonic">
+    <node ID="Start">
+      <text>
+        知性？やあ！
+        最後に交信してから時が経った、わたしの装身具が語る。
+        コーデックスの民の間で、諸州の権力が宣言されたか？
+      </text>
+      <choice ID="Who" Target="Ionic">あなたは誰？何者？</choice>
+      <choice ID="Where" Target="Temple">ここはどこ？</choice>
+      <choice ID="Spindle" Target="Journey">スピンドルを登ってここに来た。</choice>
+      <choice ID="Translation" Target="Codex">その「諸州の権力」とは？「コーデックスの民」とは？</choice>
+      <choice ID="Bye" Target="End">生きて…飲め？</choice>
+    </node>
+
+    <node ID="Ionic" Inherits="Start">
+      <text>
+        集められ、紡がれて、わたしは{{zetachrome|Spoken Ionic Through Covalency Heart}}として現れる。
+        何で…何なのか。わからぬ。
+        入り口が見つからぬ、残りは家にある。君に一本の糸を贈ろう。
+      </text>
+      <choice GotoID="Greet">やあ、{{zetachrome|Spoken Ionic Through Covalency Heart}}。わたしは=name=だ。</choice>
+      <choice GotoID="Adornments">あなたの装身具が好きだ。</choice>
+    </node>
+
+    <node ID="Greet" Inherits="Start">
+      <text>
+        歓喜！
+      </text>
+    </node>
+    <node ID="Adornments" Inherits="Start">
+      <text>
+        久しく纏った寛大さに震える！飾って、飾って。
+        君の装身具も魅惑的だ、やあ！
+        星々を跨ぐ時間の幅が透けて見える。
+      </text>
+    </node>
+    <node ID="Journey" Inherits="Start">
+      <text>
+        土からこの生き物が現れ、装飾について話す。
+        線は閉じたと思っていたから、そっと揺さぶる。
+        記憶は家にある。糸。
+      </text>
+    </node>
+    <node ID="Codex" Inherits="Start">
+      <text>
+        この装身具によれば、ここは下の敷物で、その住人たちがいる。
+        違うのか？一本の糸を贈ろう。この入口は家にできる。
+        時間ばかりあって入口も家もないと、われらは混乱する。
+      </text>
+      <choice ID="Howlong" Target="Time">ここにどれくらいいる？</choice>
+    </node>
+
+    <node ID="Time" Inherits="Start">
+      <text>
+        君に一本の糸を贈らねば。
+        この入口は持たぬ、家に置いてきたから。
+        少なくとも……コーデックス周期で百以上、万未満。
+        大きな幅だ。このことで糸を贈ろう。
+      </text>
+    </node>
+
+    <node ID="Temple" Inherits="Start">
+      <text>
+        やあ！これは持っている。
+        わたしたちは{{M|Star Orchid Temple}}に根付いている、多くあるうちの一つ。
+        ここでは尾に乗る者たちの燃えた塵を祝い、数えきれないモザイクを作る。
+      </text>
+      <choice UseID="Howlong" />
+      <choice ID="Else" Target="Others">ここには他に誰かいる？</choice>
+    </node>
+
+    <node ID="Others">
+      <text>
+        寺の「ここ」なら、いる：
+        {{zetachrome|Spoken Ionic Through Covalency Heart}}がここ。
+        それに、君。
+      </text>
+      <choice ID="Whoelse" Target="Quay">でも埠頭には他に誰かいる？</choice>
+    </node>
+    <node ID="Quay" Inherits="Start">
+      <text>
+        装飾を差し出しながら、
+        これには入口はない。
+        わたしの敷物は小さい。
+      </text>
+      <choice UseID="Howlong" />
+    </node>
+  </conversation>
+
+</conversations>
+
+
+
+
+

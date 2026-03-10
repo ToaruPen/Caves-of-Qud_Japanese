@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<embarkmodules>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudSpecificCharacterInitModule" Load="Replace"> <!-- responsible for initializing the default humanoid object during character builds (returns a "humanoid" object) -->
+
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudGamemodeModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/Modes" Prefab="HorizScroll" Class="XRL.CharacterBuilds.Qud.UI.QudGamemodeModuleWindow">
+      <title>：ゲームモードを選択：</title>
+      <name>ゲームモード</name>
+    </window>
+
+		<modes>
+
+      <mode Load="Replace" ID="Tutorial" Title="チュートリアル">
+        <icon Tile="Items/sw_square_cap.bmp" Foreground="K" Detail="W"></icon>
+        <description>
+          Caves of Qud の基礎を学ぶ。
+        </description>
+        <stringgamestate Name="GameMode" Value="Tutorial"></stringgamestate>
+      </mode>
+
+      <mode Load="Replace" ID="Classic" Title="クラシック">
+				<icon Tile="UI/sw_classic_mode.bmp" Foreground="y" Detail="K"></icon>
+				<description>
+					パーマデス：死ぬとキャラクターを失う。
+				</description>
+				<stringgamestate Name="GameMode" Value="Classic"></stringgamestate>
+			</mode>
+
+			<mode Load="Replace" ID="Roleplay" Title="ロールプレイ">
+				<icon Tile="UI/sw_roleplay_mode.bmp" Foreground="b" Detail="B"></icon>
+				<description>
+					居住地でチェックポイント保存。
+				</description>
+				<stringgamestate Name="GameMode" Value="Roleplay"></stringgamestate>
+				<stringgamestate Name="Checkpointing" Value="Enabled"></stringgamestate>
+			</mode>
+
+			<mode Load="Replace" ID="Wander" Title="放浪">
+				<icon Tile="UI/sw_wander_mode.bmp" Foreground="g" Detail="C"></icon>
+				<description>
+					{{c|&#249;}} 多くのクリーチャーが中立で始まる。
+					{{c|&#249;}} キルでXPが得られない。
+					{{c|&#249;}} 発見や水の儀式でより多くのXP。
+					{{c|&#249;}} 居住地でチェックポイント保存。
+				</description>
+				<stringgamestate Name="GameMode" Value="Wander"></stringgamestate>
+				<stringgamestate Name="Checkpointing" Value="Enabled"></stringgamestate>
+			</mode>
+
+			<mode Load="Replace" ID="Daily" Title="デイリー" Editable="False">
+				<icon Tile="Items/sw_clockthing.bmp" Foreground="w" Detail="W"></icon>
+				<description>
+					{{c|&#249;}} 固定キャラクターと固定シードで一発勝負。
+					{{c|&#249;}} 現在 {{W|{year}}} 年の {{W|{day_of_year}}} 日目。
+				</description>
+				<stringgamestate Name="GameMode" Value="Daily"></stringgamestate>
+			</mode>
+		</modes>
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudChartypeModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/CharType" Prefab="HorizScroll" Class="XRL.CharacterBuilds.Qud.UI.QudChartypeModuleWindow">
+      <name>キャラクター種別</name>
+      <title>：プレイ方式を選択：</title>
+    </window>
+
+    <types>
+      <type ID="Pregen" Title="プリセット">
+        <icon Tile="UI/sw_preset.bmp" Foreground="W" Detail="w"></icon>
+        <description>
+          いくつかのプリセットから選ぶ。慣れたらカスタマイズしよう。
+         </description>
+      </type>
+      
+      <type ID="New" Title="新規作成">
+        <icon Tile="UI/sw_newchar.bmp" Foreground="W" Detail="w"></icon>
+        <description>
+          新しいキャラクターを作成する。
+        </description>
+      </type>
+
+      <type ID="Random" Title="ランダム">
+        <icon Tile="UI/sw_random.bmp" Foreground="w" Detail="W"></icon>
+        <description>
+          ランダムなキャラクターを生成する。
+        </description>
+      </type>
+
+      <type ID="Library" Title="ビルドライブラリ">
+        <icon Tile="Items/sw_bookshelf1.bmp" Foreground="w" Detail="W"></icon>
+        <description>
+          ビルドライブラリからキャラクターを選ぶ。
+        </description>
+      </type>
+
+      <type ID="Last" Title="前回のキャラクター">
+        <icon Tile="UI/sw_lastchar.bmp" Foreground="W" Detail="w"></icon>
+        <description>
+          前回プレイしたキャラクターで再開する。
+        </description>
+      </type>
+    </types>
+  </module>
+  
+  <module Class="XRL.CharacterBuilds.Qud.QudBuildLibraryModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/BuildLibrary" Prefab="HorizScroll" Class="XRL.CharacterBuilds.Qud.UI.QudBuildLibraryModuleWindow">
+      <name>ビルドライブラリ</name>
+      <title>：ビルドライブラリ：</title>
+    </window>
+  </module>
+  
+  <module Class="XRL.CharacterBuilds.Qud.QudGenotypeModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/ChooseGenotypes" Prefab="HorizScroll" Class="XRL.CharacterBuilds.Qud.UI.QudGenotypeModuleWindow">
+      <name>ジェノタイプ</name>
+      <title>：ジェノタイプを選択：</title>
+    </window>
+  </module>
+  
+  <module Class="XRL.CharacterBuilds.Qud.QudPregenModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/Pregens" Prefab="HorizScroll" Class="XRL.CharacterBuilds.Qud.UI.QudPregenModuleWindow">
+      <name>プリセット</name>
+      <title>：プリセットを選択：</title>
+    </window>
+
+    <pregens>
+      
+    <!-- True Kin -->
+      <pregen Name="Praetorian Prime" Genotype="True Kin" Tile="creatures/sw_praetorian_prime.bmp" Foreground="y" Detail="c" Background="k">
+        <code>H4sIACEIKGEA/81U74vTQBD9fnD/wxL8mIZeLSJCP9T6AzmVei1VkPuwSYZkcbsbdmeVIP3fbyZNbfYKFgWlC6XNvDczL29m+/P6Soikklv4Ds4ra5IXIplk42wynmTTaZJ2eB6ULgeEGyKMe2xry6DBU/grPwvRleTTQ+u2AU76cvc+W9TSyQLBveSKPvsUSv68BWORaB+6hFTMvYdtrtvRYkUJTSo2+96zo7JULILG4GBmIKCTOhXLkGtV3EK7tt/AzEzQeq+xE1NKlCTjlzoKPeGev5EWy3pFBU6kHRtQvQOfS65dAHGrTEQ4sfCA7fY/dj35LyxchfwCHYxUnTewp3PBpZOA1in53xycIzqVBwR/YSY+Fnbex6VVBv0yuKKWHsq4H/uMDkyFNQHPB3mEzCulFbYEPIuBtQ1VbcDzRX+U884gaK0qMAW/xjRGPyutG/sD3Cn0urIcPMYO0+tQ2awaMEiM0dNhRwLuYCuVUaYicDyEcnrdeUPROOMfbs2izcEZQFVc2tqcKDu/N5qtG90MQx40FEjqB//w+xOtFDGP/VjUR1XVuFGd7dHUmWlDN9dhow7YSL7wDCVvJC3TEO5Hxef+j2bLX/fXV7sH0tV16+sGAAA=</code>
+        <description>
+        &amp;c&#249;&amp;y 突撃主体の近接戦闘
+        &amp;c&#249;&amp;y 暗視を持って始まる
+        &amp;c&#249;&amp;y {{W|もっとも生存力が高い}}初期ビルド
+        </description>
+      </pregen>
+
+      <pregen Name="First Gardener" Genotype="True Kin" Tile="creatures/sw_first_horticulturalist.bmp" Foreground="y" Detail="g" Background="k">
+        <code>H4sIAEQIKGEA/81UYYvTQBD9fnD/YQl+TEOvFhWhH2IVT06ltuEU5D5skiFd3O6G3Vk1SP/7zW7aa/YKFgWlC6XJvDczb99M++vygrGk4Rv4DsYKrZKXLJlk42wynmTTaZIGvHRC1gPCFRHGO2yjayfBUvirf2cslPRnBxVdCz7py/J9Nl9zwysE88pXtNknV/vPW1AaifYhJKQstxY2pexG8xUltCm77XvPDspSNncSnYGZAoeGy5QtXClFdQNdob+BmiknZa8xiKk5cpLxoI5CT3zP30iLZb2mAkfSDg2o3p7vSxbGAbsRKiIcWbjHtv3Ddkf+CwtXrjxDByNVpw3c0X3Ba21QVEGgsPi/XMwRjSgdgj0zIx8LO+3lQguFduFMteYW6rif9xoNqAbXBDwb5BGSN0IK7Ah4HgOFds1agfU/9kfQO4UgpWhAVf4a0xj9LKRs9Q8wx83eNNoHD7H99ALK21ULCokxevoiBpaw4UIJ1RA4HkIlXTdvKRpn/MOtmXclGAW0r+e2NkfKTu+N9NaNroYhCxIqJPWDf/n+RCtFzEM/L+qjruh+isu8hZ/DJj1XuzDZYasA3HIjeICSa+D1w6AGw/Ln7o+m67/uLi+295ltPBvxBgAA</code>
+        <description>
+        &amp;c&#249;&amp;y 近接と遠隔のハイブリッド
+        &amp;c&#249;&amp;y 料理と採集を習得済みで開始
+        &amp;c&#249;&amp;y {{W|生存力が高い}}初期ビルド
+        </description>
+      </pregen>
+
+      <pregen Name="First Child of the Hearth" Genotype="True Kin" Tile="creatures/sw_first_child_of_the_hearth.bmp" Foreground="y" Detail="r" Background="k">
+        <code>H4sIAFgIKGEA/81UYWvbMBD9Xuh/EGYfHZOkYYxCPqTeWEdXyBqTDUY/yPbNFlMkI502zMh/78lOGquBhQ02IghJ7r27e3p39q/LC8aiim/gBxgrtIquWTRNxsl0PE1msyju8NwJWQ4IEyKMd9hGl06CpfBX/5+xrqQ/OyhrG/BJXx4+JmnNDS8QzI2vaJNPrvSf96A0Eu2+S4jZwlrY5LIdpStKaGK27nvPD8piljqJzsBcgUPDZcyWLpeiuIM2099BzZWTstfYiSk5cpLxrI5Cr3zP30gLZb2lAkfSDg2o3p7vS2bGAbsTKiAcWbjHtv2P7Y78FxauXH6GDgaqThu4o/uCaU01mP7GsAZ2C9xg/b+sXCAakTsEe2ZuvhR22tClFgrt0pmi5hbKsJ83HA2oiqy9ZpPpIJGgRSWkwJaQ1yGQaVfVCqx/5F9AHxSClKICVfh7TEL0s5Cy0T/BEHQVQu8qTcHZIbYfX4fyZtWAQmKMrt6EwANsuFBCVQSOh1BO9100vlOQ8Q/XJm1zMApQFOe2N0fKTi+O9NaNhgOMLEgokNQP3vX9CXaKmId+3ZPMTS5KuOWqvNG0N8M+PV27brjhuhCw5kbwDop8tn0e1mBg/jz+0YT91+PlxfYJFKR47fsGAAA=</code>
+        <description>
+        &amp;c&#249;&amp;y 近接戦闘で非常に打たれ強い
+        &amp;c&#249;&amp;y カーバイド化した手の骨を所持して開始
+        &amp;c&#249;&amp;y {{W|生存力が高い}}初期ビルド
+        </description>
+      </pregen>
+      
+    <!-- Mutants -->
+  
+      <pregen Name="Marsh Taur" Genotype="Mutated Human" Tile="creatures/sw_marsh_taur.bmp" Foreground="y" Detail="g" Background="k">
+        <code>H4sIAGwIKGEA/81UXWvbMBR9L/Q/CLNH17ghjFHIg5d9sgayJHSD0QfZvthismT0sZGN/PdeKc5suTDDBiGGkPieo3tOjnT1+/qKkKiiDfwApZkU0R2JZkmazNJZMp9Hscdzy3g5INwiIe2wRpaWg8byN/dOiG/png7a7Vtwi75u7pNlTRUtDKjXrqNOPtvSfd6DkAZpK78gJpnW0OR8f7Pc4oI2Jg9H7UXvLCZLy41VsBBgjaI8Jmubc1Z8gv1OfgexEJbzo0dvpqSGoo0/7rD0wmn+xVpo6w02eGatF8B+J75rubKGGijJB9tQEbCe5XjCDscfh478DzlubX6BMQauplPs6D5E7GVLUOfKz28a9tYXluDI13SGTYvd0mFFA4fC9+gn9fgMjHjmScz5eacAfjFRkQ3dDwU8cSmtMMi6HQMPVDHqoXSInDZmWnaFibKWA7mHSp9RN2vamuVM2nOK7nBnWqm6wn/r9i+PZ5qazBjFcmvg0sZmbGx6btaSCaPXVhU11VCGeu5uMgpEZWq3IcPxQiirGGdmj8irENhJW9UCtBu8EfRRGOCcVSAK9z/mIfqFcd7Kn3j93ZGXIfS2kq7Y14bHLaLttgV/NG4w6ADYQEOZwIke3w85/t/M3Rrhislj474er68OT6AIWPBJCAAA</code>
+        <description>
+        &amp;c&#249;&amp;y 突撃主体の近接戦闘
+        &amp;c&#249;&amp;y 敵を凍結させられる
+        &amp;c&#249;&amp;y 高い機動力
+        &amp;c&#249;&amp;y {{W|もっとも生存力が高い}}初期ビルド
+        </description>
+      </pregen>
+    
+      <pregen Name="Dream Tortoise" Genotype="Mutated Human" Tile="Creatures/sw_dream_tortoise.bmp" Foreground="y" Detail="w" Background="k">
+        <code>H4sIAAAAAAAACs1VUWvbMBB+L/Q/CLNHNySl67pBHjJvtNtayOrQDUYfZPuwxWTJSKeNEPLfe7LTxnZo044uxGBs3Xf33aez7rw4PGAsyHkJf8BYoVXwgQXHg+HgeHg6GJ0FYY0nTsis5TAih+EKK3XmJFgy//JrxhbN4wGazSvwQT+vLwdRwQ1PEcxHz2gH313m73NQGsntqg4I2cRaKBM5P4piCqhCdtPkHq+VhSxyEp2BsQKHhsuQTV0iRfoN5jP9G9RYOSkbjbWYjCMnGQ/qyPQGXyrtE5FsyFsnIc57f0975ZAjZOzClVx1vDZqeY8tm5dl+M+1jF2yp6XsKNteyZW7J52YVCvucFc1rD8ccds9rGJP2/Y6lhUxDtsWCxLSmmPdtc21aC/Y6gSvihyRnIqn0CavnW64EVwh+fgd9tFIuxobte3L8LlZL0DkBYLybQSUSOU7zq8NlWmnKWMJULFzbhkNEzCN/TUUrBe3jzbS6FUbaYJoROIQ9rGT+uK2t9JUC4V26kxacAtZN6cfWWhA5VgQcNb5JMEkF1LgnID3XWCmXV4osHYz5otCkFLkoFK/lXdd9IeQstJ/wRB02oU+55qMb9e29tkLeBVXUJ+Oo5OTLnANJRfK91hvYiS03YmfI92I/ziCo0JrCzFyg6TnUqd1G+zhKXpK6DN+cr04n+yrrir+sl+df9weHizvAPZg4hzPCQAA</code>
+        <description>
+        &amp;c&#249;&amp;y 近接戦闘型
+        &amp;c&#249;&amp;y 高い装甲
+        &amp;c&#249;&amp;y 睡眠ガスを放ち敵を無力化
+        &amp;c&#249;&amp;y {{W|生存力が高い}}初期ビルド
+        </description>
+      </pregen>
+      
+      <pregen Name="Gunwing" Genotype="Mutated Human" Tile="Creatures/sw_gunwing.bmp" Foreground="y" Detail="K" Background="k">
+        <code>H4sIAJAIKGEA/81U32vbMBB+L/R/EGaPrnFD94NCHpJsa8dWSJvQDkYfZPuwRWTJSLqNMPq/96Qks53ADBuEGELs+07f9+l0p9/nZ4xFJa/hJxgrtIquWTRK0mSUjpKrqygOeIZCFp2ES0pIt1itC5RgKfzDfzMWKP2zhZbrBvyi7w/fklnFDc8dmKlntMk9Fv53A0o7SrsLC2I2sRbqTK4vZgta0MTscaM9bp3FbIbSoYGxAnSGy5jNMZMi/wrrpV6BGiuUcuMxmCm442TjjzsKvfGaf7HWt/WRCA6stQLEt8v3lHfouIOC3WLNVS/roI477GXz8rJN/oc6LjA7wTL2XA1XcZvuCW9QWSlUCeZYFQzHRtz2xGq452u4inVDbGk3YkFCHjjaWd08HSMhcyfm/UyBr7rEIWGmUTlCL/eBR24ED1DaRXYHMix3C6KsHCianHsU+UqBtUeUf6JmO6beZ21yYFPMMgn/L9t+PB9pXCbOGZGhg1Obl31jwwMz10I5O0eTV9xC0dfz15IzoEpXEfCudyDRpBRSuLU/qe7AEbLUWFahha/Zhz70RTmQUpSgcr+P9330SUjZ6F907x2ofSo1Bd+2sW63RbxZNBBa44IK3QMeoOZCUYPvXwwZ7Xfir4v+isG28X/P52cvrzAEiiVECAAA</code>
+        <description>
+        &amp;c&#249;&amp;y 主に遠隔戦闘を行う
+        &amp;c&#249;&amp;y 素早く機動力に優れる
+        &amp;c&#249;&amp;y 飛行できる
+        &amp;c&#249;&amp;y {{W|生存力が高い}}初期ビルド
+        </description>
+      </pregen>
+        
+      <pregen Name="Star-Eye Esper" Genotype="Mutated Human" Tile="creatures/sw_stareye_esper.bmp" Foreground="y" Detail="m" Background="k">
+        <code>H4sIAAAAAAAACs1VXWvbMBR9L/Q/CLNHNySl3dZCHjzvewnL6tAORh9k+2KLyZKQrjpMyH+vZKdJnLCmHV1IINi6534cH90rzY6PCAkKWsEdaMOkCC5JcNrr9077F73zIGzg1DKer+EDh/cXWCVzy8E48y+/JmTWPpbQtFbgg35ejXpxSTXNEPQ7n9H0ftjc/z+BkOjcxk1ASCJjoEp5fRInLkCF5LqtPVwSC0lsOVoNQwEWNeUhmdiUs+wb1FP5G8RQWM5big2XnCJ1LJbknOkVPpfZe5dki92qiMv54O/Tji1ShJx8thUVHa8tKR+wefsyD/9ZysSmh6lkh9huIRfuPmmkpEEO+1Kw2TaX2xyehhvUdqtYKZexv24xwCFrcqwmtv3N1hdk0b4LjWNOmb6TNRVZZx8ax2uqGRXo/PxXbqKxtA02WLfPw6dWHrGiRDKmginLW+te6ycgDJCJqbOSZXsujVYIJgryUep9yz51baKkRvIdS9AvUnu1uP3rJA9edJIjRM1Si3CAo7zJbfcsTyQTaCZWZyU1kHdr+hMTNYgCSwecd3YkiArGGdYOeN0FptIWpQDjz4K3XeiLQOCcFeAn/pK86aI3jHMl/7jO2Ar8UEhnvFjZ1psuoCpR0DTHydlZF7iCijLf75tHVuo+N/IHWTfiP14BcSmlgQSpRsdnJLNmLg6viR7j+YQrdiPOF/sqlaLPu2n94/b4aH4P7c/CyUoKAAA=</code>
+        <description>
+        &amp;c&#249;&amp;y 精神系の遠隔戦闘ビルド
+        &amp;c&#249;&amp;y 優れた範囲制圧と視界確保
+        &amp;c&#249;&amp;y {{W|生存力は中程度}}の初期ビルド
+        </description>
+      </pregen>
+    
+      <pregen Name="Firefrond" Genotype="Mutated Human" Tile="Creatures/sw_firefrond.bmp" Foreground="y" Detail="R" Background="k">
+        <code>H4sIALEIKGEA/81UYWvbMBD9Xuh/EGYfXeOGso5BPqTZuo2tkCVZOxj9INuHLSpLRjp1mJH/XklJZsuBGTYWYgix7z3dezrd6df5GSFRSWt4BqWZFNFbEk2SNJmkk+TqKoo9nhnGix7h0hLSHVbLwnDQNvzDfRPiU7pnB63bBtyi78svybyiiuYI6sZl1MlXU7jfBxASLe3OL4jJTGuoM95ezFd2QROT+632tHMWk7nhaBRMBRhUlMdkYTLO8s/QruUTiKkwnG89ejMFRWpt/HZnQ6+c5h+shbbe2QQH1joBm2/PdynvDFKEgnw0NRUB66COe2yzfdnsyH9Rx5XJTrCMgavxKu7oLuGDLaF6ZgLILVU1qGPV0R+eza1PrJIDX+O1rBubLe1HNHDIfY5uYrdPz4hn7sWcn29CI804ENfiNfQ1PHcujUBLvBwC91Qx6qG0j+zPZlz5ltOaiZIsaXtE1UUlUepWYAXIcrJ6YsEM/2f1G6NKkMJu+99Fu4/HIw3PDFGxzCCc2vQMjY2Pz0IygXphVF5RDUWo564qVCBKrCzwJjiQaFYyzrA9BNbSlJUA7cZvAH0SCJyzEkTutnEdog+M80b+tJfgAfS+lDb4uov1Wy2izaoB3xkXts4BsISaMt9ng1sis9udubsjXDHaNe7v8fxs8wIqHOwZVwgAAA==</code>
+        <description>
+        &amp;c&#249;&amp;y 近接戦闘と精神系キャスターの混成
+        &amp;c&#249;&amp;y 敵を炎上させられる
+        &amp;c&#249;&amp;y 周囲に採取可能な植物を生やす
+        &amp;c&#249;&amp;y {{W|挑戦的}}な初期ビルド
+        </description>
+      </pregen>
+    
+      <pregen Name="bzzzt" Genotype="Mutated Human" Tile="Creatures/sw_bzzzt.bmp" Foreground="y" Detail="W" Background="k">
+        <code>H4sIAMEIKGEA/81VXYsaMRR9X9j/EIZ9dAdXpLQFH1y77ZZ2i9XBFso+ZGYumWAmGfJRkeJ/35uodaJQoaWDA6LmnJxzcpPc+XV9RUjCaA0/QRuuZPKWJIO0nw76g3Q4THoBzx0XZYtwh4T+DqtV6QQYHP7h/xMSJP2zg7J1A37S99nndFJRTQsL+t4rmvSrK/3nA0hlkfYUJvTI2Bioc7G+ncxxQtMji6336JCsRyZOWKdhJMFZTUWPTF0uePEJ1plaghxJJ8Q2YwhTUksxxu90OHTjPf8QLY71DgVOoh0MUG/P95JPzlILJXl0NZUR66SOe2yz/bHZkf+ijnOXX2AZo1Tnq7ije8GMyyXorqoXtgy1zYXV7yjX+QrWDar12yMGBBRB43BPt08rSGDuzXyee6e1WnHJyETQlWl7BO5EOWmReHcMLKjmNED9NrLfm/PODz6u5gUVBC8V6C3Qnf8jcFZZdMYLDCgmWYfmX7w3WfBwzruznTdcYqnBdrnRWcWLJXnvokv+vxeqCk6FWJMZNI5Jr/XP5oc/zx11q7HFC5I7C5fWro6Dne9XU8WlNVOni4oaKGM//0awGiSzFQJvog1JxowLbtcIvI6BTDlWSTC+3x1BH6UFITgDWfhlvIrRb1yIRq3wrXMy8YEpHBwextpHLqHNvIFwMm6xzhEwg5py6ZvIUVvOcblj36zjGWdPjf96vr7avABMFNzuvgkAAA==</code>
+        <description>
+        &amp;c&#249;&amp;y 近接と電撃攻撃のハイブリッド
+        &amp;c&#249;&amp;y 地中潜行・罠設置が可能
+        &amp;c&#249;&amp;y 暗視を持って始まる
+        &amp;c&#249;&amp;y {{W|挑戦的}}な初期ビルド
+        </description>
+      </pregen>
+
+    </pregens>
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudSubtypeModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/ChooseSubtypes" Prefab="HorizScroll" Class="XRL.CharacterBuilds.Qud.UI.QudSubtypeModuleWindow">
+      <name>サブタイプ</name>
+      <title>：サブタイプを選択：</title>
+    </window>
+    <window Load="Replace" ID="Chargen/ChooseSubtypesCategory" Prefab="SwitchingScroller" Class="XRL.CharacterBuilds.Qud.UI.QudSubtypeModuleCategoryWindow">
+      <name>カテゴリ別サブタイプ</name>
+      <title>：サブタイプを選択：</title>
+    </window>
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudMutationsModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/Mutations" Prefab="CategoryMenus" Class="XRL.CharacterBuilds.Qud.UI.QudMutationsModuleWindow">
+      <name>変異</name>
+      <title>：変異を選択：</title>
+    </window>
+
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudAttributesModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/PickAttributes" Prefab="HorizScrollerScroller" Class="XRL.CharacterBuilds.Qud.UI.QudAttributesModuleWindow">
+      <title>：能力値を選択：</title>
+      <name>能力値</name>
+    </window>
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudCyberneticsModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/Cybernetic" Prefab="CategoryMenus" Class="XRL.CharacterBuilds.Qud.UI.QudCyberneticsModuleWindow">
+      <name>サイバネ</name>
+      <title>：サイバネ移植を選択：</title>
+    </window>
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudBuildSummaryModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/BuildSummary" Prefab="HorizScroll" Class="XRL.CharacterBuilds.Qud.UI.QudBuildSummaryModuleWindow">
+      <name>まとめ</name>
+      <title>：ビルドまとめ：</title>
+    </window>
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudCustomizeCharacterModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/Customize" Prefab="VertScroll" Class="XRL.CharacterBuilds.Qud.UI.QudCustomizeCharacterModuleWindow">
+      <name>カスタマイズ</name>
+      <title>：キャラクターをカスタマイズ：</title>
+    </window>
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudChooseStartingLocationModule" Load="Replace">
+    <window Load="Replace" ID="Chargen/ChooseStartingLocation" Prefab="HorizScroll" Class="XRL.CharacterBuilds.Qud.UI.QudChooseStartingLocationModuleWindow">
+      <name>開始場所</name>
+      <title>：開始場所を選択：</title>
+    </window>
+    
+    <locations>
+      <location ID="Joppa" Name="{{Y|Joppa}}" Location="GlobalLocation:JoppaWorld.11.22.1.1.10@37,22">
+        <description>
+          初心者におすすめ。
+        </description>
+        
+        <stringgamestate Name="VillageZeroRegion" Value="*Joppa"></stringgamestate>
+                
+        <grid Position="00" Tile="Terrain/sw_marsh_worldmap_2.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="10" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="20" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="30" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="40" Tile="Terrain/sw_marsh_worldmap_2.bmp" Foreground="g" Detail="b" Background="k"></grid>
+
+        <grid Position="01" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="11" Tile="Terrain/sw_marsh_worldmap_1.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="21" Tile="Terrain/sw_joppa.bmp" Foreground="w" Detail="y" Background="k"></grid>
+        <grid Position="31" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="41" Tile="Terrain/sw_marsh_worldmap_1.bmp" Foreground="g" Detail="b" Background="k"></grid>
+
+        <grid Position="02" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="12" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="22" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="32" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="42" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+      </location>
+
+       <location ID="SaltMarshVillage" Name="{{G|塩の湿地}}&#10;の村" Location="StringGameState:villageZeroStartingLocation">
+        <description>
+          {{c|&#249;}} 塩の湿地にあるランダムな村。
+          {{c|&#249;}} 村で収穫術を教えてくれる。
+          {{c|&#249;}} 昆虫と魚の評判 +50。
+          {{c|&#249;}} {{g|クロッカシン}}の靴を持って開始。
+        </description>
+
+        <stringgamestate Name="VillageZeroRegion" Value="Saltmarsh"></stringgamestate>
+        <stringgamestate Name="RuinedJoppa" Value="Yes"></stringgamestate>
+
+        <reputation Faction="Insects" Modifier="50"></reputation>
+        <reputation Faction="Fish" Modifier="50"></reputation>
+        <item Blueprint="Croccasins"></item>        
+
+        <grid Position="00" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="b" Background="k"></grid>
+        <grid Position="10" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="20" Tile="Terrain/sw_marsh_worldmap_1.bmp" Foreground="g" Detail="b" Background="k"></grid>
+        <grid Position="30" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="40" Tile="Terrain/sw_marsh_worldmap_2.bmp" Foreground="g" Detail="g" Background="k"></grid>
+
+        <grid Position="01" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="11" Tile="Terrain/sw_marsh_worldmap_1.bmp" Foreground="g" Detail="b" Background="k"></grid>
+        <grid Position="21" Tile="Terrain/sw_joppa.bmp" Foreground="W" Detail="r" Background="k"></grid>
+        <grid Position="31" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="41" Tile="Terrain/sw_marsh_worldmap_1.bmp" Foreground="g" Detail="g" Background="k"></grid>
+
+        <grid Position="02" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="12" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="22" Tile="Terrain/sw_marsh_worldmap_1.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="32" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="b" Background="k"></grid>
+        <grid Position="42" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="b" Background="k"></grid>
+      </location>
+
+       <location ID="SaltDuneVillage" Name="{{Y|塩の砂丘}}&#10;の村" Location="StringGameState:villageZeroStartingLocation">
+        <description>
+          {{c|&#249;}} 塩の砂丘にあるランダムな村。
+          {{c|&#249;}} 村で断食の道を教えてくれる。
+          {{c|&#249;}} 爬虫類の評判 +100。
+          {{c|&#249;}} {{Y|イッサカリ}}の旗を持って開始。
+        </description>
+        
+        <stringgamestate Name="VillageZeroRegion" Value="Saltdunes"></stringgamestate>
+        <stringgamestate Name="RuinedJoppa" Value="Yes"></stringgamestate>
+
+        <item Blueprint="Issachari Banner"></item>
+        <reputation Faction="Unshelled Reptiles" Modifier="100"></reputation>        
+
+        <grid Position="00" Tile="Terrain/sw_ground_desert_11.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="10" Tile="Terrain/sw_ground_desert_2.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="20" Tile="Terrain/sw_ground_desert_11.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="30" Tile="Terrain/sw_ground_desert_7.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="40" Tile="Terrain/sw_ground_desert_9.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+
+        <grid Position="01" Tile="Terrain/sw_ground_desert_4.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="11" Tile="Terrain/sw_ground_desert_6.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="21" Tile="Terrain/sw_joppa.bmp" Foreground="m" Detail="M" Background="k"></grid>
+        <grid Position="31" Tile="Terrain/sw_ground_desert_5.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="41" Tile="Terrain/sw_ground_desert_3.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+
+        <grid Position="02" Tile="Terrain/sw_ground_desert_7.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="12" Tile="Terrain/sw_ground_desert_6.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="22" Tile="Terrain/sw_ground_desert_6.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="32" Tile="Terrain/sw_ground_desert_11.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+        <grid Position="42" Tile="Terrain/sw_ground_desert_9.bmp" Foreground="Y" Detail="Y" Background="k"></grid>
+      </location>
+
+       <location ID="DesertCanyonsVillage" Name="{{W|砂漠の峡谷}}&#10;の村" Location="StringGameState:villageZeroStartingLocation">
+        <description>
+          {{c|&#249;}} 砂漠の峡谷にあるランダムな村。
+          {{c|&#249;}} 村でウェイフェアリングを教えてくれる。
+          {{c|&#249;}} 馬、カメ、ツタの評判 +50。
+        </description>
+        
+        <stringgamestate Name="VillageZeroRegion" Value="DesertCanyon"></stringgamestate>
+        <stringgamestate Name="RuinedJoppa" Value="Yes"></stringgamestate>
+        
+        <reputation Faction="Equines" Modifier="50"></reputation>
+        <reputation Faction="Tortoises" Modifier="50"></reputation>
+        <reputation Faction="Vines" Modifier="50"></reputation>        
+                
+        <grid Position="00" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="10" Tile="Terrain/sw_hills2.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="20" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="30" Tile="Terrain/sw_hills2.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="40" Tile="Terrain/tile_flowers1.bmp" Foreground="r" Detail="M" Background="k"></grid>
+
+        <grid Position="01" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="11" Tile="Terrain/sw_hills2.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="21" Tile="Terrain/sw_joppa.bmp" Foreground="r" Detail="R" Background="k"></grid>
+        <grid Position="31" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="41" Tile="Terrain/sw_hills2.bmp" Foreground="w" Detail="w" Background="k"></grid>
+
+        <grid Position="02" Tile="Terrain/sw_marsh_worldmap_2.bmp" Foreground="g" Detail="b" Background="k"></grid>
+        <grid Position="12" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="22" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="32" Tile="Terrain/sw_hills2.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="42" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+      </location>
+  
+      <location ID="HillsVillage" Name="{{Y|丘陵}}&#10;の村" Location="StringGameState:villageZeroStartingLocation">
+        <description>
+          {{c|&#249;}} 丘陵地帯にあるランダムな村。
+          {{c|&#249;}} 村で解体を教えてくれる。
+          {{c|&#249;}} 隠者の評判 +100。
+          {{c|&#249;}} {{r|血塗れの}}首輪を持って開始。
+        </description>
+        
+        <stringgamestate Name="VillageZeroRegion" Value="Hills"></stringgamestate>
+        <stringgamestate Name="RuinedJoppa" Value="Yes"></stringgamestate>
+
+        <item Blueprint="Blood-stained neck-ring"></item>
+        <reputation Faction="Hermits" Modifier="100"></reputation>
+                        
+        <grid Position="00" Tile="Terrain/sw_hills.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="10" Tile="Terrain/sw_hills_2.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="20" Tile="Terrain/sw_hills_2.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="30" Tile="Terrain/sw_hills.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="40" Tile="Terrain/sw_hills2.bmp" Foreground="y" Detail="y" Background="k"></grid>
+
+        <grid Position="01" Tile="Terrain/sw_hills_2.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="11" Tile="Terrain/sw_hills.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="21" Tile="Terrain/sw_joppa.bmp" Foreground="Y" Detail="g" Background="k"></grid>
+        <grid Position="31" Tile="Terrain/sw_hills.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="41" Tile="Terrain/tile_jungle1b.png" Foreground="g" Detail="G" Background="k"></grid>
+
+        <grid Position="02" Tile="Terrain/sw_hills_2.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="12" Tile="Terrain/sw_hills.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="22" Tile="Terrain/sw_hills_2.bmp" Foreground="y" Detail="y" Background="k"></grid>
+        <grid Position="32" Tile="Terrain/sw_hills.bmp" Foreground="w" Detail="w" Background="k"></grid>
+        <grid Position="42" Tile="Terrain/tile_jungle2.bmp" Foreground="g" Detail="G" Background="k"></grid>
+      </location>
+
+      <location ID="JoppaTutorial" Name="沈んだ隊商宿" Location="GlobalLocation:JoppaWorld.11.24.1.1.11@10,13" Set="Tutorial" ExcludeFromDaily="Yes">
+        <description>
+          クッドの辺境に到着する。
+        </description>
+
+        <grid Position="00" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="10" Tile="Terrain/sw_marsh_worldmap_1.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="20" Tile="Terrain/sw_joppa.bmp" Foreground="w" Detail="y" Background="k"></grid>
+        <grid Position="30" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="40" Tile="Terrain/sw_marsh_worldmap_1.bmp" Foreground="g" Detail="b" Background="k"></grid>
+
+        <grid Position="01" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="11" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="21" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="31" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="41" Tile="Terrain/sw_canyon.bmp" Foreground="w" Detail="w" Background="k"></grid>
+
+        <grid Position="02" Tile="Terrain/sw_marsh_worldmap_2.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="12" Tile="Terrain/sw_marsh_worldmap_3.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="22" Tile="Items/sw_bedroll.bmp" Foreground="w" Detail="y" Background="k"></grid>
+        <grid Position="32" Tile="Terrain/sw_marsh_worldmap_4.bmp" Foreground="g" Detail="g" Background="k"></grid>
+        <grid Position="42" Tile="Terrain/sw_marsh_worldmap_2.bmp" Foreground="g" Detail="b" Background="k"></grid>
+
+      </location>
+      
+    </locations>
+  
+  </module>
+
+  <module Class="XRL.CharacterBuilds.Qud.QudSpecificBootHandlersModule" Load="Replace">  <!-- responsible for handling the qud-implementation-specific game engine boot messages -->
+    
+  </module>
+    
+  <module Class="XRL.CharacterBuilds.Qud.QudGameBootModule" Load="Replace">  <!-- responsible for the general engine boot sequen -->
+
+  </module>
+</embarkmodules>
+
+

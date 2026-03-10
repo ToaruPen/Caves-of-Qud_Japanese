@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "id": "ui-help",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    { "key": "HelpScreen", "context": "Qud.UI.HelpScreen", "text": "ヘルプ画面" },
+    { "key": "Menu", "context": "Qud.UI.HelpScreen", "text": "メニュー" },
+    { "key": "navigate", "context": "Qud.UI.HelpScreen", "text": "移動" },
+    { "key": "Accept", "context": "Qud.UI.HelpScreen", "text": "決定" },
+    { "key": "Select", "context": "Qud.UI.HelpScreen", "text": "選択" },
+    { "key": "Keyboard && Mouse", "context": "Qud.UI.HelpScreen", "text": "キーボード＆マウス" },
+    { "key": "Gamepad", "context": "Qud.UI.HelpScreen", "text": "ゲームパッド" },
+
+    { "key": "{{W|Alt}}", "context": "Qud.UI.HelpRow", "text": "{{W|Alt}}" },
+    { "key": "{{C|[+]}}", "context": "Qud.UI.HelpRow", "text": "{{C|[+]}}" },
+    { "key": "{{C|[-]}}", "context": "Qud.UI.HelpRow", "text": "{{C|[-]}}" },
+    { "key": "~Highlight", "context": "Qud.UI.HelpRow", "text": "~ハイライト" }
+  ]
+}

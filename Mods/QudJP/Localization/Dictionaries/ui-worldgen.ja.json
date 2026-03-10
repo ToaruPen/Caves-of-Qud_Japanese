@@ -1,0 +1,228 @@
+{
+  "meta": {
+    "id": "ui-worldgen",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "[ Creating World ]",
+      "context": "XRL.UI.WorldCreationProgress.Header",
+      "text": "[ 世界を生成しています ]"
+    },
+    {
+      "key": " : &GComplete!",
+      "context": "XRL.UI.WorldCreationProgress.Complete",
+      "text": " : &G完了！"
+    },
+    {
+      "key": "Hardening math...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "数式を安定化しています..."
+    },
+    {
+      "key": "Initializing protocols...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "プロトコルを初期化しています..."
+    },
+    {
+      "key": "Resolving faction relationships...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "派閥関係を解決しています..."
+    },
+    {
+      "key": "Generating topography...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "地形を生成しています..."
+    },
+    {
+      "key": "Generating deep history...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "深層史を生成しています..."
+    },
+    {
+      "key": "Generating historical sites...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "歴史的遺構を生成しています..."
+    },
+    {
+      "key": "Generating rivers...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "河川を生成しています..."
+    },
+    {
+      "key": "Generating canyons...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "峡谷を生成しています..."
+    },
+    {
+      "key": "Planting world seeds...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "世界のシードを植え付けています..."
+    },
+    {
+      "key": "Adding player to world...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "プレイヤーを世界に配置しています..."
+    },
+    {
+      "key": "Starting game!",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "ゲームを開始しています！"
+    },
+    {
+      "key": "Generating lairs...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "巣窟を生成しています..."
+    },
+    {
+      "key": "Building forts...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "砦を建設しています..."
+    },
+    {
+      "key": "Building farms...",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "農場を建設しています..."
+    },
+    {
+        "key": "Generating village history...",
+        "context": "XRL.UI.WorldCreationProgress.StepProgress",
+        "text": "村の歴史を生成しています..."
+    },
+    {
+      "key": "Building JoppaWorld",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "JoppaWorld を構築しています"
+    },
+    {
+      "key": "Building JoppaWorld.11.22.1.1.10",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "JoppaWorld.11.22.1.1.10 を構築しています"
+    },
+    {
+      "key": "Building NorthSheva",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "NorthSheva を構築しています"
+    },
+    {
+      "key": "Loading Compat.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Compat.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading HistorySpice.json",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "HistorySpice.json を読み込んでいます"
+    },
+    {
+      "key": "Loading Factions.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Factions.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading Bodies.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Bodies.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading Mods.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Mods.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading PopulationTables.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "PopulationTables.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading SparkingBaetyls.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "SparkingBaetyls.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading genders",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "性別データを読み込んでいます"
+    },
+    {
+      "key": "Loading PronounSets.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "PronounSets.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading Relics.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Relics.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading Colors.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Colors.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading Naming.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Naming.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading object blueprints",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "オブジェクトのブループリントを読み込んでいます"
+    },
+    {
+      "key": "Loading Mutations.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Mutations.xml を読み込んでいます"
+    },
+    {
+      "key": "Initialize tinkering",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "細工を初期化しています"
+    },
+    {
+      "key": "Loading ZoneTemplates.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "ZoneTemplates.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading Quests.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Quests.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading BuildingTiles.txt",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "BuildingTiles.txt を読み込んでいます"
+    },
+    {
+      "key": "Loading Conversations.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Conversations.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading Skills.xml",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "Skills.xml を読み込んでいます"
+    },
+    {
+      "key": "Loading PronounSets",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "代名詞セットを読み込んでいます"
+    },
+    {
+      "key": "Initialize liquids",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "液体系を初期化しています"
+    },
+    {
+      "key": "Saving game",
+      "context": "XRL.UI.WorldCreationProgress.StepProgress",
+      "text": "ゲームを保存しています"
+    }
+  ]
+}

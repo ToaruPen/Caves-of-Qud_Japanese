@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "id": "ui-options",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Toggle Visibilty",
+      "context": "Qud.UI.OptionsCategoryControl.TOGGLE_OPTION.Description",
+      "text": "表示を切り替え"
+    },
+    {
+      "key": "Toggle Option",
+      "context": "Qud.UI.OptionsCheckboxControl.TOGGLE_OPTION.Description",
+      "text": "設定を切り替え"
+    },
+    {
+      "key": "Change Value",
+      "context": "Qud.UI.OptionsSliderControl.CHANGE_VALUE.Description",
+      "text": "値を変更"
+    },
+    {
+      "key": "Change Value",
+      "context": "Qud.UI.OptionsSliderControl.ARROWS_CHANGE_VALUE.Description",
+      "text": "値を変更（カーソル）"
+    },
+    {
+      "key": "Save",
+      "context": "Qud.UI.OptionsSliderControl.SAVE_VALUE.Description",
+      "text": "保存"
+    },
+    {
+      "key": "Cancel",
+      "context": "Qud.UI.OptionsSliderControl.CANCEL_VALUE.Description",
+      "text": "キャンセル"
+    },
+    {
+      "key": "Collapse All",
+      "context": "Qud.UI.OptionsScreen.COLLAPSE_ALL.Description",
+      "text": "すべて折りたたむ"
+    },
+    {
+      "key": "Expand All",
+      "context": "Qud.UI.OptionsScreen.EXPAND_ALL.Description",
+      "text": "すべて展開"
+    },
+    {
+      "key": "Help",
+      "context": "Qud.UI.OptionsScreen.HELP_TEXT.Description",
+      "text": "ヘルプ"
+    },
+    {
+      "key": "navigate",
+      "context": "Qud.UI.OptionsScreen.MenuOption.Navigate.Description",
+      "text": "移動"
+    },
+    {
+      "key": "Select",
+      "context": "Qud.UI.OptionsScreen.MenuOption.Select.Description",
+      "text": "決定"
+    },
+    {
+      "key": "Toggle Visibility",
+      "context": "Qud.UI.HelpScreen.MenuOption.ToggleVisibility.Description",
+      "text": "表示を切り替え"
+    },
+    {
+      "key": "navigate",
+      "context": "Qud.UI.HelpScreen.MenuOption.Navigate.Description",
+      "text": "移動"
+    },
+    {
+      "key": "{{R|press key...}}",
+      "context": "Qud.UI.KeybindBox.EditPrompt",
+      "text": "{{R|キーを押してください...}}"
+    },
+    {
+      "key": "{{K|None}}",
+      "context": "Qud.UI.KeybindRow.NoBindDisplay",
+      "text": "{{K|未設定}}"
+    },
+    {
+      "key": "remove keybind",
+      "context": "Qud.UI.KeybindsScreen.REMOVE_BIND.Description",
+      "text": "バインドを削除"
+    },
+    {
+      "key": "restore defaults",
+      "context": "Qud.UI.KeybindsScreen.RESTORE_DEFAULTS.Description",
+      "text": "デフォルトに戻す"
+    },
+    {
+      "key": "navigate",
+      "context": "Qud.UI.KeybindsScreen.MenuOption.Navigate.Description",
+      "text": "移動"
+    },
+    {
+      "key": "select",
+      "context": "Qud.UI.KeybindsScreen.MenuOption.Select.Description",
+      "text": "選択"
+    },
+    {
+      "key": "Keyboard && Mouse",
+      "context": "Qud.UI.KeybindsScreen.ControlTypeDisplayName.Keyboard",
+      "text": "キーボード＆マウス"
+    },
+    {
+      "key": "Gamepad",
+      "context": "Qud.UI.KeybindsScreen.ControlTypeDisplayName.Gamepad",
+      "text": "ゲームパッド"
+    },
+    {
+      "key": "Would you like to save your changes?",
+      "context": "Qud.UI.KeybindsScreen.Exit.SavePrompt",
+      "text": "変更内容を保存しますか？"
+    },
+    {
+      "key": "Are you sure you want to override your keymap with the default?",
+      "context": "Qud.UI.KeybindsScreen.RestoreDefaults.Confirm",
+      "text": "キー設定を既定に上書きします。よろしいですか？"
+    },
+    {
+      "key": "{{C|Configuring Controller:}} {{c|Keyboard && Mouse}}",
+      "context": "Qud.UI.KeybindsScreen.ConfiguringController.Keyboard",
+      "text": "{{C|設定中の入力デバイス:}} {{c|キーボード＆マウス}}"
+    },
+    {
+      "key": "{{C|Configuring Controller:}} {{c|<no controller detected>}}",
+      "context": "Qud.UI.KeybindsScreen.ConfiguringController.NoDevice",
+      "text": "{{C|設定中の入力デバイス:}} {{c|コントローラーが検出されません}}"
+    },
+    {
+      "key": "Select Controller",
+      "context": "Qud.UI.KeybindsScreen.SelectController.Title",
+      "text": "コントローラーを選択"
+    },
+    { "key": "UI",       "context": "Options.Category.UI.Label",       "text": "UI" },
+    { "key": "デバッグ", "context": "Options.Category.デバッグ.Label", "text": "デバッグ" },
+    { "key": "表示",     "context": "Options.Category.表示.Label",     "text": "表示" },
+    { "key": "自動化",   "context": "Options.Category.自動化.Label",   "text": "自動化" },
+    { "key": "自動取得", "context": "Options.Category.自動取得.Label", "text": "自動取得" }
+  ]
+}

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<genotypes>
+  <genotype Name="Mutated Human" DisplayName="突然変異した人間" MutationPoints="12" StatPoints="44" AllowedMutationCategories="*" RandomWeight="90" Subtypes="Callings" Class="" Tile="UI/sw_mutant.bmp" DetailColor="g" BodyObject="Humanoid" BaseHPGain="1-4" BaseSPGain="50" BaseMPGain="1" Species="human" IsMutant="true" CharacterBuilderModules="XRL.CharacterBuilds.Qud.QudCasteModule,XRL.CharacterBuilds.Qud.QudCyberneticsModule" Load="Replace">
+    <removeextrainfo>Mutations</removeextrainfo>
+    <removeextrainfo>Moderate starting attributes</removeextrainfo>
+    <removeextrainfo>-600 reputation with {{C|the Putus Templar}}</removeextrainfo>
+    <stat Name="Strength" Minimum="10" Maximum="24" ChargenDescription="{{W|筋力}}は近接攻撃で装甲を貫く力・与ダメージ・押し戻しへの耐性・所持重量を決定します。" />
+    <stat Name="Agility" Minimum="10" Maximum="24" ChargenDescription="{{W|敏捷}}は近接／遠隔武器の命中率と回避力を決定します。" />
+    <stat Name="Toughness" Minimum="10" Maximum="24" ChargenDescription="{{W|頑健}}はヒットポイント・自然回復速度・毒および病気への抵抗を決定します。" />
+    <stat Name="Intelligence" Minimum="10" Maximum="24" ChargenDescription="{{W|知力}}はスキルポイントとアーティファクト鑑定能力を決定します。" />
+    <stat Name="Willpower" Minimum="10" Maximum="24" ChargenDescription="{{W|意志力}}はアクティブ能力のリチャージ時間・精神攻撃への抵抗・自然回復速度を左右します。" />
+    <stat Name="Ego" Minimum="10" Maximum="24" ChargenDescription="{{W|自我}}は精神系突然変異の威力・商人との交渉力・他者の意志を支配する力を決定します。" />
+    <skills>
+      <skill Name="Tactics_Run" />
+      <skill Name="Survival_Camp" />
+    </skills>
+    <extrainfo>突然変異</extrainfo>
+    <extrainfo>平均的な初期能力値</extrainfo>
+    <extrainfo>{{C|プトゥス聖堂騎士団}} との評判 -600</extrainfo>
+  </genotype>
+  <genotype Name="True Kin" DisplayName="真性人類" MutationPoints="0" StatPoints="38" AllowedMutationCategories="" CyberneticsLicensePoints="2" RandomWeight="10" Subtypes="Castes" Class="" Tile="UI/sw_truekin.bmp" DetailColor="C" BodyObject="Humanoid" BaseHPGain="1-4" BaseSPGain="70" BaseMPGain="0" Species="human" IsTrueKin="true" CharacterBuilderModules="XRL.CharacterBuilds.Qud.QudCallingModule,XRL.CharacterBuilds.Qud.QudMutationsModule" Load="Replace">
+    <removeextrainfo>High starting attributes</removeextrainfo>
+    <removeextrainfo>Access to cybernetics</removeextrainfo>
+    <removeextrainfo>{{C|20}} bonus skill points each level</removeextrainfo>
+    <removeextrainfo>Bonus resistances based on arcology of origin</removeextrainfo>
+    <removeextrainfo>May rebuke robots</removeextrainfo>
+    <stat Name="Strength" Minimum="12" Maximum="24" ChargenDescription="{{W|筋力}}は近接攻撃で装甲を貫く力・与ダメージ・押し戻しへの耐性・所持重量を決定します。" />
+    <stat Name="Agility" Minimum="12" Maximum="24" ChargenDescription="{{W|敏捷}}は近接／遠隔武器の命中率と回避力を決定します。" />
+    <stat Name="Toughness" Minimum="12" Maximum="24" ChargenDescription="{{W|頑健}}はヒットポイント・自然回復速度・毒および病気への抵抗を決定します。" />
+    <stat Name="Intelligence" Minimum="12" Maximum="24" ChargenDescription="{{W|知力}}はスキルポイントとアーティファクト鑑定能力を決定します。" />
+    <stat Name="Willpower" Minimum="12" Maximum="24" ChargenDescription="{{W|意志力}}はアクティブ能力のリチャージ時間・精神攻撃への抵抗・自然回復速度を左右します。" />
+    <stat Name="Ego" Minimum="12" Maximum="24" ChargenDescription="{{W|自我}}は商人との交渉力および他者の意志を支配する力を決定します。" />
+    <skills>
+      <skill Name="Persuasion_RebukeRobot" />
+      <skill Name="Tactics_Run" />
+      <skill Name="Survival_Camp" />
+    </skills>
+    <reputations>
+      <reputation With="Templar" Value="600" />
+    </reputations>
+    <extrainfo>高い初期能力値</extrainfo>
+    <extrainfo>サイバネティクスへのアクセス</extrainfo>
+    <extrainfo>レベルごとに {{C|20}} スキルポイントを獲得</extrainfo>
+    <extrainfo>出身アーコロジーに応じて追加耐性を獲得</extrainfo>
+    <extrainfo>ロボットを叱責して無力化可能</extrainfo>
+  </genotype>
+</genotypes>
