@@ -138,3 +138,13 @@
 - `check_encoding.py`: `check_file()` に `exists()` / `is_file()` ガードを追加しても、`check_directory()` 経由では `is_file()` 確認済みのパスしか渡されないため既存動線には影響なし。
 - ruff S108: `/tmp/...` パスをテスト内で使う場合は `# noqa: S108` が必要。
 - テスト数: 49 → 53 (新規4件追加、全パス)。
+
+## 2026-03-11 Task 19 ドキュメント整備
+
+- README.md: 32行スタブから142行の包括的ドキュメントに書き直し。CI バッジ、Requirements テーブル、Install/Build/Test/Lint/Project Structure/Documentation セクションを追加。
+- docs/test-architecture.md: 164行。L1/L2/L3 の3層テーブル、DummyTarget パターンのコード例、層境界ルール、テストプロジェクト構成を記載。
+- docs/translation-process.md: 175行。XML/JSON 翻訳ファイルの種類、追加手順、色コード保全、変数プレースホルダー、検証ワークフロー、よくある間違いを記載。
+- docs/contributing.md: 197行。前提条件、開発環境セットアップ、Git ワークフロー、Conventional Commits 規約、コード品質要件（C#/Python）、テスト要件、CI パイプライン、重要な制約を記載。
+- CHANGELOG.md: 65行。Keep a Changelog 形式、0.1.0-dev (Unreleased) に全実装済み機能を英語で記載。
+- scripts/README.md: 219行。5スクリプト全ての用途・使い方・出力例・終了コードを記載。典型的なワークフローも追加。
+- docs/glossary.csv: ヘッダー English,Japanese,Short,Notes,Status、83エントリ、UTF-8 BOM なし、問題なし（変更不要）。
