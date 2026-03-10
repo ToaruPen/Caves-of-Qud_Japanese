@@ -122,3 +122,19 @@
 - 兄弟重複チェックは親要素ごとに `ID` と `Name` を別カウントして `count > 1` を警告化すると要件に合う。
 - 空翻訳チェックは leaf 要素に限定し、`<text>` の `None` / 空白のみ文字列を警告対象にすると過検出を抑えられる。
 - Ruff `D103` が `scripts/tests/` の test 関数にも適用されるため、各 test に短い docstring が必要。
+
+## 2026-03-11 Fail-fast hardening (Assemblies/src)
+- 起動時処理（`Translator.LoadTranslations` / `QudJPMod.ApplyHarmonyPatches`）は警告+継続ではなく例外送出に統一すると、Player.log で初期化失敗を即時に特定できる。
+- 辞書JSONのファイル単位障害は握りつぶさず伝播させる一方、ファイル内の不正エントリは `Trace.TraceWarning` でスキップ継続する分離が有効。
+- Harmony の `TargetMethod()` は null 許容運用でも、失敗時 `Trace.TraceError` を各パッチで明示すると「どのパッチが当たらなかったか」を更新追従時に即断できる。
+- L1 では `SetDictionaryDirectoryForTests` と生JSON書き込みヘルパーを使うと、`DirectoryNotFoundException` / `SerializationException` / `InvalidDataException` の fail-fast 回帰を安定再現できる。
+
+## 2026-03-11 Python fail-fast hardening
+- `validate_xml.py`: `errors="ignore"` を除去し strict UTF-8 デコードに変更。ET.parse() は ISO-8859-1 宣言のXMLを正常パースするが、後続の `read_text(encoding="utf-8")` が UnicodeDecodeError を投げるため、テストでは `<?xml encoding="ISO-8859-1"?>` + `\xe9` バイトの組み合わせが有効。
+- `_collect_xml_files()` の else-raise 追加で symlink等の非正規パスを拒否する際、`run_validation()` のハンドラに `ValueError` を追加する必要あり。
+- `diff_localization.py`: `ET.ParseError` の fallback は意図的だが、`as exc` で束縛して `sys.stderr` に警告出力すると、サイレント降格からデバッグ可能な降格に変わる。
+- `_extract_books_entries_regex()` の set comprehension を for ループに展開すると、個別 decode 例外を投げられる。
+- `_extract_generic_entries()` の空集合 raise は `_is_blank_xml()` + `return set()` の上流で既にガードされているため、到達するのは非空だが ID/Name なし XML のみ。
+- `check_encoding.py`: `check_file()` に `exists()` / `is_file()` ガードを追加しても、`check_directory()` 経由では `is_file()` 確認済みのパスしか渡されないため既存動線には影響なし。
+- ruff S108: `/tmp/...` パスをテスト内で使う場合は `# noqa: S108` が必要。
+- テスト数: 49 → 53 (新規4件追加、全パス)。

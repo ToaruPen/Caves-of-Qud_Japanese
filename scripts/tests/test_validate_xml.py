@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from scripts.validate_xml import main
+from scripts.validate_xml import main, validate_xml_file
 
 
 def _write_xml(path: Path, content: str) -> None:
@@ -108,3 +108,14 @@ def test_file_with_no_issues_reports_ok(tmp_path: Path, capsys: pytest.CaptureFi
 
     assert result == 0
     assert f"Checking {xml_path}... OK" in captured.out
+
+
+def test_invalid_utf8_reports_error_in_color_scan(tmp_path: Path) -> None:
+    """Invalid UTF-8 bytes are reported as validation error, not silently ignored."""
+    xml_path = tmp_path / "bad_encoding.xml"
+    xml_path.write_bytes(b'<?xml version="1.0" encoding="ISO-8859-1"?>\n<root><text>\xe9</text></root>')
+
+    result = validate_xml_file(xml_path)
+
+    assert len(result.errors) >= 1
+    assert any("not valid UTF-8" in e for e in result.errors)

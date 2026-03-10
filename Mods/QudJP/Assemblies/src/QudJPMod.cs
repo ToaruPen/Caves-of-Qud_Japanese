@@ -32,21 +32,14 @@ public static class QudJPMod
 
     private static void ApplyHarmonyPatches()
     {
-        try
+        var harmony = CreateHarmony("com.qudjp.localization");
+        if (harmony is null)
         {
-            var harmony = CreateHarmony("com.qudjp.localization");
-            if (harmony is null)
-            {
-                Trace.TraceWarning("QudJP: Harmony runtime not found. Skipping patch bootstrap.");
-                return;
-            }
+            throw new InvalidOperationException(
+                "QudJP: Harmony runtime not available. The mod cannot function without Harmony.");
+        }
 
-            InvokePatchAll(harmony);
-        }
-        catch (Exception ex)
-        {
-            Trace.TraceError($"QudJP: failed to apply Harmony patches. {ex}");
-        }
+        InvokePatchAll(harmony);
     }
 
     private static object? CreateHarmony(string harmonyId)
@@ -54,12 +47,14 @@ public static class QudJPMod
         var harmonyType = ResolveHarmonyType();
         if (harmonyType is null)
         {
+            Trace.TraceError("QudJP: HarmonyLib.Harmony type not found in any loaded assembly.");
             return null;
         }
 
         var constructor = harmonyType.GetConstructor(new[] { typeof(string) });
         if (constructor is null)
         {
+            Trace.TraceError("QudJP: HarmonyLib.Harmony(string) constructor not found.");
             return null;
         }
 

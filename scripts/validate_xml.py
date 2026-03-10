@@ -35,6 +35,10 @@ def _collect_xml_files(paths: list[Path]) -> list[Path]:
 
         if input_path.is_file():
             xml_files.add(input_path)
+            continue
+
+        msg = f"Path is not a regular file or directory: {input_path}"
+        raise ValueError(msg)
 
     return sorted(xml_files, key=str)
 
@@ -134,7 +138,11 @@ def validate_xml_file(path: Path) -> ValidationResult:
         errors.append(f"XML parse failed: {exc}")
         return ValidationResult(path=path, errors=errors, warnings=warnings)
 
-    raw_text = path.read_text(encoding="utf-8", errors="ignore")
+    try:
+        raw_text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError as exc:
+        errors.append(f"File is not valid UTF-8 (cannot scan color codes): {exc}. Save as UTF-8 without BOM.")
+        return ValidationResult(path=path, errors=errors, warnings=warnings)
     if line_number := _find_unbalanced_color_line(raw_text):
         warnings.append(f"Unbalanced color code at line {line_number}")
 
@@ -173,7 +181,7 @@ def run_validation(paths: list[Path], *, strict: bool) -> int:
     """
     try:
         xml_files = _collect_xml_files(paths)
-    except FileNotFoundError as exc:
+    except (FileNotFoundError, ValueError) as exc:
         print(f"Error: {exc}", file=sys.stderr)  # noqa: T201
         return 1
 

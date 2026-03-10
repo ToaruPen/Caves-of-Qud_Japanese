@@ -139,6 +139,9 @@ def _extract_generic_entries(path: Path) -> set[str]:
         identifier = element.attrib.get("ID") or element.attrib.get("Name")
         if identifier:
             fallback_ids.add(identifier)
+    if not fallback_ids:
+        msg = f"No ID or Name attributes found in {path}. File may use an unsupported XML structure."
+        raise ValueError(msg)
     return fallback_ids
 
 
@@ -146,13 +149,26 @@ def _extract_books_entries(path: Path) -> set[str]:
     try:
         root = _parse_xml_root(path)
         return {book_id for book in root.findall("book") if (book_id := book.attrib.get("ID"))}
-    except ET.ParseError:
+    except ET.ParseError as exc:
+        print(  # noqa: T201
+            f"WARNING: Books XML parse failed for {path}, falling back to regex extraction: {exc}",
+            file=sys.stderr,
+        )
         return _extract_books_entries_regex(path)
 
 
 def _extract_books_entries_regex(path: Path) -> set[str]:
     raw = path.read_bytes()
-    return {match.decode("utf-8", errors="ignore") for match in _BOOK_ID_PATTERN.findall(raw) if match}
+    result: set[str] = set()
+    for match in _BOOK_ID_PATTERN.findall(raw):
+        if not match:
+            continue
+        try:
+            result.add(match.decode("utf-8"))
+        except UnicodeDecodeError as exc:
+            msg = f"Non-UTF-8 book ID in {path}: {exc}"
+            raise ValueError(msg) from exc
+    return result
 
 
 def _extract_entries(path: Path, *, category: str) -> set[str]:

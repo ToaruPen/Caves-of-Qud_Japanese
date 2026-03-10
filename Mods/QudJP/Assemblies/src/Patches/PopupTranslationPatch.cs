@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using HarmonyLib;
 
@@ -30,6 +31,7 @@ public static class PopupTranslationPatch
     {
         if (__originalMethod is null || __args is null)
         {
+            Trace.TraceError("QudJP: PopupTranslationPatch.Prefix received null originalMethod or args.");
             return;
         }
 
@@ -114,6 +116,7 @@ public static class PopupTranslationPatch
         var targetType = AccessTools.TypeByName(TargetTypeName);
         if (targetType is null)
         {
+            Trace.TraceError($"QudJP: PopupTranslationPatch target type '{TargetTypeName}' not found.");
             return null;
         }
 
@@ -127,6 +130,8 @@ public static class PopupTranslationPatch
             }
         }
 
+        Trace.TraceError(
+            $"QudJP: PopupTranslationPatch method '{methodName}' with {parameterCount} params not found on '{TargetTypeName}'.");
         return null;
     }
 }

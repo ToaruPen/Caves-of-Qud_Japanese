@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from scripts.diff_localization import main
+from scripts.diff_localization import _extract_generic_entries, main
 
 
 def _write_text(path: Path, content: str) -> None:
@@ -214,3 +214,13 @@ def test_books_parse_error_falls_back_to_regex(tmp_path: Path, capsys: pytest.Ca
     assert result == 0
     assert "Books" in captured.out
     assert "100.0%" in captured.out
+    assert "WARNING" in captured.err
+
+
+def test_generic_entries_raises_on_no_id_or_name(tmp_path: Path) -> None:
+    """_extract_generic_entries raises ValueError for XML with no ID/Name attributes."""
+    xml_path = tmp_path / "NoAttrs.xml"
+    _write_text(xml_path, "<root><item/><item/></root>")
+
+    with pytest.raises(ValueError, match="No ID or Name attributes found"):
+        _extract_generic_entries(xml_path)

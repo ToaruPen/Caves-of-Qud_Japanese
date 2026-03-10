@@ -120,3 +120,17 @@ class TestMain:
     def test_nonexistent_directory_returns_one(self) -> None:
         """Nonexistent directory results in exit code 1."""
         assert main(["/nonexistent/path/abc123"]) == 1
+
+
+class TestCheckFileValidation:
+    """Tests for check_file input validation."""
+
+    def test_nonexistent_file_raises(self) -> None:
+        """check_file raises FileNotFoundError for a missing path."""
+        with pytest.raises(FileNotFoundError, match="File not found"):
+            check_file(Path("/tmp/nonexistent_qudjp"))  # noqa: S108 -- intentional nonexistent path for test
+
+    def test_directory_raises_value_error(self, tmp_path: Path) -> None:
+        """check_file raises ValueError when given a directory."""
+        with pytest.raises(ValueError, match="Not a regular file"):
+            check_file(tmp_path)

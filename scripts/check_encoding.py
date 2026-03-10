@@ -35,7 +35,17 @@ def check_file(path: Path) -> list[EncodingIssue]:
 
     Returns:
         List of encoding issues found. Empty if the file is clean.
+
+    Raises:
+        FileNotFoundError: If path does not exist.
+        ValueError: If path is not a regular file.
     """
+    if not path.exists():
+        msg = f"File not found: {path}"
+        raise FileNotFoundError(msg)
+    if not path.is_file():
+        msg = f"Not a regular file: {path}. Pass a file path, not a directory."
+        raise ValueError(msg)
     issues: list[EncodingIssue] = []
     raw = path.read_bytes()
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Reflection;
 using HarmonyLib;
 
@@ -11,7 +12,13 @@ public static class UITextSkinTranslationPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method("XRL.UI.UITextSkin:SetText", new[] { typeof(string) });
+        var method = AccessTools.Method("XRL.UI.UITextSkin:SetText", new[] { typeof(string) });
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve UITextSkin.SetText(string). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static void Prefix(ref string text)

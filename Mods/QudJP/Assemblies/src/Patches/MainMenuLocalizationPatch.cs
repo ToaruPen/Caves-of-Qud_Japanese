@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using HarmonyLib;
 
@@ -12,7 +13,13 @@ public static class MainMenuLocalizationPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(TargetTypeName + ":Show");
+        var method = AccessTools.Method(TargetTypeName + ":Show");
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Qud.UI.MainMenu.Show(). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static void Postfix(object __instance)
@@ -20,6 +27,7 @@ public static class MainMenuLocalizationPatch
         var targetType = __instance?.GetType() ?? AccessTools.TypeByName(TargetTypeName);
         if (targetType is null)
         {
+            Trace.TraceError("QudJP: MainMenuLocalizationPatch target type is null. Skipping translation.");
             return;
         }
 

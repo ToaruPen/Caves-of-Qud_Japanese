@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace QudJP.Tests.L1;
@@ -66,6 +67,40 @@ public sealed class TranslatorTests
         });
     }
 
+    [Test]
+    [Category("L1")]
+    public void Translate_ThrowsDirectoryNotFoundException_WhenDictionaryDirectoryMissing()
+    {
+        Translator.SetDictionaryDirectoryForTests("/nonexistent/qudjp/path");
+
+        Assert.Throws<DirectoryNotFoundException>(() => Translator.Translate("test"));
+    }
+
+    [Test]
+    [Category("L1")]
+    public void Translate_ThrowsSerializationException_WhenDictionaryJsonIsCorrupt()
+    {
+        WriteRawDictionary("corrupt.ja.json", "{\"entries\":[{\"key\":\"Hello\",\"text\":\"こんにちは\"}");
+
+        Assert.Throws<SerializationException>(() => Translator.Translate("Hello"));
+    }
+
+    [Test]
+    [Category("L1")]
+    public void Translate_ThrowsInvalidDataException_WhenEntriesArrayIsMissing()
+    {
+        WriteRawDictionary("missing-entries.ja.json", "{}");
+
+        Assert.Throws<InvalidDataException>(() => Translator.Translate("Hello"));
+    }
+
+    [Test]
+    [Category("L1")]
+    public void Translate_ThrowsArgumentNullException_WhenKeyIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => Translator.Translate(null!));
+    }
+
     private void WriteDictionary(string fileName, string key, string text)
     {
         var content =
@@ -84,5 +119,11 @@ public sealed class TranslatorTests
         return value
             .Replace("\\", "\\\\", StringComparison.Ordinal)
             .Replace("\"", "\\\"", StringComparison.Ordinal);
+    }
+
+    private void WriteRawDictionary(string fileName, string content)
+    {
+        var path = Path.Combine(tempDirectory, fileName);
+        File.WriteAllText(path, content + Environment.NewLine, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
     }
 }

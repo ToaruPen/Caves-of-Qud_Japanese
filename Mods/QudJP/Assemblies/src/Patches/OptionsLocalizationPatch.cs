@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 using HarmonyLib;
 
@@ -11,13 +12,20 @@ public static class OptionsLocalizationPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(TargetTypeName + ":Show");
+        var method = AccessTools.Method(TargetTypeName + ":Show");
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Qud.UI.OptionsScreen.Show(). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static void Postfix(object __instance)
     {
         if (__instance is null)
         {
+            Trace.TraceError("QudJP: OptionsLocalizationPatch.Postfix received null __instance. Skipping translation.");
             return;
         }
 

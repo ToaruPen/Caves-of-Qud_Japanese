@@ -93,8 +93,8 @@ public static class Translator
         var dictionaryDirectory = ResolveDictionaryDirectory();
         if (!Directory.Exists(dictionaryDirectory))
         {
-            Trace.TraceWarning($"QudJP Translator: dictionary directory does not exist: {dictionaryDirectory}");
-            return translations;
+            throw new DirectoryNotFoundException(
+                $"QudJP Translator: dictionary directory does not exist: {dictionaryDirectory}");
         }
 
         var files = Directory.GetFiles(dictionaryDirectory, "*.ja.json", SearchOption.TopDirectoryOnly);
@@ -120,30 +120,25 @@ public static class Translator
 
     private static void LoadDictionaryFile(string filePath, Dictionary<string, string> translations)
     {
-        try
+        using var stream = File.OpenRead(filePath);
+        var serializer = new DataContractJsonSerializer(typeof(DictionaryDocument));
+        var document = serializer.ReadObject(stream) as DictionaryDocument;
+        if (document?.Entries is null)
         {
-            using var stream = File.OpenRead(filePath);
-            var serializer = new DataContractJsonSerializer(typeof(DictionaryDocument));
-            var document = serializer.ReadObject(stream) as DictionaryDocument;
-            if (document?.Entries is null)
-            {
-                return;
-            }
-
-            for (var index = 0; index < document.Entries.Count; index++)
-            {
-                var entry = document.Entries[index];
-                if (entry is null || string.IsNullOrEmpty(entry.Key) || entry.Text is null)
-                {
-                    continue;
-                }
-
-                translations[entry.Key!] = entry.Text;
-            }
+            throw new InvalidDataException($"Dictionary file has no entries array: {filePath}");
         }
-        catch (Exception ex)
+
+        for (var index = 0; index < document.Entries.Count; index++)
         {
-            Trace.TraceWarning($"QudJP Translator: failed to read dictionary '{filePath}'. {ex.Message}");
+            var entry = document.Entries[index];
+            if (entry is null || string.IsNullOrEmpty(entry.Key) || entry.Text is null)
+            {
+                Trace.TraceWarning(
+                    $"QudJP Translator: skipped malformed entry at index {index} in '{filePath}'.");
+                continue;
+            }
+
+            translations[entry.Key!] = entry.Text;
         }
     }
 

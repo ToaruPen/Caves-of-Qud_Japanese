@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Diagnostics;
 using System.Reflection;
 using HarmonyLib;
 
@@ -72,7 +73,13 @@ public static class GrammarAPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(GrammarPatchTarget.TypeName + ":A", new[] { typeof(string), typeof(bool) });
+        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":A", new[] { typeof(string), typeof(bool) });
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.A(string, bool). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static bool Prefix(string Word, bool Capitalize, ref string __result)
@@ -89,7 +96,13 @@ public static class GrammarPluralizePatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(GrammarPatchTarget.TypeName + ":Pluralize", new[] { typeof(string) });
+        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":Pluralize", new[] { typeof(string) });
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.Pluralize(string). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static bool Prefix(string word, ref string __result)
@@ -105,7 +118,13 @@ public static class GrammarMakePossessivePatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(GrammarPatchTarget.TypeName + ":MakePossessive", new[] { typeof(string) });
+        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":MakePossessive", new[] { typeof(string) });
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.MakePossessive(string). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static bool Prefix(string word, ref string __result)
@@ -121,7 +140,13 @@ public static class GrammarMakeAndListPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeAndList", new[] { typeof(List<string>) });
+        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeAndList", new[] { typeof(List<string>) });
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.MakeAndList(List<string>). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static bool Prefix(List<string> Items, ref string __result)
@@ -137,7 +162,13 @@ public static class GrammarMakeOrListPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeOrList", new[] { typeof(List<string>) });
+        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeOrList", new[] { typeof(List<string>) });
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.MakeOrList(List<string>). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static bool Prefix(List<string> Items, ref string __result)
@@ -153,7 +184,13 @@ public static class GrammarSplitOfSentenceListPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(GrammarPatchTarget.TypeName + ":SplitOfSentenceList");
+        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":SplitOfSentenceList");
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.SplitOfSentenceList(). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static bool Prefix(string Text, ref List<string> __result)
@@ -169,7 +206,13 @@ public static class GrammarInitCapsPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(GrammarPatchTarget.TypeName + ":InitCaps", new[] { typeof(string) });
+        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":InitCaps", new[] { typeof(string) });
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.InitCaps(string). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static bool Prefix(string Text, ref string __result)
@@ -185,7 +228,13 @@ public static class GrammarCardinalNumberPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        return AccessTools.Method(GrammarPatchTarget.TypeName + ":CardinalNumber", new[] { typeof(int) });
+        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":CardinalNumber", new[] { typeof(int) });
+        if (method is null)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.CardinalNumber(int). Patch will not apply.");
+        }
+
+        return method;
     }
 
     public static bool Prefix(int Number, ref string __result)
