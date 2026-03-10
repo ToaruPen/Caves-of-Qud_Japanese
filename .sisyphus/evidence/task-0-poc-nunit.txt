@@ -1,0 +1,12 @@
+  Determining projects to restore...
+/private/tmp/qudjp-poc/QudJP.PoC.Tests/QudJP.PoC.Tests.csproj : warning NU1701: Package 'NUnit3TestAdapter 5.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.
+  All projects are up-to-date for restore.
+/private/tmp/qudjp-poc/QudJP.PoC.Tests/QudJP.PoC.Tests.csproj : warning NU1701: Package 'NUnit3TestAdapter 5.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project. [TargetFramework=net10.0]
+  QudJP.PoC.Tests -> /private/tmp/qudjp-poc/QudJP.PoC.Tests/bin/Debug/net10.0/QudJP.PoC.Tests.dll
+Test run for /private/tmp/qudjp-poc/QudJP.PoC.Tests/bin/Debug/net10.0/QudJP.PoC.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (arm64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 486 ms - QudJP.PoC.Tests.dll (net10.0)
