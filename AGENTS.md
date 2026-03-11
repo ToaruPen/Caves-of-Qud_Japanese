@@ -126,12 +126,12 @@ Examples:
 
 ## Mod Deployment
 
-ゲームへの Mod デプロイ方法は [docs/deployment.md](docs/deployment.md) を参照。
+See [docs/deployment.md](docs/deployment.md) for full deployment instructions.
 
-**要点**:
-- `python scripts/sync_mod.py` でデプロイ（推奨）
-- ゲームに必要なのは `manifest.json` + `QudJP.dll` + `Localization/` のみ
-- `.cs` ソースファイルは絶対にデプロイしない（ゲームのコンパイラがエラーを出す）
+**Key points**:
+- Deploy with `python scripts/sync_mod.py` (recommended)
+- The game only needs `manifest.json` + `QudJP.dll` + `Localization/`
+- NEVER deploy `.cs` source files (the game's Unity/Mono compiler will attempt to compile them and fail)
 
 ## Constraints
 

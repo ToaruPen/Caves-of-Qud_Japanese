@@ -1,49 +1,49 @@
-# Mod デプロイ手順
+# Mod Deployment Guide
 
-QudJP Mod をゲームにデプロイする手順です。
-
----
-
-## 前提条件
-
-- Caves of Qud がインストールされていること（Steam 版 macOS）
-- `dotnet build` で `QudJP.dll` がビルド済みであること
+How to deploy the QudJP mod to the Caves of Qud game directory.
 
 ---
 
-## デプロイ方法
+## Prerequisites
 
-### 方法 1: sync_mod.py（推奨）
+- Caves of Qud installed (Steam, macOS)
+- `QudJP.dll` built via `dotnet build`
+
+---
+
+## Deployment Methods
+
+### Method 1: sync_mod.py (Recommended)
 
 ```bash
-# ビルド → デプロイ
+# Build then deploy
 dotnet build Mods/QudJP/Assemblies/QudJP.csproj
 python scripts/sync_mod.py
 ```
 
-`sync_mod.py` は rsync の include-first 戦略で、ゲームに必要なファイルのみをデプロイします。
+`sync_mod.py` uses an rsync include-first strategy to deploy only game-essential files.
 
-**ドライラン**（実際にはコピーしない）:
+**Dry run** (preview without copying):
 
 ```bash
 python scripts/sync_mod.py --dry-run
 ```
 
-**フォント除外**（フォントを変更していない場合に高速化）:
+**Exclude fonts** (faster when fonts have not changed):
 
 ```bash
 python scripts/sync_mod.py --exclude-fonts
 ```
 
-### 方法 2: 手動コピー
+### Method 2: Manual Copy
 
 ```bash
 GAME_MODS="$HOME/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods"
 
-# 古いデプロイを削除
+# Remove previous deployment
 rm -rf "$GAME_MODS/QudJP"
 
-# 必要なファイルのみコピー
+# Copy only required files
 mkdir -p "$GAME_MODS/QudJP/Assemblies"
 cp Mods/QudJP/manifest.json "$GAME_MODS/QudJP/"
 cp Mods/QudJP/Assemblies/QudJP.dll "$GAME_MODS/QudJP/Assemblies/"
@@ -52,34 +52,34 @@ cp -r Mods/QudJP/Localization "$GAME_MODS/QudJP/"
 
 ---
 
-## デプロイされるファイル
+## Deployed Files
 
-ゲームに必要なのは以下の 3 種類のみです:
+The game requires exactly three types of files:
 
-| ファイル | 役割 |
-|---------|------|
-| `manifest.json` | Mod メタデータ（ID、タイトル、DLL パス） |
-| `Assemblies/QudJP.dll` | Harmony パッチ DLL（ビルド済みバイナリ） |
-| `Localization/` | XML 翻訳ファイル + JSON 辞書 |
+| File | Purpose |
+|------|---------|
+| `manifest.json` | Mod metadata (ID, title, DLL path) |
+| `Assemblies/QudJP.dll` | Pre-compiled Harmony patch DLL |
+| `Localization/` | XML translation files + JSON dictionaries |
 
-### デプロイしてはいけないファイル
+### Files That Must NOT Be Deployed
 
-| ファイル | 理由 |
-|---------|------|
-| `*.cs` | ゲームの Unity/Mono コンパイラが解釈を試みてエラーになる |
-| `*.csproj`, `*.sln` | ビルド設定ファイル（ゲーム不要） |
-| `*.pdb` | デバッグシンボル（ゲーム不要） |
-| `bin/`, `obj/` | ビルドアーティファクト |
-| `src/` | ソースコードディレクトリ |
-| `QudJP.Tests/` | テストプロジェクト |
-| `QudJP.Analyzers/` | Roslyn アナライザープロジェクト |
-| `AGENTS.md` | 開発用ドキュメント |
+| File | Reason |
+|------|--------|
+| `*.cs` | Game's Unity/Mono compiler attempts to compile them and fails |
+| `*.csproj`, `*.sln` | Build configuration files (not needed by the game) |
+| `*.pdb` | Debug symbols (not needed by the game) |
+| `bin/`, `obj/` | Build artifacts |
+| `src/` | Source code directory |
+| `QudJP.Tests/` | Test project |
+| `QudJP.Analyzers/` | Roslyn analyzer project |
+| `AGENTS.md` | Development documentation |
 
-> **重要**: ゲームの Mod システムは、Mod ディレクトリ内の `.cs` ファイルを自動的にコンパイルしようとします。QudJP は事前コンパイル済み DLL を使用するため、ソースファイルが存在すると C# 10+ 構文（`global using`、ファイルスコープ名前空間など）が古いコンパイラで解釈できずエラーになります。
+> **Critical**: The game's mod system automatically attempts to compile any `.cs` file found in the mod directory. QudJP uses a pre-compiled DLL, so if source files are present, C# 10+ syntax (`global using`, file-scoped namespaces, etc.) will cause compilation errors in the game's older compiler (CS8652, CS1514, +438 errors).
 
 ---
 
-## デプロイ先パス（macOS Steam）
+## Deployment Target Path (macOS Steam)
 
 ```
 ~/Library/Application Support/Steam/steamapps/common/
@@ -88,30 +88,30 @@ cp -r Mods/QudJP/Localization "$GAME_MODS/QudJP/"
 
 ---
 
-## デプロイ後の確認
+## Post-Deployment Verification
 
-1. ゲームを起動
-2. Mod マネージャーで **「Caves of Qud 日本語化」** が表示されることを確認
-3. ENABLED に設定
-4. ゲームを再起動し、Options 画面が日本語で表示されることを確認
+1. Launch the game
+2. Confirm **"Caves of Qud 日本語化"** appears in the Mod Manager
+3. Set the mod to ENABLED
+4. Restart the game and verify the Options screen displays Japanese text
 
-### トラブルシューティング
+### Troubleshooting
 
-| 症状 | 原因 | 対処 |
-|------|------|------|
-| FAILED + CS8652/CS1514 エラー | `.cs` ファイルがデプロイされている | `sync_mod.py` で再デプロイ（ソース除外） |
-| Mod が表示されない | `manifest.json` が配置されていない | デプロイ先に `manifest.json` があるか確認 |
-| 日本語が □（豆腐）表示 | フォント未同梱 | Fonts ディレクトリの配置を確認 |
-| DLL 読み込みエラー | `QudJP.dll` がビルドされていない | `dotnet build` を実行後に再デプロイ |
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| FAILED + CS8652/CS1514 errors | `.cs` source files were deployed | Re-deploy with `sync_mod.py` (excludes source files) |
+| Mod not listed | `manifest.json` not deployed | Verify `manifest.json` exists at the deploy target |
+| Japanese text shows as □ (tofu) | CJK font not bundled | Verify Fonts directory is deployed |
+| DLL load error | `QudJP.dll` not built | Run `dotnet build` then re-deploy |
 
 ---
 
-## L3 テスト（ゲーム内動作確認）
+## L3 Testing (In-Game Verification)
 
-自動テスト（L1/L2）ではカバーできないゲーム内動作を手動で確認します:
+Manual checks that cannot be covered by automated tests (L1/L2):
 
-- [ ] Mod マネージャーに「Caves of Qud 日本語化」が表示される
-- [ ] Options 画面が日本語で表示される
-- [ ] キャラクター作成画面が日本語化されている
-- [ ] 日本語文字が □（豆腐）にならない
-- [ ] Player.log に Missing glyph / エンコーディングエラーがない
+- [ ] "Caves of Qud 日本語化" appears in the Mod Manager
+- [ ] Options screen displays Japanese text
+- [ ] Character creation screen is localized
+- [ ] Japanese characters render correctly (no □ tofu)
+- [ ] Player.log contains no Missing glyph / encoding errors
