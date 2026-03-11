@@ -1212,7 +1212,7 @@ Wave FINAL (After ALL tasks — verification, 4 parallel):
   **Commit**: YES
   - Message: `feat(harmony): add Grammar neutralization patches with L1 tests`
 
-- [ ] 12. 会話・書籍・クエストの統合検証
+- [x] 12. 会話・書籍・クエストの統合検証
 
   **What to do**:
   - **XML Merge 方式による統合** (Harmonyパッチ不要の部分):
@@ -1336,7 +1336,7 @@ Wave FINAL (After ALL tasks — verification, 4 parallel):
   **Commit**: YES
   - Message: `feat(localization): verify ObjectBlueprints integration`
 
-- [ ] 14. UI パッチ拡張 (CharGen, Inventory, Status等) + L2テスト
+- [x] 14. UI パッチ拡張 (CharGen, Inventory, Status等) + L2テスト
 
   **What to do**:
   - キャラクター作成画面（Genotypes, Subtypes, Mutations, EmbarkModules）
