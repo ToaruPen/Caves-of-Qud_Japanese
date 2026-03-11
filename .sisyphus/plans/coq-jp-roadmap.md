@@ -1282,7 +1282,7 @@ Wave FINAL (After ALL tasks — verification, 4 parallel):
   **Commit**: YES
   - Message: `feat(localization): integrate conversations, books, quests via XML Merge`
 
-- [ ] 13. ObjectBlueprints 全カテゴリ統合
+- [x] 13. ObjectBlueprints 全カテゴリ統合
 
   **What to do**:
   - レガシーから移行済みの12+サブカテゴリのObjectBlueprint XMLをゲーム内で検証:
