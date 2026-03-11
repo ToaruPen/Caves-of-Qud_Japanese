@@ -65,7 +65,7 @@ dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCa
 dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L2
 ```
 
-現在のテスト数: **50 件**（L1: 41 件、L2: 9 件）
+現在のテスト数: **96 件**（L1 + L2）
 
 ### Python テスト
 
@@ -73,7 +73,7 @@ dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCa
 pytest scripts/tests/
 ```
 
-現在のテスト数: **53 件**
+現在のテスト数: **59 件**
 
 ---
 

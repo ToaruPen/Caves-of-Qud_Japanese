@@ -190,3 +190,31 @@
 - CharGen/Inventory はゲーム更新で型名が変わりやすいため、既知型名配列 + 名前空間/型名パターンのフォールバック走査で `string` 戻り値メソッドをまとめて Postfix する設計が保守しやすい。
 - 共有ソースを `net48` と `net10.0` の両方で analyzer clean にするには、`StringComparison.OrdinalIgnoreCase` 付き部分一致を `#if NET48` で `IndexOf`、それ以外で `Contains` に分岐するヘルパー化が有効（CA2249 回避）。
 - L2は `DummyGetDisplayNameEvent` + UI拡張テスト1ファイルで8ケース（GetDisplayName 4 / CharGen 2 / Inventory 2）を追加し、全体テストは 96 passed まで増加した。
+
+## 2026-03-11 Task 20: GitHub Release Preparation (v0.1.0)
+
+### DLL Output Path
+- `QudJP.csproj` uses `<OutputPath>$(MSBuildProjectDirectory)/</OutputPath>` with `AppendTargetFrameworkToOutputPath=false`
+- DLL is output to `Mods/QudJP/Assemblies/QudJP.dll` directly (NOT `bin/Release/net48/`)
+- AGENTS.md context said `bin/Release/net48/` but actual path is different — always verify with `find`
+
+### build_release.py Patterns
+- Use `zipfile.ZipFile` with `ZIP_DEFLATED` for compression
+- ZIP root must be `QudJP/` so users extract directly into Mods/
+- `localization_dir.parent` is `Mods/QudJP/` — use `relative_to(localization_dir.parent)` to get `Localization/...` relative paths
+- `rglob("*.xml")` not `rglob("**/*.xml")` — the `**` is implicit in rglob
+
+### Ruff Rules Encountered
+- `RUF043`: regex metacharacters in `match=` need raw string `r"..."` or `re.escape()`
+- `RUF059`: unused unpacked variable needs `_` prefix
+- `ARG002`: unused method argument in test class methods
+- `PLC0415`: imports must be at top-level (no local imports inside functions/methods)
+- `SIM117`: nested `with` statements should use parenthesized form
+
+### Test Count (final)
+- C# NUnit: 96 tests (L1 + L2), all pass
+- Python pytest: 80 tests (59 existing + 21 new test_build_release.py), all pass
+
+### ZIP Contents (v0.1.0-dev)
+- 73 files total: 1 manifest + 1 DLL + 71 localization files
+- Localization: 36 XML files + 35 JSON files
