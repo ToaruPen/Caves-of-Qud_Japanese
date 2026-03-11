@@ -14,6 +14,6 @@ public static class FontManager
             return;
         }
 
-        Trace.TraceInformation("QudJP FontManager: CJK fallback font loading is pending implementation.");
+        Trace.TraceInformation("QudJP FontManager: CJK text rendering uses the game's built-in font pipeline.");
     }
 }

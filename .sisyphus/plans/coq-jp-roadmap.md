@@ -1847,7 +1847,7 @@ Wave FINAL (After ALL tasks — verification, 4 parallel):
 
 ## Final Verification Wave
 
-- [ ] F1. **Plan Compliance Audit** — `deep`
+- [x] F1. **Plan Compliance Audit** — `deep`
 
   **What to do**:
   Read the plan end-to-end. For each "Must Have": verify implementation exists. For each "Must NOT Have": search codebase for forbidden patterns. Check evidence files exist. Verify `dotnet test` passes.
@@ -1873,7 +1873,7 @@ Wave FINAL (After ALL tasks — verification, 4 parallel):
   ```
   Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | Tests [N pass] | VERDICT: APPROVE/REJECT`
 
-- [ ] F2. **Code Quality Review** — `unspecified-high`
+- [x] F2. **Code Quality Review** — `unspecified-high`
 
   **What to do**:
   Run `dotnet build` + `dotnet test` + linter + `pytest`. Review all changed files for: empty catches, commented-out code, unused imports. Check AI slop patterns. Verify test layer isolation.
@@ -1926,7 +1926,7 @@ Wave FINAL (After ALL tasks — verification, 4 parallel):
   ```
   Output: `Scenarios [N/N pass] | Screenshots [N captured] | Log Errors [N] | VERDICT`
 
-- [ ] F4. **Scope Fidelity Check** — `deep`
+- [x] F4. **Scope Fidelity Check** — `deep`
 
   **What to do**:
   Verify: no legacy code copied, no AI-slop patterns, encoding is UTF-8/LF throughout, all XML parses cleanly, test layer isolation, DummyTarget discipline, TDDサイクル遵守（テストが実装より先に書かれている commit history 確認）.

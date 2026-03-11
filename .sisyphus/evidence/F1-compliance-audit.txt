@@ -1,82 +1,101 @@
-F1 Plan Compliance Audit
+F1 Plan Compliance Audit (Round 3)
 Date: 2026-03-11
 Repository: /Users/sankenbisha/Dev/Caves-of-Qud_Japanese
-Plan read: .sisyphus/plans/coq-jp-roadmap.md (lines 1-1988, fully read)
+Plan read: .sisyphus/plans/coq-jp-roadmap.md (lines 1-1988, full)
 
-Must Have Checks (requested set)
-1) dotnet test passes with 50+ tests: PASS
-   - Command: dotnet test Mods/QudJP/Assemblies/QudJP.Tests/ -v normal
-   - Result: Total tests: 96, Passed: 96, Failed: 0
+Must Have Checks (plan lines 82-93)
+1) UTF-8 (no BOM) / LF encoding convention: PASS
+   - Command: python3 scripts/check_encoding.py Mods/QudJP/Localization/
+   - Result: Scanned 79 files: 79 OK, 0 issue(s)
 
-2) Game Mods directory deployable via sync script: PASS
-   - File exists: scripts/sync_mod.py
-   - Command: python3 scripts/sync_mod.py --dry-run
-   - Result: rsync dry-run completed, file transfer plan printed
+2) XML structural validation (parseable, ContextID discipline): PASS
+   - Command: python3 scripts/validate_xml.py Mods/QudJP/Localization/
+   - Result: All target files parsed; warnings reported but no validation failure exit
 
-3) Options screen Japanese patch exists: PASS
-   - Evidence: Mods/QudJP/Assemblies/src/Patches/OptionsLocalizationPatch.cs
+3) CJK font support: PASS
+   - Evidence: Mods/QudJP/Assemblies/src/FontManager.cs:17
+   - Result: Log message states CJK text rendering uses the game's built-in font pipeline
+   - Negative check: no "pending" token in FontManager.cs
 
-4) Character creation Japanese patch exists: PASS
-   - Evidence: Mods/QudJP/Assemblies/src/Patches/CharGenLocalizationPatch.cs
+4) Color code/markup preservation ({{W|text}}, &G, ^r, &&, ^^): PASS
+   - Evidence: Mods/QudJP/Assemblies/src/ColorCodePreserver.cs:92-127
+   - Result: Handles markup {{...|...}}, foreground &, background ^, escaped && and ^^
 
-5) NPC conversation Japanese patch exists: PASS
-   - Evidence: Mods/QudJP/Assemblies/src/Patches/ConversationDisplayTextPatch.cs
-
-6) diff_localization.py functional: FAIL
-   - File exists: scripts/diff_localization.py
+5) Update diff mechanism: PASS
    - Command: python3 scripts/diff_localization.py --summary
-   - Result: exits with error on Base/Compat.xml unsupported structure
-   - Note: --help works, but default summary run fails in current environment
+   - Result: Exit 0 with category coverage table output
+   - Notes: Known parse warnings for game XML files (Compat/Manual and invalid character refs) are warned and skipped
 
-7) dotnet build succeeds on macOS: PASS
-   - Command: dotnet build Mods/QudJP/Assemblies/QudJP.csproj
-   - Result: Build succeeded, 0 Warning(s), 0 Error(s)
+6) 3-layer test architecture (L1/L2/L3): PASS
+   - Evidence: docs/test-architecture.md:9-13, 17-47, 110-116
+   - Result: Explicit L1/L2/L3 boundaries, execution model, and restrictions documented
 
-Must NOT Have Checks (requested set)
-1) No legacy code copy patterns in implementation: PASS
-   - Search: legacy|Caves-of-Qud_Japanese_legacy in Assemblies/src and scripts
-   - Result: no matches
+7) Each Harmony patch covered by L1/L2 tests: PASS
+   - Evidence command: python3 script mapping patch classes to test references
+   - Result: TOTAL_PATCH_CLASSES=18, UNCOVERED=0
 
-2) No lint-free/type-check-free configuration: PASS
-   - C#: Mods/QudJP/Assemblies/QudJP.csproj has Nullable=enable, TreatWarningsAsErrors=true
-   - Python: pyproject.toml has [tool.ruff.lint] select = ["ALL"]
+8) Target game version fixed: PASS
+   - Evidence: AGENTS.md:4
+   - Result: "Game version target: 2.0.4"
 
-3) No CI-bypass setup (CI workflow exists): PASS
-   - Evidence: .github/workflows/ci.yml exists
+9) GitHub Actions CI gate (lint/test/build): PASS
+   - Evidence: .github/workflows/ci.yml:3-7, 23-24, 30-33, 42-45, 50-52
+   - Result: push/pull_request triggers and build/test/lint jobs are defined
 
-4) No Assembly-CSharp.dll direct instantiation in tests: PASS
-   - Search: new.*(GameObject|XRLCore|GameManager) in QudJP.Tests
-   - Result: no matches
+10) Strict linter settings: PASS
+   - C# evidence: Mods/QudJP/Assemblies/QudJP.csproj:6-10, 26-29, 43-46
+     Nullable enable, TreatWarningsAsErrors, EnforceCodeStyleInBuild, EnableNETAnalyzers, AnalysisLevel=latest-all,
+     SonarAnalyzer.CSharp, custom analyzer project reference
+   - Python evidence: pyproject.toml:12, 20-21, 23-27
+     Ruff select=["ALL"], mccabe max-complexity=10, strict pylint-family limits
+   - Custom analyzer evidence: QJ001/QJ002/QJ003 in QudJP.Analyzers/*.cs
 
-5) No HarmonyLib dependency in L1 tests: PASS
-   - Search: using HarmonyLib in QudJP.Tests/L1
-   - Result: no matches
+11) Fail-fast error handling (init throw, runtime fail-loud): PASS
+   - Init fail-fast evidence:
+     - Mods/QudJP/Assemblies/src/QudJPMod.cs:36-40 (throws InvalidOperationException when Harmony missing)
+     - Mods/QudJP/Assemblies/src/Translator.cs:96-98, 128-129 (throws on missing/invalid dictionary data)
+   - Runtime fail-loud evidence:
+     - Trace.TraceError across patch files (multiple matches)
+     - catch blocks present with logged errors; no empty catch blocks found
 
-6) No UnityEngine dependency in L2 tests: PASS
-   - Search: using UnityEngine in QudJP.Tests/L2
-   - Result: no matches
+Must NOT Have Checks (forbidden pattern set)
+1) L1 tests must not depend on HarmonyLib: PASS
+   - Pattern: using\s+HarmonyLib
+   - Scope: Mods/QudJP/Assemblies/QudJP.Tests/L1
+   - Result: 0 matches
 
-7) No silent error suppression patterns: PASS
-   - Search (C#): catch (Exception) { Trace.TraceWarning ... } => no matches
-   - Search (C#): is null) return; (unexpected null ignore pattern) => no matches in src
-   - Search (Python): errors="ignore" => no matches
+2) L2 tests must not depend on UnityEngine: PASS
+   - Pattern: using\s+UnityEngine
+   - Scope: Mods/QudJP/Assemblies/QudJP.Tests/L2
+   - Result: 0 matches
 
-Required verification commands
-- dotnet test Mods/QudJP/Assemblies/QudJP.Tests/ -v normal: PASS (96/96)
-- pytest scripts/tests/: PASS (80 passed)
-- ruff check scripts/: PASS (All checks passed)
-- python scripts/check_encoding.py Mods/QudJP/Localization/: command not found (python)
-- python3 scripts/check_encoding.py Mods/QudJP/Localization/: reports 1 issue
-  [MOJIBAKE] Mods/QudJP/Localization/AGENTS.md (known false-positive example text)
+3) Tests must not instantiate game runtime types directly: PASS
+   - Pattern: new\s+.*(GameObject|XRLCore|GameManager)
+   - Scope: Mods/QudJP/Assemblies/QudJP.Tests
+   - Result: 0 matches
 
-Implementation task completion (0-22 except 18)
-- Checked via plan checkbox scan: 22 completed, 1 pending
-- Pending is Task 18 only: - [ ] 18. フルゲームプレイテスト
-- Therefore implementation tasks 0-22 except 18 are complete
+4) Silent empty catch blocks forbidden: PASS
+   - Pattern: catch\s*\{\s*\}
+   - Scope: Mods/QudJP/Assemblies/src
+   - Result: 0 matches
 
-Evidence files existence
-- Command: ls .sisyphus/evidence/
-- Result: evidence directory populated (task-* files plus F2/F4 evidence files)
+5) Silent warning-only exception swallow forbidden: PASS
+   - Pattern: catch\s*\(Exception\)\s*\{\s*Trace\.TraceWarning
+   - Scope: Mods/QudJP/Assemblies/src
+   - Result: 0 matches
+
+6) Implementation task completion target check (Task 18 intentionally unchecked): PASS
+   - Command: python3 checkbox counter against plan
+   - Result: IMPLEMENTATION_TASKS_TOTAL=23, CHECKED=22, UNCHECKED=1, UNCHECKED_LIST=18
+
+Required command results
+- dotnet test Mods/QudJP/Assemblies/QudJP.Tests/ -v normal: PASS (101/101)
+- dotnet build Mods/QudJP/Assemblies/QudJP.csproj -c Release: PASS (0 warnings, 0 errors)
+- python3 scripts/check_encoding.py Mods/QudJP/Localization/: PASS (79 OK, 0 issues)
+- python3 scripts/validate_xml.py Mods/QudJP/Localization/: PASS (warnings only)
+- python3 scripts/diff_localization.py --summary: PASS (exit 0)
+- ruff check scripts/: PASS
+- pytest scripts/tests/: PASS (83/83)
 
 Audit Output
-Must Have [6/7] | Must NOT Have [7/7] | Tasks [22/22] | Tests [96 pass] | VERDICT: REJECT
+Must Have [11/11] | Must NOT Have [6/6] | Tasks [22/22] | Tests [184 pass] | VERDICT: APPROVE

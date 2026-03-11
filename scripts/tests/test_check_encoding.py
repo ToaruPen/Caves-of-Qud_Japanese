@@ -63,6 +63,23 @@ class TestCheckFile:
         f.write_bytes(b"")
         assert check_file(f) == []
 
+    def test_md_file_skips_mojibake_check(self, tmp_path: Path) -> None:
+        """A .md file with mojibake characters is not flagged for MOJIBAKE."""
+        f = tmp_path / "docs.md"
+        f.write_text("Example mojibake: 繧縺\n", encoding="utf-8")
+        issues = check_file(f)
+        kinds = {issue.kind for issue in issues}
+        assert "MOJIBAKE" not in kinds
+
+    def test_md_file_still_checks_bom(self, tmp_path: Path) -> None:
+        """A .md file with BOM is still flagged for BOM."""
+        f = tmp_path / "bom.md"
+        f.write_bytes(b"\xef\xbb\xbf# Title\n")
+        issues = check_file(f)
+        kinds = {issue.kind for issue in issues}
+        assert "BOM" in kinds
+        assert "MOJIBAKE" not in kinds
+
 
 class TestCheckDirectory:
     """Tests for the check_directory function."""

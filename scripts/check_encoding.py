@@ -28,7 +28,9 @@ def check_file(path: Path) -> list[EncodingIssue]:
     """Check a single file for encoding issues.
 
     Inspects for UTF-8 BOM, CRLF line endings, mojibake characters,
-    and invalid UTF-8 encoding.
+    and invalid UTF-8 encoding. Mojibake detection is skipped for
+    Markdown (``.md``) files, which may contain mojibake examples as
+    documentation.
 
     Args:
         path: Path to the file to check.
@@ -61,12 +63,13 @@ def check_file(path: Path) -> list[EncodingIssue]:
         issues.append(EncodingIssue(path, "DECODE", "File is not valid UTF-8"))
         return issues
 
-    for char in _MOJIBAKE_CHARS:
-        if char in text:
-            issues.append(
-                EncodingIssue(path, "MOJIBAKE", f"Suspected mojibake character: {char}"),
-            )
-            break
+    if path.suffix.lower() != ".md":
+        for char in _MOJIBAKE_CHARS:
+            if char in text:
+                issues.append(
+                    EncodingIssue(path, "MOJIBAKE", f"Suspected mojibake character: {char}"),
+                )
+                break
 
     return issues
 

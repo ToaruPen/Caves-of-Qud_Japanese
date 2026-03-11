@@ -49,8 +49,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `build_release.py` — Builds Release DLL and creates `dist/QudJP-v{version}.zip`
 
 **Test suite**
-- 96 C# NUnit tests (L1 pure logic + L2 Harmony integration)
-- 59 Python pytest tests across all scripts
+- 101 C# NUnit tests (L1 pure logic + L2 Harmony integration)
+- 83 Python pytest tests across all scripts
 - 3-layer test architecture: L1 (no HarmonyLib), L2 (no UnityEngine), L3 (manual game smoke)
 - DummyTarget pattern for L2 tests — no direct instantiation of `Assembly-CSharp.dll` types
 

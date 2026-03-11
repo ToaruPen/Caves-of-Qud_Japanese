@@ -27,3 +27,7 @@
 - `python3 scripts/validate_xml.py Mods/QudJP/Localization/Skills.jp.xml` は OK。
 - `python3 scripts/validate_xml.py Mods/QudJP/Localization/HiddenMutations.jp.xml` は OK。
 - `python3 scripts/validate_xml.py Mods/QudJP/Localization/` は完走。既存の警告（重複ID/空テキスト等）は出るが、今回修正対象8ファイルの属性不整合に関する新規エラーはなし。
+
+## 2026-03-11 F1 Plan Compliance Audit (re-run)
+- `python3 scripts/check_encoding.py Mods/QudJP/Localization/` が `Mods/QudJP/Localization/AGENTS.md` を `[MOJIBAKE]` として1件報告（UTF-8エンコード問題というより内容語彙の検知）。
+- `Mods/QudJP/Assemblies/src/FontManager.cs:17` が CJK フォールバック未実装ログを出しており、Must Have「CJKフォント対応」で監査NG。

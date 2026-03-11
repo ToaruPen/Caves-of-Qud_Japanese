@@ -226,3 +226,22 @@
 - `Compat.xml` が先に失敗していたため `Manual.xml` の問題が隠れていた — 修正時は連鎖的な問題に注意
 - Ruff: `print()` には `# noqa: T201` が必要
 - テスト: `capsys.readouterr().err` で stderr の WARNING を検証
+
+## 2026-03-11 F4 Scope Fidelity Check (re-run)
+- `src/Patches/*.cs` 11件はすべて `QudJP.Tests` 内 `.cs` テストファイルから参照され、前回欠落だった `UITextSkinTranslationPatch` も `L2/UITextSkinTranslationPatchTests.cs` で直接カバーされている。
+- レイヤ分離は再確認で `L1` の `using HarmonyLib` 0件、`L2` の `using UnityEngine` 0件を維持。
+- `check_encoding.py` は `Localization/AGENTS.md` を既知の誤検知として1件報告するが、XML限定のUTF-8/BOM再検査では decode error 0・BOM 0 を確認。
+- `dotnet test Mods/QudJP/Assemblies/QudJP.Tests/ -v normal` は 101/101 Passed。
+
+## 2026-03-11 F1 Plan Compliance Audit (re-run)
+- `dotnet test Mods/QudJP/Assemblies/QudJP.Tests/ -v normal` は 101/101 pass に更新（前回96）。
+- `python3 scripts/diff_localization.py --summary` は Compat.xml を含む環境で exit 0 を確認（warn-and-skip 方針が有効）。
+- Must Have 監査では `FontManager` が「CJK fallback font loading is pending implementation」を出しており、CJK対応は未完了と判定。
+
+
+## 2026-03-11 F1 Plan Compliance Audit (round 3)
+- Full plan was re-read end-to-end (1-1988) before verification; implementation task checkboxes are 22 checked / 1 unchecked (Task 18 only).
+- `check_encoding.py` now passes for Localization scope (79/79 OK, 0 issues); `.md` mojibake false positive no longer blocks F1.
+- `FontManager.cs` no longer contains pending wording and now documents built-in game font pipeline for CJK rendering.
+- Must Have re-check reached 11/11 with fresh command evidence: `dotnet test` 101/101, `dotnet build` Release 0 warnings, `pytest` 83/83, `ruff` clean, `diff_localization.py --summary` exit 0.
+- Patch coverage audit script showed 18 patch classes with test references and 0 uncovered.

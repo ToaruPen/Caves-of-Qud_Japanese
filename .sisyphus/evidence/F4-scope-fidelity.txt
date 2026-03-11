@@ -1,41 +1,61 @@
-F4 Scope Fidelity Check Evidence
-Timestamp: 2026-03-11 23:20:12 JST
+F4 Scope Fidelity Check Evidence (Re-run)
+Timestamp: 2026-03-11 23:33:59 JST
 
 [XML Parse]
-Parsed 35 XML files
-All XML files parse OK
+Command: python3 -c "import xml.etree.ElementTree as ET; from pathlib import Path; [ET.parse(f) for f in Path('Mods/QudJP/Localization').rglob('*.xml')]; print('All XML OK')"
+Result: All XML OK
+Status: PASS
 
 [Encoding]
-check_encoding.py: Scanned 79 files: 78 OK, 1 issue(s)
-Known false positive: Mods/QudJP/Localization/AGENTS.md (expected mojibake sample text)
-Custom UTF-8/BOM scan: TOTAL_FILES=79, BOM_FILES=0, UTF8_ERRORS=0
+Command: python3 scripts/check_encoding.py Mods/QudJP/Localization/
+Result: Scanned 79 files: 78 OK, 1 issue(s)
+Detail: [MOJIBAKE] Mods/QudJP/Localization/AGENTS.md (known false positive; expected per task context)
+Command: python3 -c "...XML-only UTF-8/BOM scan..."
+Result: XML UTF-8 decode errors: 0 / XML UTF-8 BOM files: 0
+Status: PASS (XML scope clean)
 
-[Legacy/AI-slop Scan]
-Legacy markers in Assemblies/src: no matches
-Legacy markers in scripts: no matches
-AI-slop markers in Assemblies/src: no matches
-AI-slop markers in scripts: no matches
+[Legacy Code Scan]
+Command: grep -rn "QudJP_Legacy\|legacy_\|old_translator" Mods/QudJP/Assemblies/src/ scripts/
+Result: Legacy markers: CLEAN
+Status: PASS
 
 [Assembly-CSharp Direct Instantiation in Tests]
-Pattern new.*GameObject|new.*XRLCore|new.*GameManager|new.*XRL.: no matches
-Additional XRL namespace usage scan: no matches
+Command: grep -rn "new.*GameObject\|new.*XRLCore\|new.*GameManager" Mods/QudJP/Assemblies/QudJP.Tests/
+Result: Direct game instantiation in tests: CLEAN
+Status: PASS
 
 [DummyTarget Discipline]
-Dummy classes detected in QudJP.Tests: 17 declarations (all Dummy* naming)
-DummyTarget directory contains 8 files
+Command: grep -rn "class Dummy" Mods/QudJP/Assemblies/QudJP.Tests/
+Result: Dummy class declarations detected across L2 and DummyTargets/
+Status: PASS
 
 [Patch-to-Test Coverage]
-Patch files in src/Patches: 11
-L2 test files: 8
-Direct references found for 10/11 patch classes across all tests
-Missing direct test reference: UITextSkinTranslationPatch
+Command: for f in Mods/QudJP/Assemblies/src/Patches/*.cs; do name=$(basename "$f" .cs); found=$(grep -rl --include "*.cs" "$name" Mods/QudJP/Assemblies/QudJP.Tests/ 2>/dev/null | head -1); echo "$name -> ${found:-MISSING}"; done
+Result: Patch coverage 11/11
+ - CharGenLocalizationPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/UIExpansionPatchTests.cs
+ - ConversationDisplayTextPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/ConversationDisplayTextPatchTests.cs
+ - GetDisplayNamePatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/UIExpansionPatchTests.cs
+ - GrammarPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L1/GrammarPatchTests.cs
+ - HistoricStringExpanderPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/HistoricStringExpanderPatchTests.cs
+ - InventoryLocalizationPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/UIExpansionPatchTests.cs
+ - MainMenuLocalizationPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/MainMenuLocalizationPatchTests.cs
+ - MessageLogPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/MessageLogPatchTests.cs
+ - OptionsLocalizationPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/OptionsLocalizationPatchTests.cs
+ - PopupTranslationPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/PopupTranslationPatchTests.cs
+ - UITextSkinTranslationPatch -> Mods/QudJP/Assemblies/QudJP.Tests/L2/UITextSkinTranslationPatchTests.cs
+Status: PASS
 
 [Layer Isolation]
-using HarmonyLib in L1 count: 0
-using UnityEngine in L2 count: 0
+Command: grep -rn "using HarmonyLib" Mods/QudJP/Assemblies/QudJP.Tests/L1/
+Result: L1 HarmonyLib import: CLEAN
+Command: grep -rn "using UnityEngine" Mods/QudJP/Assemblies/QudJP.Tests/L2/
+Result: L2 UnityEngine import: CLEAN
+Status: PASS
 
 [Test Count]
-dotnet test result: Total tests: 96, Passed: 96
+Command: dotnet test Mods/QudJP/Assemblies/QudJP.Tests/ -v normal
+Result: Total tests: 101 / Passed: 101
+Status: PASS
 
-[Interim Verdict]
-One compliance failure: missing explicit test coverage reference for UITextSkinTranslationPatch.
+[Final]
+Tasks [7/7 compliant] | Encoding [CLEAN/0 issues in XML scope; 1 known false-positive in Localization/AGENTS.md] | Test Isolation [CLEAN/0 violations] | VERDICT: APPROVE
