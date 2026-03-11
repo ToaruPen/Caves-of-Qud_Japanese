@@ -134,7 +134,7 @@ public static class Translator
             if (entry is null || string.IsNullOrEmpty(entry.Key) || entry.Text is null)
             {
                 Trace.TraceWarning(
-                    $"QudJP Translator: skipped malformed entry at index {index} in '{filePath}'.");
+                    $"QudJP: Translator skipped malformed entry at index {index} in '{filePath}'.");
                 continue;
             }
 

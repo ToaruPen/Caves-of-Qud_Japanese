@@ -161,3 +161,9 @@
 - ColorCodePreserver の S127 (ループカウンタ更新) はパーサーステートマシンの必然。
 - 全 suppress は .editorconfig で管理し、#pragma warning disable ゼロを維持。
 - 初回ビルドで mod project 37 errors, test project 37 errors を2ラウンドのトリアージで解消。
+
+## 2026-03-11 Task 22 build failure fix
+- QJ002の誤検出回避は `??` を残したまま抑制するより、`ResolveHarmonyType` を段階的な `Type.GetType` 試行 + `Trace.TraceWarning` に分解する方が fail-fast 方針と整合しやすい。
+- `Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.NUnit` 1.1.2 は NUnit 4 系と実行時互換がなく、`Assert.That(ValueTuple<,>...)` の `MissingMethodException` が出るため、Analyzer テスト側は NUnit 3.13.x が安定した。
+- Analyzer テストの raw string は `using` が namespace 宣言より後ろに回ると `CS1529` を誘発するため、`using` を先頭、スタブ namespace を後置する順序が必要。
+- Analyzer プロジェクトの RS2008 は release tracking markdown を維持しない運用なら `.editorconfig` の `dotnet_diagnostic.RS2008.severity = none` で無警告運用にできる。

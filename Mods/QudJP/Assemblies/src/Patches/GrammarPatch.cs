@@ -84,9 +84,17 @@ public static class GrammarAPatch
 
     public static bool Prefix(string Word, bool Capitalize, ref string __result)
     {
-        _ = Capitalize;
-        __result = Word;
-        return false;
+        try
+        {
+            _ = Capitalize;
+            __result = Word;
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarAPatch.Prefix failed: {0}", ex);
+            return true;
+        }
     }
 }
 
@@ -107,8 +115,16 @@ public static class GrammarPluralizePatch
 
     public static bool Prefix(string word, ref string __result)
     {
-        __result = word;
-        return false;
+        try
+        {
+            __result = word;
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarPluralizePatch.Prefix failed: {0}", ex);
+            return true;
+        }
     }
 }
 
@@ -129,8 +145,16 @@ public static class GrammarMakePossessivePatch
 
     public static bool Prefix(string word, ref string __result)
     {
-        __result = word.EndsWith("の", StringComparison.Ordinal) ? word : word + "の";
-        return false;
+        try
+        {
+            __result = word.EndsWith("の", StringComparison.Ordinal) ? word : word + "の";
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarMakePossessivePatch.Prefix failed: {0}", ex);
+            return true;
+        }
     }
 }
 
@@ -151,8 +175,16 @@ public static class GrammarMakeAndListPatch
 
     public static bool Prefix(List<string> Items, ref string __result)
     {
-        __result = GrammarPatchHelpers.BuildJapaneseList(Items, "と");
-        return false;
+        try
+        {
+            __result = GrammarPatchHelpers.BuildJapaneseList(Items, "と");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarMakeAndListPatch.Prefix failed: {0}", ex);
+            return true;
+        }
     }
 }
 
@@ -173,8 +205,16 @@ public static class GrammarMakeOrListPatch
 
     public static bool Prefix(List<string> Items, ref string __result)
     {
-        __result = GrammarPatchHelpers.BuildJapaneseList(Items, "または");
-        return false;
+        try
+        {
+            __result = GrammarPatchHelpers.BuildJapaneseList(Items, "または");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarMakeOrListPatch.Prefix failed: {0}", ex);
+            return true;
+        }
     }
 }
 
@@ -195,8 +235,16 @@ public static class GrammarSplitOfSentenceListPatch
 
     public static bool Prefix(string Text, ref List<string> __result)
     {
-        __result = GrammarPatchHelpers.SplitSentenceList(Text);
-        return false;
+        try
+        {
+            __result = GrammarPatchHelpers.SplitSentenceList(Text);
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarSplitOfSentenceListPatch.Prefix failed: {0}", ex);
+            return true;
+        }
     }
 }
 
@@ -217,8 +265,16 @@ public static class GrammarInitCapsPatch
 
     public static bool Prefix(string Text, ref string __result)
     {
-        __result = Text;
-        return false;
+        try
+        {
+            __result = Text;
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarInitCapsPatch.Prefix failed: {0}", ex);
+            return true;
+        }
     }
 }
 
@@ -239,7 +295,15 @@ public static class GrammarCardinalNumberPatch
 
     public static bool Prefix(int Number, ref string __result)
     {
-        __result = Number.ToString(CultureInfo.InvariantCulture);
-        return false;
+        try
+        {
+            __result = Number.ToString(CultureInfo.InvariantCulture);
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarCardinalNumberPatch.Prefix failed: {0}", ex);
+            return true;
+        }
     }
 }

@@ -23,7 +23,14 @@ public static class UITextSkinTranslationPatch
 
     public static void Prefix(ref string text)
     {
-        text = TranslatePreservingColors(text);
+        try
+        {
+            text = TranslatePreservingColors(text);
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: UITextSkinTranslationPatch.Prefix failed: {0}", ex);
+        }
     }
 
     internal static string TranslatePreservingColors(string? source)

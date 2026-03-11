@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,21 +41,28 @@ public static class PopupTranslationPatch
 
     public static void Prefix(MethodBase __originalMethod, object[] __args)
     {
-        if (__originalMethod is null || __args is null)
+        try
         {
-            Trace.TraceError("QudJP: PopupTranslationPatch.Prefix received null originalMethod or args.");
-            return;
-        }
+            if (__originalMethod is null || __args is null)
+            {
+                Trace.TraceError("QudJP: PopupTranslationPatch.Prefix received null originalMethod or args.");
+                return;
+            }
 
-        if (__originalMethod.Name == "ShowBlock")
-        {
-            TranslateShowBlockArgs(__args);
-            return;
-        }
+            if (__originalMethod.Name == "ShowBlock")
+            {
+                TranslateShowBlockArgs(__args);
+                return;
+            }
 
-        if (__originalMethod.Name == "ShowOptionList")
+            if (__originalMethod.Name == "ShowOptionList")
+            {
+                TranslateShowOptionListArgs(__args);
+            }
+        }
+        catch (Exception ex)
         {
-            TranslateShowOptionListArgs(__args);
+            Trace.TraceError("QudJP: PopupTranslationPatch.Prefix failed: {0}", ex);
         }
     }
 

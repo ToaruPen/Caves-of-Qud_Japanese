@@ -24,24 +24,31 @@ public static class MainMenuLocalizationPatch
 
     public static void Postfix(object __instance)
     {
-        var targetType = __instance?.GetType();
-        if (targetType is null)
+        try
         {
-            Trace.TraceWarning("QudJP: MainMenuLocalizationPatch __instance is null, resolving type by name.");
-            targetType = AccessTools.TypeByName(TargetTypeName);
-        }
+            var targetType = __instance?.GetType();
+            if (targetType is null)
+            {
+                Trace.TraceWarning("QudJP: MainMenuLocalizationPatch __instance is null, resolving type by name.");
+                targetType = AccessTools.TypeByName(TargetTypeName);
+            }
 
-        if (targetType is null)
+            if (targetType is null)
+            {
+                Trace.TraceError("QudJP: MainMenuLocalizationPatch target type is null. Skipping translation.");
+                return;
+            }
+
+            var leftOptions = AccessCollectionField(targetType, __instance, "LeftOptions");
+            UITextSkinTranslationPatch.TranslateStringFieldsInCollection(leftOptions, "Text");
+
+            var rightOptions = AccessCollectionField(targetType, __instance, "RightOptions");
+            UITextSkinTranslationPatch.TranslateStringFieldsInCollection(rightOptions, "Text");
+        }
+        catch (Exception ex)
         {
-            Trace.TraceError("QudJP: MainMenuLocalizationPatch target type is null. Skipping translation.");
-            return;
+            Trace.TraceError("QudJP: MainMenuLocalizationPatch.Postfix failed: {0}", ex);
         }
-
-        var leftOptions = AccessCollectionField(targetType, __instance, "LeftOptions");
-        UITextSkinTranslationPatch.TranslateStringFieldsInCollection(leftOptions, "Text");
-
-        var rightOptions = AccessCollectionField(targetType, __instance, "RightOptions");
-        UITextSkinTranslationPatch.TranslateStringFieldsInCollection(rightOptions, "Text");
     }
 
     private static object? AccessCollectionField(Type targetType, object? instance, string fieldName)

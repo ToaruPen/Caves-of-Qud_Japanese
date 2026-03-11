@@ -95,7 +95,13 @@ public static class QudJPMod
 
     private static Type? ResolveHarmonyType()
     {
-        return Type.GetType("HarmonyLib.Harmony, 0Harmony", throwOnError: false)
-               ?? Type.GetType("HarmonyLib.Harmony, HarmonyLib", throwOnError: false);
+        var typeFrom0Harmony = Type.GetType("HarmonyLib.Harmony, 0Harmony", throwOnError: false);
+        if (typeFrom0Harmony is not null)
+        {
+            return typeFrom0Harmony;
+        }
+
+        Trace.TraceWarning("QudJP: Harmony type was not found in 0Harmony. Trying HarmonyLib assembly name.");
+        return Type.GetType("HarmonyLib.Harmony, HarmonyLib", throwOnError: false);
     }
 }

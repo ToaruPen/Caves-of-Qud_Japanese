@@ -22,6 +22,12 @@
     <Compile Include="src/**/*.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="QudJP.Analyzers/QudJP.Analyzers.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
   <ItemGroup Condition="Exists('$(ManagedDir)/0Harmony.dll')">
     <Reference Include="0Harmony">
       <HintPath>$(ManagedDir)/0Harmony.dll</HintPath>

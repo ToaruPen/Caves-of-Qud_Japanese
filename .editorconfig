@@ -59,6 +59,13 @@ dotnet_diagnostic.CA1307.severity = none
 # string.EndsWith(char) is .NET Core 2.1+; source shared with net48 which lacks this overload
 dotnet_diagnostic.CA1865.severity = none
 
+# Harmony runtime patches must catch all exceptions to avoid crashing the game.
+# The fail-fast pattern for patches is: catch (Exception ex) { Trace.TraceError(...); }
+dotnet_diagnostic.CA1031.severity = none
+
+# Custom analyzer project intentionally omits release tracking markdown files.
+dotnet_diagnostic.RS2008.severity = none
+
 [**/QudJP.Tests/**/*.cs]
 # Magic numbers in test data and assertions are acceptable
 dotnet_diagnostic.S109.severity = none
@@ -71,6 +78,18 @@ dotnet_diagnostic.CA1822.severity = none
 
 # Test doubles mimic game API patterns which use IndexOf
 dotnet_diagnostic.CA2249.severity = none
+
+[**/QudJP.Analyzers/**/*.cs]
+# Analyzer project doesn't use Harmony — QJ rules don't apply to analyzer code itself
+dotnet_diagnostic.QJ001.severity = none
+dotnet_diagnostic.QJ002.severity = none
+dotnet_diagnostic.QJ003.severity = none
+
+[**/QudJP.Analyzers.Tests/**/*.cs]
+# Analyzer test helper strings contain intentional violations
+dotnet_diagnostic.QJ001.severity = none
+dotnet_diagnostic.QJ002.severity = none
+dotnet_diagnostic.QJ003.severity = none
 
 [*.xml]
 indent_style = space
