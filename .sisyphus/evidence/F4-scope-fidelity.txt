@@ -1,0 +1,41 @@
+F4 Scope Fidelity Check Evidence
+Timestamp: 2026-03-11 23:20:12 JST
+
+[XML Parse]
+Parsed 35 XML files
+All XML files parse OK
+
+[Encoding]
+check_encoding.py: Scanned 79 files: 78 OK, 1 issue(s)
+Known false positive: Mods/QudJP/Localization/AGENTS.md (expected mojibake sample text)
+Custom UTF-8/BOM scan: TOTAL_FILES=79, BOM_FILES=0, UTF8_ERRORS=0
+
+[Legacy/AI-slop Scan]
+Legacy markers in Assemblies/src: no matches
+Legacy markers in scripts: no matches
+AI-slop markers in Assemblies/src: no matches
+AI-slop markers in scripts: no matches
+
+[Assembly-CSharp Direct Instantiation in Tests]
+Pattern new.*GameObject|new.*XRLCore|new.*GameManager|new.*XRL.: no matches
+Additional XRL namespace usage scan: no matches
+
+[DummyTarget Discipline]
+Dummy classes detected in QudJP.Tests: 17 declarations (all Dummy* naming)
+DummyTarget directory contains 8 files
+
+[Patch-to-Test Coverage]
+Patch files in src/Patches: 11
+L2 test files: 8
+Direct references found for 10/11 patch classes across all tests
+Missing direct test reference: UITextSkinTranslationPatch
+
+[Layer Isolation]
+using HarmonyLib in L1 count: 0
+using UnityEngine in L2 count: 0
+
+[Test Count]
+dotnet test result: Total tests: 96, Passed: 96
+
+[Interim Verdict]
+One compliance failure: missing explicit test coverage reference for UITextSkinTranslationPatch.

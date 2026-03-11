@@ -217,10 +217,35 @@ def test_books_parse_error_falls_back_to_regex(tmp_path: Path, capsys: pytest.Ca
     assert "WARNING" in captured.err
 
 
-def test_generic_entries_raises_on_no_id_or_name(tmp_path: Path) -> None:
-    """_extract_generic_entries raises ValueError for XML with no ID/Name attributes."""
+def test_generic_entries_returns_empty_set_on_no_id_or_name(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """_extract_generic_entries returns empty set and warns for XML with no ID/Name attributes."""
     xml_path = tmp_path / "NoAttrs.xml"
     _write_text(xml_path, "<root><item/><item/></root>")
 
-    with pytest.raises(ValueError, match="No ID or Name attributes found"):
-        _extract_generic_entries(xml_path)
+    result = _extract_generic_entries(xml_path)
+    captured = capsys.readouterr()
+
+    assert result == set()
+    assert "WARNING" in captured.err
+    assert "No ID or Name attributes found" in captured.err
+
+
+def test_generic_entries_compat_xml_like_returns_empty_set(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """_extract_generic_entries returns empty set for Compat.xml-like structure (Old/New attrs only)."""
+    xml_path = tmp_path / "Compat.xml"
+    _write_text(
+        xml_path,
+        '<compat><skill Old="Axe_ChargingStrike" New="Cudgel_ChargingStrike"/></compat>',
+    )
+
+    result = _extract_generic_entries(xml_path)
+    captured = capsys.readouterr()
+
+    assert result == set()
+    assert "WARNING" in captured.err

@@ -218,3 +218,11 @@
 ### ZIP Contents (v0.1.0-dev)
 - 73 files total: 1 manifest + 1 DLL + 71 localization files
 - Localization: 36 XML files + 35 JSON files
+
+## diff_localization.py warn-and-skip パターン (2026-03-11)
+
+- `_extract_generic_entries()` の `raise ValueError` を `print(WARNING, file=sys.stderr); return set()` に変更
+- `_extract_entries()` の `ET.ParseError` ハンドラも同様に warn-and-skip に変更（`Manual.xml` 等の無効文字参照XMLが隠れていた）
+- `Compat.xml` が先に失敗していたため `Manual.xml` の問題が隠れていた — 修正時は連鎖的な問題に注意
+- Ruff: `print()` には `# noqa: T201` が必要
+- テスト: `capsys.readouterr().err` で stderr の WARNING を検証

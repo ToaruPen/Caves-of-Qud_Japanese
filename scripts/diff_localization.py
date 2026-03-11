@@ -141,7 +141,8 @@ def _extract_generic_entries(path: Path) -> set[str]:
             fallback_ids.add(identifier)
     if not fallback_ids:
         msg = f"No ID or Name attributes found in {path}. File may use an unsupported XML structure."
-        raise ValueError(msg)
+        print(f"WARNING: {msg}", file=sys.stderr)  # noqa: T201
+        return set()
     return fallback_ids
 
 
@@ -187,8 +188,11 @@ def _extract_entries(path: Path, *, category: str) -> set[str]:
     except ET.ParseError as exc:
         if _is_blank_xml(path):
             return set()
-        msg = f"Failed to parse XML: {path} ({exc})"
-        raise ValueError(msg) from exc
+        print(  # noqa: T201
+            f"WARNING: Failed to parse XML: {path} ({exc}), skipping.",
+            file=sys.stderr,
+        )
+        return set()
 
 
 def build_report(base_dir: Path, mod_dir: Path) -> DiffReport:

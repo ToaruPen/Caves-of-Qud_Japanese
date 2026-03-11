@@ -1,0 +1,97 @@
+F2 — Code Quality Review Evidence
+===================================
+Date: 2026-03-11
+
+## 1. Build
+Command: dotnet build Mods/QudJP/Assemblies/QudJP.csproj -c Release
+Result: PASS — Build succeeded. 0 Warning(s), 0 Error(s)
+
+## 2. Tests (C#)
+Command: dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj -v normal
+Result: PASS — Total tests: 96, Passed: 96, Failed: 0
+
+## 3. Lint (Python)
+Command: ruff check scripts/
+Result: PASS — All checks passed!
+
+## 4. Tests (Python)
+Command: pytest scripts/tests/
+Result: PASS — 80 passed in 0.08s
+
+## 5. Anti-Pattern Search (C# production code: src/)
+
+### Empty catch blocks (bare `catch {`)
+Search: grep -rn "catch\s*{" src/
+Result: 0 matches — PASS
+
+### TODO/HACK/FIXME markers
+Search: grep -rn "// TODO|// HACK|// FIXME" src/
+Result: 0 matches — PASS
+
+### NotImplementedException
+Search: grep -rn "throw new NotImplementedException" src/
+Result: 0 matches — PASS
+
+### Catch blocks review
+All 18 catch blocks in 11 files use typed `catch (Exception ex)` pattern.
+Spot-checked: all log with `Trace.TraceError("QudJP: ...", ex)` — no swallowed exceptions.
+
+## 6. Test Layer Isolation
+
+### L1 — No HarmonyLib
+Search: grep -rn "using HarmonyLib" QudJP.Tests/L1/
+Result: 0 matches — PASS
+
+### L1 — No UnityEngine
+Search: grep -rn "using UnityEngine" QudJP.Tests/L1/
+Result: 0 matches — PASS
+
+### L2 — No UnityEngine
+Search: grep -rn "using UnityEngine" QudJP.Tests/L2/
+Result: 0 matches — PASS
+
+## 7. csproj Settings Verification (QudJP.csproj)
+
+- Nullable: enable ✓ (line 6)
+- TreatWarningsAsErrors: true ✓ (line 7)
+- EnforceCodeStyleInBuild: true ✓ (line 8)
+- EnableNETAnalyzers: true ✓ (line 9)
+- AnalysisLevel: latest-all ✓ (line 10)
+- SonarAnalyzer.CSharp: installed ✓ (line 43)
+- QudJP.Analyzers: referenced as analyzer ✓ (line 26)
+- 0Harmony: Private=false ✓ (line 34)
+
+## 8. .editorconfig Verification
+
+- root = true ✓
+- C# indent: 4 spaces ✓
+- Code style enforcement: dotnet_style_qualification, csharp_style_var, modifier order ✓
+- 16 suppression entries, each with documented justification ✓
+- Test-specific relaxations in [**/QudJP.Tests/**/*.cs] ✓
+
+## 9. AI Slop / Code Quality
+
+### Commented-out code
+Search: grep for commented public/private/if/for/return/var/using
+Result: 0 matches — PASS
+
+### Unused imports
+Enforced by TreatWarningsAsErrors + AnalysisLevel=latest-all.
+Build 0 warnings confirms: 0 unused imports — PASS
+
+### XML doc boilerplate / #region
+Search: grep for "/// <summary>" and "#region"
+Result: 0 matches each — PASS
+
+## 10. Source File Count
+Production code: 18 files in src/
+  - 12 patch files (Patches/)
+  - 6 support files (Translator, QudJPMod, ColorCodePreserver, FontManager, LocalizationAssetResolver, MessagePatternTranslator, AssemblyInfo)
+
+===================================
+SUMMARY
+===================================
+Build [PASS] | Tests [96 pass/0 fail] | Ruff [PASS] | Pytest [80 pass/0 fail]
+Anti-patterns [PASS] | Layer Isolation [PASS] | csproj [PASS] | .editorconfig [PASS]
+
+VERDICT: APPROVE
