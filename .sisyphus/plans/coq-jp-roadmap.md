@@ -1592,7 +1592,7 @@ Wave FINAL (After ALL tasks — verification, 4 parallel):
   **Commit**: YES
   - Message: `feat(harmony): initial procedural text localization support`
 
-- [x] 18. フルゲームプレイテスト
+- [ ] 18. フルゲームプレイテスト
 
   **What to do**:
   - **全自動テスト実行**: `dotnet test` + `pytest` + `ruff check` + encoding check
