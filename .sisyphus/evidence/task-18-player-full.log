@@ -1,0 +1,979 @@
+Mono path[0] = '/Users/sankenbisha/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/Managed'
+Mono config path = '/Users/sankenbisha/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/MonoBleedingEdge/etc'
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Initialize engine version: 6000.0.41f1 (46e447368a18)
+[Subsystems] Discovering subsystems at path /Users/sankenbisha/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/UnitySubsystems
+GfxDevice: creating device client; kGfxThreadingModeThreaded
+ preferred device: Apple M4 (high power)
+Metal devices available: 1
+0: Apple M4 (high power)
+Using device Apple M4 (high power)
+Initializing Metal device caps: Apple M4
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.066 seconds
+- Finished resetting the current domain, in  0.001 seconds
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+INFO - Starting 'Initialize tinkering' task at 00:00:00:000
+UnloadTime: 0.393042 ms
+Initializing paths...
+Data path: /Users/sankenbisha/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Base
+Save path: /Users/sankenbisha/Library/Application Support/Freehold Games/CavesOfQud
+Shared path: /Users/sankenbisha/Library/Application Support/Freehold Games/CavesOfQud/Local
+Synced path: /Users/sankenbisha/Library/Application Support/Freehold Games/CavesOfQud/Synced
+<color=#AAAAAA>[Info] GameLogger initialized...</color>
+<color=orange>Logger..cctor</color>
+<color=red></color>
+<color=#AAAAAA>[Info] TraceLogger initialized...</color>
+<color=orange>Logger..cctor</color>
+<color=red></color>
+<color=#AAAAAA>[Info] Starting up logger...</color>
+<color=orange>GameManager.Awake</color>
+<color=red></color>
+<color=#AAAAAA>[Info] Getting player 0...</color>
+<color=orange>GameManager.Awake</color>
+<color=red></color>
+<color=#AAAAAA>[Info] Got player 0...</color>
+<color=orange>GameManager.Awake</color>
+<color=red></color>
+Startup time: Wednesday, 11 March 2026 at 22:43:18
+Version: 2.0.210.24
+Platform: OSXPlayer
+System Language: Japanese
+Unity Version: 6000.0.41f1
+Unity Reported Version: 2.0.4
+[S_API] SteamAPI_Init(): Loaded '/Users/sankenbisha/Library/Application Support/Steam/Steam.AppBundle/Steam/Contents/MacOS/steamclient.dylib' OK.
+Setting breakpad minidump AppID = 333640
+SteamInternal_SetMinidumpSteamID:  Caching Steam ID:  76561198205102067 [API loaded no]
+STEAM - Requesting user stats.
+INFO - Checking entitlements
+INFO - does not have Pets Pack 1
+INFO - does not have OST
+GALAXY - Initializing.
+GALAXY - Error initializing: System.TypeInitializationException: The type initializer for 'Galaxy.Api.GalaxyInstancePINVOKE' threw an exception. ---> System.TypeInitializationException: The type initializer for 'SWIGExceptionHelper' threw an exception. ---> System.DllNotFoundException: GalaxyCSharpGlue assembly:<unknown assembly> type:<unknown type> member:(null)
+  at (wrapper managed-to-native) Galaxy.Api.GalaxyInstancePINVOKE+SWIGExceptionHelper.SWIGRegisterExceptionCallbacks_GalaxyInstance(Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate,Galaxy.Api.GalaxyInstancePINVOKE/SWIGExceptionHelper/ExceptionDelegate)
+  at Galaxy.Api.GalaxyInstancePINVOKE+SWIGExceptionHelper..cctor () [0x000ee] in <dd2a12251acf44a382957fbf1e41babe>:0 
+   --- End of inner exception stack trace ---
+  at (wrapper managed-to-native) System.Object.__icall_wrapper_mono_generic_class_init(intptr)
+  at Galaxy.Api.GalaxyInstancePINVOKE..cctor () [0x00000] in <dd2a12251acf44a382957fbf1e41babe>:0 
+   --- End of inner exception stack trace ---
+  at Galaxy.Api.InitParams..ctor (System.String _clientID, System.String _clientSecret) [0x00000] in <dd2a12251acf44a382957fbf1e41babe>:0 
+  at Galaxy.GalaxyManager.Awake () [0x00057] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+GALAXY - Shutting down.
+GalaxyManager::Shutdown: System.TypeInitializationException: The type initializer for 'Galaxy.Api.GalaxyInstance' threw an exception. ---> System.TypeInitializationException: The type initializer for 'CustomExceptionHelper' threw an exception. ---> System.DllNotFoundException: GalaxyCSharpGlue assembly:<unknown assembly> type:<unknown type> member:(null)
+  at (wrapper managed-to-native) Galaxy.Api.GalaxyInstance+CustomExceptionHelper.CustomExceptionRegisterCallback(Galaxy.Api.GalaxyInstance/CustomExceptionHelper/CustomExceptionDelegate)
+  at Galaxy.Api.GalaxyInstance+CustomExceptionHelper..cctor () [0x00011] in <dd2a12251acf44a382957fbf1e41babe>:0 
+   --- End of inner exception stack trace ---
+  at (wrapper managed-to-native) System.Object.__icall_wrapper_mono_generic_class_init(intptr)
+  at Galaxy.Api.GalaxyInstance..cctor () [0x00000] in <dd2a12251acf44a382957fbf1e41babe>:0 
+   --- End of inner exception stack trace ---
+  at Galaxy.GalaxyManager.Shutdown () [0x00038] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+INFO - Detected device: Keyboard
+INFO - Detected device: Mouse
+INFO - Detected device: Pen
+INFO - RefreshModDirectory /Users/sankenbisha/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/DLC
+INFO - RefreshModDirectory /Users/sankenbisha/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/../../CoQ_Data/StreamingAssets/DLC
+INFO - RefreshModDirectory /Users/sankenbisha/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods
+MODERROR [Caves of Qud 日本語化] - System.FormatException: '0.1.0-dev' is not a valid version string.
+  at XRL.Version..ctor (System.String Version) [0x00035] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+  at XRL.Version+Converter.ReadJson (Newtonsoft.Json.JsonReader reader, System.Type objectType, XRL.Version existingValue, System.Boolean hasExistingValue, Newtonsoft.Json.JsonSerializer serializer) [0x00010] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+  at Newtonsoft.Json.JsonConverter`1[T].ReadJson (Newtonsoft.Json.JsonReader reader, System.Type objectType, System.Object existingValue, Newtonsoft.Json.JsonSerializer serializer) [0x0002f] in <29e3dfd7379d434ca9881f8263fe42fe>:0 
+  at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.DeserializeConvertable (Newtonsoft.Json.JsonConverter converter, Newtonsoft.Json.JsonReader reader, System.Type objectType, System.Object existingValue) [0x00055] in <29e3dfd7379d434ca9881f8263fe42fe>:0 
+  at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.SetPropertyValue (Newtonsoft.Json.Serialization.JsonProperty property, Newtonsoft.Json.JsonConverter propertyConverter, Newtonsoft.Json.Serialization.JsonContainerContract containerContract, Newtonsoft.Json.Serialization.JsonProperty containerProperty, Newtonsoft.Json.JsonReader reader, System.Object target) [0x00052] in <29e3dfd7379d434ca9881f8263fe42fe>:0 
+  at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.PopulateObject (System.Object newObject, Newtonsoft.Json.JsonReader reader, Newtonsoft.Json.Serialization.JsonObjectContract contract, Newtonsoft.Json.Serialization.JsonProperty member, System.String id) [0x00280] in <29e3dfd7379d434ca9881f8263fe42fe>:0 
+  at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Populate (Newtonsoft.Json.JsonReader reader, System.Object target) [0x00136] in <29e3dfd7379d434ca9881f8263fe42fe>:0 
+  at Newtonsoft.Json.JsonSerializer.PopulateInternal (Newtonsoft.Json.JsonReader reader, System.Object target) [0x00051] in <29e3dfd7379d434ca9881f8263fe42fe>:0 
+  at Newtonsoft.Json.JsonSerializer.Populate (Newtonsoft.Json.JsonReader reader, System.Object target) [0x00000] in <29e3dfd7379d434ca9881f8263fe42fe>:0 
+  at Extensions.Populate (Newtonsoft.Json.JsonSerializer serializer, System.String file, System.Object target) [0x0000e] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+  at XRL.ModInfo.ReadConfiguration (System.IO.FileInfo File) [0x00052] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+  at XRL.ModInfo.ReadConfigurations () [0x0001a] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+INFO - RefreshModDirectory /Users/sankenbisha/Library/Application Support/Freehold Games/CavesOfQud/Mods
+INFO - RefreshModDirectory /Users/sankenbisha/Library/Application Support/Freehold Games/CavesOfQud/Local/Mods
+INFO - Subscribed workshop items: 3
+INFO - Audio files: 3004 base, 0 mod
+INFO - Found 27 XML roots;
+ - ACTIVATEDABILITIES: 1 base file, 1 mod file
+ - BODIES: 1 base file
+ - BOOKS: 1 base file, 1 mod file
+ - FACTIONS: 2 base files, 2 mod files
+ - COLORS: 1 base file
+ - COMMANDS: 1 base file, 1 mod file
+ - COMPAT: 1 base file
+ - CONVERSATIONS: 2 base files, 2 mod files
+ - EMBARKMODULES: 1 base file, 1 mod file
+ - GENDERS: 1 base file
+ - GENOTYPES: 1 base file, 1 mod file
+ - MUTATIONS: 2 base files, 2 mod files
+ - HELP: 1 base file, 1 mod file
+ - MODS: 1 base file, 1 mod file
+ - NAMING: 1 base file
+ - OBJECTS: 15 base files, 14 mod files
+ - OPTIONS: 1 base file, 1 mod file
+ - POPULATIONS: 1 base file
+ - PRONOUNSETS: 1 base file
+ - QUESTS: 1 base file, 1 mod file
+ - RELICS: 1 base file, 1 mod file
+ - SKILLS: 1 base file, 1 mod file
+ - SPARKINGBAETYLS: 1 base file, 1 mod file
+ - SUBTYPES: 1 base file, 1 mod file
+ - WISHCOMMANDS: 1 base file, 1 mod file
+ - WORLDS: 1 base file, 1 mod file
+ - ZONETEMPLATES: 1 base file
+INFO - Starting 'Loading Compat.xml' task at 00:00:00:370
+INFO - Finished 'Loading Compat.xml' task in 0ms
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Genotypes.jp.xml line 3 char 422
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Genotypes.jp.xml line 21 char 440
+Unused attribute "Load" detected.
+INFO - Starting 'Loading Compat.xml' task at 00:00:00:374
+INFO - Finished 'Loading Compat.xml' task in 0ms
+INFO - Starting 'Loading SparkingBaetyls.xml' task at 00:00:00:391
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/SparkingBaetyls.jp.xml line 2 char 18
+Unused attribute "Load" detected.
+INFO - Finished 'Loading SparkingBaetyls.xml' task in 1ms
+INFO - Starting 'Loading genders' task at 00:00:00:392
+INFO - Finished 'Loading genders' task in 1ms
+INFO - Starting 'Loading PronounSets.xml' task at 00:00:00:393
+INFO - Finished 'Loading PronounSets.xml' task in 2ms
+INFO - Starting 'Loading Relics.xml' task at 00:00:00:395
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Relics.jp.xml line 2 char 9
+Unused attribute "Load" detected.
+INFO - Finished 'Loading Relics.xml' task in 0ms
+Initializing input manager...
+UnityEngine.InputSystem.InputActionAsset must be instantiated using the ScriptableObject.CreateInstance method instead of new InputActionAsset.
+INFO - Starting 'Loading Colors.xml' task at 00:00:00:503
+INFO - Finished 'Loading Colors.xml' task in 15ms
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/ActivatedAbilities.jp.xml line 1 char 21
+Unused attribute "Load" detected.
+INFO - Enabled mods: Caves of Qud 日本語化
+sound request pool was empty for request 
+sound request pool was empty for request 
+sound request pool was empty for request 
+Initializing input manager...
+Starting game thread...
+Starting core...
+Started!
+Cleaning up...
+Starting up XRL...
+Initialize Genders and Pronoun Sets...
+Initialize Name Styles...
+INFO - Starting 'Loading Naming.xml' task at 00:00:00:753
+INFO - Finished 'Loading Naming.xml' task in 4ms
+Loading World Blueprints...
+Loading Object Blueprints...
+INFO - Starting 'Loading object blueprints' task at 00:00:00:780
+INFO - Starting 'Loading Mutations.xml' task at 00:00:00:780
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 2 char 49
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 4 char 63
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 5 char 72
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 6 char 51
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 7 char 61
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 8 char 70
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 9 char 63
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 10 char 62
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 11 char 60
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 12 char 73
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 13 char 66
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 14 char 62
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 15 char 68
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 16 char 69
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 17 char 61
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 18 char 65
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 19 char 53
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 20 char 65
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 21 char 65
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 22 char 66
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 23 char 62
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 24 char 66
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 25 char 66
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 26 char 67
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 27 char 58
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 28 char 59
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 29 char 68
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 30 char 70
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 31 char 88
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 33 char 64
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 34 char 62
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 35 char 74
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 36 char 74
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 37 char 74
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 38 char 64
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 39 char 68
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 40 char 66
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 41 char 66
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 43 char 88
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 44 char 97
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 45 char 96
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 46 char 96
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 47 char 103
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 48 char 103
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 49 char 101
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 52 char 65
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 53 char 65
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 54 char 64
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 55 char 66
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 56 char 66
+Unused attribute "BearerDescription" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/HiddenMutations.jp.xml line 57 char 70
+Unused attribute "BearerDescription" detected.
+INFO - Finished 'Loading Mutations.xml' task in 5ms
+Initilization complete...
+PlayFab player id: a40364dc-aac9-47ba-970d-c6c523b4b13d
+STEAM - User stats retrieved.
+INFO - Starting 'Initialize tinkering' task at 00:00:00:938
+INFO - Finished 'Initialize tinkering' task in 0ms
+PlayFab login success.
+PlayFab token expires 03/12/2026 13:43:19
+INFO - Cleared 0 orphaned part reflection caches.
+INFO - Finished 'Loading object blueprints' task in 1441ms
+Loading Help...
+Init Pathfinder...
+Init Console UIs...
+INFO - Starting 'Loading ZoneTemplates.xml' task at 00:00:02:258
+INFO - Finished 'Loading ZoneTemplates.xml' task in 2ms
+INFO - Starting 'Loading Quests.xml' task at 00:00:02:260
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Quests.jp.xml line 2 char 9
+Unused attribute "Load" detected.
+INFO - Finished 'Loading Quests.xml' task in 3ms
+INFO - Starting 'Loading BuildingTiles.txt' task at 00:00:02:263
+INFO - Finished 'Loading BuildingTiles.txt' task in 2ms
+INFO - Starting 'Loading Conversations.xml' task at 00:00:02:276
+INFO - Finished 'Loading Conversations.xml' task in 40ms
+Starting Game...
+Unknown color code:  
+Unknown color code:  
+Activate Context: {"text":"{{y|{{W|[Esc]}} Back}}","command":"Cancel","hotkey":"Cancel"}
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 4 char 74
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 8 char 61
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 9 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 16 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 24 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 32 char 10
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 41 char 10
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 53 char 10
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 64 char 61
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 65 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 108 char 65
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 109 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 115 char 61
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 116 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 122 char 59
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 123 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 222 char 60
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 223 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 227 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 233 char 62
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 234 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 241 char 63
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 242 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 248 char 64
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 249 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 255 char 65
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 256 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 262 char 71
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 263 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 269 char 75
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 270 char 13
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 464 char 73
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/EmbarkModules.jp.xml line 468 char 61
+Unused attribute "Load" detected.
+INFO - Starting 'Loading PronounSets.xml' task at 00:00:14:518
+INFO - Finished 'Loading PronounSets.xml' task in 0ms
+INFO - Starting 'Loading Skills.xml' task at 00:00:17:500
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 3 char 182
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 3 char 195
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 4 char 230
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 4 char 243
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 5 char 189
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 5 char 202
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 6 char 230
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 6 char 243
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 7 char 241
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 7 char 254
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 9 char 162
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 9 char 175
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 10 char 208
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 10 char 221
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 11 char 261
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 11 char 274
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 12 char 326
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 12 char 339
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 13 char 293
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 13 char 306
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 14 char 317
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 14 char 330
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 15 char 289
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 15 char 302
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 16 char 287
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 16 char 300
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 18 char 195
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 18 char 208
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 19 char 227
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 19 char 240
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 20 char 277
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 20 char 290
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 21 char 280
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 21 char 293
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 22 char 305
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 22 char 318
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 23 char 305
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 23 char 318
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 24 char 299
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 24 char 312
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 25 char 258
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 25 char 271
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 26 char 278
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 26 char 291
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 27 char 270
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 27 char 283
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 29 char 227
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 29 char 240
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 30 char 306
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 30 char 319
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 31 char 234
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 31 char 247
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 32 char 235
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 32 char 248
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 33 char 235
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 33 char 248
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 34 char 309
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 34 char 322
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 36 char 175
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 36 char 188
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 37 char 219
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 37 char 232
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 38 char 266
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 38 char 279
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 39 char 334
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 39 char 347
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 40 char 303
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 40 char 316
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 41 char 229
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 41 char 242
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 42 char 336
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 42 char 349
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 43 char 317
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 43 char 330
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 45 char 216
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 45 char 229
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 46 char 245
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 46 char 258
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 47 char 244
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 47 char 257
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 49 char 243
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 49 char 256
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 50 char 294
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 50 char 307
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 51 char 277
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 51 char 290
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 52 char 275
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 52 char 288
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 53 char 312
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 53 char 325
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 55 char 229
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 55 char 242
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 56 char 245
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 56 char 258
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 57 char 255
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 57 char 268
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 58 char 282
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 58 char 295
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 59 char 275
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 59 char 288
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 61 char 189
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 61 char 202
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 62 char 248
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 62 char 261
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 63 char 221
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 63 char 234
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 64 char 234
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 64 char 247
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 65 char 239
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 65 char 252
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 66 char 215
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 66 char 228
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 67 char 210
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 67 char 223
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 68 char 222
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 68 char 235
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 70 char 180
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 70 char 193
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 71 char 230
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 71 char 243
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 72 char 232
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 72 char 245
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 73 char 231
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 73 char 244
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 74 char 225
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 74 char 238
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 76 char 194
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 76 char 207
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 77 char 258
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 77 char 271
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 78 char 210
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 78 char 223
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 79 char 223
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 79 char 236
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 81 char 194
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 81 char 207
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 82 char 290
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 82 char 303
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 83 char 285
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 83 char 298
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 84 char 312
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 84 char 325
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 85 char 255
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 85 char 268
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 86 char 282
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 86 char 295
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 87 char 263
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 87 char 276
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 88 char 295
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 88 char 308
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 89 char 281
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 89 char 294
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 91 char 184
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 91 char 197
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 92 char 224
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 92 char 237
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 93 char 261
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 93 char 274
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 94 char 243
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 94 char 256
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 95 char 220
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 95 char 233
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 96 char 218
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 96 char 231
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 97 char 237
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 97 char 250
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 99 char 175
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 99 char 188
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 100 char 217
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 100 char 230
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 101 char 221
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 101 char 234
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 102 char 227
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 102 char 240
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 103 char 227
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 103 char 240
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 104 char 236
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 104 char 249
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 105 char 215
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 105 char 228
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 106 char 244
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 106 char 257
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 107 char 248
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 107 char 261
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 109 char 198
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 109 char 211
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 110 char 296
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 110 char 309
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 111 char 233
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 111 char 246
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 112 char 230
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 112 char 243
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 113 char 231
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 113 char 244
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 114 char 216
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 114 char 229
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 115 char 267
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 115 char 280
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 117 char 172
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 117 char 185
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 118 char 274
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 118 char 287
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 119 char 290
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 119 char 303
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 120 char 225
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 120 char 238
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 121 char 235
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 121 char 248
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 122 char 258
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 122 char 271
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 123 char 239
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 123 char 252
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 125 char 192
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 125 char 205
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 126 char 252
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 126 char 265
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 127 char 306
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 127 char 319
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 128 char 223
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 128 char 236
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 129 char 245
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 129 char 258
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 130 char 290
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 130 char 303
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 131 char 248
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 131 char 261
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 132 char 249
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 132 char 262
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 134 char 176
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 134 char 189
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 135 char 219
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 135 char 232
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 136 char 231
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 136 char 244
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 137 char 208
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 137 char 221
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 138 char 219
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 138 char 232
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 139 char 220
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 139 char 233
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 141 char 196
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 141 char 209
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 142 char 248
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 142 char 261
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 143 char 257
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 143 char 270
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 144 char 300
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 144 char 313
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 145 char 250
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 145 char 263
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 146 char 211
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 146 char 224
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 147 char 232
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 147 char 245
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 148 char 237
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 148 char 250
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 149 char 245
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 149 char 258
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 150 char 255
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 150 char 268
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 151 char 256
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 151 char 269
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 153 char 188
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 153 char 201
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 154 char 205
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 154 char 218
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 155 char 258
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 155 char 271
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 156 char 283
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 156 char 296
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 157 char 281
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 157 char 294
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 158 char 273
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 158 char 286
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 159 char 275
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 159 char 288
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 160 char 273
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 160 char 286
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 161 char 272
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 161 char 285
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 162 char 283
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 162 char 296
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 163 char 265
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 163 char 278
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 165 char 189
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 165 char 202
+Unused attribute "DisplayName" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 166 char 213
+Unused attribute "Load" detected.
+MODWARN [Caves of Qud 日本語化] - XmlDataHelper:: <...>/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/StreamingAssets/Mods/QudJP/Localization/Skills.jp.xml line 166 char 226
+Unused attribute "DisplayName" detected.
+INFO - Finished 'Loading Skills.xml' task in 9ms
+INFO - Starting 'Loading Factions.xml' task at 00:00:17:511
+INFO - Finished 'Loading Factions.xml' task in 5ms
+Show
+Hide
+exiting without info
+Stopping...
+INFO - Platform - Shutdown Starting
+STEAM - Shutting down.
+System.Threading.ThreadAbortException: Thread was being aborted.
+  at (wrapper managed-to-native) System.Threading.WaitHandle.Wait_internal(intptr*,int,bool,int)
+  at System.Threading.WaitHandle.WaitOneNative (System.Runtime.InteropServices.SafeHandle waitableSafeHandle, System.UInt32 millisecondsTimeout, System.Boolean hasThreadAffinity, System.Boolean exitContext) [0x00044] in <b4bf55bf6893420ebddeeda99394cb6d>:0 
+  at System.Threading.WaitHandle.InternalWaitOne (System.Runtime.InteropServices.SafeHandle waitableSafeHandle, System.Int64 millisecondsTimeout, System.Boolean hasThreadAffinity, System.Boolean exitContext) [0x00014] in <b4bf55bf6893420ebddeeda99394cb6d>:0 
+  at System.Threading.WaitHandle.WaitOne (System.Int64 timeout, System.Boolean exitContext) [0x00000] in <b4bf55bf6893420ebddeeda99394cb6d>:0 
+  at System.Threading.WaitHandle.WaitOne (System.Int32 millisecondsTimeout, System.Boolean exitContext) [0x00019] in <b4bf55bf6893420ebddeeda99394cb6d>:0 
+  at System.Threading.WaitHandle.WaitOne (System.Int32 millisecondsTimeout) [0x00000] in <b4bf55bf6893420ebddeeda99394cb6d>:0 
+  at ConsoleLib.Console.Keyboard.GetNextKey (System.Boolean MapDirectionsToArrows, System.Boolean pumpActions, System.Boolean waitForNext) [0x00146] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+  at ConsoleLib.Console.Keyboard.getvk (System.Boolean MapDirectionToArrows, System.Boolean pumpActions, System.Boolean wait) [0x00000] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+  at XRL.Core.XRLCore._Start () [0x00653] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+  at XRL.Core.XRLCore._ThreadStart () [0x0000a] in <79ed0a4f7c8c4bb493cf38496e340fba>:0 
+INFO - Platform - Shutdown Complete
+Stopping...
+INFO - Platform - Shutdown Starting
+INFO - Platform - Shutdown Complete
+Thread 0x16f24f000 may have been prematurely finalized
+Stopping...
+INFO - Platform - Shutdown Starting
+INFO - Platform - Shutdown Complete
+[Physics::Module] Cleanup current backned.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+Thread 0x16dedf000 may have been prematurely finalized

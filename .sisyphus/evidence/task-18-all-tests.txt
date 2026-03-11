@@ -1,0 +1,27 @@
+Task 18 — Full Test Suite Results (2026-03-11)
+
+=== C# Tests ===
+dotnet test: Passed! - Failed: 0, Passed: 96, Skipped: 0, Total: 96
+Build: 0 Warnings, 0 Errors
+
+=== Python Tests ===
+pytest: 59 passed in 0.06s
+
+=== Ruff Lint ===
+All checks passed!
+
+=== Encoding Check ===
+Scanned 79 files: 78 OK, 1 issue(s)
+  [MOJIBAKE] Mods/QudJP/Localization/AGENTS.md — Suspected mojibake (dev doc, not game file)
+
+=== Player.log Review ===
+QudJP errors: 0
+QudJP exceptions: 0
+Missing glyph: 0
+MODWARN: 378 (pre-fix session; fix deployed, pending game restart)
+
+=== L3 Game Verification (from Task 10) ===
+- Mod loads successfully: YES
+- Options screen in Japanese: YES
+- No tofu (□): YES
+- Mod Manager shows "Caves of Qud 日本語化" ENABLED: YES
