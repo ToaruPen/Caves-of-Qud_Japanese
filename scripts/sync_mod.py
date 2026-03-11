@@ -5,6 +5,20 @@ import subprocess
 import sys
 from pathlib import Path
 
+# Only game-essential files are deployed.  The game's Unity/Mono compiler will
+# attempt to compile any .cs file it finds, so source code must never reach the
+# Mods directory.  We use an include-first strategy: explicitly allow the three
+# things the game needs, then exclude everything else.
+_RSYNC_INCLUDES: tuple[str, ...] = (
+    "manifest.json",
+    "Assemblies/",
+    "Assemblies/QudJP.dll",
+    "Localization/",
+    "Localization/**",
+)
+
+_RSYNC_EXCLUDES: tuple[str, ...] = ("*",)
+
 _GAME_MODS_DIR = (
     Path.home()
     / "Library"
@@ -64,6 +78,8 @@ def build_rsync_command(
         cmd.append("--dry-run")
     if exclude_fonts:
         cmd.append("--exclude=Fonts/")
+    cmd.extend(f"--include={p}" for p in _RSYNC_INCLUDES)
+    cmd.extend(f"--exclude={p}" for p in _RSYNC_EXCLUDES)
     cmd.extend([f"{source}/", f"{destination}/"])
     return cmd
 

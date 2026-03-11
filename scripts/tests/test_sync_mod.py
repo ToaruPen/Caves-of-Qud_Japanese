@@ -5,7 +5,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from scripts.sync_mod import build_rsync_command, run_sync
+from scripts.sync_mod import (
+    _RSYNC_EXCLUDES,
+    _RSYNC_INCLUDES,
+    build_rsync_command,
+    run_sync,
+)
 
 
 class TestBuildRsyncCommand:
@@ -50,6 +55,44 @@ class TestBuildRsyncCommand:
         )
         assert "--dry-run" in cmd
         assert "--exclude=Fonts/" in cmd
+
+    def test_include_patterns_present(self) -> None:
+        """All _RSYNC_INCLUDES patterns appear as --include= args."""
+        cmd = build_rsync_command(Path("/src"), Path("/dst"))
+        for pattern in _RSYNC_INCLUDES:
+            assert f"--include={pattern}" in cmd
+
+    def test_exclude_patterns_present(self) -> None:
+        """All _RSYNC_EXCLUDES patterns appear as --exclude= args."""
+        cmd = build_rsync_command(Path("/src"), Path("/dst"))
+        for pattern in _RSYNC_EXCLUDES:
+            assert f"--exclude={pattern}" in cmd
+
+    def test_includes_before_excludes(self) -> None:
+        """--include= args must appear before --exclude= args for rsync to work."""
+        cmd = build_rsync_command(Path("/src"), Path("/dst"))
+        first_include = next(i for i, a in enumerate(cmd) if a.startswith("--include="))
+        first_exclude = next(i for i, a in enumerate(cmd) if a.startswith("--exclude="))
+        assert first_include < first_exclude
+
+    def test_wildcard_exclude_present(self) -> None:
+        """--exclude=* is present to block all non-included files."""
+        cmd = build_rsync_command(Path("/src"), Path("/dst"))
+        assert "--exclude=*" in cmd
+
+    def test_essential_files_included(self) -> None:
+        """manifest.json, Assemblies/QudJP.dll, and Localization/** are included."""
+        cmd = build_rsync_command(Path("/src"), Path("/dst"))
+        assert "--include=manifest.json" in cmd
+        assert "--include=Assemblies/QudJP.dll" in cmd
+        assert "--include=Localization/**" in cmd
+
+    def test_exclude_fonts_before_wildcard_exclude(self) -> None:
+        """--exclude=Fonts/ appears before --exclude=* when exclude_fonts is set."""
+        cmd = build_rsync_command(Path("/src"), Path("/dst"), exclude_fonts=True)
+        fonts_idx = cmd.index("--exclude=Fonts/")
+        wildcard_idx = cmd.index("--exclude=*")
+        assert fonts_idx < wildcard_idx
 
 
 class TestRunSync:
