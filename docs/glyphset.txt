@@ -1,0 +1,28 @@
+# Basic Latin
+U+0020-007E
+
+# Latin-1 Supplement (punctuation)
+U+00A1-00FF
+
+# Hiragana
+U+3040-309F
+
+# Katakana
+U+30A0-30FF
+
+# Katakana Phonetic Extensions
+U+31F0-31FF
+
+# CJK Symbols and Punctuation
+U+3000-303F
+
+# Fullwidth forms
+U+FF00-FFEF
+
+# CJK Unified Ideographs (full common range)
+U+4E00-9FFF
+
+# Misc
+U+2010-203B
+U+2190-21FF
+U+25A0-25FF

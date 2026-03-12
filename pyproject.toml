@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Python tooling for Caves of Qud Japanese localization"
 requires-python = ">=3.12"
 
+[project.optional-dependencies]
+fonts = ["fonttools", "brotli"]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 120
