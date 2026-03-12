@@ -245,3 +245,106 @@
 - `FontManager.cs` no longer contains pending wording and now documents built-in game font pipeline for CJK rendering.
 - Must Have re-check reached 11/11 with fresh command evidence: `dotnet test` 101/101, `dotnet build` Release 0 warnings, `pytest` 83/83, `ruff` clean, `diff_localization.py --summary` exit 0.
 - Patch coverage audit script showed 18 patch classes with test references and 0 uncovered.
+
+---
+## CoQ テキストレンダリングと CJK フォント処理 (2026-03-12 調査)
+
+### ゲームのテキストレンダリングシステム (Assembly-CSharp.dll から確認)
+
+CoQ には **2 つのレンダリングパス** が存在する:
+
+#### 1. ConsoleLib 旧パス (ゲームワールドビュー)
+- `ConsoleLib.Console.TextConsole.DrawBuffer(ScreenBuffer, IScreenBufferExtra, bSkipIfOverlay)` がメインエントリポイント
+- `ScreenBuffer` は `ConsoleChar` の 2D グリッド (各セルが `Char` / `Foreground` Color / `Tile` スプライト名を持つ)
+- `exBitmapFont` (ex2D ライブラリ: `Assets/Kobold/ex2D/Runtime/Assets/exBitmapFont.cs`) でテクスチャアトラスから文字を描画
+- `tileSizeX` / `tileSizeY` でセルサイズを管理、`kernings` / `KerningTableKey` でカーニング
+- 文字エンコーディングは **CP437** (0x80–0xFF は Latin/罫線/記号)
+
+#### 2. TMP Modern UI パス
+- `GameManager.ModernUI` / `GameManager.RenderForModernUI` で切り替え
+- `_TMPro.TextMeshProUGUI` (Unity.TextMeshPro) を使用
+- ゲーム内の `QudScreenBufferExtra` が Modern UI 側の拡張情報を保持
+- バニラフォントは `LiberationSans SDF` / `LiberationSans` (TMP SDF)
+
+### レガシープロジェクト (Caves-of-Qud_Japanese_legacy) の CJK アプローチ
+
+場所: `/Users/sankenbisha/Dev/Caves-of-Qud_Japanese_legacy/`
+
+#### 2 層構成アーキテクチャ
+
+**Layer A: TMP フォント置換 (Modern UI パネル)**
+- `FontManager` (`src/FontManager.cs`) が NotoSansCJKjp サブセット OTF から実行時に `TMP_FontAsset` を動的生成
+  - `TMP_FontAsset.CreateFontAsset(path, 0, 96, 6, GlyphRenderMode.SDFAA, 4096, 4096)`
+  - `AtlasPopulationMode.Dynamic` + `isMultiAtlasTexturesEnabled = true`
+- `TMP_Settings.defaultFontAsset` を Primary フォントに差し替え、`fallbackFontAssets` 先頭に追加
+- `Resources.FindObjectsOfTypeAll<TMP_FontAsset>()` で全既存アセットに `EnsureFallbackChain` を適用
+- フォントファイル名: `NotoSansCJKjp-Regular-Subset.otf` / `NotoSansCJKjp-Bold-Subset.otf`
+  - fonttools でサブセット化 (`--unicodes-file=Docs/glyphset.txt`)
+  - フォントファイル自体はリポジトリに含まない (SIL OFL ライセンスで再配布)
+- `UnityEngine.UI.Text` には ASCII 以外の文字を含む場合のみ `legacyFont` (= `PrimaryFont.sourceFontFile`) を適用
+- バニラフォント判定: `LiberationSans`, `Liberation Sans`, `LiberationSans SDF`, `Liberation Sans SDF`
+
+**Harmony パッチでのフォント適用タイミング:**
+- `TextMeshProUGUI.OnEnable` → `FontManager.ApplyToText`
+- `TextMeshPro.OnEnable` → `FontManager.ApplyToText`
+- `TMP_InputField.OnEnable` → `FontManager.ApplyToInputField`
+- `UnityEngine.UI.Text.OnEnable` → `FontManager.ApplyToLegacyText`
+- `ModManager.Init` → `QudJPMod.EnsureInitialized` (起動時の初期化保証)
+
+**Layer B: ScreenBuffer コンソールオーバーレイ (ゲームワールドビュー)**
+- `TextConsole.DrawBuffer` を Harmony **Prefix パッチ** で完全に横取り (return false で元の実装を呼ばない)
+- `ConsoleBridge.CaptureFrame(ScreenBuffer)` で `ConsoleChar` グリッドを TMP リッチテキスト文字列に変換:
+  - 行ごとに `<mspace=0.61><color=#RRGGBB>...</color></mspace>` タグ付き文字列を生成
+  - CP437 文字 (0x80–0xFF) を Unicode に変換
+  - `Tile` フィールド (スプライト参照) を優先し、なければ `Char` を使用
+- `ConsoleBridgeView` (MonoBehaviour) が `Canvas` (RenderMode.ScreenSpaceOverlay, sortingOrder=short.MaxValue) を作成
+  - 1920×1080 参照解像度、画面にフィット
+  - 行ごとに `TextMeshProUGUI` を生成、毎フレーム `Update()` でフレームを消費して描画
+  - セルサイズ: BaseCellWidth=8f, BaseCellHeight=16f (スケール計算あり)
+  - フォントサイズ = `cellHeight * 0.9f` (最小 8f)
+
+**重要: ConsoleBridgePatch はゲームオリジナルの ConsoleLib/exBitmapFont レンダリングを完全に置き換える。**
+
+### XUnity AutoTranslator
+- 調査対象のゲームモッドディレクトリ (`StreamingAssets/Mods/`) には存在しない
+- QudJP_PoC と QudJP のみが存在
+- レガシープロジェクトも XUnity を使用していない (独自 Harmony + TMP 方式)
+
+### 既知の落とし穴 (legacy Docs/font_pipeline.md より)
+- CP932 などで上書きするとフォント名が文字化けする → 常に UTF-8 BOM なし
+- Sprite Asset を更新しないと `<sprite name="AV"/>` が空文字になる
+- `TMP_Settings.defaultFontAsset` を変えても既存オブジェクトには自動適用されない → `EnsureFallbackOnAllFontAssets` + OnEnable パッチが必須
+- `SelectableTextMenuItem` は毎フレーム `SetText` を呼ぶため、多バイト文字で TMP メッシュが 0 になりやすい
+
+
+## CJKフォントレンダリング調査 (2026-03-12)
+
+### CoQのテキストレンダリングシステム（現状）
+- **現在のシステム**: TextMeshPro (TMP) + UGUI + NGUI の組み合わせ
+- **旧システム（2016年）**: ビットマップフォント、ASCII拡張のみ
+- **移行完了**: AlphaBeard が2024年12月28日に確認「The character set is no longer a bitmap font」
+- ソース: https://steamcommunity.com/app/333640/discussions/0/358415738212245626/
+
+### XUnity AutoTranslatorの仕組み
+- qud-xunity-autotranslatorリポジトリ: https://github.com/gnarf/qud-xunity-autotranslator
+- BepInExやReiPatcherを使わず、CoQの Loadables/ + RoslynCSharp（実行時C#コンパイル）でロード
+- Bootstrap.cs が [ModSensitiveCacheInit] で起動、ScriptDomainを作成してDLLをロード
+- AutoTranslator.Plugin.cs を実行時コンパイルしてHarmonyパッチ適用
+
+### XUnity ATのCJKフォント対応
+- config: OverrideFontTextMeshPro= と FallbackFontTextMeshPro= で指定
+- 使用フォント: arialuni_sdf_u2019（Arial Unicode MS の TMP SDF版）
+- TMP_Font_AssetBundles.zip をXUnity ATリリースページから別途ダウンロードが必要
+- デフォルト設定では空欄 → ユーザーが手動設定必要
+- TMP版互換性問題: u2018（TMP≤1.2.0）vs u2019（新バージョン）の区別が必要
+
+### dewfalse/CoQJPTranslation の実態
+- リポジトリ: https://github.com/dewfalse/CoQJPTranslation
+- ランタイムModではなく翻訳ファイル生成ツール（2020年、フォント問題は未解決）
+- ワークフロー: CoQ XML → Xml2ParaTranz → ParaTranz → CreateJPTranslation → 翻訳済みXML
+- フォント注入機能なし
+
+### 結論: QudJPのXML翻訳アプローチの妥当性
+- XMLでコンテンツを翻訳するアプローチは技術的に正しい
+- HarmonyパッチでC#コード内テキスト処理も必要（既存戦略で対応）
+- **未解決**: CJKフォント注入が別途必要
