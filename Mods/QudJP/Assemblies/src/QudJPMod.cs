@@ -19,7 +19,7 @@ public static class QudJPMod
         Initialize();
     }
 
-    private static void Initialize()
+    internal static void Initialize()
     {
         if (Interlocked.Exchange(ref isInitialized, 1) == 1)
         {
@@ -30,7 +30,7 @@ public static class QudJPMod
         ApplyHarmonyPatches();
     }
 
-    private static void ApplyHarmonyPatches()
+    internal static void ApplyHarmonyPatches()
     {
         var harmony = CreateHarmony("com.qudjp.localization");
         if (harmony is null)
@@ -42,7 +42,7 @@ public static class QudJPMod
         InvokePatchAll(harmony);
     }
 
-    private static object? CreateHarmony(string harmonyId)
+    internal static object? CreateHarmony(string harmonyId)
     {
         var harmonyType = ResolveHarmonyType();
         if (harmonyType is null)
@@ -61,7 +61,7 @@ public static class QudJPMod
         return constructor.Invoke(new object[] { harmonyId });
     }
 
-    private static void InvokePatchAll(object harmony)
+    internal static void InvokePatchAll(object harmony)
     {
         var harmonyType = harmony.GetType();
         var patchAllWithoutArgs = harmonyType.GetMethod(
@@ -93,7 +93,7 @@ public static class QudJPMod
         throw new MissingMethodException(harmonyType.FullName, "PatchAll");
     }
 
-    private static Type? ResolveHarmonyType()
+    internal static Type? ResolveHarmonyType()
     {
         var typeFrom0Harmony = Type.GetType("HarmonyLib.Harmony, 0Harmony", throwOnError: false);
         if (typeFrom0Harmony is not null)
