@@ -66,6 +66,7 @@ public static class FontManager
 #endif
     }
 
+#if HAS_TMP
     private static string ResolveFontPath()
     {
         var asmPath = Assembly.GetExecutingAssembly().Location;
@@ -83,4 +84,5 @@ public static class FontManager
         var modRoot = Directory.GetParent(asmDir);
         return Path.Combine(modRoot is null ? asmDir : modRoot.FullName, "Fonts", "NotoSansCJKjp-Regular-Subset.otf");
     }
+#endif
 }
