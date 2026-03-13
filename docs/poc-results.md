@@ -55,4 +55,5 @@ Test project uses multi-targeting with `<TargetFrameworks>net10.0;net48</TargetF
 - **Assembly-CSharp.dll reference**: Use `<Private>false</Private>` to avoid copying.
 - **Harmony approach**: NuGet `Lib.Harmony` 2.4.2 for tests, game-bundled `0Harmony.dll` 2.2.2.0 for runtime.
 - **3-Layer test strategy**: CONFIRMED viable — Part A proves L1/L2 tests work.
-- **DummyTarget pattern**: CONFIRMED — Prefix (return false) and Postfix (ref __result) both work.
+- **game-DLL-assisted TDD**: Recommended for L2 wherever real target resolution, real signatures, and Unity-runtime-free static or side-effect-light methods can be exercised safely.
+- **DummyTarget pattern**: Keep as a secondary technique for patch-body behavior that is difficult to exercise directly on real game types without Unity runtime.

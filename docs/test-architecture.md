@@ -1,16 +1,17 @@
 # テストアーキテクチャ
 
-QudJP のテストは **3 層構造** で設計されています。各層は依存範囲を厳密に制限し、高速なフィードバックと確実な品質保証を両立します。
+QudJP のテストは **3 層構造** を維持しつつ、L2 を `game-DLL-assisted TDD` に拡張して運用します。
+目的は、`Assembly-CSharp.dll` の実シグネチャと実メソッド解決を自動検証に取り込みながら、Unity ランタイム依存の表示確認だけを L3 に残すことです。
 
 ---
 
 ## 層の概要
 
-| 層 | 名称 | HarmonyLib | UnityEngine | 実行環境 | タグ |
-|----|------|-----------|------------|---------|------|
-| L1 | 純粋ロジック | 禁止 | 禁止 | CI / ローカル | `[Category("L1")]` |
-| L2 | Harmony 統合 | NuGet 2.4.2 | 禁止 | CI / ローカル | `[Category("L2")]` |
-| L3 | ゲームスモーク | ゲーム同梱版 | 必要 | 手動のみ | なし |
+| 層 | 名称 | HarmonyLib | Assembly-CSharp.dll | UnityEngine 実ランタイム | 実行環境 | タグ |
+|----|------|-----------|---------------------|--------------------------|---------|------|
+| L1 | 純粋ロジック | 禁止 | 禁止 | 不要 | CI / ローカル | `[Category("L1")]` |
+| L2 | Harmony 統合 / game-DLL-assisted | NuGet 2.4.2 | 使用可 | 不要 | ローカル中心 / 条件付き CI | `[Category("L2")]` |
+| L3 | ゲームスモーク | ゲーム同梱版 | 使用可 | 必要 | 手動のみ | なし |
 
 ---
 
@@ -19,14 +20,14 @@ QudJP のテストは **3 層構造** で設計されています。各層は依
 **目的**: ゲームや Harmony に依存しない純粋な C# ロジックを検証する。
 
 **制約**:
-- `using HarmonyLib` を含めてはいけない
-- `using UnityEngine` を含めてはいけない
-- `Assembly-CSharp.dll` の型を参照してはいけない
+- `using HarmonyLib` を含めない
+- `using UnityEngine` を含めない
+- `Assembly-CSharp.dll` の型を参照しない
 
 **対象コード**:
-- `Translator` — JSON 辞書の読み込みとキャッシュ
-- `ColorCodePreserver` — `{{W|...}}` / `&X` / `^Y` の保全と復元
-- `Grammar patches` — `GrammarPatch.cs` の 8 つのパッチ (`GrammarAPatch`, `GrammarPluralizePatch`, `GrammarMakePossessivePatch`, `GrammarMakeAndListPatch`, `GrammarMakeOrListPatch`, `GrammarSplitOfSentenceListPatch`, `GrammarInitCapsPatch`, `GrammarCardinalNumberPatch`) が和文向けに振る舞いを調整
+- `Translator`
+- `ColorCodePreserver`
+- 純粋な文字列変換ロジック
 
 **実行コマンド**:
 
@@ -34,141 +35,126 @@ QudJP のテストは **3 層構造** で設計されています。各層は依
 dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L1
 ```
 
-**現在のテスト数**: 41 件
-
 ---
 
-## L2 — Harmony 統合
+## L2 — Harmony 統合 / game-DLL-assisted
 
-**目的**: Harmony パッチが正しく適用されることを、ゲーム型なしで検証する。
+**目的**: Harmony パッチの target 解決、シグネチャ整合、翻訳ロジック適用を自動検証する。
+
+L2 では 2 つのモードを使い分けます。
+
+### L2-A — game-DLL-assisted
+
+`Assembly-CSharp.dll` を参照し、実ゲームの型名・メソッド名・シグネチャ・static メソッド・副作用の軽い処理を直接検証します。
+
+**このモードで優先して検証するもの**:
+- `HarmonyTargetMethod` / `HarmonyTargetMethods` が実 DLL 上で正しいメソッドを解決できるか
+- 実ゲーム DLL 由来の static メソッドや、Unity ランタイムなしで安全に呼べる処理
+- ILSpy 解析で得たフック候補が現行ゲーム 2.0.4 の実 DLL と一致しているか
 
 **制約**:
-- HarmonyLib NuGet 2.4.2 は使用可能
-- `using UnityEngine` を含めてはいけない
-- `Assembly-CSharp.dll` の型を直接インスタンス化してはいけない
+- `Assembly-CSharp.dll` の型を参照してよい
+- `using UnityEngine` を含めない
+- `Assembly-CSharp.dll` の型をテスト内で直接 instantiate しない
+- 画面表示や TMP/UGUI の実描画結果は L3 に残す
+
+**推奨例**:
+- `AccessTools.Method("XRL.UI.Look:GenerateTooltipContent")` の解決確認
+- `ConsoleLib.Console.Markup` の static API 解決確認
+- private `TargetMethod()` の反射呼び出し検証
+
+### L2-B — DummyTarget
+
+実 DLL の安全な直接実行が難しい場合は、従来どおり同一シグネチャの DummyTarget にパッチを当てて、Prefix/Postfix のロジックを検証します。
+
+**このモードで検証するもの**:
+- パッチ本文の文字列変換結果
+- 色コード保持
+- 引数 rewrite / `__result` rewrite の挙動
 
 **DummyTarget パターン**:
 
-ゲームの型を直接使うと `TypeInitializationException` が発生する可能性があります。代わりに、同じメソッドシグネチャを持つ DummyTarget クラスを作成してパッチを当てます。
-
 ```csharp
-// 正しい: DummyTarget を使う
-internal class DummyGrammar
+internal sealed class DummyGrammar
 {
     public string Pluralize(string noun) => noun + "s";
-    public string MakePossessive(string noun) => noun + "'s";
 }
-
-// 間違い: ゲームの型を直接インスタンス化する
-// var grammar = new XRL.Language.Grammar();  // TypeInitializationException の原因
 ```
 
-L2 テストの典型的な構造:
+**禁止例**:
 
 ```csharp
-[TestFixture]
-[Category("L2")]
-public class GrammarPatchTests
-{
-    private Harmony _harmony = null!;
-
-    [SetUp]
-    public void SetUp()
-    {
-        _harmony = new Harmony("test.grammar");
-        // DummyTarget にパッチを当てる
-        var original = AccessTools.Method(typeof(DummyGrammar), nameof(DummyGrammar.Pluralize));
-        var prefix = AccessTools.Method(typeof(GrammarPluralizePatch), "PluralizePrefix");
-        _harmony.Patch(original, prefix: new HarmonyMethod(prefix));
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        _harmony.UnpatchAll("test.grammar");
-    }
-
-    [Test]
-    public void Pluralize_ReturnsOriginalNoun_WhenPatched()
-    {
-        var dummy = new DummyGrammar();
-        Assert.That(dummy.Pluralize("cat"), Is.EqualTo("cat"));
-    }
-}
+// var grammar = new XRL.Language.Grammar();
 ```
+
+L2 の基本方針は次の順序です。
+
+1. まず実 DLL で target 解決とシグネチャを検証する
+2. 次に DummyTarget でパッチ本文の挙動を固定する
+3. 最後に L3 で実際の表示を確認する
 
 **実行コマンド**:
 
 ```bash
 dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L2
+dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L2G
 ```
-
-**現在のテスト数**: 9 件
 
 ---
 
 ## L3 — ゲームスモーク
 
-**目的**: 実際のゲーム起動環境でエンドツーエンドのレンダリングを確認する。
+**目的**: 実際のゲーム起動環境で、レンダリング・フォント・UI の見え方を確認する。
+
+**L3 に残すもの**:
+- 日本語文字が透明にならないか
+- `TMP_Settings.defaultFontAsset` / fallback / OnEnable 適用が実際に効いているか
+- メニュー、tooltip、mutation description、sidebar が実画面で読めるか
+- `Player.log` に `Missing glyph`, `MODWARN`, `[QudJP]` エラーがないか
 
 **制約**:
-- 手動実行のみ（CI には含めない）
+- 手動実行のみ
 - Caves of Qud v2.0.4 の実行環境が必要
 
 **手順**:
 
-1. `dotnet build Mods/QudJP/Assemblies/QudJP.csproj` でビルド
-2. `python scripts/sync_mod.py` でゲームディレクトリに配備
-3. ゲームを起動し、Mod マネージャーで QudJP を有効化
-4. メインメニュー、オプション画面、ポップアップが日本語で表示されることを確認
-5. `Player.log` にエラーがないことを確認
-
-**確認ポイント**:
-- メインメニューのボタンラベルが日本語になっている
-- オプション画面の項目名が日本語になっている
-- ゲーム内ポップアップのタイトル・本文が日本語になっている
-- `Player.log` に `[QudJP]` プレフィックスのエラーがない
+1. `dotnet build Mods/QudJP/Assemblies/QudJP.csproj`
+2. `python scripts/sync_mod.py`
+3. ゲームを起動して QudJP を有効化
+4. 主要 UI と tooltip を確認
+5. `Player.log` を確認
 
 ---
 
 ## 層境界ルール
 
-これらのルールは CI で機械的に確認できます。
+- L1 では `Assembly-CSharp.dll` を使わない
+- L2 では `UnityEngine` 実ランタイムに依存しない
+- L2 では `Assembly-CSharp.dll` の型を直接 instantiate しない
+- L3 だけが実レンダリングの最終保証を担う
 
-```bash
-# L1 テストに HarmonyLib 参照がないことを確認
-grep -r "using HarmonyLib" Mods/QudJP/Assemblies/QudJP.Tests/L1/
+---
 
-# L2 テストに UnityEngine 参照がないことを確認
-grep -r "using UnityEngine" Mods/QudJP/Assemblies/QudJP.Tests/L2/
-```
+## 推奨 TDD サイクル
 
-どちらも出力がゼロであることが正しい状態です。
+1. 実 DLL で target 解決テストを書く
+2. DummyTarget または副作用の軽い実メソッドで挙動テストを書く
+3. パッチを実装する
+4. L1/L2 を通す
+5. L3 で表示確認する
+
+この順序により、`フック位置が間違っている`, `翻訳ロジックが壊れている`, `表示だけが壊れている` を分離しやすくなります。
 
 ---
 
 ## テストプロジェクト構成
 
-```
+```text
 QudJP.Tests/
-├── QudJP.Tests.csproj    # net10.0, NUnit 4.3.2, Lib.Harmony 2.4.2
-├── DummyTargets/          # テスト用ダミー実装
-│   ├── DummyConversationElement.cs
-│   ├── DummyGrammar.cs
-│   ├── DummyMainMenuTarget.cs
-│   ├── DummyMessageQueue.cs
-│   ├── DummyOptionsTarget.cs
-│   └── DummyPopupTarget.cs
-├── L1/                   # 純粋ロジックテスト（HarmonyLib 参照なし）
-│   ├── TranslatorTests.cs
-│   ├── ColorCodePreserverTests.cs
-│   ├── GrammarPatchTests.cs
-│   └── StringUtilityTests.cs
-└── L2/                   # Harmony 統合テスト（UnityEngine 参照なし）
-    ├── HarmonyIntegrationTests.cs
-    ├── MainMenuLocalizationPatchTests.cs
-    ├── OptionsLocalizationPatchTests.cs
-    └── PopupTranslationPatchTests.cs
+|- QudJP.Tests.csproj
+|- DummyTargets/
+|- L1/
+`- L2/
 ```
 
-`net10.0` テストプロジェクトから `net48` 本体への参照は `ReferenceOutputAssembly=false` と `SkipGetTargetFrameworkProperties=true` を使って警告なしで共存させています。
+`QudJP.Tests.csproj` は `Assembly-CSharp.dll` が存在する環境で条件付き参照を張ります。存在しない環境では game-DLL-assisted な検証は実行できないため、そうしたテストは反射ベースの存在確認や skip 戦略で扱います。

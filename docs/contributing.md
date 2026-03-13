@@ -143,7 +143,7 @@ ruff check scripts/
 新しいコードには必ずテストを追加してください。
 
 - **C# 純粋ロジック** → L1 テスト（`[Category("L1")]`）
-- **Harmony パッチ** → L2 テスト（`[Category("L2")]`、DummyTarget パターン使用）
+- **Harmony パッチ** → L2 テスト（`[Category("L2")]`、まず game-DLL-assisted な target/sig 検証、その後に必要なら DummyTarget）
 - **Python スクリプト** → `scripts/tests/test_<script_name>.py`
 
 テストアーキテクチャの詳細は [docs/test-architecture.md](test-architecture.md) を参照してください。
@@ -152,6 +152,11 @@ ruff check scripts/
 - `Assembly-CSharp.dll` の型をテスト内で直接インスタンス化しない
 - アサーションのないテストを書かない
 - カバレッジ除外ディレクティブ（`# pragma: no cover` 等）を使わない
+
+**推奨順序**:
+1. 実ゲーム DLL 上で `TargetMethod()` / シグネチャ / static メソッドの自動検証を書く
+2. その上で Prefix/Postfix の文字列変換を DummyTarget または副作用の軽い実メソッドで固定する
+3. 最後に L3 で表示確認を行う
 
 ---
 

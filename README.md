@@ -130,7 +130,7 @@ Caves-of-Qud_Japanese/
 
 ## Documentation
 
-- [テストアーキテクチャ](docs/test-architecture.md) — L1/L2/L3 の 3 層構造と DummyTarget パターン
+- [テストアーキテクチャ](docs/test-architecture.md) — L1/L2/L3 の 3 層構造、game-DLL-assisted TDD、DummyTarget の使い分け
 - [翻訳追加手順](docs/translation-process.md) — XML 翻訳ファイルの作り方
 - [コントリビューションガイド](docs/contributing.md) — 開発環境セットアップ、コーディング規約、PR フロー
 - [スクリプトガイド](scripts/README.md) — Python ツールの使い方
