@@ -66,7 +66,7 @@ public static class DescriptionLongDescriptionPatch
             }
 
             var appended = SB.ToString(__state, SB.Length - __state);
-            var translated = TranslatePreservingColors(appended);
+            var translated = UITextSkinTranslationPatch.TranslatePreservingColors(appended, nameof(DescriptionLongDescriptionPatch));
             if (string.Equals(appended, translated, StringComparison.Ordinal))
             {
                 return;
@@ -79,17 +79,5 @@ public static class DescriptionLongDescriptionPatch
         {
             Trace.TraceError("QudJP: DescriptionLongDescriptionPatch.Postfix failed: {0}", ex);
         }
-    }
-
-    private static string TranslatePreservingColors(string source)
-    {
-        var (stripped, spans) = ColorCodePreserver.Strip(source);
-        if (stripped.Length == 0)
-        {
-            return source;
-        }
-
-        var translated = Translator.Translate(stripped);
-        return ColorCodePreserver.Restore(translated, spans);
     }
 }

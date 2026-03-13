@@ -52,23 +52,11 @@ public static class LookTooltipContentPatch
                 return;
             }
 
-            __result = TranslatePreservingColors(__result);
+            __result = UITextSkinTranslationPatch.TranslatePreservingColors(__result, nameof(LookTooltipContentPatch));
         }
         catch (Exception ex)
         {
             Trace.TraceError("QudJP: LookTooltipContentPatch.Postfix failed: {0}", ex);
         }
-    }
-
-    private static string TranslatePreservingColors(string source)
-    {
-        var (stripped, spans) = ColorCodePreserver.Strip(source);
-        if (stripped.Length == 0)
-        {
-            return source;
-        }
-
-        var translated = Translator.Translate(stripped);
-        return ColorCodePreserver.Restore(translated, spans);
     }
 }

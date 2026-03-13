@@ -68,23 +68,11 @@ public static class GetDisplayNameProcessPatch
                 return;
             }
 
-            __result = TranslatePreservingColors(__result);
+            __result = UITextSkinTranslationPatch.TranslatePreservingColors(__result, nameof(GetDisplayNameProcessPatch));
         }
         catch (Exception ex)
         {
             Trace.TraceError("QudJP: GetDisplayNameProcessPatch.Postfix failed: {0}", ex);
         }
-    }
-
-    private static string TranslatePreservingColors(string source)
-    {
-        var (stripped, spans) = ColorCodePreserver.Strip(source);
-        if (stripped.Length == 0)
-        {
-            return source;
-        }
-
-        var translated = Translator.Translate(stripped);
-        return ColorCodePreserver.Restore(translated, spans);
     }
 }
