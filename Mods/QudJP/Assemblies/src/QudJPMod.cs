@@ -1,7 +1,10 @@
 using System;
 using System.Diagnostics;
+using System.Collections;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
+using HarmonyLib;
 
 namespace QudJP;
 
@@ -65,6 +68,21 @@ public static class QudJPMod
     internal static void InvokePatchAll(object harmony)
     {
         var harmonyType = harmony.GetType();
+        var createClassProcessor = harmonyType.GetMethod(
+            "CreateClassProcessor",
+            BindingFlags.Instance | BindingFlags.Public,
+            binder: null,
+            types: new[] { typeof(Type) },
+            modifiers: null);
+
+        if (createClassProcessor is not null)
+        {
+            PatchByClassProcessor(harmony, createClassProcessor);
+            return;
+        }
+
+        Trace.TraceWarning("QudJP: Harmony.CreateClassProcessor(Type) not available. Falling back to PatchAll(Assembly).");
+
         var patchAllWithAssembly = harmonyType.GetMethod(
             "PatchAll",
             BindingFlags.Instance | BindingFlags.Public,
@@ -90,13 +108,188 @@ public static class QudJPMod
         }
     }
 
+    private static void PatchByClassProcessor(object harmony, MethodInfo createClassProcessor)
+    {
+        var patchAssembly = Assembly.GetExecutingAssembly();
+        var patchTypes = GetHarmonyPatchTypes(patchAssembly);
+        for (var index = 0; index < patchTypes.Length; index++)
+        {
+            var patchType = patchTypes[index];
+            if (!TryPreparePatchType(patchType, out var preparationFailure))
+            {
+                LogToUnity($"[QudJP] Warning: Skipping patch {patchType.FullName}: {preparationFailure}");
+                continue;
+            }
+
+            try
+            {
+                var processor = createClassProcessor.Invoke(harmony, new object[] { patchType });
+                if (processor is null)
+                {
+                    LogToUnity($"[QudJP] Warning: Harmony returned null class processor for patch {patchType.FullName}.");
+                    continue;
+                }
+
+                var patchMethod = processor.GetType().GetMethod("Patch", Type.EmptyTypes);
+                if (patchMethod is null)
+                {
+                    LogToUnity($"[QudJP] Warning: Patch() missing on class processor for {patchType.FullName}.");
+                    continue;
+                }
+
+                patchMethod.Invoke(processor, null);
+            }
+            catch (TargetInvocationException ex)
+            {
+                var details = ex.InnerException?.ToString() ?? ex.ToString();
+                LogToUnity($"[QudJP] Warning: Failed to apply patch {patchType.FullName}: {details}");
+            }
+        }
+    }
+
+    internal static bool TryPreparePatchType(Type patchType, out string failureReason)
+    {
+        var methods = AccessTools.GetDeclaredMethods(patchType);
+        for (var index = 0; index < methods.Count; index++)
+        {
+            var method = methods[index];
+
+            if (HasHarmonyTargetMethodAttribute(method)
+                && !TryResolveSingleTarget(method, out failureReason))
+            {
+                return false;
+            }
+
+            if (HasHarmonyTargetMethodsAttribute(method)
+                && !TryResolveMultipleTargets(method, out failureReason))
+            {
+                return false;
+            }
+        }
+
+        failureReason = string.Empty;
+        return true;
+    }
+
+    internal static Type[] GetHarmonyPatchTypes(Assembly assembly)
+    {
+        return assembly
+            .GetTypes()
+            .Where(HasHarmonyPatchAttribute)
+            .ToArray();
+    }
+
+    private static bool HasHarmonyPatchAttribute(Type type)
+    {
+        var attributes = CustomAttributeData.GetCustomAttributes(type);
+        for (var index = 0; index < attributes.Count; index++)
+        {
+            var attributeType = attributes[index].AttributeType;
+            if (attributeType.FullName == "HarmonyLib.HarmonyPatch"
+                || attributeType.Name == "HarmonyPatch")
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool HasHarmonyTargetMethodAttribute(MethodInfo method)
+    {
+        return HasHarmonyAttribute(method, "HarmonyTargetMethod");
+    }
+
+    private static bool HasHarmonyTargetMethodsAttribute(MethodInfo method)
+    {
+        return HasHarmonyAttribute(method, "HarmonyTargetMethods");
+    }
+
+    private static bool HasHarmonyAttribute(MemberInfo member, string attributeName)
+    {
+        var attributes = CustomAttributeData.GetCustomAttributes(member);
+        for (var index = 0; index < attributes.Count; index++)
+        {
+            var attributeType = attributes[index].AttributeType;
+            if (attributeType.FullName == "HarmonyLib." + attributeName
+                || attributeType.Name == attributeName)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool TryResolveSingleTarget(MethodInfo resolver, out string failureReason)
+    {
+        try
+        {
+            if (resolver.Invoke(null, null) is MethodBase)
+            {
+                failureReason = string.Empty;
+                return true;
+            }
+
+            failureReason = $"{resolver.DeclaringType?.FullName}.{resolver.Name} returned null.";
+            return false;
+        }
+        catch (TargetInvocationException ex)
+        {
+            failureReason = ex.InnerException?.Message ?? ex.Message;
+            return false;
+        }
+    }
+
+    private static bool TryResolveMultipleTargets(MethodInfo resolver, out string failureReason)
+    {
+        try
+        {
+            if (resolver.Invoke(null, null) is not IEnumerable enumerable)
+            {
+                failureReason = $"{resolver.DeclaringType?.FullName}.{resolver.Name} returned null.";
+                return false;
+            }
+
+            if (enumerable.Cast<object?>().OfType<MethodBase>().Any())
+            {
+                failureReason = string.Empty;
+                return true;
+            }
+
+            failureReason = $"{resolver.DeclaringType?.FullName}.{resolver.Name} returned no target methods.";
+            return false;
+        }
+        catch (TargetInvocationException ex)
+        {
+            failureReason = ex.InnerException?.Message ?? ex.Message;
+            return false;
+        }
+    }
+
     internal static void LogToUnity(string message)
     {
-#if HAS_TMP
-        UnityEngine.Debug.Log(message);
-#else
+        try
+        {
+            var debugType = Type.GetType("UnityEngine.Debug, UnityEngine.CoreModule", throwOnError: false);
+            if (debugType is null)
+            {
+                Trace.TraceWarning("QudJP: UnityEngine.Debug not found in UnityEngine.CoreModule. Trying UnityEngine assembly name.");
+                debugType = Type.GetType("UnityEngine.Debug, UnityEngine", throwOnError: false);
+            }
+
+            var logMethod = debugType?.GetMethod("Log", BindingFlags.Public | BindingFlags.Static, binder: null, types: new[] { typeof(object) }, modifiers: null);
+            if (logMethod is not null)
+            {
+                logMethod.Invoke(null, new object[] { message });
+            }
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceWarning("QudJP: Unity debug logging failed; falling back to trace. {0}", ex.Message);
+        }
+
         Trace.TraceInformation(message);
-#endif
     }
 
     internal static void LogPatchResults(object harmony)
@@ -108,14 +301,22 @@ public static class QudJPMod
             return;
         }
 
-        var methods = (System.Collections.IEnumerable)getPatchedMethods.Invoke(harmony, null)!;
-        var count = 0;
-        foreach (var _ in methods)
+        try
         {
-            count++;
-        }
+            var methods = (System.Collections.IEnumerable)getPatchedMethods.Invoke(harmony, null)!;
+            var count = 0;
+            foreach (var _ in methods)
+            {
+                count++;
+            }
 
-        LogToUnity($"[QudJP] Harmony patching complete: {count} method(s) patched.");
+            LogToUnity($"[QudJP] Harmony patching complete: {count} method(s) patched.");
+        }
+        catch (TargetInvocationException ex)
+        {
+            var message = ex.InnerException?.Message ?? ex.Message;
+            LogToUnity($"[QudJP] Warning: Failed to enumerate patched methods: {message}");
+        }
     }
 
     internal static Type? ResolveHarmonyType()
