@@ -31,7 +31,8 @@
 - **netstandard2.0**: ⚠️ Build directory empty — likely incompatible with test adapter
 
 Decision: Tests will run on net10.0. Mod DLL targets net48 (matches game's Mono runtime).
-Test project uses multi-targeting with `<TargetFrameworks>net10.0;net48</TargetFrameworks>` for cross-compatibility.
+Test project now stays on single-target `net10.0` and conditionally enables
+game-DLL-assisted checks when `Assembly-CSharp.dll` is available locally.
 
 ## Part B Status — AWAITING MANUAL VERIFICATION
 - Minimal mod created and deployed to `StreamingAssets/Mods/QudJP_PoC/`:
