@@ -10,7 +10,8 @@ QudJP のテストは **3 層構造** を維持しつつ、L2 を `game-DLL-assi
 | 層 | 名称 | HarmonyLib | Assembly-CSharp.dll | UnityEngine 実ランタイム | 実行環境 | タグ |
 |----|------|-----------|---------------------|--------------------------|---------|------|
 | L1 | 純粋ロジック | 禁止 | 禁止 | 不要 | CI / ローカル | `[Category("L1")]` |
-| L2 | Harmony 統合 / game-DLL-assisted | NuGet 2.4.2 | 使用可 | 不要 | ローカル中心 / 条件付き CI | `[Category("L2")]` |
+| L2 | Harmony 統合 / DummyTarget | NuGet 2.4.2 | 使用可 | 不要 | CI / ローカル | `[Category("L2")]` |
+| L2G | game-DLL-assisted hook inventory | NuGet 2.4.2 | 使用可 | 不要 | ローカル中心 / 条件付き CI | `[Category("L2G")]` |
 | L3 | ゲームスモーク | ゲーム同梱版 | 使用可 | 必要 | 手動のみ | なし |
 
 ---
@@ -120,9 +121,14 @@ dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCa
 
 1. `dotnet build Mods/QudJP/Assemblies/QudJP.csproj`
 2. `python scripts/sync_mod.py`
-3. ゲームを起動して QudJP を有効化
-4. 主要 UI と tooltip を確認
-5. `Player.log` を確認
+3. Apple Silicon では `scripts/launch_rosetta.sh` または `Launch CavesOfQud (Rosetta).command` で Rosetta 起動する
+4. ゲームを起動して QudJP を有効化
+5. 主要 UI と tooltip を確認
+6. `Player.log` を確認
+
+**Apple Silicon の注意**:
+- native ARM64 の Harmony 実行結果は観測証跡として扱わない
+- Apple Silicon 上の L3 受け入れ証跡は Rosetta 起動ログのみを有効とする
 
 ---
 
@@ -154,7 +160,8 @@ QudJP.Tests/
 |- QudJP.Tests.csproj
 |- DummyTargets/
 |- L1/
-`- L2/
+|- L2/
+`- L2G/
 ```
 
 `QudJP.Tests.csproj` は `Assembly-CSharp.dll` が存在する環境で条件付き参照を張ります。存在しない環境では game-DLL-assisted な検証は実行できないため、そうしたテストは反射ベースの存在確認や skip 戦略で扱います。
