@@ -164,20 +164,29 @@ public static class GrammarMakeAndListPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeAndList", new[] { typeof(List<string>) });
-        if (method is null)
+        try
         {
-            Trace.TraceError("QudJP: Failed to resolve Grammar.MakeAndList(List<string>). Patch will not apply.");
-        }
+            var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeAndList", new[] { typeof(IReadOnlyList<string>), typeof(bool) });
+            if (method is null)
+            {
+                Trace.TraceError("QudJP: Failed to resolve Grammar.MakeAndList(IReadOnlyList<string>, bool). Patch will not apply.");
+            }
 
-        return method;
+            return method;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarMakeAndListPatch.TargetMethod failed: {0}", ex);
+            return null;
+        }
     }
 
-    public static bool Prefix(List<string> Items, ref string __result)
+    public static bool Prefix(IEnumerable<string> __0, bool __1, ref string __result)
     {
         try
         {
-            __result = GrammarPatchHelpers.BuildJapaneseList(Items, "と");
+            _ = __1;
+            __result = GrammarPatchHelpers.BuildJapaneseList(new List<string>(__0), "と");
             return false;
         }
         catch (Exception ex)
@@ -191,23 +200,41 @@ public static class GrammarMakeAndListPatch
 [HarmonyPatch]
 public static class GrammarMakeOrListPatch
 {
-    [HarmonyTargetMethod]
-    private static MethodBase? TargetMethod()
+    [HarmonyTargetMethods]
+    private static IEnumerable<MethodBase> TargetMethods()
     {
-        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeOrList", new[] { typeof(List<string>) });
-        if (method is null)
+        var any = false;
+
+        MethodBase?[] candidates =
         {
-            Trace.TraceError("QudJP: Failed to resolve Grammar.MakeOrList(List<string>). Patch will not apply.");
+            AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeOrList", new[] { typeof(string[]), typeof(bool) }),
+            AccessTools.Method(GrammarPatchTarget.TypeName + ":MakeOrList", new[] { typeof(List<string>), typeof(bool) }),
+        };
+
+        for (var index = 0; index < candidates.Length; index++)
+        {
+            var method = candidates[index];
+            if (method is null)
+            {
+                continue;
+            }
+
+            any = true;
+            yield return method;
         }
 
-        return method;
+        if (!any)
+        {
+            Trace.TraceError("QudJP: Failed to resolve Grammar.MakeOrList(string[]/List<string>, bool). Patch will not apply.");
+        }
     }
 
-    public static bool Prefix(List<string> Items, ref string __result)
+    public static bool Prefix(IEnumerable<string> __0, bool __1, ref string __result)
     {
         try
         {
-            __result = GrammarPatchHelpers.BuildJapaneseList(Items, "または");
+            _ = __1;
+            __result = GrammarPatchHelpers.BuildJapaneseList(new List<string>(__0), "または");
             return false;
         }
         catch (Exception ex)
@@ -224,13 +251,21 @@ public static class GrammarSplitOfSentenceListPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":SplitOfSentenceList");
-        if (method is null)
+        try
         {
-            Trace.TraceError("QudJP: Failed to resolve Grammar.SplitOfSentenceList(). Patch will not apply.");
-        }
+            var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":SplitOfSentenceList", new[] { typeof(string) });
+            if (method is null)
+            {
+                Trace.TraceError("QudJP: Failed to resolve Grammar.SplitOfSentenceList(string). Patch will not apply.");
+            }
 
-        return method;
+            return method;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarSplitOfSentenceListPatch.TargetMethod failed: {0}", ex);
+            return null;
+        }
     }
 
     public static bool Prefix(string Text, ref List<string> __result)
@@ -254,13 +289,21 @@ public static class GrammarInitCapsPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":InitCaps", new[] { typeof(string) });
-        if (method is null)
+        try
         {
-            Trace.TraceError("QudJP: Failed to resolve Grammar.InitCaps(string). Patch will not apply.");
-        }
+            var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":InitCaps", new[] { typeof(string) });
+            if (method is null)
+            {
+                Trace.TraceError("QudJP: Failed to resolve Grammar.InitCaps(string). Patch will not apply.");
+            }
 
-        return method;
+            return method;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarInitCapsPatch.TargetMethod failed: {0}", ex);
+            return null;
+        }
     }
 
     public static bool Prefix(string Text, ref string __result)
@@ -284,13 +327,21 @@ public static class GrammarCardinalNumberPatch
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
-        var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":CardinalNumber", new[] { typeof(int) });
-        if (method is null)
+        try
         {
-            Trace.TraceError("QudJP: Failed to resolve Grammar.CardinalNumber(int). Patch will not apply.");
-        }
+            var method = AccessTools.Method(GrammarPatchTarget.TypeName + ":CardinalNumber", new[] { typeof(int) });
+            if (method is null)
+            {
+                Trace.TraceError("QudJP: Failed to resolve Grammar.CardinalNumber(int). Patch will not apply.");
+            }
 
-        return method;
+            return method;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: GrammarCardinalNumberPatch.TargetMethod failed: {0}", ex);
+            return null;
+        }
     }
 
     public static bool Prefix(int Number, ref string __result)
