@@ -64,16 +64,17 @@ public sealed class TranslatorTests
         try
         {
             using var _ = Translator.PushLogContext("TestRoute");
+            const string missingKey = "MISSING_KEY_FOR_LogsContext";
 
-            var translated = Translator.Translate("Goodbye");
+            var translated = Translator.Translate(missingKey);
 
             listener.Flush();
             var output = writer.ToString();
 
             Assert.Multiple(() =>
             {
-                Assert.That(translated, Is.EqualTo("Goodbye"));
-                Assert.That(output, Does.Contain("missing key 'Goodbye'"));
+                Assert.That(translated, Is.EqualTo(missingKey));
+                Assert.That(output, Does.Contain($"missing key '{missingKey}'"));
                 Assert.That(output, Does.Contain("context: TestRoute"));
             });
         }

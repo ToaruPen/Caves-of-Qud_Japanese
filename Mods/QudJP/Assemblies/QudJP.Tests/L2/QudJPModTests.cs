@@ -124,6 +124,7 @@ public sealed class QudJPModTests
         try
         {
             action();
+            Trace.Flush();
             listener.Flush();
             return writer.ToString();
         }

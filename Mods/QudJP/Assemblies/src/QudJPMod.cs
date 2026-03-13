@@ -316,9 +316,11 @@ public static class QudJPMod
 
             LogToUnity($"[QudJP] Harmony patching complete: {count} method(s) patched.");
         }
-        catch (TargetInvocationException ex)
+        catch (Exception ex)
         {
-            var message = ex.InnerException?.Message ?? ex.Message;
+            var message = ex is TargetInvocationException tie
+                ? tie.InnerException?.Message ?? tie.Message
+                : ex.Message;
             LogToUnity($"[QudJP] Warning: Failed to enumerate patched methods: {message}");
         }
     }

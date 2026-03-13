@@ -159,8 +159,6 @@ public sealed class UIExpansionPatchTests
 
         var headerGetter = RequireMethod(typeof(DummyCharGenProperties), nameof(DummyCharGenProperties.get_HeaderText));
         var typeGetter = RequireMethod(typeof(DummyCharGenProperties), nameof(DummyCharGenProperties.get_type));
-        _ = DummyEmbarkModuleRow.GetMarker();
-        _ = DummyQudMutationModuleDataRow.GetMarker();
         var embarkTypeResult = (bool)typeFilterMethod!.Invoke(null, new object[] { typeof(DummyEmbarkModuleRow) })!;
         var qudMutationTypeResult = (bool)typeFilterMethod.Invoke(null, new object[] { typeof(DummyQudMutationModuleDataRow) })!;
 
@@ -329,13 +327,9 @@ public sealed class UIExpansionPatchTests
         }
     }
 
-    private static class DummyEmbarkModuleRow
-    {
-        public static int GetMarker() => 1;
-    }
+#pragma warning disable S2094
+    private static class DummyEmbarkModuleRow;
 
-    private static class DummyQudMutationModuleDataRow
-    {
-        public static int GetMarker() => 1;
-    }
+    private static class DummyQudMutationModuleDataRow;
+#pragma warning restore S2094
 }

@@ -190,7 +190,8 @@ public static class GrammarMakeAndListPatch
         try
         {
             _ = __1;
-            __result = GrammarPatchHelpers.BuildJapaneseList(new List<string>(__0), "と");
+            var items = __0 is List<string> list ? list : new List<string>(__0);
+            __result = GrammarPatchHelpers.BuildJapaneseList(items, "と");
             return false;
         }
         catch (Exception ex)
@@ -238,7 +239,8 @@ public static class GrammarMakeOrListPatch
         try
         {
             _ = __1;
-            __result = GrammarPatchHelpers.BuildJapaneseList(new List<string>(__0), "または");
+            var items = __0 is List<string> list ? list : new List<string>(__0);
+            __result = GrammarPatchHelpers.BuildJapaneseList(items, "または");
             return false;
         }
         catch (Exception ex)

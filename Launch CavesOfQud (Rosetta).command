@@ -7,8 +7,10 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CURRENT_TTY="$(tty)"
 
+set +e
 "${SCRIPT_DIR}/scripts/launch_rosetta.sh"
 EXIT_CODE=$?
+set -e
 
 if [[ ${EXIT_CODE} -eq 0 ]]; then
   osascript <<EOF >/dev/null 2>&1 || true

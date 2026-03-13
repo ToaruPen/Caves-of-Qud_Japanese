@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using QudJP.Patches;
 
@@ -52,7 +53,7 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(GetDisplayNameProcessPatch), "ProcessFor", "XRL.World.GetDisplayNameEvent", "System.String", new[] { "XRL.World.GameObject", "System.Boolean" })]
     [TestCase(typeof(LookTooltipContentPatch), "GenerateTooltipContent", "XRL.UI.Look", "System.String", new[] { "XRL.World.GameObject" })]
     [TestCase(typeof(DescriptionLongDescriptionPatch), "GetLongDescription", "XRL.World.Parts.Description", "System.Void", new[] { "System.Text.StringBuilder" })]
-    [TestCase(typeof(GrammarMakeAndListPatch), "MakeAndList", "XRL.Language.Grammar", "System.String", new[] { "System.Collections.Generic.IReadOnlyList`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]", "System.Boolean" })]
+    [TestCase(typeof(GrammarMakeAndListPatch), "MakeAndList", "XRL.Language.Grammar", "System.String", new[] { "System.Collections.Generic.IReadOnlyList`1[[System.String]]", "System.Boolean" })]
 #endif
 #if HAS_TMP
     [TestCase(typeof(TextMeshProUguiFontPatch), "OnEnable", "TMPro.TextMeshProUGUI", "System.Void", new string[0])]
@@ -79,7 +80,7 @@ public sealed class TargetMethodResolutionTests
             Assert.That(methodInfo, Is.Not.Null, $"Expected MethodInfo for {patchType.FullName}");
             Assert.That(methodInfo!.ReturnType.FullName, Is.EqualTo(expectedReturnType));
 
-            var parameterTypes = Array.ConvertAll(methodInfo.GetParameters(), static parameter => parameter.ParameterType.FullName);
+            var parameterTypes = Array.ConvertAll(methodInfo.GetParameters(), static parameter => NormalizeTypeName(parameter.ParameterType.FullName));
             Assert.That(parameterTypes, Is.EqualTo(expectedParameterTypes));
         });
     }
@@ -88,7 +89,7 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(GrammarMakeOrListPatch), new[]
     {
         "System.String[]|System.Boolean",
-        "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]|System.Boolean",
+        "System.Collections.Generic.List`1[[System.String]]|System.Boolean",
     })]
     public void TargetMethods_ResolveExpectedOverloads(Type patchType, string[] expectedSignatures)
     {
@@ -106,7 +107,7 @@ public sealed class TargetMethodResolutionTests
                 continue;
             }
 
-            var signature = string.Join("|", Array.ConvertAll(methodInfo.GetParameters(), static parameter => parameter.ParameterType.FullName));
+            var signature = string.Join("|", Array.ConvertAll(methodInfo.GetParameters(), static parameter => NormalizeTypeName(parameter.ParameterType.FullName)));
             actualSignatures.Add(signature);
         }
 
@@ -120,6 +121,40 @@ public sealed class TargetMethodResolutionTests
         return targetMethod?.Invoke(null, null) as MethodBase;
     }
 
+    // Regex: strip assembly-qualified parts from generic type args
+    // "List`1[[System.String, System.Private.CoreLib, Version=...]]" → "List`1[[System.String]]"
+    private static string NormalizeTypeName(string? typeName)
+    {
+        if (typeName is null)
+        {
+            return string.Empty;
+        }
+
+        return Regex.Replace(typeName, @",\s*[^\[\],]+,\s*Version=[^\]]+", string.Empty);
+    }
+
+    private static string ResolveManagedDirectory()
+    {
+        var envDir = Environment.GetEnvironmentVariable("COQ_MANAGED_DIR");
+        if (!string.IsNullOrWhiteSpace(envDir))
+        {
+            return envDir;
+        }
+
+        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        var defaultDir = Path.Combine(
+            home,
+            "Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/Managed");
+
+        if (Directory.Exists(defaultDir))
+        {
+            return defaultDir;
+        }
+
+        Assert.Ignore("Game managed directory not found. Set COQ_MANAGED_DIR to run game-DLL-backed tests.");
+        return string.Empty;
+    }
+
 #if HAS_GAME_DLL
     private static Assembly EnsureGameAssemblyLoaded()
     {
@@ -131,10 +166,8 @@ public sealed class TargetMethodResolutionTests
             return loadedAssembly;
         }
 
-        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        var assemblyPath = Path.Combine(
-            home,
-            "Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/Managed/Assembly-CSharp.dll");
+        var managedDir = ResolveManagedDirectory();
+        var assemblyPath = Path.Combine(managedDir, "Assembly-CSharp.dll");
 
         Assert.That(File.Exists(assemblyPath), Is.True, $"Assembly-CSharp.dll not found at {assemblyPath}");
         loadedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
@@ -154,10 +187,7 @@ public sealed class TargetMethodResolutionTests
             return loadedAssembly;
         }
 
-        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        var managedDir = Path.Combine(
-            home,
-            "Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/Managed");
+        var managedDir = ResolveManagedDirectory();
         var assemblyPath = Path.Combine(managedDir, assemblyName + ".dll");
 
         Assert.That(File.Exists(assemblyPath), Is.True, $"{assemblyName}.dll not found at {assemblyPath}");
