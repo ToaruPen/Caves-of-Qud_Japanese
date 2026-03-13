@@ -234,9 +234,11 @@ public static class QudJPMod
             failureReason = $"{resolver.DeclaringType?.FullName}.{resolver.Name} returned null.";
             return false;
         }
-        catch (TargetInvocationException ex)
+        catch (Exception ex)
         {
-            failureReason = ex.InnerException?.Message ?? ex.Message;
+            failureReason = ex is TargetInvocationException tie
+                ? tie.InnerException?.Message ?? tie.Message
+                : ex.Message;
             return false;
         }
     }
@@ -260,9 +262,11 @@ public static class QudJPMod
             failureReason = $"{resolver.DeclaringType?.FullName}.{resolver.Name} returned no target methods.";
             return false;
         }
-        catch (TargetInvocationException ex)
+        catch (Exception ex)
         {
-            failureReason = ex.InnerException?.Message ?? ex.Message;
+            failureReason = ex is TargetInvocationException tie
+                ? tie.InnerException?.Message ?? tie.Message
+                : ex.Message;
             return false;
         }
     }

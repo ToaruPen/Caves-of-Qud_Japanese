@@ -23,35 +23,27 @@ public static class GetDisplayNameProcessPatch
             }
         }
 
-        foreach (var type in AccessTools.AllTypes())
+        var targetType = AccessTools.TypeByName(TargetTypeName);
+        if (targetType is null)
         {
-            if (type is null)
+            Trace.TraceError("QudJP: Failed to resolve GetDisplayNameEvent.ProcessFor(GameObject,bool). Patch will not apply.");
+            return null;
+        }
+
+        var methods = AccessTools.GetDeclaredMethods(targetType);
+        for (var index = 0; index < methods.Count; index++)
+        {
+            var candidate = methods[index];
+            if (!string.Equals(candidate.Name, "ProcessFor", StringComparison.Ordinal)
+                || candidate.ReturnType != typeof(string))
             {
                 continue;
             }
 
-            var fullName = type.FullName;
-            if (!string.Equals(fullName, TargetTypeName, StringComparison.Ordinal)
-                && !string.Equals(type.Name, "GetDisplayNameEvent", StringComparison.Ordinal))
+            var parameters = candidate.GetParameters();
+            if (parameters.Length == 2 && parameters[1].ParameterType == typeof(bool))
             {
-                continue;
-            }
-
-            var methods = AccessTools.GetDeclaredMethods(type);
-            for (var index = 0; index < methods.Count; index++)
-            {
-                var candidate = methods[index];
-                if (!string.Equals(candidate.Name, "ProcessFor", StringComparison.Ordinal)
-                    || candidate.ReturnType != typeof(string))
-                {
-                    continue;
-                }
-
-                var parameters = candidate.GetParameters();
-                if (parameters.Length == 2 && parameters[1].ParameterType == typeof(bool))
-                {
-                    return candidate;
-                }
+                return candidate;
             }
         }
 

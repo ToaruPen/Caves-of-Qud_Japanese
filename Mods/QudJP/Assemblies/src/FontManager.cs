@@ -106,6 +106,7 @@ public static class FontManager
 #endif
     }
 
+#if HAS_TMP
     internal static void ApplyToText(TMP_Text text)
     {
         if (text is null)
@@ -154,18 +155,12 @@ public static class FontManager
         var fallbackFont = legacyFont
             ?? throw new InvalidOperationException("QudJP FontManager: legacy font is not initialized.");
 
-        if (!ContainsNonAscii(text.text))
-        {
-            return;
-        }
-
         if (text.font is null || IsVanillaLegacyFont(text.font))
         {
             text.font = fallbackFont;
         }
     }
 
-#if HAS_TMP
     private static string ResolveFontPath()
     {
         var asmPath = Assembly.GetExecutingAssembly().Location;
@@ -274,24 +269,5 @@ public static class FontManager
         return false;
     }
 
-    private static bool ContainsNonAscii(string? text)
-    {
-        if (string.IsNullOrEmpty(text))
-        {
-            return false;
-        }
-
-        var value = text!;
-
-        for (var index = 0; index < value.Length; index++)
-        {
-            if (value[index] > 0x7F)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
 #endif
 }
