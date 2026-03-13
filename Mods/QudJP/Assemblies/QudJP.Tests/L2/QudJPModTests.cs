@@ -1,4 +1,7 @@
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using HarmonyLib;
 
 namespace QudJP.Tests.L2;
@@ -14,15 +17,9 @@ public sealed class QudJPModTests
         var harmonyId = $"qudjp.tests.patchall.{Guid.NewGuid():N}";
         var harmony = new Harmony(harmonyId);
 
-        using var listener = new System.Diagnostics.TextWriterTraceListener(new System.IO.StringWriter());
-        System.Diagnostics.Trace.Listeners.Add(listener);
-
         try
         {
-            Assert.That(() => QudJPMod.InvokePatchAll(harmony), Throws.Nothing);
-
-            listener.Flush();
-            var output = listener.Writer!.ToString()!;
+            var output = CaptureTrace(() => Assert.That(() => QudJPMod.InvokePatchAll(harmony), Throws.Nothing));
 
             Assert.That(output, Does.Contain("[QudJP]"),
                 "InvokePatchAll should log when patches fail to apply, " +
@@ -30,9 +27,21 @@ public sealed class QudJPModTests
         }
         finally
         {
-            System.Diagnostics.Trace.Listeners.Remove(listener);
             harmony.UnpatchAll(harmonyId);
         }
+    }
+
+    [Test]
+    public void GetHarmonyPatchTypes_ReturnsHarmonyPatchClassesOnly()
+    {
+        var patchTypes = QudJPMod.GetHarmonyPatchTypes(typeof(QudJPModTests).Assembly);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(patchTypes, Does.Contain(typeof(PatchAllTestPatch)));
+            Assert.That(patchTypes, Does.Not.Contain(typeof(QudJPModTests)));
+            Assert.That(patchTypes, Does.Not.Contain(typeof(PatchAllDummyTarget)));
+        });
     }
 
     [Test]
@@ -47,21 +56,8 @@ public sealed class QudJPModTests
                 original: AccessTools.Method(typeof(PatchAllDummyTarget), nameof(PatchAllDummyTarget.Echo)),
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(PatchAllTestPatch), nameof(PatchAllTestPatch.Postfix))));
 
-            using var listener = new System.Diagnostics.TextWriterTraceListener(new System.IO.StringWriter());
-            System.Diagnostics.Trace.Listeners.Add(listener);
-
-            try
-            {
-                QudJPMod.LogPatchResults(harmony);
-                listener.Flush();
-                var output = listener.Writer!.ToString()!;
-
-                Assert.That(output, Does.Contain("method(s) patched"));
-            }
-            finally
-            {
-                System.Diagnostics.Trace.Listeners.Remove(listener);
-            }
+            var output = CaptureTrace(() => QudJPMod.LogPatchResults(harmony));
+            Assert.That(output, Does.Contain("method(s) patched"));
         }
         finally
         {
@@ -70,22 +66,71 @@ public sealed class QudJPModTests
     }
 
     [Test]
+    public void TryPreparePatchType_ReturnsFalse_WhenTargetMethodReturnsNull()
+    {
+        var prepared = QudJPMod.TryPreparePatchType(typeof(NullTargetPatch), out var reason);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(prepared, Is.False);
+            Assert.That(reason, Does.Contain("returned null"));
+        });
+    }
+
+    [Test]
+    public void TryPreparePatchType_ReturnsFalse_WhenTargetMethodsReturnsEmpty()
+    {
+        var prepared = QudJPMod.TryPreparePatchType(typeof(EmptyTargetsPatch), out var reason);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(prepared, Is.False);
+            Assert.That(reason, Does.Contain("returned no target methods"));
+        });
+    }
+
+    [Test]
+    public void TryPreparePatchType_ReturnsTrue_ForSimpleHarmonyPatchWithoutCustomTargetResolver()
+    {
+        var prepared = QudJPMod.TryPreparePatchType(typeof(PatchAllTestPatch), out var reason);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(prepared, Is.True);
+            Assert.That(reason, Is.Empty);
+        });
+    }
+
+    [Test]
+    public void LogPatchResults_HandlesGetPatchedMethodsFailure_WithoutThrowing()
+    {
+        var output = CaptureTrace(() => Assert.That(() => QudJPMod.LogPatchResults(ThrowingPatchedMethodsProbe.Create()), Throws.Nothing));
+        Assert.That(output, Does.Contain("Failed to enumerate patched methods"));
+    }
+
+    [Test]
     public void LogToUnity_WritesToTrace_InTestEnvironment()
     {
-        using var listener = new System.Diagnostics.TextWriterTraceListener(new System.IO.StringWriter());
-        System.Diagnostics.Trace.Listeners.Add(listener);
+        var output = CaptureTrace(() => QudJPMod.LogToUnity("[QudJP] test message"));
+        Assert.That(output, Does.Contain("[QudJP] test message"));
+    }
+
+    private static string CaptureTrace(Action action)
+    {
+        using var writer = new StringWriter();
+        using var listener = new TextWriterTraceListener(writer);
+        Trace.Listeners.Add(listener);
 
         try
         {
-            QudJPMod.LogToUnity("[QudJP] test message");
+            action();
+            Trace.Flush();
             listener.Flush();
-            var output = listener.Writer!.ToString()!;
-
-            Assert.That(output, Does.Contain("[QudJP] test message"));
+            return writer.ToString();
         }
         finally
         {
-            System.Diagnostics.Trace.Listeners.Remove(listener);
+            Trace.Listeners.Remove(listener);
         }
     }
 
@@ -104,6 +149,46 @@ public sealed class QudJPModTests
         public static void Postfix(ref string __result)
         {
             __result = $"[patched] {__result}";
+        }
+    }
+
+    [HarmonyPatch]
+    internal static class NullTargetPatch
+    {
+        [HarmonyTargetMethod]
+        private static MethodBase? TargetMethod()
+        {
+            return null;
+        }
+    }
+
+    [HarmonyPatch]
+    internal static class EmptyTargetsPatch
+    {
+        [HarmonyTargetMethods]
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            yield break;
+        }
+    }
+
+    internal sealed class ThrowingPatchedMethodsProbe
+    {
+        private readonly int sentinel = 1;
+
+        private ThrowingPatchedMethodsProbe()
+        {
+        }
+
+        public static ThrowingPatchedMethodsProbe Create()
+        {
+            return new ThrowingPatchedMethodsProbe();
+        }
+
+        public System.Collections.IEnumerable GetPatchedMethods()
+        {
+            _ = sentinel;
+            throw new InvalidOperationException("simulated patched-method enumeration failure");
         }
     }
 }

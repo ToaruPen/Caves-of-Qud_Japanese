@@ -17,3 +17,15 @@
 - `.editorconfig` の C# スタイルルールは severity=error で統一（`dotnet_style_qualification` 系）。
 - CI は `hashFiles()` ガードで条件付き実行（テストプロジェクト・Pythonファイル未存在時にスキップ）。
 - pyproject.toml の Ruff ignore は `D100`, `D104`, `COM812`, `ISC001` の4ルールのみ。
+
+## 2026-03-13 Task 18-20 Harmony runtime / Rosetta decision
+- Apple Silicon ネイティブ ARM64 + Unity Mono + game-bundled `0Harmony 2.2.2.0` では、Harmony patch 適用が広範囲に失敗する前提で扱う。
+- macOS Apple Silicon 上の実ゲーム確認は、以後 `scripts/launch_rosetta.sh` または `Launch CavesOfQud (Rosetta).command` を使った Rosetta 起動を標準手順とする。
+- 根拠: ネイティブ起動では `HarmonySharedState` / `mprotect returned EACCES` 系の障害が出た一方、Rosetta 起動では `Harmony patching complete: 22 method(s) patched.` まで進んだ。
+- したがって、Apple Silicon 上で native ARM64 ログだけを見て個別 patch を掘るのは後回しにし、まず Rosetta での再現・比較を優先する。
+
+## 2026-03-13 Task 20 world generation safety decision
+- `HistoricStringExpanderPatch` は当面 runtime で無効化する。
+- 根拠: Rosetta 起動後、`HistorySpice` 生成中に `spice reference 時間/ガラスの/遊牧民 ... wasn't a node` が大量発生し、その後 `CherubimSpawner.ReplaceDescription` の `ArgumentOutOfRangeException` と `Worships.Generate` の `NullReferenceException` でワールド生成が停止した。
+- これは `HistoricStringExpanderPatch` が表示文だけでなく history generation 用の symbolic key まで翻訳して破壊している仮説と最も整合する。
+- 当面は playability を coverage より優先し、world generation が通ることを先に確保する。歴史文ローカライズは後で表示専用ケースに限定して再導入する。

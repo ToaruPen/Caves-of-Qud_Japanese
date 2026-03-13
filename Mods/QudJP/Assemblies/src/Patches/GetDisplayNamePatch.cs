@@ -69,7 +69,7 @@ public static class GetDisplayNamePatch
                 return;
             }
 
-            __result = UITextSkinTranslationPatch.TranslatePreservingColors(__result);
+            __result = UITextSkinTranslationPatch.TranslatePreservingColors(__result, nameof(GetDisplayNamePatch));
         }
         catch (Exception ex)
         {

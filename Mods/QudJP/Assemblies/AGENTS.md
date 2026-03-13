@@ -139,7 +139,8 @@ public class TranslatorTests
 ### L2 — Harmony Integration (`[Category("L2")]`)
 
 HarmonyLib NuGet 2.4.2 allowed. No UnityEngine. Tests patch application
-against DummyTarget classes.
+against DummyTarget classes and, where safe, against real `Assembly-CSharp.dll`
+method resolution/static behavior without Unity runtime.
 
 ```csharp
 [TestFixture, Category("L2")]
@@ -159,6 +160,8 @@ public class GrammarPatchTests
 ## DummyTarget Pattern (Critical)
 
 NEVER instantiate types from Assembly-CSharp.dll in tests.
+Assembly-CSharp.dll may be referenced in tests for target resolution, signature
+checks, and Unity-runtime-free static behavior.
 Create test doubles with matching method signatures:
 
 ```csharp
@@ -174,14 +177,17 @@ internal class DummyGrammar
 ```
 
 The DummyTarget must have the exact same method signature as the real class
-so Harmony can patch it in L2 tests.
+so Harmony can patch it in L2 tests when direct real-type execution is not the
+best fit.
 
 ## HarmonyLib Versions
 
 | Context | Version | Source |
 |---------|---------|--------|
-| Runtime (mod) | 0Harmony 2.2.2.0 | Game-bundled, do NOT reference via NuGet |
+| Runtime (mod) | 0Harmony 2.2.2.0 | Prefer game-bundled; fall back to `Lib.Harmony` 2.2.2 metadata-only reference when `0Harmony.dll` is absent locally |
 | Tests | HarmonyLib 2.4.2 | NuGet, test project only |
 
-The test project references HarmonyLib via NuGet. The mod project does NOT
-reference HarmonyLib at all; the game provides it at runtime.
+The test project references HarmonyLib via NuGet. The mod project prefers the
+game-bundled `0Harmony.dll` at runtime, but may use a conditional
+`Lib.Harmony` reference (with `ExcludeAssets="runtime"`) so local builds still
+compile when `0Harmony.dll` is not present.

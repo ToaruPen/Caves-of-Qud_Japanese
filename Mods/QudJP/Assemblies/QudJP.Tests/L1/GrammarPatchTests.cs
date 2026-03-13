@@ -153,7 +153,7 @@ public sealed class GrammarPatchTests
         var result = string.Empty;
         var input = new List<string> { "A", "B", "C" };
 
-        var skipped = GrammarMakeAndListPatch.Prefix(input, ref result);
+        var skipped = GrammarMakeAndListPatch.Prefix(input, false, ref result);
 
         Assert.Multiple(() =>
         {
@@ -168,7 +168,7 @@ public sealed class GrammarPatchTests
         var result = "placeholder";
         var input = new List<string>();
 
-        var skipped = GrammarMakeAndListPatch.Prefix(input, ref result);
+        var skipped = GrammarMakeAndListPatch.Prefix(input, false, ref result);
 
         Assert.Multiple(() =>
         {
@@ -183,7 +183,7 @@ public sealed class GrammarPatchTests
         var result = string.Empty;
         var input = new List<string> { "{{W|刀}}", "&G盾^k" };
 
-        var skipped = GrammarMakeAndListPatch.Prefix(input, ref result);
+        var skipped = GrammarMakeAndListPatch.Prefix(input, false, ref result);
 
         Assert.Multiple(() =>
         {
@@ -198,7 +198,7 @@ public sealed class GrammarPatchTests
         var result = string.Empty;
         var input = new List<string> { "A", "B", "C" };
 
-        var skipped = GrammarMakeOrListPatch.Prefix(input, ref result);
+        var skipped = GrammarMakeOrListPatch.Prefix(input, false, ref result);
 
         Assert.Multiple(() =>
         {
@@ -213,7 +213,7 @@ public sealed class GrammarPatchTests
         var result = "placeholder";
         var input = new List<string>();
 
-        var skipped = GrammarMakeOrListPatch.Prefix(input, ref result);
+        var skipped = GrammarMakeOrListPatch.Prefix(input, false, ref result);
 
         Assert.Multiple(() =>
         {
@@ -228,7 +228,7 @@ public sealed class GrammarPatchTests
         var result = string.Empty;
         var input = new List<string> { "{{W|刀}}", "&G盾^k" };
 
-        var skipped = GrammarMakeOrListPatch.Prefix(input, ref result);
+        var skipped = GrammarMakeOrListPatch.Prefix(input, false, ref result);
 
         Assert.Multiple(() =>
         {

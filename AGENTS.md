@@ -73,7 +73,7 @@ pytest scripts/tests/
 ### L2 — Harmony Integration
 - HarmonyLib NuGet 2.4.2 allowed
 - No UnityEngine dependency
-- Tests that patches apply correctly to DummyTarget classes
+- Tests that patches apply correctly to DummyTarget classes and, where safe, against real `Assembly-CSharp.dll` method resolution/static behavior without Unity runtime
 - Tag: `[Category("L2")]`
 - Run on every commit
 
@@ -86,12 +86,13 @@ pytest scripts/tests/
 
 **DummyTarget pattern** (critical):
 - NEVER instantiate types from Assembly-CSharp.dll in tests
+- Assembly-CSharp.dll may be referenced in tests for target resolution, signature checks, and Unity-runtime-free static behavior
 - Create test doubles with matching method signatures instead
 - Example: `class DummyGrammar { public string Pluralize(string s) => s + "s"; }`
 
 **Layer boundaries**:
 - L1 tests: zero references to HarmonyLib
-- L2 tests: zero references to UnityEngine
+- L2 tests: zero references to UnityEngine; direct Assembly-CSharp instantiation remains forbidden
 - L3 tests: manual game launch only, no automation
 
 ## Code Style

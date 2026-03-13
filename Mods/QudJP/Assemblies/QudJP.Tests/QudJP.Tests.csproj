@@ -7,10 +7,16 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AnalysisLevel>latest-all</AnalysisLevel>
     <IsPackable>false</IsPackable>
-    <!-- FontManager.ResolveFontPath is only used inside #if HAS_TMP, which is not defined in test builds.
-         S1144 is a false positive here — suppress it for the test project only. -->
-    <NoWarn>S1144</NoWarn>
     <AssemblyCSharpPath>$(HOME)/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/Managed/Assembly-CSharp.dll</AssemblyCSharpPath>
+    <ManagedDir>$([System.IO.Path]::GetDirectoryName('$(AssemblyCSharpPath)'))</ManagedDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(AssemblyCSharpPath)')">
+    <DefineConstants>$(DefineConstants);HAS_GAME_DLL</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(ManagedDir)/Unity.TextMeshPro.dll')">
+    <DefineConstants>$(DefineConstants);HAS_TMP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +47,33 @@
   <ItemGroup Condition="Exists('$(AssemblyCSharpPath)')">
     <Reference Include="Assembly-CSharp">
       <HintPath>$(AssemblyCSharpPath)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('$(ManagedDir)/Unity.TextMeshPro.dll')">
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(ManagedDir)/Unity.TextMeshPro.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(ManagedDir)/UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ManagedDir)/UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreFontEngineModule">
+      <HintPath>$(ManagedDir)/UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreTextEngineModule">
+      <HintPath>$(ManagedDir)/UnityEngine.TextCoreTextEngineModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(ManagedDir)/UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

@@ -31,7 +31,8 @@
 - **netstandard2.0**: ⚠️ Build directory empty — likely incompatible with test adapter
 
 Decision: Tests will run on net10.0. Mod DLL targets net48 (matches game's Mono runtime).
-Test project uses multi-targeting with `<TargetFrameworks>net10.0;net48</TargetFrameworks>` for cross-compatibility.
+Test project now stays on single-target `net10.0` and conditionally enables
+game-DLL-assisted checks when `Assembly-CSharp.dll` is available locally.
 
 ## Part B Status — AWAITING MANUAL VERIFICATION
 - Minimal mod created and deployed to `StreamingAssets/Mods/QudJP_PoC/`:
@@ -55,4 +56,5 @@ Test project uses multi-targeting with `<TargetFrameworks>net10.0;net48</TargetF
 - **Assembly-CSharp.dll reference**: Use `<Private>false</Private>` to avoid copying.
 - **Harmony approach**: NuGet `Lib.Harmony` 2.4.2 for tests, game-bundled `0Harmony.dll` 2.2.2.0 for runtime.
 - **3-Layer test strategy**: CONFIRMED viable — Part A proves L1/L2 tests work.
-- **DummyTarget pattern**: CONFIRMED — Prefix (return false) and Postfix (ref __result) both work.
+- **game-DLL-assisted TDD**: Recommended for L2 wherever real target resolution, real signatures, and Unity-runtime-free static or side-effect-light methods can be exercised safely.
+- **DummyTarget pattern**: Keep as a secondary technique for patch-body behavior that is difficult to exercise directly on real game types without Unity runtime.

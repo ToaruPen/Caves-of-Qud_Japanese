@@ -1,7 +1,9 @@
 #if HAS_TMP
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
+using UguiText = UnityEngine.UI.Text;
 #endif
 using System;
 #if !HAS_TMP
@@ -16,6 +18,25 @@ namespace QudJP;
 public static class FontManager
 {
     private static int isInitialized;
+
+#if HAS_TMP
+    private static readonly string[] VanillaTmpFontNames =
+    {
+        "LiberationSans SDF",
+        "Liberation Sans SDF",
+        "LiberationSans",
+        "Liberation Sans",
+    };
+
+    private static readonly string[] VanillaLegacyFontNames =
+    {
+        "LiberationSans",
+        "Liberation Sans",
+    };
+
+    private static TMP_FontAsset? primaryFontAsset;
+    private static Font? legacyFont;
+#endif
 
     public static void Initialize()
     {
@@ -46,15 +67,34 @@ public static class FontManager
             fontAsset.atlasPopulationMode = AtlasPopulationMode.Dynamic;
             fontAsset.isMultiAtlasTexturesEnabled = true;
 
-            TMP_Settings.fallbackFontAssets ??= new System.Collections.Generic.List<TMP_FontAsset>();
-            TMP_Settings.fallbackFontAssets.Add(fontAsset);
+            primaryFontAsset = fontAsset;
+            legacyFont = fontAsset.sourceFontFile;
+
+            fontAsset.fallbackFontAssetTable ??= new List<TMP_FontAsset>();
+
+            var previousDefaultFont = TMP_Settings.defaultFontAsset;
+            if (previousDefaultFont is not null && !ReferenceEquals(previousDefaultFont, fontAsset))
+            {
+                EnsureFontListed(fontAsset.fallbackFontAssetTable, previousDefaultFont, prepend: false);
+            }
+
+            TMP_Settings.defaultFontAsset = fontAsset;
+
+            TMP_Settings.fallbackFontAssets ??= new List<TMP_FontAsset>();
+            EnsureFontListed(TMP_Settings.fallbackFontAssets, fontAsset, prepend: true);
+            if (previousDefaultFont is not null && !ReferenceEquals(previousDefaultFont, fontAsset))
+            {
+                EnsureFontListed(TMP_Settings.fallbackFontAssets, previousDefaultFont, prepend: false);
+            }
+
+            var patchedFontAssetCount = EnsureFallbackOnAllFontAssets(fontAsset);
 
             if (!fontAsset.TryAddCharacters("日本語テスト"))
             {
                 throw new InvalidOperationException("TryAddCharacters failed for probe string '日本語テスト'");
             }
 
-            Debug.Log("[QudJP] FontManager: CJK font registered as TMP global fallback.");
+            Debug.Log($"[QudJP] FontManager: CJK font registered. defaultFontAsset='{fontAsset.name}', patchedAssets={patchedFontAssetCount}.");
         }
         catch (Exception ex)
         {
@@ -67,6 +107,60 @@ public static class FontManager
     }
 
 #if HAS_TMP
+    internal static void ApplyToText(TMP_Text text)
+    {
+        if (text is null)
+        {
+            throw new ArgumentNullException(nameof(text));
+        }
+
+        var fontAsset = primaryFontAsset
+            ?? throw new InvalidOperationException("QudJP FontManager: primary TMP font asset is not initialized.");
+
+        if (text.font is null || IsVanillaTmpFont(text.font))
+        {
+            text.font = fontAsset;
+        }
+        else
+        {
+            EnsureFallbackChain(text.font, fontAsset);
+        }
+    }
+
+    internal static void ApplyToInputField(TMP_InputField inputField)
+    {
+        if (inputField is null)
+        {
+            throw new ArgumentNullException(nameof(inputField));
+        }
+
+        if (inputField.textComponent is not null)
+        {
+            ApplyToText(inputField.textComponent);
+        }
+
+        if (inputField.placeholder is TMP_Text placeholder)
+        {
+            ApplyToText(placeholder);
+        }
+    }
+
+    internal static void ApplyToLegacyText(UguiText text)
+    {
+        if (text is null)
+        {
+            throw new ArgumentNullException(nameof(text));
+        }
+
+        var fallbackFont = legacyFont
+            ?? throw new InvalidOperationException("QudJP FontManager: legacy font is not initialized.");
+
+        if (text.font is null || IsVanillaLegacyFont(text.font))
+        {
+            text.font = fallbackFont;
+        }
+    }
+
     private static string ResolveFontPath()
     {
         var asmPath = Assembly.GetExecutingAssembly().Location;
@@ -84,5 +178,96 @@ public static class FontManager
         var modRoot = Directory.GetParent(asmDir);
         return Path.Combine(modRoot is null ? asmDir : modRoot.FullName, "Fonts", "NotoSansCJKjp-Regular-Subset.otf");
     }
+
+    private static int EnsureFallbackOnAllFontAssets(TMP_FontAsset fontAsset)
+    {
+        var patchedCount = 0;
+        var existingAssets = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
+        for (var index = 0; index < existingAssets.Length; index++)
+        {
+            var existingAsset = existingAssets[index];
+            if (existingAsset is null || ReferenceEquals(existingAsset, fontAsset))
+            {
+                continue;
+            }
+
+            if (EnsureFallbackChain(existingAsset, fontAsset))
+            {
+                patchedCount++;
+            }
+        }
+
+        return patchedCount;
+    }
+
+    private static bool EnsureFallbackChain(TMP_FontAsset targetAsset, TMP_FontAsset fallbackAsset)
+    {
+        if (ReferenceEquals(targetAsset, fallbackAsset))
+        {
+            return false;
+        }
+
+        targetAsset.fallbackFontAssetTable ??= new List<TMP_FontAsset>();
+        return EnsureFontListed(targetAsset.fallbackFontAssetTable, fallbackAsset, prepend: true);
+    }
+
+    private static bool EnsureFontListed(List<TMP_FontAsset>? fontList, TMP_FontAsset fontAsset, bool prepend)
+    {
+        if (fontList is null)
+        {
+            throw new InvalidOperationException("QudJP FontManager: target font list is null.");
+        }
+
+        var existingIndex = fontList.FindIndex(candidate => ReferenceEquals(candidate, fontAsset));
+        if (existingIndex == 0 && prepend)
+        {
+            return false;
+        }
+
+        if (existingIndex >= 0)
+        {
+            fontList.RemoveAt(existingIndex);
+        }
+
+        if (prepend)
+        {
+            fontList.Insert(0, fontAsset);
+        }
+        else
+        {
+            fontList.Add(fontAsset);
+        }
+
+        return true;
+    }
+
+    private static bool IsVanillaTmpFont(TMP_FontAsset fontAsset)
+    {
+        return MatchesKnownFontName(fontAsset.name, VanillaTmpFontNames);
+    }
+
+    private static bool IsVanillaLegacyFont(Font font)
+    {
+        return MatchesKnownFontName(font.name, VanillaLegacyFontNames);
+    }
+
+    private static bool MatchesKnownFontName(string? value, string[] candidates)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return true;
+        }
+
+        for (var index = 0; index < candidates.Length; index++)
+        {
+            if (string.Equals(value, candidates[index], StringComparison.Ordinal))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 #endif
 }
