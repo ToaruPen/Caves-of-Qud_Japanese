@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using HarmonyLib;
 
@@ -14,6 +15,52 @@ public static class CharGenLocalizationPatch
         "XRL.CharacterCreation.CharacterCreationManager",
         "XRL.CharacterCreation.EmbarkModule",
         "XRL.CharacterBuilds.EmbarkBuilder",
+        "QudGenotypeModule",
+        "QudMutationsModule",
+        "QudCyberneticsModule",
+        "EmbarkBuilder",
+    };
+
+    private static readonly string[] TypeNameHints =
+    {
+        "CharacterCreation",
+        "Embark",
+        "Genotype",
+        "Mutation",
+        "Calling",
+        "Cybernetics",
+    };
+
+    private static readonly string[] StructuralTypeHints =
+    {
+        "Module",
+        "Builder",
+        "Screen",
+        "Manager",
+        "Window",
+    };
+
+    private static readonly string[] ExcludedTypeHints =
+    {
+        "Data",
+        "Entry",
+        "Line",
+    };
+
+    private static readonly string[] MethodNameHints =
+    {
+        "Text",
+        "Title",
+        "Label",
+        "Description",
+        "Display",
+        "Prompt",
+        "Choice",
+        "Node",
+        "Calling",
+        "Mutation",
+        "Genotype",
+        "Cybernetics",
     };
 
     [HarmonyTargetMethods]
@@ -84,9 +131,34 @@ public static class CharGenLocalizationPatch
             return false;
         }
 
-        return fullName.StartsWith("XRL.CharacterCreation.", StringComparison.Ordinal)
-               || ContainsOrdinalIgnoreCase(fullName, "CharacterCreation")
-               || ContainsOrdinalIgnoreCase(fullName, "Embark");
+        if (fullName.StartsWith("XRL.CharacterCreation.", StringComparison.Ordinal))
+        {
+            return true;
+        }
+
+        for (var excludedIndex = 0; excludedIndex < ExcludedTypeHints.Length; excludedIndex++)
+        {
+            if (ContainsOrdinalIgnoreCase(fullName, ExcludedTypeHints[excludedIndex]))
+            {
+                return false;
+            }
+        }
+
+        for (var index = 0; index < TypeNameHints.Length; index++)
+        {
+            if (ContainsOrdinalIgnoreCase(fullName, TypeNameHints[index]))
+            {
+                for (var structuralIndex = 0; structuralIndex < StructuralTypeHints.Length; structuralIndex++)
+                {
+                    if (ContainsOrdinalIgnoreCase(fullName, StructuralTypeHints[structuralIndex]))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     private static void CollectCandidateMethods(Type type, ICollection<MethodBase> targets, ISet<MethodBase> seen)
@@ -106,8 +178,29 @@ public static class CharGenLocalizationPatch
 
     private static bool IsTextReturningMethodCandidate(MethodInfo method)
     {
-        if (method.ReturnType != typeof(string) || method.ContainsGenericParameters)
+        try
         {
+            if (method.ReturnType != typeof(string) || method.ContainsGenericParameters)
+            {
+                return false;
+            }
+        }
+        catch (FileNotFoundException ex)
+        {
+            Trace.TraceWarning(
+                "QudJP: CharGenLocalizationPatch skipped method '{0}' on '{1}' because dependency assembly '{2}' is unavailable during target resolution.",
+                method.Name,
+                method.DeclaringType?.FullName,
+                ex.FileName);
+            return false;
+        }
+        catch (TypeLoadException ex)
+        {
+            Trace.TraceWarning(
+                "QudJP: CharGenLocalizationPatch skipped method '{0}' on '{1}' because a dependent type could not be loaded: {2}",
+                method.Name,
+                method.DeclaringType?.FullName,
+                ex.Message);
             return false;
         }
 
@@ -121,12 +214,20 @@ public static class CharGenLocalizationPatch
             ? name.Substring("get_".Length)
             : name;
 
-        return ContainsOrdinalIgnoreCase(candidateName, "Text")
-               || ContainsOrdinalIgnoreCase(candidateName, "Title")
-               || ContainsOrdinalIgnoreCase(candidateName, "Label")
-               || ContainsOrdinalIgnoreCase(candidateName, "Description")
-               || ContainsOrdinalIgnoreCase(candidateName, "Display")
-               || ContainsOrdinalIgnoreCase(candidateName, "Prompt");
+        if (ContainsOrdinalIgnoreCase(candidateName, "Type"))
+        {
+            return false;
+        }
+
+        for (var index = 0; index < MethodNameHints.Length; index++)
+        {
+            if (ContainsOrdinalIgnoreCase(candidateName, MethodNameHints[index]))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static bool ContainsOrdinalIgnoreCase(string source, string value)
