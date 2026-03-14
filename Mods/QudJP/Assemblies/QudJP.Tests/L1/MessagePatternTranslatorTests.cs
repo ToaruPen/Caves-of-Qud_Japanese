@@ -124,6 +124,45 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void Translate_AppliesJournalNotesPattern()
+    {
+        WritePatternDictionary(("^Notes: (.+)$", "備考: {0}"));
+
+        var translated = MessagePatternTranslator.Translate("Notes: Damur");
+
+        Assert.That(translated, Is.EqualTo("備考: Damur"));
+    }
+
+    [Test]
+    public void Translate_AppliesEmbarkPattern()
+    {
+        WritePatternDictionary(("^You embark for the caves of Qud\\.$", "あなたはQudの洞窟へ旅立った。"));
+
+        var translated = MessagePatternTranslator.Translate("You embark for the caves of Qud.");
+
+        Assert.That(translated, Is.EqualTo("あなたはQudの洞窟へ旅立った。"));
+    }
+
+    [Test]
+    public void Translate_AppliesVillageArrivalPattern()
+    {
+        WritePatternDictionary(
+            (
+                "^On the (.+?) of (.+?), you arrive at the village of (.+?)\\.\\n\\nOn the horizon, Qud's jungles strangle chrome steeples and rusted archways to the earth\\. Further and beyond, the fabled Spindle rises above the fray and pierces the cloud-ribboned sky\\.$",
+                "{1}の{0}日、あなたは{2}の村に到着した。\n\n地平線では、Qudのジャングルがクロームの尖塔と錆びたアーチを大地に絡みつかせている。さらにその彼方では、伝説のスピンドルが乱景の上にそびえ、雲の帯を貫いて空へ伸びている。"));
+
+        var source = "On the 5th of Ut yara Ux, you arrive at the village of Damur and fungus patch.\n\n" +
+            "On the horizon, Qud's jungles strangle chrome steeples and rusted archways to the earth. Further and beyond, the fabled Spindle rises above the fray and pierces the cloud-ribboned sky.";
+
+        var translated = MessagePatternTranslator.Translate(source);
+
+        var expected = "Ut yara Uxの5th日、あなたはDamur and fungus patchの村に到着した。\n\n" +
+            "地平線では、Qudのジャングルがクロームの尖塔と錆びたアーチを大地に絡みつかせている。さらにその彼方では、伝説のスピンドルが乱景の上にそびえ、雲の帯を貫いて空へ伸びている。";
+
+        Assert.That(translated, Is.EqualTo(expected));
+    }
+
+    [Test]
     public void Translate_ReturnsOriginal_WhenPatternDoesNotMatch()
     {
         WritePatternDictionary(("^You equip (.+)[.!]?$", "{0}を装備した"));
@@ -358,6 +397,8 @@ public sealed class MessagePatternTranslatorTests
     {
         return value
             .Replace("\\", "\\\\", StringComparison.Ordinal)
+            .Replace("\r", "\\r", StringComparison.Ordinal)
+            .Replace("\n", "\\n", StringComparison.Ordinal)
             .Replace("\"", "\\\"", StringComparison.Ordinal);
     }
 }

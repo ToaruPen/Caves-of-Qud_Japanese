@@ -165,9 +165,19 @@
             "text": "能力値ポイント: {0}{1}}}}}"
         },
         {
+            "key": "Attribute Points: {0}",
+            "context": "Qud.UI.CharacterStatusScreen.AttributePointsText",
+            "text": "能力値ポイント: {0}"
+        },
+        {
             "key": "MP: {0}{1}}}}}",
             "context": "Qud.UI.CharacterStatusScreen.MutationPointsText.Short",
             "text": "突然変異P: {0}{1}}}}}"
+        },
+        {
+            "key": "Mutation Points: {0}",
+            "context": "Qud.UI.CharacterStatusScreen.MutationPointsText",
+            "text": "突然変異ポイント: {0}"
         },
         {
             "key": "{0} Points: {1}{2}}}}}",

@@ -50,6 +50,9 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(LookTooltipContentPatch), "GenerateTooltipContent", "XRL.UI.Look", "System.String", new[] { "XRL.World.GameObject" })]
     [TestCase(typeof(DescriptionLongDescriptionPatch), "GetLongDescription", "XRL.World.Parts.Description", "System.Void", new[] { "System.Text.StringBuilder" })]
     [TestCase(typeof(UITextSkinTranslationPatch), "SetText", "XRL.UI.UITextSkin", "System.Boolean", new[] { "System.String" })]
+    [TestCase(typeof(CharacterStatusScreenTranslationPatch), "UpdateViewFromData", "Qud.UI.CharacterStatusScreen", "System.Void", new string[0])]
+    [TestCase(typeof(FactionsStatusScreenTranslationPatch), "UpdateViewFromData", "Qud.UI.FactionsStatusScreen", "System.Void", new string[0])]
+    [TestCase(typeof(SkillsAndPowersStatusScreenTranslationPatch), "UpdateViewFromData", "Qud.UI.SkillsAndPowersStatusScreen", "System.Void", new string[0])]
     [TestCase(typeof(MessageLogPatch), "AddPlayerMessage", "XRL.Messages.MessageQueue", "System.Void", new[] { "System.String", "System.String", "System.Boolean" })]
     [TestCase(typeof(ConversationDisplayTextPatch), "GetDisplayText", "XRL.World.Conversations.Choice", "System.String", new[] { "System.Boolean" })]
     [TestCase(typeof(GrammarMakeAndListPatch), "MakeAndList", "XRL.Language.Grammar", "System.String", new[] { "System.Collections.Generic.IReadOnlyList`1[[System.String]]", "System.Boolean" })]
@@ -94,6 +97,7 @@ public sealed class TargetMethodResolutionTests
     {
         "System.String|System.String|System.String|System.Boolean|System.Boolean|System.Boolean|System.Boolean|Genkit.Location2D",
         "System.String|System.Collections.Generic.IReadOnlyList`1[[System.String]]|System.Collections.Generic.IReadOnlyList`1[[System.Char]]|System.Int32|System.String|System.Int32|System.Boolean|System.Boolean|System.Int32|System.String|System.Action`1[[System.Int32]]|XRL.World.GameObject|System.Collections.Generic.IReadOnlyList`1[[ConsoleLib.Console.IRenderable]]|ConsoleLib.Console.IRenderable|System.Collections.Generic.IReadOnlyList`1[[Qud.UI.QudMenuItem]]|System.Boolean|System.Boolean|System.Int32|System.Boolean",
+        "System.String|XRL.World.GameObject|System.String|System.Collections.Generic.List`1[[System.String]]|System.Boolean|System.Boolean|System.Boolean",
     })]
     public void TargetMethods_ResolveExpectedOverloads(Type patchType, string[] expectedSignatures)
     {
@@ -138,6 +142,32 @@ public sealed class TargetMethodResolutionTests
             $"Method not found: {declaringTypeName}.{methodName} with {parameterCount} parameter(s)");
     }
 
+    [TestCase("XRL.UI.Popup", "ShowConversation", 7, "System.Int32")]
+    [TestCase("XRL.GameText", "VariableReplace", 4, "System.String")]
+    [TestCase("XRL.GameText", "Process", 6, "System.Void")]
+    [TestCase("XRL.World.Text.ReplaceBuilder", "Process", 0, "System.Void")]
+    [TestCase("XRL.World.DescriptionBuilder", "ToString", 0, "System.String")]
+    public void Issue29Probe_ResolvesUpstreamCandidateMethods(
+        string declaringTypeName,
+        string methodName,
+        int parameterCount,
+        string expectedReturnType)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var declaringType = assembly.GetType(declaringTypeName, throwOnError: false);
+        Assert.That(declaringType, Is.Not.Null, $"Type not found: {declaringTypeName}");
+
+        var method = FindMethodByNameAndParameterCount(declaringType!, methodName, parameterCount) as MethodInfo;
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                method,
+                Is.Not.Null,
+                $"Method not found: {declaringTypeName}.{methodName} with {parameterCount} parameter(s)");
+            Assert.That(method?.ReturnType.FullName, Is.EqualTo(expectedReturnType));
+        });
+    }
+
     [TestCase("XRL.Messages.Messaging", "XRL.World.Messaging", "XRL.UI.Messaging")]
     [TestCase("XRL.World.Conversations.ConversationUI", "XRL.World.ConversationUI", null)]
     public void NamespaceProbe_DocumentsCurrentDecompilationGapCandidates(
@@ -170,10 +200,135 @@ public sealed class TargetMethodResolutionTests
     [TestCase("EmbarkBuilder")]
     public void CharGenProbe_ResolvesKnownSimpleTypeNames(string simpleTypeName)
     {
-        var assembly = EnsureGameAssemblyLoaded();
-        var resolvedType = FindTypeBySimpleName(assembly, simpleTypeName);
+        AssertSimpleTypeNameResolves(simpleTypeName);
+    }
 
-        Assert.That(resolvedType, Is.Not.Null, $"Type not found by simple name: {simpleTypeName}");
+    [TestCase("CharacterStatusScreen")]
+    [TestCase("FactionsStatusScreen")]
+    [TestCase("SkillsAndPowersStatusScreen")]
+    [TestCase("InventoryAndEquipmentStatusScreen")]
+    [TestCase("JournalStatusScreen")]
+    [TestCase("MessageLogStatusScreen")]
+    [TestCase("QuestsStatusScreen")]
+    [TestCase("TinkeringStatusScreen")]
+    [TestCase("StatusScreensScreen")]
+    public void Issue29Probe_ResolvesKnownStatusScreenTypeNames(string simpleTypeName)
+    {
+        AssertSimpleTypeNameResolves(simpleTypeName);
+    }
+
+    [TestCase("Qud.UI.CharacterStatusScreen")]
+    [TestCase("Qud.UI.FactionsStatusScreen")]
+    [TestCase("Qud.UI.JournalStatusScreen")]
+    [TestCase("Qud.UI.MessageLogStatusScreen")]
+    public void Issue29Probe_ResolvesKnownQualifiedStatusScreenTypes(string typeName)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var resolvedType = assembly.GetType(typeName, throwOnError: false);
+
+        Assert.That(resolvedType, Is.Not.Null, $"Type not found: {typeName}");
+    }
+
+    [Test]
+    public void Issue29Probe_ResolvesDescriptionBuilderSurfaceMethods()
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var descriptionBuilderType = FindTypeBySimpleName(assembly, "DescriptionBuilder");
+        Assert.That(descriptionBuilderType, Is.Not.Null, "Type not found by simple name: DescriptionBuilder");
+
+        var methods = descriptionBuilderType!.GetMethods(
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+        var methodNames = new HashSet<string>(Array.ConvertAll(methods, static method => method.Name), StringComparer.Ordinal);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(methodNames.Contains("AddAdjective"), Is.True, "DescriptionBuilder.AddAdjective not found.");
+            Assert.That(methodNames.Contains("AddClause"), Is.True, "DescriptionBuilder.AddClause not found.");
+            Assert.That(methodNames.Contains("ToString"), Is.True, "DescriptionBuilder.ToString not found.");
+        });
+    }
+
+    [TestCase("PrimaryBase")]
+    [TestCase("LastAdded")]
+    public void Issue29Probe_DescriptionBuilderContainsStringField(string fieldName)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var descriptionBuilderType = assembly.GetType("XRL.World.DescriptionBuilder", throwOnError: false);
+        Assert.That(descriptionBuilderType, Is.Not.Null, "Type not found: XRL.World.DescriptionBuilder");
+
+        var field = descriptionBuilderType!.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(field, Is.Not.Null, $"DescriptionBuilder.{fieldName} field not found.");
+            Assert.That(field?.FieldType, Is.EqualTo(typeof(string)));
+        });
+    }
+
+    [TestCase("attributePointsText")]
+    [TestCase("mutationPointsText")]
+    public void Issue29Probe_CharacterStatusScreenContainsUITextSkinField(string fieldName)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var type = assembly.GetType("Qud.UI.CharacterStatusScreen", throwOnError: false);
+        Assert.That(type, Is.Not.Null, "Type not found: Qud.UI.CharacterStatusScreen");
+
+        var field = type!.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(field, Is.Not.Null, $"CharacterStatusScreen.{fieldName} field not found.");
+            Assert.That(field?.FieldType.FullName, Is.EqualTo("XRL.UI.UITextSkin"));
+        });
+    }
+
+    [Test]
+    public void Issue29Probe_SkillsAndPowersStatusScreenContainsSpTextField()
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var type = FindTypeBySimpleName(assembly, "SkillsAndPowersStatusScreen");
+        Assert.That(type, Is.Not.Null, "Type not found by simple name: SkillsAndPowersStatusScreen");
+
+        var field = type!.GetField("spText", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(field, Is.Not.Null, "SkillsAndPowersStatusScreen.spText field not found.");
+            Assert.That(field?.FieldType.FullName, Is.EqualTo("XRL.UI.UITextSkin"));
+        });
+    }
+
+    [TestCase("rawData")]
+    [TestCase("sortedData")]
+    public void Issue29Probe_FactionsStatusScreenContainsLineCollectionField(string fieldName)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var type = assembly.GetType("Qud.UI.FactionsStatusScreen", throwOnError: false);
+        Assert.That(type, Is.Not.Null, "Type not found: Qud.UI.FactionsStatusScreen");
+
+        var field = type!.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(field, Is.Not.Null, $"FactionsStatusScreen.{fieldName} field not found.");
+            Assert.That(field?.FieldType.FullName, Does.StartWith("System.Collections.Generic.List`1[[Qud.UI.FactionsLineData"));
+        });
+    }
+
+    [Test]
+    public void Issue29Probe_GetDisplayNameEventContainsDescriptionBuilderField()
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var eventType = assembly.GetType("XRL.World.GetDisplayNameEvent", throwOnError: false);
+        Assert.That(eventType, Is.Not.Null, "Type not found: XRL.World.GetDisplayNameEvent");
+
+        var field = eventType!.GetField("DB", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(field, Is.Not.Null, "GetDisplayNameEvent.DB field not found.");
+            Assert.That(field?.FieldType.Name, Is.EqualTo("DescriptionBuilder"));
+        });
     }
 
     [Test]
@@ -263,6 +418,14 @@ public sealed class TargetMethodResolutionTests
         }
 
         return null;
+    }
+
+    private static void AssertSimpleTypeNameResolves(string simpleTypeName)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var resolvedType = FindTypeBySimpleName(assembly, simpleTypeName);
+
+        Assert.That(resolvedType, Is.Not.Null, $"Type not found by simple name: {simpleTypeName}");
     }
 
     // Regex: strip assembly-qualified parts from generic type args

@@ -16,6 +16,12 @@ internal static class DummyPopupTarget
 
     public static IReadOnlyList<DummyPopupMenuItem>? LastOptionListButtons { get; private set; }
 
+    public static string LastShowConversationTitle { get; private set; } = string.Empty;
+
+    public static string LastShowConversationIntro { get; private set; } = string.Empty;
+
+    public static IReadOnlyList<string>? LastShowConversationOptions { get; private set; }
+
     public static void Reset()
     {
         LastShowBlockMessage = string.Empty;
@@ -25,6 +31,9 @@ internal static class DummyPopupTarget
         LastOptionListIntro = string.Empty;
         LastOptionListSpacingText = string.Empty;
         LastOptionListButtons = null;
+        LastShowConversationTitle = string.Empty;
+        LastShowConversationIntro = string.Empty;
+        LastShowConversationOptions = null;
     }
 
     public static int ShowBlock(
@@ -90,6 +99,26 @@ internal static class DummyPopupTarget
         LastOptionListIntro = Intro ?? string.Empty;
         LastOptionListSpacingText = SpacingText;
         LastOptionListButtons = Buttons;
+        return 0;
+    }
+
+    public static int ShowConversation(
+        string Title,
+        object? Icon = null,
+        string? Intro = null,
+        List<string>? Options = null,
+        bool AllowTrade = false,
+        bool AllowEscape = true,
+        bool AllowRenderMapBehind = false)
+    {
+        _ = Icon;
+        _ = AllowTrade;
+        _ = AllowEscape;
+        _ = AllowRenderMapBehind;
+
+        LastShowConversationTitle = Title;
+        LastShowConversationIntro = Intro ?? string.Empty;
+        LastShowConversationOptions = Options is null ? null : new List<string>(Options);
         return 0;
     }
 }

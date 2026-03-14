@@ -353,6 +353,276 @@ From `GameText.Process` and `ReplaceBuilder`:
 =state.string:QuestKey:unknown=
 ```
 
+## 8. Issue-29 Upstream Investigation Map
+
+This section narrows the next source-level investigation targets for the buckets
+currently marked `logic-required` in `docs/untranslated-work-buckets.md`.
+
+Working policy for issue-29 from this point:
+
+- `Player.log` identifies residual families and provides reproducible examples.
+- Once a family is classified as `logic-required`, the next step is source-first
+  investigation of the generator / formatter upstream of the current sink.
+- In other words, we stop draining sink strings one by one and instead look for the
+  method boundary that can eliminate an entire family of residuals at once.
+
+### 8.1 Dynamic `UITextSkin` residuals
+
+Observed sink examples from current `Player.log`:
+
+- `Level: 1 ¯ HP: 21/21 ¯ XP: 0/220 ¯ Weight: 411#` (`Player.log:2746`)
+- `Attribute Points: 0` (`Player.log:2747`)
+- `Mutation Points: 0` (`Player.log:2748`)
+- `The villagers of Abal don't care about you...` (`Player.log:2986`)
+- `Skill Points (SP): 0` (`Player.log:3082`)
+
+Current observability facts:
+
+- `UITextSkinTranslationPatch` is the last-mile sink hook on `UITextSkin.SetText(string)`.
+- `ResolveObservabilityContext(...)` can reclassify sink traffic into
+  `CharGenLocalizationPatch`, `MainMenuLocalizationPatch`, `OptionsLocalizationPatch`,
+  and `PopupTranslationPatch` based on stack hints and text shape.
+- That reclassification is covered by tests in
+  `Mods/QudJP/Assemblies/QudJP.Tests/L2/UITextSkinTranslationPatchTests.cs`.
+- Some existing UI dictionaries already contain template-like keys such as
+  `Skill Points (SP): {val}` and `Attribute Points: {0}{1}}}}}`, but the current
+  `Translator` implementation still performs exact-match lookup only.
+- Those `{val}` / `{0}`-style residuals do not match the `=target.key=` token family
+  documented for `GameText.Process` / `VariableReplace`, so current skills / attributes
+  screen leftovers are not yet proven to belong to the `GameText` pipeline.
+- The current `StatHelpTextPattern` in `UITextSkinTranslationPatch` expects
+  `Your <Stat> score determines`, while current runtime examples use
+  `Your <Stat> determines...`; the current pattern does not match those logs.
+
+Implication for issue-29:
+
+- If a string stays in `UITextSkinTranslationPatch` after reclassification, we do not yet
+  know its upstream producer.
+- These residuals should not be solved by bulk dictionary growth until their upstream
+  route is identified.
+- Template-shaped dictionary entries are not enough on their own for these residuals until
+  a matching template-aware route or translator layer exists.
+- `GameText.VariableReplace(...)` remains relevant for `=...=` families, but it is not yet
+  the most evidence-backed first fix for the current `{val}` / `{0}` screen residuals.
+
+Highest-value upstream candidates already present in the hook inventory:
+
+| Candidate hook | Why it matters for residual UI text | ILSpy baseline | Repo implementation |
+| --- | --- | --- | --- |
+| `Popup.ShowConversation(...)` | popup intro/options can surface as final UI strings before `UITextSkin` | `unobserved / unpatched` | `PopupTranslationPatch` covers `ShowBlock`/`ShowOptionList` only; `ShowConversation` not yet patched |
+| `ConversationUI.Render()` | conversation-facing UI text may bypass current popup coverage | `unobserved / unpatched` | none |
+| `Look.GenerateTooltipContent(GameObject)` | tooltip and info-panel text can become final sink strings | `observable` | postfix patch exists |
+| `Description.GetLongDescription(StringBuilder)` | long blocks can flow into UI as already-composed text | `observable` | postfix patch exists |
+| `GameText.VariableReplace(...)` / `GameText.Process(...)` | formatted dynamic text may be fully assembled before UI sink | `unobserved / unpatched` | none |
+
+Current DLL symbol scan also exposes concrete status-screen families to probe next:
+
+- `CharacterStatusScreen`
+- `FactionsStatusScreen`
+- `SkillsAndPowersStatusScreen`
+- `InventoryAndEquipmentStatusScreen`
+- `JournalStatusScreen`
+- `MessageLogStatusScreen`
+- `QuestsStatusScreen`
+- `TinkeringStatusScreen`
+- `StatusScreensScreen`
+
+Cross-check with dictionary contexts and progress notes suggests the current best
+screen-family mapping is:
+
+- `Qud.UI.CharacterStatusScreen` for `{0}`-style attribute / mutation point strings
+- `SkillsAndPowersStatusScreen` for `Skill Points (SP): {val}`
+- `Qud.UI.FactionsStatusScreen` as the strongest current candidate for village
+  reputation-attitude lines
+
+Current implementation status:
+
+- `Qud.UI.CharacterStatusScreen.UpdateViewFromData()` is now patched in
+  `CharacterStatusScreenTranslationPatch` using the confirmed `attributePointsText`
+  and `mutationPointsText` `UITextSkin` fields.
+- `Qud.UI.SkillsAndPowersStatusScreen.UpdateViewFromData()` is now patched in
+  `SkillsAndPowersStatusScreenTranslationPatch` using the confirmed `spText`
+  `UITextSkin` field.
+- `Qud.UI.FactionsStatusScreen.UpdateViewFromData()` is now patched in
+  `FactionsStatusScreenTranslationPatch`, translating the current village-reputation
+  line family by rewriting `FactionsLineData.label` entries after data assembly.
+- The same patch now also handles the narrow `Reputation: {0}` score line family and
+  fixed holy-place acceptance/rejection lines through that label path.
+- reflection confirms that `Qud.UI.FactionsStatusScreen` does not expose a
+  reflectable `barReputationText` field in the current DLL; broader faction-attitude
+  coverage therefore needs to move toward `FormatFactionReputation` /
+  `AppendReputationDescription` or a nested data formatter rather than another simple
+  UITextSkin field patch.
+
+Current symbol evidence inside those families points to the following candidate
+member names for the next source-first pass:
+
+- `SkillsAndPowersStatusScreen.SPText`
+- `Qud.UI.CharacterStatusScreen.AttributePointsText`
+- `Qud.UI.CharacterStatusScreen.MutationPointsText`
+- `Qud.UI.FactionsStatusScreen.FormatFactionReputation` / `AppendReputationDescription`
+  (with `CurrentReputation` as a supporting clue; `barReputationText` did not surface as
+  a reflectable field in the current DLL)
+
+These names are supported by dictionary contexts and raw DLL symbol scans, but not yet
+proven as reflectable members through L2G tests, so they should be treated as strong
+inspection candidates rather than confirmed patch targets.
+
+`SkillsAndPowersLocalizer` and `SafeStringTranslator` appear in
+`Mods/QudJP/Localization/Dictionaries/progress.md`, but not in the current `src/`
+tree, so they should be treated as planning notes rather than live interception
+points.
+
+Next evidence needed:
+
+1. Map each high-hit residual UI string family to one upstream hook candidate.
+2. Confirm whether reputation text and stat lines are assembled before popup/render,
+   or only become final at `UITextSkin.SetText`.
+3. Separate popup-owned dynamic text from true sink-only leftovers.
+4. Identify which screen-specific formatter emits `{val}` / `{0}`-style status strings,
+   since those placeholders do not line up with the `GameText` token syntax.
+
+### 8.2 Char-gen counters and long descriptions
+
+Observed examples from current `Player.log`:
+
+- `Points Remaining: 12` (`Player.log:331`)
+- `You emit a ray of frost...` in both `UITextSkinTranslationPatch` and
+  `CharGenLocalizationPatch` contexts (`Player.log:338`, `Player.log:348`)
+- `Strength: 14 ... Ego: 16` (`Player.log:452`)
+
+Current source-level facts:
+
+- `CharGenLocalizationPatch` is heuristic: it scans text-returning methods on character
+  creation related types and forwards final strings to `TranslatePreservingColors(...)`.
+- `UITextSkinTranslationPatch` also reclassifies known char-gen sink strings by pattern:
+  `Points Remaining`, `Your <Stat> score determines`, and bullet-block markers (`ù␣`).
+- The current stat-help regex does not match the in-game `Your Strength determines...`
+  family observed in `Player.log`, so those lines currently stay in raw
+  `UITextSkinTranslationPatch` context.
+
+Implication for issue-29:
+
+- We know char-gen text reaches observable routes, but we do not yet know which upstream
+  method boundaries cleanly separate fixed labels from counters and paragraph blocks.
+- This is why char-gen logic work is only partially source-mapped today.
+
+Next evidence needed:
+
+1. Identify which char-gen methods emit stable labels versus value-bearing readouts.
+2. Identify whether long descriptions are assembled in module-specific methods or only
+   after they enter generic UI sinks.
+3. Decide whether to patch earlier text-returning methods or add a small template layer
+   on top of current routes.
+
+### 8.3 Display-name composition
+
+Observed examples from current `Player.log`:
+
+- Atomic terms: `螺旋角`, `奇妙な遺物` (`Player.log:480`, `Player.log:504`)
+- Composed names: `瑪瑙 手袋屋 のフィギュリン`,
+  `Oo-hoo-ho-HOO-OOO-ee-ho, legendary ヒヒ` (`Player.log:513`, `Player.log:566`)
+
+Current source-level facts:
+
+- `GetDisplayNamePatch` and `GetDisplayNameProcessPatch` both act after display-name
+  composition has effectively happened.
+- `DescriptionBuilder` ordering is already documented:
+  `[Mark] -> [Adjective] -> [Base] -> [Clause] -> [Tag]`.
+- `GetDisplayNameEvent.ProcessFor` appends event channels in this order:
+  `Prefix -> AddAdjective`, `Infix -> AddClause`, `Postfix -> AddTag`,
+  `PostPostfix -> AddTag(+20)`.
+- Current DLL symbol scan confirms the builder surface includes
+  `AddAdjective`, `AddClause`, and `ToString`, which makes `DescriptionBuilder`
+  itself a concrete next probe target even before a composition-aware production
+  patch is chosen.
+- Reflection probes also confirm that `XRL.World.GetDisplayNameEvent` contains an
+  instance field whose type name is `DescriptionBuilder`, which strengthens the
+  case for a future `ProcessFor` Prefix/Postfix pair that snapshots builder state.
+- Reflection probes also confirm the concrete field names on the current types:
+  `XRL.World.GetDisplayNameEvent.DB`, and on `XRL.World.DescriptionBuilder` the
+  segment-bearing fields `PrimaryBase`, `Epithets`, `Titles`, `WithClauses`, and `Descs`.
+- Current implementation now uses a narrow `GetDisplayNameProcessPatch` builder-aware
+  bypass for the figurine family: when `DB.PrimaryBase` is present and `DB.LastAdded`
+  is `のフィギュリン`, the patch keeps the already-composed Japanese string on the
+  source-first path instead of sending that family through final exact-match fallback.
+- The same narrow builder-aware bypass now also handles the `の軍主` family when
+  `DB.LastAdded` is `軍主` and the already-composed result is `{PrimaryBase}の軍主`.
+- `TryAddTag` also appears in current DLL symbol scan, but its owning type is not yet
+  proven by reflection, so it should remain a follow-up probe rather than a hard
+  assumption in patch design.
+
+Implication for issue-29:
+
+- We already know enough to say composed names are not a dictionary-scaling problem.
+- We do not yet know which specific channel carries legendary titles, figurine suffixes,
+  generated names, or material adjectives for each family of examples.
+
+Next evidence needed:
+
+1. Capture representative examples by builder segment: adjective, base, clause, tag.
+2. Determine whether a patch before `DescriptionBuilder.ToString()` is sufficient, or if
+   channel-level interception is needed.
+3. Separate atomic noun supplementation from composition-aware reassembly work.
+
+### 8.4 Procedural / generated naming boundary
+
+Observed examples from current `Player.log`:
+
+- `Sithithythoth` (`Player.log:488`)
+- `Iondanna` (`Player.log:499`)
+- `Baaraahaaaaah` (`Player.log:522`)
+
+Current source-level facts:
+
+- These names are visible through `GetDisplayName*` routes today.
+- `HistoricStringExpander` remains intentionally disabled, so procedural lore generation is
+  still a known blind spot rather than an active patch target.
+
+Implication for issue-29:
+
+- The observable part of procedural naming is currently only the surface form that leaks
+  into display-name routes.
+- We have not yet traced those names back to their generating systems in a way that is
+  safe for localization changes.
+
+Next evidence needed:
+
+1. Distinguish generated proper names from generated titles/modifiers.
+2. Confirm whether any of these examples can be improved by display-name channel work
+   alone without touching historic generation.
+3. Keep lore-generation work separate from playability-sensitive reintroduction of
+   `HistoricStringExpander`.
+
+### 8.5 Mutation / ability description blocks outside `Description.GetLongDescription`
+
+Observed examples from current `Player.log`:
+
+- `You beguile a nearby creature into serving you loyally...` (`Player.log:2775`)
+- `Through sheer force of will, you perform uncanny physical feats...` (`Player.log:3161`)
+- `You invoke a concussive force in a nearby area...` (`Player.log:3172`)
+
+Current source-level facts:
+
+- `Description.GetLongDescription(StringBuilder)` is already a documented observable hook.
+- `Look.GenerateTooltipContent(GameObject)` is also already patched.
+- Despite that, the observed mutation / ability description blocks still appear in
+  `UITextSkinTranslationPatch` context rather than `DescriptionLongDescriptionPatch` or
+  `LookTooltipContentPatch` contexts.
+
+Implication for issue-29:
+
+- These blocks are likely assembled by a separate skill / mutation description pipeline,
+  not by the current long-description hook.
+- A next-step source probe should target activated ability / mutation description methods
+  before assuming `Description.GetLongDescription` is the correct upstream split point.
+
+Next evidence needed:
+
+1. Identify the method that formats skill / mutation description text before it reaches UI.
+2. Confirm whether the skill screen uses a dedicated renderer or a generic popup/info panel.
+3. Separate mutation-description work from object long-description work in future patch plans.
+
 ## Appendix: Known missing-type probes
 
 When targeting message/conversation internals directly, these types need namespace/type-system probing because decompilation failed:

@@ -18,10 +18,16 @@ public static class PopupTranslationPatch
     // ShowOptionList parameter count for game version 2.0.4
     private const int ShowOptionListParameterCount = 19;
 
+    private const int ShowConversationParameterCount = 7;
+
     // ShowOptionList argument indices (game version 2.0.4)
     private const int ShowOptionListIntroIndex = 4;
     private const int ShowOptionListSpacingTextIndex = 9;
     private const int ShowOptionListButtonsIndex = 14;
+
+    private const int ShowConversationTitleIndex = 0;
+    private const int ShowConversationIntroIndex = 2;
+    private const int ShowConversationOptionsIndex = 3;
 
     [HarmonyTargetMethods]
     private static IEnumerable<MethodBase> TargetMethods()
@@ -36,6 +42,12 @@ public static class PopupTranslationPatch
         if (showOptionList is not null)
         {
             yield return showOptionList;
+        }
+
+        var showConversation = FindMethod(methodName: "ShowConversation", parameterCount: ShowConversationParameterCount);
+        if (showConversation is not null)
+        {
+            yield return showConversation;
         }
     }
 
@@ -58,6 +70,12 @@ public static class PopupTranslationPatch
             if (__originalMethod.Name == "ShowOptionList")
             {
                 TranslateShowOptionListArgs(__args);
+                return;
+            }
+
+            if (__originalMethod.Name == "ShowConversation")
+            {
+                TranslateShowConversationArgs(__args);
             }
         }
         catch (Exception ex)
@@ -83,6 +101,13 @@ public static class PopupTranslationPatch
         {
             UITextSkinTranslationPatch.TranslateStringFieldsInCollection(args[ShowOptionListButtonsIndex], nameof(PopupTranslationPatch), "text");
         }
+    }
+
+    private static void TranslateShowConversationArgs(object[] args)
+    {
+        TranslateStringArg(args, index: ShowConversationTitleIndex);
+        TranslateStringArg(args, index: ShowConversationIntroIndex);
+        TranslateStringListArg(args, index: ShowConversationOptionsIndex);
     }
 
     private static void TranslateStringArg(object[] args, int index)

@@ -55,6 +55,24 @@ public sealed class UIExpansionPatchTests
     }
 
     [Test]
+    public void GetDisplayName_AcceptsJapaneseEntry_WhenPatched()
+    {
+        WriteDictionary(("螺旋角", "ねじれた角"));
+
+        RunWithPostfixPatch(
+            targetType: typeof(DummyGetDisplayNameEvent),
+            targetMethodName: nameof(DummyGetDisplayNameEvent.GetFor),
+            patchType: typeof(GetDisplayNamePatch),
+            patchMethodName: nameof(GetDisplayNamePatch.Postfix),
+            assertion: () =>
+        {
+            var result = DummyGetDisplayNameEvent.GetFor("螺旋角", "螺旋角");
+
+            Assert.That(result, Is.EqualTo("ねじれた角"));
+        });
+    }
+
+    [Test]
     public void GetDisplayName_PassesThroughUnknownDisplayName_WhenPatched()
     {
         WriteDictionary(("known sword", "既知の剣"));
@@ -234,7 +252,10 @@ public sealed class UIExpansionPatchTests
     {
         return value
             .Replace("\\", "\\\\", StringComparison.Ordinal)
-            .Replace("\"", "\\\"", StringComparison.Ordinal);
+            .Replace("\"", "\\\"", StringComparison.Ordinal)
+            .Replace("\n", "\\n", StringComparison.Ordinal)
+            .Replace("\r", "\\r", StringComparison.Ordinal)
+            .Replace("\t", "\\t", StringComparison.Ordinal);
     }
 
     private static void AppendEntries(StringBuilder builder, IReadOnlyList<(string key, string text)> entries)

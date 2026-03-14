@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="../src/ColorCodePreserver.cs" Link="Production/ColorCodePreserver.cs" />
     <Compile Include="../src/FontManager.cs" Link="Production/FontManager.cs" />
+    <Compile Include="../src/GameTypeResolver.cs" Link="Production/GameTypeResolver.cs" />
     <Compile Include="../src/LocalizationAssetResolver.cs" Link="Production/LocalizationAssetResolver.cs" />
     <Compile Include="../src/MessagePatternTranslator.cs" Link="Production/MessagePatternTranslator.cs" />
     <Compile Include="../src/ObservabilityHelpers.cs" Link="Production/ObservabilityHelpers.cs" />
@@ -44,6 +45,7 @@
     <Compile Include="../src/QudJPMod.cs" Link="Production/QudJPMod.cs" />
     <Compile Include="../src/StringHelpers.cs" Link="Production/StringHelpers.cs" />
     <Compile Include="../src/Translator.cs" Link="Production/Translator.cs" />
+    <Compile Include="../src/UITextSkinTemplateTranslator.cs" Link="Production/UITextSkinTemplateTranslator.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists('$(AssemblyCSharpPath)')">
