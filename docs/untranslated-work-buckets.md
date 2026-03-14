@@ -3,7 +3,10 @@
 issue-29 の目的は、`Player.log` に残っている未翻訳テキストを
 `asset-solvable` と `logic-required` に分離し、次の実装作業が再調査なしで始められる状態にすることです。
 
-- 観測ソース: `~/Library/Logs/Freehold Games/CavesOfQud/Player.log`
+- 観測ソース:
+  - macOS: `~/Library/Logs/Freehold Games/CavesOfQud/Player.log`
+  - Windows: `%USERPROFILE%\AppData\LocalLow\Freehold Games\CavesOfQud\Player.log`
+  - Linux: `~/.config/unity3d/Freehold Games/CavesOfQud/Player.log`
 - 観測時刻: `2026-03-14 08:42 JST` 前後
 - 実装根拠:
   - `Mods/QudJP/Assemblies/src/Translator.cs` - `Translator.Translate(...)` は exact-match のみ

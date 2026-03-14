@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 
@@ -10,6 +9,14 @@ namespace QudJP.Patches;
 public static class GetDisplayNameProcessPatch
 {
     private const string TargetTypeName = "XRL.World.GetDisplayNameEvent";
+
+    private static Type? cachedBuilderType;
+    private static FieldInfo? cachedPrimaryBaseField;
+    private static FieldInfo? cachedLastAddedField;
+
+#pragma warning disable CA2249 // net48 lacks string.Contains(char)
+    private static bool ContainsChar(string value, char ch) => value.IndexOf(ch) >= 0;
+#pragma warning restore CA2249
 
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
@@ -84,34 +91,55 @@ public static class GetDisplayNameProcessPatch
         }
     }
 
+    private static (string? primaryBase, string? lastAdded) GetBuilderFields(object descriptionBuilder)
+    {
+        var dbType = descriptionBuilder.GetType();
+        if (dbType != cachedBuilderType)
+        {
+            cachedBuilderType = dbType;
+            cachedPrimaryBaseField = AccessTools.Field(dbType, "PrimaryBase");
+            cachedLastAddedField = AccessTools.Field(dbType, "LastAdded");
+        }
+
+        var primaryBase = cachedPrimaryBaseField?.GetValue(descriptionBuilder) as string;
+        var lastAdded = cachedLastAddedField?.GetValue(descriptionBuilder) as string;
+        return (primaryBase, lastAdded);
+    }
+
     private static bool TryHandleFigurineFamily(string current, object? descriptionBuilder)
     {
-        if (descriptionBuilder is null || current.Any(static ch => ch == ','))
+        if (descriptionBuilder is null || ContainsChar(current, ','))
         {
             return false;
         }
 
-        var primaryBase = AccessTools.Field(descriptionBuilder.GetType(), "PrimaryBase")?.GetValue(descriptionBuilder) as string;
-        var lastAdded = AccessTools.Field(descriptionBuilder.GetType(), "LastAdded")?.GetValue(descriptionBuilder) as string;
+        var (primaryBase, lastAdded) = GetBuilderFields(descriptionBuilder);
         if (string.IsNullOrEmpty(primaryBase)
             || !string.Equals(lastAdded, "のフィギュリン", StringComparison.Ordinal))
         {
             return false;
         }
 
-        var expectedSuffix = $" {primaryBase} のフィギュリン";
-        return current.EndsWith(expectedSuffix, StringComparison.Ordinal);
+        // Match either exact "{base} のフィギュリン" or space-delimited "{material} {base} のフィギュリン"
+        var baseName = primaryBase + " のフィギュリン";
+        if (string.Equals(current, baseName, StringComparison.Ordinal))
+        {
+            return true;
+        }
+
+        return current.Length > baseName.Length
+            && current[current.Length - baseName.Length - 1] == ' '
+            && current.EndsWith(baseName, StringComparison.Ordinal);
     }
 
     private static bool TryHandleWarlordFamily(string current, object? descriptionBuilder)
     {
-        if (descriptionBuilder is null || current.Any(static ch => ch == ',') || current.Any(static ch => ch == ' '))
+        if (descriptionBuilder is null || ContainsChar(current, ',') || ContainsChar(current, ' '))
         {
             return false;
         }
 
-        var primaryBase = AccessTools.Field(descriptionBuilder.GetType(), "PrimaryBase")?.GetValue(descriptionBuilder) as string;
-        var lastAdded = AccessTools.Field(descriptionBuilder.GetType(), "LastAdded")?.GetValue(descriptionBuilder) as string;
+        var (primaryBase, lastAdded) = GetBuilderFields(descriptionBuilder);
         if (string.IsNullOrEmpty(primaryBase)
             || !string.Equals(lastAdded, "軍主", StringComparison.Ordinal))
         {
@@ -129,13 +157,12 @@ public static class GetDisplayNameProcessPatch
             return false;
         }
 
-        var lastAdded = AccessTools.Field(descriptionBuilder.GetType(), "LastAdded")?.GetValue(descriptionBuilder) as string;
+        var (primaryBase, lastAdded) = GetBuilderFields(descriptionBuilder);
         if (!string.Equals(lastAdded, "legendary", StringComparison.Ordinal))
         {
             return false;
         }
 
-        var primaryBase = AccessTools.Field(descriptionBuilder.GetType(), "PrimaryBase")?.GetValue(descriptionBuilder) as string;
         if (!TryTransformLegendaryDisplayName(current, primaryBase, out var transformed))
         {
             return false;

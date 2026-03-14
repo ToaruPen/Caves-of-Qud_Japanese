@@ -1,7 +1,7 @@
-namespace QudJP.Tests.L2;
+namespace QudJP.Tests.L1;
 
 [TestFixture]
-[Category("L2")]
+[Category("L1")]
 public sealed class GameTypeResolverTests
 {
     [Test]
@@ -15,7 +15,7 @@ public sealed class GameTypeResolverTests
     [Test]
     public void FindType_FallsBackToSimpleName_WhenFullNameIsMissing()
     {
-        var resolved = GameTypeResolver.FindType("QudJP.Tests.L2.Does.Not.Exist", nameof(GameTypeResolverTests));
+        var resolved = GameTypeResolver.FindType("QudJP.Tests.L1.Does.Not.Exist", nameof(GameTypeResolverTests));
 
         Assert.That(resolved, Is.EqualTo(typeof(GameTypeResolverTests)));
     }
@@ -23,7 +23,7 @@ public sealed class GameTypeResolverTests
     [Test]
     public void FindType_ReturnsNull_WhenNeitherNameResolves()
     {
-        var resolved = GameTypeResolver.FindType("QudJP.Tests.L2.Does.Not.Exist", "NoSuchSimpleTypeName");
+        var resolved = GameTypeResolver.FindType("QudJP.Tests.L1.Does.Not.Exist", "NoSuchSimpleTypeName");
 
         Assert.That(resolved, Is.Null);
     }

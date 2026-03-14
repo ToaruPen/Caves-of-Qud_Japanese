@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using HarmonyLib;
@@ -16,12 +17,18 @@ internal static class UITextSkinTemplateTranslator
     {
         if (uiTextSkin is null)
         {
+            Trace.TraceWarning("QudJP: [{0}] uiTextSkin is null for templateKey '{1}'", context, templateKey);
             return;
         }
 
         var current = GetCurrentText(uiTextSkin);
         if (string.IsNullOrEmpty(current))
         {
+            Trace.TraceWarning(
+                "QudJP: [{0}] GetCurrentText returned null/empty for {1}, templateKey '{2}'",
+                context,
+                uiTextSkin.GetType().Name,
+                templateKey);
             return;
         }
 
@@ -35,6 +42,11 @@ internal static class UITextSkinTemplateTranslator
         var translatedTemplate = Translator.Translate(templateKey);
         if (string.Equals(translatedTemplate, templateKey, StringComparison.Ordinal))
         {
+            Trace.TraceWarning(
+                "QudJP: [{0}] Untranslated template '{1}' for {2}",
+                context,
+                templateKey,
+                uiTextSkin.GetType().Name);
             return;
         }
 

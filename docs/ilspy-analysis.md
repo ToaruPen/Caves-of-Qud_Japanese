@@ -496,7 +496,7 @@ Current source-level facts:
 - `CharGenLocalizationPatch` is heuristic: it scans text-returning methods on character
   creation related types and forwards final strings to `TranslatePreservingColors(...)`.
 - `UITextSkinTranslationPatch` also reclassifies known char-gen sink strings by pattern:
-  `Points Remaining`, `Your <Stat> score determines`, and bullet-block markers (`ù `).
+  `Points Remaining`, `Your <Stat> score determines`, and bullet-block markers (`ù␣`).
 - The current stat-help regex does not match the in-game `Your Strength determines...`
   family observed in `Player.log`, so those lines currently stay in raw
   `UITextSkinTranslationPatch` context.

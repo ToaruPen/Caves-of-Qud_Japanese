@@ -118,7 +118,7 @@ internal static class DummyPopupTarget
 
         LastShowConversationTitle = Title;
         LastShowConversationIntro = Intro ?? string.Empty;
-        LastShowConversationOptions = Options;
+        LastShowConversationOptions = Options is null ? null : new List<string>(Options);
         return 0;
     }
 }

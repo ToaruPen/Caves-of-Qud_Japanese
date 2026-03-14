@@ -45,7 +45,8 @@ public sealed class GetDisplayNameProcessPatchTests
 
         RunWithDisplayNameProcessPatch(() =>
         {
-            var result = DummyDisplayNameProcessor.ProcessFor("engraved carbide dagger");
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("engraved carbide dagger");
 
             Assert.That(result, Is.EqualTo("刻印されたカーバイドダガー"));
         });
@@ -58,7 +59,8 @@ public sealed class GetDisplayNameProcessPatchTests
 
         RunWithDisplayNameProcessPatch(() =>
         {
-            var result = DummyDisplayNameProcessor.ProcessFor("奇妙な遺物");
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("奇妙な遺物");
 
             Assert.That(result, Is.EqualTo("奇妙な遺物"));
         });
@@ -71,7 +73,8 @@ public sealed class GetDisplayNameProcessPatchTests
 
         RunWithDisplayNameProcessPatch(() =>
         {
-            var result = DummyDisplayNameProcessor.ProcessFor("{{C|engraved carbide dagger}}");
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("{{C|engraved carbide dagger}}");
 
             Assert.That(result, Is.EqualTo("{{C|刻印されたカーバイドダガー}}"));
         });
@@ -84,7 +87,8 @@ public sealed class GetDisplayNameProcessPatchTests
 
         RunWithDisplayNameProcessPatch(() =>
         {
-            var result = DummyDisplayNameProcessor.ProcessFor("unknown relic");
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("unknown relic");
 
             Assert.That(result, Is.EqualTo("unknown relic"));
         });
@@ -186,7 +190,10 @@ public sealed class GetDisplayNameProcessPatchTests
     {
         return value
             .Replace("\\", "\\\\", StringComparison.Ordinal)
-            .Replace("\"", "\\\"", StringComparison.Ordinal);
+            .Replace("\"", "\\\"", StringComparison.Ordinal)
+            .Replace("\n", "\\n", StringComparison.Ordinal)
+            .Replace("\r", "\\r", StringComparison.Ordinal)
+            .Replace("\t", "\\t", StringComparison.Ordinal);
     }
 
     private static void AppendEntries(StringBuilder builder, IReadOnlyList<(string key, string text)> entries)
@@ -252,11 +259,11 @@ public sealed class GetDisplayNameProcessPatchTests
         File.WriteAllText(path, content, Utf8WithoutBom);
     }
 
-    private static class DummyDisplayNameProcessor
+    private sealed class DummyDisplayNameProcessor
     {
-        public static object? DB = new object();
+        public object? DB = new object();
 
-        public static string ProcessFor(string displayName)
+        public string ProcessFor(string displayName)
         {
             _ = DB;
             return displayName;

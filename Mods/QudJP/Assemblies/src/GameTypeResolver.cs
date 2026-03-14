@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using HarmonyLib;
 
@@ -13,6 +14,9 @@ internal static class GameTypeResolver
         {
             return byFullName;
         }
+
+        Type? match = null;
+        string? matchAssemblyName = null;
 
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         for (var assemblyIndex = 0; assemblyIndex < assemblies.Length; assemblyIndex++)
@@ -29,13 +33,28 @@ internal static class GameTypeResolver
 
             for (var typeIndex = 0; typeIndex < types.Length; typeIndex++)
             {
-                if (types[typeIndex].Name == simpleTypeName)
+                if (types[typeIndex].Name != simpleTypeName)
                 {
-                    return types[typeIndex];
+                    continue;
+                }
+
+                if (match is null)
+                {
+                    match = types[typeIndex];
+                    matchAssemblyName = assemblies[assemblyIndex].GetName().Name;
+                }
+                else
+                {
+                    Trace.TraceWarning(
+                        "QudJP: Ambiguous simple name '{0}' found in assemblies '{1}' and '{2}'. Returning null.",
+                        simpleTypeName,
+                        matchAssemblyName,
+                        assemblies[assemblyIndex].GetName().Name);
+                    return null;
                 }
             }
         }
 
-        return null;
+        return match;
     }
 }
