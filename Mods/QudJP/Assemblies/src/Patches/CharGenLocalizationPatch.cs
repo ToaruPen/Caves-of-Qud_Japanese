@@ -215,7 +215,7 @@ public static class CharGenLocalizationPatch
             ? name.Substring("get_".Length)
             : name;
 
-        if (StringHelpers.ContainsOrdinalIgnoreCase(candidateName, "Type"))
+        if (StringHelpers.EqualsOrdinalIgnoreCase(candidateName, "Type"))
         {
             return false;
         }

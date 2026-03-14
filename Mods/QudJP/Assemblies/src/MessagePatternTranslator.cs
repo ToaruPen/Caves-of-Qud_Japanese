@@ -233,6 +233,10 @@ internal static class MessagePatternTranslator
         return hitCount;
     }
 
+    // NOTE: The ContainsKey/Count check and subsequent AddOrUpdate are not atomic.
+    // Under contention, the dictionary may slightly exceed maxKeys before new keys
+    // are routed to the overflow bucket. This is acceptable for observability counters
+    // where approximate caps are sufficient and lock-free throughput is preferred.
     private static int AddOrUpdateCapped(ConcurrentDictionary<string, int> counters, string key, int maxKeys)
     {
         if (counters.ContainsKey(key) || counters.Count < maxKeys)

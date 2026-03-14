@@ -12,4 +12,9 @@ internal static class StringHelpers
         return source.Contains(value, StringComparison.OrdinalIgnoreCase);
 #endif
     }
+
+    internal static bool EqualsOrdinalIgnoreCase(string source, string value)
+    {
+        return string.Equals(source, value, StringComparison.OrdinalIgnoreCase);
+    }
 }
