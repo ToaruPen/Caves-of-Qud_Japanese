@@ -98,6 +98,12 @@ The game requires exactly five types of files:
 3. Set the mod to ENABLED
 4. Restart the game and verify the Options screen displays Japanese text
 
+### Apple Silicon / Rosetta
+
+- On Apple Silicon, in-game verification must run under Rosetta 2
+- Use `scripts/launch_rosetta.sh` or `Launch CavesOfQud (Rosetta).command`
+- Do not use native ARM64 runtime logs as localization observability evidence
+
 ### Troubleshooting
 
 | Symptom | Cause | Fix |
@@ -114,6 +120,7 @@ The game requires exactly five types of files:
 
 Manual checks that cannot be covered by automated tests (L1/L2):
 
+- [ ] On Apple Silicon, launch via Rosetta before collecting evidence
 - [ ] "Caves of Qud 日本語化" appears in the Mod Manager
 - [ ] Options screen displays Japanese text
 - [ ] Character creation screen is localized

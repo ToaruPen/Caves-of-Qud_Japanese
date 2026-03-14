@@ -16,14 +16,51 @@ internal static class MessagePatternTranslator
     private static readonly object SyncRoot = new object();
     private static readonly ConcurrentDictionary<string, Regex> RegexCache =
         new ConcurrentDictionary<string, Regex>(StringComparer.Ordinal);
-    private static readonly ConcurrentDictionary<string, byte> MissingPatternLog =
-        new ConcurrentDictionary<string, byte>(StringComparer.Ordinal);
+    private static readonly ConcurrentDictionary<string, int> MissingPatternCounts =
+        new ConcurrentDictionary<string, int>(StringComparer.Ordinal);
+    private static readonly ConcurrentDictionary<string, int> MissingRouteCounts =
+        new ConcurrentDictionary<string, int>(StringComparer.Ordinal);
 
     private static List<MessagePatternDefinition>? loadedPatterns;
     private static string? patternFileOverride;
+    private static string patternLoadSummary = "MessagePatternTranslator: pattern load summary unavailable.";
     private static int loadInvocationCount;
+    private const int MaxLogSourceLength = 200;
+    internal const int MaxUniquePatterns = 10_000;
+    internal const int MaxUniqueRoutes = 1_000;
+    internal const string OverflowKey = "__overflow__";
 
     internal static int LoadInvocationCount => Volatile.Read(ref loadInvocationCount);
+
+    internal static string GetPatternLoadSummaryForTests()
+    {
+        return patternLoadSummary;
+    }
+
+    internal static int GetMissingPatternHitCountForTests(string source)
+    {
+        return ObservabilityHelpers.GetCounterValue(MissingPatternCounts, source);
+    }
+
+    internal static int GetMissingRouteHitCountForTests(string? context)
+    {
+        return ObservabilityHelpers.GetCounterValue(MissingRouteCounts, ObservabilityHelpers.NormalizeContext(context));
+    }
+
+    internal static string GetMissingPatternSummaryForTests(int maxEntries = 10)
+    {
+        var routeSummary = ObservabilityHelpers.BuildRankedSummary(
+            "QudJP MessagePatternTranslator",
+            "missing pattern routes",
+            MissingRouteCounts,
+            maxEntries);
+        var patternSummary = ObservabilityHelpers.BuildRankedSummary(
+            "QudJP MessagePatternTranslator",
+            "missing patterns",
+            MissingPatternCounts,
+            maxEntries);
+        return routeSummary + Environment.NewLine + patternSummary;
+    }
 
     internal static string Translate(string? source, string? context = null)
     {
@@ -51,7 +88,9 @@ internal static class MessagePatternTranslator
             patternFileOverride = filePath;
             loadedPatterns = null;
             RegexCache.Clear();
-            MissingPatternLog.Clear();
+            MissingPatternCounts.Clear();
+            MissingRouteCounts.Clear();
+            patternLoadSummary = "MessagePatternTranslator: pattern load summary unavailable.";
             Interlocked.Exchange(ref loadInvocationCount, 0);
         }
     }
@@ -77,9 +116,12 @@ internal static class MessagePatternTranslator
             return ApplyTemplate(definition.Template, match);
         }
 
-        if (MissingPatternLog.TryAdd(source, 0))
+        var hitCount = RecordMissingPattern(source);
+        if (ObservabilityHelpers.ShouldLogMissingHit(hitCount))
         {
-            Trace.TraceInformation($"QudJP MessagePatternTranslator: no pattern for '{source}'.{Translator.GetCurrentLogContextSuffix()}");
+            var sanitizedSource = SanitizeForLog(source);
+            LogObservability(
+                $"[QudJP] MessagePatternTranslator: no pattern for '{sanitizedSource}' (hit {hitCount}).{Translator.GetCurrentLogContextSuffix()}");
         }
 
         return source;
@@ -125,6 +167,9 @@ internal static class MessagePatternTranslator
         }
 
         var definitions = new List<MessagePatternDefinition>(document.Patterns.Count);
+        var seenPatterns = new Dictionary<string, int>(StringComparer.Ordinal);
+        var duplicatePatternCounts = new Dictionary<string, int>(StringComparer.Ordinal);
+        var duplicatePatternCount = 0;
         for (var index = 0; index < document.Patterns.Count; index++)
         {
             var patternEntry = document.Patterns[index];
@@ -137,8 +182,23 @@ internal static class MessagePatternTranslator
             }
 
             _ = GetCompiledRegex(pattern);
+            if (seenPatterns.TryGetValue(pattern, out _))
+            {
+                duplicatePatternCount++;
+                duplicatePatternCounts[pattern] = duplicatePatternCounts.TryGetValue(pattern, out var duplicateCount)
+                    ? duplicateCount + 1
+                    : 1;
+            }
+
+            seenPatterns[pattern] = index;
             definitions.Add(new MessagePatternDefinition(pattern, template));
         }
+
+        patternLoadSummary =
+            $"MessagePatternTranslator: loaded {definitions.Count} pattern(s) from '{patternFilePath}' " +
+            $"({seenPatterns.Count} unique, {duplicatePatternCount} duplicate pattern(s) across {duplicatePatternCounts.Count} distinct pattern(s)).";
+        LogObservability($"[QudJP] {patternLoadSummary}");
+        LogDuplicatePatternSummary(duplicatePatternCounts);
 
         return definitions;
     }
@@ -161,6 +221,93 @@ internal static class MessagePatternTranslator
     private static Regex CreateRegex(string pattern)
     {
         return new Regex(pattern, RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    }
+
+    private static int RecordMissingPattern(string source)
+    {
+        var hitCount = AddOrUpdateCapped(MissingPatternCounts, source, MaxUniquePatterns);
+        _ = AddOrUpdateCapped(
+            MissingRouteCounts,
+            ObservabilityHelpers.NormalizeContext(Translator.GetCurrentLogContext()),
+            MaxUniqueRoutes);
+        return hitCount;
+    }
+
+    // NOTE: The ContainsKey/Count check and subsequent AddOrUpdate are not atomic.
+    // Under contention, the dictionary may slightly exceed maxKeys before new keys
+    // are routed to the overflow bucket. This is acceptable for observability counters
+    // where approximate caps are sufficient and lock-free throughput is preferred.
+    private static int AddOrUpdateCapped(ConcurrentDictionary<string, int> counters, string key, int maxKeys)
+    {
+        if (counters.ContainsKey(key) || counters.Count < maxKeys)
+        {
+            return counters.AddOrUpdate(key, 1, ObservabilityHelpers.IncrementCounter);
+        }
+
+        return counters.AddOrUpdate(OverflowKey, 1, ObservabilityHelpers.IncrementCounter);
+    }
+
+    internal static bool ShouldLogMissingHitForTests(int hitCount)
+    {
+        return ObservabilityHelpers.ShouldLogMissingHit(hitCount);
+    }
+
+    private static void LogDuplicatePatternSummary(Dictionary<string, int> duplicatePatternCounts)
+    {
+        if (duplicatePatternCounts.Count == 0)
+        {
+            return;
+        }
+
+        LogObservability(
+            $"[QudJP] Warning: MessagePatternTranslator duplicate patterns: {ObservabilityHelpers.BuildRankedCounterBody(duplicatePatternCounts, 10)}.");
+    }
+
+    private static void LogObservability(string message)
+    {
+        QudJPMod.LogToUnity(message);
+    }
+
+    private static string SanitizeForLog(string source)
+    {
+#if NET48
+        var sanitized = source.Length > MaxLogSourceLength
+            ? source.Substring(0, MaxLogSourceLength) + "..."
+            : source;
+#else
+        var sanitized = source.Length > MaxLogSourceLength
+            ? string.Concat(source.AsSpan(0, MaxLogSourceLength), "...")
+            : source;
+#endif
+
+        var builder = new System.Text.StringBuilder(sanitized.Length);
+        for (var index = 0; index < sanitized.Length; index++)
+        {
+            var character = sanitized[index];
+            if (character == '\n')
+            {
+                builder.Append("\\n");
+            }
+            else if (character == '\r')
+            {
+                builder.Append("\\r");
+            }
+            else if (character == '\t')
+            {
+                builder.Append("\\t");
+            }
+            else if (char.IsControl(character))
+            {
+                builder.Append("\\u");
+                builder.Append(((int)character).ToString("X4", System.Globalization.CultureInfo.InvariantCulture));
+            }
+            else
+            {
+                builder.Append(character);
+            }
+        }
+
+        return builder.ToString();
     }
 
     private static string ApplyTemplate(string template, Match match)

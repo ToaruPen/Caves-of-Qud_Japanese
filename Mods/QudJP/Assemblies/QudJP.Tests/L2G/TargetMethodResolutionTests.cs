@@ -1,11 +1,7 @@
 #if HAS_GAME_DLL || HAS_TMP
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text.RegularExpressions;
-using NUnit.Framework;
 using QudJP.Patches;
 
 namespace QudJP.Tests.L2G;
@@ -53,6 +49,9 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(GetDisplayNameProcessPatch), "ProcessFor", "XRL.World.GetDisplayNameEvent", "System.String", new[] { "XRL.World.GameObject", "System.Boolean" })]
     [TestCase(typeof(LookTooltipContentPatch), "GenerateTooltipContent", "XRL.UI.Look", "System.String", new[] { "XRL.World.GameObject" })]
     [TestCase(typeof(DescriptionLongDescriptionPatch), "GetLongDescription", "XRL.World.Parts.Description", "System.Void", new[] { "System.Text.StringBuilder" })]
+    [TestCase(typeof(UITextSkinTranslationPatch), "SetText", "XRL.UI.UITextSkin", "System.Boolean", new[] { "System.String" })]
+    [TestCase(typeof(MessageLogPatch), "AddPlayerMessage", "XRL.Messages.MessageQueue", "System.Void", new[] { "System.String", "System.String", "System.Boolean" })]
+    [TestCase(typeof(ConversationDisplayTextPatch), "GetDisplayText", "XRL.World.Conversations.Choice", "System.String", new[] { "System.Boolean" })]
     [TestCase(typeof(GrammarMakeAndListPatch), "MakeAndList", "XRL.Language.Grammar", "System.String", new[] { "System.Collections.Generic.IReadOnlyList`1[[System.String]]", "System.Boolean" })]
 #endif
 #if HAS_TMP
@@ -91,6 +90,11 @@ public sealed class TargetMethodResolutionTests
         "System.String[]|System.Boolean",
         "System.Collections.Generic.List`1[[System.String]]|System.Boolean",
     })]
+    [TestCase(typeof(PopupTranslationPatch), new[]
+    {
+        "System.String|System.String|System.String|System.Boolean|System.Boolean|System.Boolean|System.Boolean|Genkit.Location2D",
+        "System.String|System.Collections.Generic.IReadOnlyList`1[[System.String]]|System.Collections.Generic.IReadOnlyList`1[[System.Char]]|System.Int32|System.String|System.Int32|System.Boolean|System.Boolean|System.Int32|System.String|System.Action`1[[System.Int32]]|XRL.World.GameObject|System.Collections.Generic.IReadOnlyList`1[[ConsoleLib.Console.IRenderable]]|ConsoleLib.Console.IRenderable|System.Collections.Generic.IReadOnlyList`1[[Qud.UI.QudMenuItem]]|System.Boolean|System.Boolean|System.Int32|System.Boolean",
+    })]
     public void TargetMethods_ResolveExpectedOverloads(Type patchType, string[] expectedSignatures)
     {
         var targetMethodsMethod = patchType.GetMethod("TargetMethods", BindingFlags.NonPublic | BindingFlags.Static);
@@ -113,12 +117,152 @@ public sealed class TargetMethodResolutionTests
 
         Assert.That(actualSignatures, Is.EquivalentTo(expectedSignatures));
     }
+
+    [TestCase("XRL.World.Conversations.ConversationLoader", "LoadConversations", 0)]
+    [TestCase("XRL.World.Conversations.ConversationLoader", "ReadConversation", 2)]
+    [TestCase("XRL.World.GameObjectFactory", "LoadBlueprints", 0)]
+    [TestCase("XRL.World.GameObjectFactory", "LoadBakedXML", 1)]
+    public void HookInventoryProbe_ResolvesXmlLoaderMethods(
+        string declaringTypeName,
+        string methodName,
+        int parameterCount)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var declaringType = assembly.GetType(declaringTypeName, throwOnError: false);
+        Assert.That(declaringType, Is.Not.Null, $"Type not found: {declaringTypeName}");
+
+        var method = FindMethodByNameAndParameterCount(declaringType!, methodName, parameterCount);
+        Assert.That(
+            method,
+            Is.Not.Null,
+            $"Method not found: {declaringTypeName}.{methodName} with {parameterCount} parameter(s)");
+    }
+
+    [TestCase("XRL.Messages.Messaging", "XRL.World.Messaging", "XRL.UI.Messaging")]
+    [TestCase("XRL.World.Conversations.ConversationUI", "XRL.World.ConversationUI", null)]
+    public void NamespaceProbe_DocumentsCurrentDecompilationGapCandidates(
+        string firstCandidateTypeName,
+        string secondCandidateTypeName,
+        string? thirdCandidateTypeName)
+    {
+        string?[] candidateTypeNames =
+        {
+            firstCandidateTypeName,
+            secondCandidateTypeName,
+            thirdCandidateTypeName,
+        };
+
+        var assembly = EnsureGameAssemblyLoaded();
+        var resolvedTypeName = Array.Find(
+            candidateTypeNames,
+            candidateTypeName => candidateTypeName is not null
+                && assembly.GetType(candidateTypeName, throwOnError: false) is not null);
+
+        Assert.That(
+            resolvedTypeName,
+            Is.Null,
+            $"Expected current decompilation-gap candidates to remain unresolved: {string.Join(", ", candidateTypeNames)}");
+    }
+
+    [TestCase("QudGenotypeModule")]
+    [TestCase("QudMutationsModule")]
+    [TestCase("QudCyberneticsModule")]
+    [TestCase("EmbarkBuilder")]
+    public void CharGenProbe_ResolvesKnownSimpleTypeNames(string simpleTypeName)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var resolvedType = FindTypeBySimpleName(assembly, simpleTypeName);
+
+        Assert.That(resolvedType, Is.Not.Null, $"Type not found by simple name: {simpleTypeName}");
+    }
+
+    [Test]
+    public void CharGenLocalizationPatch_TargetMethods_ResolveCurrentCharGenSurface()
+    {
+        var targetMethodsMethod = typeof(CharGenLocalizationPatch).GetMethod("TargetMethods", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(targetMethodsMethod, Is.Not.Null, "TargetMethods not found for CharGenLocalizationPatch");
+
+        var result = targetMethodsMethod!.Invoke(null, null) as System.Collections.IEnumerable;
+        Assert.That(result, Is.Not.Null, "TargetMethods returned null for CharGenLocalizationPatch");
+
+        var foundKnownCharGenType = false;
+        var foundAnyMethod = false;
+        foreach (var item in result!)
+        {
+            if (item is not MethodInfo methodInfo)
+            {
+                continue;
+            }
+
+            foundAnyMethod = true;
+            var declaringTypeName = methodInfo.DeclaringType?.Name;
+            if (!string.IsNullOrEmpty(declaringTypeName)
+                && (declaringTypeName.Contains("Embark", StringComparison.Ordinal)
+                    || declaringTypeName.Contains("Genotype", StringComparison.Ordinal)
+                    || declaringTypeName.Contains("Mutation", StringComparison.Ordinal)
+                    || declaringTypeName.Contains("Cybernetics", StringComparison.Ordinal)
+                    || declaringTypeName.Contains("CharacterCreation", StringComparison.Ordinal)
+                    || declaringTypeName.Contains("Calling", StringComparison.Ordinal)))
+            {
+                foundKnownCharGenType = true;
+                break;
+            }
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(foundAnyMethod, Is.True, "CharGenLocalizationPatch resolved no target methods.");
+            Assert.That(foundKnownCharGenType, Is.True, "CharGenLocalizationPatch did not resolve any char-gen-related declaring types.");
+        });
+    }
 #endif
 
     private static MethodBase? InvokeTargetMethod(Type patchType)
     {
         var targetMethod = patchType.GetMethod("TargetMethod", BindingFlags.NonPublic | BindingFlags.Static);
         return targetMethod?.Invoke(null, null) as MethodBase;
+    }
+
+    private static MethodBase? FindMethodByNameAndParameterCount(
+        Type declaringType,
+        string methodName,
+        int parameterCount)
+    {
+        var methods = declaringType.GetMethods(
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+        for (var index = 0; index < methods.Length; index++)
+        {
+            var method = methods[index];
+            if (method.Name == methodName && method.GetParameters().Length == parameterCount)
+            {
+                return method;
+            }
+        }
+
+        return null;
+    }
+
+    private static Type? FindTypeBySimpleName(Assembly assembly, string simpleTypeName)
+    {
+        Type[] types;
+        try
+        {
+            types = assembly.GetTypes();
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+            types = Array.FindAll(ex.Types, static type => type is not null)!;
+        }
+
+        for (var index = 0; index < types.Length; index++)
+        {
+            if (types[index].Name == simpleTypeName)
+            {
+                return types[index];
+            }
+        }
+
+        return null;
     }
 
     // Regex: strip assembly-qualified parts from generic type args
