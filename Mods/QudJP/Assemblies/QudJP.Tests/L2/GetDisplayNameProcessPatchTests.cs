@@ -52,6 +52,19 @@ public sealed class GetDisplayNameProcessPatchTests
     }
 
     [Test]
+    public void Postfix_AcceptsJapaneseIdentityEntry_WhenPatched()
+    {
+        WriteDictionary(("奇妙な遺物", "奇妙な遺物"));
+
+        RunWithDisplayNameProcessPatch(() =>
+        {
+            var result = DummyDisplayNameProcessor.ProcessFor("奇妙な遺物");
+
+            Assert.That(result, Is.EqualTo("奇妙な遺物"));
+        });
+    }
+
+    [Test]
     public void Postfix_PreservesColorCodes_WhenPatched()
     {
         WriteDictionary(("engraved carbide dagger", "刻印されたカーバイドダガー"));
@@ -74,6 +87,78 @@ public sealed class GetDisplayNameProcessPatchTests
             var result = DummyDisplayNameProcessor.ProcessFor("unknown relic");
 
             Assert.That(result, Is.EqualTo("unknown relic"));
+        });
+    }
+
+    [Test]
+    public void Postfix_SkipsMissingKeyLogging_ForFigurineFamily_WhenBuilderMatches()
+    {
+        WriteDictionary(("手袋屋", "手袋屋"));
+
+        RunWithFigurineDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyFigurineDisplayNameProcessor();
+            var result = processor.ProcessFor(displayName: "瑪瑙 手袋屋 のフィギュリン");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("瑪瑙 手袋屋 のフィギュリン"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("瑪瑙 手袋屋 のフィギュリン"), Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
+    public void Postfix_TransformsLegendaryFamily_WhenBuilderMatches()
+    {
+        WriteDictionary(("ヒヒ", "ヒヒ"));
+
+        RunWithFigurineDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyFigurineDisplayNameProcessor { DB = new DummyDescriptionBuilder("ヒヒ", "legendary") };
+            var result = processor.ProcessFor(displayName: "Oo-hoo-ho-HOO-OOO-ee-ho, legendary ヒヒ");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("Oo-hoo-ho-HOO-OOO-ee-ho、伝説のヒヒ"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("Oo-hoo-ho-HOO-OOO-ee-ho, legendary ヒヒ"), Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
+    public void Postfix_SkipsMissingKeyLogging_ForWarlordFamily_WhenBuilderMatches()
+    {
+        WriteDictionary(("スナップジョー", "スナップジョー"));
+
+        RunWithFigurineDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyFigurineDisplayNameProcessor { DB = new DummyDescriptionBuilder("スナップジョー", "軍主") };
+            var result = processor.ProcessFor(displayName: "スナップジョーの軍主");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("スナップジョーの軍主"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("スナップジョーの軍主"), Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
+    public void Postfix_LeavesComposedNameOnExactMatchPath_WhenBuilderLastAddedDoesNotMatch()
+    {
+        WriteDictionary(("ヒヒ", "ヒヒ"));
+
+        RunWithFigurineDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyFigurineDisplayNameProcessor { DB = new DummyDescriptionBuilder("ヒヒ", "warlord") };
+            var result = processor.ProcessFor(displayName: "Oo-hoo-ho-HOO-OOO-ee-ho, legendary ヒヒ");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("Oo-hoo-ho-HOO-OOO-ee-ho, legendary ヒヒ"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("Oo-hoo-ho-HOO-OOO-ee-ho, legendary ヒヒ"), Is.EqualTo(1));
+            });
         });
     }
 
@@ -143,6 +228,24 @@ public sealed class GetDisplayNameProcessPatchTests
         }
     }
 
+    private static void RunWithFigurineDisplayNameProcessPatch(Action assertion)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyFigurineDisplayNameProcessor), nameof(DummyFigurineDisplayNameProcessor.ProcessFor)),
+                postfix: DisplayNameProcessPostfix);
+            assertion();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private void WriteDictionaryFile(string content)
     {
         var path = Path.Combine(tempDirectory, "displayname-process-l2.ja.json");
@@ -151,9 +254,36 @@ public sealed class GetDisplayNameProcessPatchTests
 
     private static class DummyDisplayNameProcessor
     {
+        public static object? DB = new object();
+
         public static string ProcessFor(string displayName)
         {
+            _ = DB;
             return displayName;
         }
+    }
+
+    private sealed class DummyFigurineDisplayNameProcessor
+    {
+        public DummyDescriptionBuilder DB = new DummyDescriptionBuilder("手袋屋", "のフィギュリン");
+
+        public string ProcessFor(string displayName)
+        {
+            _ = string.Concat(DB.PrimaryBase, DB.LastAdded);
+            return displayName;
+        }
+    }
+
+    private sealed class DummyDescriptionBuilder
+    {
+        public DummyDescriptionBuilder(string primaryBase, string lastAdded)
+        {
+            PrimaryBase = primaryBase;
+            LastAdded = lastAdded;
+        }
+
+        public string PrimaryBase;
+
+        public string LastAdded;
     }
 }

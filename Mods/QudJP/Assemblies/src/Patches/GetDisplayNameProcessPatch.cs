@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 
@@ -51,11 +52,26 @@ public static class GetDisplayNameProcessPatch
         return null;
     }
 
-    public static void Postfix(ref string __result)
+    public static void Postfix(ref string __result, object? ___DB)
     {
         try
         {
             if (string.IsNullOrEmpty(__result))
+            {
+                return;
+            }
+
+            if (TryHandleFigurineFamily(__result, ___DB))
+            {
+                return;
+            }
+
+            if (TryHandleWarlordFamily(__result, ___DB))
+            {
+                return;
+            }
+
+            if (TryHandleLegendaryFamily(ref __result, ___DB))
             {
                 return;
             }
@@ -66,5 +82,94 @@ public static class GetDisplayNameProcessPatch
         {
             Trace.TraceError("QudJP: GetDisplayNameProcessPatch.Postfix failed: {0}", ex);
         }
+    }
+
+    private static bool TryHandleFigurineFamily(string current, object? descriptionBuilder)
+    {
+        if (descriptionBuilder is null || current.Any(static ch => ch == ','))
+        {
+            return false;
+        }
+
+        var primaryBase = AccessTools.Field(descriptionBuilder.GetType(), "PrimaryBase")?.GetValue(descriptionBuilder) as string;
+        var lastAdded = AccessTools.Field(descriptionBuilder.GetType(), "LastAdded")?.GetValue(descriptionBuilder) as string;
+        if (string.IsNullOrEmpty(primaryBase)
+            || !string.Equals(lastAdded, "のフィギュリン", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var expectedSuffix = $" {primaryBase} のフィギュリン";
+        return current.EndsWith(expectedSuffix, StringComparison.Ordinal);
+    }
+
+    private static bool TryHandleWarlordFamily(string current, object? descriptionBuilder)
+    {
+        if (descriptionBuilder is null || current.Any(static ch => ch == ',') || current.Any(static ch => ch == ' '))
+        {
+            return false;
+        }
+
+        var primaryBase = AccessTools.Field(descriptionBuilder.GetType(), "PrimaryBase")?.GetValue(descriptionBuilder) as string;
+        var lastAdded = AccessTools.Field(descriptionBuilder.GetType(), "LastAdded")?.GetValue(descriptionBuilder) as string;
+        if (string.IsNullOrEmpty(primaryBase)
+            || !string.Equals(lastAdded, "軍主", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var expected = primaryBase + "の軍主";
+        return string.Equals(current, expected, StringComparison.Ordinal);
+    }
+
+    private static bool TryHandleLegendaryFamily(ref string current, object? descriptionBuilder)
+    {
+        if (descriptionBuilder is null)
+        {
+            return false;
+        }
+
+        var lastAdded = AccessTools.Field(descriptionBuilder.GetType(), "LastAdded")?.GetValue(descriptionBuilder) as string;
+        if (!string.Equals(lastAdded, "legendary", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var primaryBase = AccessTools.Field(descriptionBuilder.GetType(), "PrimaryBase")?.GetValue(descriptionBuilder) as string;
+        if (!TryTransformLegendaryDisplayName(current, primaryBase, out var transformed))
+        {
+            return false;
+        }
+
+        current = transformed;
+        return true;
+    }
+
+    internal static bool TryTransformLegendaryDisplayName(string current, string? primaryBase, out string transformed)
+    {
+        const string marker = ", legendary ";
+
+        if (string.IsNullOrEmpty(primaryBase) || string.IsNullOrEmpty(current))
+        {
+            transformed = current;
+            return false;
+        }
+
+        var markerIndex = current.IndexOf(marker, StringComparison.Ordinal);
+        if (markerIndex < 0)
+        {
+            transformed = current;
+            return false;
+        }
+
+        var expectedSuffix = marker + primaryBase;
+        if (!current.EndsWith(expectedSuffix, StringComparison.Ordinal))
+        {
+            transformed = current;
+            return false;
+        }
+
+        transformed = current.Remove(markerIndex) + "、伝説の" + primaryBase;
+        return true;
     }
 }
