@@ -114,6 +114,44 @@ public sealed class PopupTranslationPatchTests
         }
     }
 
+    [Test]
+    public void Prefix_TranslatesShowConversationPayload()
+    {
+        WriteDictionary(
+            ("Trade", "取引"),
+            ("Choose your response.", "返答を選択してください。"),
+            ("Ask about water", "水について尋ねる"),
+            ("Leave", "立ち去る"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowConversation)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowConversation(
+                Title: "Trade",
+                Intro: "Choose your response.",
+                Options: new List<string> { "Ask about water", "{{G|Leave}}" });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupTarget.LastShowConversationTitle, Is.EqualTo("取引"));
+                Assert.That(DummyPopupTarget.LastShowConversationIntro, Is.EqualTo("返答を選択してください。"));
+                Assert.That(DummyPopupTarget.LastShowConversationOptions, Is.Not.Null);
+                Assert.That(DummyPopupTarget.LastShowConversationOptions![0], Is.EqualTo("水について尋ねる"));
+                Assert.That(DummyPopupTarget.LastShowConversationOptions[1], Is.EqualTo("{{G|立ち去る}}"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";
