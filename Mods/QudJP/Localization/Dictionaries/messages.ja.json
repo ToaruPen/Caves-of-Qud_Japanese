@@ -23,11 +23,11 @@
     },
     {
       "pattern": "^(.+) attacks you[.!]?$",
-      "template": "{0}があなたに攻撃した"
+      "template": "{0}があなたを攻撃してきた"
     },
     {
       "pattern": "^You miss (.+?)[.!]?$",
-      "template": "{0}への攻撃をはずした"
+      "template": "{0}への攻撃は外れた"
     },
     {
       "pattern": "^(.+) misses you[.!]?$",
@@ -51,7 +51,7 @@
     },
     {
       "pattern": "^You are stunned[.!]?$",
-      "template": "あなたは朦朧としている"
+      "template": "あなたは朦朧となった"
     },
     {
       "pattern": "^You are poisoned[.!]?$",
@@ -59,11 +59,11 @@
     },
     {
       "pattern": "^You are bleeding[.!]?$",
-      "template": "あなたは出血している"
+      "template": "あなたは出血した"
     },
     {
       "pattern": "^You are burning[.!]?$",
-      "template": "あなたは燃えている"
+      "template": "あなたは燃え始めた"
     },
     {
       "pattern": "^You stop bleeding[.!]?$",
@@ -119,7 +119,7 @@
     },
     {
       "pattern": "^You feel (.+?)[.!]?$",
-      "template": "あなたは{0}と感じた"
+      "template": "あなたは{0}を感じた"
     },
     {
       "pattern": "^You see (.+?)[.!]?$",
@@ -140,6 +140,18 @@
     {
       "pattern": "^You recover (\\d+) HP[.!]?$",
       "template": "あなたは{0}HP回復した"
+    },
+    {
+      "pattern": "^Notes: (.+)$",
+      "template": "備考: {0}"
+    },
+    {
+      "pattern": "^You embark for the caves of Qud\\.$",
+      "template": "あなたはQudの洞窟へ旅立った。"
+    },
+    {
+      "pattern": "^On the (.+?) of (.+?), you arrive at the village of (.+?)\\.\\n\\nOn the horizon, Qud's jungles strangle chrome steeples and rusted archways to the earth\\. Further and beyond, the fabled Spindle rises above the fray and pierces the cloud-ribboned sky\\.$",
+      "template": "{1}の{0}日、あなたは{2}の村に到着した。\n\n地平線では、Qudのジャングルがクロームの尖塔と錆びたアーチを大地に絡みつかせている。さらにその彼方では、伝説のスピンドルが乱景の上にそびえ、雲の帯を貫いて空へ伸びている。"
     },
     {
       "pattern": "^You cannot do that[.!]?$",
