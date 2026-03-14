@@ -159,14 +159,23 @@ public static class UITextSkinTranslationPatch
 
     private static bool ShouldSkipTranslation(string source, string? context)
     {
+        if (IsWhitespaceOnly(source)
+            || IsAlreadyLocalizedDirectRouteText(source, context))
+        {
+            return true;
+        }
+
+        if (!string.Equals(context, nameof(UITextSkinTranslationPatch), StringComparison.Ordinal))
+        {
+            return false;
+        }
+
         return IsBracketedControlLabel(source)
             || IsShortcutPrefixedLabel(source)
             || IsVersionBuildString(source)
             || IsCompactStatBadge(source)
-            || IsWhitespaceOnly(source)
             || IsUiPseudoGraphic(source)
             || string.Equals(source, "quit", StringComparison.Ordinal)
-            || IsAlreadyLocalizedDirectRouteText(source, context)
             || IsAlreadyLocalizedUITextSinkText(source, context);
     }
 
