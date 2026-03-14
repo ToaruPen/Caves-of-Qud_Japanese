@@ -18,6 +18,7 @@ internal sealed class DummyFactionsStatusScreen
         new DummyFactionsLineData("Reputation:  -475"),
         new DummyFactionsLineData("The villagers of Biwar don't care about you, but aggressive ones will attack you."),
         new DummyFactionsLineData("The villagers of Biwar are interested in hearing gossip that's about them."),
+        new DummyFactionsLineData("The villagers of Biwar are preparing for war."),
     ];
 
     public void UpdateViewFromData()

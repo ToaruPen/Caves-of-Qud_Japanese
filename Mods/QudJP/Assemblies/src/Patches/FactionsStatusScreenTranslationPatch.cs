@@ -11,7 +11,7 @@ namespace QudJP.Patches;
 public static class FactionsStatusScreenTranslationPatch
 {
     private static readonly Regex VillageLabelPattern =
-        new Regex("^The villagers of (?<name>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        new Regex("^The villagers of (?<name>[^.]+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex VillageNeutralPattern =
         new Regex("^The villagers of (?<name>.+) don't care about you, but aggressive ones will attack you\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex VillageGossipPattern =

@@ -68,6 +68,7 @@ public sealed class FactionsStatusScreenTranslationPatchTests
                 Assert.That(screen.sortedData[0].label, Is.EqualTo("Biwarの村人たち"));
                 Assert.That(screen.sortedData[1].label, Is.EqualTo("評判: -475"));
                 Assert.That(screen.sortedData[2]._searchText, Is.EqualTo("The villagers of Biwar don't care about you, but aggressive ones will attack you."));
+                Assert.That(screen.sortedData[4].label, Is.EqualTo("The villagers of Biwar are preparing for war."), "Unhandled sentence must not be rewritten by VillageLabelPattern");
             });
         }
         finally
