@@ -54,12 +54,7 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(FactionsStatusScreenTranslationPatch), "UpdateViewFromData", "Qud.UI.FactionsStatusScreen", "System.Void", new string[0])]
     [TestCase(typeof(SkillsAndPowersStatusScreenTranslationPatch), "UpdateViewFromData", "Qud.UI.SkillsAndPowersStatusScreen", "System.Void", new string[0])]
     [TestCase(typeof(MessageLogPatch), "AddPlayerMessage", "XRL.Messages.MessageQueue", "System.Void", new[] { "System.String", "System.String", "System.Boolean" })]
-    [TestCase(typeof(DescriptionInventoryActionProbePatch), "HandleEvent", "XRL.World.Parts.Description", "System.Boolean", new[] { "XRL.World.InventoryActionEvent" })]
-    [TestCase(typeof(HandleSelectItemProbePatch), "HandleSelectItem", "Qud.UI.InventoryAndEquipmentStatusScreen", "System.Void", new[] { "XRL.UI.Framework.FrameworkDataElement" })]
     [TestCase(typeof(BaseLineWithTooltipStartTooltipPatch), "StartTooltip", "Qud.UI.BaseLineWithTooltip", "System.Void", new[] { "XRL.World.GameObject", "XRL.World.GameObject", "System.Boolean", "UnityEngine.RectTransform" })]
-    [TestCase(typeof(InventoryScreenChildTextProbePatch), "UpdateViewFromData", "Qud.UI.InventoryAndEquipmentStatusScreen", "System.Void", new string[0])]
-    [TestCase(typeof(SelectableTextMenuItemSelectChangedProbePatch), "SelectChanged", "Qud.UI.SelectableTextMenuItem", "System.Void", new[] { "System.Boolean" })]
-    [TestCase(typeof(QudMenuBottomContextRefreshProbePatch), "RefreshButtons", "Qud.UI.QudMenuBottomContext", "System.Void", new string[0])]
     [TestCase(typeof(ConversationDisplayTextPatch), "GetDisplayText", "XRL.World.Conversations.Choice", "System.String", new[] { "System.Boolean" })]
     [TestCase(typeof(GrammarMakeAndListPatch), "MakeAndList", "XRL.Language.Grammar", "System.String", new[] { "System.Collections.Generic.IReadOnlyList`1[[System.String]]", "System.Boolean" })]
 #endif
