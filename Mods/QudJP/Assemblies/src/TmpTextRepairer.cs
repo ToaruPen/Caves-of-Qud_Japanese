@@ -14,6 +14,7 @@ internal static class TmpTextRepairer
 {
 #if HAS_TMP
     private const int MaxLeafProbeLogsPerBucket = 3;
+    private const string ReplacementObjectName = "QudJPReplacementText";
 
     private static readonly ConcurrentDictionary<string, int> LeafProbeCounts =
         new ConcurrentDictionary<string, int>(StringComparer.Ordinal);
@@ -36,6 +37,18 @@ internal static class TmpTextRepairer
         }
 
         return repaired;
+    }
+
+    internal static bool CanAttemptRepairForTests(
+        bool enabled,
+        bool activeInHierarchy,
+        string? text,
+        string objectName)
+    {
+        return enabled
+            && activeInHierarchy
+            && !string.IsNullOrEmpty(text)
+            && !string.Equals(objectName, ReplacementObjectName, StringComparison.Ordinal);
     }
 
     internal static bool TryBuildTextShellLeafProbe(object? componentInstance, string probeName, out string? logLine)
@@ -461,7 +474,11 @@ internal static class TmpTextRepairer
 
     private static bool CanAttemptRepair(TextMeshProUGUI text)
     {
-        return text.enabled && text.gameObject.activeInHierarchy && !string.IsNullOrEmpty(text.text);
+        return CanAttemptRepairForTests(
+            text.enabled,
+            text.gameObject.activeInHierarchy,
+            text.text,
+            text.gameObject.name);
     }
 
     private static string GetSkipReason(TextMeshProUGUI text)
@@ -474,6 +491,11 @@ internal static class TmpTextRepairer
         if (!text.gameObject.activeInHierarchy)
         {
             return "inactive";
+        }
+
+        if (string.Equals(text.gameObject.name, ReplacementObjectName, StringComparison.Ordinal))
+        {
+            return "replacement";
         }
 
         return string.IsNullOrEmpty(text.text) ? "empty" : "none";

@@ -14,6 +14,13 @@ namespace QudJP;
 internal static class TextShellReplacementRenderer
 {
 #if HAS_TMP
+    internal enum ReplacementRenderAction
+    {
+        AttemptReplacement,
+        PreserveActiveReplacement,
+        DisableReplacement,
+    }
+
     private const string ReplacementObjectName = "QudJPReplacementText";
     private const string LegacyReplacementObjectName = "QudJPReplacementLegacyText";
     private static readonly ConcurrentDictionary<string, byte> FailureProbeLogged = new();
@@ -90,8 +97,8 @@ internal static class TextShellReplacementRenderer
             AppendCreationStageSnapshot(creationStageLog, "afterEnable", replacement);
             if (replacement.textInfo.characterCount > 0)
             {
-                replacement.havePropertiesChanged = true;
-                replacement.SetAllDirty();
+                original.enabled = false;
+                StabilizeSuccessfulReplacement(replacement);
                 replaced++;
                 replacement.transform.SetAsLastSibling();
                 builder.Append("; leaf[");
@@ -142,6 +149,7 @@ internal static class TextShellReplacementRenderer
             }
 
             replaced++;
+            original.enabled = false;
             replacement.transform.SetAsLastSibling();
             builder.Append("; leaf[");
             builder.Append(replaced.ToString(CultureInfo.InvariantCulture));
@@ -163,6 +171,67 @@ internal static class TextShellReplacementRenderer
 
         logLine = builder.ToString();
         return replaced;
+    }
+
+    internal static bool ShouldPreserveActiveReplacementForTests(bool originalEnabled, bool originalActiveInHierarchy)
+    {
+        return !originalEnabled || !originalActiveInHierarchy;
+    }
+
+    internal static ReplacementRenderAction DecideRenderActionForTests(
+        bool originalEnabled,
+        bool originalActiveInHierarchy,
+        int originalCharacterCount)
+    {
+        return DecideRenderAction(originalEnabled, originalActiveInHierarchy, originalCharacterCount);
+    }
+
+    internal static TextOverflowModes GetReplacementOverflowModeForTests()
+    {
+        return TextOverflowModes.Overflow;
+    }
+
+    internal static bool IsReplacementTextNameForTests(string objectName)
+    {
+        return string.Equals(objectName, ReplacementObjectName, StringComparison.Ordinal);
+    }
+
+    internal static bool TryBuildReplacementLifecycleSnapshot(
+        TextMeshProUGUI replacement,
+        string probeName,
+        string trigger,
+        out string? logLine)
+    {
+        logLine = null;
+        if (!string.Equals(replacement.gameObject.name, ReplacementObjectName, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var builder = new StringBuilder();
+        builder.Append("[QudJP] ");
+        builder.Append(probeName);
+        builder.Append(": frame=");
+        builder.Append(Time.frameCount.ToString(CultureInfo.InvariantCulture));
+        builder.Append(" trigger='");
+        builder.Append(trigger);
+        builder.Append("' root='");
+        var owningInventoryLineName = FindOwningInventoryLineName(replacement.transform);
+        if (owningInventoryLineName is null)
+        {
+            Trace.TraceWarning("QudJP: Could not resolve owning inventory line for replacement lifecycle probe.");
+            builder.Append("<unknown>");
+        }
+        else
+        {
+            builder.Append(owningInventoryLineName);
+        }
+        builder.Append("' path='");
+        builder.Append(BuildAbsolutePath(replacement.transform));
+        builder.Append("' ");
+        AppendCreationStageSnapshot(builder, "state", replacement);
+        logLine = builder.ToString();
+        return true;
     }
 
     internal static bool TryBuildReplacementState(object? componentInstance, string probeName, out string? logLine)
@@ -212,10 +281,22 @@ internal static class TextShellReplacementRenderer
             builder.Append(text.enabled ? "True" : "False");
             builder.Append(" propsChanged=");
             builder.Append(text.havePropertiesChanged ? "True" : "False");
+            builder.Append(" isAwake=");
+            builder.Append(GetBoolFieldValue(text, "m_isAwake")?.ToString() ?? "<unknown>");
+            builder.Append(" registered=");
+            builder.Append(GetBoolFieldValue(text, "m_isRegisteredForEvents")?.ToString() ?? "<unknown>");
+            builder.Append(" ignoreActiveState=");
+            builder.Append(GetBoolFieldValue(text, "m_ignoreActiveState")?.ToString() ?? "<unknown>");
+            builder.Append(" hasCanvas=");
+            builder.Append(GetFieldValue(text, "m_canvas") is null ? "False" : "True");
             builder.Append(" font='");
             builder.Append(text.font is null ? string.Empty : text.font.name);
+            builder.Append("' internalFont='");
+            builder.Append(GetTmpFontFieldName(text, "m_fontAsset"));
             builder.Append("' material='");
             builder.Append(text.fontSharedMaterial is null ? string.Empty : text.fontSharedMaterial.name);
+            builder.Append("' internalSharedMaterial='");
+            builder.Append(GetMaterialFieldName(text, "m_sharedMaterial"));
             builder.Append("' canvasA=");
             builder.Append(TryGetCanvasAlpha(text)?.ToString("0.###", CultureInfo.InvariantCulture) ?? "<unknown>");
             builder.Append(" subMeshes=");
@@ -317,7 +398,13 @@ internal static class TextShellReplacementRenderer
         }
 
         replacement.ForceMeshUpdate(ignoreActiveState: true, forceTextReparsing: false);
+        var recovered = false;
         if (replacement.textInfo.characterCount == 0)
+        {
+            recovered = TryRecoverDegradedReplacement(replacement);
+        }
+
+        if (replacement.textInfo.characterCount == 0 && !recovered)
         {
             return false;
         }
@@ -334,8 +421,83 @@ internal static class TextShellReplacementRenderer
         builder.Append(replacement.textInfo.pageCount.ToString(CultureInfo.InvariantCulture));
         builder.Append(" parent='");
         builder.Append(shell.name);
-        builder.Append("' phase='reuseActive'");
+        builder.Append("' phase='");
+        builder.Append(recovered ? "reuseActiveRecovered" : "reuseActive");
+        builder.Append('\'');
         return true;
+    }
+
+    private static bool TryRecoverDegradedReplacement(TextMeshProUGUI replacement)
+    {
+        if (!replacement.enabled || !replacement.gameObject.activeInHierarchy || string.IsNullOrEmpty(replacement.text))
+        {
+            return false;
+        }
+
+        var originalText = replacement.text;
+        if (replacement.transform.parent is RectTransform parentRect)
+        {
+            TryForceLayoutRebuild(parentRect);
+        }
+
+        TryForceLayoutRebuild(replacement.rectTransform);
+        TryForceCanvasUpdate();
+
+        replacement.havePropertiesChanged = true;
+        replacement.SetAllDirty();
+        replacement.text = originalText;
+        replacement.ForceMeshUpdate(ignoreActiveState: true, forceTextReparsing: true);
+        if (replacement.textInfo.characterCount > 0)
+        {
+            StabilizeSuccessfulReplacement(replacement);
+            return true;
+        }
+
+        FontManager.ForcePrimaryFont(replacement);
+        if (replacement.font is not null)
+        {
+            replacement.fontSharedMaterial = replacement.font.material;
+        }
+
+        replacement.havePropertiesChanged = true;
+        replacement.SetAllDirty();
+        replacement.text = originalText;
+        TryForceCanvasUpdate();
+        replacement.ForceMeshUpdate(ignoreActiveState: true, forceTextReparsing: true);
+        if (replacement.textInfo.characterCount > 0)
+        {
+            StabilizeSuccessfulReplacement(replacement);
+            return true;
+        }
+
+        return false;
+    }
+
+    private static void StabilizeSuccessfulReplacement(TextMeshProUGUI replacement)
+    {
+        replacement.havePropertiesChanged = false;
+        TrySetBoolFieldValue(replacement, "m_isLayoutDirty", false);
+        TrySetBoolFieldValue(replacement, "m_VertsDirty", false);
+        TrySetBoolFieldValue(replacement, "m_MaterialDirty", false);
+        TrySetBoolFieldValue(replacement, "m_ignoreActiveState", false);
+        TryInvokeLifecycleMethod(replacement, "RecalculateClipping");
+        TryInvokeLifecycleMethod(replacement, "RecalculateMasking");
+        TryForceCanvasUpdate();
+    }
+
+    private static ReplacementRenderAction DecideRenderAction(
+        bool originalEnabled,
+        bool originalActiveInHierarchy,
+        int originalCharacterCount)
+    {
+        if (originalEnabled && originalActiveInHierarchy && originalCharacterCount == 0)
+        {
+            return ReplacementRenderAction.AttemptReplacement;
+        }
+
+        return ShouldPreserveActiveReplacementForTests(originalEnabled, originalActiveInHierarchy)
+            ? ReplacementRenderAction.PreserveActiveReplacement
+            : ReplacementRenderAction.DisableReplacement;
     }
 
     private static void TryDisableLegacyReplacement(Transform? parent)
@@ -416,7 +578,7 @@ internal static class TextShellReplacementRenderer
         replacement.font = original.font;
         replacement.fontStyle = original.fontStyle;
         replacement.alignment = original.alignment;
-        replacement.overflowMode = original.overflowMode;
+        replacement.overflowMode = TextOverflowModes.Overflow;
         replacement.textWrappingMode = original.textWrappingMode;
         replacement.margin = original.margin;
         replacement.color = original.color;
@@ -584,16 +746,34 @@ internal static class TextShellReplacementRenderer
         builder.Append(text.gameObject.activeInHierarchy ? "True" : "False");
         builder.Append(", enabled=");
         builder.Append(text.enabled ? "True" : "False");
+        builder.Append(", sibling=");
+        builder.Append(text.transform.GetSiblingIndex().ToString(CultureInfo.InvariantCulture));
+        builder.Append('/');
+        builder.Append(text.transform.parent is null ? "<none>" : text.transform.parent.childCount.ToString(CultureInfo.InvariantCulture));
         builder.Append(", propsChanged=");
         builder.Append(text.havePropertiesChanged ? "True" : "False");
+        builder.Append(", layoutDirty=");
+        builder.Append(GetBoolFieldValue(text, "m_isLayoutDirty")?.ToString() ?? "<unknown>");
+        builder.Append(", vertsDirty=");
+        builder.Append(GetBoolFieldValue(text, "m_VertsDirty")?.ToString() ?? "<unknown>");
+        builder.Append(", materialDirty=");
+        builder.Append(GetBoolFieldValue(text, "m_MaterialDirty")?.ToString() ?? "<unknown>");
         builder.Append(", chars=");
         builder.Append(text.textInfo.characterCount.ToString(CultureInfo.InvariantCulture));
+        builder.Append(", visibleChars=");
+        builder.Append(CountVisibleCharacters(text).ToString(CultureInfo.InvariantCulture));
         builder.Append(", pages=");
         builder.Append(text.textInfo.pageCount.ToString(CultureInfo.InvariantCulture));
         builder.Append(", rect=");
         builder.Append(text.rectTransform.rect.width.ToString("0.###", CultureInfo.InvariantCulture));
         builder.Append('x');
         builder.Append(text.rectTransform.rect.height.ToString("0.###", CultureInfo.InvariantCulture));
+        builder.Append(", worldCenter=");
+        AppendVector3(builder, text.rectTransform.TransformPoint(text.rectTransform.rect.center));
+        builder.Append(", marginW=");
+        builder.Append(TryGetFloatFieldValue(text, "m_marginWidth")?.ToString("0.###", CultureInfo.InvariantCulture) ?? "<unknown>");
+        builder.Append(", marginH=");
+        builder.Append(TryGetFloatFieldValue(text, "m_marginHeight")?.ToString("0.###", CultureInfo.InvariantCulture) ?? "<unknown>");
         builder.Append(", overflow=");
         builder.Append(text.overflowMode);
         builder.Append(", wrap=");
@@ -604,16 +784,36 @@ internal static class TextShellReplacementRenderer
         builder.Append(text.maxVisibleLines.ToString(CultureInfo.InvariantCulture));
         builder.Append(", pageToDisplay=");
         builder.Append(text.pageToDisplay.ToString(CultureInfo.InvariantCulture));
+        builder.Append(", maskable=");
+        builder.Append(text.maskable ? "True" : "False");
+        builder.Append(", alpha=");
+        builder.Append(text.alpha.ToString("0.###", CultureInfo.InvariantCulture));
+        builder.Append(", colorA=");
+        builder.Append(text.color.a.ToString("0.###", CultureInfo.InvariantCulture));
         builder.Append(", isAwake=");
         builder.Append(GetBoolFieldValue(text, "m_isAwake")?.ToString() ?? "<unknown>");
         builder.Append(", registered=");
         builder.Append(GetBoolFieldValue(text, "m_isRegisteredForEvents")?.ToString() ?? "<unknown>");
         builder.Append(", ignoreActiveState=");
         builder.Append(GetBoolFieldValue(text, "m_ignoreActiveState")?.ToString() ?? "<unknown>");
+        builder.Append(", textTruncated=");
+        builder.Append(GetBoolFieldValue(text, "m_isTextTruncated")?.ToString() ?? "<unknown>");
+        builder.Append(", autoSizePointSet=");
+        builder.Append(GetBoolFieldValue(text, "m_IsAutoSizePointSizeSet")?.ToString() ?? "<unknown>");
+        builder.Append(", inputParsingRequired=");
+        builder.Append(GetBoolFieldValue(text, "m_isInputParsingRequired")?.ToString() ?? "<unknown>");
         builder.Append(", hasCanvas=");
         builder.Append(GetFieldValue(text, "m_canvas") is null ? "False" : "True");
+        builder.Append(", renderMode=");
+        builder.Append(GetFieldValue(text, "m_renderMode")?.ToString() ?? "<unknown>");
+        builder.Append(", firstUnicode=");
+        builder.Append(TryGetFirstTextProcessingUnicode(text)?.ToString(CultureInfo.InvariantCulture) ?? "<unknown>");
         builder.Append(", canvasA=");
         builder.Append(TryGetCanvasAlpha(text)?.ToString("0.###", CultureInfo.InvariantCulture) ?? "<unknown>");
+        builder.Append(", canvasCull=");
+        builder.Append(TryGetCanvasCull(text)?.ToString() ?? "<unknown>");
+        builder.Append(", parentCanvasGroupA=");
+        builder.Append(TryGetParentCanvasGroupAlpha(text.transform)?.ToString("0.###", CultureInfo.InvariantCulture) ?? "<unknown>");
         builder.Append(", stencil=");
         builder.Append(TryGetMaterialInt(text.fontSharedMaterial, "_Stencil")?.ToString(CultureInfo.InvariantCulture) ?? "<unknown>");
         builder.Append(", faceA=");
@@ -628,6 +828,7 @@ internal static class TextShellReplacementRenderer
         builder.Append(GetMaterialFieldName(text, "m_sharedMaterial"));
         builder.Append("', subMeshes=");
         builder.Append(subMeshes.Length.ToString(CultureInfo.InvariantCulture));
+        AppendFirstVisibleCharacterSnapshot(builder, text);
         if (subMeshes.Length > 0)
         {
             var subMesh = subMeshes[0];
@@ -729,9 +930,143 @@ internal static class TextShellReplacementRenderer
         return null;
     }
 
+    private static void TrySetBoolFieldValue(object instance, string fieldName, bool value)
+    {
+        var type = instance.GetType();
+        while (type is not null)
+        {
+#pragma warning disable S3011
+            var field = type.GetField(
+                fieldName,
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+#pragma warning restore S3011
+            if (field is not null && field.FieldType == typeof(bool))
+            {
+#pragma warning disable S3011
+                field.SetValue(instance, value);
+#pragma warning restore S3011
+                return;
+            }
+
+            type = type.BaseType;
+        }
+    }
+
+    private static void TryInvokeLifecycleMethod(object instance, string methodName)
+    {
+        var type = instance.GetType();
+        while (type is not null)
+        {
+#pragma warning disable S3011
+            var method = type.GetMethod(
+                methodName,
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic,
+                binder: null,
+                types: Type.EmptyTypes,
+                modifiers: null);
+#pragma warning restore S3011
+            if (method is not null)
+            {
+#pragma warning disable S3011
+                method.Invoke(instance, null);
+#pragma warning restore S3011
+                return;
+            }
+
+            type = type.BaseType;
+        }
+    }
+
+    private static float? TryGetFloatFieldValue(object instance, string fieldName)
+    {
+        return GetFieldValue(instance, fieldName) switch
+        {
+            float floatValue => floatValue,
+            double doubleValue => (float)doubleValue,
+            _ => null,
+        };
+    }
+
     private static int? TryGetMaterialInt(Material? material, string propertyName)
     {
         return material is not null && material.HasProperty(propertyName) ? material.GetInt(propertyName) : null;
+    }
+
+    private static uint? TryGetFirstTextProcessingUnicode(TMP_Text text)
+    {
+        if (GetFieldValue(text, "m_TextProcessingArray") is not Array processingArray || processingArray.Length == 0)
+        {
+            return null;
+        }
+
+        var first = processingArray.GetValue(0);
+        if (first is null)
+        {
+            return null;
+        }
+
+        var unicodeValue = GetFieldValue(first, "unicode");
+        return unicodeValue switch
+        {
+            uint uintValue => uintValue,
+            int intValue when intValue >= 0 => (uint)intValue,
+            _ => null,
+        };
+    }
+
+    private static int CountVisibleCharacters(TMP_Text text)
+    {
+        var count = 0;
+        for (var index = 0; index < text.textInfo.characterCount; index++)
+        {
+            if (text.textInfo.characterInfo[index].isVisible)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private static void AppendFirstVisibleCharacterSnapshot(StringBuilder builder, TMP_Text text)
+    {
+        for (var index = 0; index < text.textInfo.characterCount; index++)
+        {
+            var character = text.textInfo.characterInfo[index];
+            if (!character.isVisible)
+            {
+                continue;
+            }
+
+            builder.Append(", firstVisibleChar='");
+            builder.Append(char.ConvertFromUtf32(character.character));
+            builder.Append("' charIndex=");
+            builder.Append(index.ToString(CultureInfo.InvariantCulture));
+            builder.Append(" quad=");
+            builder.Append(character.bottomLeft.x.ToString("0.###", CultureInfo.InvariantCulture));
+            builder.Append(',');
+            builder.Append(character.bottomLeft.y.ToString("0.###", CultureInfo.InvariantCulture));
+            builder.Append("->");
+            builder.Append(character.topRight.x.ToString("0.###", CultureInfo.InvariantCulture));
+            builder.Append(',');
+            builder.Append(character.topRight.y.ToString("0.###", CultureInfo.InvariantCulture));
+            builder.Append(" worldQuad=");
+            AppendVector3(builder, text.rectTransform.TransformPoint(character.bottomLeft));
+            builder.Append("->");
+            AppendVector3(builder, text.rectTransform.TransformPoint(character.topRight));
+            return;
+        }
+
+        builder.Append(", firstVisibleChar=<none>");
+    }
+
+    private static void AppendVector3(StringBuilder builder, Vector3 value)
+    {
+        builder.Append(value.x.ToString("0.###", CultureInfo.InvariantCulture));
+        builder.Append(',');
+        builder.Append(value.y.ToString("0.###", CultureInfo.InvariantCulture));
+        builder.Append(',');
+        builder.Append(value.z.ToString("0.###", CultureInfo.InvariantCulture));
     }
 
     private static float? TryGetFaceColorAlpha(Material? material)
@@ -769,6 +1104,46 @@ internal static class TextShellReplacementRenderer
         return null;
     }
 
+    private static bool? TryGetCanvasCull(TMP_Text text)
+    {
+        var canvasRendererProperty = text.GetType().GetProperty(
+            "canvasRenderer",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+        var canvasRenderer = canvasRendererProperty?.GetValue(text);
+        if (canvasRenderer is null)
+        {
+            return null;
+        }
+
+        var cullProperty = canvasRenderer.GetType().GetProperty(
+            "cull",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+        return cullProperty?.GetValue(canvasRenderer) as bool?;
+    }
+
+    private static float? TryGetParentCanvasGroupAlpha(Transform transform)
+    {
+        var current = transform.parent;
+        while (current is not null)
+        {
+            var component = current.GetComponent("CanvasGroup");
+            if (component is not null)
+            {
+                var alphaProperty = component.GetType().GetProperty(
+                    "alpha",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+                if (alphaProperty?.GetValue(component) is float alpha)
+                {
+                    return alpha;
+                }
+            }
+
+            current = current.parent;
+        }
+
+        return null;
+    }
+
     private static void TryForceCanvasUpdate()
     {
         try
@@ -790,6 +1165,18 @@ internal static class TextShellReplacementRenderer
         catch (Exception ex)
         {
             Trace.TraceWarning("QudJP: TextShellReplacementRenderer.TryForceCanvasUpdate failed: {0}", ex.Message);
+        }
+    }
+
+    private static void TryForceLayoutRebuild(RectTransform rectTransform)
+    {
+        try
+        {
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceWarning("QudJP: TextShellReplacementRenderer.TryForceLayoutRebuild failed: {0}", ex.Message);
         }
     }
 
@@ -846,6 +1233,41 @@ internal static class TextShellReplacementRenderer
         }
 
         return string.Join("/", stack.ToArray());
+    }
+
+    private static string BuildAbsolutePath(Transform target)
+    {
+        var stack = new System.Collections.Generic.Stack<string>();
+        var current = target;
+        while (current is not null)
+        {
+            stack.Push(current.name);
+            current = current.parent;
+        }
+
+        return string.Join("/", stack.ToArray());
+    }
+
+    private static string? FindOwningInventoryLineName(Transform target)
+    {
+        var current = target;
+        while (current is not null)
+        {
+            var components = current.GetComponents<Component>();
+            for (var index = 0; index < components.Length; index++)
+            {
+                var component = components[index];
+                if (component is not null
+                    && string.Equals(component.GetType().FullName, "Qud.UI.InventoryLine", StringComparison.Ordinal))
+                {
+                    return current.gameObject.name;
+                }
+            }
+
+            current = current.parent;
+        }
+
+        return null;
     }
 #else
     internal static int TryRenderReplacementTexts(object? componentInstance, out string? logLine)
