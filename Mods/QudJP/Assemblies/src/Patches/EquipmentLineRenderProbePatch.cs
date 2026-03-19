@@ -50,6 +50,7 @@ public static class EquipmentLineRenderProbePatch
     {
         try
         {
+#if HAS_TMP
             var applied = EquipmentLineFontFixer.TryApplyPrimaryFontToEquipmentLine(__instance);
             var repaired = TmpTextRepairer.TryRepairInvisibleTexts(__instance);
             if (EquipmentLineObservability.TryBuildState(__instance, data, applied, out var logLine)
@@ -77,6 +78,10 @@ public static class EquipmentLineRenderProbePatch
             {
                 LogProbe(compactChildLogLine);
             }
+#else
+            _ = __instance;
+            _ = data;
+#endif
         }
         catch (Exception ex)
         {
@@ -84,6 +89,7 @@ public static class EquipmentLineRenderProbePatch
         }
     }
 
+    #if HAS_TMP
     private static void LogProbe(string message)
     {
         try
@@ -111,4 +117,5 @@ public static class EquipmentLineRenderProbePatch
 
         Trace.TraceInformation(message);
     }
+    #endif
 }

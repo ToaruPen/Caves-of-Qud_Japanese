@@ -58,7 +58,11 @@ public static class BaseLineWithTooltipStartTooltipPatch
     {
         try
         {
+#if HAS_TMP
             DelayedSceneProbeScheduler.ScheduleCompareSceneProbe(__instance);
+#else
+            _ = __instance;
+#endif
         }
         catch (Exception ex)
         {

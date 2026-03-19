@@ -50,8 +50,13 @@ public static class InventoryLineRenderProbePatch
     {
         try
         {
+#if HAS_TMP
             _ = InventoryLineFontFixer.TryApplyPrimaryFontToItemRow(__instance, data);
             DelayedInventoryLineRepairScheduler.ScheduleRepair(__instance);
+#else
+            _ = __instance;
+            _ = data;
+#endif
         }
         catch (Exception ex)
         {

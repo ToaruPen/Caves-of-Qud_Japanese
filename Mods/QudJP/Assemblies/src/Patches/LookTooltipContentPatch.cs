@@ -54,7 +54,11 @@ public static class LookTooltipContentPatch
 
             __result = UITextSkinTranslationPatch.TranslatePreservingColors(__result, nameof(LookTooltipContentPatch));
             LogProbe(BuildTooltipContentProbe(__result));
+#if HAS_TMP
             DelayedSceneProbeScheduler.ScheduleCompareSceneProbe(__instance);
+#else
+            _ = __instance;
+#endif
         }
         catch (Exception ex)
         {

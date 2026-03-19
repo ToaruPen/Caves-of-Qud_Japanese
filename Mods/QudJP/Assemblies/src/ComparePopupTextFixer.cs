@@ -418,27 +418,5 @@ internal static class ComparePopupTextFixer
         return normalized.Substring(0, 60) + "...";
 #pragma warning restore CA1845
     }
-#else
-    internal static bool TryRepairActiveComparePopup(out string? logLine)
-    {
-        logLine = null;
-        return false;
-    }
-
-    internal static bool TryRepairAnyActivePopup(out string? logLine)
-    {
-        logLine = null;
-        return false;
-    }
-
-    internal static bool RepairActiveComparePopup()
-    {
-        return false;
-    }
-
-    internal static bool RepairAnyActivePopup()
-    {
-        return false;
-    }
 #endif
 }

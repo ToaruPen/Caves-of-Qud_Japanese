@@ -9,8 +9,6 @@ namespace QudJP;
 
 internal static class CompareProbeRunner
 {
-    private const string InventoryScreenTypeName = "Qud.UI.InventoryAndEquipmentStatusScreen";
-
     internal static void Run(object screenInstance)
     {
 #if HAS_TMP
@@ -91,6 +89,8 @@ internal static class CompareProbeRunner
     }
 
 #if HAS_TMP
+    private const string InventoryScreenTypeName = "Qud.UI.InventoryAndEquipmentStatusScreen";
+
     private static object? ResolveInventoryScreen(object triggerInstance)
     {
         if (string.Equals(triggerInstance.GetType().FullName, InventoryScreenTypeName, StringComparison.Ordinal))

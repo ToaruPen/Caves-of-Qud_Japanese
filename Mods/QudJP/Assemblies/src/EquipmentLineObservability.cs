@@ -281,6 +281,7 @@ internal static class EquipmentLineObservability
 #pragma warning restore CA1845
     }
 
+    #if HAS_TMP
     private static string CompactTruncate(string value)
     {
         var normalized = value.Replace("\r", "\\r")
@@ -299,4 +300,5 @@ internal static class EquipmentLineObservability
         return normalized.Substring(0, 28) + "...";
 #pragma warning restore CA1845
     }
+    #endif
 }
