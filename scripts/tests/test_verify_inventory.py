@@ -1,10 +1,12 @@
 """Tests for the verify_inventory module."""
 
+import subprocess
 from pathlib import Path
 
 import pytest
 
 from scripts.verify_inventory import (
+    _build_activate_application_script,
     _build_focus_script,
     _build_hammerspoon_focus_lua,
     _escape_osascript_string,
@@ -16,6 +18,7 @@ from scripts.verify_inventory import (
     _parse_args,
     _parse_hammerspoon_focus_output,
     _read_log_delta,
+    _stabilize_game_focus,
 )
 
 
@@ -43,6 +46,10 @@ class TestInputMappings:
         assert "application process whose unix id is 55" in script
         assert "frontmost" in script
 
+    def test_builds_activate_application_script(self) -> None:
+        script = _build_activate_application_script("com.example.Game")
+        assert script == 'tell application id "com.example.Game" to activate'
+
 
 class TestFindMatchingPatterns:
     def test_returns_only_present_patterns(self) -> None:
@@ -63,6 +70,31 @@ class TestHammerspoonHelpers:
     def test_parses_hammerspoon_focus_output(self) -> None:
         parsed = _parse_hammerspoon_focus_output("found= true\nfront= CoQ\nfocused_title= CavesOfQud\n")
         assert parsed == {"found": "true", "front": "CoQ", "focused_title": "CavesOfQud"}
+
+    def test_stabilize_game_focus_falls_back_to_activate_when_hammerspoon_command_fails(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        calls: list[str] = []
+
+        monkeypatch.setattr(
+            "scripts.verify_inventory._locate_hammerspoon_app",
+            lambda: Path("/Applications/Hammerspoon.app"),
+        )
+
+        def fail_with_called_process_error(_pid: int) -> None:
+            raise subprocess.CalledProcessError(returncode=1, cmd=["osascript"], stderr="denied")
+
+        def record_activate() -> None:
+            calls.append("activate")
+
+        monkeypatch.setattr("scripts.verify_inventory._focus_process_with_hammerspoon", fail_with_called_process_error)
+        monkeypatch.setattr("scripts.verify_inventory._activate_game_application", record_activate)
+        monkeypatch.setattr("scripts.verify_inventory._focus_process", lambda pid: calls.append(f"focus:{pid}"))
+
+        _stabilize_game_focus(123)
+
+        assert calls == ["activate"]
 
 
 class TestConsoleLockHelpers:

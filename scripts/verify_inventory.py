@@ -60,6 +60,7 @@ _HAMMERSPOON_APP_CANDIDATES = (
     Path.home() / "Applications" / "Hammerspoon.app",
     Path("/Applications/Setapp/Hammerspoon.app"),
 )
+_COQ_BUNDLE_IDENTIFIER = "com.FreeholdGames.CavesOfQud"
 
 
 class _CGPoint(ctypes.Structure):
@@ -194,6 +195,10 @@ def _build_focus_script(pid: int) -> str:
     )
 
 
+def _build_activate_application_script(bundle_identifier: str) -> str:
+    return f'tell application id "{_escape_osascript_string(bundle_identifier)}" to activate'
+
+
 def _escape_osascript_string(text: str) -> str:
     return text.replace("\\", "\\\\").replace('"', '\\"')
 
@@ -313,7 +318,7 @@ def _send_key(pid: int, key: str, modifiers: tuple[str, ...] = ()) -> None:
     key_code = _key_code_for(key)
     modifier_mask = _modifier_mask(modifiers)
 
-    _focus_process(pid)
+    _stabilize_game_focus(pid)
     time.sleep(0.2)
     for is_key_down in (True, False):
         event = library.CGEventCreateKeyboardEvent(None, key_code, is_key_down)
@@ -330,6 +335,10 @@ def _send_key(pid: int, key: str, modifiers: tuple[str, ...] = ()) -> None:
 def _focus_process(pid: int) -> None:
     script = _build_focus_script(pid)
     _run_osascript(script)
+
+
+def _activate_game_application() -> None:
+    _run_osascript(_build_activate_application_script(_COQ_BUNDLE_IDENTIFIER))
 
 
 def _open_hammerspoon_console() -> None:
@@ -417,12 +426,15 @@ def _stabilize_game_focus(pid: int) -> None:
     if _locate_hammerspoon_app() is not None:
         try:
             _focus_process_with_hammerspoon(pid)
-        except RuntimeError:
+        except (RuntimeError, subprocess.CalledProcessError):
             pass
         else:
             return
 
-    _focus_process(pid)
+    try:
+        _activate_game_application()
+    except subprocess.CalledProcessError:
+        _focus_process(pid)
 
 
 def _click_point(pid: int, x: int, y: int) -> None:
