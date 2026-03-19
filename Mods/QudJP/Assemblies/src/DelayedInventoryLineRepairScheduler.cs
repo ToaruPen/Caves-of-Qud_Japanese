@@ -107,13 +107,13 @@ internal static class DelayedInventoryLineRepairScheduler
 
             yield return null;
 
-            if (replaced > 0
-                && TextShellReplacementRenderer.TryBuildReplacementState(component, "InventoryLineReplacementStateNextFrame/v1", out var replacementStateLog)
-                && replacementStateLog is not null
-                && replacementStateLog.Length > 0)
+            if (replaced > 0)
             {
-                Debug.Log(replacementStateLog);
+                _ = TmpTextRepairer.TryRepairInvisibleTexts(component);
+                _ = TextShellReplacementRenderer.TryBuildReplacementState(component, "InventoryLineReplacementStateNextFrame/v1", out _);
+                _ = ScreenHierarchyObservability.TryBuildLineItemSnapshot(component, "InventoryLineItemProbe/v1", out _);
             }
+
         }
         finally
         {

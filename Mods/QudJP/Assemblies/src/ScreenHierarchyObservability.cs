@@ -48,6 +48,187 @@ internal static class ScreenHierarchyObservability
         return true;
     }
 
+    internal static bool TryBuildLineSubtreeSnapshot(object? lineInstance, string probeName, out string? logLine)
+    {
+        logLine = null;
+        if (lineInstance is not Component component)
+        {
+            return false;
+        }
+
+        var bucket = probeName + ":" + component.gameObject.name;
+        var hitCount = BucketCounts.AddOrUpdate(bucket, 1, static (_, current) => current + 1);
+        if (hitCount > MaxLogsPerBucket)
+        {
+            return false;
+        }
+
+        var builder = new StringBuilder();
+        builder.Append("[QudJP] ");
+        builder.Append(probeName);
+        builder.Append(": ");
+        AppendSubtreeSummary(builder, component.transform);
+        builder.Append(" children=[");
+        var count = Math.Min(component.transform.childCount, MaxChildrenPerAnchor);
+        for (var index = 0; index < count; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(" | ");
+            }
+
+            var child = component.transform.GetChild(index);
+            AppendSubtreeSummary(builder, child);
+            AppendInterestingDescendants(builder, child, depth: 1);
+        }
+
+        if (component.transform.childCount > count)
+        {
+            builder.Append(" | ...+");
+            builder.Append((component.transform.childCount - count).ToString(CultureInfo.InvariantCulture));
+        }
+
+        builder.Append(']');
+        logLine = builder.ToString();
+        return true;
+    }
+
+    internal static bool TryBuildLineModesSnapshot(object? lineInstance, string probeName, out string? logLine)
+    {
+        logLine = null;
+        if (lineInstance is not Component component)
+        {
+            return false;
+        }
+
+        var modes = FindDirectChildByName(component.transform, "Modes");
+        if (modes is null)
+        {
+            return false;
+        }
+
+        var bucket = probeName + ":" + component.gameObject.name;
+        var hitCount = BucketCounts.AddOrUpdate(bucket, 1, static (_, current) => current + 1);
+        if (hitCount > MaxLogsPerBucket)
+        {
+            return false;
+        }
+
+        var builder = new StringBuilder();
+        builder.Append("[QudJP] ");
+        builder.Append(probeName);
+        builder.Append(": root='");
+        builder.Append(component.gameObject.name);
+        builder.Append("' modes=");
+        AppendSubtreeSummary(builder, modes);
+        builder.Append(" children=[");
+        for (var index = 0; index < modes.childCount; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(" | ");
+            }
+
+            var child = modes.GetChild(index);
+            AppendSubtreeSummary(builder, child);
+            AppendInterestingDescendants(builder, child, depth: 1);
+        }
+
+        builder.Append(']');
+        logLine = builder.ToString();
+        return true;
+    }
+
+    internal static bool TryBuildLineItemSnapshot(object? lineInstance, string probeName, out string? logLine)
+    {
+        logLine = null;
+        if (lineInstance is not Component component)
+        {
+            return false;
+        }
+
+        var modes = FindDirectChildByName(component.transform, "Modes");
+        var item = modes is null ? null : FindDirectChildByName(modes, "Item");
+        if (item is null)
+        {
+            return false;
+        }
+
+        var bucket = probeName + ":" + component.gameObject.name;
+        var hitCount = BucketCounts.AddOrUpdate(bucket, 1, static (_, current) => current + 1);
+        if (hitCount > MaxLogsPerBucket)
+        {
+            return false;
+        }
+
+        var builder = new StringBuilder();
+        builder.Append("[QudJP] ");
+        builder.Append(probeName);
+        builder.Append(": root='");
+        builder.Append(component.gameObject.name);
+        builder.Append("' item=");
+        AppendSubtreeSummary(builder, item);
+        builder.Append(" children=[");
+        for (var index = 0; index < item.childCount; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(" | ");
+            }
+
+            var child = item.GetChild(index);
+            AppendSubtreeSummary(builder, child);
+            if (string.Equals(child.name, "TextShell", StringComparison.Ordinal))
+            {
+                AppendTextShellChildStates(builder, child);
+            }
+            AppendInterestingDescendants(builder, child, depth: 1);
+        }
+
+        builder.Append(']');
+        logLine = builder.ToString();
+        return true;
+    }
+
+    private static void AppendTextShellChildStates(StringBuilder builder, Transform textShell)
+    {
+        builder.Append(" textShellChildren=[");
+        for (var index = 0; index < textShell.childCount; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(" | ");
+            }
+
+            var child = textShell.GetChild(index);
+            builder.Append(child.name);
+            builder.Append('#');
+            builder.Append(child.GetSiblingIndex().ToString(CultureInfo.InvariantCulture));
+
+            var tmp = child.GetComponent<TextMeshProUGUI>();
+            if (tmp is null)
+            {
+                builder.Append("{tmp=<null>}");
+                continue;
+            }
+
+            tmp.ForceMeshUpdate(ignoreActiveState: true, forceTextReparsing: true);
+            builder.Append("{active=");
+            builder.Append(tmp.gameObject.activeInHierarchy ? "True" : "False");
+            builder.Append(", enabled=");
+            builder.Append(tmp.enabled ? "True" : "False");
+            builder.Append(", chars=");
+            builder.Append(tmp.textInfo.characterCount.ToString(CultureInfo.InvariantCulture));
+            builder.Append(", pageCount=");
+            builder.Append(tmp.textInfo.pageCount.ToString(CultureInfo.InvariantCulture));
+            builder.Append(", text='");
+            builder.Append(CompactText(tmp.text ?? string.Empty));
+            builder.Append("'}");
+        }
+
+        builder.Append(']');
+    }
+
     internal static string[] BuildFocusedBranchSnapshots(object? screenInstance, string probeName)
     {
         if (screenInstance is not Component component)
