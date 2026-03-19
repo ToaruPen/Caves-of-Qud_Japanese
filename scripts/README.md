@@ -15,6 +15,7 @@ QudJP の翻訳ワークフローを支援する Python スクリプト群です
 | `diff_localization.py` | 翻訳カバレッジ比較 |
 | `extract_base.py` | ゲーム XML の抽出 |
 | `sync_mod.py` | Mod ファイルの配備 |
+| `verify_inventory.py` | Rosetta 起動で既知セーブを開き、インベントリのスクリーンショットを取得 |
 
 ---
 
@@ -171,6 +172,52 @@ python scripts/sync_mod.py --dry-run
 
 ---
 
+## verify_inventory.py
+
+Rosetta でゲームを起動し、既知セーブを読み込んでインベントリを開き、
+スクリーンショットを取得します。`Player.log` の `[QudJP]` probe を待つため、
+手動観測の再現を自動化するための L3 補助スクリプトとして使えます。
+
+既定フローは、タイトル画面で `Continue` に 1 つ下移動してから `space` を 2 回送り、
+`LOAD GAME` 画面の先頭セーブを読み込む前提です。
+
+**前提**:
+- macOS
+- 実行時に Mac がロック解除済みで、通常の `screencapture` が黒画面にならないこと
+- Accessibility 権限が `Terminal.app` など実行元に付与されていること
+- Screen Recording 権限が実行元に付与されていること
+- 検証用セーブが `Continue` -> `LOAD GAME` の先頭項目から開けること
+- Hammerspoon が入っている場合、前面化補助として自動利用される（`~/.hammerspoon/init.lua` は変更しない）
+
+**使い方**:
+
+```bash
+# 同期込みで実行（スクショは /tmp 配下に保存）
+python scripts/verify_inventory.py
+
+# 既に配備済みなら同期をスキップ
+python scripts/verify_inventory.py --skip-sync
+
+# スクショ保存先や待機時間を調整
+python scripts/verify_inventory.py \
+  --screenshot-path /tmp/coq-inventory.png \
+  --load-wait 20 \
+  --inventory-timeout 20
+
+# 実運用向け: スクショを残す
+python scripts/verify_inventory.py \
+  --skip-sync \
+  --screenshot-path artifacts/verify_inventory/verified-inventory.png
+```
+
+**出力**:
+- JSON 形式で `screenshot_path`、`player_log_path`、`load_ready_matches`、一致した inventory probe、ログ抜粋を標準出力に表示
+- スクリーンショット自体の破棄は、この JSON を読んだ呼び出し側が行う想定
+
+**終了コード**: 0 = 実行完了、1 = 起動/権限/ログ待機エラー
+
+---
+
 ## テスト
 
 ```bash
@@ -184,6 +231,7 @@ pytest scripts/tests/ -v
 pytest scripts/tests/test_check_encoding.py
 pytest scripts/tests/test_validate_xml.py
 pytest scripts/tests/test_diff_localization.py
+pytest scripts/tests/test_verify_inventory.py
 ```
 
 現在のテスト数: **53 件**

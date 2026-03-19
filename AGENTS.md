@@ -81,6 +81,7 @@ pytest scripts/tests/
 - Requires actual game launch
 - Manual only, never in CI
 - Verifies end-to-end rendering in-game
+- For automated inventory/equipment display verification, use `docs/inventory-verification.md`
 
 ## Testing Rules
 
@@ -142,6 +143,7 @@ See [docs/deployment.md](docs/deployment.md) for full deployment instructions.
 - Mod build logs are under `~/Library/Application Support/Freehold Games/CavesOfQud/` (`build_log.txt`, `build_log.txt.prev`)
 - On Apple Silicon, collect L3 evidence from Rosetta launches only; use `scripts/launch_rosetta.sh` or `Launch CavesOfQud (Rosetta).command`
 - When verifying the mod, check `Player.log` for `[QudJP] Build marker`, probe lines like `[QudJP] PopupTitleProbe` / `[QudJP] DescriptionInventoryActionProbe`, and errors such as `MODWARN` or `Missing glyph`
+- For inventory / equipment rendering checks, follow `docs/inventory-verification.md` and keep proof screenshots under `artifacts/verify_inventory/`
 
 ## Constraints
 

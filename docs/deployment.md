@@ -98,6 +98,8 @@ The game requires exactly five types of files:
 3. Set the mod to ENABLED
 4. Restart the game and verify the Options screen displays Japanese text
 
+Inventory / equipment の自動表示確認は `docs/inventory-verification.md` を参照してください。
+
 ### Apple Silicon / Rosetta
 
 - On Apple Silicon, in-game verification must run under Rosetta 2
@@ -126,3 +128,4 @@ Manual checks that cannot be covered by automated tests (L1/L2):
 - [ ] Character creation screen is localized
 - [ ] Japanese characters render correctly (no □ tofu)
 - [ ] Player.log contains no Missing glyph / encoding errors
+- [ ] Inventory / equipment 表示は `docs/inventory-verification.md` の手順で自動確認できる
