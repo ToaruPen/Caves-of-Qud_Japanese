@@ -51,14 +51,12 @@ public static class EquipmentLineRenderProbePatch
         try
         {
 #if HAS_TMP
-            var applied = EquipmentLineFontFixer.TryApplyPrimaryFontToEquipmentLine(__instance);
+            _ = EquipmentLineFontFixer.TryApplyPrimaryFontToEquipmentLine(__instance);
             _ = TmpTextRepairer.TryRepairInvisibleTexts(__instance);
 #else
             _ = __instance;
             _ = data;
-            _ = data;
 #endif
-            _ = applied;
         }
         catch (Exception ex)
         {
