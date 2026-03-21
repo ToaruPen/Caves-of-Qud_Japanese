@@ -340,7 +340,8 @@ The difference from the current sink:
 Known sources of audit noise that should NOT trigger "unclaimed" investigation:
 
 - `HistoricStringExpander` output: procedurally generated names/lore. Intentionally
-  disabled (`docs/procedural-text-status.md`). Tag as `(blind-spot: procedural)`.
+  disabled (`docs/procedural-text-status.md`). The corresponding `HistoricStringExpanderPatch`
+  is dead code — `TargetMethods()` yields nothing. Tag as `(blind-spot: procedural)`.
 - Empty strings, whitespace-only strings, single-character strings: noise. Suppress.
 - Strings that are purely numeric (e.g., `"12"`, `"3/5"`): UI data values. Suppress.
 - Version strings (e.g., `"1.0.4"`): not game text. Suppress.
@@ -496,20 +497,34 @@ Migration plan:
    - `RegisterLeafDictionary()` for ~600-700 high-confidence entries (MUST be simultaneous
      with audit cutover to prevent unclaimed flood)
    - Remove `ResolveObservabilityContext` entirely
-   - **TranslatePreservingColors migration**: relocate from `UITextSkinTranslationPatch` to
-     `ColorAwareTranslationComposer`. ALL callers must be updated simultaneously:
+   - **TranslatePreservingColors migration**: There are TWO distinct TPC implementations
+     that must be migrated separately, plus a shared generic utility:
+
+     **Implementation A** — `UITextSkinTranslationPatch.TranslatePreservingColors`:
+     Complex sink-level logic (~10 steps: stack trace resolution, dedicated route checks,
+     multiple fallback paths, `Translator.Translate()` generic fallback). This is the one
+     being REMOVED (replaced by audit-only sink). Callers that currently call this method:
      - `DescriptionLongDescriptionPatch.cs`
      - `LookTooltipContentPatch.cs`
      - `ConversationDisplayTextPatch.cs`
      - `PopupTranslationPatch.cs`
      - `QudMenuBottomContextTranslationPatch.cs`
      - `CharGenLocalizationPatch.cs`
-     - `HistoricStringExpanderPatch.cs`
+     - `HistoricStringExpanderPatch.cs` ← **DEAD CODE**: `TargetMethods()` yields nothing (`yield break`), patch never fires at runtime
      - `InventoryLocalizationPatch.cs`
      - `InventoryAndEquipmentStatusScreenTranslationPatch.cs`
+     - `DeathWrapperFamilyTranslator.cs`
+
+     **Implementation B** — `GetDisplayNameRouteTranslator.TranslatePreservingColors`:
+     DisplayName-specific suffix decomposition logic (no generic `Translator.Translate()` fallback).
+     This one is KEPT and evolved into the Builder renderer. Callers:
      - `GetDisplayNamePatch.cs`
      - `GetDisplayNameProcessPatch.cs`
-     - `DeathWrapperFamilyTranslator.cs`
+
+     **Shared infrastructure** — `ColorAwareTranslationComposer.TranslatePreservingColors(string?, Func<string,string>)`:
+     Generic Strip→callback→Restore utility. Already used by 5+ patches (AbilityBar, ActiveEffect,
+     WorldMods, EffectDescription, EffectDetails, etc.). All Implementation A callers should be
+     migrated to use this shared utility with contract-specific callbacks.
    - Verify audit log false positive rate after cutover (run game, check Player.log)
 
 6. **Display Name Builder contract migration**
@@ -539,7 +554,9 @@ Migration plan:
 - [ ] **During Step 4**: Migrate `UITextSkinTranslationPatchTests.cs` per L2 test migration plan (rename/repurpose, don't delete)
 - [ ] **After Step 4**: Verify audit false positive rate is bounded (run game, check Player.log)
 - [ ] **Scope Exemption + Claim Categories documented**: three categories (field-write/ClaimRegistry, __result/exempt, Leaf/sink-executed) in design doc
-- [ ] **OQ-3 inventory correction**: Verify actual TranslateStringField call sites against current branch before refactoring
+- [ ] **OQ-3 branch sync**: Cherry-pick or merge `PickGameObjectScreenTranslationPatch` from `main` (commit 67a3931) into `producer-first` before Step 4 cutover
+- [ ] **Dead code**: `HistoricStringExpanderPatch` has `yield break` in `TargetMethods()` — patch never fires. Remove from TPC caller list during Step 4 migration; consider deleting entirely or documenting rationale for retention
+- [ ] **New local patches**: 6 uncommitted local patches exist on main working directory (AbilityBarUpdateAbilitiesTextPatch, ActiveEffectTextTranslator, CharacterStatusScreenHighlightEffectPatch, DescriptionShortDescriptionPatch, EffectDescriptionPatch, EffectDetailsPatch, GameObjectShowActiveEffectsPatch, WorldModsTextTranslator). Assess which need ContractRegistry registration before Step 4 cutover
 
 ## Investigation Results (formerly Open Questions)
 
@@ -575,14 +592,22 @@ After `Prepare()`, `IConversationElement.Text` contains fully assembled text wit
 - Node body: `IConversationElement.Prepare()` Postfix — text is complete, before UI render
 - Choice labels: `IConversationElement.GetDisplayText()` Postfix — after DisplayTextEvent
 
-### OQ-3: TranslateStringField helper migration — RESOLVED (inventory needs re-verification)
+### OQ-3: TranslateStringField helper migration — RESOLVED
 
-**Finding: Call sites exist in MainMenuLocalizationPatch and OptionsLocalizationPatch.**
+**Finding: Call sites exist in MainMenuLocalizationPatch, OptionsLocalizationPatch,
+and PickGameObjectScreenTranslationPatch.**
 
-**Note**: Prior investigation reported 9 call sites across 3 patches including
-`PickGameObjectScreenTranslationPatch`, but this patch was not found on the current branch.
-Re-verify actual call sites before refactoring. The migration approach (refactor helpers
-to accept `RouteContract`, not inline) remains valid regardless of exact count.
+`PickGameObjectScreenTranslationPatch` exists on `main` (commit 67a3931) and
+`feat/issue-45-triage-pipeline`, but NOT on the `producer-first` branch because
+this branch was created before that commit. The file must be cherry-picked or
+merged into `producer-first` before Step 4 cutover.
+
+Verified call sites (on main):
+- `PickGameObjectScreenTranslationPatch`: 2× `TranslateStringFieldsInCollection` + 2× `TranslateStringField`
+- `MainMenuLocalizationPatch`: `TranslateStringField` calls
+- `OptionsLocalizationPatch`: `TranslateStringField` calls
+
+The migration approach (refactor helpers to accept `RouteContract`, not inline) remains valid.
 
 ### OQ-4: Leaf entry inventory — RESOLVED
 
