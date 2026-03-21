@@ -321,6 +321,18 @@ These stay because they ARE producer-first — they intercept at a specific upst
 These are already producer-first in spirit. The migration formalizes them with contract types
 and registers them in ContractRegistry so they push TranslationScope.
 
+### Scope Exemption: non-SetText patches
+
+Patches that rewrite `__result` directly (e.g., `GetDisplayNameProcessPatch`,
+`GrammarAPatch`, `GrammarPluralizePatch`) do **NOT** need `TranslationScope` push/pop.
+Reason: their translated output never reaches `UITextSkin.SetText`, so the audit sink
+will never see these strings. Adding TranslationScope to these patches would be wasted work.
+
+Rule of thumb: if the patch's translated string flows to `UITextSkin.SetText` (via field
+assignment, `StringBuilder` write, or any path that ends at the UI rendering layer), it
+needs TranslationScope. If it returns a translated `__result` directly to the game engine
+without passing through a UI sink, it does not.
+
 ## What Gets Removed/Replaced
 
 | Current | Replacement |
@@ -359,10 +371,20 @@ and registers them in ContractRegistry so they push TranslationScope.
 ### Phase 1: Infrastructure + proven domains
 1. `TranslationScope` (thread-static stack, Finalizer pop) + `ContractRegistry` (overwrite semantics, static ctor init) + `ContractType` enum + `IContractRenderer` interface + concrete renderers
 2. Register existing Leaf/MarkupLeaf entries + formalize existing screen patches with TranslationScope push/pop (simultaneous)
+   - **Leaf batch registration**: ~600-700 Leaf entries from `ui-default.ja.json` and other
+     high-confidence dictionaries. These are NOT registered via 600+ individual `Register()` calls.
+     Instead, `ContractRegistry` provides a `RegisterLeafDictionary(dictionaryId, routeId)` method
+     that reads a `*.ja.json` file at mod init and registers all entries as Leaf contracts
+     under the specified route. This leverages the existing `Translator` dictionary loading path.
 3. UITextSkin audit-only mode + remove `ResolveObservabilityContext` (single cutover)
    - **Cutover checklist**: simultaneously cut over `DescriptionLongDescriptionPatch` and
      `GetDisplayNameProcessPatch` which call `TranslatePreservingColors()` directly —
      these do not go through SetText but depend on the helper that may be refactored
+   - **TranslatePreservingColors migration**: This helper currently lives in
+     `UITextSkinTranslationPatch` and is called by non-sink patches. After audit cutover,
+     move it to a shared utility (e.g., `ColorAwareTranslationComposer` which already exists)
+     or into each calling patch directly. It must NOT remain in the audit-only sink patch.
+     The helper itself is not deleted — it is relocated.
 4. Display Name Builder contract migration (L2G prerequisite: DescriptionBuilder slot validation)
 5. Long Description split: intercept contributing producers (NOT output split)
    - **Prerequisite**: L2G test confirming `GetShortDescription()` signature against real DLL.
