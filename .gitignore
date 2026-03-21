@@ -50,3 +50,4 @@ docs/ilspy-raw/
 
 # Local tool installations
 .sisyphus/tools/
+.omx/

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -10,6 +11,16 @@ namespace QudJP.Patches;
 [HarmonyPatch]
 public static class SkillsAndPowersStatusScreenTranslationPatch
 {
+    private static readonly IReadOnlyDictionary<string, string> AttributeRequirementAbbreviations =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Strength"] = "STR",
+            ["Toughness"] = "TOU",
+            ["Willpower"] = "WIL",
+            ["Agility"] = "AGI",
+            ["Ego"] = "EGO",
+            ["Intelligence"] = "INT",
+        };
     private static readonly Regex SkillPointsPattern =
         new Regex("^Skill Points \\(SP\\): (?<rest>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex LearnedPattern =
@@ -195,7 +206,7 @@ public static class SkillsAndPowersStatusScreenTranslationPatch
             return false;
         }
 
-        var attribute = TranslateLeaf(match.Groups["attribute"].Value);
+        var attribute = TranslateAttributeRequirement(match.Groups["attribute"].Value);
         translated = $":: {match.Groups["cost"].Value} SP ::\n:: {match.Groups["requirement"].Value} {attribute} ::";
         DynamicTextObservability.RecordTransform(route, "SkillRequirementBlock", source, translated);
         return true;
@@ -211,7 +222,7 @@ public static class SkillsAndPowersStatusScreenTranslationPatch
         }
 
         var name = TranslateLeaf(match.Groups["name"].Value);
-        var attribute = TranslateLeaf(match.Groups["attribute"].Value);
+        var attribute = TranslateAttributeRequirement(match.Groups["attribute"].Value);
         var changed = !string.Equals(name, match.Groups["name"].Value, StringComparison.Ordinal)
             || !string.Equals(attribute, match.Groups["attribute"].Value, StringComparison.Ordinal);
         var translatedLine = $"{name} [{match.Groups["cost"].Value}sp] {match.Groups["requirement"].Value} {attribute}";
@@ -258,5 +269,12 @@ public static class SkillsAndPowersStatusScreenTranslationPatch
     {
         var direct = Translator.Translate(source);
         return string.Equals(direct, source, StringComparison.Ordinal) ? source : direct;
+    }
+
+    private static string TranslateAttributeRequirement(string source)
+    {
+        return AttributeRequirementAbbreviations.TryGetValue(source, out var abbreviation)
+            ? abbreviation
+            : source;
     }
 }
