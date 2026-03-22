@@ -278,7 +278,7 @@ public static class XDidYTranslationPatch
                 return true;
             }
 
-            DispatchTranslatedMessage(
+            return !DispatchTranslatedMessage(
                 ResolveMessageSource(source, actor),
                 playerMessage,
                 color,
@@ -286,7 +286,6 @@ public static class XDidYTranslationPatch
                 colorAsBadFor,
                 fromDialog,
                 usePopup);
-            return false;
         }
 
         if (!alwaysVisible && !IsVisible(useVisibilityOf ?? source ?? actor))
@@ -318,7 +317,7 @@ public static class XDidYTranslationPatch
             translated = InsertBeforePunctuation(translated, lateDirectionSuffix);
         }
 
-        DispatchTranslatedMessage(
+        return !DispatchTranslatedMessage(
             ResolveMessageSource(source, actor),
             translated,
             color,
@@ -326,7 +325,6 @@ public static class XDidYTranslationPatch
             colorAsBadFor,
             fromDialog,
             usePopup);
-        return false;
     }
 
     private static bool HandleXDidYToZ(object?[] args)
@@ -378,7 +376,8 @@ public static class XDidYTranslationPatch
                 useFullNames,
                 indefiniteObject,
                 indefiniteObjectForOthers,
-                possessiveObject);
+                possessiveObject,
+                objectPossessedBy);
             if (string.IsNullOrWhiteSpace(objectText))
             {
                 return true;
@@ -389,7 +388,7 @@ public static class XDidYTranslationPatch
                 return true;
             }
 
-            DispatchTranslatedMessage(
+            return !DispatchTranslatedMessage(
                 ResolveMessageSource(source, actor),
                 playerMessage,
                 color,
@@ -397,7 +396,6 @@ public static class XDidYTranslationPatch
                 colorAsBadFor,
                 fromDialog,
                 usePopup);
-            return false;
         }
 
         if (!alwaysVisible && !IsVisible(useVisibilityOf ?? source ?? actor))
@@ -450,7 +448,7 @@ public static class XDidYTranslationPatch
             translated = InsertBeforePunctuation(translated, lateDirectionSuffix);
         }
 
-        DispatchTranslatedMessage(
+        return !DispatchTranslatedMessage(
             ResolveMessageSource(source, actor),
             translated,
             color,
@@ -458,7 +456,6 @@ public static class XDidYTranslationPatch
             colorAsBadFor,
             fromDialog,
             usePopup);
-        return false;
     }
 
     private static bool HandleWDidXToYWithZ(object?[] args)
@@ -557,7 +554,7 @@ public static class XDidYTranslationPatch
                 return true;
             }
 
-            DispatchTranslatedMessage(
+            return !DispatchTranslatedMessage(
                 ResolveMessageSource(source, actor),
                 playerMessage,
                 color,
@@ -565,7 +562,6 @@ public static class XDidYTranslationPatch
                 colorAsBadFor,
                 fromDialog,
                 usePopup);
-            return false;
         }
 
         if (!alwaysVisible && !IsVisible(useVisibilityOf ?? source ?? actor))
@@ -629,7 +625,7 @@ public static class XDidYTranslationPatch
             translated = InsertBeforePunctuation(translated, lateDirectionSuffix);
         }
 
-        DispatchTranslatedMessage(
+        return !DispatchTranslatedMessage(
             ResolveMessageSource(source, actor),
             translated,
             color,
@@ -637,7 +633,6 @@ public static class XDidYTranslationPatch
             colorAsBadFor,
             fromDialog,
             usePopup);
-        return false;
     }
 
     private static bool ShouldPromotePopupForXDidY(bool usePopup, bool fromDialog, object? actor, object? subjectPossessedBy)
@@ -973,7 +968,11 @@ public static class XDidYTranslationPatch
         };
     }
 
-    private static void DispatchTranslatedMessage(
+    /// <summary>
+    /// Returns true if dispatch succeeded (caller should return false to skip original).
+    /// Returns false if dispatch failed (caller should return true to fall back to English).
+    /// </summary>
+    private static bool DispatchTranslatedMessage(
         object? source,
         string translatedMessage,
         string? color,
@@ -988,13 +987,13 @@ public static class XDidYTranslationPatch
         if (messageDispatcherOverride is not null)
         {
             messageDispatcherOverride(source, finalMessage, fromDialog, usePopup);
-            return;
+            return true;
         }
 
         if (HandleMessageMethod is null)
         {
             Trace.TraceError("QudJP: Failed to resolve Messaging.HandleMessage(string overload).");
-            return;
+            return false;
         }
 
         HandleMessageMethod.Invoke(
@@ -1009,6 +1008,7 @@ public static class XDidYTranslationPatch
                 null,
                 null,
             });
+        return true;
     }
 
     private static string ApplyMessageColor(string message, string? color, object? colorAsGoodFor, object? colorAsBadFor)
