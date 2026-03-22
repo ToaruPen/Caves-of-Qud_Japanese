@@ -312,19 +312,7 @@ public static class XDidYTranslationPatch
             return true;
         }
 
-        if (!string.IsNullOrEmpty(lateDirectionSuffix))
-        {
-            translated = InsertBeforePunctuation(translated, lateDirectionSuffix);
-        }
-
-        return !DispatchTranslatedMessage(
-            ResolveMessageSource(source, actor),
-            translated,
-            color,
-            colorAsGoodFor,
-            colorAsBadFor,
-            fromDialog,
-            usePopup);
+        return FinalizeAndDispatch(translated, lateDirectionSuffix, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
     }
 
     private static bool HandleXDidYToZ(object?[] args)
@@ -443,19 +431,7 @@ public static class XDidYTranslationPatch
             return true;
         }
 
-        if (!string.IsNullOrEmpty(lateDirectionSuffix))
-        {
-            translated = InsertBeforePunctuation(translated, lateDirectionSuffix);
-        }
-
-        return !DispatchTranslatedMessage(
-            ResolveMessageSource(source, actor),
-            translated,
-            color,
-            colorAsGoodFor,
-            colorAsBadFor,
-            fromDialog,
-            usePopup);
+        return FinalizeAndDispatch(translated, lateDirectionSuffix, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
     }
 
     private static bool HandleWDidXToYWithZ(object?[] args)
@@ -620,19 +596,7 @@ public static class XDidYTranslationPatch
             return true;
         }
 
-        if (!string.IsNullOrEmpty(lateDirectionSuffix))
-        {
-            translated = InsertBeforePunctuation(translated, lateDirectionSuffix);
-        }
-
-        return !DispatchTranslatedMessage(
-            ResolveMessageSource(source, actor),
-            translated,
-            color,
-            colorAsGoodFor,
-            colorAsBadFor,
-            fromDialog,
-            usePopup);
+        return FinalizeAndDispatch(translated, lateDirectionSuffix, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
     }
 
     private static bool ShouldPromotePopupForXDidY(bool usePopup, bool fromDialog, object? actor, object? subjectPossessedBy)
@@ -729,6 +693,32 @@ public static class XDidYTranslationPatch
         subjectText = ownerPrefix + baseLabel;
 
         return true;
+    }
+
+    private static bool FinalizeAndDispatch(
+        string translated,
+        string lateDirectionSuffix,
+        object? source,
+        object? actor,
+        string? color,
+        object? colorAsGoodFor,
+        object? colorAsBadFor,
+        bool fromDialog,
+        bool usePopup)
+    {
+        if (!string.IsNullOrEmpty(lateDirectionSuffix))
+        {
+            translated = InsertBeforePunctuation(translated, lateDirectionSuffix);
+        }
+
+        return !DispatchTranslatedMessage(
+            ResolveMessageSource(source, actor),
+            translated,
+            color,
+            colorAsGoodFor,
+            colorAsBadFor,
+            fromDialog,
+            usePopup);
     }
 
     private static string InsertBeforePunctuation(string text, string insertion)
