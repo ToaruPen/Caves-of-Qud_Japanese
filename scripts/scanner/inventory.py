@@ -27,6 +27,28 @@ class ExclusionReason(StrEnum):
     FLAT_NAMESPACE_DUPLICATE = "flat_namespace_duplicate"
 
 
+class Confidence(StrEnum):
+    """Confidence levels assigned during Phase 1b classification."""
+
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
+
+
+class SiteType(StrEnum):
+    """Candidate site types produced by the source-first classifier."""
+
+    LEAF = "Leaf"
+    TEMPLATE = "Template"
+    BUILDER = "Builder"
+    MESSAGE_FRAME = "MessageFrame"
+    VERB_COMPOSITION = "VerbComposition"
+    VARIABLE_TEMPLATE = "VariableTemplate"
+    PROCEDURAL_TEXT = "ProceduralText"
+    NARRATIVE_TEMPLATE = "NarrativeTemplate"
+    UNRESOLVED = "Unresolved"
+
+
 @dataclass(frozen=True, slots=True)
 class RawHit:
     """A Phase 1a source hit emitted by ast-grep or override grep."""
@@ -111,6 +133,150 @@ class SourceFileInventory:
         return frozenset(record.path for record in self.included_files)
 
 
+@dataclass(frozen=True, slots=True)
+class InventorySite:
+    """One Phase 1b classified candidate site."""
+
+    id: str
+    file: str
+    line: int
+    column: int
+    sink: str
+    type: SiteType
+    confidence: Confidence
+    pattern: str
+    key: str | None = None
+    verb: str | None = None
+    extra: str | None = None
+    frame: str | None = None
+    lookup_tier: int | None = None
+    source_context: str | None = None
+    needs_review: bool = False
+    needs_runtime: bool = False
+
+    def to_dict(self) -> dict[str, object]:
+        """Serialize an inventory site as JSON-compatible data."""
+        payload: dict[str, object] = {
+            "id": self.id,
+            "file": self.file,
+            "line": self.line,
+            "column": self.column,
+            "sink": self.sink,
+            "type": self.type.value,
+            "confidence": self.confidence.value,
+            "pattern": self.pattern,
+            "needs_review": self.needs_review,
+            "needs_runtime": self.needs_runtime,
+        }
+        optional_fields: dict[str, object | None] = {
+            "key": self.key,
+            "verb": self.verb,
+            "extra": self.extra,
+            "frame": self.frame,
+            "lookup_tier": self.lookup_tier,
+            "source_context": self.source_context,
+        }
+        payload.update({key: value for key, value in optional_fields.items() if value is not None})
+        return payload
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, object]) -> InventorySite:
+        """Deserialize an inventory site from JSON-compatible data."""
+        return cls(
+            id=str(payload["id"]),
+            file=str(payload["file"]),
+            line=int(payload["line"]),
+            column=int(payload["column"]),
+            sink=str(payload["sink"]),
+            type=SiteType(str(payload["type"])),
+            confidence=Confidence(str(payload["confidence"])),
+            pattern=str(payload["pattern"]),
+            key=_optional_string(payload.get("key")),
+            verb=_optional_string(payload.get("verb")),
+            extra=_optional_string(payload.get("extra")),
+            frame=_optional_string(payload.get("frame")),
+            lookup_tier=_optional_int(payload.get("lookup_tier")),
+            source_context=_optional_string(payload.get("source_context")),
+            needs_review=bool(payload.get("needs_review", False)),
+            needs_runtime=bool(payload.get("needs_runtime", False)),
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class InventoryStats:
+    """Summary counts for a classified inventory draft."""
+
+    input_hits: int
+    filtered_hits: int
+    output_sites: int
+    high_confidence: int
+    medium_confidence: int
+    low_confidence: int
+    needs_review: int
+    needs_runtime: int
+
+    def to_dict(self) -> dict[str, int]:
+        """Serialize summary stats."""
+        return {
+            "input_hits": self.input_hits,
+            "filtered_hits": self.filtered_hits,
+            "output_sites": self.output_sites,
+            "high_confidence": self.high_confidence,
+            "medium_confidence": self.medium_confidence,
+            "low_confidence": self.low_confidence,
+            "needs_review": self.needs_review,
+            "needs_runtime": self.needs_runtime,
+        }
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, object]) -> InventoryStats:
+        """Deserialize summary stats from JSON-compatible data."""
+        return cls(
+            input_hits=int(payload["input_hits"]),
+            filtered_hits=int(payload["filtered_hits"]),
+            output_sites=int(payload["output_sites"]),
+            high_confidence=int(payload["high_confidence"]),
+            medium_confidence=int(payload["medium_confidence"]),
+            low_confidence=int(payload["low_confidence"]),
+            needs_review=int(payload["needs_review"]),
+            needs_runtime=int(payload["needs_runtime"]),
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class InventoryDraft:
+    """Phase 1b inventory draft persisted to JSON."""
+
+    version: str
+    game_version: str
+    scan_date: str
+    stats: InventoryStats
+    sites: tuple[InventorySite, ...]
+
+    def to_dict(self) -> dict[str, object]:
+        """Serialize the draft as a stable JSON-compatible payload."""
+        return {
+            "version": self.version,
+            "game_version": self.game_version,
+            "scan_date": self.scan_date,
+            "stats": self.stats.to_dict(),
+            "sites": [site.to_dict() for site in self.sites],
+        }
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, object]) -> InventoryDraft:
+        """Deserialize an inventory draft from JSON-compatible data."""
+        stats = InventoryStats.from_dict(dict(payload["stats"]))
+        sites = tuple(InventorySite.from_dict(site) for site in payload["sites"])
+        return cls(
+            version=str(payload["version"]),
+            game_version=str(payload["game_version"]),
+            scan_date=str(payload["scan_date"]),
+            stats=stats,
+            sites=sites,
+        )
+
+
 def write_raw_hits_jsonl(path: Path, hits: list[RawHit]) -> None:
     """Write raw hits as deterministic JSON Lines."""
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -129,3 +295,31 @@ def read_raw_hits_jsonl(path: Path) -> list[RawHit]:
                 continue
             hits.append(RawHit.from_dict(json.loads(line)))
     return hits
+
+
+def write_inventory_draft_json(path: Path, draft: InventoryDraft) -> None:
+    """Write a classified inventory draft as deterministic JSON."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        json.dump(draft.to_dict(), handle, ensure_ascii=False, indent=2, sort_keys=True)
+        handle.write("\n")
+
+
+def read_inventory_draft_json(path: Path) -> InventoryDraft:
+    """Read a classified inventory draft from disk."""
+    with path.open(encoding="utf-8") as handle:
+        return InventoryDraft.from_dict(json.load(handle))
+
+
+def _optional_int(value: object | None) -> int | None:
+    """Convert an optional JSON number to int."""
+    if value is None:
+        return None
+    return int(value)
+
+
+def _optional_string(value: object | None) -> str | None:
+    """Convert an optional JSON string value."""
+    if value is None:
+        return None
+    return str(value)
