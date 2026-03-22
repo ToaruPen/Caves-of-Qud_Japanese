@@ -481,8 +481,7 @@ public static class XDidYTranslationPatch
         var usePopup = GetBoolArg(args, 28);
         var useVisibilityOf = GetArg(args, 29);
 
-        _ = directObjectPossessedBy;
-        _ = indirectObjectPossessedBy;
+        // directObjectPossessedBy and indirectObjectPossessedBy are passed to BuildObjectLabel
 
         if (string.IsNullOrWhiteSpace(verb))
         {
@@ -514,7 +513,8 @@ public static class XDidYTranslationPatch
                 useFullNames,
                 indefiniteDirectObject,
                 indefiniteDirectObjectForOthers,
-                possessiveDirectObject);
+                possessiveDirectObject,
+                directObjectPossessedBy);
             var indirectObjectText = BuildObjectLabel(
                 indirectObject,
                 actor,
@@ -522,7 +522,8 @@ public static class XDidYTranslationPatch
                 useFullNames,
                 indefiniteIndirectObject,
                 indefiniteIndirectObjectForOthers,
-                possessiveIndirectObject);
+                possessiveIndirectObject,
+                indirectObjectPossessedBy);
 
             if (string.IsNullOrWhiteSpace(directObjectText) || string.IsNullOrWhiteSpace(indirectObjectText))
             {
@@ -768,7 +769,8 @@ public static class XDidYTranslationPatch
         bool useFullNames,
         bool indefiniteObject,
         bool indefiniteObjectForOthers,
-        bool possessive)
+        bool possessive,
+        object? objectPossessedBy = null)
     {
         if (ReferenceEquals(value, actor) && string.IsNullOrEmpty(subjectOverride))
         {
@@ -784,6 +786,26 @@ public static class XDidYTranslationPatch
         if (string.IsNullOrWhiteSpace(label))
         {
             return string.Empty;
+        }
+
+        // Prepend owner prefix when objectPossessedBy is specified (e.g., "your shield", "its claw")
+        if (objectPossessedBy is not null)
+        {
+            string ownerLabel;
+            if (IsPlayer(objectPossessedBy))
+            {
+                ownerLabel = "あなたの";
+            }
+            else if (ReferenceEquals(objectPossessedBy, actor))
+            {
+                ownerLabel = "自分の";
+            }
+            else
+            {
+                ownerLabel = GetEntityDisplayName(objectPossessedBy, capitalize: false, useFullNames: false, indefiniteArticle: false) + "の";
+            }
+
+            label = ownerLabel + label;
         }
 
         return possessive ? MakePossessiveLabel(label) : label;
@@ -909,12 +931,12 @@ public static class XDidYTranslationPatch
         bool fromDialog,
         bool usePopup)
     {
-        var marked = MessageFrameTranslator.MarkDirectTranslation(translatedMessage);
-        var colored = ApplyMessageColor(marked, color, colorAsGoodFor, colorAsBadFor);
+        var colored = ApplyMessageColor(translatedMessage, color, colorAsGoodFor, colorAsBadFor);
+        var finalMessage = MessageFrameTranslator.MarkDirectTranslation(colored);
 
         if (messageDispatcherOverride is not null)
         {
-            messageDispatcherOverride(source, colored, fromDialog, usePopup);
+            messageDispatcherOverride(source, finalMessage, fromDialog, usePopup);
             return;
         }
 
@@ -929,7 +951,7 @@ public static class XDidYTranslationPatch
             new[]
             {
                 ResolveMessageSource(source, null),
-                (object?)colored,
+                (object?)finalMessage,
                 ' ',
                 fromDialog,
                 usePopup,
