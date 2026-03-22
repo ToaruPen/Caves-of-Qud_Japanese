@@ -86,6 +86,90 @@
       "template": "あなたは燃え始めた"
     },
     {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) exhausted!$",
+      "template": "{t0}は疲弊した！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) exhausted\\.$",
+      "template": "{t0}は疲弊した。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) exhausted$",
+      "template": "{t0}は疲弊した"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) stunned!$",
+      "template": "{t0}は気絶した！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) stunned\\.$",
+      "template": "{t0}は気絶した。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) stunned$",
+      "template": "{t0}は気絶した"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) stuck!$",
+      "template": "{t0}は動けなくなった！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) stuck\\.$",
+      "template": "{t0}は動けなくなった。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) stuck$",
+      "template": "{t0}は動けなくなった"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) sealed!$",
+      "template": "{t0}は封印された！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) sealed\\.$",
+      "template": "{t0}は封印された。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) sealed$",
+      "template": "{t0}は封印された"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) jammed!$",
+      "template": "{t0}は動作不良を起こした！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) jammed\\.$",
+      "template": "{t0}は動作不良を起こした。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) jammed$",
+      "template": "{t0}は動作不良を起こした"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) empty!$",
+      "template": "{t0}は空になった！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) empty\\.$",
+      "template": "{t0}は空になった。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) empty$",
+      "template": "{t0}は空になった"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) unresponsive!$",
+      "template": "{t0}は反応しなくなった！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) unresponsive\\.$",
+      "template": "{t0}は反応しなくなった。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:is|are) unresponsive$",
+      "template": "{t0}は反応しなくなった"
+    },
+    {
       "pattern": "^You stop bleeding[.!]?$",
       "template": "あなたの出血は止まった"
     },
