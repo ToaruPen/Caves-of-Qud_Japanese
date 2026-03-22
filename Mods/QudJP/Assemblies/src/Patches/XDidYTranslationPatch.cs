@@ -940,6 +940,10 @@ public static class XDidYTranslationPatch
             "to the southeast" => "南東側",
             "to the southwest" => "南西側",
             "nearby" => "近く",
+            "above" => "上方",
+            "below" => "下方",
+            "here" => "ここ",
+            "somewhere" => "どこか",
             _ => direction,
         };
     }
