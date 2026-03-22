@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "id": "templates-format",
+    "lang": "ja",
+    "version": "0.1.0",
+    "description": "Translations for string.Format and interpolated string templates"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectFormatSlots": true
+  },
+  "entries": [
+    {
+      "key": "Exodus launch in {0}...",
+      "context": "XRL.World.Parts.ShevaStarshipControl.EmitMessage",
+      "text": "エクソダス発射まで{0}..."
+    },
+    {
+      "key": "{{{0}|{1} :: Level {2} :: {3}}}",
+      "context": "HighScoresRow.SetText",
+      "text": "{{{0}|{1} :: Lv {2} :: {3}}}"
+    },
+    {
+      "key": "{{y|{0} ({{{1}|{2}}})}}",
+      "context": "Qud.UI.CharacterMutationLine",
+      "text": "{{y|{0} ({{{1}|{2}}})}}"
+    },
+    {
+      "key": "{{B|${0}}}",
+      "context": "Qud.UI.InventoryAndEquipmentStatusScreen.Price",
+      "text": "{{B|{0}ドラム}}"
+    },
+    {
+      "key": "{{C|{0}{{K|/{1}}} lbs. }}",
+      "context": "Qud.UI.InventoryAndEquipmentStatusScreen.Weight",
+      "text": "{{C|{0}{{K|/{1}}} lbs. }}"
+    },
+    {
+      "key": "{{K|{0}#}}",
+      "context": "Qud.UI.PickGameObjectLine.Weight",
+      "text": "{{K|{0}#}}"
+    },
+    {
+      "key": "LVL: {0} Exp: {1} / {2}",
+      "context": "Qud.UI.PlayerStatusBar.XPBar",
+      "text": "Lv: {0} 経験値: {1} / {2}"
+    },
+    {
+      "key": "Starting Cost {{g|[{0} sp]}}",
+      "context": "Qud.UI.SkillsAndPowersLine.Affordable",
+      "text": "初期コスト {{g|[{0} sp]}}"
+    },
+    {
+      "key": "Starting Cost {{r|[{0} sp]}}",
+      "context": "Qud.UI.SkillsAndPowersLine.Unaffordable",
+      "text": "初期コスト {{r|[{0} sp]}}"
+    },
+    {
+      "key": "Starting Cost {{g|[{0} sp]}} [{1}/{2}]",
+      "context": "Qud.UI.SkillsAndPowersLine.AffordableProgress",
+      "text": "初期コスト {{g|[{0} sp]}} [{1}/{2}]"
+    },
+    {
+      "key": "Starting Cost {{r|[{0} sp]}} [{1}/{2}]",
+      "context": "Qud.UI.SkillsAndPowersLine.UnaffordableProgress",
+      "text": "初期コスト {{r|[{0} sp]}} [{1}/{2}]"
+    },
+    {
+      "key": "{{g|Learned}} [{0}/{1}]",
+      "context": "Qud.UI.SkillsAndPowersLine.Learned",
+      "text": "{{g|習得済}} [{0}/{1}]"
+    },
+    {
+      "key": "{{K|{{g|STR:}}{0} ■ {{g|AGI}}: {1} ■ {{g|TOU}}: {2} ■ {{g|INT}}: {3} ■ {{g|WIL}}: {4} ■ {{g|EGO}}: {5}}}",
+      "context": "Qud.UI.SkillsAndPowersStatusScreen.StatBlock",
+      "text": "{{K|{{g|筋:}}{0} ■ {{g|敏}}: {1} ■ {{g|耐}}: {2} ■ {{g|知}}: {3} ■ {{g|意}}: {4} ■ {{g|自}}: {5}}}"
+    },
+    {
+      "key": "Skill Points (SP): {{C|{0}}}",
+      "context": "Qud.UI.SkillsAndPowersStatusScreen.SP",
+      "text": "スキルポイント(SP): {{C|{0}}}"
+    },
+    {
+      "key": "\n{{G|û}} {0}\n",
+      "context": "Qud.UI.TinkeringDetailsLine.ModBitCost",
+      "text": "\n{{G|û}} {0}\n"
+    },
+    {
+      "key": "{0} {1} [{2}]",
+      "context": "Qud.UI.TinkeringLine.Category",
+      "text": "{0} {1} [{2}]"
+    },
+    {
+      "key": "[{{W|${0}}}]",
+      "context": "Qud.UI.TradeLine.PriceColored",
+      "text": "[{{W|{0}ドラム}}]"
+    },
+    {
+      "key": "[${0}]",
+      "context": "Qud.UI.TradeLine.PricePlain",
+      "text": "[{0}ドラム]"
+    },
+    {
+      "key": "{{W|${0}}}",
+      "context": "Qud.UI.TradeScreen.FreeDramsTrader",
+      "text": "{{W|{0}ドラム}}"
+    },
+    {
+      "key": "{{W|${0}}} | {{{1}|{2}/{3} lbs.}}",
+      "context": "Qud.UI.TradeScreen.FreeDramsPlayer",
+      "text": "{{W|{0}ドラム}} | {{{1}|{2}/{3} lbs.}}"
+    }
+  ]
+}
