@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import re
 import subprocess
 import sys
@@ -18,6 +19,8 @@ from scripts.scanner.inventory import (
     SourceFileInventory,
     write_raw_hits_jsonl,
 )
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, slots=True)
@@ -223,7 +226,22 @@ def _run_ast_grep_pattern(
 ) -> list[RawHit]:
     """Run one ast-grep pattern and convert JSON output into RawHit rows."""
     command = [*_AST_GREP_BASE_COMMAND, "--pattern", pattern, str(source_root)]
-    completed = subprocess.run(command, capture_output=True, check=False, text=True)  # noqa: S603
+    try:
+        completed = subprocess.run(  # noqa: S603
+            command,
+            capture_output=True,
+            check=False,
+            text=True,
+            timeout=120,
+        )
+    except subprocess.TimeoutExpired as exc:
+        logger.exception("ast-grep timed out after 120s: %s", " ".join(command))
+        raise subprocess.CalledProcessError(
+            1,
+            command,
+            output="",
+            stderr=f"Timed out: {exc}",
+        ) from exc
     if completed.returncode not in {0, 1}:
         raise subprocess.CalledProcessError(
             completed.returncode,
@@ -270,7 +288,12 @@ def _scan_override_producers(source_root: Path, source_inventory: SourceFileInve
         relative_path = Path(file_record.path)
         if not relative_path.parts:
             continue
-        source_text = (source_root / relative_path).read_text(encoding="utf-8")
+        file_path = source_root / relative_path
+        try:
+            source_text = file_path.read_text(encoding="utf-8")
+        except UnicodeDecodeError as exc:
+            logger.warning("Encoding error in %s: %s — falling back to replace", file_path, exc)
+            source_text = file_path.read_bytes().decode("utf-8", errors="replace")
         lines = source_text.splitlines()
         top_level_segment = relative_path.parts[0]
 
