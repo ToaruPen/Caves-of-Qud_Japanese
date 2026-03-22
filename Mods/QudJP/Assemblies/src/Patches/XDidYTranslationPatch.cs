@@ -301,8 +301,7 @@ public static class XDidYTranslationPatch
                 subjectPossessedBy,
                 describeSubjectDirection,
                 describeSubjectDirectionLate,
-                out var subjectText,
-                out var lateDirectionSuffix))
+                out var subjectText))
         {
             return true;
         }
@@ -312,7 +311,7 @@ public static class XDidYTranslationPatch
             return true;
         }
 
-        return FinalizeAndDispatch(translated, lateDirectionSuffix, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
+        return FinalizeAndDispatch(translated, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
     }
 
     private static bool HandleXDidYToZ(object?[] args)
@@ -399,8 +398,7 @@ public static class XDidYTranslationPatch
                 subjectPossessedBy,
                 describeSubjectDirection,
                 describeSubjectDirectionLate,
-                out var subjectText,
-                out var lateDirectionSuffix))
+                out var subjectText))
         {
             return true;
         }
@@ -431,7 +429,7 @@ public static class XDidYTranslationPatch
             return true;
         }
 
-        return FinalizeAndDispatch(translated, lateDirectionSuffix, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
+        return FinalizeAndDispatch(translated, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
     }
 
     private static bool HandleWDidXToYWithZ(object?[] args)
@@ -553,8 +551,7 @@ public static class XDidYTranslationPatch
                 subjectPossessedBy,
                 describeSubjectDirection,
                 describeSubjectDirectionLate,
-                out var subjectText,
-                out var lateDirectionSuffix))
+                out var subjectText))
         {
             return true;
         }
@@ -596,7 +593,7 @@ public static class XDidYTranslationPatch
             return true;
         }
 
-        return FinalizeAndDispatch(translated, lateDirectionSuffix, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
+        return FinalizeAndDispatch(translated, source, actor, color, colorAsGoodFor, colorAsBadFor, fromDialog, usePopup);
     }
 
     private static bool ShouldPromotePopupForXDidY(bool usePopup, bool fromDialog, object? actor, object? subjectPossessedBy)
@@ -662,10 +659,8 @@ public static class XDidYTranslationPatch
         object? subjectPossessedBy,
         bool describeSubjectDirection,
         bool describeSubjectDirectionLate,
-        out string subjectText,
-        out string lateDirectionSuffix)
+        out string subjectText)
     {
-        lateDirectionSuffix = string.Empty;
         var ownerPrefix = GetOwnerPrefix(subjectPossessedBy ?? GetHolder(actor), useFullNames, indefiniteSubject);
         var baseLabel = TranslateSubjectBase(actor, subjectOverride, useFullNames, indefiniteSubject);
         if (string.IsNullOrWhiteSpace(baseLabel))
@@ -702,7 +697,6 @@ public static class XDidYTranslationPatch
 
     private static bool FinalizeAndDispatch(
         string translated,
-        string lateDirectionSuffix,
         object? source,
         object? actor,
         string? color,
@@ -711,11 +705,6 @@ public static class XDidYTranslationPatch
         bool fromDialog,
         bool usePopup)
     {
-        if (!string.IsNullOrEmpty(lateDirectionSuffix))
-        {
-            translated = InsertBeforePunctuation(translated, lateDirectionSuffix);
-        }
-
         return !DispatchTranslatedMessage(
             ResolveMessageSource(source, actor),
             translated,
@@ -724,22 +713,6 @@ public static class XDidYTranslationPatch
             colorAsBadFor,
             fromDialog,
             usePopup);
-    }
-
-    private static string InsertBeforePunctuation(string text, string insertion)
-    {
-        if (string.IsNullOrEmpty(text))
-        {
-            return insertion;
-        }
-
-        var lastChar = text[text.Length - 1];
-        if (lastChar is '。' or '！' or '!' or '.' or '?' or '？')
-        {
-            return text.Substring(0, text.Length - 1) + insertion + lastChar;
-        }
-
-        return text + insertion;
     }
 
     private static string TranslateSubjectBase(object? actor, string? subjectOverride, bool useFullNames, bool indefiniteSubject)
@@ -934,7 +907,7 @@ public static class XDidYTranslationPatch
         // Do NOT use Translator.TryGetTranslation here because global dictionaries
         // may return adverbial forms that break both prepend ("北にの熊") and
         // late-append ("…、北にに。") composition.
-        return direction switch
+        var translated = direction switch
         {
             "to the north" => "北側",
             "to the south" => "南側",
@@ -949,8 +922,15 @@ public static class XDidYTranslationPatch
             "below" => "下方",
             "here" => "ここ",
             "somewhere" => "どこか",
-            _ => direction,
+            _ => string.Empty,
         };
+
+        if (translated.Length == 0)
+        {
+            Trace.TraceError("QudJP: Unknown direction phrase not mapped: {0}", direction);
+        }
+
+        return translated;
     }
 
     /// <summary>
