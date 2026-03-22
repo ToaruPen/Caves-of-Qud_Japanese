@@ -426,6 +426,54 @@
       "template": "{t0}は{2}するのに十分な{1}がない"
     },
     {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:has|have) no room for more (.+?)!$",
+      "template": "{t0}にはこれ以上の{t1}を入れる余地がない！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:has|have) no room for more (.+?)\\.$",
+      "template": "{t0}にはこれ以上の{t1}を入れる余地がない。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:has|have) no room for more (.+?)$",
+      "template": "{t0}にはこれ以上の{t1}を入れる余地がない"
+    },
+    {
+      "pattern": "^You have no more ammo!$",
+      "template": "弾薬が尽きた！"
+    },
+    {
+      "pattern": "^You have no more ammo\\.$",
+      "template": "弾薬が尽きた。"
+    },
+    {
+      "pattern": "^You have no more ammo$",
+      "template": "弾薬が尽きた"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:has|have) nothing to say!$",
+      "template": "{t0}は何も言うことがない！"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:has|have) nothing to say\\.$",
+      "template": "{t0}は何も言うことがない。"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:has|have) nothing to say$",
+      "template": "{t0}は何も言うことがない"
+    },
+    {
+      "pattern": "^You have left your party!$",
+      "template": "あなたはパーティーを離れた！"
+    },
+    {
+      "pattern": "^You have left your party\\.$",
+      "template": "あなたはパーティーを離れた。"
+    },
+    {
+      "pattern": "^You have left your party$",
+      "template": "あなたはパーティーを離れた"
+    },
+    {
       "pattern": "^(.+) begins bleeding from another wound[.!]?$",
       "template": "{0}はさらに出血し始めた。"
     },
