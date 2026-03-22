@@ -3,8 +3,8 @@
 ## Premise
 
 Full decompilation of Assembly-CSharp.dll (5474 files, 40MB) makes incremental route
-discovery obsolete. Static analysis of decompiled source can classify ~90%+ of all
-translatable text without ever running the game. The remaining ~5-10% falls back to
+discovery obsolete. Static analysis of decompiled source can classify ~85-90% of all
+translatable text without ever running the game. The remaining ~10-15% falls back to
 runtime log analysis.
 
 This replaces the producer-first design (archived as `producer-first-design-old.md`),
@@ -16,7 +16,7 @@ Measured against `~/Dev/coq-decompiled/` with deduplication: 5,474 raw → **5,3
 `.cs` files (excluded: 32 empty, 37 dot-namespace flat dupes, 26 underscore-namespace
 flat dupes, 8 retry/msgprobe artifacts).
 
-### Sink Call Sites (10 families)
+### Sink Call Sites (11 families)
 
 | # | Family | Call Sites | Files | Notes |
 |---|--------|----------:|------:|-------|
@@ -89,7 +89,7 @@ Phase 1: Static Scan (Python + ast-grep + LLM)
     → Generates candidate-inventory.json (all routes, with confidence)
     → LLM agents consume inventory to produce translations
 
-Phase 2: Runtime Verification (C# + Harmony, only for unresolved ~5-10%)
+Phase 2: Runtime Verification (C# + Harmony, only for unresolved ~10-15%)
   Player.log + audit sink
     → Captures text that static analysis couldn't classify
     → Agent traces upstream in decompiled source → resolves
@@ -101,7 +101,7 @@ Phase 2: Runtime Verification (C# + Harmony, only for unresolved ~5-10%)
 
 All `.cs` files in `~/Dev/coq-decompiled/`, organized by namespace.
 
-### Scan Targets (10 sink families + 4 override producers)
+### Scan Targets (11 sink families + 5 override producers)
 
 See "Validated Site Counts" section above for the full table with deduplicated numbers.
 
@@ -149,8 +149,26 @@ For each sink call site, classify by argument pattern:
 3. GetDisplayName result → Builder
    SetText(go.GetDisplayName())  →  { type: "Builder", confidence: "high" }
 
-4. DidX/DidXToY → MessageFrame
-   ParentObject.DidX("block", ...)  →  { type: "MessageFrame", confidence: "high" }
+4a. DidX/DidXToY → MessageFrame (HandleMessage path)
+    ParentObject.DidX("block", ...)  →  { type: "MessageFrame", confidence: "high", path: "HandleMessage" }
+
+4b. Does() → VerbComposition (caller-assembled path)
+    obj.Does("begin") + " flying."  →  { type: "VerbComposition", confidence: "high", path: "caller" }
+    NOTE: Does() returns a string; translation must happen at the call site or at
+    the downstream sink (AddPlayerMessage/Popup.Show), NOT via HandleMessage.
+
+4c. ReplaceBuilder → VariableTemplate
+    "=subject.T= =verb:strike=".StartReplace()  →  { type: "VariableTemplate", confidence: "high" }
+    Uses =variable= template syntax, distinct from string.Format.
+
+4d. HistoricStringExpander → ProceduralText
+    HistoricStringExpander.ExpandString(...)  →  { type: "ProceduralText", confidence: "low", needs_runtime: true }
+    Deep <spice.*> template expansion — cannot be statically resolved.
+
+4e. JournalAPI → NarrativeTemplate
+    JournalAPI.AddAccomplishment("On the " + Calendar.GetDay() + ...)
+    →  { type: "NarrativeTemplate", confidence: "medium", needs_review: true }
+    Calendar/string concatenation patterns, partially traceable.
 
 5. StringBuilder.ToString() → Template (needs slot analysis)
    SetText(sb.ToString())  →  { type: "Template", confidence: "medium", needs_review: true }
@@ -165,7 +183,7 @@ For each sink call site, classify by argument pattern:
    SetText(ComputeSomething())  →  { type: "Unresolved", confidence: "low", needs_runtime: true }
 ```
 
-Steps 1-4 are mechanical (ast-grep + regex). ~3,000-3,200 sites, ~70-75%.
+Steps 1-4e are mechanical (ast-grep + regex). ~3,000-3,200 sites, ~70-75%.
 Steps 5-6 require LLM reading decompiled source. ~700-900 additional sites, ~15-20%.
 Step 7 is the remainder. ~400-600 sites, ~10-15%.
 
@@ -255,10 +273,12 @@ Step 7 is the remainder. ~400-600 sites, ~10-15%.
 2. Agent reads inventory, filters by status=needs_translation or needs_patch
 3. For each site:
    a. type=Leaf → add dictionary entry (key → Japanese)
-   b. type=Template → create template pattern with slot mapping
+   b. type=Template / VariableTemplate / NarrativeTemplate → create template pattern with slot mapping
    c. type=Builder → verify existing GetDisplayNameRouteTranslator handles it
-   d. type=MessageFrame → implement SVO→SOV rewrite (or add to MessagePatternTranslator)
-   e. type=needs_review → read decompiled source, reclassify, then act
+   d. type=MessageFrame → translated by HandleMessage Prefix (verb dictionary)
+   e. type=VerbComposition → translate at call site or downstream sink (see Does() strategy)
+   f. type=ProceduralText → defer to Phase 2 (runtime)
+   g. type=needs_review → read decompiled source, reclassify, then act
 4. Agent updates inventory status to `translated`
 5. Repeat until needs_translation/needs_patch count → 0
 ```
@@ -268,16 +288,18 @@ Step 7 is the remainder. ~400-600 sites, ~10-15%.
 | Priority | Domain | Sites | Rationale |
 |----------|--------|------:|-----------|
 | P0 | UI screen labels (SetText literals) | ~30 | Immediately visible, Leaf, trivial |
-| P1 | Effect/mutation/skill descriptions (overrides) | ~609 | High volume, mostly Leaf/Template |
+| P1 | Effect/mutation descriptions (overrides) | ~609 | High volume, mostly Leaf. Effects 180+171, Mutations 127+131 |
 | P2 | Screen-specific templates (CharacterStatus, Skills, Factions) | ~50 | Already partially patched |
 | P3 | Popup family literals (Show, ShowFail, ShowYesNo, etc.) | ~1,460 | Largest family, many Leaf |
 | P4 | AddPlayerMessage literals | ~585 | Message log text |
-| P5 | Conversation text | ~40 | Template with =variable= slots |
-| P6 | MessageFrame (DidX 6 variants + Does()) | ~579 | SVO→SOV via Messaging postfix patch |
+| P5 | Parts.GetShortDescription overrides | ~265 | Item/creature descriptions, mostly Leaf |
+| P6a | MessageFrame (DidX 6 variants) | ~272 | SVO→SOV via HandleMessage Prefix patch |
+| P6b | VerbComposition (Does()) | ~307 | Separate strategy — Does() does NOT flow through HandleMessage |
 | P7 | GetDisplayName / Trade / Tinkering / Book screens | ~227 | Mixed Template/Leaf |
-| P8 | JournalAPI / EmitMessage | ~368 | Narrative + direct message paths |
-| P9 | HistoricStringExpander (procedural lore) | ~242 | Deep template expansion, likely runtime |
-| P10 | Unresolved (runtime fallback) | ~400-600 | Phase 2 |
+| P8 | JournalAPI / EmitMessage / ReplaceBuilder | ~432 | Narrative + direct messages + template vars |
+| P9 | Conversation text | ~40 | Template with =variable= slots |
+| P10 | HistoricStringExpander (procedural lore) | ~242 | Deep template expansion, likely runtime |
+| P11 | Unresolved (runtime fallback) | ~400-600 | Phase 2 |
 
 ## Phase 2: Runtime Verification (for Unresolved ~10-15%)
 
@@ -295,7 +317,7 @@ composition pattern. Uses the existing Player.log infrastructure.
 ### Runtime Infrastructure (minimal, deferred)
 
 The old plan's ContractRegistry/ClaimRegistry/audit sink may still be useful here,
-but it is NOT a prerequisite for Phase 1. It only matters for the ~265 unresolved sites
+but it is NOT a prerequisite for Phase 1. It only matters for the ~400-600 unresolved sites
 that need runtime evidence.
 
 Decision: defer runtime infrastructure until Phase 1 is substantially complete and
@@ -335,7 +357,7 @@ are UI-presentation concerns unaffected by decompilation depth. Keep as-is.
 | `GetDisplayNamePatch` / `GetDisplayNameRouteTranslator` | Suffix decomposition heuristics | Source-traced name composition; inventory knows exact Builder patterns |
 | `InventoryLocalizationPatch` | GetDisplayNameRouteTranslator delegation | Contains translation logic (was misclassified as Tier 1) |
 | `InventoryAndEquipmentStatusScreenTranslationPatch` | Inventory/Equipment screen | Scanner classifies all sites in these screens |
-| `EffectDescriptionPatch` / `EffectDetailsPatch` | Override hook + dictionary | Scanner identifies all 347 GetDescription overrides; generates complete dictionary |
+| `EffectDescriptionPatch` / `EffectDetailsPatch` | Override hook + dictionary | Scanner identifies all 180+171 Effect overrides; generates complete dictionary |
 | `MutationDescriptionPatch` / `MutationLevelTextPatch` | Override hook + dictionary | Scanner identifies all 127+132 overrides; generates complete dictionary |
 | `SkillDescriptionPatch` | Override hook + dictionary | Scanner identifies all skill descriptions; generates complete dictionary |
 | `CharacterStatusScreenTranslationPatch` | Manual template extraction | Scanner classifies all Template sites in CharacterStatusScreen |
@@ -348,7 +370,7 @@ are UI-presentation concerns unaffected by decompilation depth. Keep as-is.
 
 ### Migration Strategy
 
-Tier 2 rewrites follow the scanner output priority (P0→P9):
+Tier 2 rewrites follow the scanner output priority (P0→P11):
 
 1. Scanner classifies all sites in the relevant domain
 2. Agent compares scanner output vs existing patch implementation
@@ -366,16 +388,16 @@ is per-domain, not a big-bang rewrite.
 
 - **Python 3 (>=3.12)** — use `python3`, not version-pinned `python3.12`
 - **ast-grep** for structural C# pattern matching (installed, v0.42.0)
-- **Claude Code subagents** for steps 5-6 classification (reads decompiled source in-session, no API cost)
+- **Interactive LLM classification** for steps 5-6 (run within Claude Code session or via `claude -p` headless mode)
 - Output: JSON (`candidate-inventory.json` — committed to repo; intermediate files `.gitignore`d)
 
 ### Pipeline Phases (Approach C: Hybrid)
 
 ```
 Phase 1a — ast-grep batch scan (mechanical, seconds)
-  10 sink families (25+ patterns) × ~/Dev/coq-decompiled/ → .scanner-cache/raw_hits.jsonl
-  + override producer grep → .scanner-cache/override_hits.jsonl
-  ~4,313 total hits extracted with file, line, matched code
+  11 sink families (30+ patterns) × ~/Dev/coq-decompiled/ → .scanner-cache/raw_hits.jsonl
+  + 5 override producer greps → .scanner-cache/override_hits.jsonl
+  ~4,642 total hits extracted with file, line, matched code
   Dedup: exclude flat namespace duplicates + empty files (5,474 → 5,371 files)
 
 Phase 1b — Python rule classifier (mechanical, seconds)
@@ -464,7 +486,7 @@ All scanner components and translation engine code MUST follow Test-Driven Devel
 |-----------|-----------|---------|
 | `ast_grep_runner.py` | L1 unit | Given a known .cs snippet, assert correct raw hits extraction |
 | `rule_classifier.py` | L1 unit | Given a raw hit, assert correct classification (Leaf/Template/etc.) |
-| `llm_classifier.py` | L1 unit (mocked) | Given a medium-confidence site, assert correct subagent prompt |
+| `llm_classifier.py` | L1 unit | Given a medium-confidence site, assert correct presentation format and result write-back |
 | `cross_reference.py` | L1 unit | Given existing patch list + inventory, assert correct `translated` marking |
 | `inventory.py` | L1 unit | JSON round-trip, dedup, diff operations |
 | `MessageFrameTranslator` | L1 unit | Given assembled English DidX output, assert correct SOV Japanese |
@@ -481,7 +503,7 @@ step is verified against known inputs before the pipeline is assembled.
 - [ ] candidate-inventory.json contains ALL ~4,642 translatable sites (deduped)
 - [ ] Auto-classification (steps 1-4) covers ≥75% with high confidence
 - [ ] LLM-assisted classification (steps 5-6) brings total to ≥90%
-- [ ] Unresolved sites are <10% of total
+- [ ] Unresolved sites are <15% of total (estimate: 10-15%)
 - [ ] AGENTS.md references candidate-inventory.json as the workflow gate
 - [ ] Agent can consume inventory and generate translation artifacts without manual guidance
 - [ ] Existing translations (50 patches + 38 dictionaries) are cross-referenced and marked `translated`
@@ -490,7 +512,7 @@ step is verified against known inputs before the pipeline is assembled.
 ## MessageFrame Translation: SVO→SOV Rewrite Engine
 
 272 DidX-family + 307 Does() call sites make per-pattern regex infeasible. Instead,
-build a generalized SVO→SOV rewrite engine via Messaging class-level Harmony postfix patch.
+build a generalized SVO→SOV rewrite engine via HandleMessage Prefix patch.
 
 ### Problem
 
@@ -533,11 +555,57 @@ The `MessageFrameTranslator` Prefix:
 4. **Recomposes** in SOV order with Japanese particles
 5. For freeform `Extra` phrases, falls back to per-verb-Extra pair dictionary or LLM-generated translation at scan time
 6. **Discriminates** DidX-originated messages from other EmitMessage calls (via pattern matching or `__state` flag from a companion XDidY Prefix)
+7. **Marks translated messages** so downstream patches (MessagePatternTranslator, PopupTranslationPatch) skip them — prevents double-translation
+
+### Does() Translation: Separate Strategy Required
+
+**Does() does NOT flow through HandleMessage.** `obj.Does("verb")` returns a string
+that callers concatenate via `+` before passing to AddPlayerMessage or Popup.Show.
+
+```
+DidX path:  DidX("block") → Messaging.XDidY() → HandleMessage() → AddPlayerMessage()
+                                                   ↑ Prefix patch here
+
+Does path:  obj.Does("begin") + " flying." → AddPlayerMessage(result)
+            ↑ returns string               ↑ already concatenated, no HandleMessage
+```
+
+Two viable strategies:
+
+**Option A: Patch `Does()` itself** — Harmony Prefix/Postfix on `IComponent.Does(string)`
+to return Japanese subject+verb. Caller still appends freeform English via `+`.
+Pros: Catches all 307 sites at the source. Cons: Freeform tail text remains English.
+
+**Option B: Catch at downstream sink** — The concatenated string reaches
+`AddPlayerMessage` or `Popup.Show`, where existing patches (MessageLogPatch,
+PopupTranslationPatch) already intercept. Add Does()-aware pattern matching there.
+Pros: Full sentence available. Cons: Must reverse-engineer the concatenation pattern.
+
+Decision: deferred to implementation. The scanner classifies Does() sites as
+`type: "VerbComposition"` with the verb string extracted, enabling either approach.
+
+### Double-Translation Prevention
+
+With HandleMessage Prefix active, translated DidX messages flow downstream:
+
+```
+HandleMessage Prefix (SVO→SOV) → AddPlayerMessage → MessageLogPatch → MessagePatternTranslator
+                                                                       ↑ sees Japanese, must skip
+```
+
+Prevention mechanism: HandleMessage Prefix prepends a non-visible marker (e.g., `\x01`)
+to translated messages. Downstream patches check for the marker, strip it, and skip
+translation. This is lightweight and avoids coupling between patches.
 
 ### Inventory Integration
 
-The scanner classifies all 272 DidX-family + 307 Does() sites. The inventory records
-the verb string for each site, enabling bulk extraction of the verb dictionary (118 unique verbs):
+The scanner classifies DidX (272 sites) and Does() (307 sites) separately:
+
+- DidX → `type: "MessageFrame"`, translated via HandleMessage Prefix
+- Does() → `type: "VerbComposition"`, strategy decided at implementation
+
+The inventory records the verb string for each site, enabling bulk extraction of the
+verb dictionary (118 unique verbs from DidX; Does() verbs may partially overlap):
 
 ```json
 {
@@ -555,7 +623,7 @@ the verb string for each site, enabling bulk extraction of the verb dictionary (
 P6 in the translation order. Implementation depends on:
 - Inventory completion (know all 579 DidX + Does() sites)
 - Verb dictionary extraction (118 unique verbs, automated from inventory)
-- Messaging class postfix patch (intercepts at message generation, not per call site)
+- HandleMessage Prefix patch (intercepts at message generation, not per call site)
 - Freeform Extra phrase handling (per-verb-Extra pair dictionary + LLM fallback)
 
 ## Freshness Management: Decompile Diff
@@ -598,7 +666,7 @@ the `--diff` flag is a filter, not a separate code path.
 
 | Question | Decision | Rationale |
 |----------|----------|-----------|
-| LLM classifier execution model | Claude Code subagents (in-session) | Zero API cost, leverages existing tooling, ~300-400 sites only |
+| LLM classifier execution model | Interactive within Claude Code session (or `claude -p` headless) | No Python→subagent API exists; interactive mode or Anthropic API for automation |
 | Intermediate file management | `.gitignore`d, only `candidate-inventory.json` committed | Reproducible locally, review-friendly final output |
 | MessageFrame strategy | HandleMessage Prefix patch | void methods make postfix impossible; HandleMessage is the single funnel point |
 | Inventory freshness | Decompile diff | Automated detection of changed sites on game update |
