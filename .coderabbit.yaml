@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: ja-JP
+
+reviews:
+  profile: assertive
+  request_changes_workflow: true
+  high_level_summary: true
+  auto_review:
+    enabled: true
+    drafts: false
+
+  path_instructions:
+    - path: "Mods/QudJP/Assemblies/src/**/*.cs"
+      instructions: |
+        Review C# Harmony patches for the QudJP Japanese localization mod.
+
+        Core principles (enforce strictly):
+        - YAGNI: No speculative abstractions, feature flags, or "future-proofing". Only code needed for the current task.
+        - DRY: Extract shared families/helpers when the same pattern appears 3+ times. But 3 similar lines is better than a premature abstraction.
+        - TDD: Every new translation route MUST have a corresponding test. Bug fixes MUST include a failing-then-passing test.
+
+        Architecture rules:
+        - Harmony Prefix/Postfix methods MUST wrap their body in try-catch with Trace.TraceError (QJ001 analyzer enforces this).
+        - Translation patches must NOT crash the game loop — always fall back to English on error.
+        - The \x01 marker (DirectTranslationMarker) prevents double-translation by downstream patches.
+        - Does() is NOT patched directly — translation happens at sink level (MessageLogPatch/PopupTranslationPatch).
+        - Existing Tier 2 patches are kept as outer shell — no full rewrites, only shared family extraction.
+
+        Japanese language rules:
+        - SOV word order (Subject-Object-Verb), not SVO.
+        - Direction phrases use noun-stem form ("北側") not adverbial ("北に") when composing with の.
+        - Late direction embeds as pre-verbal adverb ("ホログラムは北側に現れた。").
+
+    - path: "Mods/QudJP/Assemblies/QudJP.Tests/**/*.cs"
+      instructions: |
+        Tests are CRITICAL — they are the living specification of the game's text generation logic.
+
+        Review tests with maximum scrutiny:
+        - Every test must verify JAPANESE OUTPUT, not just that code runs without error.
+        - Test names must describe the behavior being verified, not the implementation.
+        - L1 tests: pure unit tests, no Harmony, no game DLL.
+        - L2 tests: Harmony integration via DummyTarget classes.
+        - L2G tests: require game DLL reference for type resolution.
+        - NEVER delete or disable existing tests.
+        - New translation families MUST have tests covering: exact match, fallback to English, edge cases (empty input, color tags, \x01 marker).
+        - Verify test assertions match the actual Japanese translation rules (particles, word order, verb forms).
+
+    - path: "Mods/QudJP/Localization/**"
+      instructions: |
+        Translation asset files (JSON dictionaries, XML blueprints, conversations).
+
+        Rules:
+        - Leaf dictionary entries (ui-default.ja.json) must NOT contain runtime variable markers (=subject.T=, =verb:*=, =bodypart:*=). Those belong in templates-variable.ja.json.
+        - Verb dictionary (verbs.ja.json) entries: Tier 1 = verb-only, Tier 2 = verb|extra pair, Tier 3 = verb+extra template with slots.
+        - JSON keys must exactly match the English source string (case-sensitive, whitespace-sensitive).
+        - No =verb:*= markers in Japanese text values — pre-expand to fixed Japanese verbs (game's English verb system would produce English).
+
+    - path: "scripts/**/*.py"
+      instructions: |
+        Python scanner pipeline and tooling.
+        - Must pass ruff check with project's strict config.
+        - Scanner output must be deterministic (same input → same output).
+        - No AI-generated boilerplate comments or docstrings.
+
+    - path: "docs/**"
+      instructions: |
+        Architecture and design documents.
+        - Verify consistency with actual implementation.
+        - Flag any claims about site counts or coverage that contradict candidate-inventory.json.
+
+chat:
+  auto_reply: true
