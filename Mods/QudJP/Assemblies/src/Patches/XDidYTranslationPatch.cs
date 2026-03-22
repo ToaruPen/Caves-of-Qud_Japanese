@@ -718,7 +718,7 @@ public static class XDidYTranslationPatch
                 // Late direction appears at end of sentence: "…現れた、北側に。"
                 lateDirectionSuffix = string.IsNullOrEmpty(dirSuffix) ? string.Empty : "、" + dirSuffix + "に";
             }
-            else
+            else if (!string.IsNullOrEmpty(dirSuffix))
             {
                 // Prepend direction: "北側の熊" not "熊の北側"
                 subjectText = dirSuffix + "の" + ownerPrefix + baseLabel;
@@ -837,21 +837,8 @@ public static class XDidYTranslationPatch
         // Prepend owner prefix when objectPossessedBy is specified (e.g., "your shield", "its claw")
         if (objectPossessedBy is not null)
         {
-            string ownerLabel;
-            if (IsPlayer(objectPossessedBy))
-            {
-                ownerLabel = "あなたの";
-            }
-            else if (ReferenceEquals(objectPossessedBy, actor))
-            {
-                ownerLabel = "自分の";
-            }
-            else
-            {
-                ownerLabel = GetEntityDisplayName(objectPossessedBy, capitalize: false, useFullNames: false, indefiniteArticle: false) + "の";
-            }
-
-            label = ownerLabel + label;
+            var ownerPrefix = GetOwnerPrefix(objectPossessedBy, useFullNames, indefiniteObject || indefiniteObjectForOthers);
+            label = ownerPrefix + label;
         }
 
         return possessive ? MakePossessiveLabel(label) : label;
