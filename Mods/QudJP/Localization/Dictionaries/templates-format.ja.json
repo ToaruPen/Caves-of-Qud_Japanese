@@ -41,11 +41,6 @@
       "text": "{{K|{0}#}}"
     },
     {
-      "key": "LVL: {0} Exp: {1} / {2}",
-      "context": "Qud.UI.PlayerStatusBar.XPBar",
-      "text": "Lv: {0} 経験値: {1} / {2}"
-    },
-    {
       "key": "Starting Cost {{g|[{0} sp]}}",
       "context": "Qud.UI.SkillsAndPowersLine.Affordable",
       "text": "初期コスト {{g|[{0} sp]}}"
