@@ -217,26 +217,29 @@ Step 7 is the remainder. ~400-600 sites, ~10-15%.
       "existing_patch": "CharacterStatusScreenTranslationPatch"
     },
     {
-      "id": "Qud.UI.SkillsAndPowersStatusScreen::UpdateDetailsFromNode::L91",
-      "file": "Qud.UI/SkillsAndPowersStatusScreen.cs",
-      "line": 91,
-      "sink": "SetText",
-      "type": "Leaf",
-      "confidence": "medium",
-      "pattern": "learnedText.SetText(\"{{R|[Unlearned]}}\")",
-      "key": "{{R|[Unlearned]}}",
-      "status": "needs_translation",
-      "existing_patch": "SkillsAndPowersStatusScreenTranslationPatch"
-    },
-    {
       "id": "XRL.World.Parts.Combat::HandleEvent::L1015",
       "file": "XRL.World.Parts/Combat.cs",
       "line": 1015,
       "sink": "AddPlayerMessage",
       "type": "MessageFrame",
       "confidence": "high",
-      "pattern": "DidX(\"block\", ...)",
+      "verb": "block",
+      "extra": null,
+      "frame": "XDidY",
+      "lookup_tier": 1,
       "status": "needs_patch",
+      "existing_patch": null
+    },
+    {
+      "id": "XRL.World.Parts.Mutation/Flight::Activate::L296",
+      "file": "XRL.World.Parts.Mutation/Flight.cs",
+      "line": 296,
+      "sink": "AddPlayerMessage",
+      "type": "VerbComposition",
+      "confidence": "high",
+      "verb": "begin",
+      "source_context": "Object.Does(\"begin\") + \" flying.\"",
+      "status": "needs_review",
       "existing_patch": null
     },
     {
@@ -293,7 +296,7 @@ Step 7 is the remainder. ~400-600 sites, ~10-15%.
 | P3 | Popup family literals (Show, ShowFail, ShowYesNo, etc.) | ~1,460 | Largest family, many Leaf |
 | P4 | AddPlayerMessage literals | ~585 | Message log text |
 | P5 | Parts.GetShortDescription overrides | ~265 | Item/creature descriptions, mostly Leaf |
-| P6a | MessageFrame (DidX 6 variants) | ~272 | SVO→SOV via HandleMessage Prefix patch |
+| P6a | MessageFrame (DidX 6 variants) | ~272 | SVO→SOV via XDidY Direct Prefix (3 patches on Messaging methods) |
 | P6b | VerbComposition (Does()) | ~307 | Separate strategy — Does() does NOT flow through HandleMessage |
 | P7 | GetDisplayName / Trade / Tinkering / Book screens | ~227 | Mixed Template/Leaf |
 | P8 | JournalAPI / EmitMessage / ReplaceBuilder | ~432 | Narrative + direct messages + template vars |
@@ -351,9 +354,9 @@ are UI-presentation concerns unaffected by decompilation depth. Keep as-is.
 | Component | Current Approach | Source-First Improvement |
 |-----------|-----------------|------------------------|
 | `UITextSkinTranslationPatch` | Stack inspection + context guessing | Scanner classifies every SetText site upfront; route is known before runtime |
-| `MessagePatternTranslator` | 30+ hand-written regex patterns | Scanner extracts all AddPlayerMessage patterns; regex generated from inventory |
+| `MessagePatternTranslator` | 30+ hand-written regex patterns | Deprecate after XDidY Prefix covers DidX messages; replace with scanner-data-driven design |
 | `PopupTranslationPatch` | 3 methods (ShowBlock, ShowOptionList, ShowConversation) | Expand to all Popup variants; classification from inventory |
-| `MessageLogPatch` | Delegates to MessagePatternTranslator | Rewrite with HandleMessage Prefix patch for SVO→SOV |
+| `MessageLogPatch` | Delegates to MessagePatternTranslator | Rewrite with XDidY Direct Prefix for SVO→SOV; add \x01 marker check |
 | `GetDisplayNamePatch` / `GetDisplayNameRouteTranslator` | Suffix decomposition heuristics | Source-traced name composition; inventory knows exact Builder patterns |
 | `InventoryLocalizationPatch` | GetDisplayNameRouteTranslator delegation | Contains translation logic (was misclassified as Tier 1) |
 | `InventoryAndEquipmentStatusScreenTranslationPatch` | Inventory/Equipment screen | Scanner classifies all sites in these screens |
@@ -509,125 +512,191 @@ step is verified against known inputs before the pipeline is assembled.
 - [ ] Existing translations (50 patches + 38 dictionaries) are cross-referenced and marked `translated`
 - [ ] All scanner components have passing tests before integration
 
-## MessageFrame Translation: SVO→SOV Rewrite Engine
+## MessageFrame Translation: XDidY Direct Prefix
 
 272 DidX-family + 307 Does() call sites make per-pattern regex infeasible. Instead,
-build a generalized SVO→SOV rewrite engine via HandleMessage Prefix patch.
+Prefix-patch the XDidY/XDidYToZ/WDidXToYWithZ methods directly where raw semantic
+parameters (Actor, Verb, Extra, Object, Preposition) are still separate — before
+English sentence assembly.
 
-### Problem
+### Why NOT HandleMessage Prefix (previous approach, rejected)
 
-English: `The bear blocks the attack with its shield.` (Subject-Verb-Object)
-Japanese: `クマは盾で攻撃を防いだ。` (Subject-Object-Verb)
+HandleMessage receives the **already-assembled** English sentence (e.g.,
+`"The bear blocks the attack."`). Parsing this back into semantic slots is fragile —
+the subject may include possessives/articles, the verb is conjugated, and Extra is
+already concatenated. XDidY Direct Prefix avoids this problem entirely.
 
-DidX/DidXToY frames produce English word-order messages at runtime. Each call site
-uses a verb string + optional object + optional preposition phrase. The combinations
-are too numerous for individual regex patterns.
+### Approach: Prefix on XDidY/XDidYToZ/WDidXToYWithZ
 
-### Approach
-
-XDidY/XDidYToZ/WDidXToYWithZ are all **void methods** — a postfix patch cannot
-intercept the assembled message (it's already been sent to `HandleMessage` →
-`MessageQueue.AddPlayerMessage()` or `Popup.Show()` by postfix time).
-
-Instead, use a **Prefix patch on `Messaging.HandleMessage()`** — the single funnel
-point through which ALL DidX/EmitMessage output passes (confirmed in Messaging.cs
-at lines 87, 197, 284, 431, 564, 735). This is a `private static` method but Harmony
-can patch it via `AccessTools.Method`.
+These methods receive raw parameters before assembly:
 
 ```csharp
-[HarmonyPatch]
-static class MessageFrameTranslatorPatch
-{
-    // HandleMessage has 2 overloads (string vs StringBuilder) — must specify param types
-    static MethodBase TargetMethod() =>
-        AccessTools.Method(typeof(Messaging), "HandleMessage",
-            new[] { typeof(GameObject), typeof(string), typeof(char),
-                    typeof(bool), typeof(bool), typeof(GameObject), typeof(GameObject) });
+// XDidY signature (Messaging.cs line 48)
+public static void XDidY(
+    GameObject Actor,      // → subject (GetDisplayName for Japanese)
+    string Verb,           // → base form: "block", "die", "are"
+    string Extra = null,   // → optional tail: "destroyed", "in place", runtime-composed
+    string EndMark = null, // → "!", ".", null
+    ...);
 
-    // Prefix receives ref string Msg — rewrite SVO→SOV in place
-    static void Prefix(ref string Msg, GameObject Source)
-    { ... }
+// XDidYToZ signature (Messaging.cs)
+public static void XDidYToZ(
+    GameObject Actor,
+    string Verb,           // → "sit", "try", "are"
+    string Preposition,    // → "down on", "to beat at the flames on"
+    GameObject Object,     // → target object
+    string Extra = null,
+    ...);
+```
+
+Prefix patches intercept these parameters, build the Japanese sentence, call
+HandleMessage with the Japanese text, and `return false` to skip English assembly.
+
+```csharp
+[HarmonyPatch(typeof(Messaging), nameof(Messaging.XDidY))]
+static class XDidYTranslationPatch
+{
+    static bool Prefix(GameObject Actor, string Verb, string Extra,
+                       string EndMark, string Color, bool UsePopup,
+                       bool FromDialog, GameObject Source, ...)
+    {
+        string subjectJa = GetJapaneseDisplayName(Actor);
+        string sentenceJa = MessageFrameTranslator.Translate(
+            subjectJa, Verb, Extra, EndMark);
+        // Call HandleMessage with Japanese text, skip English assembly
+        HandleMessage(Source ?? Actor, sentenceJa, Color, FromDialog, UsePopup, ...);
+        return false;  // skip original method
+    }
 }
 ```
 
-The `MessageFrameTranslator` Prefix:
+### Verb Dictionary: 3-Tier Lookup
 
-1. **Receives** `ref string Msg` (the assembled English sentence) from HandleMessage
-2. **Parses** into semantic slots: `{subject, verb, extra}` (note: "Extra" is freeform English — not just object/instrument)
-3. **Looks up** verb → Japanese verb mapping (dictionary-driven, **118 unique verbs**)
-4. **Recomposes** in SOV order with Japanese particles
-5. For freeform `Extra` phrases, falls back to per-verb-Extra pair dictionary or LLM-generated translation at scan time
-6. **Discriminates** DidX-originated messages from other EmitMessage calls (via pattern matching or `__state` flag from a companion XDidY Prefix)
-7. **Marks translated messages** so downstream patches (MessagePatternTranslator, PopupTranslationPatch) skip them — prevents double-translation
+The game's English grammar system separates voice/tense from the verb parameter.
+Active voice uses the base verb; passive/state uses `Verb="are"` + Extra=past participle.
+
+```
+Tier 1 — Verb only (Extra=null):
+  "block"   → "防いだ"
+  "chirp"   → "鳴いた"
+  "appear"  → "現れた"
+  "die"     → "死んだ"
+  "disappear" → "消えた"
+
+Tier 2 — Verb+Extra pair (passive/state, "are" + past participle):
+  "are|destroyed"     → "破壊された"
+  "are|stunned"       → "気絶した"
+  "are|paralyzed"     → "麻痺した"
+  "are|knocked prone" → "倒れた"
+  "are|revealed"      → "姿を現した"
+  "lock|in place"     → "固定された"
+  "feel|a bit glitchy" → "少しおかしくなった"
+
+Tier 3 — Verb+Extra with runtime slots:
+  "gain|{{rules|{0}}} XP"  → "{{rules|{0}}}XPを獲得した"
+  "stare|at {0} menacingly" → "{0}を睨みつけた"
+```
+
+The scanner extracts all Verb and Verb+Extra pairs from decompiled source, enabling
+bulk generation of the dictionary. 118 unique verbs; Verb+Extra pairs estimated at
+~200-300 (many are `Verb="are"` + past participle).
+
+**Freeform Extra (Pattern C)**: A minority of call sites pass runtime-composed Extra
+strings (e.g., `"a cone of " + mutation.GetBreathName()`). These fall back to LLM-
+assisted per-site translation during Phase 1c or are handled via template patterns.
 
 ### Does() Translation: Separate Strategy Required
 
-**Does() does NOT flow through HandleMessage.** `obj.Does("verb")` returns a string
-that callers concatenate via `+` before passing to AddPlayerMessage or Popup.Show.
+**Does() does NOT flow through XDidY.** `obj.Does("verb")` returns a subject+verb
+string that callers concatenate via `+` before passing to AddPlayerMessage/Popup.Show.
 
 ```
-DidX path:  DidX("block") → Messaging.XDidY() → HandleMessage() → AddPlayerMessage()
-                                                   ↑ Prefix patch here
+XDidY path:  DidX("block") → Messaging.XDidY(Actor, "block", ...) → HandleMessage()
+             ↑ Prefix intercepts here — raw params available
 
-Does path:  obj.Does("begin") + " flying." → AddPlayerMessage(result)
-            ↑ returns string               ↑ already concatenated, no HandleMessage
+Does path:   obj.Does("begin") + " flying." → AddPlayerMessage(result)
+             ↑ returns "The bear begins"   ↑ already concatenated
 ```
-
-Two viable strategies:
-
-**Option A: Patch `Does()` itself** — Harmony Prefix/Postfix on `IComponent.Does(string)`
-to return Japanese subject+verb. Caller still appends freeform English via `+`.
-Pros: Catches all 307 sites at the source. Cons: Freeform tail text remains English.
-
-**Option B: Catch at downstream sink** — The concatenated string reaches
-`AddPlayerMessage` or `Popup.Show`, where existing patches (MessageLogPatch,
-PopupTranslationPatch) already intercept. Add Does()-aware pattern matching there.
-Pros: Full sentence available. Cons: Must reverse-engineer the concatenation pattern.
 
 Decision: deferred to implementation. The scanner classifies Does() sites as
-`type: "VerbComposition"` with the verb string extracted, enabling either approach.
+`type: "VerbComposition"` with the verb string and `source_context` (the full
+concatenation expression) extracted, enabling strategy selection per site.
 
 ### Double-Translation Prevention
 
-With HandleMessage Prefix active, translated DidX messages flow downstream:
+XDidY Prefix calls HandleMessage with Japanese text. This flows downstream:
 
 ```
-HandleMessage Prefix (SVO→SOV) → AddPlayerMessage → MessageLogPatch → MessagePatternTranslator
-                                                                       ↑ sees Japanese, must skip
+XDidY Prefix → HandleMessage(japaneseMsg) → AddPlayerMessage → MessageLogPatch
+                                                                 ↑ must skip
 ```
 
-Prevention mechanism: HandleMessage Prefix prepends a non-visible marker (e.g., `\x01`)
-to translated messages. Downstream patches check for the marker, strip it, and skip
-translation. This is lightweight and avoids coupling between patches.
+Prevention: XDidY Prefix prepends a non-visible marker (`\x01`) to the Japanese
+message. ALL downstream translation patches must check for and strip this marker:
+- `MessageLogPatch` (MessagePatternTranslator)
+- `PopupTranslationPatch`
+- `UITextSkinTranslationPatch`
+
+The marker is stripped before final rendering. The game's text pipeline
+(`Markup.Transform`, `ColorUtility`) does not process `\x01` — verified in
+decompiled source.
 
 ### Inventory Integration
 
-The scanner classifies DidX (272 sites) and Does() (307 sites) separately:
+The scanner classifies DidX and Does() sites separately:
 
-- DidX → `type: "MessageFrame"`, translated via HandleMessage Prefix
+- DidX → `type: "MessageFrame"`, translated via XDidY Direct Prefix
 - Does() → `type: "VerbComposition"`, strategy decided at implementation
 
-The inventory records the verb string for each site, enabling bulk extraction of the
-verb dictionary (118 unique verbs from DidX; Does() verbs may partially overlap):
+The inventory records the verb string and Extra for each site:
 
 ```json
 {
   "id": "XRL.World.Parts.Combat::HandleEvent::L1015",
   "type": "MessageFrame",
   "verb": "block",
-  "frame": "DidX",
-  "has_object": true,
-  "has_with_phrase": true
+  "extra": null,
+  "frame": "XDidY",
+  "lookup_tier": 1
 }
+```
+```json
+{
+  "id": "XRL.World.Effects.Stun::Apply::L90",
+  "type": "MessageFrame",
+  "verb": "are",
+  "extra": "stunned",
+  "frame": "DidX",
+  "lookup_tier": 2
+}
+```
+
+### TDD Verification Strategy
+
+XDidY's assembly logic is pure string operations (StringBuilder + GetVerb +
+GetDisplayName) with no Unity/rendering dependencies. Tests can verify the
+translation pipeline without running the game:
+
+```
+L1 unit tests:
+  - Given (Verb="block", Extra=null) → assert Japanese output "防いだ"
+  - Given (Verb="are", Extra="stunned") → assert "気絶した"
+  - Given (Verb="are", Extra="knocked " + direction) → assert template match
+  - Given unknown Verb → assert fallback behavior
+
+L2 integration tests (Harmony):
+  - Patch XDidY, call with mock Actor → assert HandleMessage receives Japanese
+  - Verify return false skips original English assembly
+  - Verify \x01 marker is prepended and stripped by downstream patches
 ```
 
 ### Priority
 
 P6 in the translation order. Implementation depends on:
-- Inventory completion (know all 579 DidX + Does() sites)
-- Verb dictionary extraction (118 unique verbs, automated from inventory)
-- HandleMessage Prefix patch (intercepts at message generation, not per call site)
-- Freeform Extra phrase handling (per-verb-Extra pair dictionary + LLM fallback)
+- Inventory completion (know all DidX + Does() sites with verb/extra extraction)
+- Verb dictionary (Tier 1: 118 verbs, Tier 2: ~200-300 verb+extra pairs, Tier 3: templates)
+- XDidY/XDidYToZ/WDidXToYWithZ Prefix patches (3 patches, not 272+ individual sites)
+- \x01 marker integration into all downstream patches
 
 ## Freshness Management: Decompile Diff
 
@@ -671,5 +740,5 @@ the `--diff` flag is a filter, not a separate code path.
 |----------|----------|-----------|
 | LLM classifier execution model | Interactive within Claude Code session (or `claude -p` headless) | No Python→subagent API exists; interactive mode or Anthropic API for automation |
 | Intermediate file management | `.gitignore`d, only `candidate-inventory.json` committed | Reproducible locally, review-friendly final output |
-| MessageFrame strategy | HandleMessage Prefix patch | void methods make postfix impossible; HandleMessage is the single funnel point |
+| MessageFrame strategy | XDidY Direct Prefix | Intercepts raw params (Actor, Verb, Extra) before English assembly; avoids fragile reverse-parsing |
 | Inventory freshness | Decompile diff | Automated detection of changed sites on game update |
