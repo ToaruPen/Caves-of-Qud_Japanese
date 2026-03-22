@@ -386,27 +386,27 @@
       "template": "{0}は{1}に{2}ダメージを与えた"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )(.+?) with (?:a |an |the )?(.+?)! \\[(.+?) vs (.+?)\\]$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )?(?!you)(.+?) with (?:a |an |the )?(.+?)! \\[(.+?) vs (.+?)\\]$",
       "template": "{0}は{2}で{1}への攻撃を外した！ [{3} vs {4}]"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )(.+?) with (?:a |an |the )?(.+?)\\. \\[(.+?) vs (.+?)\\]$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )?(?!you)(.+?) with (?:a |an |the )?(.+?)\\. \\[(.+?) vs (.+?)\\]$",
       "template": "{0}は{2}で{1}への攻撃を外した。 [{3} vs {4}]"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )(.+?) with (?:a |an |the )?(.+?) \\[(.+?) vs (.+?)\\]$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )?(?!you)(.+?) with (?:a |an |the )?(.+?) \\[(.+?) vs (.+?)\\]$",
       "template": "{0}は{2}で{1}への攻撃を外した [{3} vs {4}]"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )(.+?)!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )?(?!you)(.+?)!$",
       "template": "{0}は{1}への攻撃を外した！"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )(.+?)\\.$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )?(?!you)(.+?)\\.$",
       "template": "{0}は{1}への攻撃を外した。"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )(.+?)$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) misses (?:the |a |an )?(?!you)(.+?)$",
       "template": "{0}は{1}への攻撃を外した"
     },
     {
@@ -475,15 +475,15 @@
     },
     {
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:doesn't|don't) have enough (.+?) to (.+?)!$",
-      "template": "{0}は{2}するのに十分な{1}がない！"
+      "template": "{t0}は{t2}するのに十分な{t1}がない！"
     },
     {
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:doesn't|don't) have enough (.+?) to (.+?)\\.$",
-      "template": "{0}は{2}するのに十分な{1}がない。"
+      "template": "{t0}は{t2}するのに十分な{t1}がない。"
     },
     {
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:doesn't|don't) have enough (.+?) to (.+?)$",
-      "template": "{0}は{2}するのに十分な{1}がない"
+      "template": "{t0}は{t2}するのに十分な{t1}がない"
     },
     {
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:has|have) no room for more (.+?)!$",
