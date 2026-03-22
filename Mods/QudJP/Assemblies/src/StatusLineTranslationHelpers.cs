@@ -16,6 +16,11 @@ internal static class StatusLineTranslationHelpers
 
     internal static bool TryTranslateCompareStatusLine(string source, string route, string family, out string translated)
     {
+        if (WorldModsTextTranslator.TryTranslate(source, route, family, out translated))
+        {
+            return true;
+        }
+
         var bonusCapMatch = BonusCapPattern.Match(source);
         if (bonusCapMatch.Success)
         {
