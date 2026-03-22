@@ -18797,54 +18797,54 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "XRL.Liquids/LiquidWarmStatic.cs",
       "id": "XRL.Liquids/LiquidWarmStatic.cs::L192:C3",
       "line": 192,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "Object.EmitMessage(stringBuilder.ToString(), null, null, flag)",
       "sink": "EmitMessage",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
       "column": 4,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "XRL.Liquids/LiquidWarmStatic.cs",
       "id": "XRL.Liquids/LiquidWarmStatic.cs::L251:C4",
       "line": 251,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "Object.EmitMessage(stringBuilder.ToString(), null, null, UsePopup: true)",
       "sink": "EmitMessage",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "XRL.Liquids/LiquidWarmStatic.cs",
       "id": "XRL.Liquids/LiquidWarmStatic.cs::L306:C3",
       "line": 306,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "Object.EmitMessage(stringBuilder.ToString(), null, null, flag)",
       "sink": "EmitMessage",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
       "column": 4,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "XRL.Liquids/LiquidWarmStatic.cs",
       "id": "XRL.Liquids/LiquidWarmStatic.cs::L351:C4",
       "line": 351,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "Object.EmitMessage(stringBuilder.ToString(), null, null, UsePopup: true)",
       "sink": "EmitMessage",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
@@ -21126,28 +21126,28 @@
     },
     {
       "column": 6,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "XRL.World.Parts/Physics.cs",
       "id": "XRL.World.Parts/Physics.cs::L3795:C6",
       "line": 3795,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "EmitMessage(stringBuilder3.ToString(), ' ', FromDialog: false, E.HasFlag(\"UsePopups\"), AlwaysVisible: true)",
       "sink": "EmitMessage",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
       "column": 6,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "XRL.World.Parts/Physics.cs",
       "id": "XRL.World.Parts/Physics.cs::L3811:C6",
       "line": 3811,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "EmitMessage(stringBuilder4.ToString(), ' ', FromDialog: false, E.HasFlag(\"UsePopups\"), AlwaysVisible: true)",
       "sink": "EmitMessage",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
@@ -21712,16 +21712,16 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "XRL.World/IComponent.cs",
       "id": "XRL.World/IComponent.cs::L3762:C3",
       "line": 3762,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "EmitMessage(Msg.ToString(), Color, FromDialog, UsePopup, AlwaysVisible, ColorAsGoodFor, ColorAsBadFor)",
       "sink": "EmitMessage",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "excluded",
+      "type": "Unresolved"
     },
     {
       "column": 5,
@@ -21777,16 +21777,16 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "XRL_World_IComponent_backtick1.cs",
       "id": "XRL_World_IComponent_backtick1.cs::L3762:C3",
       "line": 3762,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "EmitMessage(Msg.ToString(), Color, FromDialog, UsePopup, AlwaysVisible, ColorAsGoodFor, ColorAsBadFor)",
       "sink": "EmitMessage",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "excluded",
+      "type": "Unresolved"
     },
     {
       "column": 10,
@@ -50536,15 +50536,15 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/AbilityManagerLine.cs",
       "id": "Qud.UI/AbilityManagerLine.cs::L214:C3",
       "line": 214,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "this.text.SetText(SB.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
@@ -50562,15 +50562,15 @@
     },
     {
       "column": 4,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/AbilityManagerScreen.cs",
       "id": "Qud.UI/AbilityManagerScreen.cs::L490:C4",
       "line": 490,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "rightSideDescriptionArea.SetText(stringBuilder.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
@@ -51140,16 +51140,17 @@
     },
     {
       "column": 4,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/CharacterStatusScreen.cs",
       "id": "Qud.UI/CharacterStatusScreen.cs::L291:C4",
       "line": 291,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "mutationsDetails.SetText(stringBuilder.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "translated",
+      "type": "Builder",
+      "existing_patch": "CharacterStatusScreenMutationDetailsPatch"
     },
     {
       "column": 4,
@@ -51836,16 +51837,17 @@
     },
     {
       "column": 4,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/JournalLine.cs",
       "id": "Qud.UI/JournalLine.cs::L130:C4",
       "line": 130,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "headerText.SetText(sb.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "translated",
+      "type": "Builder",
+      "existing_dictionary": "ui-journal.ja.json"
     },
     {
       "column": 4,
@@ -51877,29 +51879,29 @@
     },
     {
       "column": 4,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/JournalLine.cs",
       "id": "Qud.UI/JournalLine.cs::L162:C4",
       "line": 162,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "text.SetText(sb.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
       "column": 4,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/JournalLine.cs",
       "id": "Qud.UI/JournalLine.cs::L203:C4",
       "line": 203,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "text.SetText(sb.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "needs_patch",
+      "type": "Builder"
     },
     {
       "column": 4,
@@ -51942,16 +51944,17 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/JournalSultanStatueLine.cs",
       "id": "Qud.UI/JournalSultanStatueLine.cs::L162:C3",
       "line": 162,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "text.SetText(sb.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "translated",
+      "type": "Builder",
+      "existing_dictionary": "ui-journal.ja.json"
     },
     {
       "column": 5,
@@ -52490,16 +52493,16 @@
     },
     {
       "column": 4,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/PickGameObjectLine.cs",
       "id": "Qud.UI/PickGameObjectLine.cs::L151:C4",
       "line": 151,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "this.text.SetText(SB.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "needs_patch",
+      "type": "Builder"
     },
     {
       "column": 4,
@@ -52794,16 +52797,16 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/QuestsLine.cs",
       "id": "Qud.UI/QuestsLine.cs::L161:C3",
       "line": 161,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "bodyText.SetText(stringBuilder.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "needs_patch",
+      "type": "Builder"
     },
     {
       "column": 4,
@@ -53036,16 +53039,17 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/SkillsAndPowersStatusScreen.cs",
       "id": "Qud.UI/SkillsAndPowersStatusScreen.cs::L143:C3",
       "line": 143,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "requirementsText.SetText(stringBuilder.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "needs_patch",
+      "type": "Template",
+      "existing_patch": "SkillsAndPowersStatusScreenDetailsPatch"
     },
     {
       "column": 4,
@@ -53614,16 +53618,17 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/TradeLine.cs",
       "id": "Qud.UI/TradeLine.cs::L479:C3",
       "line": 479,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "this.text.SetText(SB.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "translated",
+      "type": "Builder",
+      "existing_patch": "GetDisplayNamePatch, GetDisplayNameProcessPatch"
     },
     {
       "column": 4,
@@ -53960,16 +53965,17 @@
     },
     {
       "column": 3,
-      "confidence": "medium",
+      "confidence": "high",
       "file": "Qud.UI/WorldGenerationScreen.cs",
       "id": "Qud.UI/WorldGenerationScreen.cs::L259:C3",
       "line": 259,
-      "needs_review": true,
+      "needs_review": false,
       "needs_runtime": false,
       "pattern": "quoteText.SetText(stringBuilder.ToString())",
       "sink": "SetText",
-      "status": "needs_review",
-      "type": "Template"
+      "status": "translated",
+      "type": "Leaf",
+      "existing_dictionary": "Books.jp.xml"
     },
     {
       "column": 3,
