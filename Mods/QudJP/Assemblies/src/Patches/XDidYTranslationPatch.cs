@@ -426,7 +426,8 @@ public static class XDidYTranslationPatch
             useFullNames,
             indefiniteObject,
             indefiniteObjectForOthers,
-            possessiveObject);
+            possessiveObject,
+            objectPossessedBy);
         if (string.IsNullOrWhiteSpace(objectLabel))
         {
             return true;
@@ -719,7 +720,8 @@ public static class XDidYTranslationPatch
             var dirSuffix = GetDirectionSuffix(actor);
             if (describeSubjectDirectionLate)
             {
-                lateDirectionSuffix = dirSuffix;
+                // Late direction appears at end of sentence: "…現れた、北側に。"
+                lateDirectionSuffix = string.IsNullOrEmpty(dirSuffix) ? string.Empty : "、" + dirSuffix + "に";
             }
             else
             {
@@ -959,14 +961,14 @@ public static class XDidYTranslationPatch
 
         return direction switch
         {
-            "to the north" => "の北側",
-            "to the south" => "の南側",
-            "to the east" => "の東側",
-            "to the west" => "の西側",
-            "to the northeast" => "の北東側",
-            "to the northwest" => "の北西側",
-            "to the southeast" => "の南東側",
-            "to the southwest" => "の南西側",
+            "to the north" => "北側",
+            "to the south" => "南側",
+            "to the east" => "東側",
+            "to the west" => "西側",
+            "to the northeast" => "北東側",
+            "to the northwest" => "北西側",
+            "to the southeast" => "南東側",
+            "to the southwest" => "南西側",
             _ => direction,
         };
     }
