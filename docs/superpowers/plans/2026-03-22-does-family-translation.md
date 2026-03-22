@@ -12,12 +12,59 @@
 
 **Key reference files:**
 - `Mods/QudJP/Assemblies/src/MessagePatternTranslator.cs` — pattern engine (loads JSON, linear scan, template expansion)
+- `Mods/QudJP/Assemblies/src/ColorAwareTranslationComposer.cs` — strip/restore pipeline for color tags
+- `Mods/QudJP/Assemblies/src/ColorCodePreserver.cs` — low-level color token extraction (3 formats)
 - `Mods/QudJP/Assemblies/src/Patches/DeathWrapperFamilyTranslator.cs` — reference implementation for shared family translator
 - `Mods/QudJP/Assemblies/src/Patches/MessageLogPatch.cs` — Harmony Prefix on AddPlayerMessage (entry point)
 - `Mods/QudJP/Assemblies/src/Patches/PopupTranslationPatch.cs` — popup translation chain (falls back to MessagePatternTranslator)
 - `Mods/QudJP/Localization/Dictionaries/messages.ja.json` — 92 existing regex patterns
 - `Mods/QudJP/Assemblies/QudJP.Tests/L1/MessagePatternTranslatorTests.cs` — L1 test patterns
 - `Mods/QudJP/Assemblies/QudJP.Tests/L2/MessageLogPatchTests.cs` — L2 Harmony integration tests
+
+---
+
+## Color Tag Handling — Static Analysis Results
+
+### How the game applies color to Does() messages
+
+From decompiled source analysis (`XRL.Messages/MessageQueue.cs:106-136`):
+
+```
+AddPlayerMessage(message, color)
+  → wraps entire message: {{color|message}}
+```
+
+Color is determined at the call site by:
+- **ConsequentialColorChar** (relationship to player): returns `'G'`, `'g'`, `'R'`, `'r'`, `'y'`
+- **Stat.GetResultColor** (penetration result): returns `"&K"`, `"&r"`, `"&w"`, `"&W"`, `"&R"`, `"&M"`
+
+**Key fact**: Individual words (status nouns, damage numbers) are NOT separately colored. The entire composed message gets one color wrapping. Example from `GameObject.cs:2670`:
+```csharp
+MessageQueue.AddPlayerMessage(Does("heal") + " for " + num + " hit points.", color);
+// → "{{g|The bear heals for 5 hit points.}}"
+```
+
+### Three color code formats (ColorCodePreserver.cs:113-167)
+
+| Format | Example | Used by |
+|--------|---------|---------|
+| Brace markup | `{{R\|text}}` | AddPlayerMessage internal wrapping |
+| Ampersand | `&R` | ConsequentialColor, Stat.GetResultColor |
+| Caret | `^r` | Some inline markup |
+
+### MessagePatternTranslator color pipeline
+
+```
+Input:  "{{g|The bear is exhausted!}}"
+  ↓ ColorAwareTranslationComposer.Strip()
+Stripped: "The bear is exhausted!"  +  spans=[{pos:0, token:"{{g|"}, {pos:end, token:"}}"}]
+  ↓ TranslateStripped() — regex matches on STRIPPED text
+Matched: pattern "^(.+?) is exhausted$"  →  template "{t0}は疲弊した"
+  ↓ ColorAwareTranslationComposer.Restore()
+Output: "{{g|熊は疲弊した}}"
+```
+
+**Test implication**: Every family MUST include color-wrapped test cases to verify the strip/restore pipeline preserves colors correctly through translation.
 
 ---
 
@@ -96,11 +143,15 @@ public sealed class DoesVerbFamilyTests
 
     // --- Status Predicate Family ---
 
+    // Plain text (no color)
     [TestCase("The bear is exhausted!", "熊は疲弊した！")]
     [TestCase("The snapjaw is stunned!", "スナップジョーは気絶した！")]
     [TestCase("The bear is stuck.", "熊は動けなくなった。")]
     [TestCase("The glowpad is sealed.", "グロウパッドは封印された。")]
     [TestCase("You are exhausted!", "あなたは疲弊した！")]
+    // Color-wrapped (AddPlayerMessage wraps entire message in {{color|...}})
+    [TestCase("{{g|The bear is exhausted!}}", "{{g|熊は疲弊した！}}")]
+    [TestCase("{{R|The snapjaw is stunned!}}", "{{R|スナップジョーは気絶した！}}")]
     public void Translate_StatusPredicateFamily(string input, string expected)
     {
         var result = MessagePatternTranslator.Translate(input);
@@ -184,11 +235,14 @@ Add to `DoesVerbFamilyTests.cs`:
 ```csharp
     // --- Negation/Lack Family ---
 
+    // Plain text
     [TestCase("The turret can't hear you!", "タレットにはあなたの声が聞こえない！")]
     [TestCase("The bear doesn't have a consciousness to appeal to.", "熊には訴えるべき意識がない。")]
     [TestCase("You don't penetrate the snapjaw's armor!", "スナップジョーの防具を貫通できなかった！")]
     [TestCase("You can't see!", "視界がない！")]
     [TestCase("The turret doesn't have enough charge to fire.", "タレットはfireするのに十分なchargeがない。")]
+    // Color-wrapped (ConsequentialColor wraps full message)
+    [TestCase("{{r|You don't penetrate the snapjaw's armor!}}", "{{r|スナップジョーの防具を貫通できなかった！}}")]
     public void Translate_NegationLackFamily(string input, string expected)
     {
         var result = MessagePatternTranslator.Translate(input);
@@ -263,10 +317,15 @@ Add to `DoesVerbFamilyTests.cs`:
 ```csharp
     // --- Combat Damage Family (third-person actor) ---
 
+    // Plain text
     [TestCase("The bear hits the snapjaw for 5 damage!", "熊はスナップジョーに5ダメージを与えた！")]
     [TestCase("The bear misses the snapjaw!", "熊はスナップジョーへの攻撃を外した！")]
     [TestCase("The bear hits the snapjaw with a bronze short sword for 3 damage.", "熊は青銅の短剣でスナップジョーに3ダメージを与えた。")]
     [TestCase("The bear misses the snapjaw with a bronze short sword! [8 vs 12]", "熊は青銅の短剣でスナップジョーへの攻撃を外した！ [8 vs 12]")]
+    // Penetration color (Stat.GetResultColor wraps full message in ampersand format)
+    // AddPlayerMessage converts ampersand to brace: &W → {{W|...}}
+    [TestCase("{{W|The bear hits the snapjaw for 5 damage!}}", "{{W|熊はスナップジョーに5ダメージを与えた！}}")]
+    [TestCase("{{r|The bear misses the snapjaw!}}", "{{r|熊はスナップジョーへの攻撃を外した！}}")]
     public void Translate_CombatDamageThirdPerson(string input, string expected)
     {
         var result = MessagePatternTranslator.Translate(input);
@@ -338,10 +397,13 @@ git commit -m "feat(translation): add third-person combat damage patterns for Do
 ```csharp
     // --- Possession/Lack Family ---
 
+    // Plain text
     [TestCase("The canteen has no room for more water.", "水筒にはこれ以上の水を入れる余地がない。")]
     [TestCase("You have no more ammo!", "弾薬が尽きた！")]
     [TestCase("The bear has nothing to say.", "熊は何も言うことがない。")]
     [TestCase("You have left your party.", "あなたはパーティーを離れた。")]
+    // Color-wrapped
+    [TestCase("{{y|You have no more ammo!}}", "{{y|弾薬が尽きた！}}")]
     public void Translate_PossessionLackFamily(string input, string expected)
     {
         var result = MessagePatternTranslator.Translate(input);
@@ -392,9 +454,12 @@ git commit -m "feat(translation): add possession/lack family patterns for Does()
 ```csharp
     // --- Motion/Direction Family ---
 
+    // Plain text
     [TestCase("The bear falls to the ground.", "熊は地面に倒れた。")]
     [TestCase("You fall to the ground.", "あなたは地面に倒れた。")]
     [TestCase("The snapjaw falls asleep.", "スナップジョーは眠りに落ちた。")]
+    // Color-wrapped (ConsequentialColor)
+    [TestCase("{{g|The bear falls to the ground.}}", "{{g|熊は地面に倒れた。}}")]
     public void Translate_MotionDirectionFamily(string input, string expected)
     {
         var result = MessagePatternTranslator.Translate(input);
@@ -477,5 +542,7 @@ CodeRabbit is configured as a required reviewer on `source-first` branch. Review
 - **Test file location**: The test copies the REAL `messages.ja.json` from the project. The `SetUp` method handles this via relative path from `AppDomain.CurrentDomain.BaseDirectory`.
 - **Existing patterns**: There are already 92 patterns. New patterns for the same domain (combat) must be ordered carefully to avoid shadowing.
 - **Japanese translation quality**: Each pattern's Japanese output must be natural. Status predicates should use past tense (～した) for completed actions. Negation should use natural negative forms (～ない, ～できなかった).
-- **Color tags**: `MessagePatternTranslator.Translate` STRIPS color markup before pattern matching (`{{C|asleep}}` → `asleep`), then restores it via `ColorAwareTranslationComposer`. Do NOT put `\{\{C\|...\}\}` in regex patterns — match the stripped text only.
+- **Color tags — strip/restore pipeline**: `MessagePatternTranslator.Translate` STRIPS all color markup before pattern matching (`{{g|The bear is exhausted!}}` → `The bear is exhausted!` + spans), then restores them via `ColorAwareTranslationComposer.Restore()` after template expansion. Do NOT put `\{\{C\|...\}\}` in regex patterns — match the stripped text only. The color wrapping is automatically re-applied to the translated output.
+- **Color tag test coverage is mandatory**: The game applies color to Does() messages in two ways: (1) `ConsequentialColorChar` wraps entire message based on relationship to player, (2) `Stat.GetResultColor` wraps based on combat penetration result. Both produce whole-message wrapping `{{X|message}}`. Every family MUST include at least one `{{X|...}}` test case to verify strip/restore preserves colors through translation.
+- **Numbers and status words are NOT individually colored**: Static analysis of `AddPlayerMessage` call sites confirms that `damage.Amount`, status phrases, etc. are concatenated as plain text — only the outer message gets one color. No per-segment color handling is needed in patterns.
 - **Pattern shadowing**: New third-person patterns (e.g., `(.+?) misses (.+?)`) can shadow existing player-centric patterns (`misses you`). Always place new patterns AFTER existing more-specific patterns. For `misses`, require `(?:the |a |an )` (non-optional) before the target to avoid matching `"you"`.
