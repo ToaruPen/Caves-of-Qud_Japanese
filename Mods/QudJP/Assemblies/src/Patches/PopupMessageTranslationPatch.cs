@@ -10,6 +10,8 @@ namespace QudJP.Patches;
 public static class PopupMessageTranslationPatch
 {
     private const string TargetTypeName = "Qud.UI.PopupMessage";
+
+    // ShowPopup parameter indices for game version 2.0.4
     private const int MessageIndex = 0;
     private const int ButtonsIndex = 1;
     private const int ItemsIndex = 2;
