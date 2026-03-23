@@ -22,12 +22,7 @@ ALLOWED_ROUTES = (
 ALLOWED_ROUTE_SET = set(ALLOWED_ROUTES)
 _MESSAGE_FRAME_CAPTURE_COUNT = 2
 DEFAULT_PATTERN_FILE = (
-    Path(__file__).resolve().parent.parent
-    / "Mods"
-    / "QudJP"
-    / "Localization"
-    / "Dictionaries"
-    / "messages.ja.json"
+    Path(__file__).resolve().parent.parent / "Mods" / "QudJP" / "Localization" / "Dictionaries" / "messages.ja.json"
 )
 _JOURNAL_MARKERS = (
     "^Notes: ",
@@ -91,6 +86,9 @@ def classify_route(pattern: str) -> str:
 def validate_pattern_routes(path: Path) -> RouteValidationReport:
     """Validate route fields and summarize counts by allowed route."""
     raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        msg = f"Pattern file root is not an object: {path}"
+        raise TypeError(msg)
     patterns = raw.get("patterns")
     if not isinstance(patterns, list):
         msg = f"Pattern file has no patterns array: {path}"
