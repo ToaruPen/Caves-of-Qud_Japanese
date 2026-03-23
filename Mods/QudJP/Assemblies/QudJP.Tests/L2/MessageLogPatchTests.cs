@@ -174,6 +174,36 @@ public sealed class MessageLogPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesStatusPredicateMessage_WhenPatched()
+    {
+        WritePatternDictionary(("^(?:The |the |[Aa]n? )?(.+?) (?:is|are) stunned[.!]?$", "{t0}は気絶した"));
+        WriteExactDictionary(("snapjaw", "スナップジョー"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyMessageQueue), nameof(DummyMessageQueue.AddPlayerMessage)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(MessageLogPatch), nameof(MessageLogPatch.Prefix))));
+
+            DummyMessageQueue.AddPlayerMessage("The snapjaw is stunned!", "&R", Capitalize: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("スナップジョーは気絶した"));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("&R"));
+                Assert.That(DummyMessageQueue.LastCapitalize, Is.False);
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_TranslatesWeaponCombatMessage_WhenPatched()
     {
         WritePatternDictionary(
@@ -316,6 +346,35 @@ public sealed class MessageLogPatchTests
             DummyMessageQueue.AddPlayerMessage("You died.\n\nYou were bitten to death by the ウォーターヴァイン農家.", "&R", Capitalize: false);
 
             Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("あなたは死んだ。\n\nウォーターヴァイン農家に噛み殺された。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_StripsDirectTranslationMarkerWithoutReapplyingPatterns()
+    {
+        // Pattern that matches the English original AND a trap pattern matching the stripped Japanese.
+        // If MessagePatternTranslator.Translate were invoked on the stripped text, the trap would fire.
+        WritePatternDictionary(
+            ("^You hit (.+) for (\\d+) damage[.!]?$", "{0}に{1}ダメージを与えた"),
+            ("^熊は防いだ。$", "TRAP: should not be reached"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyMessageQueue), nameof(DummyMessageQueue.AddPlayerMessage)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(MessageLogPatch), nameof(MessageLogPatch.Prefix))));
+
+            DummyMessageQueue.AddPlayerMessage("\u0001熊は防いだ。", "&W", Capitalize: false);
+
+            // The marker should be stripped AND the trap pattern should NOT fire.
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("熊は防いだ。"));
         }
         finally
         {

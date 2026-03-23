@@ -239,6 +239,32 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_StripsDirectTranslationMarkerAndSkipsTranslation()
+    {
+        // Set up a dictionary entry that would match the stripped text if translation were applied.
+        WriteDictionary(("{{R|熊は防いだ。}}", "TRAP: should not be reached"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock("\u0001{{R|熊は防いだ。}}", "Warning");
+
+            // Marker stripped AND trap dictionary entry NOT applied.
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("{{R|熊は防いだ。}}"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_TranslatesHotkeyLabelWithCaseFallback()
     {
         WriteDictionary(("desecrate", "冒涜する"));
