@@ -1282,10 +1282,6 @@
       "template": "{0}の場所を発見した。"
     },
     {
-      "pattern": "^You slew (.+?)\\.$",
-      "template": "{0}を倒した。"
-    },
-    {
       "pattern": "^You slew (.+?) and encoded their psyche's psionic bits on the holographic boundary of your own psyche\\.$",
       "template": "{0}を倒し、その精神のサイオニック・ビットを自らの精神のホログラフィック境界面に刻み付けた。"
     },
@@ -1296,6 +1292,10 @@
     {
       "pattern": "^You slew your bonded kith (.+?), violating the covenant of the water ritual and earning the emnity of all\\.$",
       "template": "水の儀式で結ばれた同胞{0}を殺し、その誓約を破って全ての者の敵意を買った。"
+    },
+    {
+      "pattern": "^You slew (.+?)\\.$",
+      "template": "{0}を倒した。"
     },
     {
       "pattern": "^You read (.+?)\\.$",
@@ -1355,7 +1355,7 @@
     },
     {
       "pattern": "^You contracted (.+?) on your (.+?), endearing (.+?) to (.+?)\\.$",
-      "template": "{1}に{0}を罹患し、{3}に対する{2}の好感を得た。"
+      "template": "{1}に{0}を罹患し、{2}に対する{3}の好感を得た。"
     },
     {
       "pattern": "^(.+?) ogled you lovingly after you employed your charm\\.$",
@@ -1394,12 +1394,12 @@
       "template": "{0}を発見した。"
     },
     {
-      "pattern": "^You recovered (.+?)\\.$",
-      "template": "{0}を回収した。"
-    },
-    {
       "pattern": "^You recovered the historic relic, (.+?)\\.$",
       "template": "歴史的遺物{0}を回収した。"
+    },
+    {
+      "pattern": "^You recovered (.+?)\\.$",
+      "template": "{0}を回収した。"
     },
     {
       "pattern": "^You ate (.+?)\\.$",
