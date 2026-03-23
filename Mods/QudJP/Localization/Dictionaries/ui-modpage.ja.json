@@ -305,6 +305,11 @@
             "key": "press button",
             "context": "QudMenuItem",
             "text": "ボタンを押す"
+        },
+        {
+            "context": "SteamWorkshopUploaderView",
+            "key": "Managing - ",
+            "text": "管理中 - "
         }
     ]
 }

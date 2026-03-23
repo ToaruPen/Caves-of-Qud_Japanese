@@ -18978,7 +18978,7 @@
       "needs_runtime": false,
       "pattern": "go.EmitMessage(\"A trio of tongues vegetate from =subject.t's= =bodypart:Face=!\")",
       "sink": "EmitMessage",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -21218,7 +21218,7 @@
       "needs_runtime": false,
       "pattern": "EmitMessage(\"Your shot goes wild!\", 'R', FromDialog: false, flag2)",
       "sink": "EmitMessage",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -21607,7 +21607,7 @@
       "needs_runtime": false,
       "pattern": "EmitMessage(\"The zealot mumbles inaudibly, encased in ice.\", ' ', Dialog)",
       "sink": "EmitMessage",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -53990,7 +53990,7 @@
       "needs_runtime": false,
       "pattern": "rightSideDescriptionArea.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54046,7 +54046,7 @@
       "needs_runtime": false,
       "pattern": "Date.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54060,7 +54060,7 @@
       "needs_runtime": false,
       "pattern": "Date.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54088,7 +54088,7 @@
       "needs_runtime": false,
       "pattern": "Description.SetText(\"Details will be revealed once unlocked.\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54102,7 +54102,7 @@
       "needs_runtime": false,
       "pattern": "Date.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54519,7 +54519,7 @@
       "needs_runtime": false,
       "pattern": "mutationTypeText.SetText(\"{{C|[Morphotype]}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54575,7 +54575,7 @@
       "needs_runtime": false,
       "pattern": "mutationsDetails.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54693,7 +54693,7 @@
       "needs_runtime": false,
       "pattern": "description.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54791,7 +54791,7 @@
       "needs_runtime": false,
       "pattern": "hotkeyText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -54805,7 +54805,7 @@
       "needs_runtime": false,
       "pattern": "hotkeyText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55016,7 +55016,7 @@
       "needs_runtime": false,
       "pattern": "titleText.SetText(\"{{W|ACHIEVEMENTS}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55030,7 +55030,7 @@
       "needs_runtime": false,
       "pattern": "titleText.SetText(\"{{W|ENDED RUNS}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55213,7 +55213,7 @@
       "needs_runtime": false,
       "pattern": "itemWeightText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55227,7 +55227,7 @@
       "needs_runtime": false,
       "pattern": "hotkeyText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55241,7 +55241,7 @@
       "needs_runtime": false,
       "pattern": "hotkeyText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55282,7 +55282,7 @@
       "needs_runtime": false,
       "pattern": "text.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55549,7 +55549,7 @@
       "needs_runtime": false,
       "pattern": "text.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55831,7 +55831,7 @@
       "needs_runtime": false,
       "pattern": "TooltipTrigger.SetText(\"BodyText\", RTF.FormatToRTF(data.HelpText))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55915,7 +55915,7 @@
       "needs_runtime": false,
       "pattern": "check.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -55943,7 +55943,7 @@
       "needs_runtime": false,
       "pattern": "rightFloatText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -56150,7 +56150,7 @@
       "needs_runtime": false,
       "pattern": "Title.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -56221,7 +56221,7 @@
       "needs_runtime": false,
       "pattern": "giverText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -56235,7 +56235,7 @@
       "needs_runtime": false,
       "pattern": "bodyText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -56540,7 +56540,7 @@
       "needs_runtime": false,
       "pattern": "requiredSkillsText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -56554,7 +56554,7 @@
       "needs_runtime": false,
       "pattern": "requiredSkillsText.SetText(\"{{K|[none]}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -56966,7 +56966,7 @@
       "needs_runtime": false,
       "pattern": "categoryText.SetText(\"{{K|You don't have any schematics.}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57007,7 +57007,7 @@
       "needs_runtime": false,
       "pattern": "text.SetText(\"    <no applicable items>\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57090,7 +57090,7 @@
       "needs_runtime": false,
       "pattern": "check.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57104,7 +57104,7 @@
       "needs_runtime": false,
       "pattern": "check.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57334,7 +57334,7 @@
       "needs_runtime": false,
       "pattern": "detailsLeftText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57348,7 +57348,7 @@
       "needs_runtime": false,
       "pattern": "detailsRightText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57390,7 +57390,7 @@
       "needs_runtime": false,
       "pattern": "progressTexts[i].SetText(\" \")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57404,7 +57404,7 @@
       "needs_runtime": false,
       "pattern": "attributionText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57418,7 +57418,7 @@
       "needs_runtime": false,
       "pattern": "quoteText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57432,7 +57432,7 @@
       "needs_runtime": false,
       "pattern": "quoteText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57446,7 +57446,7 @@
       "needs_runtime": false,
       "pattern": "attributionText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57474,7 +57474,7 @@
       "needs_runtime": false,
       "pattern": "attributionText.SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57586,7 +57586,7 @@
       "needs_runtime": false,
       "pattern": "TextSkins[1].SetText(\"\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57639,7 +57639,7 @@
       "needs_runtime": false,
       "pattern": "rootObject.transform.Find(\"SelectedModLabel\").GetComponent<UITextSkin>().SetText(\"Managing - \" + info.ID)",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57695,7 +57695,7 @@
       "needs_runtime": false,
       "pattern": "tooltip.SetText(\"BodyText\", Sidebar.FormatToRTF(data.BonusSource))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57807,7 +57807,7 @@
       "needs_runtime": false,
       "pattern": "InputText.SetText(\"{{K|<search>}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57905,7 +57905,7 @@
       "needs_runtime": false,
       "pattern": "tooltip.SetText(\"BodyText\", RTF.FormatToRTF(contents.ToString()))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
@@ -57919,7 +57919,7 @@
       "needs_runtime": false,
       "pattern": "trigger.SetText(\"BodyText\", Sidebar.FormatToRTF(await GameManager.Instance.gameQueue.executeAsync(() => GenerateTooltipContent(item))))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Leaf"
     },
     {
