@@ -73,14 +73,15 @@ public static class PopupMessageTranslationPatch
 
     private static void TranslateItemTextCollection(object[] args, int index, string detail)
     {
-        if (index < 0 || index >= args.Length || args[index] is null || args[index] is string || args[index] is not IEnumerable enumerable)
+        if (index < 0 || index >= args.Length || args[index] is null || args[index] is string || args[index] is not IList list)
         {
             return;
         }
 
         var route = ObservabilityHelpers.ComposeContext(nameof(PopupMessageTranslationPatch), detail);
-        foreach (var item in enumerable)
+        for (var itemIndex = 0; itemIndex < list.Count; itemIndex++)
         {
+            var item = list[itemIndex];
             if (item is null)
             {
                 continue;
@@ -102,6 +103,7 @@ public static class PopupMessageTranslationPatch
             if (!string.Equals(translated, current, StringComparison.Ordinal))
             {
                 textField.SetValue(item, translated);
+                list[itemIndex] = item;
             }
         }
     }

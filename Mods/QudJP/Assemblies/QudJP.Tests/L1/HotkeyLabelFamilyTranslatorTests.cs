@@ -87,6 +87,63 @@ public sealed class HotkeyLabelFamilyTranslatorTests
         });
     }
 
+    [Test]
+    public void TryTranslateBracketedLabel_ReturnsFalse_WhenKeyNotInDictionary()
+    {
+        WriteDictionary(("Cancel", "キャンセル"));
+
+        var result = HotkeyLabelFamilyTranslator.TryTranslateBracketedLabel(
+            "[Esc] Unknown",
+            nameof(PopupTranslationPatch),
+            "HotkeyLabel",
+            rejectNumericHotkeys: true,
+            out var label);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.False);
+            Assert.That(label, Is.EqualTo("[Esc] Unknown"));
+        });
+    }
+
+    [Test]
+    public void TryTranslateBracketedLabel_ReturnsFalse_WhenInputIsEmpty()
+    {
+        WriteDictionary(("Cancel", "キャンセル"));
+
+        var result = HotkeyLabelFamilyTranslator.TryTranslateBracketedLabel(
+            string.Empty,
+            nameof(PopupTranslationPatch),
+            "HotkeyLabel",
+            rejectNumericHotkeys: true,
+            out var label);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.False);
+            Assert.That(label, Is.EqualTo(string.Empty));
+        });
+    }
+
+    [Test]
+    public void TryTranslateBracketedLabel_ReturnsFalse_WhenNoBracketedHotkey()
+    {
+        WriteDictionary(("Cancel", "キャンセル"));
+
+        var result = HotkeyLabelFamilyTranslator.TryTranslateBracketedLabel(
+            "Cancel",
+            nameof(PopupTranslationPatch),
+            "HotkeyLabel",
+            rejectNumericHotkeys: true,
+            out var label);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.False);
+            Assert.That(label, Is.EqualTo("Cancel"));
+        });
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();

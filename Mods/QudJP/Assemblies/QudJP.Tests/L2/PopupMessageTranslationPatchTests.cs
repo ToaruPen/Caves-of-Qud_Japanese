@@ -135,6 +135,58 @@ public sealed class PopupMessageTranslationPatchTests
         }
     }
 
+    [Test]
+    public void Prefix_FallsBackToEnglish_WhenKeyNotInDictionary()
+    {
+        WriteDictionary(("Cancel", "キャンセル"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupMessageTarget), nameof(DummyPopupMessageTarget.ShowPopup)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupMessageTranslationPatch), nameof(PopupMessageTranslationPatch.Prefix))));
+
+            var target = new DummyPopupMessageTarget();
+            target.ShowPopup("Unknown English Text");
+
+            Assert.That(DummyPopupMessageTarget.LastMessage, Is.EqualTo("Unknown English Text"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_SkipsRetranslation_WhenDirectTranslationMarkerPresent()
+    {
+        WriteDictionary(("Cancel", "キャンセル"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupMessageTarget), nameof(DummyPopupMessageTarget.ShowPopup)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupMessageTranslationPatch), nameof(PopupMessageTranslationPatch.Prefix))));
+
+            var markedMessage = "\u0001既に翻訳済み";
+            var target = new DummyPopupMessageTarget();
+            target.ShowPopup(markedMessage);
+
+            // \x01 marker is stripped by TranslatePopupTextForRoute but translation is skipped
+            Assert.That(DummyPopupMessageTarget.LastMessage, Is.EqualTo("既に翻訳済み"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";
