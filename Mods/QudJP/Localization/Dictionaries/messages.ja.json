@@ -2054,14 +2054,6 @@
       "template": "茶色い汚泥が口に入った。金属の味に顔をしかめた。"
     },
     {
-      "pattern": "^The liquids stop reacting\\.$",
-      "template": "液体の反応が止まった。"
-    },
-    {
-      "pattern": "^The reacting liquids congeal into (?:a |an |the )?(.+?)\\.$",
-      "template": "反応した液体が凝固して{0}になった。"
-    },
-    {
       "pattern": "^The zealot yells 'Make an offering at the Argent Well! Pay homage to your Fathers!'$",
       "template": "狂信者が叫んだ「白銀の泉に捧げものをせよ！父祖を称えよ！」"
     },
