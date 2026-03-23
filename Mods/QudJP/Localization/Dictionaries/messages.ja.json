@@ -1436,10 +1436,6 @@
     {
       "pattern": "^(.+?) provided you with insightful commentary on (.+?)\\.$",
       "template": "{0}が{1}について洞察に満ちた解説をしてくれた。"
-    },
-    {
-      "pattern": "^On the (.+?) of (.+?), (.+?)$",
-      "template": "{1}の{0}日、{2}"
     }
   ]
 }
