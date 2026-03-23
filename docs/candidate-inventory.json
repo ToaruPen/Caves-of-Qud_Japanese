@@ -18859,7 +18859,7 @@
       "needs_runtime": false,
       "pattern": "Object.EmitMessage(stringBuilder.ToString(), null, null, flag)",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "MessageLogPatch",
       "notes": "StringBuilder -> EmitMessage(UsePopup=flag); intercepted by MessageLogPatch or PopupTranslationPatch depending on flag"
@@ -18874,7 +18874,7 @@
       "needs_runtime": false,
       "pattern": "Object.EmitMessage(stringBuilder.ToString(), null, null, UsePopup: true)",
       "sink": "EmitMessage(UsePopup=true)",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "PopupTranslationPatch",
       "notes": "StringBuilder -> EmitMessage(UsePopup=true); intercepted by PopupTranslationPatch"
@@ -18889,7 +18889,7 @@
       "needs_runtime": false,
       "pattern": "Object.EmitMessage(stringBuilder.ToString(), null, null, flag)",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "MessageLogPatch",
       "notes": "StringBuilder -> EmitMessage(UsePopup=flag); intercepted by MessageLogPatch or PopupTranslationPatch depending on flag"
@@ -18904,7 +18904,7 @@
       "needs_runtime": false,
       "pattern": "Object.EmitMessage(stringBuilder.ToString(), null, null, UsePopup: true)",
       "sink": "EmitMessage(UsePopup=true)",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "PopupTranslationPatch",
       "notes": "StringBuilder -> EmitMessage(UsePopup=true); intercepted by PopupTranslationPatch"
@@ -21646,7 +21646,7 @@
       "needs_runtime": false,
       "pattern": "EmitMessage(stringBuilder3.ToString(), ' ', FromDialog: false, E.HasFlag(\"UsePopups\"), AlwaysVisible: true)",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "MessageLogPatch",
       "notes": "StringBuilder damage message -> EmitMessage; intercepted by MessageLogPatch (or PopupTranslationPatch if UsePopups)"
@@ -21661,7 +21661,7 @@
       "needs_runtime": false,
       "pattern": "EmitMessage(stringBuilder4.ToString(), ' ', FromDialog: false, E.HasFlag(\"UsePopups\"), AlwaysVisible: true)",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "MessageLogPatch",
       "notes": "StringBuilder damage message -> EmitMessage; intercepted by MessageLogPatch (or PopupTranslationPatch if UsePopups)"
@@ -21936,7 +21936,7 @@
       "needs_runtime": false,
       "pattern": "EmitMessage($\"Exodus launch in {Timer}...\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: true)",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "MessageLogPatch",
       "notes": "String interpolation -> EmitMessage; intercepted by MessageLogPatch (UsePopup=false)"
@@ -24427,7 +24427,7 @@
       "needs_runtime": false,
       "pattern": "part.GetLongDescription(stringBuilder)",
       "sink": "GetShort/LongDescription",
-      "status": "not_applicable",
+      "status": "excluded",
       "type": "Unresolved",
       "runtime_reason": "Call targets a runtime-selected description or part instance, so the final text depends on object composition at runtime.",
       "static_classification": "description_text",
@@ -24511,7 +24511,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(muralText ?? \"\")",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString -> JournalAccomplishment.MuralText/GospelText; intercepted by JournalEntryDisplayTextPatch"
@@ -24526,7 +24526,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(gospelText ?? \"\", historicEntitySnapshot, historicEntitySnapshot.entity.history)",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString -> JournalAccomplishment.MuralText/GospelText; intercepted by JournalEntryDisplayTextPatch"
@@ -24541,7 +24541,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.lovesick.!random>\", null, null)",
       "sink": "AddPlayerMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "MessageLogPatch",
       "notes": "ExpandString('<spice.lovesick.!random>') -> accomplishment text -> AddPlayerMessage path"
@@ -24855,7 +24855,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.commonPhrases.oneStarryNight.!random.capitalize>, =name= manifested a latent power inside \" + GO.GetPronounProvider().Objective + \" and joined the divine ranks of \" + list2[num4].GetBearerDescription() + \".\")",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString('<spice.commonPhrases.oneStarryNight.!random>') -> AddAccomplishment muralText; intercepted by JournalEntryDisplayTextPatch"
@@ -24961,7 +24961,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.gossip.leadIns.!random>\", null, The.Game.sultanHistory)",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.gossip.leadIns.!random>') -> text -> Popup.Show; intercepted by PopupTranslationPatch"
@@ -24976,7 +24976,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.commonPhrases.onlooker.!random.capitalize>! <spice.commonPhrases.remember.!random.capitalize> the admonishment =name= gave \" + Object.an(int.MaxValue, null, null, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: true, WithoutTitles: true) + \" when \" + Object.it + \" presumed to speak the sacred tongue!\")",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString -> JournalAPI.AddAccomplishment muralText; intercepted by JournalEntryDisplayTextPatch"
@@ -25173,7 +25173,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.satellitePower.occlusionReasons.!random>\", null, null)",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> SatellitePowerOcclusionReason -> E.Postfix in GetShortDescription; intercepted by DescriptionShortDescriptionPatch"
@@ -25188,7 +25188,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25203,7 +25203,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25218,7 +25218,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25233,7 +25233,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25248,7 +25248,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25263,7 +25263,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25278,7 +25278,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25293,7 +25293,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25308,7 +25308,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ate.!random>\")",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ate.!random>') -> Popup.Show"
@@ -25323,7 +25323,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.ingredient.!random>\", null, null, variableCache, Random)",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "PopupTranslationPatch",
       "notes": "ExpandString('<spice.cooking.ingredient.!random>') -> DescribeMeal -> Popup.Show"
@@ -25338,7 +25338,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.cookTemplate.!random>\")",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "ExpandString('<spice.cooking.cookTemplate.!random>') -> recipe DisplayName; intercepted when displayed via SetText"
@@ -25353,7 +25353,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.cookbooks.genericName.!random>\")",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "GetDisplayNamePatch",
       "notes": "ExpandString -> Render.DisplayName; intercepted when displayed via GetDisplayName chain"
@@ -25368,7 +25368,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.cookbooks.genericName.!random>\")",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "GetDisplayNamePatch",
       "notes": "ExpandString -> Render.DisplayName; intercepted when displayed via GetDisplayName chain"
@@ -25383,7 +25383,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.cookbooks.focalName.!random>\")",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "GetDisplayNamePatch",
       "notes": "ExpandString -> Render.DisplayName; intercepted when displayed via GetDisplayName chain"
@@ -25398,7 +25398,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.quests.intro.!random>\")",
       "sink": "Conversation",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "ConversationDisplayTextPatch",
       "notes": "ExpandString -> AddChoice/AddNode text; intercepted by ConversationDisplayTextPatch"
@@ -25413,7 +25413,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.instancesOf.speakTo.!random.capitalize> \")",
       "sink": "Conversation",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "ConversationDisplayTextPatch",
       "notes": "ExpandString -> AddChoice/AddNode text; intercepted by ConversationDisplayTextPatch"
@@ -25428,7 +25428,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.cryptIntroPlural.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25443,7 +25443,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.cryptPlaque.familyTitlePlural.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25458,7 +25458,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.cryptPlaque.\" + Caste + \".familyCognomen.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25473,7 +25473,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.instancesOf.\" + text + \".!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25488,7 +25488,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.personNouns.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25503,7 +25503,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.cryptPlaque.familyTitleSingular.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25518,7 +25518,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.cryptPlaque.\" + Caste + \".familyCognomen.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25533,7 +25533,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.instancesOf.\" + text + \".!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25548,7 +25548,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.personNouns.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25563,7 +25563,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.cryptIntroSingular.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25578,7 +25578,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.cryptPlaque.familyTitleSingular.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25593,7 +25593,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.cryptPlaque.\" + Caste + \".familyWords.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Inscription/Prefix -> GetShortDescriptionEvent.Base; intercepted by DescriptionShortDescriptionPatch + LookTooltipContentPatch"
@@ -25608,7 +25608,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.eaterUrnIntro.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Introduction -> GetShortDescriptionEvent via Look; intercepted by DescriptionShortDescriptionPatch"
@@ -25623,7 +25623,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.ydFreeholderUrnIntro.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Introduction -> GetShortDescriptionEvent via Look; intercepted by DescriptionShortDescriptionPatch"
@@ -25638,7 +25638,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.barathrumiteUrnIntro.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Introduction -> GetShortDescriptionEvent via Look; intercepted by DescriptionShortDescriptionPatch"
@@ -25653,7 +25653,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.genericUrnIntro.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Introduction -> GetShortDescriptionEvent via Look; intercepted by DescriptionShortDescriptionPatch"
@@ -25824,7 +25824,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.commonPhrases.intrepid.!random.capitalize> =name= recovered \" + locateRelicQuestManager_QuestEntry.Relic + \", a historic relic once thought lost to the sands of time.\")",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString -> AddAccomplishment muralText; intercepted by JournalEntryDisplayTextPatch"
@@ -25839,7 +25839,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.advertisements.merchants.!random>\", null, null, vars)",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> bookText; displayed when reading the book (GetShortDescription path)"
@@ -25854,7 +25854,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.elements.\" + The.Player.GetMythicDomain() + \".nouns.!random>\")",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString -> JournalAPI.AddAccomplishment muralText; intercepted by JournalEntryDisplayTextPatch"
@@ -25869,7 +25869,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.colors.!random>\")",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString -> JournalAPI.AddAccomplishment muralText; intercepted by JournalEntryDisplayTextPatch"
@@ -25884,7 +25884,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.intro.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString('<spice.tombstones.intro.!random>') -> Inscription -> GetShortDescriptionEvent; intercepted by DescriptionShortDescriptionPatch"
@@ -26042,7 +26042,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.egregorePrefix.!random> <spice.nouns.!random>\", seededRandomGenerator)",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> GenerateInscription -> GetShortDescriptionEvent; intercepted by DescriptionShortDescriptionPatch"
@@ -26057,7 +26057,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.nouns.!random> Era.\", seededRandomGenerator)",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> GenerateInscription -> GetShortDescriptionEvent; intercepted by DescriptionShortDescriptionPatch"
@@ -26072,7 +26072,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.tombstones.intro.!random>\")",
       "sink": "GetShortDescription",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString('<spice.tombstones.intro.!random>') -> Inscription -> GetShortDescriptionEvent; intercepted by DescriptionShortDescriptionPatch"
@@ -26087,7 +26087,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"In the month of \" + Calendar.GetMonth() + \" of \" + Calendar.GetYear() + \" AR, =name= founded the village of \" + VillageName + \" to <spice.history.gospels.HumblePractice.LateSultanate.!random>.\")",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString embedded in JournalAPI.AddAccomplishment muralText; intercepted by JournalEntryDisplayTextPatch"
@@ -26102,7 +26102,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.history.regions.terrain.\" + tag + \".over.!random>\", currentSnapshot, sultanHistory)",
       "sink": "Description.Short",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Description.Short; intercepted by DescriptionShortDescriptionPatch"
@@ -26117,7 +26117,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.history.regions.terrain.\" + tag + \".over.!random>\", currentSnapshot, sultanHistory)",
       "sink": "Description.Short",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Description.Short; intercepted by DescriptionShortDescriptionPatch"
@@ -26132,7 +26132,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.villages.description.!random>.\")",
       "sink": "Description.Short",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "ExpandString -> Description.Short; intercepted by DescriptionShortDescriptionPatch"
@@ -26147,7 +26147,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.recipeNames.oneIngredientMeal.!random>\", null, null, dictionary)",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "ExpandString -> GenerateRecipeName -> recipe.DisplayName; intercepted when rendered via SetText/Popup"
@@ -26162,7 +26162,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.recipeNames.twoIngredientMeal.!random>\", null, null, dictionary2)",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "ExpandString -> GenerateRecipeName -> recipe.DisplayName; intercepted when rendered via SetText/Popup"
@@ -26177,7 +26177,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(\"<spice.cooking.recipeNames.threeIngredientMeal.!random>\", null, null, dictionary3)",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "ExpandString -> GenerateRecipeName -> recipe.DisplayName; intercepted when rendered via SetText/Popup"
@@ -26192,7 +26192,7 @@
       "needs_runtime": true,
       "pattern": "HistoricStringExpander.ExpandString(input)",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "ProceduralText",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "ExpandString -> GenerateRecipeName -> recipe.DisplayName; intercepted when rendered via SetText/Popup"
@@ -53795,7 +53795,7 @@
       "needs_runtime": false,
       "pattern": "Text.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "ExpandVillageText: Text.StartReplace().Execute(); called from Conversation/Description contexts — downstream patches intercept"
@@ -53810,7 +53810,7 @@
       "needs_runtime": false,
       "pattern": "HistoricStringExpander.ExpandString(muralText ?? \"\").StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString().StartReplace() -> JournalAccomplishment; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -53825,7 +53825,7 @@
       "needs_runtime": false,
       "pattern": "HistoricStringExpander.ExpandString(gospelText ?? \"\", historicEntitySnapshot, historicEntitySnapshot.entity.history).StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "ExpandString().StartReplace() -> JournalAccomplishment; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -53840,7 +53840,7 @@
       "needs_runtime": false,
       "pattern": "stringBuilder.StartReplace()",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "PopupTranslationPatch",
       "notes": "stringBuilder.StartReplace() -> Popup.Show (WishGospelAccomplishments debug); intercepted by PopupTranslationPatch"
@@ -53855,7 +53855,7 @@
       "needs_runtime": false,
       "pattern": "E.Text.StartReplace()",
       "sink": "Conversation",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "ConversationDisplayTextPatch",
       "notes": "E.Text.StartReplace() modifies conversation text in-place; intercepted by ConversationDisplayTextPatch"
@@ -53870,7 +53870,7 @@
       "needs_runtime": false,
       "pattern": "E.Text.StartReplace()",
       "sink": "Conversation",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "ConversationDisplayTextPatch",
       "notes": "E.Text.StartReplace() modifies conversation text in-place; intercepted by ConversationDisplayTextPatch"
@@ -53885,7 +53885,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "PopupTranslationPatch",
       "notes": "Message.StartReplace() -> Popup.Show; intercepted by StartReplaceTranslationPatch + PopupTranslationPatch"
@@ -53900,7 +53900,7 @@
       "needs_runtime": false,
       "pattern": "render.DisplayName.StartReplace()",
       "sink": "DisplayName",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "GetDisplayNamePatch",
       "notes": "render.DisplayName.StartReplace() modifies creature DisplayName; intercepted by GetDisplayNamePatch downstream"
@@ -53915,7 +53915,7 @@
       "needs_runtime": false,
       "pattern": "\"=subject.T= =verb:bask= in the sunlight and =verb:absorb= the nourishing rays.\".StartReplace()",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "MessageLogPatch",
       "notes": "template.StartReplace().EmitMessage() -> AddPlayerMessage; intercepted by StartReplaceTranslationPatch + MessageLogPatch"
@@ -53930,7 +53930,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "MessageLogPatch",
       "notes": "Message.StartReplace() -> ParentObject.EmitMessage -> AddPlayerMessage; intercepted by StartReplaceTranslationPatch + MessageLogPatch"
@@ -53945,7 +53945,7 @@
       "needs_runtime": false,
       "pattern": "message.StartReplace()",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "MessageLogPatch",
       "notes": "message.StartReplace() -> EmitMessage; intercepted by StartReplaceTranslationPatch + MessageLogPatch"
@@ -53960,7 +53960,7 @@
       "needs_runtime": false,
       "pattern": "Text.StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "Text/Hagiograph/Gospel.StartReplace() -> JournalAPI.AddAccomplishment; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -53975,7 +53975,7 @@
       "needs_runtime": false,
       "pattern": "Hagiograph.StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "Text/Hagiograph/Gospel.StartReplace() -> JournalAPI.AddAccomplishment; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -53990,7 +53990,7 @@
       "needs_runtime": false,
       "pattern": "Gospel.StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "Text/Hagiograph/Gospel.StartReplace() -> JournalAPI.AddAccomplishment; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -54005,7 +54005,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "Popup.Show|EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "PopupTranslationPatch",
       "notes": "Message.StartReplace() -> Popup.Show (UsePopup) or EmitMessage; intercepted by StartReplaceTranslationPatch + PopupTranslationPatch/MessageLogPatch"
@@ -54020,7 +54020,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "PopupTranslationPatch",
       "notes": "Message.StartReplace() -> Popup.Show; intercepted by StartReplaceTranslationPatch + PopupTranslationPatch"
@@ -54035,7 +54035,7 @@
       "needs_runtime": false,
       "pattern": "lineText.StartReplace()",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "MessageLogPatch",
       "notes": "lineText/Prefix/Postfix.StartReplace() -> EmitMessage -> AddPlayerMessage; intercepted by StartReplaceTranslationPatch + MessageLogPatch"
@@ -54050,7 +54050,7 @@
       "needs_runtime": false,
       "pattern": "Prefix.StartReplace()",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "MessageLogPatch",
       "notes": "lineText/Prefix/Postfix.StartReplace() -> EmitMessage -> AddPlayerMessage; intercepted by StartReplaceTranslationPatch + MessageLogPatch"
@@ -54065,7 +54065,7 @@
       "needs_runtime": false,
       "pattern": "Postfix.StartReplace()",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "MessageLogPatch",
       "notes": "lineText/Prefix/Postfix.StartReplace() -> EmitMessage -> AddPlayerMessage; intercepted by StartReplaceTranslationPatch + MessageLogPatch"
@@ -54080,7 +54080,7 @@
       "needs_runtime": false,
       "pattern": "Text.StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "Text/Hagiograph/Gospel.StartReplace() -> JournalAPI.AddAccomplishment; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -54095,7 +54095,7 @@
       "needs_runtime": false,
       "pattern": "Hagiograph.StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "Text/Hagiograph/Gospel.StartReplace() -> JournalAPI.AddAccomplishment; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -54110,7 +54110,7 @@
       "needs_runtime": false,
       "pattern": "Gospel.StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "Text/Hagiograph/Gospel.StartReplace() -> JournalAPI.AddAccomplishment; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -54125,7 +54125,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "EmitMessage",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "MessageLogPatch",
       "notes": "Message.StartReplace() -> EmitMessage; intercepted by StartReplaceTranslationPatch + MessageLogPatch"
@@ -54140,7 +54140,7 @@
       "needs_runtime": false,
       "pattern": "GetProperty(Super ? \"MessageArrivalSuper\" : \"MessageArrival\").StartReplace()",
       "sink": "Popup.Show",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "PopupTranslationPatch",
       "notes": "GetProperty('MessageArrival').StartReplace() -> Popup.Show; intercepted by StartReplaceTranslationPatch + PopupTranslationPatch"
@@ -54168,7 +54168,7 @@
       "needs_runtime": false,
       "pattern": "\"This shrine depicts a significant event from the life of the ancient =sultan.term= =subject.name=:\\n\\n\".StartReplace()",
       "sink": "Description.Short",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "DescriptionShortDescriptionPatch",
       "notes": "StartReplace -> Description.Short (SetStatueDescription); intercepted by DescriptionShortDescriptionPatch"
@@ -54183,7 +54183,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54198,7 +54198,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54213,7 +54213,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54228,7 +54228,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54243,7 +54243,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54258,7 +54258,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54273,7 +54273,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54288,7 +54288,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54303,7 +54303,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54318,7 +54318,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54333,7 +54333,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54348,7 +54348,7 @@
       "needs_runtime": false,
       "pattern": "Message.StartReplace()",
       "sink": "ReplaceBuilder",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "StartReplaceTranslationPatch",
       "notes": "GameText.VariableReplace -> StartReplace; intercepted by StartReplaceTranslationPatch (prefix on template). Output flows through caller's sink."
@@ -54363,7 +54363,7 @@
       "needs_runtime": false,
       "pattern": "text.StartReplace()",
       "sink": "JournalAccomplishment",
-      "status": "intercepted",
+      "status": "translated",
       "type": "VariableTemplate",
       "existing_patch": "JournalEntryDisplayTextPatch",
       "notes": "text.StartReplace() -> JournalAPI.AddAccomplishment muralText; intercepted by StartReplaceTranslationPatch + JournalEntryDisplayTextPatch"
@@ -54559,7 +54559,7 @@
       "needs_runtime": false,
       "pattern": "this.text.SetText(SB.ToString())",
       "sink": "SetText",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "SB (ability display) -> this.text.SetText; intercepted by UITextSkinTranslationPatch"
@@ -54588,7 +54588,7 @@
       "needs_runtime": false,
       "pattern": "rightSideDescriptionArea.SetText(stringBuilder.ToString())",
       "sink": "SetText",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "SB (ability description) -> rightSideDescriptionArea.SetText; intercepted by UITextSkinTranslationPatch"
@@ -55937,7 +55937,7 @@
       "needs_runtime": false,
       "pattern": "text.SetText(sb.ToString())",
       "sink": "SetText",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "SB (journal line display) -> text.SetText; intercepted by UITextSkinTranslationPatch + JournalEntryDisplayTextPatch for entry text"
@@ -55952,7 +55952,7 @@
       "needs_runtime": false,
       "pattern": "text.SetText(sb.ToString())",
       "sink": "SetText",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Builder",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "SB (journal entry display) -> text.SetText; intercepted by UITextSkinTranslationPatch"
@@ -56194,7 +56194,7 @@
       "needs_runtime": false,
       "pattern": "text.SetText(status.text)",
       "sink": "SetText",
-      "status": "not_applicable",
+      "status": "excluded",
       "type": "Unresolved",
       "runtime_reason": "UI field receives a computed value or external data payload; final visible text requires runtime evidence.",
       "static_classification": "ui_element",
@@ -56590,7 +56590,7 @@
       "needs_runtime": false,
       "pattern": "this.text.SetText(SB.ToString())",
       "sink": "SetText",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Builder",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "SB (game object line) -> this.text.SetText; intercepted by UITextSkinTranslationPatch (DisplayName already translated)"
@@ -56912,7 +56912,7 @@
       "needs_runtime": false,
       "pattern": "bodyText.SetText(stringBuilder.ToString())",
       "sink": "SetText",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Builder",
       "existing_patch": "UITextSkinTranslationPatch",
       "notes": "SB (quest body) -> bodyText.SetText; intercepted by UITextSkinTranslationPatch"
@@ -57163,7 +57163,7 @@
       "needs_runtime": false,
       "pattern": "requirementsText.SetText(stringBuilder.ToString())",
       "sink": "SetText",
-      "status": "intercepted",
+      "status": "translated",
       "type": "Template",
       "existing_patch": "SkillsAndPowersStatusScreenTranslationPatch",
       "notes": "SB (requirements) -> requirementsText.SetText; intercepted by SkillsAndPowersStatusScreenTranslationPatch + UITextSkinTranslationPatch"
