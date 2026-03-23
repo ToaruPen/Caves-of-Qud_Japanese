@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "id": "ui-journal-kithkin",
+    "lang": "ja",
+    "version": "0.1.0",
+    "description": "Translations for Kith and Kin quest journal observation entries (KithAndKinGameState hardcoded strings)"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Kith and Kin",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "血と骨の絆"
+    },
+    {
+      "key": "I found a bloody patch of fur near the village paths, a sign of recent violence.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "村の小道付近で血に染まった毛皮の切れ端を見つけた。最近暴力沙汰があった証拠だ。"
+    },
+    {
+      "key": "I discovered a patch of watervine stained red with blood, a sign of recent violence.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "血で赤く染まったウォーターヴァインの一片を発見した。最近暴力沙汰があった証拠だ。"
+    },
+    {
+      "key": "I found a weapon haft, broken from use, on the paths, a sign of recent violence.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "小道で使用痕のある折れた武器の柄を見つけた。最近暴力沙汰があった証拠だ。"
+    },
+    {
+      "key": "Someone left a sealed merchant's waterskin on the paths, a sign of recent trade.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "小道に封印された商人の水袋が置き去りにされていた。最近取引があった証拠だ。"
+    },
+    {
+      "key": "Someone dropped a copper nugget on the paths, a sign of recent trade.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "小道に銅の塊が落ちていた。最近取引があった証拠だ。"
+    },
+    {
+      "key": "I discovered a footprint from a great saltback on the paths, a sign of recent trade.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "小道でグレート・ソルトバックの足跡を発見した。最近取引があった証拠だ。"
+    },
+    {
+      "key": "I found a detached tongue on the ground, rotted with infection: a sign of recent illness.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "地面に感染症で腐った千切れた舌を見つけた。最近病気が蔓延した証拠だ。"
+    },
+    {
+      "key": "I found the discarded husks of the curative yuckwheat plant, a sign of recent illness.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "薬草ヤックウィートの捨てられた殻を見つけた。最近病気が蔓延した証拠だ。"
+    },
+    {
+      "key": "I found a few scraps from some kind of leatherworking project, a sign of recent craft.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "何かの革細工から出た切れ端をいくつか見つけた。最近工作があった証拠だ。"
+    },
+    {
+      "key": "Someone discarded a worn but still functional leather bracer on the paths, a sign of recent craft.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "小道に使い古されたがまだ使える革の腕当てが捨てられていた。最近工作があった証拠だ。"
+    },
+    {
+      "key": "I found a small leatherworking hammer on the paths, a sign of recent craft.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "小道で小さな革細工用の槌を見つけた。最近工作があった証拠だ。"
+    },
+    {
+      "key": "One villager was frightened by sounds of fighting at night, indicating recent violence.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ある村人が夜中の戦闘音に怯えたという。最近暴力沙汰があったことを示している。"
+    },
+    {
+      "key": "One of Bey Lah's scouts heard a fight in the watervine paddies, indicating recent violence.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ベイ・ラーの斥候の一人がウォーターヴァイン畑で戦闘の音を聞いたという。最近暴力沙汰があったことを示している。"
+    },
+    {
+      "key": "Faundren saw a merchant from outside the village sneaking around, indicating recent trade.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ファウンドレンが村の外から来た商人がこそこそしているのを見たという。最近取引があったことを示している。"
+    },
+    {
+      "key": "The faundren heard the voice of a hindren and a kendren discussing goods late at night, indicating recent trade.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ファウンドレンが深夜にヒンドレンとケンドレンが商品について話し合う声を聞いたという。最近取引があったことを示している。"
+    },
+    {
+      "key": "The villagers are on edge due to rumors of sore throats in the village, indicating recent illness.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "村で喉の痛みの噂が広まり、村人たちが不安がっている。最近病気が蔓延したことを示している。"
+    },
+    {
+      "key": "The faundren are complaining about the smell of yuckwheat tea, indicating recent illness.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ファウンドレンがヤックウィート茶の臭いに文句を言っている。最近病気が蔓延したことを示している。"
+    },
+    {
+      "key": "The scouts report that someone has taken leather from the village stores, indicating recent craft.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "斥候が村の倉庫から革が持ち出されたと報告している。最近工作があったことを示している。"
+    },
+    {
+      "key": "The scouts heard someone doing work with tools late at night, indicating recent craft.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "斥候が深夜に道具で作業する音を聞いたという。最近工作があったことを示している。"
+    },
+    {
+      "key": "I found an empty injector near the Hindriarch's bedroll. Why doesn't anyone know she was sick?",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ヒンドリアークの寝床の近くで空のインジェクターを見つけた。彼女が病気だったことを誰も知らないのはなぜだ？"
+    },
+    {
+      "key": "I found a bloody arrow on the paths of Bey Lah. Its fletching resembles the ones in Hindriarch Keh's quiver.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ベイ・ラーの小道で血に染まった矢を見つけた。矢羽がヒンドリアーク・ケーの矢筒にあるものと似ている。"
+    },
+    {
+      "key": "Apparently, the Hindriarch isolated herself to work on a mystery project, possibly to hide Kindrish.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ヒンドリアークは謎の作業のために自らを隔離していたらしい。キンドリッシュを隠すためだったのかもしれない。"
+    },
+    {
+      "key": "Rumor has it that the village is flush with water, perhaps because Keh made a big trade.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "村に水が潤沢だという噂がある。ケーが大きな取引をしたからかもしれない。"
+    },
+    {
+      "key": "The faundren claim that Eskhind left the village sporting a poorly-made leather bracer, possibly to conceal Kindrish.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ファウンドレンによると、エスキンドは粗末な革の腕当てを付けて村を出たという。キンドリッシュを隠すためだったのかもしれない。"
+    },
+    {
+      "key": "The faundren tell me that Eskhind's sister had a period of complete silence; she may have been ill.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ファウンドレンによると、エスキンドの妹はしばらく完全に沈黙していたという。病気だったのかもしれない。"
+    },
+    {
+      "key": "I found the village stores of Bey Lah untouched; Eskhind must have traded something for her basics.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ベイ・ラーの村の倉庫は手つかずだった。エスキンドは必需品を交易で手に入れたのだろう。"
+    },
+    {
+      "key": "Eskhind is showing signs of a leg injury. Perhaps she was in a fight. ",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "エスキンドには脚の怪我の兆候がある。戦闘に巻き込まれたのかもしれない。"
+    },
+    {
+      "key": "Eskhind appears to be favoring a leg, though she has concealed any injury. ",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "エスキンドは片脚をかばっているようだが、怪我は隠している。"
+    },
+    {
+      "key": "The faundren tell me that Kesehind went quiet for a few weeks, only to become louder than ever again.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ファウンドレンによると、ケセヒンドは数週間沈黙した後、以前にも増してうるさくなったという。"
+    },
+    {
+      "key": "Rumor has it that Kesehind has always worn hand-me-down armor, but he was recently seen with a brand new set.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ケセヒンドはいつもお下がりの鎧を着ていたが、最近真新しい一式を身につけているのが目撃されたという。"
+    },
+    {
+      "key": "I found a worn-out bracer abandoned near Kesehind's bedroll.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ケセヒンドの寝床の近くで使い古された腕当てが捨てられていた。"
+    },
+    {
+      "key": "Kesehind tried to clean blood off his armor, but missed a spot. ",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ケセヒンドは鎧の血を拭き取ろうとしたが、拭き残しがある。"
+    },
+    {
+      "key": "Carmine streaks on Kesehind's armor suggest that he tried and failed to wipe away spilled blood. ",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ケセヒンドの鎧の深紅色の筋は、こぼれた血を拭き取ろうとして失敗したことを示している。"
+    },
+    {
+      "key": "The Bey Lah scouts have had trouble with violent kendren. What if one slipped by?",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "ベイ・ラーの斥候たちは凶暴なケンドレンに手を焼いている。もし一匹が侵入していたら？"
+    },
+    {
+      "key": "The scouts have seen kendren treasure hunters about. That type will take anything not nailed down.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "斥候がケンドレンのトレジャーハンターを目撃している。あの連中は固定されていないものなら何でも持っていく。"
+    },
+    {
+      "key": "Theft by kendren is very common during an outbreak of disease like the one the villagers describe.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "村人たちが語るような疫病の流行中は、ケンドレンによる窃盗が非常に多い。"
+    },
+    {
+      "key": "I found a set of foreign leatherworking tools on the village paths. A kendren crafter has been here.",
+      "context": "XRL.World.KithAndKinGameState",
+      "text": "村の小道で異国の革細工道具一式を見つけた。ケンドレンの職人がここにいたのだ。"
+    }
+  ]
+}

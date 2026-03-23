@@ -29871,7 +29871,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddObservation(Text, ID, Category, ID, Attributes.Split(','), revealed: false, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "unresolved",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -29890,7 +29890,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "Dead code path: no blueprints use the AddObservation part in game version 2.0.4. The only XML reference is commented out in Walls.xml."
     },
     {
       "column": 4,
@@ -29902,7 +29903,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddObservation(Text, text, Category, text, Attributes.Split(','), revealed: true, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "unresolved",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -29921,7 +29922,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "Dead code path: no blueprints use the AddObservationOnLook part in game version 2.0.4."
     },
     {
       "column": 9,
@@ -30234,7 +30236,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddAccomplishment(Text.StartReplace().AddObject(ParentObject, \"this\").ToString(), Hagiograph.StartReplace().AddObject(ParentObject, \"this\").ForceThirdPerson()\n\t\t\t\t.ToString(), muralCategory: MuralCategoryHelpers.parseCategory(HagiographCategory), muralWeight: MuralCategoryHelpers.parseWeight(HagiographWeight), gospelText: Gospel.StartReplace().AddObject(ParentObject, \"this\").ForceThirdPerson()\n\t\t\t\t.ToString(), aggregateWith: null, category: \"general\", secretId: null, time: -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -30260,7 +30262,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "Text/Hagiograph/Gospel are XML blueprint attributes, already translated in Items.jp.xml. Runtime text with =this.an=, =name= resolved by StartReplace() flows through JournalEntryDisplayTextPatch."
     },
     {
       "column": 5,
@@ -30656,7 +30659,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddMapNote(merchantLoc)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -30675,7 +30678,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalMapNoteDisplayTextPatch"
+      "existing_patch": "JournalMapNoteDisplayTextPatch",
+      "note": "JournalAPI.AddMapNote(merchantLoc) passes a pre-existing JournalMapNote whose Text is derived from other map notes already covered by JournalMapNoteDisplayTextPatch."
     },
     {
       "column": 3,
@@ -30803,7 +30807,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddMapNote(ParentObject.GetCurrentCell().ParentZone.ZoneID, stringBuilder.ToString(), \"Baetyls\", null, MapNoteID, revealed: true, sold: false, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -30822,7 +30826,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalMapNoteDisplayTextPatch"
+      "existing_patch": "JournalMapNoteDisplayTextPatch",
+      "note": "Baetyl journal note text has two forms: 'A \"SATED\" baetyl' (exact entry in world-parts.ja.json) and 'A baetyl demanding X and promising Y' (regex pattern added to messages.ja.json). Both flow through JournalMapNoteDisplayTextPatch."
     },
     {
       "column": 5,
@@ -30834,7 +30839,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddMapNote(ParentObject.GetCurrentCell().ParentZone.ZoneID, text, category, adjectives.Split(','), id, revealed: true, sold: false, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -30853,7 +30858,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalMapNoteDisplayTextPatch"
+      "existing_patch": "JournalMapNoteDisplayTextPatch",
+      "note": "text and category fields come from XML blueprint part attributes, already translated in ObjectBlueprints JP XML overrides. Flows through JournalMapNoteDisplayTextPatch."
     },
     {
       "column": 5,
@@ -30865,7 +30871,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddMapNote(ParentObject.GetCurrentCell().ParentZone.ZoneID, text, category, adjectives.Split(','), id, revealed: true, sold: false, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -30884,7 +30890,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalMapNoteDisplayTextPatch"
+      "existing_patch": "JournalMapNoteDisplayTextPatch",
+      "note": "text and category fields come from XML blueprint part attributes, already translated in ObjectBlueprints JP XML overrides. Flows through JournalMapNoteDisplayTextPatch."
     },
     {
       "column": 5,
@@ -30896,7 +30903,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddMapNote(ParentObject.GetCurrentCell().ParentZone.ZoneID, text, category, adjectives.Split(','), id, revealed: true, sold: false, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -30915,7 +30922,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalMapNoteDisplayTextPatch"
+      "existing_patch": "JournalMapNoteDisplayTextPatch",
+      "note": "text and category fields come from XML blueprint part attributes, already translated in ObjectBlueprints JP XML overrides. Flows through JournalMapNoteDisplayTextPatch."
     },
     {
       "column": 5,
@@ -30927,7 +30935,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddMapNote(ParentObject.GetCurrentCell().ParentZone.ZoneID, text, category, adjectives.Split(','), id, revealed: true, sold: false, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -30946,7 +30954,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalMapNoteDisplayTextPatch"
+      "existing_patch": "JournalMapNoteDisplayTextPatch",
+      "note": "text and category fields come from XML blueprint part attributes, already translated in ObjectBlueprints JP XML overrides. Flows through JournalMapNoteDisplayTextPatch."
     },
     {
       "column": 4,
@@ -31150,7 +31159,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddAccomplishment(Text.StartReplace().AddObject(ParentObject, \"this\").ToString(), Hagiograph.StartReplace().AddObject(ParentObject, \"this\").ForceThirdPerson()\n\t\t\t\t.ToString(), muralCategory: MuralCategoryHelpers.parseCategory(HagiographCategory), muralWeight: MuralCategoryHelpers.parseWeight(HagiographWeight), gospelText: Gospel.StartReplace().AddObject(ParentObject, \"this\").ForceThirdPerson()\n\t\t\t\t.ToString(), aggregateWith: null, category: \"general\", secretId: null, time: -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -31176,7 +31185,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "Text/Hagiograph/Gospel are XML blueprint attributes, already translated in Items.jp.xml. Runtime text with =this.refname=, =name= resolved by StartReplace() flows through JournalEntryDisplayTextPatch."
     },
     {
       "column": 4,
@@ -31462,7 +31472,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddAccomplishment(GameText.GenerateMarkovMessageSentence(), \"\", null, null, \"general\", item, MuralWeight.Nil, null, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "unresolved",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -31488,7 +31498,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "GameText.GenerateMarkovMessageSentence() produces procedurally generated Markov chain text. Completely random and unpredictable; cannot be handled by dictionary or pattern matching. Would require C# patch to intercept Markov generation."
     },
     {
       "column": 3,
@@ -31540,7 +31551,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddMapNote(secretZone, name, category, adj, secretid, revealed, sold: false, 0L, silent)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -31559,7 +31570,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalMapNoteDisplayTextPatch"
+      "existing_patch": "JournalMapNoteDisplayTextPatch",
+      "note": "Map note names and categories come from world generation; static names (lairs, settlements) are translated via exact dictionary entries in ui-journal.ja.json. Procedurally generated village/ruin names from history engine flow through JournalMapNoteDisplayTextPatch."
     },
     {
       "column": 3,
@@ -31687,7 +31699,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddAccomplishment(\"You \" + text + \" \" + gameObject.t(int.MaxValue, null, null, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: false) + \".\", \"While exploring \" + Object.CurrentZone.DisplayName + \", =name= \" + text + \" the fabled contraption called \" + gameObject.t(int.MaxValue, null, null, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: true) + \".\", \"While visiting an obscure <spice.professions.\" + text2 + \".guildhall>, =name= met with a group of <spice.professions.\" + text2 + \".plural> and commissed what came to be known as \" + gameObject.t(int.MaxValue, null, null, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: true) + \".\", null, \"general\", MuralCategory.FindsObject, MuralWeight.Medium, null, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "unresolved",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -31713,7 +31725,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "Accomplishment/hagiograph/gospel texts are dynamically constructed from runtime verb (past-tense), object name (.t()), zone DisplayName, and <spice> tags. Too many variable combinations for dictionary/pattern approach. Would require a dedicated C# patch."
     },
     {
       "column": 5,
@@ -31801,7 +31814,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddObservation(journaltext, secret_id, HINT_CATEGORY, secret_id, new string[4]\n\t\t{\n\t\t\t\"hindrenclue\",\n\t\t\tinfluence,\n\t\t\tevidenceType,\n\t\t\t\"influence:\" + influence\n\t\t}, revealed: false, -1L, null, initCapAsFragment: false, Tradable: false)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -31820,7 +31833,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "initRumorClue journaltext is a hardcoded static string. Exact dictionary entries added to ui-journal-kithkin.ja.json. Flows through JournalEntryDisplayTextPatch."
     },
     {
       "column": 3,
@@ -31832,7 +31846,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddObservation(text, blueprint, HINT_CATEGORY, blueprint, new string[4]\n\t\t{\n\t\t\t\"hindrenclue\",\n\t\t\tinfluence,\n\t\t\tevidenceType,\n\t\t\t\"influence:\" + influence\n\t\t}, revealed: false, -1L, revealText, initCapAsFragment: false, Tradable: false)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -31851,7 +31865,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "initLookClue text and revealText are hardcoded static strings. Exact dictionary entries added to ui-journal-kithkin.ja.json. Flows through JournalEntryDisplayTextPatch."
     },
     {
       "column": 3,
@@ -31863,7 +31878,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddObservation(text, blueprint, HINT_CATEGORY, blueprint, new string[4]\n\t\t{\n\t\t\t\"hindrenclue\",\n\t\t\tinfluence,\n\t\t\tevidenceType,\n\t\t\t\"influence:\" + influence\n\t\t}, revealed: false, -1L, revealText, initCapAsFragment: false, Tradable: false)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -31882,7 +31897,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "initItemClue text and revealText are hardcoded static strings. Exact dictionary entries added to ui-journal-kithkin.ja.json. Flows through JournalEntryDisplayTextPatch."
     },
     {
       "column": 6,
@@ -32565,7 +32581,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddAccomplishment(accomplishment, muralText, Quest.Gospel, null, \"general\", muralCategory, muralWeight2, null, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -32591,7 +32607,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "Quest.Accomplishment, Quest.Hagiograph, and Quest.Gospel come from quest XML, already translated in Quests.jp.xml. Flows through JournalEntryDisplayTextPatch."
     },
     {
       "column": 5,
@@ -32603,7 +32620,7 @@
       "needs_runtime": false,
       "pattern": "JournalAPI.AddAccomplishment(accomplishment2, muralText2, Quest.Gospel, null, \"general\", muralCategory, muralWeight2, null, -1L)",
       "sink": "JournalAPI",
-      "status": "needs_patch",
+      "status": "translated",
       "type": "NarrativeTemplate",
       "narrative_arguments": [
         {
@@ -32629,7 +32646,8 @@
         }
       ],
       "implemented_arguments": [],
-      "existing_patch": "JournalEntryDisplayTextPatch"
+      "existing_patch": "JournalEntryDisplayTextPatch",
+      "note": "Quest.Accomplishment, Quest.Hagiograph, and Quest.Gospel come from quest XML, already translated in Quests.jp.xml. Flows through JournalEntryDisplayTextPatch."
     },
     {
       "column": 10,
