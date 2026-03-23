@@ -1718,19 +1718,19 @@
       "template": "{0}の制圧射撃が{1}を地面に叩き伏せた！"
     },
     {
-      "pattern": "^You (?:wounds?|wound) (?:the |a |an )?(.+?)[.!]?$",
+      "pattern": "^You wounds? (?:the |a |an )?(.+?)[.!]?$",
       "template": "{0}に深手を負わせた"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:wounds?|wound) (?:the |a |an )?(.+?)[.!]?$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) wounds? (?:the |a |an )?(.+?)[.!]?$",
       "template": "{0}は{1}に深手を負わせた"
     },
     {
-      "pattern": "^You (?:disorients?|disorient) (?:the |a |an )?(.+?)[.!]?$",
+      "pattern": "^You disorients? (?:the |a |an )?(.+?)[.!]?$",
       "template": "{0}を混乱させた"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:disorients?|disorient) (?:the |a |an )?(.+?)[.!]?$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) disorients? (?:the |a |an )?(.+?)[.!]?$",
       "template": "{0}は{1}を混乱させた"
     },
     {
