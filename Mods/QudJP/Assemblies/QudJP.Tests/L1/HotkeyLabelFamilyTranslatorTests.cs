@@ -144,6 +144,47 @@ public sealed class HotkeyLabelFamilyTranslatorTests
         });
     }
 
+    [Test]
+    public void TryTranslateBracketedLabel_ReturnsFalse_WhenLabelContainsColorTags()
+    {
+        WriteDictionary(("Cancel", "キャンセル"));
+
+        // Color tags are stripped upstream; if they reach this method, the label
+        // won't match the dictionary key and should be left unchanged.
+        var result = HotkeyLabelFamilyTranslator.TryTranslateBracketedLabel(
+            "[Esc] {{y|Cancel}}",
+            nameof(PopupTranslationPatch),
+            "HotkeyLabel",
+            rejectNumericHotkeys: true,
+            out var label);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.False);
+            Assert.That(label, Is.EqualTo("[Esc] {{y|Cancel}}"));
+        });
+    }
+
+    [Test]
+    public void TryTranslateBracketedLabel_ReturnsFalse_WhenInputHasDirectTranslationMarker()
+    {
+        WriteDictionary(("Cancel", "キャンセル"));
+
+        // \x01 marker prefix prevents the bracketed-hotkey regex from matching.
+        var result = HotkeyLabelFamilyTranslator.TryTranslateBracketedLabel(
+            "\u0001[Esc] Cancel",
+            nameof(PopupTranslationPatch),
+            "HotkeyLabel",
+            rejectNumericHotkeys: true,
+            out var label);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.False);
+            Assert.That(label, Is.EqualTo("\u0001[Esc] Cancel"));
+        });
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();
