@@ -18823,7 +18823,7 @@
       "status": "translated",
       "type": "Unresolved",
       "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
-      "exclusion_reason": "Runtime composition (direction + liquid name); already handled by existing message pattern"
+      "resolution_note": "Runtime composition (direction + liquid name); already handled by existing message pattern"
     },
     {
       "column": 4,
@@ -71858,10 +71858,10 @@
     }
   ],
   "stats": {
-    "translated": 3956,
+    "translated": 4028,
     "needs_patch": 117,
-    "unresolved": 303,
-    "excluded": 224,
+    "unresolved": 218,
+    "excluded": 237,
     "exclude": 64
   },
   "version": "1.0"
