@@ -21579,7 +21579,7 @@
       "needs_runtime": false,
       "pattern": "EmitMessage($\"Exodus launch in {Timer}...\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: true)",
       "sink": "EmitMessage",
-      "status": "needs_translation",
+      "status": "needs_patch",
       "type": "Template"
     },
     {
@@ -53768,7 +53768,7 @@
       "needs_runtime": false,
       "pattern": "TextSkins[0].SetText(string.Format(\"{{{{{0}|{1} :: Level {2} :: {3}}}}}\", hasCoda ? \"W\" : \"C\", highScoresDataElement.entry.Name, highScoresDataElement.entry.Level, highScoresDataElement.entry.GameMode))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -54255,7 +54255,7 @@
       "needs_runtime": false,
       "pattern": "valueText.SetText($\"{{{{{text}|{CharacterStatusScreen.CP}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -54282,7 +54282,7 @@
       "needs_runtime": false,
       "pattern": "valueText.SetText($\"{{{{{text}|{Stats.GetCombatAV(characterAttributeLineData.go)}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -54295,7 +54295,7 @@
       "needs_runtime": false,
       "pattern": "valueText.SetText($\"{{{{{text}|{Stats.GetCombatDV(characterAttributeLineData.go)}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -54308,7 +54308,7 @@
       "needs_runtime": false,
       "pattern": "valueText.SetText($\"{{{{{text}|{Stats.GetCombatMA(characterAttributeLineData.go)}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -54363,7 +54363,7 @@
       "needs_runtime": false,
       "pattern": "text.SetText($\"{{{{y|{characterMutationLineData.mutation.GetDisplayName()} ({{{{{arg}|{characterMutationLineData.mutation.GetUIDisplayLevel()}}}}})}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -54818,7 +54818,7 @@
       "needs_runtime": false,
       "pattern": "hotkeyText.SetText($\"{context.data.spread.charAt(scrollIndex)})\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -55057,7 +55057,7 @@
       "needs_runtime": false,
       "pattern": "priceText.SetText($\"{{{{B|${GO.GetFreeDrams()}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -55070,7 +55070,7 @@
       "needs_runtime": false,
       "pattern": "weightText.SetText($\"{{{{C|{GO.GetCarriedWeight()}{{{{K|/{GO.GetMaxCarriedWeight()}}}}} lbs. }}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -55254,7 +55254,7 @@
       "needs_runtime": false,
       "pattern": "hotkeyText.SetText($\"{context.data.spread.charAt(scrollIndex)})\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -55969,7 +55969,7 @@
       "needs_runtime": false,
       "pattern": "rightFloatText.SetText($\"{{{{K|{pickGameObjectLineData.go.GetWeight()}#}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56024,7 +56024,7 @@
       "needs_runtime": false,
       "pattern": "XPBar.text.SetText(string.Format(\"LVL: {0} Exp: {1} / {2}\", playerStats[\"Level\"], playerStats[\"XP\"], Leveler.GetXPForLevel(Convert.ToInt32(playerStats[\"Level\"]) + 1)))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56345,7 +56345,7 @@
       "needs_runtime": false,
       "pattern": "skillRightText.SetText($\"Starting Cost {{{{g|[{d.entry.Skill.Cost} sp]}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56358,7 +56358,7 @@
       "needs_runtime": false,
       "pattern": "skillRightText.SetText($\"Starting Cost {{{{r|[{d.entry.Skill.Cost} sp]}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56385,7 +56385,7 @@
       "needs_runtime": false,
       "pattern": "skillRightText.SetText($\"Starting Cost {{{{g|[{d.entry.Skill.Cost} sp]}}}} [{num2}/{num}]\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56398,7 +56398,7 @@
       "needs_runtime": false,
       "pattern": "skillRightText.SetText($\"Starting Cost {{{{r|[{d.entry.Skill.Cost} sp]}}}} [{num2}/{num}]\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56425,7 +56425,7 @@
       "needs_runtime": false,
       "pattern": "skillRightText.SetText($\"{{{{g|Learned}}}} [{num2}/{num}]\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56595,7 +56595,7 @@
       "needs_runtime": false,
       "pattern": "statBlockText.SetText(string.Format(\"{{{{K|{{{{g|STR:}}}}{0} ■ {{{{g|AGI}}}}: {1} ■ {{{{g|TOU}}}}: {2} ■ {{{{g|INT}}}}: {3} ■ {{{{g|WIL}}}}: {4} ■ {{{{g|EGO}}}}: {5}}}}}\", GO.GetStat(\"Strength\").Value, GO.GetStat(\"Agility\").Value, GO.GetStat(\"Toughness\").Value, GO.GetStat(\"Intelligence\").Value, GO.GetStat(\"Willpower\").Value, GO.GetStat(\"Ego\").Value))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56608,7 +56608,7 @@
       "needs_runtime": false,
       "pattern": "spText.SetText(string.Format(\"Skill Points (SP): {{{{C|{0}}}}}\", GO.GetStat(\"SP\").Value))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56663,7 +56663,7 @@
       "needs_runtime": false,
       "pattern": "amountText.SetText($\"{{{{K|{tinkeringBitsLineData.amount}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56676,7 +56676,7 @@
       "needs_runtime": false,
       "pattern": "amountText.SetText($\"{{{{K|{tinkeringBitsLineData.amount}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56689,7 +56689,7 @@
       "needs_runtime": false,
       "pattern": "amountText.SetText($\"{{{{G|{tinkeringBitsLineData.amount}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56702,7 +56702,7 @@
       "needs_runtime": false,
       "pattern": "amountText.SetText($\"{{{{R|{tinkeringBitsLineData.amount}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56799,7 +56799,7 @@
       "needs_runtime": false,
       "pattern": "modBitCostText.SetText(modBitCostText.text + $\"\\n{{{{G|{'û'}}}}} {TinkeringHelpers.TinkeredItemShortDisplayName(blueprint)}\\n\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56924,7 +56924,7 @@
       "needs_runtime": false,
       "pattern": "modBitCostText.SetText(modBitCostText.text + $\"\\n{{{{G|{'û'}}}}} {TinkeringHelpers.TinkeredItemShortDisplayName(blueprint3)}\\n\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -56979,7 +56979,7 @@
       "needs_runtime": false,
       "pattern": "categoryText.SetText(string.Format(\"{0} {1} [{2}]\", tinkeringLineData.categoryExpanded ? \"[-]\" : \"[+]\", tinkeringLineData.categoryName, tinkeringLineData.categoryCount))",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57062,7 +57062,7 @@
       "needs_runtime": false,
       "pattern": "SingletonWindowBase<TradeScreen>.instance.dragIndicatorText.SetText($\"{{{{W|{num}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57117,7 +57117,7 @@
       "needs_runtime": false,
       "pattern": "check.SetText($\"{{{{W|{tradeLineData.numberSelected}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57144,7 +57144,7 @@
       "needs_runtime": false,
       "pattern": "rightFloatText.SetText(\"[{{W|$\" + text2 + \"}}]\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57157,7 +57157,7 @@
       "needs_runtime": false,
       "pattern": "rightFloatText.SetText(\"[$\" + text2 + \"]\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57170,7 +57170,7 @@
       "needs_runtime": false,
       "pattern": "SingletonWindowBase<TradeScreen>.instance.dragIndicatorText.SetText($\"{{{{W|{screen.howManySelected(context.data.go)}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57183,7 +57183,7 @@
       "needs_runtime": false,
       "pattern": "SingletonWindowBase<TradeScreen>.instance.dragIndicatorText.SetText($\"{{{{W|{num2}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57196,7 +57196,7 @@
       "needs_runtime": false,
       "pattern": "SingletonWindowBase<TradeScreen>.instance.dragIndicatorText.SetText($\"{{{{W|{num2}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57265,7 +57265,7 @@
       "needs_runtime": false,
       "pattern": "freeDramsLabels[0].SetText($\"{{{{W|${Trader?.GetFreeDrams() ?? 0}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57278,7 +57278,7 @@
       "needs_runtime": false,
       "pattern": "freeDramsLabels[1].SetText($\"{{{{W|${The.Player?.GetFreeDrams() ?? 0}}}}} | {{{{{text}|{num2}/{maxCarriedWeight} lbs.}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57599,7 +57599,7 @@
       "needs_runtime": false,
       "pattern": "TextSkins[0].SetText($\"{{{{Y|{scoreData.rank})}}}} {{{{{(isSelf ? 'W' : 'y')}|{scoreData.steamID}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57612,7 +57612,7 @@
       "needs_runtime": false,
       "pattern": "TextSkins[1].SetText($\"{scoreData.score}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
@@ -57625,7 +57625,7 @@
       "needs_runtime": false,
       "pattern": "TextSkins[0].SetText($\"{{{{Y|{scoreData.rank})}}}} {{{{{(isSelf ? 'W' : 'y')}|{arg}}}}}\")",
       "sink": "SetText",
-      "status": "needs_translation",
+      "status": "translated",
       "type": "Template"
     },
     {
