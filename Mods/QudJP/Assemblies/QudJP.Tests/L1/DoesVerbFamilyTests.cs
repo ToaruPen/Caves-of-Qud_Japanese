@@ -523,6 +523,195 @@ public sealed class DoesVerbFamilyTests
         AssertTranslated(input, expected);
     }
 
+    // --- Missile Vital Area Hit Family ---
+
+    [TestCase("You hit the スナップジョー in a vital area.", "スナップジョーの急所に命中した")]
+    [TestCase("The 熊 hits the スナップジョー in a vital area.", "熊がスナップジョーの急所に命中させた")]
+    // Color-wrapped
+    [TestCase("{{g|You hit the スナップジョー in a vital area.}}", "{{g|スナップジョーの急所に命中した}}")]
+    public void Translate_MissileVitalAreaFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Missile Hit with Projectile Family (Player attacker) ---
+
+    [TestCase("You critically hit the 熊 (x3) with a 短弓 for 15 damage!", "短弓で熊に会心の一撃、15ダメージを与えた！ (x3)")]
+    [TestCase("You hit the 熊 (x2) with an 矢 for 8 damage!", "矢で熊に8ダメージを与えた！ (x2)")]
+    [TestCase("You hit the 熊 with a 矢 for 5 damage.", "矢で熊に5ダメージを与えた")]
+    [TestCase("You critically hit the 熊 (x3) with a 短弓!", "短弓で熊に会心の一撃！ (x3)")]
+    [TestCase("You hit the 熊 (x2) with a 矢!", "矢で熊に命中した (x2)")]
+    [TestCase("You hit the 熊 with a 矢, but your mental attack has no effect.", "矢で熊に命中したが、精神攻撃は効果がない")]
+    [TestCase("You critically hit the 熊 with a 矢.", "矢で熊に会心の一撃！")]
+    [TestCase("You hit the 熊 with a 矢.", "矢で熊に命中した")]
+    // Color-wrapped
+    [TestCase("{{W|You critically hit the 熊 (x3) with a 短弓 for 15 damage!}}", "{{W|短弓で熊に会心の一撃、15ダメージを与えた！ (x3)}}")]
+    public void Translate_MissileHitPlayerAttacker(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Missile Hit Something/Something Hits Family ---
+
+    [TestCase("Something hits the 熊 with an 矢 for 5 damage.", "何かが矢で熊に5ダメージを与えた")]
+    [TestCase("Something hits the 熊 with an 矢.", "何かが矢で熊に命中した")]
+    [TestCase("You hit something to the north!", "to the northの方角の何かに命中した")]
+    [TestCase("The 熊 hits something to the south.", "熊はto the southの方角の何かに命中させた")]
+    // Color-wrapped
+    [TestCase("{{r|Something hits the 熊 with an 矢 for 5 damage.}}", "{{r|何かが矢で熊に5ダメージを与えた}}")]
+    public void Translate_MissileHitSomethingFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Missile Hit (3P attacker hits player) ---
+
+    [TestCase("The 熊 critically hits you (x3) with an 矢 for 10 damage!", "熊の矢が会心し、10ダメージを受けた！ (x3)")]
+    [TestCase("The 熊 hits you (x2) with a 矢 for 8 damage!", "熊の矢で8ダメージを受けた！ (x2)")]
+    [TestCase("The 熊 critically hits you with an 矢 for 5 damage.", "熊の矢が会心し、5ダメージを受けた")]
+    [TestCase("The 熊 hits you with a 矢 for 5 damage.", "熊の矢で5ダメージを受けた")]
+    [TestCase("The 熊 critically hits you with an 矢!", "熊の矢で会心の一撃を受けた")]
+    [TestCase("The 熊 hits you with a 矢.", "熊の矢で攻撃を受けた")]
+    [TestCase("The 熊 critically hits you! (x2)", "熊の会心の一撃を受けた！ (x2)")]
+    [TestCase("The 熊 hits you! (x3)", "熊の攻撃を受けた！ (x3)")]
+    // Color-wrapped
+    [TestCase("{{r|The 熊 hits you (x2) with a 矢 for 8 damage!}}", "{{r|熊の矢で8ダメージを受けた！ (x2)}}")]
+    public void Translate_MissileHit3PAttacksPlayer(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Missile Hit (3P attacker hits 3P defender) ---
+
+    [TestCase("The 熊 critically hits the スナップジョー (x2) with an 矢 for 8 damage!", "熊は矢でスナップジョーに会心の一撃、8ダメージを与えた！ (x2)")]
+    [TestCase("The 熊 hits the スナップジョー (x3) with a 矢 for 10 damage!", "熊は矢でスナップジョーに10ダメージを与えた！ (x3)")]
+    [TestCase("The 熊 critically hits the スナップジョー with an 矢!", "熊は矢でスナップジョーに会心の一撃")]
+    [TestCase("The 熊 hits the スナップジョー with a 矢.", "熊は矢でスナップジョーに命中した")]
+    [TestCase("The 熊 hits the スナップジョー! (x3)", "熊はスナップジョーに命中した (x3)")]
+    [TestCase("The 熊 critically hits the スナップジョー! (x2)", "熊はスナップジョーに会心の一撃！ (x2)")]
+    // Color-wrapped
+    [TestCase("{{W|The 熊 hits the スナップジョー (x3) with a 矢 for 10 damage!}}", "{{W|熊は矢でスナップジョーに10ダメージを与えた！ (x3)}}")]
+    public void Translate_MissileHit3PAttacks3P(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Missile Fail to Penetrate Family ---
+
+    [TestCase("The 熊's 矢 fails to penetrate the スナップジョー's armor [5]!", "熊の矢はスナップジョーの装甲を貫けなかった！ [5]")]
+    [TestCase("The 熊's 矢 fails to penetrate the スナップジョー's armor!", "熊の矢はスナップジョーの装甲を貫けなかった！")]
+    [TestCase("The 熊 fails to penetrate the スナップジョー's armor [3]!", "熊はスナップジョーの装甲を貫けなかった！ [3]")]
+    [TestCase("The 熊's 矢 fails to penetrate your armor [3]!", "熊の矢はあなたの装甲を貫けなかった！ [3]")]
+    [TestCase("The 熊's 矢 fails to penetrate your armor!", "熊の矢はあなたの装甲を貫けなかった！")]
+    [TestCase("The 熊 fails to penetrate your armor!", "熊はあなたの装甲を貫けなかった！")]
+    // Color-wrapped
+    [TestCase("{{g|The 熊's 矢 fails to penetrate your armor [3]!}}", "{{g|熊の矢はあなたの装甲を貫けなかった！ [3]}}")]
+    public void Translate_MissileFailPenetrateFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Suppressive/Flattening Fire Family ---
+
+    [TestCase("The 熊's suppressive fire locks the スナップジョー in place.", "熊の制圧射撃がスナップジョーをその場に釘付けにした")]
+    [TestCase("The 熊's flattening fire drops the スナップジョー to the ground!", "熊の制圧射撃がスナップジョーを地面に叩き伏せた！")]
+    // Color-wrapped
+    [TestCase("{{g|The 熊's suppressive fire locks the スナップジョー in place.}}", "{{g|熊の制圧射撃がスナップジョーをその場に釘付けにした}}")]
+    public void Translate_SuppressiveFireFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Wound/Disorient Family ---
+
+    [TestCase("You wound the 熊.", "熊に深手を負わせた")]
+    [TestCase("The 熊 wounds the スナップジョー.", "熊はスナップジョーに深手を負わせた")]
+    [TestCase("You disorient the 熊.", "熊を混乱させた")]
+    [TestCase("The 熊 disorients the スナップジョー.", "熊はスナップジョーを混乱させた")]
+    // Color-wrapped
+    [TestCase("{{r|You wound the 熊.}}", "{{r|熊に深手を負わせた}}")]
+    public void Translate_WoundDisorientFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Wild Shot Family ---
+
+    [TestCase("Your shot goes wild!", "あなたの弾が逸れた！")]
+    [TestCase("The 熊's shot goes wild!", "熊の弾が逸れた！")]
+    // Color-wrapped
+    [TestCase("{{R|Your shot goes wild!}}", "{{R|あなたの弾が逸れた！}}")]
+    public void Translate_WildShotFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Pass By Family ---
+
+    [TestCase("The 矢 whizzes past to the north.", "矢がto the northのそばを通り過ぎた")]
+    [TestCase("The 矢 flies past to the south.", "矢がto the southのそばを通り過ぎた")]
+    // Color-wrapped
+    [TestCase("{{r|The 矢 whizzes past to the north.}}", "{{r|矢がto the northのそばを通り過ぎた}}")]
+    public void Translate_PassByFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Door Open/Close/Unlock Family ---
+
+    [TestCase("You cannot open the 扉.", "扉を開けられない")]
+    [TestCase("You are out of phase with the 扉.", "扉と位相がずれている")]
+    [TestCase("You cannot reach the 扉.", "扉に手が届かない")]
+    [TestCase("You can't unlock the 扉 from a distance.", "離れた位置から扉の鍵を開けることはできない")]
+    [TestCase("You can't unlock the 扉.", "扉の鍵を開けられない")]
+    [TestCase("The 鍵 unlocks the 扉.", "鍵が扉の鍵を開けた")]
+    [TestCase("You interface with the 扉 and unlock it.", "扉にインターフェースで接続して鍵を開けた")]
+    [TestCase("The 扉 cannot be closed.", "扉は閉められない")]
+    [TestCase("You cannot close the 扉.", "扉を閉められない")]
+    [TestCase("The 扉 cannot be closed with you in the way.", "あなたが邪魔で扉を閉められない")]
+    [TestCase("The 扉 cannot be closed with the 熊 in the way.", "熊が邪魔で扉を閉められない")]
+    [TestCase("You lay your hand upon the 扉 and draw forth its passcode. You enter the code and the 扉 unlocks.", "扉に手を当ててパスコードを読み取った。コードを入力すると扉の鍵が開いた")]
+    // Color-wrapped
+    [TestCase("{{r|You cannot open the 扉.}}", "{{r|扉を開けられない}}")]
+    [TestCase("{{r|You can't unlock the 扉.}}", "{{r|扉の鍵を開けられない}}")]
+    [TestCase("{{r|The 扉 cannot be closed.}}", "{{r|扉は閉められない}}")]
+    public void Translate_DoorFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Nosebleed Family ---
+
+    [TestCase("Your nose begins bleeding more heavily.", "あなたの鼻からさらに激しくbleedingが始まった")]
+    [TestCase("Your nose begins bleeding.", "あなたの鼻からbleedingが始まった")]
+    [TestCase("Your nose stops bleeding quite so heavily.", "あなたの鼻からのbleedingが少し治まった")]
+    [TestCase("Your nose stops bleeding.", "あなたの鼻からのbleedingが止まった")]
+    [TestCase("The 熊's nose begins bleeding.", "熊の鼻からbleedingが始まった")]
+    [TestCase("The 熊's nose stops bleeding.", "熊の鼻からのbleedingが止まった")]
+    [TestCase("The 熊's noses begin bleeding more heavily.", "熊の鼻からさらに激しくbleedingが始まった")]
+    [TestCase("The 熊's noses stop bleeding quite so heavily.", "熊の鼻からのbleedingが少し治まった")]
+    // Color-wrapped
+    [TestCase("{{r|Your nose begins bleeding.}}", "{{r|あなたの鼻からbleedingが始まった}}")]
+    public void Translate_NosebleedFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Harvest Family ---
+
+    [TestCase("You harvest a ウィッチウッド from the 木.", "木からウィッチウッドを収穫した")]
+    [TestCase("You harvest three ウィッチウッド from the 木.", "木からthree個のウィッチウッドを収穫した")]
+    [TestCase("You harvest a ウィッチウッド.", "ウィッチウッドを収穫した")]
+    [TestCase("There is nothing left to harvest.", "収穫できるものが残っていない")]
+    [TestCase("The 熊 harvests a ウィッチウッド from the 木.", "熊は木からウィッチウッドを収穫した")]
+    [TestCase("The 熊 harvests three ウィッチウッド from the 木.", "熊は木からthree個のウィッチウッドを収穫した")]
+    // Color-wrapped
+    [TestCase("{{g|You harvest a ウィッチウッド from the 木.}}", "{{g|木からウィッチウッドを収穫した}}")]
+    public void Translate_HarvestFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
     // --- Edge cases (required for all families) ---
 
     [Test]
