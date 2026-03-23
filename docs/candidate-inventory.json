@@ -19131,13 +19131,16 @@
       "file": "XRL.World.Effects/Nosebleed.cs",
       "id": "XRL.World.Effects/Nosebleed.cs::L93:C5",
       "line": 93,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Object.Poss(\"noses\") + \" begin \" + CirculatoryLossTerm + \" more heavily.\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: false, null, Object)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Poss} nose(s) begin(s) {CirculatoryLossTerm} more heavily.' CirculatoryLossTerm varies by liquid type (bleeding/oozing/etc). Flows through AddPlayerMessage. Regex: ^(.+?) (noses?) begins? (.+) more heavily\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 5,
@@ -19145,13 +19148,16 @@
       "file": "XRL.World.Effects/Nosebleed.cs",
       "id": "XRL.World.Effects/Nosebleed.cs::L97:C5",
       "line": 97,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Object.Poss(\"noses\") + \" begin \" + CirculatoryLossTerm + \".\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: false, null, Object)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Poss} nose(s) begin(s) {CirculatoryLossTerm}.' CirculatoryLossTerm varies by liquid type. Flows through AddPlayerMessage. Regex: ^(.+?) (noses?) begins? (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 4,
@@ -19159,13 +19165,16 @@
       "file": "XRL.World.Effects/Nosebleed.cs",
       "id": "XRL.World.Effects/Nosebleed.cs::L102:C4",
       "line": 102,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Object.Poss(\"nose\") + \" begins \" + CirculatoryLossTerm + \" more heavily.\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: false, null, Object)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Poss} nose(s) begin(s) {CirculatoryLossTerm} more heavily.' CirculatoryLossTerm varies by liquid type (bleeding/oozing/etc). Flows through AddPlayerMessage. Regex: ^(.+?) (noses?) begins? (.+) more heavily\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 4,
@@ -19173,13 +19182,16 @@
       "file": "XRL.World.Effects/Nosebleed.cs",
       "id": "XRL.World.Effects/Nosebleed.cs::L106:C4",
       "line": 106,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Object.Poss(\"nose\") + \" begins \" + CirculatoryLossTerm + \".\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: false, null, Object)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Poss} nose(s) begin(s) {CirculatoryLossTerm}.' CirculatoryLossTerm varies by liquid type. Flows through AddPlayerMessage. Regex: ^(.+?) (noses?) begins? (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 5,
@@ -19187,13 +19199,16 @@
       "file": "XRL.World.Effects/Nosebleed.cs",
       "id": "XRL.World.Effects/Nosebleed.cs::L120:C5",
       "line": 120,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Object.Poss(\"noses\") + \" stop \" + CirculatoryLossTerm + \" quite so heavily.\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: false, Object)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Poss} nose(s) stop(s) {CirculatoryLossTerm} quite so heavily.' Flows through AddPlayerMessage. Regex: ^(.+?) (noses?) stops? (.+) quite so heavily\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 5,
@@ -19201,13 +19216,16 @@
       "file": "XRL.World.Effects/Nosebleed.cs",
       "id": "XRL.World.Effects/Nosebleed.cs::L124:C5",
       "line": 124,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Object.Poss(\"noses\") + \" stop \" + CirculatoryLossTerm + \".\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: false, Object)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Poss} nose(s) stop(s) {CirculatoryLossTerm}.' Flows through AddPlayerMessage. Regex: ^(.+?) (noses?) stops? (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 4,
@@ -19215,13 +19233,16 @@
       "file": "XRL.World.Effects/Nosebleed.cs",
       "id": "XRL.World.Effects/Nosebleed.cs::L129:C4",
       "line": 129,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Object.Poss(\"nose\") + \" stops \" + CirculatoryLossTerm + \" quite so heavily.\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: false, Object)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Poss} nose(s) stop(s) {CirculatoryLossTerm} quite so heavily.' Flows through AddPlayerMessage. Regex: ^(.+?) (noses?) stops? (.+) quite so heavily\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 4,
@@ -19229,13 +19250,16 @@
       "file": "XRL.World.Effects/Nosebleed.cs",
       "id": "XRL.World.Effects/Nosebleed.cs::L133:C4",
       "line": 133,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Object.Poss(\"nose\") + \" stops \" + CirculatoryLossTerm + \".\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: false, Object)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Poss} nose(s) stop(s) {CirculatoryLossTerm}.' Flows through AddPlayerMessage. Regex: ^(.+?) (noses?) stops? (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 5,
@@ -19747,13 +19771,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L388:C5",
       "line": 388,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You cannot open \" + ParentObject.t() + Reason + \".\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You cannot open {door} {reason}.' Flows through AddPlayerMessage. Regex: ^You cannot open (.+?)( because .+)?\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 5,
@@ -19761,13 +19788,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L396:C5",
       "line": 396,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You are out of phase with \" + ParentObject.t() + \".\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You are out of phase with {door}.' Flows through AddPlayerMessage. Regex: ^You are out of phase with (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 5,
@@ -19775,13 +19805,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L404:C5",
       "line": 404,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You cannot reach \" + ParentObject.t() + \".\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You cannot reach {door}.' Flows through AddPlayerMessage. Regex: ^You cannot reach (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -19789,13 +19822,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L432:C9",
       "line": 432,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You can't unlock \" + ParentObject.t() + \" from a distance.\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You can\\'t unlock {door} from a distance.' Flows through AddPlayerMessage. Regex: ^You can't unlock (.+) from a distance\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 11,
@@ -19803,13 +19839,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L446:C11",
       "line": 446,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, obj2.Does(\"unlock\", int.MaxValue, null, null, null, AsIfKnown: false, Single: true) + \" \" + ParentObject.t() + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{key} unlocks {door}.' Uses Does('unlock') for subject. Flows through AddPlayerMessage. Regex: ^(.+?) unlocks (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 10,
@@ -19817,13 +19856,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L461:C10",
       "line": 461,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You interface with \" + ParentObject.t() + \" and unlock \" + ParentObject.them + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You interface with {door} and unlock {it/them}.' Flows through AddPlayerMessage. Regex: ^You interface with (.+) and unlock (\\w+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 10,
@@ -19831,13 +19873,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L475:C10",
       "line": 475,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You lay your hand upon \" + ParentObject.t() + \" and draw forth \" + ParentObject.its + \" passcode. You enter the code and \" + ParentObject.does(\"unlock\") + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You lay your hand upon {door} and draw forth {its} passcode. You enter the code and {door} unlocks.' Flows through AddPlayerMessage. Complex fixed pattern.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -19845,13 +19890,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L510:C8",
       "line": 510,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You can't unlock \" + ParentObject.t() + \".\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You can\\'t unlock {door}.' Flows through AddPlayerMessage. Regex: ^You can't unlock (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 5,
@@ -19859,13 +19907,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L630:C5",
       "line": 630,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, ParentObject.T() + \" cannot be closed.\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Door} cannot be closed.' Flows through AddPlayerMessage. Regex: ^(.+) cannot be closed\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 5,
@@ -19873,13 +19924,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L642:C5",
       "line": 642,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You cannot close \" + ParentObject.t() + Reason + \".\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You cannot close {door} {reason}.' Flows through AddPlayerMessage. Regex: ^You cannot close (.+?)( because .+)?\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -19887,13 +19941,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L657:C7",
       "line": 657,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, ParentObject.T() + \" cannot be closed with \" + (gameObject.IsPlayer() ? \"you\" : gameObject.t()) + \" in the way.\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Door} cannot be closed with {obj} in the way.' Flows through AddPlayerMessage. Regex: ^(.+) cannot be closed with (.+) in the way\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -19901,13 +19958,16 @@
       "file": "XRL.World.Parts/Door.cs",
       "id": "XRL.World.Parts/Door.cs::L692:C9",
       "line": 692,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Actor, ParentObject.T() + \" cannot be closed with \" + (gameObject2.IsPlayer() ? \"you\" : gameObject2.t()) + \" in the way to the \" + Directions.GetExpandedDirection(cell.GetDirectionFromCell(cell2)) + \".\", ' ', FromDialog: false, UsePopups || UsePopupsForFailures)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Door} cannot be closed with {obj} in the way to the {direction}.' Flows through AddPlayerMessage. Regex with direction component.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 4,
@@ -20083,13 +20143,16 @@
       "file": "XRL.World.Parts/Harvestable.cs",
       "id": "XRL.World.Parts/Harvestable.cs::L316:C7",
       "line": 316,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(who, \"You harvest \" + gameObject2.an() + ((text == null) ? \"\" : (\" from \" + text)) + \".\", ' ', !Automatic)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You harvest {item} [from {direction}].' Flows through AddPlayerMessage. Regex: ^You harvest (.+?)( from .+)?\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20097,13 +20160,16 @@
       "file": "XRL.World.Parts/Harvestable.cs",
       "id": "XRL.World.Parts/Harvestable.cs::L320:C7",
       "line": 320,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(who, \"You harvest \" + Grammar.Cardinal(num) + \" \" + gameObject2.ShortDisplayName + ((text == null) ? \"\" : (\" from \" + text)) + \".\", ' ', !Automatic)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You harvest {N} {items} [from {direction}].' (already plural item name) Flows through AddPlayerMessage. Regex: ^You harvest (\\w+) (.+?)( from .+)?\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20111,13 +20177,16 @@
       "file": "XRL.World.Parts/Harvestable.cs",
       "id": "XRL.World.Parts/Harvestable.cs::L324:C7",
       "line": 324,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(who, \"You harvest \" + Grammar.Cardinal(num) + \" \" + Grammar.Pluralize(gameObject2.ShortDisplayName) + ((text == null) ? \"\" : (\" from \" + text)) + \".\", ' ', !Automatic)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You harvest {N} {item_plural} [from {direction}].' Flows through AddPlayerMessage. Regex: ^You harvest (\\w+) (.+?)( from .+)?\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20125,13 +20194,16 @@
       "file": "XRL.World.Parts/Harvestable.cs",
       "id": "XRL.World.Parts/Harvestable.cs::L331:C7",
       "line": 331,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(who, who.Does(\"harvest\") + \" \" + gameObject2.an() + ((text == null) ? \"\" : (\" from \" + text)) + \".\", ' ', !Automatic)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} harvests {item} [from {direction}].' NPC variant. Flows through AddPlayerMessage. Regex: ^(.+?) harvests (.+?)( from .+)?\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20139,13 +20211,16 @@
       "file": "XRL.World.Parts/Harvestable.cs",
       "id": "XRL.World.Parts/Harvestable.cs::L335:C7",
       "line": 335,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(who, who.Does(\"harvest\") + \" \" + Grammar.Cardinal(num) + \" \" + gameObject2.ShortDisplayName + ((text == null) ? \"\" : (\" from \" + text)) + \".\", ' ', !Automatic)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} harvests {N} {items} [from {direction}].' NPC variant. Flows through AddPlayerMessage. Regex: ^(.+?) harvests (\\w+) (.+?)( from .+)?\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20153,13 +20228,16 @@
       "file": "XRL.World.Parts/Harvestable.cs",
       "id": "XRL.World.Parts/Harvestable.cs::L339:C7",
       "line": 339,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(who, who.Does(\"harvest\") + \" \" + Grammar.Cardinal(num) + \" \" + Grammar.Pluralize(gameObject2.ShortDisplayName) + ((text == null) ? \"\" : (\" from \" + text)) + \".\", ' ', !Automatic)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} harvests {N} {item_plural} [from {direction}].' NPC variant. Flows through AddPlayerMessage. Regex: ^(.+?) harvests (\\w+) (.+?)( from .+)?\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 4,
@@ -20167,13 +20245,16 @@
       "file": "XRL.World.Parts/Harvestable.cs",
       "id": "XRL.World.Parts/Harvestable.cs::L358:C4",
       "line": 358,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(who, \"There is nothing left to harvest.\", ' ', !Automatic)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'There is nothing left to harvest.' Fixed string. Flows through AddPlayerMessage. Regex: ^There is nothing left to harvest\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 4,
@@ -20363,13 +20444,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1678:C7",
       "line": 1678,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(text + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == MessageAsFrom) ? MessageAsFrom.itself : Defender.t()) + \" in a vital area.\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} hits {target} in a vital area.' \u2014 weapon-as-subject variant. Flows through AddPlayerMessage. Regex: ^(.+?) hits (.+) in a vital area\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20377,13 +20461,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1682:C7",
       "line": 1682,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(\"You hit \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" in a vital area.\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You hit {target} in a vital area.' Flows through AddPlayerMessage. Regex: ^You hit (.+) in a vital area\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20391,13 +20478,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1783:C7",
       "line": 1783,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(text + MessageAsFrom.GetVerb(\"fail\") + \" to penetrate \" + Defender.poss(\"armor\") + \" with \" + MessageAsFrom.its_(Projectile) + OutcomeMessageFragment + \"!\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} fail(s) to penetrate {target}\\'s armor [with projectile][outcome]!' Flows through AddPlayerMessage. Regex for fail-penetrate-armor family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20405,13 +20495,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1787:C7",
       "line": 1787,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Owner.Poss(Projectile) + Projectile.GetVerb(\"fail\") + \" to penetrate \" + Defender.poss(\"armor\") + OutcomeMessageFragment + \"!\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} fail(s) to penetrate {target}\\'s armor [with projectile][outcome]!' Flows through AddPlayerMessage. Regex for fail-penetrate-armor family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20419,13 +20512,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1794:C7",
       "line": 1794,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(text + MessageAsFrom.GetVerb(\"fail\") + \" to penetrate your armor with \" + MessageAsFrom.its_(Projectile) + OutcomeMessageFragment + \"!\", 'g', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} fail(s) to penetrate your armor [with projectile][outcome]!' Flows through AddPlayerMessage. Regex for fail-penetrate-your-armor family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20433,13 +20529,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1798:C7",
       "line": 1798,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Owner.Poss(Projectile) + Projectile.GetVerb(\"fail\") + \" to penetrate your armor\" + OutcomeMessageFragment + \"!\", 'g', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} fail(s) to penetrate your armor [with projectile][outcome]!' Flows through AddPlayerMessage. Regex for fail-penetrate-your-armor family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20447,13 +20546,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1836:C8",
       "line": 1836,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, Grammar.MakePossessive(text) + \" suppressive fire locks \" + Defender.t() + \" in place.\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Possessive} suppressive fire locks {target} in place.' Flows through AddPlayerMessage. Regex: ^(.+?) suppressive fire locks (.+) in place\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20461,13 +20563,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1840:C8",
       "line": 1840,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Attacker, Attacker.Poss(\"suppressive fire locks \") + Defender.t() + \" in place.\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Possessive} suppressive fire locks {target} in place.' Flows through AddPlayerMessage. Regex: ^(.+?) suppressive fire locks (.+) in place\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20475,13 +20580,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1849:C9",
       "line": 1849,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, Grammar.MakePossessive(text) + \" flattening fire drops \" + Defender.t() + \" to the ground!\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Possessive} flattening fire drops {target} to the ground!' Flows through AddPlayerMessage. Regex: ^(.+?) flattening fire drops (.+) to the ground!$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20489,13 +20597,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1853:C9",
       "line": 1853,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Attacker, Attacker.Poss(\"flattening fire drops \") + Defender.t() + \" to the ground!\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Possessive} flattening fire drops {target} to the ground!' Flows through AddPlayerMessage. Regex: ^(.+?) flattening fire drops (.+) to the ground!$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20503,13 +20614,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1866:C8",
       "line": 1866,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + MessageAsFrom.GetVerb(\"wound\") + \" \" + Defender.t() + \".\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} wound(s) {target}.' Flows through AddPlayerMessage. Regex: ^(.+?) wounds? (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20517,13 +20631,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1870:C8",
       "line": 1870,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Attacker, text2 + Attacker.GetVerb(\"wound\") + \" \" + Defender.t() + \".\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} wound(s) {target}.' Flows through AddPlayerMessage. Regex: ^(.+?) wounds? (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20531,13 +20648,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1878:C8",
       "line": 1878,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + MessageAsFrom.GetVerb(\"disorient\") + \" \" + Defender.t() + \".\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} disorient(s) {target}.' Flows through AddPlayerMessage. Regex: ^(.+?) disorients? (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20545,13 +20665,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L1882:C8",
       "line": 1882,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Attacker, text2 + Attacker.GetVerb(\"disorient\") + \" \" + Defender.t() + \".\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} disorient(s) {target}.' Flows through AddPlayerMessage. Regex: ^(.+?) disorients? (.+)\\.$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 10,
@@ -20559,13 +20682,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2018:C10",
       "line": 2018,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 10,
@@ -20573,13 +20699,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2022:C10",
       "line": 2022,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, \"Something hits \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'Something hits {target} [with projectile] [outcome/damage]'. Flows through AddPlayerMessage.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20587,13 +20716,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2027:C9",
       "line": 2027,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, \"You\" + text3 + \" hit \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You [critically] hit {target} with {projectile} [outcome].' Flows through AddPlayerMessage. Part of missile-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 10,
@@ -20601,13 +20733,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2039:C10",
       "line": 2039,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") with \" + Projectile.an() + \" for \" + damage.Amount + \" damage!\", Stat.GetResultColorChar(num6), FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 10,
@@ -20615,13 +20750,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2043:C10",
       "line": 2043,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, \"Something hits \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") with \" + Projectile.an() + \" for \" + damage.Amount + \" damage!\", Stat.GetResultColorChar(num6), FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'Something hits {target} [with projectile] [outcome/damage]'. Flows through AddPlayerMessage.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20629,13 +20767,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2048:C9",
       "line": 2048,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, text + MessageAsFrom.GetVerb(\"hit\") + \" something \" + Owner.DescribeDirectionToward(Defender) + \"!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} hits something {direction}.' Flows through AddPlayerMessage. Part of missile-hit-something family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20643,13 +20784,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2053:C8",
       "line": 2053,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, \"You\" + text3 + \" hit \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") with \" + Projectile.an() + \" for \" + damage.Amount + \" damage!\", Stat.GetResultColorChar(num6), FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You [critically] hit {target} (xN) with {projectile} for N damage!' Flows through AddPlayerMessage. Part of missile-hit-damage family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20657,13 +20801,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2057:C8",
       "line": 2057,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, \"You hit something \" + Owner.DescribeDirectionToward(Defender) + \"!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You [critically] hit {target} with {projectile} [outcome].' Flows through AddPlayerMessage. Part of missile-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20671,13 +20818,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2069:C9",
       "line": 2069,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" you with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20685,13 +20835,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2073:C9",
       "line": 2073,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" you\" + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20699,13 +20852,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2078:C8",
       "line": 2078,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Owner.Does(\"hit\", int.MaxValue, null, null, adverb) + \" you with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20713,13 +20869,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2082:C8",
       "line": 2082,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" you \" + Defender.DescribeDirectionFrom(Owner) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20727,13 +20886,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2089:C8",
       "line": 2089,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" you (x\" + num6 + \") with \" + Projectile.an() + \" for \" + damage.Amount + \" damage!\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20741,13 +20903,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2093:C8",
       "line": 2093,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" you (x\" + num6 + \") \" + Defender.DescribeDirectionFrom(Owner) + \" for \" + damage.Amount + \" damage!\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20755,13 +20920,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2098:C7",
       "line": 2098,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Owner.Does(\"hit\", int.MaxValue, null, null, adverb) + \" you (x\" + num6 + \") with \" + Projectile.an() + \" for \" + damage.Amount + \" damage!\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20769,13 +20937,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2102:C7",
       "line": 2102,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" you (x\" + num6 + \") \" + Defender.DescribeDirectionFrom(Owner) + \" for \" + damage.Amount + \" damage!\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20783,13 +20954,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2113:C9",
       "line": 2113,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20797,13 +20971,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2117:C9",
       "line": 2117,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" \" + The.Player.DescribeDirectionFrom(Owner) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20811,13 +20988,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2122:C8",
       "line": 2122,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Owner.Does(\"hit\", int.MaxValue, null, null, adverb) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20825,13 +21005,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2126:C8",
       "line": 2126,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" \" + The.Player.DescribeDirectionFrom(Owner) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20839,13 +21022,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2133:C8",
       "line": 2133,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") with \" + Projectile.an() + \" for \" + damage.Amount + \" damage!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20853,13 +21039,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2137:C8",
       "line": 2137,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") \" + The.Player.DescribeDirectionFrom(Owner) + \" for \" + damage.Amount + \" damage!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20867,13 +21056,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2142:C7",
       "line": 2142,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Owner.Does(\"hit\", int.MaxValue, null, null, adverb) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") with \" + Projectile.an() + \" for \" + damage.Amount + \" damage!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20881,13 +21073,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2146:C7",
       "line": 2146,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") \" + The.Player.DescribeDirectionFrom(Owner) + \" for \" + damage.Amount + \" damage!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 10,
@@ -20895,13 +21090,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2166:C10",
       "line": 2166,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 10,
@@ -20909,13 +21107,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2170:C10",
       "line": 2170,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" \" + Defender.DescribeDirectionFrom(Owner) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20923,13 +21124,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2175:C9",
       "line": 2175,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, \"You\" + text3 + \" hit \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You [critically] hit {target} with {projectile} [outcome].' Flows through AddPlayerMessage. Part of missile-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20937,13 +21141,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2185:C9",
       "line": 2185,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") with \" + Projectile.an() + \"!\", Stat.GetResultColorChar(num6), FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -20951,13 +21158,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2189:C9",
       "line": 2189,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + Projectile.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") \" + Defender.DescribeDirectionFrom(Owner) + \"!\", Stat.GetResultColorChar(num6), FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -20965,13 +21175,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2194:C8",
       "line": 2194,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + MessageAsFrom.GetVerb(\"hit\") + \" something \" + Owner.DescribeDirectionToward(Defender) + \"!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} hits something {direction}.' Flows through AddPlayerMessage. Part of missile-hit-something family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20979,13 +21192,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2199:C7",
       "line": 2199,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, \"You\" + text3 + \" hit \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") with \" + Projectile.an() + \"!\", Stat.GetResultColorChar(num6), FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You [critically] hit {target} with {projectile} [outcome].' Flows through AddPlayerMessage. Part of missile-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -20993,13 +21209,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2203:C7",
       "line": 2203,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, \"You hit something \" + Owner.DescribeDirectionToward(Defender) + \"!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: 'You [critically] hit {target} with {projectile} [outcome].' Flows through AddPlayerMessage. Part of missile-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -21007,13 +21226,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2214:C9",
       "line": 2214,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" you with \" + Projectile.an() + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -21021,13 +21243,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2218:C9",
       "line": 2218,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" you \" + Defender.DescribeDirectionToward(Owner) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21035,13 +21260,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2223:C8",
       "line": 2223,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Owner.Does(\"hit\", int.MaxValue, null, null, adverb) + \" you\" + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21049,13 +21277,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2227:C8",
       "line": 2227,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" you \" + Defender.DescribeDirectionToward(Owner) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21063,13 +21294,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2234:C8",
       "line": 2234,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + \" you with \" + Projectile.an() + \"! (x\" + num6 + \")\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{WeaponName}[ critically] you with {projectile}! (x{N})' \u2014 missing 'hits' verb likely due to pattern concat. NPC-attacks-you variant. Flows through AddPlayerMessage. Part of missile-hit-you family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21077,13 +21311,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2238:C8",
       "line": 2238,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" you \" + Defender.DescribeDirectionToward(Owner) + \"! (x\" + num6 + \")\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -21091,13 +21328,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2243:C7",
       "line": 2243,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Owner.Does(\"hit\", int.MaxValue, null, null, adverb) + \" you! (x\" + num6 + \")\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -21105,13 +21345,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2247:C7",
       "line": 2247,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" you \" + Defender.DescribeDirectionToward(Owner) + \"! (x\" + num6 + \")\", 'r', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits you [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for hit-you-with-projectile family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -21119,13 +21362,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2258:C9",
       "line": 2258,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 9,
@@ -21133,13 +21379,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2262:C9",
       "line": 2262,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" \" + The.Player.DescribeDirectionToward(Owner) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21147,13 +21396,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2267:C8",
       "line": 2267,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Owner.Does(\"hit\", int.MaxValue, null, null, adverb) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21161,13 +21413,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2271:C8",
       "line": 2271,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" \" + The.Player.DescribeDirectionToward(Owner) + OutcomeMessageFragment + \".\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21175,13 +21430,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2278:C8",
       "line": 2278,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(MessageAsFrom, text + text3 + MessageAsFrom.GetVerb(\"hit\") + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \"! (x\" + num6 + \")\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Subject} [critically] hits {target} [with projectile] [outcome/damage].' Flows through AddPlayerMessage. Part of missile-hit-third-party family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21189,13 +21447,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2282:C8",
       "line": 2282,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") \" + The.Player.DescribeDirectionToward(Owner) + \"!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -21203,13 +21464,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2287:C7",
       "line": 2287,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(Owner, Owner.Does(\"hit\", int.MaxValue, null, null, adverb) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \"! (x\" + num6 + \")\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -21217,13 +21481,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2291:C7",
       "line": 2291,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Projectile.Does(\"hit\", int.MaxValue, null, null, adverb, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" \" + ((Defender == Owner) ? Owner.itself : Defender.t()) + \" (x\" + num6 + \") \" + The.Player.DescribeDirectionToward(Owner) + \"!\", ' ', FromDialog: false, UsePopups)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Does('hit') building 'Subject hits target [with projectile] [outcome/damage]'. Flows through AddPlayerMessage. Pattern matchable with regex for third-party-hit family.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 7,
@@ -21237,7 +21504,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Message from CheckLoadAmmoEvent \u2014 text generated by ammo/weapon part at runtime. Flows through AddPlayerMessage (MessageLogPatch intercepts). Need runtime samples to add patterns."
     },
     {
       "column": 8,
@@ -21251,7 +21520,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Message2 from LoadAmmoEvent \u2014 text generated by ammo/weapon part at runtime. Flows through AddPlayerMessage (MessageLogPatch intercepts). Need runtime samples to add patterns."
     },
     {
       "column": 7,
@@ -21273,13 +21544,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L2590:C7",
       "line": 2590,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "EmitMessage(Attacker.Poss(\"shot\") + \" goes wild!\", ColorCoding.ConsequentialColorChar(null, Attacker), FromDialog: false, flag2)",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Pattern: '{Name}\\'s shot goes wild!' \u2014 NPC variant. Flows through AddPlayerMessage. Regex: ^(.+)'s shot goes wild!$",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 8,
@@ -21287,13 +21561,16 @@
       "file": "XRL.World.Parts/MissileWeapon.cs",
       "id": "XRL.World.Parts/MissileWeapon.cs::L3476:C8",
       "line": 3476,
-      "needs_review": false,
-      "needs_runtime": true,
+      "needs_review": true,
+      "needs_runtime": false,
       "pattern": "IComponent<GameObject>.EmitMessage(The.Player, Object4.Does(projectile3.PassByVerb, int.MaxValue, null, null, null, AsIfKnown: false, Single: false, NoConfusion: false, NoColor: false, Stripped: false, WithoutTitles: true, Short: true, BaseOnly: false, WithIndefiniteArticle: true) + \" past \" + The.Player.DescribeDirectionFrom(gameObject) + \".\")",
       "sink": "EmitMessage",
-      "status": "unresolved",
+      "status": "needs_patch",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": null,
+      "static_classification": "pattern_matchable",
+      "analysis_notes": "Uses Projectile.Does(PassByVerb) + ' past ' + direction. Flows through AddPlayerMessage. Pattern varies by PassByVerb (e.g. 'whizzes past', 'flies past'). Need runtime samples for verb variants.",
+      "intercepted_by": "MessageLogPatch (via AddPlayerMessage)"
     },
     {
       "column": 4,
@@ -21389,7 +21666,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Uses GameText.VariableReplace on blueprint-defined KeyObjectAccessMessage template. Template varies per object. Needs data-driven translation approach, not regex patterns."
     },
     {
       "column": 5,
@@ -21403,7 +21682,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Uses GameText.VariableReplace on blueprint-defined PsychometryAccessMessage template. Template varies per object. Needs data-driven translation approach."
     },
     {
       "column": 4,
@@ -21417,7 +21698,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Uses GameText.VariableReplace on blueprint-defined AccessFailureMessage template. Template varies per object. Needs data-driven translation approach."
     },
     {
       "column": 6,
@@ -21431,7 +21714,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Emits GameText.VariableReplace'd blueprint template (activate/deactivate success/failure message). Text content varies per blueprint. Flows through AddPlayerMessage. Needs data-driven approach."
     },
     {
       "column": 5,
@@ -21445,7 +21730,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Emits GameText.VariableReplace'd blueprint template (activate/deactivate success/failure message). Text content varies per blueprint. Flows through AddPlayerMessage. Needs data-driven approach."
     },
     {
       "column": 6,
@@ -21459,7 +21746,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Emits GameText.VariableReplace'd blueprint template (activate/deactivate success/failure message). Text content varies per blueprint. Flows through AddPlayerMessage. Needs data-driven approach."
     },
     {
       "column": 5,
@@ -21473,7 +21762,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Emits GameText.VariableReplace'd blueprint template (activate/deactivate success/failure message). Text content varies per blueprint. Flows through AddPlayerMessage. Needs data-driven approach."
     },
     {
       "column": 4,
@@ -21557,7 +21848,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Emits GameText.VariableReplace'd blueprint template. Text content varies per blueprint. Flows through AddPlayerMessage but content is data-driven."
     },
     {
       "column": 7,
@@ -21571,7 +21864,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Emits GameText.VariableReplace'd blueprint template. Text content varies per blueprint. Flows through AddPlayerMessage but content is data-driven."
     },
     {
       "column": 8,
@@ -21585,7 +21880,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Emits GameText.VariableReplace'd blueprint template. Text content varies per blueprint. Flows through AddPlayerMessage but content is data-driven."
     },
     {
       "column": 7,
@@ -21599,7 +21896,9 @@
       "sink": "EmitMessage",
       "status": "unresolved",
       "type": "Unresolved",
-      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence."
+      "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
+      "static_classification": "truly_dynamic",
+      "analysis_notes": "Emits GameText.VariableReplace'd blueprint template. Text content varies per blueprint. Flows through AddPlayerMessage but content is data-driven."
     },
     {
       "column": 6,
@@ -24111,12 +24410,14 @@
       "id": "XRL.World.Parts/PowerSwitch.cs::L693:C4",
       "line": 693,
       "needs_review": false,
-      "needs_runtime": true,
+      "needs_runtime": false,
       "pattern": "part.GetLongDescription(stringBuilder)",
       "sink": "GetShort/LongDescription",
-      "status": "unresolved",
+      "status": "not_applicable",
       "type": "Unresolved",
-      "runtime_reason": "Call targets a runtime-selected description or part instance, so the final text depends on object composition at runtime."
+      "runtime_reason": "Call targets a runtime-selected description or part instance, so the final text depends on object composition at runtime.",
+      "static_classification": "description_text",
+      "analysis_notes": "GetLongDescription call for activated ability stats display. Not a player message."
     },
     {
       "column": 29,
@@ -42745,7 +43046,7 @@
       "line": 1169,
       "needs_review": false,
       "needs_runtime": false,
-      "pattern": "Popup.PickOption(\"Choose a recipe\", text, Popup.SPACING_DARK_LINE.Replace('=', '÷'), \"Sounds/UI/ui_notification\", TupleUtilities<string, CookingRecipe>.GetFirstArray(list), null, null, null, null, null, null, 1, 72, defaultSelected, -1, AllowEscape: true, RespectOptionNewlines: true)",
+      "pattern": "Popup.PickOption(\"Choose a recipe\", text, Popup.SPACING_DARK_LINE.Replace('=', '\u00f7'), \"Sounds/UI/ui_notification\", TupleUtilities<string, CookingRecipe>.GetFirstArray(list), null, null, null, null, null, null, 1, 72, defaultSelected, -1, AllowEscape: true, RespectOptionNewlines: true)",
       "sink": "Popup",
       "status": "translated",
       "type": "Leaf"
@@ -53798,7 +54099,7 @@
       "line": 26,
       "needs_review": false,
       "needs_runtime": true,
-      "pattern": "checkboxText.SetText(value ? \"[■] \" : \"[ ] \")",
+      "pattern": "checkboxText.SetText(value ? \"[\u25a0] \" : \"[ ] \")",
       "sink": "SetText",
       "status": "unresolved",
       "type": "Unresolved",
@@ -55605,12 +55906,14 @@
       "id": "Qud.UI/MissileWeaponAreaInfo.cs::L67:C50",
       "line": 67,
       "needs_review": false,
-      "needs_runtime": true,
+      "needs_runtime": false,
       "pattern": "text.SetText(status.text)",
       "sink": "SetText",
-      "status": "unresolved",
+      "status": "not_applicable",
       "type": "Unresolved",
-      "runtime_reason": "UI field receives a computed value or external data payload; final visible text requires runtime evidence."
+      "runtime_reason": "UI field receives a computed value or external data payload; final visible text requires runtime evidence.",
+      "static_classification": "ui_element",
+      "analysis_notes": "SetText on UI status element; not a player message. Out of scope for message translation."
     },
     {
       "column": 3,
@@ -55832,7 +56135,7 @@
       "line": 105,
       "needs_review": false,
       "needs_runtime": true,
-      "pattern": "text.SetText((data.Value ? \"[{{W|■}}] \" : \"[ ] \") + \"{{W|\" + data.Title + \"}}\")",
+      "pattern": "text.SetText((data.Value ? \"[{{W|\u25a0}}] \" : \"[ ] \") + \"{{W|\" + data.Title + \"}}\")",
       "sink": "SetText",
       "status": "unresolved",
       "type": "Unresolved",
@@ -55846,7 +56149,7 @@
       "line": 109,
       "needs_review": false,
       "needs_runtime": true,
-      "pattern": "text.SetText((data.Value ? \"[■] \" : \"[ ] \") + data.Title)",
+      "pattern": "text.SetText((data.Value ? \"[\u25a0] \" : \"[ ] \") + data.Title)",
       "sink": "SetText",
       "status": "unresolved",
       "type": "Unresolved",
@@ -56639,7 +56942,7 @@
       "line": 291,
       "needs_review": false,
       "needs_runtime": false,
-      "pattern": "statBlockText.SetText(string.Format(\"{{{{K|{{{{g|STR:}}}}{0} ■ {{{{g|AGI}}}}: {1} ■ {{{{g|TOU}}}}: {2} ■ {{{{g|INT}}}}: {3} ■ {{{{g|WIL}}}}: {4} ■ {{{{g|EGO}}}}: {5}}}}}\", GO.GetStat(\"Strength\").Value, GO.GetStat(\"Agility\").Value, GO.GetStat(\"Toughness\").Value, GO.GetStat(\"Intelligence\").Value, GO.GetStat(\"Willpower\").Value, GO.GetStat(\"Ego\").Value))",
+      "pattern": "statBlockText.SetText(string.Format(\"{{{{K|{{{{g|STR:}}}}{0} \u25a0 {{{{g|AGI}}}}: {1} \u25a0 {{{{g|TOU}}}}: {2} \u25a0 {{{{g|INT}}}}: {3} \u25a0 {{{{g|WIL}}}}: {4} \u25a0 {{{{g|EGO}}}}: {5}}}}}\", GO.GetStat(\"Strength\").Value, GO.GetStat(\"Agility\").Value, GO.GetStat(\"Toughness\").Value, GO.GetStat(\"Intelligence\").Value, GO.GetStat(\"Willpower\").Value, GO.GetStat(\"Ego\").Value))",
       "sink": "SetText",
       "status": "translated",
       "type": "Template"
@@ -56843,7 +57146,7 @@
       "line": 157,
       "needs_review": false,
       "needs_runtime": false,
-      "pattern": "modBitCostText.SetText(modBitCostText.text + $\"\\n{{{{G|{'û'}}}}} {TinkeringHelpers.TinkeredItemShortDisplayName(blueprint)}\\n\")",
+      "pattern": "modBitCostText.SetText(modBitCostText.text + $\"\\n{{{{G|{'\u00fb'}}}}} {TinkeringHelpers.TinkeredItemShortDisplayName(blueprint)}\\n\")",
       "sink": "SetText",
       "status": "translated",
       "type": "Template"
@@ -56968,7 +57271,7 @@
       "line": 213,
       "needs_review": false,
       "needs_runtime": false,
-      "pattern": "modBitCostText.SetText(modBitCostText.text + $\"\\n{{{{G|{'û'}}}}} {TinkeringHelpers.TinkeredItemShortDisplayName(blueprint3)}\\n\")",
+      "pattern": "modBitCostText.SetText(modBitCostText.text + $\"\\n{{{{G|{'\u00fb'}}}}} {TinkeringHelpers.TinkeredItemShortDisplayName(blueprint3)}\\n\")",
       "sink": "SetText",
       "status": "translated",
       "type": "Template"
@@ -57281,7 +57584,7 @@
       "line": 739,
       "needs_review": false,
       "needs_runtime": true,
-      "pattern": "totalLabels[0].SetText(\"{{B|\" + TradeUI.FormatPrice(Totals[0], CostMultiple) + \" drams →}}\")",
+      "pattern": "totalLabels[0].SetText(\"{{B|\" + TradeUI.FormatPrice(Totals[0], CostMultiple) + \" drams \u2192}}\")",
       "sink": "SetText",
       "status": "unresolved",
       "type": "Unresolved",
@@ -57295,7 +57598,7 @@
       "line": 740,
       "needs_review": false,
       "needs_runtime": true,
-      "pattern": "totalLabels[1].SetText(\"{{B|← \" + TradeUI.FormatPrice(Totals[1], CostMultiple) + \" drams}}\")",
+      "pattern": "totalLabels[1].SetText(\"{{B|\u2190 \" + TradeUI.FormatPrice(Totals[1], CostMultiple) + \" drams}}\")",
       "sink": "SetText",
       "status": "unresolved",
       "type": "Unresolved",
