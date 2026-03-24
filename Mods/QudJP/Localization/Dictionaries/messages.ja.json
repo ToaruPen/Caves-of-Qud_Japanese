@@ -122,11 +122,6 @@
       "route": "emit-message"
     },
     {
-      "pattern": "^(.+) switches to aggressive stance[.!]?$",
-      "template": "{0}は攻撃態勢に入った。",
-      "route": "emit-message"
-    },
-    {
       "pattern": "^You take (\\d+) damage from (.+?)の freezing effect![.!]?$",
       "template": "{1}の凍結効果で{0}ダメージを受けた！",
       "route": "emit-message"
@@ -747,11 +742,6 @@
       "route": "emit-message"
     },
     {
-      "pattern": "^You wade through (?:a |an )?(.+?)[.!]?$",
-      "template": "{0}をかき分けて進んだ。",
-      "route": "emit-message"
-    },
-    {
       "pattern": "^A (.+?) appears here[.!]?$",
       "template": "{0}がここに現れた。",
       "route": "emit-message"
@@ -819,11 +809,6 @@
     {
       "pattern": "^The (.+?) takes (\\d+) damage from your poison![.!]?$",
       "template": "{0}はあなたの毒で{1}ダメージを受けた。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You sit down on the (.+?)[.!]?$",
-      "template": "{0}に腰を下ろした。",
       "route": "emit-message"
     },
     {
