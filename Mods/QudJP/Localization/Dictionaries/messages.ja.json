@@ -1355,6 +1355,171 @@
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) sets up (?:a |an |the )?(.+?)[.!]?$",
       "template": "{0}は{1}を設置した",
       "route": "emit-message"
+    },
+    {
+      "pattern": "^An image of (.+?) appears?\\.$",
+      "template": "{0}の映像が現れた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^You disarm (?:the |a |an )?(.+?)\\.$",
+      "template": "{0}を解除した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) rind softens while (.+?) recrystallizes?\\.$",
+      "template": "{0}の外皮が軟化し、{1}が再結晶化した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^You lock (?:the |a |an )?(.+)\\.$",
+      "template": "{0}を施錠した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^You unlock (?:the |a |an )?(.+)\\.$",
+      "template": "{0}を解錠した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^You open (?:the |a |an )?(.+)\\.$",
+      "template": "{0}を開けた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^You close (?:the |a |an )?(.+)\\.$",
+      "template": "{0}を閉めた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) noses? begins? (.+) more heavily\\.$",
+      "template": "{0}の鼻が激しく{1}し始めた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) noses? begins? (.+)\\.$",
+      "template": "{0}の鼻が{1}し始めた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) noses? stops? (.+)\\.$",
+      "template": "{0}の鼻の{1}が止まった。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^Your noses? begins? (.+) more heavily\\.$",
+      "template": "あなたの鼻が激しく{0}し始めた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^Your noses? begins? (.+)\\.$",
+      "template": "あなたの鼻が{0}し始めた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^Your noses? stops? (.+)\\.$",
+      "template": "あなたの鼻の{0}が止まった。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^You harvest (.+?) from (.+)\\.$",
+      "template": "{1}から{0}を収穫した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^You harvest (.+?)\\.$",
+      "template": "{0}を収穫した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) harvests? (.+?) from (.+)\\.$",
+      "template": "{0}が{2}から{1}を収穫した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) harvests? (.+?)\\.$",
+      "template": "{0}が{1}を収穫した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) fails? to penetrate (.+?)'s armor with (.+?)[!.](.*)$",
+      "template": "{0}は{2}で{1}の装甲を貫通できなかった！{3}",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) fails? to penetrate your armor with (.+?)[!.](.*)$",
+      "template": "{0}は{1}であなたの装甲を貫通できなかった！{2}",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) suppressive fire locks (.+) in place\\.$",
+      "template": "{0}の制圧射撃が{1}を釘付けにした。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) flattening fire drops (.+) to the ground!$",
+      "template": "{0}の鎮圧射撃が{1}を地面に叩き伏せた！",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) wounds? (.+)\\.$",
+      "template": "{0}が{1}を負傷させた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) disorients? (.+)\\.$",
+      "template": "{0}が{1}を混乱させた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?)'s shot goes wild!$",
+      "template": "{0}の射撃が逸れた！",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^Something hits (.+?) with (.+?) for (\\d+) damage[.!]?(.*)$",
+      "template": "何かが{1}で{0}に{2}ダメージを与えた。{3}",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) hits something (.+)\\.$",
+      "template": "{0}の射撃が{1}の何かに命中した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^Your shot goes wild!$",
+      "template": "あなたの射撃が逸れた！",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) hits you (.+?) for (\\d+) damage[.!]?(.*)$",
+      "template": "{0}があなたに{1}命中、{2}ダメージ！{3}",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) hits (.+?) (.+?) for (\\d+) damage[.!]?(.*)$",
+      "template": "{0}が{1}に{2}命中、{3}ダメージ！{4}",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) hits you (.+?)[!.] \\(x(\\d+)\\)$",
+      "template": "{0}があなたに{1}命中！ (x{2})",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) hits (.+?) (.+?)[!.] \\(x(\\d+)\\)$",
+      "template": "{0}が{1}に{2}命中！ (x{3})",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) noses? begins? to bleed\\.$",
+      "template": "{0}の鼻が出血し始めた。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^You rip (?:a |an |the )?(.+?) out of (?:the |a |an )?(.+?)\\.$",
+      "template": "{1}から{0}を引きちぎった。",
+      "route": "emit-message"
     }
   ]
 }

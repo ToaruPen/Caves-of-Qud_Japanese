@@ -1539,6 +1539,51 @@
       "verb": "were",
       "extra": "cracked",
       "text": "{subject}にひびが入った"
+    },
+    {
+      "verb": "are",
+      "extra": "no longer trading",
+      "text": "取引をやめた"
+    },
+    {
+      "verb": "are",
+      "extra": "no longer willing to trade",
+      "text": "取引する気がなくなった"
+    },
+    {
+      "verb": "are",
+      "extra": "out of ammo",
+      "text": "弾切れだ"
+    },
+    {
+      "verb": "verb",
+      "extra": "thinking out loud",
+      "text": "独り言を言った"
+    },
+    {
+      "verb": "do",
+      "extra": "not seem to be working",
+      "text": "動いていないようだ"
+    },
+    {
+      "verb": "go",
+      "extra": "into {{C|sleep mode}}",
+      "text": "{{C|スリープモード}}に入った"
+    },
+    {
+      "verb": "lack",
+      "extra": "the energy to fire",
+      "text": "発射するエネルギーが足りない"
+    },
+    {
+      "verb": "were",
+      "extra": "reduced to dust",
+      "text": "塵に還った"
+    },
+    {
+      "verb": "fall",
+      "extra": "{{C|asleep}}",
+      "text": "{{C|眠りに落ちた}}"
     }
   ],
   "tier3": [
@@ -1988,11 +2033,6 @@
       "text": "{0}の水溜まりを吐き出した"
     },
     {
-      "verb": "stare",
-      "extra": "at {0} menacingly",
-      "text": "{0}を睨みつけた"
-    },
-    {
       "verb": "start",
       "extra": "reacting with the {0}",
       "text": "{0}と反応し始めた"
@@ -2121,6 +2161,176 @@
       "verb": "wince",
       "extra": "",
       "text": "{subject}はたじろいだ"
+    },
+    {
+      "verb": "begin",
+      "extra": "{0}",
+      "text": "{0}が始まった"
+    },
+    {
+      "verb": "stop",
+      "extra": "{0}",
+      "text": "{0}が止まった"
+    },
+    {
+      "verb": "try",
+      "extra": ", but {0} dodge",
+      "text": "試みたが、{0}がかわした"
+    },
+    {
+      "verb": "try",
+      "extra": ", but {0} pass through {1}",
+      "text": "試みたが、{0}が{1}をすり抜けた"
+    },
+    {
+      "verb": "try",
+      "extra": "to engulf {0}, but fail",
+      "text": "{0}を飲み込もうとしたが失敗した"
+    },
+    {
+      "verb": "beat",
+      "extra": "at the flames with {0} {1}",
+      "text": "{0}{1}で炎を叩いた"
+    },
+    {
+      "verb": "clasp",
+      "extra": "{0} pistols eagerly",
+      "text": "{0}ピストルを熱心に握りしめた"
+    },
+    {
+      "verb": "recharge",
+      "extra": "{0} {1} of electrical charge from the damage",
+      "text": "ダメージから{0}{1}の電荷を回復した"
+    },
+    {
+      "verb": "drink",
+      "extra": "and recharge {0} {1} of electrical charge",
+      "text": "そして{0}{1}の電荷を回復した"
+    },
+    {
+      "verb": "attempt",
+      "extra": "on {0}",
+      "text": "{0}で試みた"
+    },
+    {
+      "verb": "were",
+      "extra": "decapitated by {0}",
+      "text": "{0}に首を刎ねられた"
+    },
+    {
+      "verb": "were",
+      "extra": "relieved of your vital anatomy by {0}",
+      "text": "{0}に重要な器官を奪われた"
+    },
+    {
+      "verb": "don't",
+      "extra": "have enough drams to make that trade",
+      "text": "その取引に必要なドラムを持っていない"
+    },
+    {
+      "verb": "don't",
+      "extra": "have enough reputation to make that trade",
+      "text": "その取引に必要な評判がない"
+    },
+    {
+      "verb": "don't",
+      "extra": "penetrate {0} armor with {1}",
+      "text": "{1}で{0}の装甲を貫通できなかった"
+    },
+    {
+      "verb": "fall",
+      "extra": "to the ground; you pick {0} up",
+      "text": "地面に落ちた。あなたはそれを拾った"
+    },
+    {
+      "verb": "fall",
+      "extra": "to the ground; you scoop {0} up",
+      "text": "地面に落ちた。あなたはそれをすくい上げた"
+    },
+    {
+      "verb": "impale",
+      "extra": "{0} on {1}",
+      "text": "{1}に{0}を突き刺した"
+    },
+    {
+      "verb": "kick",
+      "extra": "at {0}, but the kick passes through {1}",
+      "text": "{0}を蹴ろうとしたが、蹴りは{1}をすり抜けた"
+    },
+    {
+      "verb": "kick",
+      "extra": "{0} backwards",
+      "text": "{0}を後方に蹴り飛ばした"
+    },
+    {
+      "verb": "do",
+      "extra": "not want to consume {0}",
+      "text": "{0}を消費したくない"
+    },
+    {
+      "verb": "do",
+      "extra": "not want {0} applied to {1}",
+      "text": "{1}に{0}を適用したくない"
+    },
+    {
+      "verb": "reflect",
+      "extra": "{0} damage back at {1}",
+      "text": "{0}ダメージを{1}に反射した"
+    },
+    {
+      "verb": "reflect",
+      "extra": "{0} damage back at you",
+      "text": "{0}ダメージをあなたに反射した"
+    },
+    {
+      "verb": "fail",
+      "extra": "to deal damage with {0} attack",
+      "text": "{0}攻撃でダメージを与えられなかった"
+    },
+    {
+      "verb": "fail",
+      "extra": "to penetrate {0} armor and{1} destroyed",
+      "text": "{0}装甲を貫通できず、破壊された"
+    },
+    {
+      "verb": "drop",
+      "extra": "{0} down {1}",
+      "text": "{0}を{1}に落とした"
+    },
+    {
+      "verb": "need",
+      "extra": "{0} before {1} can be fired again",
+      "text": "再発射まであと{0}が必要"
+    },
+    {
+      "verb": "need",
+      "extra": "water in {0}",
+      "text": "{0}に水が必要"
+    },
+    {
+      "verb": "press",
+      "extra": "{0} activation panel",
+      "text": "{0}の起動パネルを押した"
+    },
+    {
+      "verb": "attempt",
+      "extra": "to take advantage of {0} misfortune and shank {1}",
+      "text": "{0}の不運に乗じて{1}を刺そうとした"
+    },
+    {
+      "verb": "won't",
+      "extra": "let you bandage {0}",
+      "text": "あなたが{0}に包帯を巻くのを拒否した"
+    },
+    {
+      "verb": "rip",
+      "extra": "{0} out of {1}",
+      "text": "{1}から{0}を引きちぎった"
+    },
+    {
+      "verb": "step",
+      "extra": "on {0} and vibrate through spacetime",
+      "text": "{0}を踏んで時空を超えて振動した"
     }
   ]
 }
