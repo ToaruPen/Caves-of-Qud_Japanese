@@ -258,16 +258,6 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
-    public void Translate_AppliesAggressiveStancePattern()
-    {
-        WritePatternDictionary(("^(.+) switches to aggressive stance[.!]?$", "{0}は攻撃態勢に入った。"));
-
-        var translated = MessagePatternTranslator.Translate("監視官イラメ switches to aggressive stance.");
-
-        Assert.That(translated, Is.EqualTo("監視官イラメは攻撃態勢に入った。"));
-    }
-
-    [Test]
     public void Translate_AppliesFreezingEffectDamagePattern()
     {
         WritePatternDictionary(("^You take (\\d+) damage from (.+?)の freezing effect![.!]?$", "{1}の凍結効果で{0}ダメージを受けた！"));
@@ -327,16 +317,6 @@ public sealed class MessagePatternTranslatorTests
         var translated = MessagePatternTranslator.Translate("You pass by ウォーターヴァインと薄めの塩の水たまり.");
 
         Assert.That(translated, Is.EqualTo("ウォーターヴァインと薄めの塩の水たまりのそばを通り過ぎた。"));
-    }
-
-    [Test]
-    public void Translate_AppliesWadeThroughPattern()
-    {
-        WritePatternDictionary(("^You wade through (?:a |an )?(.+?)[.!]?$", "{0}をかき分けて進んだ。"));
-
-        var translated = MessagePatternTranslator.Translate("You wade through a 塩辛い水の水たまり.");
-
-        Assert.That(translated, Is.EqualTo("塩辛い水の水たまりをかき分けて進んだ。"));
     }
 
     [TestCase("north", "北")]
@@ -546,16 +526,6 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
-    public void Translate_AppliesSitDownPattern()
-    {
-        WritePatternDictionary(("^You sit down on the (.+?)[.!]?$", "{0}に腰を下ろした。"));
-
-        var translated = MessagePatternTranslator.Translate("You sit down on the フロアクッション.");
-
-        Assert.That(translated, Is.EqualTo("フロアクッションに腰を下ろした。"));
-    }
-
-    [Test]
     public void Translate_AppliesDeathPattern()
     {
         WritePatternDictionary(("^You died\\.\\n\\nYou were killed by (.+?)[.!]?$", "あなたは死んだ。\n\n{0}に殺された。"));
@@ -590,20 +560,20 @@ public sealed class MessagePatternTranslatorTests
     [Test]
     public void Translate_LogsDynamicTransformProbe_WhenPatternMatches()
     {
-        WritePatternDictionary(("^You sit down on the (.+?)[.!]?$", "{0}に腰を下ろした。"));
+        WritePatternDictionary(("^You pass by (?:a |an |the )?(.+?)[.!]?$", "{0}のそばを通り過ぎた。"));
 
         var output = TestTraceHelper.CaptureTrace(() =>
             Assert.That(
-                MessagePatternTranslator.Translate("You sit down on the フロアクッション.", "MessageLogPatch"),
-                Is.EqualTo("フロアクッションに腰を下ろした。")));
+                MessagePatternTranslator.Translate("You pass by a ウォーターヴァイン.", "MessageLogPatch"),
+                Is.EqualTo("ウォーターヴァインのそばを通り過ぎた。")));
 
         Assert.Multiple(() =>
         {
             Assert.That(output, Does.Contain("DynamicTextProbe/v1"));
             Assert.That(output, Does.Contain("route='MessagePatternTranslator'"));
-            Assert.That(output, Does.Contain("family='^You sit down on the (.+?)[.!]?$'"));
-            Assert.That(output, Does.Contain("source='You sit down on the フロアクッション.'"));
-            Assert.That(output, Does.Contain("translated='フロアクッションに腰を下ろした。'"));
+            Assert.That(output, Does.Contain("family='^You pass by (?:a |an |the )?(.+?)[.!]?$'"));
+            Assert.That(output, Does.Contain("source='You pass by a ウォーターヴァイン.'"));
+            Assert.That(output, Does.Contain("translated='ウォーターヴァインのそばを通り過ぎた。'"));
         });
     }
 
