@@ -420,6 +420,20 @@ public sealed class DoesVerbFamilyTests
         AssertTranslated(input, expected);
     }
 
+    // --- Reviewed Does() Families ---
+
+    [TestCase("The 電池 is unpowered.", "電池は無電力だ。")]
+    [TestCase("The 商人 ponies up 5 drams of fresh water to even up the trade.", "商人は取引を釣り合わせるために真水を5ドラム支払った。")]
+    [TestCase("The 司書 provides some insightful commentary on 古代書.", "司書は古代書について示唆に富む解説をしてくれた。")]
+    [TestCase("The 回収装置 reclaims a 金属片.", "回収装置は金属片を回収した。")]
+    [TestCase("The 盗賊 bot snags your 光線銃!", "盗賊 botはあなたの光線銃をかすめ取った！")]
+    [TestCase("The 装置 needs 3 more rounds before it can be fired again.", "装置は再発射まであと3ラウンド必要だ。")]
+    [TestCase("The 商人 is already your follower. Do you want to beguile it anyway?", "商人はすでにあなたの仲間だ。それでも魅了するか？")]
+    public void Translate_ReviewedDoesFamilies(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
     // --- Detach Family ---
 
     [TestCase("The クローン detaches from you!", "クローンはあなたから分離した！")]
