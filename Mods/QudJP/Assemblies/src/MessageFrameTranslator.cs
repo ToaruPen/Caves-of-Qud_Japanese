@@ -389,7 +389,7 @@ internal static class MessageFrameTranslator
         int objectSlotCount,
         string pattern)
     {
-        if (PlaceholderPattern.Matches(pattern).Count == 0)
+        if (!PlaceholderPattern.IsMatch(pattern))
         {
             return CollectRegexCaptures(match, objectSlotCount);
         }
@@ -423,7 +423,7 @@ internal static class MessageFrameTranslator
 
     private static Regex CreateTemplateRegex(string pattern, int objectSlotCount)
     {
-        if (PlaceholderPattern.Matches(pattern).Count == 0)
+        if (!PlaceholderPattern.IsMatch(pattern))
         {
             return new Regex(
                 "^" + pattern + "$",
