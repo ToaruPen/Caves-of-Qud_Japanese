@@ -339,6 +339,8 @@ internal static class MessageFrameTranslator
         // even though they are shorter. Boost their score so they win over generic captures.
         if (ContainsOrdinal(pattern, " you,") || ContainsOrdinal(pattern, " you ")
             || pattern.EndsWith(" you", StringComparison.Ordinal)
+            || pattern.StartsWith("you ", StringComparison.Ordinal)
+            || string.Equals(pattern, "you", StringComparison.Ordinal)
             || ContainsOrdinal(pattern, "your "))
         {
             score += 100;
