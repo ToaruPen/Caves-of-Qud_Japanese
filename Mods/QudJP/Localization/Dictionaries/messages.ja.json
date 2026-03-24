@@ -1362,33 +1362,13 @@
       "route": "emit-message"
     },
     {
-      "pattern": "^You disarm (.+?)\\.$",
+      "pattern": "^You disarm (?:the |a |an )?(.+?)\\.$",
       "template": "{0}を解除した。",
       "route": "emit-message"
     },
     {
       "pattern": "^(.+?) rind softens while (.+?) recrystallizes?\\.$",
       "template": "{0}の外皮が軟化し、{1}が再結晶化した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You cannot open (.+?)( because .+)?\\.$",
-      "template": "{0}を開けられない{1}。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You cannot close (.+?)( because .+)?\\.$",
-      "template": "{0}を閉められない{1}。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You are out of phase with (.+)\\.$",
-      "template": "{0}と位相がずれている。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You cannot reach (.+)\\.$",
-      "template": "{0}に届かない。",
       "route": "emit-message"
     },
     {
@@ -1537,12 +1517,12 @@
       "route": "emit-message"
     },
     {
-      "pattern": "^You rip (.+?) out of (.+?) (.+)\\.$",
+      "pattern": "^You rip (?:a |an |the )?(.+?) out of (?:the |a |an )?(.+?) (.+)\\.$",
       "template": "{1}から{0}を{2}引きちぎった。",
       "route": "emit-message"
     },
     {
-      "pattern": "^You rip (.+?) out of (.+?)\\.$",
+      "pattern": "^You rip (?:a |an |the )?(.+?) out of (?:the |a |an )?(.+?)\\.$",
       "template": "{1}から{0}を引きちぎった。",
       "route": "emit-message"
     }

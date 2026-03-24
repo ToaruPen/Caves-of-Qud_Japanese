@@ -2273,11 +2273,6 @@
       "text": "{1}に{0}を適用したくない"
     },
     {
-      "verb": "harvest",
-      "extra": "{0}",
-      "text": "{0}を収穫した"
-    },
-    {
       "verb": "reflect",
       "extra": "{0} damage back at {1}",
       "text": "{0}ダメージを{1}に反射した"
@@ -2295,7 +2290,7 @@
     {
       "verb": "fail",
       "extra": "to penetrate {0} armor and{1} destroyed",
-      "text": "{0}装甲を貫通できず、{1}破壊された"
+      "text": "{0}装甲を貫通できず、破壊された"
     },
     {
       "verb": "drop",
@@ -2315,7 +2310,7 @@
     {
       "verb": "press",
       "extra": "{0} activation panel",
-      "text": "{0}起動パネルを押した"
+      "text": "{0}の起動パネルを押した"
     },
     {
       "verb": "attempt",
@@ -2328,19 +2323,9 @@
       "text": "あなたが{0}に包帯を巻くのを拒否した"
     },
     {
-      "verb": "butcher",
-      "extra": "{0} from {1}",
-      "text": "{1}から{0}を摘出した"
-    },
-    {
       "verb": "rip",
       "extra": "{0} out of {1}",
       "text": "{1}から{0}を引きちぎった"
-    },
-    {
-      "verb": "unlock",
-      "extra": "{0}",
-      "text": "{0}を解錠した"
     },
     {
       "verb": "step",
