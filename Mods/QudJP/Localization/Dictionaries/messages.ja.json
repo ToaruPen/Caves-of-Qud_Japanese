@@ -777,16 +777,6 @@
       "route": "emit-message"
     },
     {
-      "pattern": "^You crossed into the Thin World, rarefied, and stood before the gate to (.+?)\\.$",
-      "template": "希薄な薄界へ足を踏み入れ、{t0}への門前に立った。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You have received a new quest, (.+?)(!+)$",
-      "template": "新しいクエストを受けた: {0}{1}",
-      "route": "emit-message"
-    },
-    {
       "pattern": "^You harvest ((?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|\\d+)) (.+?) from (?:the |a |an )?(.+?)[.!]?$",
       "template": "{2}から{0}個の{1}を収穫した",
       "route": "emit-message"
@@ -992,64 +982,9 @@
       "route": "unclassified"
     },
     {
-      "pattern": "^You slew (.+?) and encoded their psyche's psionic bits on the holographic boundary of your own psyche\\.$",
-      "template": "{0}を倒し、その精神のサイオニック・ビットを自らの精神のホログラフィック境界面に刻み付けた。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You slew (.+?) and watched their psyche radiate into nothingness\\.$",
-      "template": "{0}を倒し、その精神が虚無へ放射されるのを見届けた。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You slew your bonded kith (.+?), violating the covenant of the water ritual and earning the emnity of all\\.$",
-      "template": "水の儀式で結ばれた同胞{0}を殺し、その誓約を破って全ての者の敵意を買った。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You slew (.+?)\\.$",
-      "template": "{0}を倒した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You read (.+?)\\.$",
-      "template": "{0}を読んだ。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You invented a mouthwatering dish called \\{\\{\\|(.+?)\\}\\}\\.$",
-      "template": "垂涎の料理「{{{{|{0}}}}}」を発明した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You imbued (.+?) with life\\. Why\\?$",
-      "template": "{0}に命を吹き込んだ。なぜ？",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You convinced (.+?) to join your cause\\.$",
-      "template": "{0}を説得し仲間に加えた。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You rebuked (.+?) into submission\\.$",
-      "template": "{0}を叱責して従わせた。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^Your heart sang at the sight of (.+?)\\.$",
-      "template": "{0}を見て心が歌った。",
-      "route": "emit-message"
-    },
-    {
       "pattern": "^Though your affection for (.+?) endowed you with a certain wisdom, you no longer feel the tug on your heartstrings\\.$",
       "template": "{0}への愛情がある種の知恵を授けてくれたが、もう心の琴線が揺れることはない。",
       "route": "unclassified"
-    },
-    {
-      "pattern": "^Your mind was stranded inside (.+?)\\.$",
-      "template": "あなたの精神は{0}の中に閉じ込められた。",
-      "route": "emit-message"
     },
     {
       "pattern": "^Your (.+?) (?:was|were) dismembered\\.$",
@@ -1072,79 +1007,14 @@
       "route": "unclassified"
     },
     {
-      "pattern": "^You contracted (.+?) on your (.+?), endearing (.+?) to (.+?)\\.$",
-      "template": "{1}に{0}を罹患し、{2}に対する{3}の好感を得た。",
-      "route": "emit-message"
-    },
-    {
       "pattern": "^(.+?) ogled you lovingly after you employed your charm\\.$",
       "template": "あなたの魅了術を受けて{0}がうっとりとこちらを見つめた。",
       "route": "unclassified"
     },
     {
-      "pattern": "^You woke from a long, convincing dream and returned to your life as the (.+?) (.+?)\\.$",
-      "template": "長く信じ込むような夢から目覚め、{0}の{1}としての日常に戻った。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You named (.+?) '(.+?)'\\.$",
-      "template": "{0}に「{1}」と名付けた。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^Your larva gestated and you gained the (.+?) mutation\\.$",
-      "template": "あなたの幼虫が成長し、{0}の変異を獲得した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^Your genome destabilized and you gained the (.+?) (.+?)\\.$",
-      "template": "あなたのゲノムが不安定になり、{0}の{1}を得た。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You discovered (.+?)\\.$",
-      "template": "{0}を発見した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You traveled to (.+?)\\.$",
-      "template": "{t0}に旅した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You located (.+?)\\.$",
-      "template": "{0}を発見した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You recovered (.+?)\\.$",
-      "template": "{0}を回収した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You ate (.+?)\\.$",
-      "template": "{0}を食べた。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You witnessed the rare formation of (.+?)\\.$",
-      "template": "珍しい{0}の形成を目撃した。",
-      "route": "emit-message"
-    },
-    {
       "pattern": "^With the help of Pax Klanq and the Barathrumites, you constructed (.+?)\\.$",
       "template": "パクス・クランクとバラスルム派の助けを借りて{0}を建造した。",
       "route": "unclassified"
-    },
-    {
-      "pattern": "^You installed (?:a |some )cybernetic (.+?) and committed (.+?) to (.+?)\\.$",
-      "template": "サイバネティック{0}を装着し、{1}を{2}に捧げた。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You started calling (.+?) '(.+?)'\\.$",
-      "template": "{0}を「{1}」と呼ぶことにした。",
-      "route": "emit-message"
     },
     {
       "pattern": "^(.+?) provided you with insightful commentary on (.+?)\\.$",
