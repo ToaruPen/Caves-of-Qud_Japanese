@@ -1083,6 +1083,26 @@
     {
       "key": "You annulled the plagues of the Gyre.\n\nThen you launched yourself into the dusted cosmos to ply the stars.",
       "text": "あなたは回転の疫病を無効化した。\n\nそして塵に覆われた宇宙へと飛び立ち、星々を渡ることにした。"
+    },
+    {
+      "key": "switch to modifications",
+      "context": "Qud.UI.TinkeringStatusScreen",
+      "text": "改造に切り替え"
+    },
+    {
+      "key": "switch to build",
+      "context": "Qud.UI.TinkeringStatusScreen",
+      "text": "製作に切り替え"
+    },
+    {
+      "key": "Fetching leaderboard",
+      "context": "Qud.UI.HighScoresScreen",
+      "text": "リーダーボードを取得中"
+    },
+    {
+      "key": "Empty leaderboard",
+      "context": "Qud.UI.HighScoresScreen",
+      "text": "リーダーボードは空です"
     }
   ]
 }
