@@ -1368,7 +1368,7 @@
     },
     {
       "pattern": "^(.+?) rind softens while (.+?) recrystallizes?\\.$",
-      "template": "{0}外皮が軟化し、{1}が再結晶化した。",
+      "template": "{0}の外皮が軟化し、{1}が再結晶化した。",
       "route": "emit-message"
     },
     {
@@ -1413,17 +1413,17 @@
     },
     {
       "pattern": "^(.+?) noses? begins? (.+) more heavily\\.$",
-      "template": "{0}鼻が激しく{1}し始めた。",
+      "template": "{0}の鼻が激しく{1}し始めた。",
       "route": "emit-message"
     },
     {
       "pattern": "^(.+?) noses? begins? (.+)\\.$",
-      "template": "{0}鼻が{1}し始めた。",
+      "template": "{0}の鼻が{1}し始めた。",
       "route": "emit-message"
     },
     {
       "pattern": "^(.+?) noses? stops? (.+)\\.$",
-      "template": "{0}鼻の{1}が止まった。",
+      "template": "{0}の鼻の{1}が止まった。",
       "route": "emit-message"
     },
     {
@@ -1442,13 +1442,23 @@
       "route": "emit-message"
     },
     {
-      "pattern": "^You harvest (.+?)( from .+)?\\.$",
-      "template": "{0}を収穫した{1}。",
+      "pattern": "^You harvest (.+?) from (.+)\\.$",
+      "template": "{1}から{0}を収穫した。",
       "route": "emit-message"
     },
     {
-      "pattern": "^(.+?) harvests? (.+?)( from .+)?\\.$",
-      "template": "{0}が{1}を収穫した{2}。",
+      "pattern": "^You harvest (.+?)\\.$",
+      "template": "{0}を収穫した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) harvests? (.+?) from (.+)\\.$",
+      "template": "{0}が{2}から{1}を収穫した。",
+      "route": "emit-message"
+    },
+    {
+      "pattern": "^(.+?) harvests? (.+?)\\.$",
+      "template": "{0}が{1}を収穫した。",
       "route": "emit-message"
     },
     {
@@ -1463,12 +1473,12 @@
     },
     {
       "pattern": "^(.+?) suppressive fire locks (.+) in place\\.$",
-      "template": "{0}制圧射撃が{1}を釘付けにした。",
+      "template": "{0}の制圧射撃が{1}を釘付けにした。",
       "route": "emit-message"
     },
     {
       "pattern": "^(.+?) flattening fire drops (.+) to the ground!$",
-      "template": "{0}鎮圧射撃が{1}を地面に叩き伏せた！",
+      "template": "{0}の鎮圧射撃が{1}を地面に叩き伏せた！",
       "route": "emit-message"
     },
     {
