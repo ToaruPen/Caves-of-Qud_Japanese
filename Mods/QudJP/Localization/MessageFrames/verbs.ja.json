@@ -2033,11 +2033,6 @@
       "text": "{0}の水溜まりを吐き出した"
     },
     {
-      "verb": "stare",
-      "extra": "at {0} menacingly",
-      "text": "{0}を睨みつけた"
-    },
-    {
       "verb": "start",
       "extra": "reacting with the {0}",
       "text": "{0}と反応し始めた"
@@ -2211,16 +2206,6 @@
       "verb": "drink",
       "extra": "and recharge {0} {1} of electrical charge",
       "text": "そして{0}{1}の電荷を回復した"
-    },
-    {
-      "verb": "release",
-      "extra": "a cloud of steam to cool off",
-      "text": "冷却のために蒸気の雲を放出した"
-    },
-    {
-      "verb": "release",
-      "extra": "a cloud of cryogenic mist to heat up",
-      "text": "加温のために極低温の霧を放出した"
     },
     {
       "verb": "attempt",

@@ -1532,28 +1532,18 @@
       "route": "emit-message"
     },
     {
-      "pattern": "^You butcher (.+?) from (.+?)( .+)?\\.$",
-      "template": "{1}から{0}を摘出した{2}。",
-      "route": "emit-message"
-    },
-    {
       "pattern": "^(.+?) noses? begins? to bleed\\.$",
       "template": "{0}の鼻が出血し始めた。",
       "route": "emit-message"
     },
     {
-      "pattern": "^You have no more ammo for (.+?)\\.$",
-      "template": "{0}の弾薬がもうない。",
+      "pattern": "^You rip (.+?) out of (.+?) (.+)\\.$",
+      "template": "{1}から{0}を{2}引きちぎった。",
       "route": "emit-message"
     },
     {
-      "pattern": "^You rip (.+?) out of (.+?)( .+)?\\.$",
-      "template": "{1}から{0}を引きちぎった{2}。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^The reacting liquids congeal into (.+?)\\.$",
-      "template": "反応した液体が{0}に凝固した。",
+      "pattern": "^You rip (.+?) out of (.+?)\\.$",
+      "template": "{1}から{0}を引きちぎった。",
       "route": "emit-message"
     }
   ]
