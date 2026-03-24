@@ -83,14 +83,10 @@ def read_candidate_inventory_with_legacy_statuses(path: Path) -> tuple[Inventory
 def build_verb_asset_index(path: Path) -> VerbAssetIndex:
     """Build a compiled lookup index from MessageFrames/verbs.ja.json."""
     payload = json.loads(path.read_text(encoding="utf-8"))
-    tier1_verbs = frozenset(
-        entry["verb"] for entry in payload.get("tier1", []) if isinstance(entry.get("verb"), str)
-    )
+    tier1_verbs = frozenset(entry["verb"] for entry in payload.get("tier1", []) if isinstance(entry.get("verb"), str))
     tier2_patterns = _compile_verb_patterns(payload.get("tier2", []))
     tier3_patterns = _compile_verb_patterns(payload.get("tier3", []))
-    known_verbs = frozenset(
-        pattern.verb for pattern in (*tier2_patterns, *tier3_patterns)
-    ) | tier1_verbs
+    known_verbs = frozenset(pattern.verb for pattern in (*tier2_patterns, *tier3_patterns)) | tier1_verbs
     return VerbAssetIndex(
         tier1_verbs=tier1_verbs,
         tier2_patterns=tier2_patterns,
@@ -131,9 +127,13 @@ def reconcile_inventory(
             else:
                 does_verb_promotions += 1
 
-        translated_by_verbs = reason in {"message-frame", "does-verb"} or _matches_message_frame_assets(
-            current_site, verb_index
-        ) or _matches_does_verb_assets(current_site, verb_index)
+        # Verb-based evidence is recorded even for baseline/already-translated sites
+        # that happen to match verb assets (hybrid coverage).
+        translated_by_verbs = (
+            reason in {"message-frame", "does-verb"}
+            or _matches_message_frame_assets(current_site, verb_index)
+            or _matches_does_verb_assets(current_site, verb_index)
+        )
 
         reconciled_sites.append(
             replace(
