@@ -23,6 +23,10 @@
       "text": "なった"
     },
     {
+      "verb": "arrive",
+      "text": "到着した"
+    },
+    {
       "verb": "assume",
       "text": "とった"
     },
@@ -315,6 +319,14 @@
       "text": "繰り出した"
     },
     {
+      "verb": "lay",
+      "text": "設置した"
+    },
+    {
+      "verb": "leave",
+      "text": "離れた"
+    },
+    {
       "verb": "lie",
       "text": "横になった"
     },
@@ -451,6 +463,10 @@
       "text": "感知した"
     },
     {
+      "verb": "set",
+      "text": "仕掛けた"
+    },
+    {
       "verb": "shake",
       "text": "振り払った"
     },
@@ -473,6 +489,10 @@
     {
       "verb": "smash",
       "text": "打ち破った"
+    },
+    {
+      "verb": "spawn",
+      "text": "出現した"
     },
     {
       "verb": "spew",
