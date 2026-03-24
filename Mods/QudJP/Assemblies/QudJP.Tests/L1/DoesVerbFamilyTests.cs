@@ -1100,6 +1100,7 @@ public sealed class DoesVerbFamilyTests
         {
             if (!File.Exists(sourcePath))
             {
+                TestContext.WriteLine($"Warning: Leaf source file not found: {sourcePath}");
                 continue;
             }
 
