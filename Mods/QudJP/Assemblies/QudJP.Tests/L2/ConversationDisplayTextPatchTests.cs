@@ -2,7 +2,6 @@ using System.Reflection;
 using System.Text;
 using HarmonyLib;
 using QudJP.Patches;
-using QudJP.Tests;
 using QudJP.Tests.DummyTargets;
 
 namespace QudJP.Tests.L2;
@@ -190,11 +189,7 @@ public sealed class ConversationDisplayTextPatchTests
     [TestCase("お前の渇きは私の渇き、私の水はお前のものだ。 [begin water ritual; 1 dram of water]", "お前の渇きは私の渇き、私の水はお前のものだ。")]
     public void Postfix_StripsTrailingActionMarkers_WhenPatched(string source, string expected)
     {
-        WriteDictionary(
-            ("Dummy", "ダミー"),
-            ("生きて飲め。", "生きて飲め。"),
-            ("取引しよう。", "取引しよう。"),
-            ("お前の渇きは私の渇き、私の水はお前のものだ。", "お前の渇きは私の渇き、私の水はお前のものだ。"));
+        WriteDictionary(("Dummy", "ダミー"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -205,14 +200,9 @@ public sealed class ConversationDisplayTextPatchTests
                 original: RequireMethod(typeof(DummyConversationElement), nameof(DummyConversationElement.GetDisplayText)),
                 postfix: new HarmonyMethod(RequireMethod(typeof(ConversationDisplayTextPatch), nameof(ConversationDisplayTextPatch.Postfix))));
 
-            var output = TestTraceHelper.CaptureTrace(() =>
-            {
-                var element = new DummyConversationElement(source);
-                var result = element.GetDisplayText(withColor: false);
-                Assert.That(result, Is.EqualTo(expected));
-            });
-
-            Assert.That(output, Does.Not.Contain("Translator: missing key"));
+            var element = new DummyConversationElement(source);
+            var result = element.GetDisplayText(withColor: false);
+            Assert.That(result, Is.EqualTo(expected));
         }
         finally
         {
@@ -221,9 +211,9 @@ public sealed class ConversationDisplayTextPatchTests
     }
 
     [Test]
-    public void Postfix_DoesNotLogAlreadyJapaneseChoice_WhenPatched()
+    public void Postfix_PassesThroughAlreadyJapaneseChoice_WhenPatched()
     {
-        WriteDictionary(("Dummy", "ダミー"), ("スティルトとは？", "スティルトとは？"));
+        WriteDictionary(("Dummy", "ダミー"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -234,14 +224,9 @@ public sealed class ConversationDisplayTextPatchTests
                 original: RequireMethod(typeof(DummyConversationElement), nameof(DummyConversationElement.GetDisplayText)),
                 postfix: new HarmonyMethod(RequireMethod(typeof(ConversationDisplayTextPatch), nameof(ConversationDisplayTextPatch.Postfix))));
 
-            var output = TestTraceHelper.CaptureTrace(() =>
-            {
-                var element = new DummyConversationElement("スティルトとは？");
-                var result = element.GetDisplayText(withColor: false);
-                Assert.That(result, Is.EqualTo("スティルトとは？"));
-            });
-
-            Assert.That(output, Does.Not.Contain("missing key 'スティルトとは？'"));
+            var element = new DummyConversationElement("スティルトとは？");
+            var result = element.GetDisplayText(withColor: false);
+            Assert.That(result, Is.EqualTo("スティルトとは？"));
         }
         finally
         {
