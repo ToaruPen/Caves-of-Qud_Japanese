@@ -17,8 +17,10 @@ internal sealed class DummyGameObjectDie
         return true;
     }
 
-    public static void Reset()
+    public void Reset()
     {
+        LastReason = null;
+        LastThirdPersonReason = null;
     }
 }
 
