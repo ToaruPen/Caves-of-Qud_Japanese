@@ -49,8 +49,7 @@ public sealed class DescriptionLongDescriptionPatchTests
             var builder = new StringBuilder();
             target.GetLongDescription(builder);
 
-            Assert.That(builder.ToString(), Is.EqualTo("It crackles with static."),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(builder.ToString(), Is.EqualTo("それは静電気を散らしている。"));
         });
     }
 
@@ -65,8 +64,7 @@ public sealed class DescriptionLongDescriptionPatchTests
             var builder = new StringBuilder("prefix: ");
             target.GetLongDescription(builder);
 
-            Assert.That(builder.ToString(), Is.EqualTo("prefix: It crackles with static."),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(builder.ToString(), Is.EqualTo("prefix: それは静電気を散らしている。"));
         });
     }
 
@@ -81,8 +79,7 @@ public sealed class DescriptionLongDescriptionPatchTests
             var builder = new StringBuilder();
             target.GetLongDescription(builder);
 
-            Assert.That(builder.ToString(), Is.EqualTo("{{C|Charged item}}"),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(builder.ToString(), Is.EqualTo("{{C|帯電したアイテム}}"));
         });
     }
 
@@ -102,7 +99,7 @@ public sealed class DescriptionLongDescriptionPatchTests
     }
 
     [Test]
-    public void Postfix_KeepsStatAbbreviationsUntranslated_WhenPatched()
+    public void Postfix_TranslatesStatAbbreviations_WhenPatched()
     {
         WriteDictionary(("STR", "筋力"), ("+1 STR", "+1 筋力"));
 
@@ -118,8 +115,8 @@ public sealed class DescriptionLongDescriptionPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(abbreviationBuilder.ToString(), Is.EqualTo("STR"));
-                Assert.That(signedBuilder.ToString(), Is.EqualTo("+1 STR"));
+                Assert.That(abbreviationBuilder.ToString(), Is.EqualTo("筋力"));
+                Assert.That(signedBuilder.ToString(), Is.EqualTo("+1 筋力"));
             });
         });
     }

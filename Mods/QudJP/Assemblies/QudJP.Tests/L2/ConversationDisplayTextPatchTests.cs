@@ -52,8 +52,7 @@ public sealed class ConversationDisplayTextPatchTests
             var element = new DummyConversationElement("Hello, traveler.");
             var result = element.GetDisplayText(withColor: false);
 
-            Assert.That(result, Is.EqualTo("Hello, traveler."),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(result, Is.EqualTo("旅人さん、こんにちは。"));
         }
         finally
         {
@@ -103,8 +102,7 @@ public sealed class ConversationDisplayTextPatchTests
             var element = new DummyConversationElement("Farewell");
             var result = element.GetDisplayText(withColor: true);
 
-            Assert.That(result, Is.EqualTo("{{W|Farewell}}"),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(result, Is.EqualTo("{{W|さらば}}"));
         }
         finally
         {
@@ -192,7 +190,11 @@ public sealed class ConversationDisplayTextPatchTests
     [TestCase("お前の渇きは私の渇き、私の水はお前のものだ。 [begin water ritual; 1 dram of water]", "お前の渇きは私の渇き、私の水はお前のものだ。")]
     public void Postfix_StripsTrailingActionMarkers_WhenPatched(string source, string expected)
     {
-        WriteDictionary(("Dummy", "ダミー"));
+        WriteDictionary(
+            ("Dummy", "ダミー"),
+            ("生きて飲め。", "生きて飲め。"),
+            ("取引しよう。", "取引しよう。"),
+            ("お前の渇きは私の渇き、私の水はお前のものだ。", "お前の渇きは私の渇き、私の水はお前のものだ。"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -221,7 +223,7 @@ public sealed class ConversationDisplayTextPatchTests
     [Test]
     public void Postfix_DoesNotLogAlreadyJapaneseChoice_WhenPatched()
     {
-        WriteDictionary(("Dummy", "ダミー"));
+        WriteDictionary(("Dummy", "ダミー"), ("スティルトとは？", "スティルトとは？"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);

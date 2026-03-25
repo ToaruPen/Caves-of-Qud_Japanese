@@ -88,9 +88,7 @@ public static class QudMenuBottomContextTranslationPatch
                 continue;
             }
 
-            var translated = UITextSkinTranslationPatch.TranslatePreservingColors(
-                current,
-                nameof(QudMenuBottomContextTranslationPatch));
+            var translated = ColorAwareTranslationComposer.TranslatePreservingColors(current);
 
             if (string.Equals(translated, current, StringComparison.Ordinal))
             {

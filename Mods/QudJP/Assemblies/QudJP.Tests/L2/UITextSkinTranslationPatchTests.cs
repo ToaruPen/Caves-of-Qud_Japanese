@@ -610,8 +610,25 @@ public sealed class UITextSkinTranslationPatchTests
     }
 
     [Test]
-    public void TranslateStringField_ReturnsSourceUnchangedForObservationOnlyRoute()
+    public void TranslateStringField_TranslatesKnownTextViaColorAwareComposer()
     {
+        WriteDictionary(("New Game", "新しいゲーム"));
+
+        var option = new DummyMenuOption { Text = "New Game" };
+
+        UITextSkinTranslationPatch.TranslateStringField(
+            option,
+            nameof(DummyMenuOption.Text),
+            "MainMenuLocalizationPatch > collection=LeftOptions");
+
+        Assert.That(option.Text, Is.EqualTo("新しいゲーム"));
+    }
+
+    [Test]
+    public void TranslateStringField_PassesThroughUnknownText()
+    {
+        WriteDictionary(("Known", "既知"));
+
         var option = new DummyMenuOption { Text = "Unknown text" };
 
         UITextSkinTranslationPatch.TranslateStringField(
@@ -619,13 +636,8 @@ public sealed class UITextSkinTranslationPatchTests
             nameof(DummyMenuOption.Text),
             "MainMenuLocalizationPatch > collection=LeftOptions");
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(option.Text, Is.EqualTo("Unknown text"),
-                "MainMenuLocalizationPatch is observation-only — field must stay unchanged");
-            Assert.That(Translator.GetMissingRouteHitCountForTests(nameof(MainMenuLocalizationPatch)), Is.EqualTo(0),
-                "Observation-only routes skip Translator.Translate entirely");
-        });
+        Assert.That(option.Text, Is.EqualTo("Unknown text"),
+            "Unknown text passes through unchanged when not in dictionary");
     }
 
     [Test]

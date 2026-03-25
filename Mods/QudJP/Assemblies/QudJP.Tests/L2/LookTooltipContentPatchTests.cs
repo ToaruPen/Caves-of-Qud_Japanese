@@ -47,8 +47,7 @@ public sealed class LookTooltipContentPatchTests
         {
             var result = DummyLookTooltipTarget.GenerateTooltipContent("This relic hums softly.");
 
-            Assert.That(result, Is.EqualTo("This relic hums softly."),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(result, Is.EqualTo("この遺物はかすかに唸っている。"));
         });
     }
 
@@ -61,8 +60,7 @@ public sealed class LookTooltipContentPatchTests
         {
             var result = DummyLookTooltipTarget.GenerateTooltipContent("{{Y|Ancient ruin}}");
 
-            Assert.That(result, Is.EqualTo("{{Y|Ancient ruin}}"),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(result, Is.EqualTo("{{Y|古代の廃墟}}"));
         });
     }
 
@@ -80,7 +78,7 @@ public sealed class LookTooltipContentPatchTests
     }
 
     [Test]
-    public void Postfix_KeepsStatAbbreviationsUntranslated_WhenPatched()
+    public void Postfix_TranslatesStatAbbreviations_WhenPatched()
     {
         WriteDictionary(("STR", "筋力"), ("+1 STR", "+1 筋力"));
 
@@ -91,8 +89,8 @@ public sealed class LookTooltipContentPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(abbreviation, Is.EqualTo("STR"));
-                Assert.That(signed, Is.EqualTo("+1 STR"));
+                Assert.That(abbreviation, Is.EqualTo("筋力"));
+                Assert.That(signed, Is.EqualTo("+1 筋力"));
             });
         });
     }

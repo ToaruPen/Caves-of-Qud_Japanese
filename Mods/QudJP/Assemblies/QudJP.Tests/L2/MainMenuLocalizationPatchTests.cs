@@ -36,7 +36,7 @@ public sealed class MainMenuLocalizationPatchTests
     }
 
     [Test]
-    public void Postfix_LeavesMenuOptionsUnchanged_WhenObservationOnly()
+    public void Postfix_TranslatesMenuOptions_WhenPatched()
     {
         WriteDictionary(
             ("Options", "設定"),
@@ -55,10 +55,8 @@ public sealed class MainMenuLocalizationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyMainMenuTarget.LeftOptions[0].Text, Is.EqualTo("Options"),
-                    "MainMenuLocalizationPatch is observation-only — text must stay unchanged");
-                Assert.That(DummyMainMenuTarget.RightOptions[0].Text, Is.EqualTo("Help"),
-                    "MainMenuLocalizationPatch is observation-only — text must stay unchanged");
+                Assert.That(DummyMainMenuTarget.LeftOptions[0].Text, Is.EqualTo("設定"));
+                Assert.That(DummyMainMenuTarget.RightOptions[0].Text, Is.EqualTo("ヘルプ"));
             });
         }
         finally
@@ -68,7 +66,7 @@ public sealed class MainMenuLocalizationPatchTests
     }
 
     [Test]
-    public void Postfix_LeavesMarkupUnchanged_WhenObservationOnly()
+    public void Postfix_TranslatesMarkupWrappedText_WhenPatched()
     {
         WriteDictionary(("Mods", "モッド"));
 
@@ -85,8 +83,7 @@ public sealed class MainMenuLocalizationPatchTests
 
             new DummyMainMenuTarget().Show();
 
-            Assert.That(DummyMainMenuTarget.LeftOptions[1].Text, Is.EqualTo("{{G|Mods}}"),
-                "MainMenuLocalizationPatch is observation-only — markup text must stay unchanged");
+            Assert.That(DummyMainMenuTarget.LeftOptions[1].Text, Is.EqualTo("{{G|モッド}}"));
         }
         finally
         {

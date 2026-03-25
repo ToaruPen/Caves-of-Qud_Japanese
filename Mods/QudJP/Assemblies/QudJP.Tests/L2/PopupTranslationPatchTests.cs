@@ -659,6 +659,8 @@ public sealed class PopupTranslationPatchTests
     [Test]
     public void NormalizeItemTexts_SkipsAlreadyLocalizedItemsForBottomContext()
     {
+        WriteDictionary(("[Tab] 取引", "[Tab] 取引"));
+
         var context = new DummyQudMenuBottomContext(new List<DummyQudMenuItem>
         {
             new DummyQudMenuItem("{{W|[Tab]}} {{y|取引}}", hotkey: "CmdStartTrade"),

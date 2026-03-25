@@ -50,8 +50,7 @@ public sealed class HistoricStringExpanderPatchTests
 
             var result = DummyHistoricStringExpander.ExpandString("In the beginning, Resheph created Qud");
 
-            Assert.That(result, Is.EqualTo("In the beginning, Resheph created Qud"),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(result, Is.EqualTo("はじめに、レシェフがクッドを創造した"));
         }
         finally
         {
@@ -99,8 +98,7 @@ public sealed class HistoricStringExpanderPatchTests
 
             var result = DummyHistoricStringExpander.ExpandString("{{C|Sultan was crowned}}");
 
-            Assert.That(result, Is.EqualTo("{{C|Sultan was crowned}}"),
-                "Observation-only mode passes source through unchanged");
+            Assert.That(result, Is.EqualTo("{{C|スルタンが戴冠した}}"));
         }
         finally
         {
