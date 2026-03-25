@@ -1,0 +1,87 @@
+using System.Text.Json;
+using QudJP.Patches;
+
+namespace QudJP.Tests.L1;
+
+[TestFixture]
+[Category("L1")]
+[NonParallelizable]
+public sealed class MarkovCorpusTranslationPatchTests
+{
+    private string localizationRoot = null!;
+
+    [SetUp]
+    public void SetUp()
+    {
+        localizationRoot = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, "../../../../../Localization"));
+        LocalizationAssetResolver.SetLocalizationRootForTests(localizationRoot);
+        MarkovCorpusTranslationPatch.ResetForTests();
+        MarkovCorpusTranslationPatch.GetCorpusCacheForTests().Clear();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        MarkovCorpusTranslationPatch.GetCorpusCacheForTests().Clear();
+        MarkovCorpusTranslationPatch.ResetForTests();
+        LocalizationAssetResolver.SetLocalizationRootForTests(null);
+    }
+
+    [Test]
+    public void JapaneseCorpusFile_HasSegmentedSourceMaterialWithinTargetRange()
+    {
+        var path = MarkovCorpusTranslationPatch.ResolveJapaneseCorpusPath();
+
+        using var document = JsonDocument.Parse(File.ReadAllText(path));
+        var sentences = document.RootElement
+            .GetProperty("sentences")
+            .EnumerateArray()
+            .Select(static element => element.GetString() ?? string.Empty)
+            .ToArray();
+        var wordCount = sentences
+            .SelectMany(static sentence => sentence.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+            .Count();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(sentences.Length, Is.InRange(50, 100), "The corpus should provide enough sentence variety for Markov chaining.");
+            Assert.That(wordCount, Is.InRange(2000, 3000), "The corpus should stay within the requested source-material size.");
+            Assert.That(sentences.All(static sentence => sentence.IndexOf(' ') >= 0), Is.True, "Each sentence should be morpheme-segmented with spaces.");
+            Assert.That(sentences.All(static sentence => sentence.EndsWith(".", StringComparison.Ordinal)), Is.True, "Each sentence should end in '.' so the vanilla Markov chain can detect sentence boundaries.");
+            Assert.That(MarkovCorpusTranslationPatch.ContainsJapaneseCharacters(string.Join(" ", sentences)), Is.True);
+        });
+    }
+
+    [Test]
+    public void BuildChainData_ProducesJapaneseSentenceFromProductionCorpus()
+    {
+        var (order, corpusText) = MarkovCorpusTranslationPatch.LoadJapaneseCorpusSource();
+        var chainData = MarkovCorpusTranslationPatch.BuildChainData(corpusText, order);
+        var sentence = MarkovCorpusTranslationPatch.GenerateSentence(chainData);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(order, Is.EqualTo(2));
+            Assert.That(MarkovCorpusTranslationPatch.GetOpeningWordCount(chainData), Is.GreaterThan(50));
+            Assert.That(MarkovCorpusTranslationPatch.GetTransitionCount(chainData), Is.GreaterThan(500));
+            Assert.That(sentence, Is.Not.Empty);
+            Assert.That(MarkovCorpusTranslationPatch.ContainsJapaneseCharacters(sentence), Is.True);
+        });
+    }
+
+    [Test]
+    public void Prefix_InjectsJapaneseCorpusIntoLibraryCorpusCache()
+    {
+        var skipOriginal = MarkovCorpusTranslationPatch.Prefix(MarkovCorpusTranslationPatch.VanillaCorpusName);
+        var cache = MarkovCorpusTranslationPatch.GetCorpusCacheForTests();
+        var injected = cache[MarkovCorpusTranslationPatch.VanillaCorpusName];
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(skipOriginal, Is.False);
+            Assert.That(cache.Contains(MarkovCorpusTranslationPatch.VanillaCorpusName), Is.True);
+            Assert.That(injected, Is.Not.Null);
+            Assert.That(MarkovCorpusTranslationPatch.ContainsJapaneseCharacters(MarkovCorpusTranslationPatch.GenerateSentence(injected!)), Is.True);
+        });
+    }
+}
