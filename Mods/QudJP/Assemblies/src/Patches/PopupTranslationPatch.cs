@@ -247,59 +247,18 @@ public static class PopupTranslationPatch
             return markedText;
         }
 
-        if (DoesVerbRouteTranslator.TryTranslateMarkedMessage(source, out var doesTranslated))
+        if (!IsAlreadyLocalizedPopupText(source))
         {
-            return doesTranslated;
+            var (stripped, _) = ColorAwareTranslationComposer.Strip(source);
+            SinkObservation.LogUnclaimed(
+                nameof(PopupTranslationPatch),
+                route,
+                "ObservationOnly",
+                source,
+                stripped);
         }
 
-        if (!string.Equals(doesTranslated, source, StringComparison.Ordinal))
-        {
-            source = doesTranslated;
-        }
-
-        if (IsAlreadyLocalizedPopupText(source))
-        {
-            return source;
-        }
-
-        var popupMenuItemText = TranslatePopupMenuItemTextForRoute(source, route);
-        if (!string.Equals(popupMenuItemText, source, StringComparison.Ordinal))
-        {
-            return popupMenuItemText;
-        }
-
-        if (TryTranslatePopupTemplate(source, out var translated))
-        {
-            return translated;
-        }
-
-        var exact = TranslateLabelWithCaseFallback(source);
-        if (exact is not null)
-        {
-            return exact;
-        }
-
-        var (stripped, _) = ColorAwareTranslationComposer.Strip(source);
-        SinkObservation.LogUnclaimed(
-            nameof(PopupTranslationPatch),
-            route,
-            nameof(MessagePatternTranslator),
-            source,
-            stripped);
-        var patternTranslated = MessagePatternTranslator.Translate(source, route);
-        if (!string.Equals(patternTranslated, source, StringComparison.Ordinal))
-        {
-            return patternTranslated;
-        }
-
-        SinkObservation.LogUnclaimed(
-            nameof(PopupTranslationPatch),
-            route,
-            nameof(UITextSkinTranslationPatch),
-            source,
-            stripped);
-        using var _ = SinkObservation.PushSuppression(true);
-        return UITextSkinTranslationPatch.TranslatePreservingColors(source, route);
+        return source;
     }
 
     internal static string TranslatePopupMenuItemText(string source)
@@ -322,26 +281,6 @@ public static class PopupTranslationPatch
         if (MessageFrameTranslator.TryStripDirectTranslationMarker(source, out var markedText))
         {
             return markedText;
-        }
-
-        if (DoesVerbRouteTranslator.TryTranslateMarkedMessage(source, out var doesTranslated))
-        {
-            return doesTranslated;
-        }
-
-        if (!string.Equals(doesTranslated, source, StringComparison.Ordinal))
-        {
-            source = doesTranslated;
-        }
-
-        if (IsAlreadyLocalizedPopupText(source))
-        {
-            return source;
-        }
-
-        if (TryTranslateStyledHotkeyLabel(source, route, out var translated))
-        {
-            return translated;
         }
 
         return source;
@@ -543,8 +482,10 @@ public static class PopupTranslationPatch
             out translated);
     }
 
+#pragma warning disable S1144
     private static bool TryTranslateStyledHotkeyLabel(string source, string route, out string translated)
     {
+#pragma warning restore S1144
         var (stripped, _) = ColorAwareTranslationComposer.Strip(source);
         if (!HotkeyLabelFamilyTranslator.TryTranslateBracketedLabel(
                 stripped,

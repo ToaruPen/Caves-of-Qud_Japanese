@@ -32,7 +32,7 @@ public static class UITextSkinTranslationPatch
     private static readonly Regex EnglishWordPattern =
         new Regex("[A-Za-z]{2,}", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex AllowedLocalizedEnglishTokenPattern =
-        new Regex("^(Caves|Qud|of|Mod|HP|AV|DV|XP|SP|MA|STR|AGI|TOU|INT|WIL|EGO|DEX|BURST)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        new Regex("^(Caves|Qud|of|Mod|HP|AV|DV|XP|SP|MA|STR|AGI|TOU|INT|WIL|EGO|DEX|BURST|Tab|Esc|Enter|Space|Delete)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex PointsRemainingPattern =
         new Regex("^Points Remaining:\\s*\\d+$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex StatHelpTextPattern =
@@ -128,12 +128,6 @@ public static class UITextSkinTranslationPatch
         if (TryTranslateDedicatedRouteText(stripped, primaryRoute, out var dedicatedRouteTranslation))
         {
             return ColorAwareTranslationComposer.Restore(dedicatedRouteTranslation, spans);
-        }
-
-        if (IsPopupTemplateContext(effectiveContext)
-            && PopupTranslationPatch.TryTranslatePopupTemplate(stripped, out var popupTranslation))
-        {
-            return ColorAwareTranslationComposer.Restore(popupTranslation, spans);
         }
 
         if (IsUITextSinkTemplateContext(effectiveContext)
@@ -358,7 +352,8 @@ public static class UITextSkinTranslationPatch
             || string.Equals(primaryContext, nameof(FactionsStatusScreenTranslationPatch), StringComparison.Ordinal)
             || string.Equals(primaryContext, nameof(InventoryLocalizationPatch), StringComparison.Ordinal)
             || string.Equals(primaryContext, nameof(PopupTranslationPatch), StringComparison.Ordinal)
-            || string.Equals(primaryContext, nameof(PopupMessageTranslationPatch), StringComparison.Ordinal);
+            || string.Equals(primaryContext, nameof(PopupMessageTranslationPatch), StringComparison.Ordinal)
+            || string.Equals(primaryContext, nameof(QudMenuBottomContextTranslationPatch), StringComparison.Ordinal);
     }
 
     private static bool IsStrictDirectRouteContext(string? context)

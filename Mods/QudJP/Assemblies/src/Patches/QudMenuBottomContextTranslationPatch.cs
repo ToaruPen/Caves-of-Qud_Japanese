@@ -88,19 +88,9 @@ public static class QudMenuBottomContextTranslationPatch
                 continue;
             }
 
-            if (PopupTranslationPatch.IsAlreadyLocalizedPopupText(current))
-            {
-                continue;
-            }
-
-            var translated = PopupTranslationPatch.TranslatePopupMenuItemText(current!);
-            if (string.Equals(translated, current, StringComparison.Ordinal))
-            {
-                translated = UITextSkinTranslationPatch.TranslatePreservingColors(
-                    current,
-                    nameof(PopupTranslationPatch),
-                    nameof(QudMenuBottomContextTranslationPatch));
-            }
+            var translated = UITextSkinTranslationPatch.TranslatePreservingColors(
+                current,
+                nameof(QudMenuBottomContextTranslationPatch));
 
             if (string.Equals(translated, current, StringComparison.Ordinal))
             {
