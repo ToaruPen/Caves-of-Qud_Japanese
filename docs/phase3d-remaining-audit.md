@@ -24,6 +24,7 @@ Of 96 remaining unresolved sites, **only 16 are genuinely runtime-dependent**. T
 **43 sites depend on sinks** (27 COVERED_BY_SINK + 16 TRULY_RUNTIME). Before removing UITextSkinTranslationPatch / MessageLogPatch:
 
 ### Required pre-cutover producer patches
+
 1. CharGen framework producer — translate FrameworkDataElement.Description/Title (10 sites)
 2. Ability/Effect DisplayName producer (2 sites)
 3. TinkerData producer — translate DisplayName/Description (3 sites)
@@ -31,7 +32,8 @@ Of 96 remaining unresolved sites, **only 16 are genuinely runtime-dependent**. T
 5. LeftSideCategory dictionary pre-population (4 sites)
 
 ### Key Findings
+
 1. **Pettable TranslatablePartFields entry was dead code** — PetResponse is a tag, not part field. Covered by XML merge tags.
 2. **3 NEEDS_PRODUCER_PATCH sites are unreachable** — Reconstitution.DropMessage, Spawner.SpawnMessage, SwapOnUse.Message have no XML overrides in v2.0.4.
 3. **7 sites resolved with ~30 dictionary entries** — ending causes, loading status, Sheva launch text.
-4. **4 missing verbs in verbs.ja.json** improved coverage — "slip", "collect", "piece" (rifle was already present).
+4. **3 missing verbs added to verbs.ja.json** — "slip", "collect", "piece" (rifle was already present).
