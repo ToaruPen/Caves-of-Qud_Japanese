@@ -99,6 +99,36 @@ public sealed class QudJPModTests
     }
 
     [Test]
+    public void TryPreparePatchType_IncludesResolverAndExceptionType_WhenTargetMethodThrows()
+    {
+        var prepared = QudJPMod.TryPreparePatchType(typeof(ThrowingTargetPatch), out var reason);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(prepared, Is.False);
+            Assert.That(reason, Does.Contain("ThrowingTargetPatch"));
+            Assert.That(reason, Does.Contain("threw:"));
+            Assert.That(reason, Does.Contain(nameof(InvalidOperationException)));
+            Assert.That(reason, Does.Contain("single target failed"));
+        });
+    }
+
+    [Test]
+    public void TryPreparePatchType_IncludesResolverAndExceptionType_WhenTargetMethodsThrows()
+    {
+        var prepared = QudJPMod.TryPreparePatchType(typeof(ThrowingTargetsPatch), out var reason);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(prepared, Is.False);
+            Assert.That(reason, Does.Contain("ThrowingTargetsPatch"));
+            Assert.That(reason, Does.Contain("threw:"));
+            Assert.That(reason, Does.Contain(nameof(InvalidOperationException)));
+            Assert.That(reason, Does.Contain("multiple targets failed"));
+        });
+    }
+
+    [Test]
     public void LogPatchResults_HandlesGetPatchedMethodsFailure_WithoutThrowing()
     {
         var output = TestTraceHelper.CaptureTrace(() => Assert.That(() => QudJPMod.LogPatchResults(ThrowingPatchedMethodsProbe.Create()), Throws.Nothing));
@@ -147,6 +177,26 @@ public sealed class QudJPModTests
         private static IEnumerable<MethodBase> TargetMethods()
         {
             yield break;
+        }
+    }
+
+    [HarmonyPatch]
+    internal static class ThrowingTargetPatch
+    {
+        [HarmonyTargetMethod]
+        private static MethodBase TargetMethod()
+        {
+            throw new InvalidOperationException("single target failed");
+        }
+    }
+
+    [HarmonyPatch]
+    internal static class ThrowingTargetsPatch
+    {
+        [HarmonyTargetMethods]
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            throw new InvalidOperationException("multiple targets failed");
         }
     }
 

@@ -212,13 +212,20 @@ public static class Translator
 
         for (var fileIndex = 0; fileIndex < files.Length; fileIndex++)
         {
-            LoadDictionaryFile(
-                files[fileIndex],
-                translations,
-                keySources,
-                duplicateKeyCounts,
-                ref rawEntryCount,
-                ref duplicateKeyCount);
+            try
+            {
+                LoadDictionaryFile(
+                    files[fileIndex],
+                    translations,
+                    keySources,
+                    duplicateKeyCounts,
+                    ref rawEntryCount,
+                    ref duplicateKeyCount);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError("QudJP: Failed to load dictionary file '{0}': {1}", files[fileIndex], ex);
+            }
         }
 
         dictionaryLoadSummary =
@@ -272,12 +279,21 @@ public static class Translator
             }
 
             rawEntryCount++;
-            if (keySources.TryGetValue(entry.Key!, out _))
+            if (keySources.TryGetValue(entry.Key!, out var previousFile))
             {
                 duplicateKeyCount++;
-                duplicateKeyCounts[entry.Key!] = duplicateKeyCounts.TryGetValue(entry.Key!, out var duplicateCount)
-                    ? duplicateCount + 1
+                var duplicateCount = duplicateKeyCounts.TryGetValue(entry.Key!, out var currentDuplicateCount)
+                    ? currentDuplicateCount + 1
                     : 1;
+                duplicateKeyCounts[entry.Key!] = duplicateCount;
+                if (duplicateCount == 1)
+                {
+                    Trace.TraceWarning(
+                        "QudJP: Translator duplicate key '{0}': overridden by '{1}' (was in '{2}').",
+                        entry.Key,
+                        filePath,
+                        previousFile);
+                }
             }
 
             keySources[entry.Key!] = filePath;
