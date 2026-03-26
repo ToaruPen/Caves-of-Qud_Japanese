@@ -26,6 +26,31 @@
       "text": "3本の舌が=subject.t=の=bodypart:Face=から生えてきた！"
     },
     {
+      "key": "{{K|=subject.T= =verb:slip= on the ink!}}",
+      "context": "XRL.Liquids.LiquidInk",
+      "text": "{{K|=subject.T=はインクで滑った！}}"
+    },
+    {
+      "key": "{{slimy|=subject.T= =verb:slip= on the slime!}}",
+      "context": "XRL.Liquids.LiquidSlime",
+      "text": "{{slimy|=subject.T=はスライムで滑った！}}"
+    },
+    {
+      "key": "{{C|=subject.T= =verb:slip= on the oil!}}",
+      "context": "XRL.Liquids.LiquidOil",
+      "text": "{{C|=subject.T=は油で滑った！}}"
+    },
+    {
+      "key": "{{C|=subject.T= =verb:slip= on the ice!}}",
+      "context": "XRL.Liquids.LiquidWater",
+      "text": "{{C|=subject.T=は氷で滑った！}}"
+    },
+    {
+      "key": "{{Y|=subject.T= =verb:slip= on the gel!}}",
+      "context": "XRL.Liquids.LiquidGel",
+      "text": "{{Y|=subject.T=はゲルで滑った！}}"
+    },
+    {
       "key": "__vt_dynamic_passthrough",
       "context": "meta",
       "text": "Dynamic VariableTemplate sites are translated at their text source, not at StartReplace call site",

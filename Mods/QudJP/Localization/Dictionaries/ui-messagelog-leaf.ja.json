@@ -491,6 +491,18 @@
         {
             "key": "The zealot yells 'The Machine commands that you exorcise robots and bring their sacred husks here!'",
             "text": "狂信者が叫んだ「機械の御意志により、ロボットを祓い清め、聖なる殻をここへ持って来い！」"
+        },
+        {
+            "key": "The poison begins to abate, but you still feel nauseous.",
+            "text": "毒は収まり始めたが、まだ吐き気がする。"
+        },
+        {
+            "key": "You feel shaken and infirm.",
+            "text": "あなたはふらつき、衰弱を感じる。"
+        },
+        {
+            "key": "You feel nauseous.",
+            "text": "吐き気がする。"
         }
     ]
 }
