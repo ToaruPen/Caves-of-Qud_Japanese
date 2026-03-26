@@ -20492,7 +20492,7 @@
     "pattern": "IComponent<GameObject>.EmitMessage(Actor, \"You rifle through \" + gameObject.t() + ((text == null) ? \"\" : (\" \" + text)) + \", and find \" + gameObject2.an() + \".\", ' ', !Automatic, !Options.ShowScavengeItemAsMessage)",
     "sink": "EmitMessage",
     "status": "unresolved",
-    "note": "static_partial audit: journal note text + direction runtime composition",
+    "note": "static_partial audit: scavenge message with object names runtime composition",
     "type": "Unresolved",
     "runtime_reason": "Message text is composed upstream from runtime object state or contextual data; final sentence requires runtime evidence.",
     "static_classification": "runtime_dependent",
