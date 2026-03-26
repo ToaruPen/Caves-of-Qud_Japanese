@@ -1088,6 +1088,26 @@ public sealed class DoesVerbFamilyTests
         AssertTranslated(input, expected);
     }
 
+    // --- Ill Family ---
+
+    [TestCase("The poison begins to abate, but you still feel nauseous.", "毒は収まり始めたが、まだ吐き気がする。")]
+    [TestCase("You feel shaken and infirm.", "あなたはふらつき、衰弱を感じる。")]
+    [TestCase("You feel nauseous.", "吐き気がする。")]
+    [TestCase("{{g|You feel nauseous.}}", "{{g|吐き気がする。}}")]
+    public void Translate_IllFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
+    // --- Sheva Launch Countdown Family ---
+
+    [TestCase("Launching in 25...", "発射まで25…")]
+    [TestCase("{{R|Launching in 50...}}", "{{R|発射まで50…}}")]
+    public void Translate_ShevaLaunchCountdownFamily(string input, string expected)
+    {
+        AssertTranslated(input, expected);
+    }
+
     // --- Sleep Mode (Player) Family ---
 
     [TestCase("You enter sleep mode.", "あなたはスリープモードに入った")]

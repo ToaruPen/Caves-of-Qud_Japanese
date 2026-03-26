@@ -1292,6 +1292,11 @@
       "route": "emit-message"
     },
     {
+      "pattern": "^Launching in (\\d+)\\.\\.\\.$",
+      "template": "発射まで{0}…",
+      "route": "emit-message"
+    },
+    {
       "pattern": "^The protective force of the cherubim prevents (?:the |a |an )?(.+?) from taking anything from the reliquary[.!]?$",
       "template": "ケルビムの守護の力が{0}を聖遺物櫃から何かを取ることを阻んでいる",
       "route": "emit-message"
