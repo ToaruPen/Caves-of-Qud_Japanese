@@ -1094,6 +1094,9 @@ public sealed class DoesVerbFamilyTests
     [TestCase("You feel shaken and infirm.", "あなたはふらつき、衰弱を感じる。")]
     [TestCase("You feel nauseous.", "吐き気がする。")]
     [TestCase("{{g|You feel nauseous.}}", "{{g|吐き気がする。}}")]
+    [TestCase("", "")]
+    [TestCase("\u0001毒は収まり始めたが、まだ吐き気がする。", "\u0001毒は収まり始めたが、まだ吐き気がする。")]
+    [TestCase("Some unrelated English text.", "Some unrelated English text.")]
     public void Translate_IllFamily(string input, string expected)
     {
         AssertTranslated(input, expected);
@@ -1103,6 +1106,9 @@ public sealed class DoesVerbFamilyTests
 
     [TestCase("Launching in 25...", "発射まで25…")]
     [TestCase("{{R|Launching in 50...}}", "{{R|発射まで50…}}")]
+    [TestCase("", "")]
+    [TestCase("\u0001発射まで25…", "\u0001発射まで25…")]
+    [TestCase("Not a launch message", "Not a launch message")]
     public void Translate_ShevaLaunchCountdownFamily(string input, string expected)
     {
         AssertTranslated(input, expected);
