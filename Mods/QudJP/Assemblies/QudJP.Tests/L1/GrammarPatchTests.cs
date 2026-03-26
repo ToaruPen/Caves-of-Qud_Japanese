@@ -384,6 +384,22 @@ public sealed class GrammarPatchTests
     }
 
     [Test]
+    public void SplitOfSentenceListPatch_IsDisabledForGrammarInGameVersion_2_0_4()
+    {
+        var isHarmonyPatch = false;
+        foreach (var attribute in typeof(GrammarSplitOfSentenceListPatch).GetCustomAttributesData())
+        {
+            if (attribute.AttributeType.FullName == "HarmonyLib.HarmonyPatch")
+            {
+                isHarmonyPatch = true;
+                break;
+            }
+        }
+
+        Assert.That(isHarmonyPatch, Is.False);
+    }
+
+    [Test]
     public void InitCapsPatch_ReturnsInputUnchanged_ForNormalText()
     {
         var result = string.Empty;
