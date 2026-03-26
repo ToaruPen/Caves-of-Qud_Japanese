@@ -59,10 +59,10 @@ public sealed class OptionsLocalizationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(target.menuItems[0].Title, Is.EqualTo("{{W|主音量}}"));
-                Assert.That(target.menuItems[0].HelpText, Is.EqualTo("スライダーを調整"));
-                Assert.That(target.filteredMenuItems[0].Title, Is.EqualTo("主音量"));
-                Assert.That(target.filteredMenuItems[0].HelpText, Is.EqualTo("{{R|スライダーを調整}}"));
+                Assert.That(target.menuItems[0].Title, Is.EqualTo("{{W|Main volume}}"));
+                Assert.That(target.menuItems[0].HelpText, Is.EqualTo("Adjust slider"));
+                Assert.That(target.filteredMenuItems[0].Title, Is.EqualTo("Main volume"));
+                Assert.That(target.filteredMenuItems[0].HelpText, Is.EqualTo("{{R|Adjust slider}}"));
             });
         }
         finally
@@ -91,8 +91,8 @@ public sealed class OptionsLocalizationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyOptionsTarget.defaultMenuOptions[0].Description, Is.EqualTo("すべてたたむ"));
-                Assert.That(DummyOptionsTarget.defaultMenuOptions[1].Description, Is.EqualTo("ヘルプ"));
+                Assert.That(DummyOptionsTarget.defaultMenuOptions[0].Description, Is.EqualTo("Collapse All"));
+                Assert.That(DummyOptionsTarget.defaultMenuOptions[1].Description, Is.EqualTo("Help"));
             });
         }
         finally

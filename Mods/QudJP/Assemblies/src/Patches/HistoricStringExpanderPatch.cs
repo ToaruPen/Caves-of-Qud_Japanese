@@ -20,7 +20,9 @@ public static class HistoricStringExpanderPatch
     {
         try
         {
-            __result = ColorAwareTranslationComposer.TranslatePreservingColors(__result);
+            __result = UITextSkinTranslationPatch.TranslatePreservingColors(
+                __result,
+                nameof(HistoricStringExpanderPatch));
         }
         catch (Exception ex)
         {

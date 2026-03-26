@@ -40,7 +40,7 @@ public sealed class HistoricStringExpanderPatchTests
 
         HistoricStringExpanderPatch.Postfix(ref result);
 
-        Assert.That(result, Is.EqualTo("はじめに、レシェフがクッドを創造した"));
+        Assert.That(result, Is.EqualTo("In the beginning, Resheph created Qud"));
     }
 
     [Test]
@@ -64,7 +64,7 @@ public sealed class HistoricStringExpanderPatchTests
 
         HistoricStringExpanderPatch.Postfix(ref result);
 
-        Assert.That(result, Is.EqualTo("{{R|警告！}}"));
+        Assert.That(result, Is.EqualTo("{{R|Warning!}}"));
     }
 
     [Test]
@@ -120,8 +120,8 @@ public sealed class HistoricStringExpanderPatchTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(first, Is.EqualTo("スルタンが王になった"));
-            Assert.That(second, Is.EqualTo("スルタンは追放された"));
+            Assert.That(first, Is.EqualTo("Sultan became king"));
+            Assert.That(second, Is.EqualTo("Sultan was exiled"));
         });
     }
 
@@ -134,7 +134,7 @@ public sealed class HistoricStringExpanderPatchTests
 
         HistoricStringExpanderPatch.Postfix(ref result);
 
-        Assert.That(result, Is.EqualTo("&Gスルタンが戴冠した^k"));
+        Assert.That(result, Is.EqualTo("&GSultan was crowned^k"));
     }
 
     private void WriteDictionary(params (string key, string text)[] entries)

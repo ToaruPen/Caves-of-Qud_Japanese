@@ -55,8 +55,8 @@ public sealed class MainMenuLocalizationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyMainMenuTarget.LeftOptions[0].Text, Is.EqualTo("設定"));
-                Assert.That(DummyMainMenuTarget.RightOptions[0].Text, Is.EqualTo("ヘルプ"));
+                Assert.That(DummyMainMenuTarget.LeftOptions[0].Text, Is.EqualTo("Options"));
+                Assert.That(DummyMainMenuTarget.RightOptions[0].Text, Is.EqualTo("Help"));
             });
         }
         finally
@@ -83,7 +83,7 @@ public sealed class MainMenuLocalizationPatchTests
 
             new DummyMainMenuTarget().Show();
 
-            Assert.That(DummyMainMenuTarget.LeftOptions[1].Text, Is.EqualTo("{{G|モッド}}"));
+            Assert.That(DummyMainMenuTarget.LeftOptions[1].Text, Is.EqualTo("{{G|Mods}}"));
         }
         finally
         {
@@ -113,9 +113,9 @@ public sealed class MainMenuLocalizationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyMainMenuTarget.LastHotkeyChoices[0].Description, Is.EqualTo("移動"));
-                Assert.That(DummyMainMenuTarget.LastHotkeyChoices[1].Description, Is.EqualTo("選択"));
-                Assert.That(DummyMainMenuTarget.LastHotkeyChoices[2].Description, Is.EqualTo("終了"));
+                Assert.That(DummyMainMenuTarget.LastHotkeyChoices[0].Description, Is.EqualTo("navigate"));
+                Assert.That(DummyMainMenuTarget.LastHotkeyChoices[1].Description, Is.EqualTo("select"));
+                Assert.That(DummyMainMenuTarget.LastHotkeyChoices[2].Description, Is.EqualTo("quit"));
             });
         }
         finally

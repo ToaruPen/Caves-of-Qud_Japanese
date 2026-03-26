@@ -21,6 +21,7 @@ public sealed class LoadingStatusTranslationPatchTests
 
         Translator.ResetForTests();
         Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        SinkObservation.ResetForTests();
         DummyLoadingTarget.Reset();
     }
 
@@ -28,6 +29,7 @@ public sealed class LoadingStatusTranslationPatchTests
     public void TearDown()
     {
         Translator.ResetForTests();
+        SinkObservation.ResetForTests();
 
         if (Directory.Exists(tempDirectory))
         {
@@ -36,7 +38,7 @@ public sealed class LoadingStatusTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_TranslatesDescription_WhenPatched()
+    public void Prefix_ObservationOnly_LeavesDescriptionUnchanged_WhenPatched()
     {
         WriteDictionary(("Loading world", "ワールドを読み込み中"));
 
@@ -53,7 +55,7 @@ public sealed class LoadingStatusTranslationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyLoadingTarget.LastDescription, Is.EqualTo("\u0001ワールドを読み込み中"));
+                Assert.That(DummyLoadingTarget.LastDescription, Is.EqualTo("Loading world"));
                 Assert.That(DummyLoadingTarget.LastWaitForUiUpdate, Is.True);
             });
         }
@@ -82,6 +84,35 @@ public sealed class LoadingStatusTranslationPatchTests
                 Assert.That(DummyLoadingTarget.LastDescription, Is.EqualTo("既に翻訳済み"));
                 Assert.That(DummyLoadingTarget.LastWaitForUiUpdate, Is.True);
             });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_ObservationOnly_LogsUnclaimedDescription_WhenPatched()
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyLoadingTarget), nameof(DummyLoadingTarget.SetLoadingStatus)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(LoadingStatusTranslationPatch), nameof(LoadingStatusTranslationPatch.Prefix))));
+
+            const string source = "Loading world";
+            DummyLoadingTarget.SetLoadingStatus(source, waitForUiUpdate: true);
+
+            var hitCount = SinkObservation.GetHitCountForTests(
+                nameof(UITextSkinTranslationPatch),
+                nameof(LoadingStatusTranslationPatch),
+                SinkObservation.ObservationOnlyDetail,
+                source,
+                source);
+            Assert.That(hitCount, Is.GreaterThan(0));
         }
         finally
         {

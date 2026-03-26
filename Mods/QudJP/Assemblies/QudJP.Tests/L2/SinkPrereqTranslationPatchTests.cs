@@ -54,8 +54,8 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyLeftSideCategory();
         instance.setData(new DummyFrameworkDataElement { Description = "Keybinds" });
 
-        Assert.That(instance.text.text, Does.Contain("キーバインド"),
-            "LeftSideCategory text should contain translated Japanese (inside color markup).");
+        Assert.That(instance.text.text, Does.Contain("Keybinds"),
+            "Observation-only sink prerequisite patch should leave source text unchanged.");
     }
 
     [Test]
@@ -72,7 +72,7 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyFrameworkHeader();
         instance.setData(new DummyFrameworkDataElement { Description = "Choose your genotype" });
 
-        Assert.That(instance.textSkin.text, Is.EqualTo("遺伝子型を選択"));
+        Assert.That(instance.textSkin.text, Is.EqualTo("Choose your genotype"));
     }
 
     [Test]
@@ -93,9 +93,9 @@ public sealed class SinkPrereqTranslationPatchTests
             Title = "Summary Title"
         });
 
-        Assert.That(instance.text.text, Is.EqualTo("概要説明"));
-        Assert.That(instance.title.text, Is.EqualTo("概要タイトル").Or.Contains("概要タイトル"),
-            "Title should be translated (may include color markup).");
+        Assert.That(instance.text.text, Is.EqualTo("Summary Description"));
+        Assert.That(instance.title.text, Is.EqualTo("Summary Title").Or.Contains("Summary Title"),
+            "Observation-only sink prerequisite patch should leave source text unchanged.");
     }
 
     [Test]
@@ -112,8 +112,8 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyObjectFinderLine();
         instance.setData(new DummyFrameworkDataElement { Title = "nearby", Description = "a sword" });
 
-        Assert.That(instance.RightText.text, Is.EqualTo("近く"));
-        Assert.That(instance.ObjectDescription.text, Is.EqualTo("剣"));
+        Assert.That(instance.RightText.text, Is.EqualTo("nearby"));
+        Assert.That(instance.ObjectDescription.text, Is.EqualTo("a sword"));
     }
 
     [Test]
@@ -130,7 +130,7 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyCharacterEffectLine();
         instance.setData(new DummyFrameworkDataElement { Description = "Confused" });
 
-        Assert.That(instance.text.text, Is.EqualTo("混乱"));
+        Assert.That(instance.text.text, Is.EqualTo("Confused"));
     }
 
     [Test]
@@ -155,9 +155,9 @@ public sealed class SinkPrereqTranslationPatchTests
             LongDescription = "Enhanced damage"
         });
 
-        Assert.That(instance.text.text, Is.EqualTo("レーザーピストル"));
-        Assert.That(instance.descriptionText.text, Is.EqualTo("基本的な武器。"));
-        Assert.That(instance.modDescriptionText.text, Is.EqualTo("ダメージ強化"));
+        Assert.That(instance.text.text, Is.EqualTo("Laser Pistol"));
+        Assert.That(instance.descriptionText.text, Is.EqualTo("A basic weapon."));
+        Assert.That(instance.modDescriptionText.text, Is.EqualTo("Enhanced damage"));
     }
 
     [Test]
@@ -178,8 +178,8 @@ public sealed class SinkPrereqTranslationPatchTests
             LongDescription = "Born of the ancient stock."
         });
 
-        Assert.That(instance.selectedTitleText.text, Is.EqualTo("トゥルーキン"));
-        Assert.That(instance.selectedDescriptionText.text, Is.EqualTo("古の血統に生まれし者。"));
+        Assert.That(instance.selectedTitleText.text, Is.EqualTo("True Kin"));
+        Assert.That(instance.selectedDescriptionText.text, Is.EqualTo("Born of the ancient stock."));
     }
 
     [Test]
@@ -196,7 +196,7 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyTitledIconButton { Title = "Accept" };
         instance.Update();
 
-        Assert.That(instance.TitleText.text, Is.EqualTo("承認"));
+        Assert.That(instance.TitleText.text, Is.EqualTo("Accept"));
     }
 
     [Test]
@@ -213,7 +213,7 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyCyberneticsTerminalRow { DataText = "Welcome to the terminal." };
         instance.Update();
 
-        Assert.That(instance.description.text, Is.EqualTo("ターミナルへようこそ。"));
+        Assert.That(instance.description.text, Is.EqualTo("Welcome to the terminal."));
     }
 
     [Test]
@@ -234,8 +234,8 @@ public sealed class SinkPrereqTranslationPatchTests
             LongDescription = "Move quickly."
         });
 
-        Assert.That(instance.rightSideHeaderText.text, Is.EqualTo("スプリント"));
-        Assert.That(instance.rightSideDescriptionArea.text, Is.EqualTo("素早く移動する。"));
+        Assert.That(instance.rightSideHeaderText.text, Is.EqualTo("Sprint"));
+        Assert.That(instance.rightSideDescriptionArea.text, Is.EqualTo("Move quickly."));
     }
 
     [Test]
@@ -252,8 +252,8 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyMapScrollerPinItem();
         instance.SetData(new DummyFrameworkDataElement { Title = "Joppa", Description = "A small village." });
 
-        Assert.That(instance.titleText.text, Is.EqualTo("ジョッパ"));
-        Assert.That(instance.detailsText.text, Is.EqualTo("小さな村。"));
+        Assert.That(instance.titleText.text, Is.EqualTo("Joppa"));
+        Assert.That(instance.detailsText.text, Is.EqualTo("A small village."));
     }
 
     [Test]
@@ -270,7 +270,7 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyPlayerStatusBar { ZoneString = "World Map" };
         instance.Update();
 
-        Assert.That(instance.ZoneText.text, Is.EqualTo("ワールドマップ"));
+        Assert.That(instance.ZoneText.text, Is.EqualTo("World Map"));
     }
 
     [Test]
@@ -291,8 +291,8 @@ public sealed class SinkPrereqTranslationPatchTests
             Title = "Trade Details"
         });
 
-        Assert.That(instance.detailsRightText.text, Is.EqualTo("銅のナゲット"));
-        Assert.That(instance.detailsLeftText.text, Is.EqualTo("取引詳細"));
+        Assert.That(instance.detailsRightText.text, Is.EqualTo("a copper nugget"));
+        Assert.That(instance.detailsLeftText.text, Is.EqualTo("Trade Details"));
     }
 
     [Test]
