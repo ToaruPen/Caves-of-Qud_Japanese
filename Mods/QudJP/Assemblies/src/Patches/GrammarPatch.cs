@@ -341,12 +341,12 @@ public static class GrammarInitCapsPatch
         }
     }
 
-    public static bool Prefix(string Text, ref string __result)
+    public static bool Prefix(string word, ref string __result)
     {
         try
         {
-            __result = Text;
-            GrammarPatchHelpers.LogTransform("InitCap", Text, __result, logWhenUnchanged: true);
+            __result = word;
+            GrammarPatchHelpers.LogTransform("InitCap", word, __result, logWhenUnchanged: true);
             return false;
         }
         catch (Exception ex)
@@ -377,12 +377,12 @@ public static class GrammarCardinalNumberPatch
         }
     }
 
-    public static bool Prefix(int Number, ref string __result)
+    public static bool Prefix(int num, ref string __result)
     {
         try
         {
-            __result = Number.ToString(CultureInfo.InvariantCulture);
-            GrammarPatchHelpers.LogTransform("Cardinal", Number.ToString(CultureInfo.InvariantCulture), __result, logWhenUnchanged: true);
+            __result = num.ToString(CultureInfo.InvariantCulture);
+            GrammarPatchHelpers.LogTransform("Cardinal", num.ToString(CultureInfo.InvariantCulture), __result, logWhenUnchanged: true);
             return false;
         }
         catch (Exception ex)
