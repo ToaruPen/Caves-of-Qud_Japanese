@@ -27,4 +27,21 @@ public sealed class GameTypeResolverTests
 
         Assert.That(resolved, Is.Null);
     }
+
+    [Test]
+    public void FindType_LogsWarning_WhenNeitherNameResolves()
+    {
+        const string fullTypeName = "QudJP.Tests.L1.Does.Not.Exist";
+        const string simpleTypeName = "NoSuchSimpleTypeName";
+
+        var output = TestTraceHelper.CaptureTrace(() =>
+            Assert.That(GameTypeResolver.FindType(fullTypeName, simpleTypeName), Is.Null));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(output, Does.Contain("GameTypeResolver failed to resolve type"));
+            Assert.That(output, Does.Contain(fullTypeName));
+            Assert.That(output, Does.Contain(simpleTypeName));
+        });
+    }
 }

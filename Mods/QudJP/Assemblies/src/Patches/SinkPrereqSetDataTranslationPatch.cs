@@ -37,6 +37,7 @@ public static class SinkPrereqSetDataTranslationPatch
             var type = AccessTools.TypeByName(TargetTypeNames[index]);
             if (type is null)
             {
+                Trace.TraceWarning("QudJP: {0} type not found: '{1}'.", Context, TargetTypeNames[index]);
                 continue;
             }
 

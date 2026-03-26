@@ -66,6 +66,14 @@ internal static class GameTypeResolver
             return null;
         }
 
+        if (firstMatch is null)
+        {
+            Trace.TraceWarning(
+                "QudJP: GameTypeResolver failed to resolve type '{0}' (simple name: '{1}').",
+                fullTypeName,
+                simpleTypeName);
+        }
+
         return firstMatch;
     }
 }

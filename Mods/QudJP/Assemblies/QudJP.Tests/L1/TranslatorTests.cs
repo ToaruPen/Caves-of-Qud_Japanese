@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace QudJP.Tests.L1;
@@ -235,20 +234,36 @@ public sealed class TranslatorTests
 
     [Test]
     [Category("L1")]
-    public void Translate_ThrowsSerializationException_WhenDictionaryJsonIsCorrupt()
+    public void Translate_ContinuesLoading_WhenDictionaryJsonIsCorrupt()
     {
+        WriteDictionary("valid.ja.json", "Hello", "こんにちは");
         WriteRawDictionary("corrupt.ja.json", "{\"entries\":[{\"key\":\"Hello\",\"text\":\"こんにちは\"}");
 
-        Assert.Throws<SerializationException>(() => Translator.Translate("Hello"));
+        var output = TestTraceHelper.CaptureTrace(() =>
+            Assert.That(Translator.Translate("Hello"), Is.EqualTo("こんにちは")));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(output, Does.Contain("Failed to load dictionary file"));
+            Assert.That(output, Does.Contain("corrupt.ja.json"));
+        });
     }
 
     [Test]
     [Category("L1")]
-    public void Translate_ThrowsInvalidDataException_WhenEntriesArrayIsMissing()
+    public void Translate_ContinuesLoading_WhenEntriesArrayIsMissing()
     {
+        WriteDictionary("valid.ja.json", "Hello", "こんにちは");
         WriteRawDictionary("missing-entries.ja.json", "{}");
 
-        Assert.Throws<InvalidDataException>(() => Translator.Translate("Hello"));
+        var output = TestTraceHelper.CaptureTrace(() =>
+            Assert.That(Translator.Translate("Hello"), Is.EqualTo("こんにちは")));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(output, Does.Contain("Failed to load dictionary file"));
+            Assert.That(output, Does.Contain("missing-entries.ja.json"));
+        });
     }
 
     [Test]
@@ -256,6 +271,27 @@ public sealed class TranslatorTests
     public void Translate_ThrowsArgumentNullException_WhenKeyIsNull()
     {
         Assert.Throws<ArgumentNullException>(() => Translator.Translate(null!));
+    }
+
+    [Test]
+    public void Translate_LogsFirstDuplicateOverrideDetails_OncePerKey()
+    {
+        WriteDictionary("first.ja.json", ("Hello", "こんにちは"));
+        WriteDictionary("second.ja.json", ("Hello", "やあ"));
+        WriteDictionary("third.ja.json", ("Hello", "もしもし"));
+
+        var output = TestTraceHelper.CaptureTrace(() =>
+            Assert.That(Translator.Translate("Hello"), Is.EqualTo("もしもし")));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                output,
+                Does.Contain("Translator duplicate key 'Hello': overridden by"));
+            Assert.That(output, Does.Contain("second.ja.json"));
+            Assert.That(output, Does.Contain("first.ja.json"));
+            Assert.That(CountOccurrences(output, "Translator duplicate key 'Hello':"), Is.EqualTo(1));
+        });
     }
 
     private void WriteDictionary(string fileName, string key, string text)
@@ -277,6 +313,20 @@ public sealed class TranslatorTests
         return value
             .Replace("\\", "\\\\", StringComparison.Ordinal)
             .Replace("\"", "\\\"", StringComparison.Ordinal);
+    }
+
+    private static int CountOccurrences(string text, string value)
+    {
+        var count = 0;
+        var startIndex = 0;
+
+        while ((startIndex = text.IndexOf(value, startIndex, StringComparison.Ordinal)) >= 0)
+        {
+            count++;
+            startIndex += value.Length;
+        }
+
+        return count;
     }
 
     private void WriteRawDictionary(string fileName, string content)

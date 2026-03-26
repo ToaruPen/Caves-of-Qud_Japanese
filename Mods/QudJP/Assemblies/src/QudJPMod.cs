@@ -31,7 +31,8 @@ public static class QudJPMod
             return;
         }
 
-        LogToUnity($"[QudJP] Build marker: {BuildMarker}");
+        var assemblyVersion = typeof(QudJPMod).Assembly.GetName().Version;
+        LogToUnity($"[QudJP] Build marker: {BuildMarker}, Version: {assemblyVersion}");
         FontManager.Initialize();
         ApplyHarmonyPatches();
     }
@@ -272,8 +273,8 @@ public static class QudJPMod
         catch (Exception ex)
         {
             failureReason = ex is TargetInvocationException tie
-                ? tie.InnerException?.Message ?? tie.Message
-                : ex.Message;
+                ? tie.InnerException?.ToString() ?? tie.ToString()
+                : ex.ToString();
             return false;
         }
     }
@@ -300,8 +301,8 @@ public static class QudJPMod
         catch (Exception ex)
         {
             failureReason = ex is TargetInvocationException tie
-                ? tie.InnerException?.Message ?? tie.Message
-                : ex.Message;
+                ? tie.InnerException?.ToString() ?? tie.ToString()
+                : ex.ToString();
             return false;
         }
     }
