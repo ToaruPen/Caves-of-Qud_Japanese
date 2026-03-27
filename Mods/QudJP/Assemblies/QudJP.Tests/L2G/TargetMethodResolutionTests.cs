@@ -112,7 +112,6 @@ public sealed class TargetMethodResolutionTests
         "System.Boolean",
     })]
     [TestCase(typeof(BaseLineWithTooltipStartTooltipPatch), "StartTooltip", "Qud.UI.BaseLineWithTooltip", "System.Void", new[] { "XRL.World.GameObject", "XRL.World.GameObject", "System.Boolean", "UnityEngine.RectTransform" })]
-    [TestCase(typeof(ConversationDisplayTextPatch), "GetDisplayText", "XRL.World.Conversations.Choice", "System.String", new[] { "System.Boolean" })]
     [TestCase(typeof(DoesFragmentMarkingPatch), "Does", "XRL.World.GameObject", "System.String", new[]
     {
         "System.String",
@@ -228,6 +227,11 @@ public sealed class TargetMethodResolutionTests
         "",
         "",
     })]
+    [TestCase(typeof(ConversationDisplayTextPatch), new[]
+    {
+        "System.Boolean",
+        "System.Boolean",
+    })]
     public void TargetMethods_ResolveExpectedOverloads(Type patchType, string[] expectedSignatures)
     {
         var targetMethodsMethod = patchType.GetMethod("TargetMethods", BindingFlags.NonPublic | BindingFlags.Static);
@@ -249,6 +253,33 @@ public sealed class TargetMethodResolutionTests
         }
 
         Assert.That(actualSignatures, Is.EquivalentTo(expectedSignatures));
+    }
+
+    [Test]
+    public void ConversationDisplayTextPatch_TargetMethods_ResolveBaseAndChoice()
+    {
+        var targetMethodsMethod = typeof(ConversationDisplayTextPatch).GetMethod("TargetMethods", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(targetMethodsMethod, Is.Not.Null, "TargetMethods not found for ConversationDisplayTextPatch");
+
+        var result = targetMethodsMethod!.Invoke(null, null) as System.Collections.IEnumerable;
+        Assert.That(result, Is.Not.Null, "TargetMethods returned null for ConversationDisplayTextPatch");
+
+        var declaringTypes = new List<string>();
+        foreach (var item in result!)
+        {
+            if (item is not MethodInfo methodInfo)
+            {
+                continue;
+            }
+
+            declaringTypes.Add(NormalizeTypeName(methodInfo.DeclaringType?.FullName));
+        }
+
+        Assert.That(declaringTypes, Is.EquivalentTo(new[]
+        {
+            "XRL.World.Conversations.IConversationElement",
+            "XRL.World.Conversations.Choice",
+        }));
     }
 
     [TestCase("XRL.World.Conversations.ConversationLoader", "LoadConversations", 0)]

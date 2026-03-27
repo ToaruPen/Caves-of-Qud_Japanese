@@ -83,6 +83,6 @@ public static class DescriptionLongDescriptionPatch
 
     internal static string TranslateLongDescription(string source)
     {
-        return UITextSkinTranslationPatch.TranslatePreservingColors(source, nameof(DescriptionLongDescriptionPatch));
+        return DescriptionTextTranslator.TranslateLongDescription(source, nameof(DescriptionLongDescriptionPatch));
     }
 }

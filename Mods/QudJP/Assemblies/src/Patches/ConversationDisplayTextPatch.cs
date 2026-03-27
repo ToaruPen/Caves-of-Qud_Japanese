@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -12,42 +13,32 @@ public static class ConversationDisplayTextPatch
     private static readonly Regex TrailingActionMarkerPattern =
         new Regex(" (?<marker>\\[[^\\]]+\\])$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
-    [HarmonyTargetMethod]
-    private static MethodBase? TargetMethod()
+    [HarmonyTargetMethods]
+    private static IEnumerable<MethodBase> TargetMethods()
     {
-        var method = AccessTools.Method("XRL.World.Conversations.ConversationNode:GetDisplayText");
-        if (method is not null)
+        var targets = new List<MethodBase>();
+
+        AddTargetMethod(targets, "XRL.World.Conversations.IConversationElement");
+        AddTargetMethod(targets, "XRL.World.Conversations.Choice");
+
+        if (targets.Count == 0)
         {
-            return method;
+            Trace.TraceError("QudJP: Failed to resolve conversation GetDisplayText(bool) targets. Patch will not apply.");
         }
 
-        foreach (var type in AccessTools.AllTypes())
+        return targets;
+    }
+
+    private static void AddTargetMethod(List<MethodBase> targets, string typeName)
+    {
+        var method = AccessTools.Method(typeName + ":GetDisplayText", new[] { typeof(bool) });
+        if (method is null)
         {
-            if (type is null)
-            {
-                continue;
-            }
-
-            var fullName = type.FullName;
-            if (string.IsNullOrEmpty(fullName) || !fullName.StartsWith("XRL.World.Conversations.", StringComparison.Ordinal))
-            {
-                continue;
-            }
-
-            var candidate = AccessTools.Method(type, "GetDisplayText", new[] { typeof(bool) });
-            if (candidate is null)
-            {
-                continue;
-            }
-
-            if (candidate.ReturnType == typeof(string))
-            {
-                return candidate;
-            }
+            Trace.TraceError("QudJP: Failed to resolve {0}.GetDisplayText(bool).", typeName);
+            return;
         }
 
-        Trace.TraceError("QudJP: Failed to resolve ConversationNode.GetDisplayText(bool). Patch will not apply.");
-        return null;
+        targets.Add(method);
     }
 
     public static void Postfix(ref string __result)
@@ -60,7 +51,7 @@ public static class ConversationDisplayTextPatch
             }
 
             __result = NormalizeConversationDisplayText(__result);
-            __result = UITextSkinTranslationPatch.TranslatePreservingColors(__result, nameof(ConversationDisplayTextPatch));
+            __result = TranslateConversationDisplayText(__result);
         }
         catch (Exception ex)
         {
@@ -77,5 +68,28 @@ public static class ConversationDisplayTextPatch
         }
 
         return source.Substring(0, match.Index);
+    }
+
+    private static string TranslateConversationDisplayText(string source)
+    {
+        var route = nameof(ConversationDisplayTextPatch);
+        return ColorAwareTranslationComposer.TranslatePreservingColors(
+            source,
+            visible => TryTranslateVisibleConversationText(visible, route, out var translated)
+                ? translated
+                : visible);
+    }
+
+    private static bool TryTranslateVisibleConversationText(string source, string route, out string translated)
+    {
+        if (StringHelpers.TryGetTranslationExactOrLowerAscii(source, out translated)
+            && !string.Equals(source, translated, StringComparison.Ordinal))
+        {
+            DynamicTextObservability.RecordTransform(route, "ConversationDisplay.ExactLeaf", source, translated);
+            return true;
+        }
+
+        translated = source;
+        return false;
     }
 }

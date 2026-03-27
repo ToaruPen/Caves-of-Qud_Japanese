@@ -21,12 +21,18 @@ public sealed class CharacterStatusScreenMutationDetailsPatchTests
 
         Translator.ResetForTests();
         Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        DynamicTextObservability.ResetForTests();
+        SinkObservation.ResetForTests();
+        DummyCharacterStatusMutationScreen.ResetDefaults();
     }
 
     [TearDown]
     public void TearDown()
     {
         Translator.ResetForTests();
+        DynamicTextObservability.ResetForTests();
+        SinkObservation.ResetForTests();
+        DummyCharacterStatusMutationScreen.ResetDefaults();
 
         if (Directory.Exists(tempDirectory))
         {
@@ -63,6 +69,110 @@ public sealed class CharacterStatusScreenMutationDetailsPatchTests
             Assert.That(
                 screen.mutationsDetails.Text,
                 Is.EqualTo("力の壁を生み出し、9マス連続の力場で敵を遮る。\n\n飛び道具は壁を通過させられる。\n\n9マス分の連続した固定力場を作る。\n持続: 16ラウンド\nクールダウン: 100ラウンド\n力場越しに飛び道具を撃てる。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Postfix_TranslatesMutationOwnerFields_WhenPatched()
+    {
+        WriteDictionary(
+            ("Force Wall", "力の壁"),
+            ("RANK", "ランク"),
+            ("Mental Mutation", "精神変異"),
+            ("Buy Mutation", "変異を取得"),
+            ("Show Effects", "効果を表示"),
+            ("mutation:Force Wall", "力の壁を生み出し、9マス連続の力場で敵を遮る。"),
+            ("mutation:Force Wall:rank:1", "9マス分の連続した固定力場を作る。"));
+
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyCharacterStatusMutationScreen), nameof(DummyCharacterStatusMutationScreen.HandleHighlightMutation)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(CharacterStatusScreenMutationDetailsPatch), nameof(CharacterStatusScreenMutationDetailsPatch.Postfix))));
+
+            var screen = new DummyCharacterStatusMutationScreen();
+            screen.HandleHighlightMutation(new DummyCharacterMutationLineData
+            {
+                mutation = new DummyCharacterMutation
+                {
+                    Name = "Force Wall",
+                    Level = 1,
+                },
+            });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(screen.mutationNameText.Text, Is.EqualTo("{{B|力の壁}}"));
+                Assert.That(screen.mutationRankText.Text, Is.EqualTo("{{G|ランク 1/10}}"));
+                Assert.That(screen.mutationTypeText.Text, Is.EqualTo("{{c|[精神変異]}}"));
+                Assert.That(DummyCharacterStatusMutationScreen.BUY_MUTATION.Description, Is.EqualTo("変異を取得"));
+                Assert.That(DummyCharacterStatusMutationScreen.BUY_MUTATION.KeyDescription, Is.EqualTo("変異を取得"));
+                Assert.That(DummyCharacterStatusMutationScreen.SHOW_EFFECTS.Description, Is.EqualTo("効果を表示"));
+                Assert.That(DummyCharacterStatusMutationScreen.SHOW_EFFECTS.KeyDescription, Is.EqualTo("効果を表示"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(CharacterStatusScreenTranslationPatch),
+                        "CharacterStatus.ExactLookup"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(CharacterStatusScreenTranslationPatch),
+                        "CharacterStatus.Rank"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(CharacterStatusScreenTranslationPatch),
+                        "CharacterStatus.MutationType"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(UITextSkinTranslationPatch),
+                        nameof(CharacterStatusScreenTranslationPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        "Force Wall",
+                        "Force Wall"),
+                    Is.EqualTo(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Postfix_TranslatesStaticMenuOptions_WhenElementIsNull()
+    {
+        WriteDictionary(
+            ("Buy Mutation", "変異を取得"),
+            ("Show Effects", "効果を表示"));
+
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyCharacterStatusMutationScreen), nameof(DummyCharacterStatusMutationScreen.HandleHighlightMutation)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(CharacterStatusScreenMutationDetailsPatch), nameof(CharacterStatusScreenMutationDetailsPatch.Postfix))));
+
+            var screen = new DummyCharacterStatusMutationScreen();
+            screen.HandleHighlightMutation(null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyCharacterStatusMutationScreen.BUY_MUTATION.Description, Is.EqualTo("変異を取得"));
+                Assert.That(DummyCharacterStatusMutationScreen.BUY_MUTATION.KeyDescription, Is.EqualTo("変異を取得"));
+                Assert.That(DummyCharacterStatusMutationScreen.SHOW_EFFECTS.Description, Is.EqualTo("効果を表示"));
+                Assert.That(DummyCharacterStatusMutationScreen.SHOW_EFFECTS.KeyDescription, Is.EqualTo("効果を表示"));
+            });
         }
         finally
         {

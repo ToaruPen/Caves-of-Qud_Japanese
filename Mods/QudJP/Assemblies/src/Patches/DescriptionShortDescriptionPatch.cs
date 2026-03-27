@@ -36,7 +36,7 @@ public static class DescriptionShortDescriptionPatch
                 return;
             }
 
-            var translated = UITextSkinTranslationPatch.TranslatePreservingColors(
+            var translated = DescriptionTextTranslator.TranslateShortDescription(
                 __result,
                 nameof(DescriptionShortDescriptionPatch));
             if (string.Equals(translated, __result, StringComparison.Ordinal))
