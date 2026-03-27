@@ -1,5 +1,6 @@
 #if HAS_GAME_DLL
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 
 namespace QudJP.Tests.L2G;
@@ -49,24 +50,59 @@ public sealed class PlayerStatusBarProducerTranslationPatchResolutionTests
 
     private static string ResolveManagedDirectory()
     {
+        foreach (var candidate in EnumerateDefaultManagedDirectories())
+        {
+            if (Directory.Exists(candidate))
+            {
+                return candidate;
+            }
+        }
+
         var envDir = Environment.GetEnvironmentVariable("COQ_MANAGED_DIR");
-        if (!string.IsNullOrWhiteSpace(envDir))
+        if (!string.IsNullOrWhiteSpace(envDir) && Directory.Exists(envDir))
         {
             return envDir;
         }
 
-        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        var defaultDir = Path.Combine(
-            home,
-            "Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/Managed");
+        Assert.Ignore(
+            "Game managed directory not found in OS defaults, and COQ_MANAGED_DIR was unset or missing. " +
+            "Set COQ_MANAGED_DIR to your Caves of Qud Managed directory to run game-DLL-backed tests.");
+        return string.Empty;
+    }
 
-        if (Directory.Exists(defaultDir))
+    private static IEnumerable<string> EnumerateDefaultManagedDirectories()
+    {
+        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            return defaultDir;
+            var programFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            var programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+
+            if (!string.IsNullOrWhiteSpace(programFilesX86))
+            {
+                yield return Path.Combine(programFilesX86, "Steam", "steamapps", "common", "Caves of Qud", "CoQ_Data", "Managed");
+            }
+
+            if (!string.IsNullOrWhiteSpace(programFiles))
+            {
+                yield return Path.Combine(programFiles, "Steam", "steamapps", "common", "Caves of Qud", "CoQ_Data", "Managed");
+            }
+
+            yield break;
         }
 
-        Assert.Ignore("Game managed directory not found. Set COQ_MANAGED_DIR to run game-DLL-backed tests.");
-        return string.Empty;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            yield return Path.Combine(home, ".steam", "steam", "steamapps", "common", "Caves of Qud", "CoQ_Data", "Managed");
+            yield return Path.Combine(home, ".local", "share", "Steam", "steamapps", "common", "Caves of Qud", "CoQ_Data", "Managed");
+            yield return Path.Combine(home, ".var", "app", "com.valvesoftware.Steam", ".local", "share", "Steam", "steamapps", "common", "Caves of Qud", "CoQ_Data", "Managed");
+            yield break;
+        }
+
+        yield return Path.Combine(
+            home,
+            "Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data/Managed");
     }
 
     private static Assembly EnsureGameAssemblyLoaded()

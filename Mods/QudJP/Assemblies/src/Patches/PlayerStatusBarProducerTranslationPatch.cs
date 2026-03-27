@@ -12,6 +12,7 @@ namespace QudJP.Patches;
 public static class PlayerStatusBarProducerTranslationPatch
 {
     private const string Context = nameof(PlayerStatusBarProducerTranslationPatch);
+    private static FieldInfo? playerStringDataField;
 
     [HarmonyTargetMethods]
     private static IEnumerable<MethodBase> TargetMethods()
@@ -71,7 +72,13 @@ public static class PlayerStatusBarProducerTranslationPatch
 
     private static void TranslatePlayerStringData(object instance)
     {
-        var field = AccessTools.Field(instance.GetType(), "playerStringData");
+        var field = playerStringDataField;
+        if (field is null || field.DeclaringType != instance.GetType())
+        {
+            field = AccessTools.Field(instance.GetType(), "playerStringData");
+            playerStringDataField = field;
+        }
+
         if (field?.GetValue(instance) is not IDictionary dictionary)
         {
             return;

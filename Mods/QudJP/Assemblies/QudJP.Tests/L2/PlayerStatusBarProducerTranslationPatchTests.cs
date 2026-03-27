@@ -108,6 +108,34 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
         }
     }
 
+    [Test]
+    public void TranslatePlayerStringData_CachesPlayerStringDataFieldAfterFirstCall()
+    {
+        WriteDictionary(("World Map", "ワールドマップ"));
+
+        var patchType = typeof(Translator).Assembly.GetType("QudJP.Patches.PlayerStatusBarProducerTranslationPatch", throwOnError: false);
+        Assert.That(patchType, Is.Not.Null, "PlayerStatusBarProducerTranslationPatch type not found.");
+
+        var cacheField = patchType!.GetField("playerStringDataField", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(cacheField, Is.Not.Null, "playerStringDataField cache not found.");
+        cacheField!.SetValue(null, null);
+
+        var translateMethod = RequirePatchMethod("TranslatePlayerStringData", typeof(object));
+        var instance = new DummyPlayerStatusBarTarget
+        {
+            NextZone = "World Map",
+        };
+
+        instance.BeginEndTurn(core: null);
+        translateMethod.Invoke(null, new object?[] { instance });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(cacheField.GetValue(null), Is.AssignableTo<FieldInfo>());
+            Assert.That(instance.GetStringData("Zone"), Is.EqualTo("ワールドマップ"));
+        });
+    }
+
     private static MethodInfo RequirePatchMethod(string methodName, params Type[] parameterTypes)
     {
         var patchType = typeof(Translator).Assembly.GetType("QudJP.Patches.PlayerStatusBarProducerTranslationPatch", throwOnError: false);
