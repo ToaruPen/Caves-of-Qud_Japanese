@@ -109,6 +109,6 @@ public static class PopupMessageTranslationPatch
     private static string TranslatePopupText(string source, string family)
     {
         _ = family;
-        return PopupTranslationPatch.TranslatePopupTextForRoute(source, Context);
+        return PopupTranslationPatch.TranslatePopupTextForProducerRoute(source, Context);
     }
 }
