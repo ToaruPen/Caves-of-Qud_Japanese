@@ -186,6 +186,38 @@ public sealed class LocalizationCoverageTests
         });
     }
 
+    [Test]
+    public void ConversationsOverlay_DefinesKindrishSharedChoiceIdsForCurrentInherits()
+    {
+        var conversationsDocument = XDocument.Load(Path.Combine(localizationRoot, "Conversations.jp.xml"));
+        var expectedChoices = new[]
+        {
+            ("StayLong", "KindrishReturnChoice", "KindrishReturn"),
+            ("Fate", "KindrishReturnChoice", "KindrishReturn"),
+            ("Doomed", "KindrishReturnAfterChoice", "KindrishReturnAfter"),
+            ("MocksFate", "KindrishReturnAfterChoice", "KindrishReturnAfter"),
+        };
+
+        Assert.Multiple(() =>
+        {
+            foreach (var (startId, choiceId, gotoId) in expectedChoices)
+            {
+                var choice = conversationsDocument.Root!
+                    .Descendants("start")
+                    .Where(element => string.Equals(element.Attribute("ID")?.Value, startId, StringComparison.Ordinal))
+                    .Elements("choice")
+                    .SingleOrDefault(element =>
+                        string.Equals(element.Attribute("ID")?.Value, choiceId, StringComparison.Ordinal)
+                        && string.Equals(element.Attribute("GotoID")?.Value, gotoId, StringComparison.Ordinal));
+
+                Assert.That(
+                    choice,
+                    Is.Not.Null,
+                    $"{startId}.{choiceId} should exist in Conversations.jp.xml so current Kindrish inherits resolve.");
+            }
+        });
+    }
+
     private static string[] LoadMutationNamesWithDisplayName(string path)
     {
         var document = XDocument.Load(path);

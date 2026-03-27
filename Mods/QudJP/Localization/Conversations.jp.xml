@@ -3974,7 +3974,7 @@
 
         ベイ・ラーへおかえり！ 好きなだけ滞在していきなよ。
       </text>
-      <choice IfHaveBlueprint="Kindrish" IfNotHaveState="KindrishReturned" GotoID="KindrishReturn">ヒンドリアーク、キンドリシュを見つけた。</choice>
+      <choice ID="KindrishReturnChoice" IfHaveBlueprint="Kindrish" IfNotHaveState="KindrishReturned" GotoID="KindrishReturn">ヒンドリアーク、キンドリシュを見つけた。</choice>
       <choice GotoID="EskHindriarch">ヒンドリアークの暮らしはどうだ？</choice>
       <choice GotoID="End">どういたしまして。生きて飲め。</choice>
     </start>
@@ -10608,7 +10608,7 @@
         調査はまとまったか？ 私たちの運命は君の手にある。
       </text>
       <choice GotoID="Neelahind is giddy">まだだ。エスキンドとはどう？</choice>
-      <choice IfHaveBlueprint="Kindrish" IfNotHaveState="KindrishReturned" GotoID="KindrishReturn">監視官、キンドリシュを見つけた。</choice>
+      <choice ID="KindrishReturnChoice" IfHaveBlueprint="Kindrish" IfNotHaveState="KindrishReturned" GotoID="KindrishReturn">監視官、キンドリシュを見つけた。</choice>
       <choice GotoID="KithAndKinCircumstance" IfHaveState="FoundAccusationClueSet">ああ、犯人を告発したい。</choice>
       <choice GotoID="Questioning Neelahind">まだだ。質問させてくれ。</choice>
       <choice GotoID="End">証拠が足りない。もう少し待ってくれ。</choice>
@@ -10984,7 +10984,7 @@
       <text>
         胸の奥がざわついているんだ、ケンドレン。ベイ・ラーはどうなってしまうんだろう？
       </text>
-      <choice IfHaveBlueprint="Kindrish" IfNotHaveState="KindrishReturned" GotoID="KindrishReturnAfter">監視官、キンドリシュを見つけた。</choice>
+      <choice ID="KindrishReturnAfterChoice" IfHaveBlueprint="Kindrish" IfNotHaveState="KindrishReturned" GotoID="KindrishReturnAfter">監視官、キンドリシュを見つけた。</choice>
       <choice GotoID="End">……そうか。生きて飲め。</choice>
     </start>
 
@@ -11374,7 +11374,7 @@
 
         敵対的なケンドレンに飲み込まれるのも時間の問題だ。お前の存在は我らの運命を嘲っている。
       </text>
-      <choice IfHaveBlueprint="Kindrish" IfNotHaveState="KindrishReturned" GotoID="KindrishReturnAfter">ヒンドリアーク、キンドリシュを見つけた。</choice>
+      <choice ID="KindrishReturnAfterChoice" IfHaveBlueprint="Kindrish" IfNotHaveState="KindrishReturned" GotoID="KindrishReturnAfter">ヒンドリアーク、キンドリシュを見つけた。</choice>
       <choice GotoID="End">道を見つけろ。生きて飲め。</choice>
     </start>
 
