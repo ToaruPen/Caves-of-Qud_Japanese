@@ -41,7 +41,8 @@ internal static class DescriptionTextTranslator
             return source;
         }
 
-        var lines = source.Split('\n');
+        var newline = source.Contains("\r\n") ? "\r\n" : "\n";
+        var lines = source.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
         var changed = false;
         for (var index = 0; index < lines.Length; index++)
         {
@@ -54,7 +55,7 @@ internal static class DescriptionTextTranslator
             changed = true;
         }
 
-        return changed ? string.Join("\n", lines) : source;
+        return changed ? string.Join(newline, lines) : source;
     }
 
     private static bool TryTranslateSegmentPreservingColors(string source, string route, out string translated)
