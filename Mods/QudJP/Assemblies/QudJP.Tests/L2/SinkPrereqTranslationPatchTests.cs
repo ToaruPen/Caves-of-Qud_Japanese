@@ -85,7 +85,18 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyFrameworkHeader();
         instance.setData(new DummyFrameworkDataElement { Description = "Choose your genotype" });
 
-        Assert.That(instance.textSkin.text, Is.EqualTo("Choose your genotype"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.textSkin.text, Is.EqualTo("Choose your genotype"));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqSetDataTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "Choose your genotype",
+                    "Choose your genotype"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -136,8 +147,19 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyObjectFinderLine();
         instance.setData(new DummyFrameworkDataElement { Title = "nearby", Description = "a sword" });
 
-        Assert.That(instance.RightText.text, Is.EqualTo("nearby"));
-        Assert.That(instance.ObjectDescription.text, Is.EqualTo("a sword"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.RightText.text, Is.EqualTo("nearby"));
+            Assert.That(instance.ObjectDescription.text, Is.EqualTo("a sword"));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqSetDataTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "nearby",
+                    "nearby"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -154,7 +176,18 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyCharacterEffectLine();
         instance.setData(new DummyFrameworkDataElement { Description = "Confused" });
 
-        Assert.That(instance.text.text, Is.EqualTo("Confused"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.text.text, Is.EqualTo("Confused"));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqSetDataTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "Confused",
+                    "Confused"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -179,9 +212,20 @@ public sealed class SinkPrereqTranslationPatchTests
             LongDescription = "Enhanced damage"
         });
 
-        Assert.That(instance.text.text, Is.EqualTo("Laser Pistol"));
-        Assert.That(instance.descriptionText.text, Is.EqualTo("A basic weapon."));
-        Assert.That(instance.modDescriptionText.text, Is.EqualTo("Enhanced damage"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.text.text, Is.EqualTo("Laser Pistol"));
+            Assert.That(instance.descriptionText.text, Is.EqualTo("A basic weapon."));
+            Assert.That(instance.modDescriptionText.text, Is.EqualTo("Enhanced damage"));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqSetDataTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "Laser Pistol",
+                    "Laser Pistol"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -202,8 +246,19 @@ public sealed class SinkPrereqTranslationPatchTests
             LongDescription = "Born of the ancient stock."
         });
 
-        Assert.That(instance.selectedTitleText.text, Is.EqualTo("True Kin"));
-        Assert.That(instance.selectedDescriptionText.text, Is.EqualTo("Born of the ancient stock."));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.selectedTitleText.text, Is.EqualTo("True Kin"));
+            Assert.That(instance.selectedDescriptionText.text, Is.EqualTo("Born of the ancient stock."));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqUiMethodTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "True Kin",
+                    "True Kin"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -220,7 +275,18 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyTitledIconButton { Title = "Accept" };
         instance.Update();
 
-        Assert.That(instance.TitleText.text, Is.EqualTo("Accept"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.TitleText.text, Is.EqualTo("Accept"));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqUiMethodTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "Accept",
+                    "Accept"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -237,7 +303,18 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyCyberneticsTerminalRow { DataText = "Welcome to the terminal." };
         instance.Update();
 
-        Assert.That(instance.description.text, Is.EqualTo("Welcome to the terminal."));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.description.text, Is.EqualTo("Welcome to the terminal."));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqUiMethodTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "Welcome to the terminal.",
+                    "Welcome to the terminal."),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -258,8 +335,19 @@ public sealed class SinkPrereqTranslationPatchTests
             LongDescription = "Move quickly."
         });
 
-        Assert.That(instance.rightSideHeaderText.text, Is.EqualTo("Sprint"));
-        Assert.That(instance.rightSideDescriptionArea.text, Is.EqualTo("Move quickly."));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.rightSideHeaderText.text, Is.EqualTo("Sprint"));
+            Assert.That(instance.rightSideDescriptionArea.text, Is.EqualTo("Move quickly."));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqUiMethodTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "Sprint",
+                    "Sprint"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -276,8 +364,19 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyMapScrollerPinItem();
         instance.SetData(new DummyFrameworkDataElement { Title = "Joppa", Description = "A small village." });
 
-        Assert.That(instance.titleText.text, Is.EqualTo("Joppa"));
-        Assert.That(instance.detailsText.text, Is.EqualTo("A small village."));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.titleText.text, Is.EqualTo("Joppa"));
+            Assert.That(instance.detailsText.text, Is.EqualTo("A small village."));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqUiMethodTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "Joppa",
+                    "Joppa"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -294,7 +393,18 @@ public sealed class SinkPrereqTranslationPatchTests
         var instance = new DummyPlayerStatusBar { ZoneString = "World Map" };
         instance.Update();
 
-        Assert.That(instance.ZoneText.text, Is.EqualTo("World Map"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.ZoneText.text, Is.EqualTo("World Map"));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqUiMethodTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "World Map",
+                    "World Map"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
@@ -315,8 +425,19 @@ public sealed class SinkPrereqTranslationPatchTests
             Title = "Trade Details"
         });
 
-        Assert.That(instance.detailsRightText.text, Is.EqualTo("a copper nugget"));
-        Assert.That(instance.detailsLeftText.text, Is.EqualTo("Trade Details"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(instance.detailsRightText.text, Is.EqualTo("a copper nugget"));
+            Assert.That(instance.detailsLeftText.text, Is.EqualTo("Trade Details"));
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(UITextSkinTranslationPatch),
+                    nameof(SinkPrereqUiMethodTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "a copper nugget",
+                    "a copper nugget"),
+                Is.GreaterThan(0));
+        });
     }
 
     [Test]
