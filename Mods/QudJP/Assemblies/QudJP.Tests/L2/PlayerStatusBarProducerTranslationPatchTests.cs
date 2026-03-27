@@ -136,6 +136,42 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
         });
     }
 
+    [Test]
+    public void TranslateXpBar_CachesReflectionFieldsAfterFirstCall()
+    {
+        WriteDictionary(("LVL", "Lv"));
+
+        var patchType = typeof(Translator).Assembly.GetType("QudJP.Patches.PlayerStatusBarProducerTranslationPatch", throwOnError: false);
+        Assert.That(patchType, Is.Not.Null, "PlayerStatusBarProducerTranslationPatch type not found.");
+
+        var xpBarCacheField = patchType!.GetField("xpBarField", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(xpBarCacheField, Is.Not.Null, "xpBarField cache not found.");
+
+        var textCacheField = patchType.GetField("xpBarTextField", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(textCacheField, Is.Not.Null, "xpBarTextField cache not found.");
+
+        xpBarCacheField!.SetValue(null, null);
+        textCacheField!.SetValue(null, null);
+
+        var translateMethod = RequirePatchMethod("TranslateXpBar", typeof(object));
+        var instance = new DummyPlayerStatusBarTarget
+        {
+            Level = 1,
+            Experience = 0,
+            NextLevelExperience = 220,
+        };
+
+        instance.Update();
+        translateMethod.Invoke(null, new object?[] { instance });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(xpBarCacheField.GetValue(null), Is.AssignableTo<FieldInfo>());
+            Assert.That(textCacheField.GetValue(null), Is.AssignableTo<FieldInfo>());
+            Assert.That(instance.XPBar.text.text, Is.EqualTo("Lv: 1 Exp: 0 / 220"));
+        });
+    }
+
     private static MethodInfo RequirePatchMethod(string methodName, params Type[] parameterTypes)
     {
         var patchType = typeof(Translator).Assembly.GetType("QudJP.Patches.PlayerStatusBarProducerTranslationPatch", throwOnError: false);

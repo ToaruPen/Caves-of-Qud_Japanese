@@ -13,6 +13,8 @@ public static class PlayerStatusBarProducerTranslationPatch
 {
     private const string Context = nameof(PlayerStatusBarProducerTranslationPatch);
     private static FieldInfo? playerStringDataField;
+    private static FieldInfo? xpBarField;
+    private static FieldInfo? xpBarTextField;
 
     [HarmonyTargetMethods]
     private static IEnumerable<MethodBase> TargetMethods()
@@ -117,15 +119,28 @@ public static class PlayerStatusBarProducerTranslationPatch
 
     private static void TranslateXpBar(object instance)
     {
-        var xpBarField = AccessTools.Field(instance.GetType(), "XPBar");
-        var xpBar = xpBarField?.GetValue(instance);
+        var currentXpBarField = xpBarField;
+        if (currentXpBarField is null || currentXpBarField.DeclaringType != instance.GetType())
+        {
+            currentXpBarField = AccessTools.Field(instance.GetType(), "XPBar");
+            xpBarField = currentXpBarField;
+            xpBarTextField = null;
+        }
+
+        var xpBar = currentXpBarField?.GetValue(instance);
         if (xpBar is null)
         {
             return;
         }
 
-        var textField = AccessTools.Field(xpBar.GetType(), "text");
-        var textObject = textField?.GetValue(xpBar);
+        var currentXpBarTextField = xpBarTextField;
+        if (currentXpBarTextField is null || currentXpBarTextField.DeclaringType != xpBar.GetType())
+        {
+            currentXpBarTextField = AccessTools.Field(xpBar.GetType(), "text");
+            xpBarTextField = currentXpBarTextField;
+        }
+
+        var textObject = currentXpBarTextField?.GetValue(xpBar);
         var current = UITextSkinReflectionAccessor.GetCurrentText(textObject, Context);
         if (string.IsNullOrEmpty(current))
         {
