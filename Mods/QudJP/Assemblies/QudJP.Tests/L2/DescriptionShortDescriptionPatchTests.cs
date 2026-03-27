@@ -21,6 +21,7 @@ public sealed class DescriptionShortDescriptionPatchTests
 
         Translator.ResetForTests();
         Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
     }
 
@@ -28,6 +29,7 @@ public sealed class DescriptionShortDescriptionPatchTests
     public void TearDown()
     {
         Translator.ResetForTests();
+        DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
 
         if (Directory.Exists(tempDirectory))
@@ -37,7 +39,7 @@ public sealed class DescriptionShortDescriptionPatchTests
     }
 
     [Test]
-    public void DescriptionShortDescriptionPatch_ObservationOnly_LeavesScopedWorldModsEntriesUnchanged_WhenPatched()
+    public void DescriptionShortDescriptionPatch_TranslatesScopedWorldModsEntries_WhenPatched()
     {
         WriteScopedDictionary(
             ("Strength Bonus Cap: no limit\nWeapon Class: Long Blades (increased penetration on critical hit)", "筋力ボーナス上限: なし\n武器カテゴリ: 長剣（クリティカル時に貫通力上昇）"));
@@ -61,10 +63,10 @@ public sealed class DescriptionShortDescriptionPatchTests
             {
                 Assert.That(
                     compareTarget.GetShortDescription(useShort: true, useLong: false, prefix: string.Empty),
-                    Is.EqualTo("Strength Bonus Cap: no limit\nWeapon Class: Long Blades (increased penetration on critical hit)"));
+                    Is.EqualTo("筋力ボーナス上限: なし\n武器カテゴリ: 長剣（クリティカル時に貫通力上昇）"));
                 Assert.That(
                     masterworkTarget.GetShortDescription(useShort: true, useLong: false, prefix: string.Empty),
-                    Is.EqualTo("{{rules|Masterwork: This weapon scores critical hits 15% of the time instead of 5%.}}"));
+                    Is.EqualTo("{{rules|名工品: この武器のクリティカル発生率は15%（通常は5%）。}}"));
             });
         }
         finally
@@ -74,8 +76,10 @@ public sealed class DescriptionShortDescriptionPatchTests
     }
 
     [Test]
-    public void DescriptionShortDescriptionPatch_ObservationOnly_LogsUnclaimedShortDescription_WhenPatched()
+    public void DescriptionShortDescriptionPatch_RecordsOwnerRouteTransforms_WithoutUITextSkinSinkObservation_WhenPatched()
     {
+        WriteDictionary(("Charged item", "帯電したアイテム"));
+
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
         try
@@ -84,13 +88,18 @@ public sealed class DescriptionShortDescriptionPatchTests
                 original: RequireMethod(typeof(DummyDescriptionShortDescriptionTarget), nameof(DummyDescriptionShortDescriptionTarget.GetShortDescription)),
                 postfix: new HarmonyMethod(RequirePostfix(typeof(DescriptionShortDescriptionPatch), nameof(DescriptionShortDescriptionPatch.Postfix))));
 
-            const string source = "Observation-only short description";
+            const string source = "Charged item";
             var target = new DummyDescriptionShortDescriptionTarget(source);
             var result = target.GetShortDescription(useShort: true, useLong: false, prefix: string.Empty);
 
             Assert.Multiple(() =>
             {
-                Assert.That(result, Is.EqualTo(source));
+                Assert.That(result, Is.EqualTo("帯電したアイテム"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(DescriptionShortDescriptionPatch),
+                        "Description.ExactLeaf"),
+                    Is.GreaterThan(0));
                 Assert.That(
                     SinkObservation.GetHitCountForTests(
                         nameof(UITextSkinTranslationPatch),
@@ -98,7 +107,7 @@ public sealed class DescriptionShortDescriptionPatchTests
                         SinkObservation.ObservationOnlyDetail,
                         source,
                         source),
-                    Is.GreaterThan(0));
+                    Is.EqualTo(0));
             });
         }
         finally

@@ -166,6 +166,26 @@ public sealed class LocalizationCoverageTests
             "world-effects-cooking should not contain mojibake question-mark keys when a concrete English source key exists.");
     }
 
+    [Test]
+    public void ConfirmedOwnerRouteDictionaries_ContainCurrentAbilityAndActiveEffectKeys()
+    {
+        var dictionariesRoot = Path.Combine(localizationRoot, "Dictionaries");
+        var skillsAndPowersKeys = LoadEntries(Path.Combine(dictionariesRoot, "ui-skillsandpowers.ja.json"))
+            .Select(static entry => entry.Key)
+            .ToHashSet(StringComparer.Ordinal);
+        var uiDefaultKeys = LoadEntries(Path.Combine(dictionariesRoot, "ui-default.ja.json"))
+            .Select(static entry => entry.Key)
+            .ToHashSet(StringComparer.Ordinal);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(skillsAndPowersKeys, Does.Contain("ABILITIES"));
+            Assert.That(skillsAndPowersKeys, Does.Contain("page {0} of {1}"));
+            Assert.That(uiDefaultKeys, Does.Contain("Active Effects - {0}"));
+            Assert.That(uiDefaultKeys, Does.Contain("No active effects."));
+        });
+    }
+
     private static string[] LoadMutationNamesWithDisplayName(string path)
     {
         var document = XDocument.Load(path);

@@ -347,6 +347,14 @@
       "text": "発動中の効果:"
     },
     {
+      "key": "Active Effects - {0}",
+      "text": "発動中の効果 - {0}"
+    },
+    {
+      "key": "No active effects.",
+      "text": "発動中の効果はない。"
+    },
+    {
       "key": "take all",
       "text": "すべて取る"
     },

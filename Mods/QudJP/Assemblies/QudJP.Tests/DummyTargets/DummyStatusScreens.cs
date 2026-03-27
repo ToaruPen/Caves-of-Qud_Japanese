@@ -84,6 +84,10 @@ internal sealed class DummyInventoryAndEquipmentStatusScreen
 
 internal sealed class DummyCharacterStatusMutationScreen
 {
+    public static DummyMenuOption BUY_MUTATION = new DummyMenuOption("Buy Mutation", "CmdStatusBuyMutation", "Buy Mutation");
+
+    public static DummyMenuOption SHOW_EFFECTS = new DummyMenuOption("Show Effects", "CmdStatusShowEffects", "Show Effects");
+
     public DummyUITextSkin mutationNameText = new DummyUITextSkin();
 
     public DummyUITextSkin mutationRankText = new DummyUITextSkin();
@@ -91,6 +95,12 @@ internal sealed class DummyCharacterStatusMutationScreen
     public DummyUITextSkin mutationTypeText = new DummyUITextSkin();
 
     public DummyUITextSkin mutationsDetails = new DummyUITextSkin();
+
+    public static void ResetDefaults()
+    {
+        BUY_MUTATION = new DummyMenuOption("Buy Mutation", "CmdStatusBuyMutation", "Buy Mutation");
+        SHOW_EFFECTS = new DummyMenuOption("Show Effects", "CmdStatusShowEffects", "Show Effects");
+    }
 
     public void HandleHighlightMutation(object? element)
     {

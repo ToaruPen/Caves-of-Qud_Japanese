@@ -70,9 +70,12 @@ public static class InventoryAndEquipmentStatusScreenTranslationPatch
             return;
         }
 
-        var translated = UITextSkinTranslationPatch.TranslatePreservingColors(
+        var route = nameof(InventoryAndEquipmentStatusScreenTranslationPatch);
+        var translated = ColorAwareTranslationComposer.TranslatePreservingColors(
             current!,
-            nameof(InventoryAndEquipmentStatusScreenTranslationPatch));
+            visible => InventoryAndEquipmentStatusScreenTextTranslator.TryTranslateUiText(visible, route, out var candidate)
+                ? candidate
+                : visible);
 
         if (!string.Equals(translated, current, StringComparison.Ordinal))
         {

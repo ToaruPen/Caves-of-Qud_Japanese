@@ -10,6 +10,14 @@
   },
   "entries": [
     {
+      "key": "ABILITIES",
+      "text": "アビリティ"
+    },
+    {
+      "key": "page {0} of {1}",
+      "text": "{0}/{1}ページ"
+    },
+    {
       "key": "  {{C|?}} Akimbo",
       "context": "TMP.Description",
       "text": "  {{C|?}} 二挺拳銃"
