@@ -156,9 +156,6 @@ public static class AbilityBarAfterRenderTranslationPatch
         var translatedName = StringHelpers.TranslateExactOrLowerAscii(nameSource);
         if (translatedName is null)
         {
-            Trace.TraceWarning(
-                "QudJP: AbilityBarAfterRenderTranslationPatch falling back to display-name route translation for target name '{0}'.",
-                nameSource);
             translatedName = GetDisplayNameRouteTranslator.TranslatePreservingColors(
                 nameSource,
                 ObservabilityHelpers.ComposeContext(Context, "field=targetText", "segment=name"));
