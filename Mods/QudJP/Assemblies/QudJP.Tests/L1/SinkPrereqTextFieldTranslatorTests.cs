@@ -57,6 +57,29 @@ public sealed class SinkPrereqTextFieldTranslatorTests
     }
 
     [Test]
+    public void TranslateField_ObservationOnly_LeavesPropertyBackedTextSkinUnchanged()
+    {
+        WriteDictionary(("Keybinds", "キーバインド"));
+        Translator.SetDictionaryDirectoryForTests(tempDir);
+
+        var target = new DummyPropertyBackedLeftSideCategory();
+        target.text.SetText("Keybinds");
+
+        SinkPrereqTextFieldTranslator.TranslateField(target, "text", "Test");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(target.text.text, Is.EqualTo("Keybinds"));
+            Assert.That(SinkObservation.GetHitCountForTests(
+                nameof(UITextSkinTranslationPatch),
+                "Test",
+                SinkObservation.ObservationOnlyDetail,
+                "Keybinds",
+                "Keybinds"), Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
     public void TranslateField_SkipsNullInstance()
     {
         Assert.DoesNotThrow(() =>
@@ -245,5 +268,10 @@ public sealed class SinkPrereqTextFieldTranslatorTests
 #pragma warning disable CS0649
         public DummyLeftSideCategory? child;
 #pragma warning restore CS0649
+    }
+
+    internal sealed class DummyPropertyBackedLeftSideCategory
+    {
+        public DummyUITextSkinField text { get; } = new DummyUITextSkinField();
     }
 }

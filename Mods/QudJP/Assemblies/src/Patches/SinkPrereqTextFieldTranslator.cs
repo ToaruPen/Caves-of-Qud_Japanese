@@ -7,8 +7,8 @@ namespace QudJP.Patches;
 
 internal static class SinkPrereqTextFieldTranslator
 {
-    private static readonly ConcurrentDictionary<string, FieldInfo?> FieldCache =
-        new ConcurrentDictionary<string, FieldInfo?>(StringComparer.Ordinal);
+    private static readonly ConcurrentDictionary<(Type Type, string MemberName), MemberInfo?> MemberCache =
+        new ConcurrentDictionary<(Type Type, string MemberName), MemberInfo?>();
 
     internal static void TranslateField(object? instance, string fieldName, string context)
     {
@@ -58,21 +58,32 @@ internal static class SinkPrereqTextFieldTranslator
 
     internal static void ResetForTests()
     {
-        FieldCache.Clear();
+        MemberCache.Clear();
     }
 
     private static bool TryGetMemberValue(object instance, string memberName, out object? value)
     {
-        var cacheKey = string.Concat(instance.GetType().FullName, ".", memberName);
-        var field = FieldCache.GetOrAdd(cacheKey, _ => AccessTools.Field(instance.GetType(), memberName));
-        if (field is not null)
+        var member = MemberCache.GetOrAdd((instance.GetType(), memberName), static key =>
+        {
+            var field = AccessTools.Field(key.Type, key.MemberName);
+            if (field is not null)
+            {
+                return field;
+            }
+
+            var property = AccessTools.Property(key.Type, key.MemberName);
+            return property is not null && property.CanRead
+                ? property
+                : null;
+        });
+
+        if (member is FieldInfo field)
         {
             value = field.GetValue(instance);
             return true;
         }
 
-        var property = AccessTools.Property(instance.GetType(), memberName);
-        if (property is not null && property.CanRead)
+        if (member is PropertyInfo property)
         {
             value = property.GetValue(instance);
             return true;
