@@ -109,7 +109,7 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
     }
 
     [Test]
-    public void TranslatePlayerStringData_CachesPlayerStringDataFieldAfterFirstCall()
+    public void TranslatePlayerStringData_InitializesCacheOnFirstCall()
     {
         WriteDictionary(("World Map", "ワールドマップ"));
 
@@ -137,7 +137,7 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
     }
 
     [Test]
-    public void TranslateXpBar_CachesReflectionFieldsAfterFirstCall()
+    public void TranslateXpBar_InitializesReflectionCacheOnFirstCall()
     {
         WriteDictionary(("LVL", "Lv"));
 
