@@ -47,15 +47,15 @@ public sealed class PopupMessageTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_LeavesPopupContentUnchanged_WhenPatched()
+    public void Prefix_TranslatesPopupContent_WhenPatched()
     {
         WriteDictionary(
             ("Are you sure you want to delete the save game for {0}?", "{0}のセーブデータを本当に削除しますか？"),
             ("Delete {0}", "{0}を削除"),
             ("Save Slots", "セーブ一覧"),
             ("Continue", "続ける"),
-            ("Accept", "承認"),
-            ("Cancel", "キャンセル"));
+            ("[Enter] Accept", "[Enter] 承認"),
+            ("[Esc] Cancel", "[Esc] キャンセル"));
 
         var buttons = new List<DummyPopupMessageItem>
         {
@@ -87,16 +87,16 @@ public sealed class PopupMessageTranslationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyPopupMessageTarget.LastMessage, Is.EqualTo("Are you sure you want to delete the save game for Yashur?"));
-                Assert.That(DummyPopupMessageTarget.LastTitle, Is.EqualTo("Delete Yashur"));
-                Assert.That(DummyPopupMessageTarget.LastContextTitle, Is.EqualTo("Save Slots"));
+                Assert.That(DummyPopupMessageTarget.LastMessage, Is.EqualTo("Yashurのセーブデータを本当に削除しますか？"));
+                Assert.That(DummyPopupMessageTarget.LastTitle, Is.EqualTo("Yashurを削除"));
+                Assert.That(DummyPopupMessageTarget.LastContextTitle, Is.EqualTo("セーブ一覧"));
                 Assert.That(DummyPopupMessageTarget.LastButtons, Is.Not.Null);
-                Assert.That(DummyPopupMessageTarget.LastButtons![0].text, Is.EqualTo("{{W|[Enter]}} {{y|Accept}}"));
+                Assert.That(DummyPopupMessageTarget.LastButtons![0].text, Is.EqualTo("{{W|[Enter]}} {{y|承認}}"));
                 Assert.That(DummyPopupMessageTarget.LastButtons[0].hotkey, Is.EqualTo("Accept"));
                 Assert.That(DummyPopupMessageTarget.LastButtons[0].command, Is.EqualTo("Accept"));
-                Assert.That(DummyPopupMessageTarget.LastButtons[1].text, Is.EqualTo("{{W|[Esc]}} {{y|Cancel}}"));
+                Assert.That(DummyPopupMessageTarget.LastButtons[1].text, Is.EqualTo("{{W|[Esc]}} {{y|キャンセル}}"));
                 Assert.That(DummyPopupMessageTarget.LastItems, Is.Not.Null);
-                Assert.That(DummyPopupMessageTarget.LastItems![0].text, Is.EqualTo("Continue"));
+                Assert.That(DummyPopupMessageTarget.LastItems![0].text, Is.EqualTo("続ける"));
                 Assert.That(DummyPopupMessageTarget.LastWantsSpecificPrompt, Is.EqualTo("ABANDON"));
             });
         }
@@ -109,7 +109,7 @@ public sealed class PopupMessageTranslationPatchTests
     [Test]
     public void Prefix_IsIdempotentForSharedButtonLists()
     {
-        WriteDictionary(("Cancel", "キャンセル"));
+        WriteDictionary(("[Esc] Cancel", "[Esc] キャンセル"));
 
         var sharedButtons = new List<DummyPopupMessageItem>
         {
@@ -129,7 +129,7 @@ public sealed class PopupMessageTranslationPatchTests
             target.ShowPopup("Prompt", sharedButtons);
             target.ShowPopup("Prompt", sharedButtons);
 
-            Assert.That(sharedButtons[0].text, Is.EqualTo("{{W|[Esc]}} {{y|Cancel}}"));
+            Assert.That(sharedButtons[0].text, Is.EqualTo("{{W|[Esc]}} {{y|キャンセル}}"));
         }
         finally
         {
@@ -192,7 +192,7 @@ public sealed class PopupMessageTranslationPatchTests
     [Test]
     public void Prefix_TranslatesPlainHotkeyButtons_WhenPatched()
     {
-        WriteDictionary(("Cancel", "キャンセル"));
+        WriteDictionary(("B Cancel", "B キャンセル"));
 
         var buttons = new List<DummyPopupMessageItem>
         {
@@ -210,36 +210,7 @@ public sealed class PopupMessageTranslationPatchTests
 
             new DummyPopupMessageTarget().ShowPopup("Prompt", buttons);
 
-            Assert.That(DummyPopupMessageTarget.LastButtons![0].text, Is.EqualTo("{{W|B}} Cancel"));
-        }
-        finally
-        {
-            harmony.UnpatchAll(harmonyId);
-        }
-    }
-
-    [Test]
-    public void Prefix_ObservationOnly_LogsUnclaimedPopupContent()
-    {
-        var harmonyId = CreateHarmonyId();
-        var harmony = new Harmony(harmonyId);
-
-        try
-        {
-            harmony.Patch(
-                original: RequireMethod(typeof(DummyPopupMessageTarget), nameof(DummyPopupMessageTarget.ShowPopup)),
-                prefix: new HarmonyMethod(RequireMethod(typeof(PopupMessageTranslationPatch), nameof(PopupMessageTranslationPatch.Prefix))));
-
-            const string source = "Untranslated popup message";
-            new DummyPopupMessageTarget().ShowPopup(source);
-
-            var hitCount = SinkObservation.GetHitCountForTests(
-                nameof(PopupTranslationPatch),
-                nameof(PopupMessageTranslationPatch),
-                SinkObservation.ObservationOnlyDetail,
-                source,
-                source);
-            Assert.That(hitCount, Is.GreaterThan(0));
+            Assert.That(DummyPopupMessageTarget.LastButtons![0].text, Is.EqualTo("{{W|B}} キャンセル"));
         }
         finally
         {

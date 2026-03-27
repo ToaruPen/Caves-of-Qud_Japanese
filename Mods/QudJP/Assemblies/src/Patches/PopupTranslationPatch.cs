@@ -18,6 +18,10 @@ public static class PopupTranslationPatch
         new Regex("^(?<hotkey>Enter|Esc|Tab|Space|space)\\s+(?<label>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex NumberedConversationChoicePattern =
         new Regex("^\\[(?<index>\\d+)\\]\\s+(?<text>.+?)(?:\\s+\\[[^\\]]+\\])?\\s*$", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.Singleline);
+    private static readonly Regex DeleteSavePromptPattern =
+        new Regex("^Are you sure you want to delete the save game for (?<value>.+?)\\?$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex DeleteTitlePattern =
+        new Regex("^Delete (?<value>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     // ShowBlock parameter count for game version 2.0.4
     private const int ShowBlockParameterCount = 8;
@@ -198,6 +202,16 @@ public static class PopupTranslationPatch
         return TranslatePopupMenuItemTextForRoute(source, nameof(PopupTranslationPatch));
     }
 
+    internal static string TranslatePopupTextForProducerRoute(string source, string route)
+    {
+        return TranslatePopupProducerText(source, route, "Popup.ProducerText");
+    }
+
+    internal static string TranslatePopupMenuItemTextForProducerRoute(string source, string route)
+    {
+        return TranslatePopupProducerText(source, route, "Popup.ProducerMenuItem");
+    }
+
     private static string TranslatePopupText(string source)
     {
         return TranslatePopupTextForRoute(source, nameof(PopupTranslationPatch));
@@ -227,6 +241,93 @@ public static class PopupTranslationPatch
         }
 
         return source;
+    }
+
+    private static string TranslatePopupProducerText(string source, string route, string family)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return source ?? string.Empty;
+        }
+
+        if (MessageFrameTranslator.TryStripDirectTranslationMarker(source, out var markedText))
+        {
+            return markedText;
+        }
+
+        if (TryTranslatePopupProducerText(source, route, family, out var translated))
+        {
+            return translated;
+        }
+
+        return source;
+    }
+
+    private static bool TryTranslatePopupProducerText(string source, string route, string family, out string translated)
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
+
+        if (StringHelpers.TryGetTranslationExactOrLowerAscii(stripped, out var exact)
+            && !string.Equals(exact, stripped, StringComparison.Ordinal))
+        {
+            translated = spans.Count == 0 ? exact : ColorAwareTranslationComposer.Restore(exact, spans);
+            DynamicTextObservability.RecordTransform(route, family + ".Exact", source, translated);
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".DeleteSavePrompt",
+                DeleteSavePromptPattern,
+                "Are you sure you want to delete the save game for {0}?",
+                out var promptTranslated))
+        {
+            translated = spans.Count == 0 ? promptTranslated : ColorAwareTranslationComposer.Restore(promptTranslated, spans);
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".DeleteTitle",
+                DeleteTitlePattern,
+                "Delete {0}",
+                out var titleTranslated))
+        {
+            translated = spans.Count == 0 ? titleTranslated : ColorAwareTranslationComposer.Restore(titleTranslated, spans);
+            return true;
+        }
+
+        translated = source;
+        return false;
+    }
+
+    private static bool TryTranslateSinglePlaceholderTemplate(
+        string source,
+        string route,
+        string family,
+        Regex pattern,
+        string templateKey,
+        out string translated)
+    {
+        var match = pattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var translatedTemplate = Translator.Translate(templateKey);
+        if (string.Equals(translatedTemplate, templateKey, StringComparison.Ordinal))
+        {
+            translated = source;
+            return false;
+        }
+
+        translated = translatedTemplate.Replace("{0}", match.Groups["value"].Value);
+        DynamicTextObservability.RecordTransform(route, family, source, translated);
+        return true;
     }
 
     internal static bool IsAlreadyLocalizedPopupText(string? source)

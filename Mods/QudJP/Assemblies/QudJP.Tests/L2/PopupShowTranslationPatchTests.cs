@@ -38,7 +38,7 @@ public sealed class PopupShowTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_LeavesPopupShowMessageUnchanged()
+    public void Prefix_TranslatesPopupShowMessage()
     {
         WriteDictionary(("Delete save game?", "セーブデータを削除しますか？"));
 
@@ -53,7 +53,7 @@ public sealed class PopupShowTranslationPatchTests
 
             DummyPopupShow.Show("Delete save game?");
 
-            Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo("Delete save game?"));
+            Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo("セーブデータを削除しますか？"));
         }
         finally
         {
@@ -62,10 +62,8 @@ public sealed class PopupShowTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_LogsUnclaimedPopupShowMessage()
+    public void Prefix_LeavesUnknownPopupShowMessageUnchanged()
     {
-        WriteDictionary(("Delete save game?", "セーブデータを削除しますか？"));
-
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
 
@@ -75,16 +73,10 @@ public sealed class PopupShowTranslationPatchTests
                 original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.Show)),
                 prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
 
-            const string source = "Delete save game?";
+            const string source = "Untranslated popup message";
             DummyPopupShow.Show(source);
 
-            var hitCount = SinkObservation.GetHitCountForTests(
-                nameof(PopupTranslationPatch),
-                nameof(PopupShowTranslationPatch),
-                SinkObservation.ObservationOnlyDetail,
-                source,
-                source);
-            Assert.That(hitCount, Is.GreaterThan(0));
+            Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo(source));
         }
         finally
         {
