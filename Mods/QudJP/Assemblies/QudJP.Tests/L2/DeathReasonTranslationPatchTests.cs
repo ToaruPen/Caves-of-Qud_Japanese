@@ -9,14 +9,14 @@ namespace QudJP.Tests.L2;
 [TestFixture]
 [Category("L2")]
 [NonParallelizable]
-public sealed class PickGameObjectScreenTranslationPatchTests
+public sealed class DeathReasonTranslationPatchTests
 {
     private string tempDirectory = null!;
 
     [SetUp]
     public void SetUp()
     {
-        tempDirectory = Path.Combine(Path.GetTempPath(), "qudjp-pick-game-object-l2", Guid.NewGuid().ToString("N"));
+        tempDirectory = Path.Combine(Path.GetTempPath(), "qudjp-death-reason-l2", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(tempDirectory);
 
         Translator.ResetForTests();
@@ -39,47 +39,45 @@ public sealed class PickGameObjectScreenTranslationPatchTests
     }
 
     [Test]
-    public void Postfix_TranslatesMenuOptionDescriptions_WhenUpdateViewRuns()
+    public void Prefix_TranslatesReasonAndThirdPersonReason_WhenPatched()
     {
         WriteDictionary(
-            ("Close Menu", "メニューを閉じる"),
-            ("navigate", "移動"),
-            ("take all", "すべて取る"),
-            ("store an item", "アイテムを収納"));
+            ("You were vaporized.", "蒸発した。"),
+            ("was vaporized.", "蒸発した。"));
 
-        var target = new DummyPickGameObjectScreen();
-
+        var target = new DummyGameObjectDie();
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
 
         try
         {
             harmony.Patch(
-                original: RequireMethod(typeof(DummyPickGameObjectScreen), nameof(DummyPickGameObjectScreen.UpdateViewFromData)),
-                postfix: new HarmonyMethod(RequireMethod(typeof(PickGameObjectScreenTranslationPatch), nameof(PickGameObjectScreenTranslationPatch.Postfix))));
+                original: RequireMethod(typeof(DummyGameObjectDie), nameof(DummyGameObjectDie.Die)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(DeathReasonTranslationPatch), nameof(DeathReasonTranslationPatch.Prefix))));
 
-            target.UpdateViewFromData(reentry: false);
+            target.Die(Reason: "{{R|You were vaporized.}}", ThirdPersonReason: "was vaporized.");
 
             Assert.Multiple(() =>
             {
-                Assert.That(target.defaultMenuOptions[0].Description, Is.EqualTo("メニューを閉じる"));
-                Assert.That(target.defaultMenuOptions[1].Description, Is.EqualTo("移動"));
-                Assert.That(target.getItemMenuOptions[0].Description, Is.EqualTo("メニューを閉じる"));
-                Assert.That(target.getItemMenuOptions[1].Description, Is.EqualTo("移動"));
-                Assert.That(target.TAKE_ALL.Description, Is.EqualTo("すべて取る"));
-                Assert.That(target.STORE_ITEM.Description, Is.EqualTo("アイテムを収納"));
+                Assert.That(target.LastReason, Is.EqualTo("{{R|蒸発した。}}"));
+                Assert.That(target.LastThirdPersonReason, Is.EqualTo("蒸発した。"));
                 Assert.That(
                     DynamicTextObservability.GetRouteFamilyHitCountForTests(
-                        nameof(PickGameObjectScreenTranslationPatch),
-                        "PickGameObject.Description"),
+                        nameof(DeathReasonTranslationPatch),
+                        "DeathReason.Reason"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(DeathReasonTranslationPatch),
+                        "DeathReason.ThirdPerson"),
                     Is.GreaterThan(0));
                 Assert.That(
                     SinkObservation.GetHitCountForTests(
                         nameof(UITextSkinTranslationPatch),
-                        nameof(PickGameObjectScreenTranslationPatch),
+                        nameof(DeathReasonTranslationPatch),
                         SinkObservation.ObservationOnlyDetail,
-                        "Close Menu",
-                        "Close Menu"),
+                        "{{R|You were vaporized.}}",
+                        "You were vaporized."),
                     Is.EqualTo(0));
             });
         }
@@ -123,7 +121,7 @@ public sealed class PickGameObjectScreenTranslationPatchTests
         builder.Append("]}");
         builder.AppendLine();
 
-        var path = Path.Combine(tempDirectory, "ui-pick-game-object.ja.json");
+        var path = Path.Combine(tempDirectory, "death-reason-l2.ja.json");
         File.WriteAllText(path, builder.ToString(), new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
     }
 

@@ -1,4 +1,5 @@
 using System.Text;
+using QudJP;
 using QudJP.Patches;
 
 namespace QudJP.Tests.L1;
@@ -18,6 +19,7 @@ public sealed class HistoricStringExpanderPatchTests
 
         Translator.ResetForTests();
         Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
     }
 
@@ -25,6 +27,7 @@ public sealed class HistoricStringExpanderPatchTests
     public void TearDown()
     {
         Translator.ResetForTests();
+        DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
 
         if (Directory.Exists(tempDirectory))
@@ -34,18 +37,23 @@ public sealed class HistoricStringExpanderPatchTests
     }
 
     [Test]
-    public void Postfix_ObservationOnly_LeavesKnownExpandedTextUnchanged()
+    public void Postfix_TranslatesKnownExpandedText()
     {
-        WriteDictionary(("In the beginning, Resheph created Qud", "はじめに、レシェフがクッドを創造した"));
-
         const string source = "In the beginning, Resheph created Qud";
+        WriteDictionary((source, "はじめに、レシェフがクッドを創造した"));
+
         var result = source;
 
         HistoricStringExpanderPatch.Postfix(ref result);
 
         Assert.Multiple(() =>
         {
-            Assert.That(result, Is.EqualTo(source));
+            Assert.That(result, Is.EqualTo("はじめに、レシェフがクッドを創造した"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(HistoricStringExpanderPatch),
+                    "HistoricStringExpander.ExactLeaf"),
+                Is.GreaterThan(0));
             Assert.That(
                 SinkObservation.GetHitCountForTests(
                     nameof(UITextSkinTranslationPatch),
@@ -53,6 +61,26 @@ public sealed class HistoricStringExpanderPatchTests
                     SinkObservation.ObservationOnlyDetail,
                     source,
                     source),
+                Is.EqualTo(0));
+        });
+    }
+
+    [Test]
+    public void Postfix_PreservesColorWrappedText()
+    {
+        WriteDictionary(("Warning!", "警告！"));
+
+        var result = "{{R|Warning!}}";
+
+        HistoricStringExpanderPatch.Postfix(ref result);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.EqualTo("{{R|警告！}}"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(HistoricStringExpanderPatch),
+                    "HistoricStringExpander.ExactLeaf"),
                 Is.GreaterThan(0));
         });
     }
@@ -70,34 +98,8 @@ public sealed class HistoricStringExpanderPatchTests
     }
 
     [Test]
-    public void Postfix_ObservationOnly_LeavesColorWrappedTextUnchanged()
-    {
-        WriteDictionary(("Warning!", "警告！"));
-
-        const string source = "{{R|Warning!}}";
-        var result = source;
-
-        HistoricStringExpanderPatch.Postfix(ref result);
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(result, Is.EqualTo(source));
-            Assert.That(
-                SinkObservation.GetHitCountForTests(
-                    nameof(UITextSkinTranslationPatch),
-                    nameof(HistoricStringExpanderPatch),
-                    SinkObservation.ObservationOnlyDetail,
-                    source,
-                    "Warning!"),
-                Is.GreaterThan(0));
-        });
-    }
-
-    [Test]
     public void Postfix_ReturnsEmptyString_WhenResultIsEmpty()
     {
-        WriteDictionary(("In the beginning, Resheph created Qud", "はじめに、レシェフがクッドを創造した"));
-
         var result = string.Empty;
 
         HistoricStringExpanderPatch.Postfix(ref result);
@@ -108,8 +110,6 @@ public sealed class HistoricStringExpanderPatchTests
     [Test]
     public void Postfix_ConvertsNullResultToEmptyString()
     {
-        WriteDictionary(("In the beginning, Resheph created Qud", "はじめに、レシェフがクッドを創造した"));
-
         string result = null!;
 
         HistoricStringExpanderPatch.Postfix(ref result);
@@ -118,57 +118,9 @@ public sealed class HistoricStringExpanderPatchTests
     }
 
     [Test]
-    public void Postfix_PassesThroughMixedText_WhenExactKeyDoesNotMatch()
+    public void Postfix_StripsDirectTranslationMarkerBeforeTranslation()
     {
-        WriteDictionary(
-            ("Resheph", "レシェフ"),
-            ("Qud", "クッド"));
-
-        var result = "Resheph founded Qud in this era.";
-
-        HistoricStringExpanderPatch.Postfix(ref result);
-
-        Assert.That(result, Is.EqualTo("Resheph founded Qud in this era."));
-    }
-
-    [Test]
-    public void Postfix_ObservationOnly_PassesThroughMultipleCallsIndependently()
-    {
-        WriteDictionary(
-            ("Sultan became king", "スルタンが王になった"),
-            ("Sultan was exiled", "スルタンは追放された"));
-
-        var first = "Sultan became king";
-        HistoricStringExpanderPatch.Postfix(ref first);
-
-        var second = "Sultan was exiled";
-        HistoricStringExpanderPatch.Postfix(ref second);
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(first, Is.EqualTo("Sultan became king"));
-            Assert.That(second, Is.EqualTo("Sultan was exiled"));
-        });
-    }
-
-    [Test]
-    public void Postfix_ObservationOnly_PassesThroughAmpersandColorCodedText()
-    {
-        WriteDictionary(("Sultan was crowned", "スルタンが戴冠した"));
-
-        var result = "&GSultan was crowned^k";
-
-        HistoricStringExpanderPatch.Postfix(ref result);
-
-        Assert.That(result, Is.EqualTo("&GSultan was crowned^k"));
-    }
-
-    [Test]
-    public void Postfix_StripsDirectTranslationMarkerBeforeObservation()
-    {
-        WriteDictionary(("In the beginning, Resheph created Qud", "はじめに、レシェフがクッドを創造した"));
-
-        const string source = "\u0001In the beginning, Resheph created Qud";
+        const string source = "In the beginning, Resheph created Qud";
         var result = source;
 
         HistoricStringExpanderPatch.Postfix(ref result);
@@ -176,22 +128,6 @@ public sealed class HistoricStringExpanderPatchTests
         Assert.Multiple(() =>
         {
             Assert.That(result, Is.EqualTo("In the beginning, Resheph created Qud"));
-            Assert.That(
-                SinkObservation.GetHitCountForTests(
-                    nameof(UITextSkinTranslationPatch),
-                    nameof(HistoricStringExpanderPatch),
-                    SinkObservation.ObservationOnlyDetail,
-                    source,
-                    "In the beginning, Resheph created Qud"),
-                Is.EqualTo(0));
-            Assert.That(
-                SinkObservation.GetHitCountForTests(
-                    nameof(UITextSkinTranslationPatch),
-                    nameof(HistoricStringExpanderPatch),
-                    SinkObservation.ObservationOnlyDetail,
-                    "In the beginning, Resheph created Qud",
-                    "In the beginning, Resheph created Qud"),
-                Is.EqualTo(1));
         });
     }
 

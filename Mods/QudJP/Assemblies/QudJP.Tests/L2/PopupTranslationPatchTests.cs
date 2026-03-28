@@ -49,7 +49,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_ReturnsSourceUnchanged()
+    public void Prefix_TranslatesShowBlockPayload_WhenPatched()
     {
         WriteDictionary(
             ("Warning!", "警告！"),
@@ -68,8 +68,21 @@ public sealed class PopupTranslationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("{{R|Warning!}}"));
-                Assert.That(DummyPopupTarget.LastShowBlockTitle, Is.EqualTo("Options"));
+                Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("{{R|警告！}}"));
+                Assert.That(DummyPopupTarget.LastShowBlockTitle, Is.EqualTo("設定"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        "Popup.ProducerText.Exact"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        nameof(PopupTranslationPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        "{{R|Warning!}}",
+                        "Warning!"),
+                    Is.EqualTo(0));
             });
         }
         finally
@@ -175,7 +188,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_DeleteSavePromptReturnsSourceUnchanged()
+    public void Prefix_TranslatesDeleteSavePrompt_WhenPatched()
     {
         WriteDictionary(("Are you sure you want to delete the save game for {0}?", "{0}のセーブデータを本当に削除しますか？"));
 
@@ -190,7 +203,7 @@ public sealed class PopupTranslationPatchTests
 
             DummyPopupTarget.ShowBlock("Are you sure you want to delete the save game for Yashur?", "Warning");
 
-            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("Are you sure you want to delete the save game for Yashur?"));
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("Yashurのセーブデータを本当に削除しますか？"));
         }
         finally
         {
@@ -199,7 +212,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_DeleteTitleReturnsSourceUnchanged()
+    public void Prefix_TranslatesDeleteTitle_WhenPatched()
     {
         WriteDictionary(("Delete {0}", "{0}を削除"));
 
@@ -214,7 +227,7 @@ public sealed class PopupTranslationPatchTests
 
             DummyPopupTarget.ShowBlock("Prompt", "Delete Yashur");
 
-            Assert.That(DummyPopupTarget.LastShowBlockTitle, Is.EqualTo("Delete Yashur"));
+            Assert.That(DummyPopupTarget.LastShowBlockTitle, Is.EqualTo("Yashurを削除"));
         }
         finally
         {
@@ -441,7 +454,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_DeathMenuOptionsReturnSourceUnchanged()
+    public void Prefix_TranslatesDeathMenuOptions_WhenPatched()
     {
         WriteDictionary(
             ("View final messages", "最後のメッセージを見る"),
@@ -474,10 +487,15 @@ public sealed class PopupTranslationPatchTests
             Assert.Multiple(() =>
             {
                 Assert.That(DummyPopupTarget.LastOptionListOptions, Is.Not.Null);
-                Assert.That(DummyPopupTarget.LastOptionListOptions![0], Is.EqualTo("View final messages"));
-                Assert.That(DummyPopupTarget.LastOptionListOptions[1], Is.EqualTo("Reload from checkpoint"));
-                Assert.That(DummyPopupTarget.LastOptionListOptions[2], Is.EqualTo("Retire character"));
-                Assert.That(DummyPopupTarget.LastOptionListOptions[3], Is.EqualTo("Quit to main menu"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions![0], Is.EqualTo("最後のメッセージを見る"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions[1], Is.EqualTo("チェックポイントから再開"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions[2], Is.EqualTo("キャラクターを引退"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions[3], Is.EqualTo("メインメニューに戻る"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        "Popup.ProducerText.Exact"),
+                    Is.GreaterThan(0));
             });
         }
         finally
@@ -487,7 +505,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_ShowOptionListPayloadReturnsSourceUnchanged()
+    public void Prefix_TranslatesShowOptionListPayload_WhenPatched()
     {
         WriteDictionary(
             ("Choose", "選択"),
@@ -519,14 +537,27 @@ public sealed class PopupTranslationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyPopupTarget.LastOptionListTitle, Is.EqualTo("Choose"));
-                Assert.That(DummyPopupTarget.LastOptionListIntro, Is.EqualTo("Prompt"));
-                Assert.That(DummyPopupTarget.LastOptionListSpacingText, Is.EqualTo("Prompt"));
+                Assert.That(DummyPopupTarget.LastOptionListTitle, Is.EqualTo("選択"));
+                Assert.That(DummyPopupTarget.LastOptionListIntro, Is.EqualTo("案内"));
+                Assert.That(DummyPopupTarget.LastOptionListSpacingText, Is.EqualTo("案内"));
                 Assert.That(DummyPopupTarget.LastOptionListOptions, Is.Not.Null);
-                Assert.That(DummyPopupTarget.LastOptionListOptions![0], Is.EqualTo("Continue"));
-                Assert.That(DummyPopupTarget.LastOptionListOptions[1], Is.EqualTo("{{G|Quit}}"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions![0], Is.EqualTo("続行"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions[1], Is.EqualTo("{{G|終了}}"));
                 Assert.That(DummyPopupTarget.LastOptionListButtons, Is.Not.Null);
-                Assert.That(DummyPopupTarget.LastOptionListButtons![0].text, Is.EqualTo("{{W|Cancel}}"));
+                Assert.That(DummyPopupTarget.LastOptionListButtons![0].text, Is.EqualTo("{{W|キャンセル}}"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        "Popup.ProducerMenuItem.Exact"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        nameof(PopupTranslationPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        "Continue",
+                        "Continue"),
+                    Is.EqualTo(0));
             });
         }
         finally
@@ -539,7 +570,7 @@ public sealed class PopupTranslationPatchTests
     [TestCase("You are frozen solid!", "あなたは完全に凍りついた！")]
     [TestCase("There are hostiles nearby!", "近くに敵対者がいる！")]
     [TestCase("Would you like to walk to the nearest stairway down?", "最寄りの下り階段まで移動しますか？")]
-    public void Prefix_ObservationOnly_StaticPopupPromptsReturnSourceUnchanged(string source, string expected)
+    public void Prefix_TranslatesStaticPopupPrompts(string source, string expected)
     {
         WriteDictionary((source, expected));
 
@@ -554,7 +585,7 @@ public sealed class PopupTranslationPatchTests
 
             DummyPopupTarget.ShowBlock(source, "Warning");
 
-            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo(source));
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo(expected));
         }
         finally
         {
@@ -563,7 +594,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_MarkedUpPopupButtonsReturnSourceUnchanged()
+    public void Prefix_LeavesMarkedUpPopupButtonsUnchanged()
     {
         WriteDictionary(
             ("Choose", "選択"),
@@ -607,13 +638,13 @@ public sealed class PopupTranslationPatchTests
     }
 
     [TestCaseSource(typeof(QudJP.Tests.L1.ColorRouteInvariantCases), nameof(QudJP.Tests.L1.ColorRouteInvariantCases.PopupMenuItemCases))]
-    public void TranslatePopupMenuItemText_ObservationOnly_ReturnsSourceUnchanged(QudJP.Tests.L1.ColorTranslationCase testCase)
+    public void TranslatePopupMenuItemText_PreservesUnmatchedHotkeyMarkup(QudJP.Tests.L1.ColorTranslationCase testCase)
     {
         WriteDictionary(testCase.Entries.ToArray());
 
         var translated = PopupTranslationPatch.TranslatePopupMenuItemText(testCase.Source);
 
-        Assert.That(translated, Is.EqualTo(testCase.Source));
+        Assert.That(translated, Is.EqualTo(testCase.Expected));
     }
 
     [Test]
@@ -646,7 +677,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void NormalizeItemTexts_ObservationOnly_ReturnsSourceUnchanged()
+    public void NormalizeItemTexts_PreservesBottomContextHotkeyItems()
     {
         WriteDictionary(("Continue", "続ける"));
 
@@ -657,7 +688,10 @@ public sealed class PopupTranslationPatchTests
 
         QudMenuBottomContextTranslationPatch.NormalizeItemTexts(context);
 
-        Assert.That(context.items[0].text, Is.EqualTo("{{W|[space]}} {{y|Continue}}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(context.items[0].text, Is.EqualTo("{{W|[space]}} {{y|Continue}}"));
+        });
     }
 
     [Test]
@@ -681,7 +715,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_ShowConversationPayloadReturnsSourceUnchanged()
+    public void Prefix_TranslatesShowConversationPayload_WhenPatched()
     {
         WriteDictionary(
             ("Trade", "取引"),
@@ -705,11 +739,11 @@ public sealed class PopupTranslationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyPopupTarget.LastShowConversationTitle, Is.EqualTo("Trade"));
-                Assert.That(DummyPopupTarget.LastShowConversationIntro, Is.EqualTo("Choose your response."));
+                Assert.That(DummyPopupTarget.LastShowConversationTitle, Is.EqualTo("取引"));
+                Assert.That(DummyPopupTarget.LastShowConversationIntro, Is.EqualTo("返答を選択してください。"));
                 Assert.That(DummyPopupTarget.LastShowConversationOptions, Is.Not.Null);
-                Assert.That(DummyPopupTarget.LastShowConversationOptions![0], Is.EqualTo("Ask about water"));
-                Assert.That(DummyPopupTarget.LastShowConversationOptions[1], Is.EqualTo("{{G|Leave}}"));
+                Assert.That(DummyPopupTarget.LastShowConversationOptions![0], Is.EqualTo("水について尋ねる"));
+                Assert.That(DummyPopupTarget.LastShowConversationOptions[1], Is.EqualTo("{{G|立ち去る}}"));
             });
         }
         finally
@@ -719,7 +753,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ShowConversation_LeavesPayloadForConversationDisplayOwner_WhenPatched()
+    public void Prefix_ShowConversation_TranslatesPayload_WithoutPopupSinkObservation_WhenPatched()
     {
         WriteDictionary(
             ("Trade", "取引"),
@@ -752,16 +786,16 @@ public sealed class PopupTranslationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyPopupTarget.LastShowConversationTitle, Is.EqualTo(titleSource));
-                Assert.That(DummyPopupTarget.LastShowConversationIntro, Is.EqualTo(introSource));
-                Assert.That(DummyPopupTarget.LastShowConversationOptions![0], Is.EqualTo(optionSource));
+                Assert.That(DummyPopupTarget.LastShowConversationTitle, Is.EqualTo("取引"));
+                Assert.That(DummyPopupTarget.LastShowConversationIntro, Is.EqualTo("返答を選択してください。"));
+                Assert.That(DummyPopupTarget.LastShowConversationOptions![0], Is.EqualTo("水について尋ねる"));
                 Assert.That(translatedTitle, Is.EqualTo("取引"));
                 Assert.That(translatedIntro, Is.EqualTo("返答を選択してください。"));
                 Assert.That(translatedOption, Is.EqualTo("水について尋ねる"));
                 Assert.That(
                     DynamicTextObservability.GetRouteFamilyHitCountForTests(
-                        nameof(ConversationDisplayTextPatch),
-                        "ConversationDisplay.ExactLeaf"),
+                        nameof(PopupTranslationPatch),
+                        "Popup.ProducerText.Exact"),
                     Is.GreaterThan(0));
                 Assert.That(
                     SinkObservation.GetHitCountForTests(
@@ -770,7 +804,7 @@ public sealed class PopupTranslationPatchTests
                         SinkObservation.ObservationOnlyDetail,
                         titleSource,
                         titleSource),
-                    Is.GreaterThan(0));
+                    Is.EqualTo(0));
             });
         }
         finally
@@ -780,7 +814,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_ShowBlockLogsSinkObservation_WhenPatched()
+    public void Prefix_RecordsProducerRouteTransform_ForShowBlock_WhenPatched()
     {
         WriteDictionary(("Test message", "テストメッセージ"));
 
@@ -798,7 +832,12 @@ public sealed class PopupTranslationPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo(source));
+                Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("テストメッセージ"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        "Popup.ProducerText.Exact"),
+                    Is.GreaterThan(0));
                 Assert.That(
                     SinkObservation.GetHitCountForTests(
                         nameof(PopupTranslationPatch),
@@ -806,7 +845,7 @@ public sealed class PopupTranslationPatchTests
                         SinkObservation.ObservationOnlyDetail,
                         source,
                         source),
-                    Is.GreaterThan(0));
+                    Is.EqualTo(0));
             });
         }
         finally
@@ -816,7 +855,7 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_ShowOptionListLogsSinkObservation_WhenPatched()
+    public void Prefix_RecordsProducerRouteTransform_ForShowOptionList_WhenPatched()
     {
         WriteDictionary(("Continue", "続行"));
 
@@ -836,14 +875,23 @@ public sealed class PopupTranslationPatchTests
                 SpacingText: "Prompt",
                 Buttons: new List<DummyPopupMenuItem>());
 
-            Assert.That(
-                SinkObservation.GetHitCountForTests(
-                    nameof(PopupTranslationPatch),
-                    nameof(PopupTranslationPatch),
-                    SinkObservation.ObservationOnlyDetail,
-                    "Continue",
-                    "Continue"),
-                Is.GreaterThan(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupTarget.LastOptionListOptions![0], Is.EqualTo("続行"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        "Popup.ProducerText.Exact"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        nameof(PopupTranslationPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        "Continue",
+                        "Continue"),
+                    Is.EqualTo(0));
+            });
         }
         finally
         {

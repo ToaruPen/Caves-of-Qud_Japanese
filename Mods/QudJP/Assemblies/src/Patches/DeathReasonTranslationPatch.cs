@@ -67,6 +67,20 @@ public static class DeathReasonTranslationPatch
 
     internal static string TranslateDeathReason(string reason)
     {
-        return UITextSkinTranslationPatch.TranslatePreservingColors(reason, Context);
+        if (string.IsNullOrEmpty(reason))
+        {
+            return reason ?? string.Empty;
+        }
+
+        if (MessageFrameTranslator.TryStripDirectTranslationMarker(reason, out var markedText))
+        {
+            return markedText;
+        }
+
+        return ColorAwareTranslationComposer.TranslatePreservingColors(
+            reason,
+            static visible => StringHelpers.TryGetTranslationExactOrLowerAscii(visible, out var translated)
+                ? translated
+                : visible);
     }
 }
