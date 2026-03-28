@@ -108,7 +108,7 @@ Use this checklist before marking a route family as complete:
 4. **Status messages**: Pick up, drop, eat, or drink an item — verify feedback messages
 5. **Environmental messages**: Walk into a zone with temperature or radiation — verify notifications
 6. **Zone transition**: Move between zones — verify zone entry messages
-7. Check `Player.log` for `[QudJP] MessagePatternTranslator: no pattern for` entries (indicates unclaimed messages)
+7. Check `Player.log` — verify `[QudJP] MessagePatternTranslator: no pattern for` entries do NOT appear (their presence indicates unclaimed messages that lack a producer-side translation)
 8. Check `Player.log` for `[QudJP] SinkObserve/v1: sink='MessageLogPatch'` entries (observation-only sink recording)
 
 ### UITextSkin (runtime-required)
