@@ -82,26 +82,7 @@ internal static class MessagePatternTranslator
             return source!;
         }
 
-        return TranslateStripped(stripped, spans, logMissingPattern: true);
-    }
-
-    internal static bool TryTranslateWithoutLogging(string? source, out string translated)
-    {
-        if (string.IsNullOrEmpty(source))
-        {
-            translated = source ?? string.Empty;
-            return false;
-        }
-
-        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
-        if (stripped.Length == 0)
-        {
-            translated = source!;
-            return false;
-        }
-
-        translated = TranslateStripped(stripped, spans, logMissingPattern: false);
-        return !string.Equals(translated, source, StringComparison.Ordinal);
+        return TranslateStripped(stripped, spans);
     }
 
     internal static void SetPatternFileForTests(string? filePath)
@@ -196,10 +177,7 @@ internal static class MessagePatternTranslator
         return LocalizationAssetResolver.GetLocalizationPath("Dictionaries/" + DefaultLeafFileName);
     }
 
-    private static string TranslateStripped(
-        string source,
-        IReadOnlyList<ColorSpan>? spans = null,
-        bool logMissingPattern = true)
+    private static string TranslateStripped(string source, IReadOnlyList<ColorSpan>? spans = null)
     {
         if (DeathWrapperFamilyTranslator.TryTranslateMessage(source, spans, out var deathTranslated))
         {
@@ -238,15 +216,12 @@ internal static class MessagePatternTranslator
             return translated;
         }
 
-        if (logMissingPattern)
+        var hitCount = RecordMissingPattern(source);
+        if (ObservabilityHelpers.ShouldLogMissingHit(hitCount))
         {
-            var hitCount = RecordMissingPattern(source);
-            if (ObservabilityHelpers.ShouldLogMissingHit(hitCount))
-            {
-                var sanitizedSource = SanitizeForLog(source);
-                LogObservability(
-                    $"[QudJP] MessagePatternTranslator: no pattern for '{sanitizedSource}' (hit {hitCount}).{Translator.GetCurrentLogContextSuffix()}");
-            }
+            var sanitizedSource = SanitizeForLog(source);
+            LogObservability(
+                $"[QudJP] MessagePatternTranslator: no pattern for '{sanitizedSource}' (hit {hitCount}).{Translator.GetCurrentLogContextSuffix()}");
         }
 
         return spans is null || spans.Count == 0
