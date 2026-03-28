@@ -24,6 +24,7 @@ public sealed class DeathReasonTranslationPatchTests
     public void TearDown()
     {
         Translator.ResetForTests();
+        DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
         if (Directory.Exists(tempDir))
         {
@@ -32,26 +33,16 @@ public sealed class DeathReasonTranslationPatchTests
     }
 
     [Test]
-    public void TranslateDeathReason_ObservationOnly_LeavesKnownReasonUnchanged()
-    {
-        WriteDictionary(("You were vaporized.", "蒸発した。"));
-        Translator.SetDictionaryDirectoryForTests(tempDir);
-
-        var result = DeathReasonTranslationPatch.TranslateDeathReason("You were vaporized.");
-
-        Assert.That(result, Is.EqualTo("You were vaporized."));
-    }
-
-    [Test]
-    public void TranslateDeathReason_ObservationOnly_LogsUnclaimedReason()
+    public void TranslateDeathReason_TranslatesKnownReason()
     {
         const string source = "You were vaporized.";
+        WriteDictionary((source, "蒸発した。"));
 
         var result = DeathReasonTranslationPatch.TranslateDeathReason(source);
 
         Assert.Multiple(() =>
         {
-            Assert.That(result, Is.EqualTo(source));
+            Assert.That(result, Is.EqualTo("蒸発した。"));
             Assert.That(
                 SinkObservation.GetHitCountForTests(
                     nameof(UITextSkinTranslationPatch),
@@ -59,8 +50,28 @@ public sealed class DeathReasonTranslationPatchTests
                     SinkObservation.ObservationOnlyDetail,
                     source,
                     source),
-                Is.GreaterThan(0));
+                Is.EqualTo(0));
         });
+    }
+
+    [Test]
+    public void TranslateDeathReason_PreservesColorCodes()
+    {
+        WriteDictionary(("You were stepped on.", "踏みつぶされた。"));
+
+        var result = DeathReasonTranslationPatch.TranslateDeathReason("{{R|You were stepped on.}}");
+
+        Assert.That(result, Is.EqualTo("{{R|踏みつぶされた。}}"));
+    }
+
+    [Test]
+    public void TranslateDeathReason_UsesLowerAsciiFallback()
+    {
+        WriteDictionary(("you were stepped on.", "踏みつぶされた。"));
+
+        var result = DeathReasonTranslationPatch.TranslateDeathReason("You were stepped on.");
+
+        Assert.That(result, Is.EqualTo("踏みつぶされた。"));
     }
 
     [Test]
@@ -74,46 +85,10 @@ public sealed class DeathReasonTranslationPatchTests
     [Test]
     public void TranslateDeathReason_PreservesDirectTranslationMarker()
     {
-        WriteDictionary(("You were vaporized.", "蒸発した。"));
-        Translator.SetDictionaryDirectoryForTests(tempDir);
-
-        var result = DeathReasonTranslationPatch.TranslateDeathReason("\u0001Already translated");
+        var result = DeathReasonTranslationPatch.TranslateDeathReason("Already translated");
 
         Assert.That(result, Is.EqualTo("Already translated"),
             "DirectTranslationMarker should be stripped and text returned as-is.");
-    }
-
-    [Test]
-    public void TranslateDeathReason_ObservationOnly_LeavesSteppedOnUnchanged()
-    {
-        WriteDictionary(("You were stepped on.", "踏みつぶされた。"));
-        Translator.SetDictionaryDirectoryForTests(tempDir);
-
-        var result = DeathReasonTranslationPatch.TranslateDeathReason("You were stepped on.");
-
-        Assert.That(result, Is.EqualTo("You were stepped on."));
-    }
-
-    [Test]
-    public void TranslateDeathReason_ObservationOnly_LeavesCrushedByFallingRocksUnchanged()
-    {
-        WriteDictionary(("You were crushed by falling rocks.", "落石に押しつぶされた。"));
-        Translator.SetDictionaryDirectoryForTests(tempDir);
-
-        var result = DeathReasonTranslationPatch.TranslateDeathReason("You were crushed by falling rocks.");
-
-        Assert.That(result, Is.EqualTo("You were crushed by falling rocks."));
-    }
-
-    [Test]
-    public void TranslateDeathReason_ObservationOnly_LeavesResorbedIntoMassMindUnchanged()
-    {
-        WriteDictionary(("You were resorbed into the Mass Mind.", "集合精神に再吸収された。"));
-        Translator.SetDictionaryDirectoryForTests(tempDir);
-
-        var result = DeathReasonTranslationPatch.TranslateDeathReason("You were resorbed into the Mass Mind.");
-
-        Assert.That(result, Is.EqualTo("You were resorbed into the Mass Mind."));
     }
 
     [Test]

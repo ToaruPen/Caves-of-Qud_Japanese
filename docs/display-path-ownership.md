@@ -10,7 +10,7 @@ Each route family falls into one of three categories:
 |----------|-----------|-----------|---------|
 | **Statically-provable** | DummyTarget verifies the final returned/displayed value end-to-end | Owner translates, sink observation = 0, return value is Japanese | Regression only |
 | **Narrowable** | L2 proves ownership and sink suppression; UI rendering depends on Unity runtime | Owner translates, sink suppressed | Screen navigation to visually confirm |
-| **Runtime-required** | Route fires under specific game state; sink is observation-only | Producer translation logic, observation-only contract | Reproduction steps with specific game actions |
+| **Runtime-required** | Route fires under specific game state; ownership may be producer-side or observation-only depending on the family | Producer translation logic or observation-only contract, as declared in the matrix | Reproduction steps with specific game actions |
 
 ## Route Ownership Matrix
 
@@ -18,6 +18,7 @@ Each route family falls into one of three categories:
 |--------|----------|-----------|-------------|
 | Conversation display text | Statically-provable | Postfix, `ref __result` | ConversationDisplayTextPatch |
 | Descriptions/tooltips | Statically-provable | Postfix, `ref __result` / StringBuilder | DescriptionShortDescriptionPatch, DescriptionLongDescriptionPatch, LookTooltipContentPatch |
+| Death reason | Runtime-required | Prefix, `ref` args rewrite | DeathReasonTranslationPatch |
 | Zone display names | Statically-provable | Postfix, `ref __result` | ZoneDisplayNameTranslationPatch |
 | Journal entry display | Statically-provable | Postfix, `ref __result` | JournalEntryDisplayTextPatch, JournalMapNoteDisplayTextPatch |
 | Popup message | Statically-provable | Prefix, `__args` rewrite | PopupMessageTranslationPatch |
@@ -25,12 +26,21 @@ Each route family falls into one of three categories:
 | Character status | Narrowable | Postfix, field update | CharacterStatusScreenTranslationPatch, CharacterStatusScreenMutationDetailsPatch |
 | Skills/powers | Narrowable | Postfix, field/text update | SkillsAndPowersStatusScreenTranslationPatch, SkillsAndPowersStatusScreenDetailsPatch |
 | Factions | Narrowable | Postfix, field update | FactionsLineDataTranslationPatch, FactionsLineTranslationPatch, FactionsStatusScreenTranslationPatch |
+| Options screen | Narrowable | Postfix, field update | OptionsLocalizationPatch |
+| Pick game object screen | Narrowable | Postfix, field update | PickGameObjectScreenTranslationPatch |
+| Menu bottom context | Narrowable | Prefix, field update | QudMenuBottomContextTranslationPatch |
 | Player status bar / ability bar | Narrowable | Postfix, dictionary/text update | PlayerStatusBarProducerTranslationPatch, AbilityBarAfterRenderTranslationPatch |
-| Popup conversation | Narrowable | Observation-only at sink; owner = ConversationDisplayTextPatch | PopupTranslationPatch (ShowConversation) |
-| Popup (ShowBlock/ShowOptionList) | Runtime-required | Observation-only | PopupTranslationPatch |
+| Popup conversation | Narrowable | Prefix, `__args` rewrite | PopupTranslationPatch, ConversationDisplayTextPatch |
+| Popup (ShowBlock/ShowOptionList) | Runtime-required | Prefix, `__args` rewrite | PopupTranslationPatch |
 | Message log | Runtime-required | Observation-only | MessageLogPatch |
 | UITextSkin | Runtime-required | Observation-only sink | UITextSkinTranslationPatch |
 | SinkPrereq | Runtime-required | Observation-only near-sink | SinkPrereqSetDataTranslationPatch, SinkPrereqUiMethodTranslationPatch |
+
+### Disabled (not subject to L2/L3 checklists until re-enabled)
+
+| Route family | Mechanism | Owner patch |
+|-------------|-----------|-------------|
+| Historic string expansion | Postfix, `ref __result` (TargetMethods yields nothing) | HistoricStringExpanderPatch |
 
 ## Layer Proof Rules
 
@@ -71,6 +81,16 @@ Use this checklist before marking a route family as complete:
 - [ ] L3 verification steps are documented below
 
 ### Runtime-required families
+
+Runtime-required rows split into two subcases. Follow the contract declared in the matrix row for that family.
+
+#### Producer-owned runtime-required families
+
+- [ ] L2 test with 3-point ownership assertion exists and passes
+- [ ] L3 reproduction steps are documented below
+- [ ] L3 verification has been performed for known scenarios
+
+#### Observation-only runtime-required families
 
 - [ ] L2 test verifies observation-only contract (pass-through + observation logged)
 - [ ] L3 reproduction steps are documented below

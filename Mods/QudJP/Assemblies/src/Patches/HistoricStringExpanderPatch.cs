@@ -9,6 +9,8 @@ namespace QudJP.Patches;
 [HarmonyPatch]
 public static class HistoricStringExpanderPatch
 {
+    private const string Context = nameof(HistoricStringExpanderPatch);
+
     [HarmonyTargetMethods]
     private static IEnumerable<MethodBase> TargetMethods()
     {
@@ -21,18 +23,40 @@ public static class HistoricStringExpanderPatch
         try
         {
             var source = __result;
-            if (MessageFrameTranslator.TryStripDirectTranslationMarker(__result, out var markedText))
+            var translated = TranslateExpandedText(source);
+            if (!string.Equals(translated, source, StringComparison.Ordinal))
             {
-                source = markedText;
+                DynamicTextObservability.RecordTransform(
+                    Context,
+                    "HistoricStringExpander.ExactLeaf",
+                    source ?? string.Empty,
+                    translated);
             }
 
-            __result = UITextSkinTranslationPatch.TranslatePreservingColors(
-                source,
-                nameof(HistoricStringExpanderPatch));
+            __result = translated;
         }
         catch (Exception ex)
         {
             Trace.TraceError("QudJP: HistoricStringExpanderPatch.Postfix failed: {0}", ex);
         }
+    }
+
+    internal static string TranslateExpandedText(string? source)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return source ?? string.Empty;
+        }
+
+        if (MessageFrameTranslator.TryStripDirectTranslationMarker(source, out var markedText))
+        {
+            return markedText;
+        }
+
+        return ColorAwareTranslationComposer.TranslatePreservingColors(
+            source,
+            static visible => StringHelpers.TryGetTranslationExactOrLowerAscii(visible, out var translated)
+                ? translated
+                : visible);
     }
 }

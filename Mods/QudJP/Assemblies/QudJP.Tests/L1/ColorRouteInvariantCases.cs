@@ -45,7 +45,7 @@ internal static class ColorRouteInvariantCases
         yield return new TestCaseData(
                 new ColorTranslationCase(
                     "{{W|[Esc]}} {{y|Cancel}}",
-                    "{{W|[Esc]}} {{y|キャンセル}}",
+                    "{{W|[Esc]}} {{y|Cancel}}",
                     nameof(QudJP.Patches.PopupTranslationPatch),
                     ("Cancel", "キャンセル")))
             .SetName("Popup_HotkeyLabelMarkup");

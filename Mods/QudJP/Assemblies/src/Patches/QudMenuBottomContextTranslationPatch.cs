@@ -88,7 +88,7 @@ public static class QudMenuBottomContextTranslationPatch
                 continue;
             }
 
-            var translated = PopupTranslationPatch.TranslatePopupMenuItemTextForRoute(
+            var translated = PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute(
                 current!,
                 nameof(QudMenuBottomContextTranslationPatch));
 

@@ -68,7 +68,12 @@ public static class LookTooltipContentPatch
 
     internal static string TranslateTooltipContent(string source)
     {
-        return UITextSkinTranslationPatch.TranslatePreservingColors(source, nameof(LookTooltipContentPatch));
+        if (MessageFrameTranslator.TryStripDirectTranslationMarker(source, out var markedText))
+        {
+            return markedText;
+        }
+
+        return DescriptionTextTranslator.TranslateLongDescription(source, nameof(LookTooltipContentPatch));
     }
 
     private static string BuildTooltipContentProbe(string content)

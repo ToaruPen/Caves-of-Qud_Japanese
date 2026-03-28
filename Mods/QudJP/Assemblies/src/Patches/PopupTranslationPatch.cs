@@ -199,7 +199,7 @@ public static class PopupTranslationPatch
 
     internal static string TranslatePopupMenuItemText(string source)
     {
-        return TranslatePopupMenuItemTextForRoute(source, nameof(PopupTranslationPatch));
+        return TranslatePopupMenuItemTextForProducerRoute(source, nameof(PopupTranslationPatch));
     }
 
     internal static string TranslatePopupTextForProducerRoute(string source, string route)
@@ -214,7 +214,7 @@ public static class PopupTranslationPatch
 
     private static string TranslatePopupText(string source)
     {
-        return TranslatePopupTextForRoute(source, nameof(PopupTranslationPatch));
+        return TranslatePopupTextForProducerRoute(source, nameof(PopupTranslationPatch));
     }
 
     internal static string TranslatePopupMenuItemTextForRoute(string source, string route)
@@ -443,7 +443,7 @@ public static class PopupTranslationPatch
             }
 
             var current = field.GetValue(item) as string;
-            var translated = TranslatePopupText(current ?? string.Empty);
+            var translated = TranslatePopupMenuItemText(current ?? string.Empty);
             if (string.Equals(current, translated, StringComparison.Ordinal))
             {
                 continue;
