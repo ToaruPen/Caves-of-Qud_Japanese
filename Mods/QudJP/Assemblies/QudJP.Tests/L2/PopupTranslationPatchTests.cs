@@ -29,6 +29,8 @@ public sealed class PopupTranslationPatchTests
         MessagePatternTranslator.ResetForTests();
         MessagePatternTranslator.SetPatternFileForTests(patternFilePath);
         File.WriteAllText(patternFilePath, "{\"patterns\":[]}\n", new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+        DynamicTextObservability.ResetForTests();
+        SinkObservation.ResetForTests();
         DummyPopupTarget.Reset();
     }
 
@@ -37,6 +39,8 @@ public sealed class PopupTranslationPatchTests
     {
         Translator.ResetForTests();
         MessagePatternTranslator.ResetForTests();
+        DynamicTextObservability.ResetForTests();
+        SinkObservation.ResetForTests();
 
         if (Directory.Exists(tempDirectory))
         {
@@ -715,9 +719,80 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_ObservationOnly_ShowBlockLogsSinkObservation_WhenPatched()
+    {
+        WriteDictionary(("Test message", "テストメッセージ"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            const string source = "Test message";
+            DummyPopupTarget.ShowBlock(source, "Warning");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo(source));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(PopupTranslationPatch),
+                        nameof(PopupTranslationPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        source,
+                        source),
+                    Is.GreaterThan(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_ObservationOnly_ShowOptionListLogsSinkObservation_WhenPatched()
+    {
+        WriteDictionary(("Continue", "続行"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowOptionList)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowOptionList(
+                Title: "Choose",
+                Options: new List<string> { "Continue" },
+                Intro: "Prompt",
+                SpacingText: "Prompt",
+                Buttons: new List<DummyPopupMenuItem>());
+
+            Assert.That(
+                SinkObservation.GetHitCountForTests(
+                    nameof(PopupTranslationPatch),
+                    nameof(PopupTranslationPatch),
+                    SinkObservation.ObservationOnlyDetail,
+                    "Continue",
+                    "Continue"),
+                Is.GreaterThan(0));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void TranslatePopupTextForRoute_ObservationOnly_ReturnsSourceUnchanged()
     {
-        SinkObservation.ResetForTests();
         var source = "Do you really want to attack the bear?";
         var result = PopupTranslationPatch.TranslatePopupTextForRoute(source, "TestRoute");
         Assert.That(result, Is.EqualTo(source));
@@ -726,7 +801,6 @@ public sealed class PopupTranslationPatchTests
     [Test]
     public void TranslatePopupTextForRoute_ObservationOnly_LogsUnclaimed()
     {
-        SinkObservation.ResetForTests();
         var source = "Some untranslated popup text";
         PopupTranslationPatch.TranslatePopupTextForRoute(source, "TestRoute");
         var hitCount = SinkObservation.GetHitCountForTests(

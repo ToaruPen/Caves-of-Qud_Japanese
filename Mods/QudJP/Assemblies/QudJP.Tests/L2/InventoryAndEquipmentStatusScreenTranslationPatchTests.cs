@@ -123,6 +123,49 @@ public sealed class InventoryAndEquipmentStatusScreenTranslationPatchTests
         }
     }
 
+    [Test]
+    public void Postfix_RecordsHotkeyLabelRouteTransform_WithoutUITextSkinSinkObservation()
+    {
+        WriteDictionary(("Show Tooltip", "ツールチップ表示"));
+
+        var target = new DummyInventoryAndEquipmentStatusScreen();
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyInventoryAndEquipmentStatusScreen), nameof(DummyInventoryAndEquipmentStatusScreen.UpdateViewFromData)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(InventoryAndEquipmentStatusScreenTranslationPatch), nameof(InventoryAndEquipmentStatusScreenTranslationPatch.Postfix))));
+
+            target.UpdateViewFromData();
+
+            const string source = "[{{W|Alt}}] Show Tooltip";
+            Assert.Multiple(() =>
+            {
+                Assert.That(target.SHOW_TOOLTIP.Description, Is.EqualTo("[{{W|Alt}}] ツールチップ表示"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(InventoryAndEquipmentStatusScreenTranslationPatch),
+                        "InventoryAndEquipment.HotkeyLabel"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(UITextSkinTranslationPatch),
+                        nameof(InventoryAndEquipmentStatusScreenTranslationPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        source,
+                        source),
+                    Is.EqualTo(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";
