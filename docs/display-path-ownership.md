@@ -109,7 +109,7 @@ Use this checklist before marking a route family as complete:
 5. **Environmental messages**: Walk into a zone with temperature or radiation — verify notifications
 6. **Zone transition**: Move between zones — verify zone entry messages
 7. Check `Player.log` for `[QudJP] MessagePatternTranslator: no pattern for` entries (indicates unclaimed messages)
-8. Check `Player.log` for `[MessageLogPatch]` sink observation markers
+8. Check `Player.log` for `[QudJP] SinkObserve/v1: sink='MessageLogPatch'` entries (observation-only sink recording)
 
 ### UITextSkin (runtime-required)
 
@@ -120,7 +120,7 @@ Use this checklist before marking a route family as complete:
 5. **Status screens**: Open character status (`x`), skills (`s`), factions — verify screen headers and section titles
 6. **Conversation UI**: Talk to an NPC — verify conversation text renders correctly
 7. **Options screen**: Open options — verify setting labels and help text
-8. Check `Player.log` for `[UITextSkinTranslationPatch]` entries with context identifiers (e.g., `[CharGenLocalizationPatch]`, `[InventoryLocalizationPatch]`)
+8. Check `Player.log` for `[QudJP] SinkObserve/v1: sink='UITextSkinTranslationPatch'` entries with route context (e.g., `route='CharGenLocalizationPatch'`, `route='InventoryLocalizationPatch'`)
 
 ### SinkPrereq (runtime-required)
 
@@ -136,7 +136,7 @@ Use this checklist before marking a route family as complete:
    - Open ability manager — verify ability selection detail text
    - Open cybernetics terminal (if available) — verify terminal row descriptions
    - Check player status bar for zone text and detail text
-5. Check `Player.log` for `[SinkPrereqSetDataTranslationPatch]` and `[SinkPrereqUiMethodTranslationPatch]` markers
+5. Check `Player.log` for `[QudJP] SinkObserve/v1: sink='UITextSkinTranslationPatch'` entries where the route context is `SinkPrereqSetDataTranslationPatch` or `SinkPrereqUiMethodTranslationPatch` (these patches delegate to UITextSkinTranslationPatch via `TranslatePreservingColors`)
 
 ### General L3 verification notes
 
