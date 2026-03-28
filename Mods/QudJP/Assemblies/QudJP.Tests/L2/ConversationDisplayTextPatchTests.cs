@@ -131,6 +131,47 @@ public sealed class ConversationDisplayTextPatchTests
     }
 
     [Test]
+    public void Postfix_UnknownText_DoesNotRecordRouteOrTriggerSinkObservation_WhenPatched()
+    {
+        WriteDictionary(("Known line", "既知の文"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyConversationElement), nameof(DummyConversationElement.GetDisplayText)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(ConversationDisplayTextPatch), nameof(ConversationDisplayTextPatch.Postfix))));
+
+            const string source = "Unknown runtime line";
+            var element = new DummyConversationElement(source);
+            element.GetDisplayText(withColor: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(ConversationDisplayTextPatch),
+                        "ConversationDisplay.ExactLeaf"),
+                    Is.EqualTo(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(UITextSkinTranslationPatch),
+                        nameof(ConversationDisplayTextPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        source,
+                        source),
+                    Is.EqualTo(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Postfix_PreservesColorCodes_WhenPatched()
     {
         WriteDictionary(("Farewell", "さらば"));
