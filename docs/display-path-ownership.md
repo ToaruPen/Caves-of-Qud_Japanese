@@ -24,7 +24,7 @@ Each route family falls into one of three categories:
 | Inventory/equipment | Narrowable | Postfix, field update | InventoryAndEquipmentStatusScreenTranslationPatch |
 | Character status | Narrowable | Postfix, field update | CharacterStatusScreenTranslationPatch, CharacterStatusScreenMutationDetailsPatch |
 | Skills/powers | Narrowable | Postfix, field/text update | SkillsAndPowersStatusScreenTranslationPatch, SkillsAndPowersStatusScreenDetailsPatch |
-| Factions | Narrowable | Postfix, field update | FactionsLineDataTranslationPatch, FactionsLineTranslationPatch |
+| Factions | Narrowable | Postfix, field update | FactionsLineDataTranslationPatch, FactionsLineTranslationPatch, FactionsStatusScreenTranslationPatch |
 | Player status bar / ability bar | Narrowable | Postfix, dictionary/text update | PlayerStatusBarProducerTranslationPatch, AbilityBarAfterRenderTranslationPatch |
 | Popup conversation | Narrowable | Observation-only at sink; owner = ConversationDisplayTextPatch | PopupTranslationPatch (ShowConversation) |
 | Popup (ShowBlock/ShowOptionList) | Runtime-required | Observation-only | PopupTranslationPatch |
