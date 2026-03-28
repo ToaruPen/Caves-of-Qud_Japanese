@@ -24,6 +24,7 @@ public sealed class MessageLogProducerTranslationHelpersTests
         Translator.SetDictionaryDirectoryForTests(dictionaryDirectory);
         MessagePatternTranslator.ResetForTests();
         MessagePatternTranslator.SetPatternFileForTests(patternFilePath);
+        DynamicTextObservability.ResetForTests();
         File.WriteAllText(patternFilePath, "{\"patterns\":[]}\n", new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
     }
 
@@ -32,6 +33,7 @@ public sealed class MessageLogProducerTranslationHelpersTests
     {
         Translator.ResetForTests();
         MessagePatternTranslator.ResetForTests();
+        DynamicTextObservability.ResetForTests();
 
         if (Directory.Exists(tempDirectory))
         {
@@ -191,6 +193,34 @@ public sealed class MessageLogProducerTranslationHelpersTests
             "ZoneManagerSetActiveZoneTranslationPatch");
 
         Assert.That(result, Is.EqualTo(source));
+    }
+
+    [Test]
+    public void PreparePatternMessage_MarksTranslatedMessageAndCountsProducerRoute()
+    {
+        WritePatternDictionary(("^You hit \\((x\\d+)\\) for (\\d+) damage with your (.+?)[.!] \\[(.+?)\\]$", "{2}で{1}ダメージを与えた。({0}) [{3}]"));
+
+        var result = MessageLogProducerTranslationHelpers.PreparePatternMessage(
+            "You hit (x1) for 2 damage with your 青銅の短剣! [11]",
+            nameof(AddPlayerMessagePatternTranslationPatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.EqualTo("\u0001青銅の短剣で2ダメージを与えた。(x1) [11]"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(AddPlayerMessagePatternTranslationPatch), "Pattern"),
+                Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void PreparePatternMessage_MarksAlreadyLocalizedTextWithoutRelookup()
+    {
+        var result = MessageLogProducerTranslationHelpers.PreparePatternMessage(
+            "既に翻訳済みのメッセージ",
+            nameof(AddPlayerMessagePatternTranslationPatch));
+
+        Assert.That(result, Is.EqualTo("\u0001既に翻訳済みのメッセージ"));
     }
 
     private void WriteExactDictionary(params (string key, string text)[] entries)

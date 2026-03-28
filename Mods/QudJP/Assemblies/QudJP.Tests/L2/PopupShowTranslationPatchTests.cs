@@ -108,6 +108,30 @@ public sealed class PopupShowTranslationPatchTests
         }
     }
 
+    [Test]
+    public void Prefix_TranslatesPopupShowYesNoAsyncMessage()
+    {
+        WriteDictionary(("Are you sure you want to quit?", "本当に終了しますか？"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.ShowYesNoAsync)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            _ = DummyPopupShow.ShowYesNoAsync("Are you sure you want to quit?");
+
+            Assert.That(DummyPopupShow.LastShowYesNoAsyncMessage, Is.EqualTo("本当に終了しますか？"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";
