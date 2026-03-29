@@ -22,7 +22,7 @@ public static class CombatAndLogMessageQueuePatch
         return method;
     }
 
-    [HarmonyPriority(Priority.First + 1)]
+    [HarmonyPriority(Priority.First - 1)]
     public static bool Prefix(ref string Message, string? Color = null, bool Capitalize = true)
     {
         try
