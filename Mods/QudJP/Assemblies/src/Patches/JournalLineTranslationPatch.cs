@@ -97,10 +97,6 @@ public static class JournalLineTranslationPatch
         var route = ObservabilityHelpers.ComposeContext(Context, "field=headerText");
         var translatedCategory = TranslateVisibleText(categoryName, route, "JournalLine.CategoryHeader");
         var translated = prefix + translatedCategory;
-        if (!string.Equals(translated, source, StringComparison.Ordinal))
-        {
-            DynamicTextObservability.RecordTransform(route, "JournalLine.CategoryHeader", source, translated);
-        }
 
         TrySetActive(GetMemberValue(instance, "headerContainer"), active: true);
         OwnerTextSetter.SetTranslatedText(
@@ -233,14 +229,7 @@ public static class JournalLineTranslationPatch
         }
 
         builder.Append(" \n \n");
-        var translated = builder.ToString();
-        var source = BuildRecipeBody(ingredients, description);
-        if (!string.Equals(translated, source, StringComparison.Ordinal))
-        {
-            DynamicTextObservability.RecordTransform(route, "JournalLine.RecipeBody", source, translated);
-        }
-
-        return translated;
+        return builder.ToString();
     }
 
     private static string BuildEntrySource(object entry)
@@ -321,6 +310,7 @@ public static class JournalLineTranslationPatch
             builder.Append("}}");
         }
 
+        // Record at the entry-row level: the translator uses its own families internally.
         var translated = builder.ToString();
         if (!string.Equals(translated, source, StringComparison.Ordinal))
         {

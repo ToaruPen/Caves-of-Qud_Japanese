@@ -106,11 +106,6 @@ public static class AbilityManagerLineTranslationPatch
 
         var source = BuildAbilityText(data, ability, translated: false);
         var translated = BuildAbilityText(data, ability, translated: true);
-        var route = ObservabilityHelpers.ComposeContext(Context, "field=text");
-        if (!string.Equals(translated, source, StringComparison.Ordinal))
-        {
-            DynamicTextObservability.RecordTransform(route, "AbilityManagerLine.AbilityText", source, translated);
-        }
 
         OwnerTextSetter.SetTranslatedText(
             GetMemberValue(instance, "text"),
