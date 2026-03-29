@@ -154,6 +154,102 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(QudMenuBottomContextTranslationPatch), "RefreshButtons", "Qud.UI.QudMenuBottomContext", "System.Void", new string[0])]
     [TestCase(typeof(SelectableTextMenuItemProbePatch), "Update", "Qud.UI.SelectableTextMenuItem", "System.Void", new string[0])]
     [TestCase(typeof(LoadingStatusTranslationPatch), "SetLoadingStatus", "XRL.UI.Loading", "System.Void", new[] { "System.String", "System.Boolean" })]
+    [TestCase(typeof(CombatAndLogMessageQueuePatch), "AddPlayerMessage", "XRL.Messages.MessageQueue", "System.Void", new[] { "System.String", "System.String", "System.Boolean" })]
+    [TestCase(typeof(PhysicsObjectEnteringCellTranslationPatch), "HandleEvent", "XRL.World.Parts.Physics", "System.Boolean", new[] { "XRL.World.ObjectEnteringCellEvent" })]
+    [TestCase(typeof(PhysicsApplyDischargeTranslationPatch), "ApplyDischarge", "XRL.World.Parts.Physics", "System.Int32", new[]
+    {
+        "XRL.World.Cell",
+        "XRL.World.Cell",
+        "System.Int32",
+        "System.Int32",
+        "System.String",
+        "XRL.Rules.DieRoll",
+        "XRL.World.GameObject",
+        "System.Collections.Generic.List`1[[XRL.World.Cell]]",
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
+        "System.Collections.Generic.List`1[[XRL.World.GameObject]]",
+        "System.Nullable`1[[System.Boolean]]",
+        "System.String",
+        "System.String",
+        "System.Int32",
+        "System.Boolean",
+        "System.Boolean",
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
+        "System.String",
+        "System.Boolean",
+    })]
+    [TestCase(typeof(GameObjectHealTranslationPatch), "Heal", "XRL.World.GameObject", "System.Int32", new[] { "System.Int32", "System.Boolean", "System.Boolean", "System.Boolean" })]
+    [TestCase(typeof(GameObjectMoveTranslationPatch), "Move", "XRL.World.GameObject", "System.Boolean", new[]
+    {
+        "System.String",
+        "XRL.World.GameObject&",
+        "System.Boolean",
+        "System.Boolean",
+        "System.Boolean",
+        "System.Boolean",
+        "System.Boolean",
+        "System.Boolean",
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
+        "System.Boolean",
+        "System.Nullable`1[[System.Int32]]",
+        "System.String",
+        "System.Nullable`1[[System.Int32]]",
+        "System.Boolean",
+        "System.Boolean",
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
+        "System.Int32",
+    })]
+    [TestCase(typeof(GameObjectPerformThrowTranslationPatch), "PerformThrow", "XRL.World.GameObject", "System.Boolean", new[]
+    {
+        "XRL.World.GameObject",
+        "XRL.World.Cell",
+        "XRL.World.GameObject",
+        "XRL.World.Parts.MissilePath",
+        "System.Int32",
+        "System.Nullable`1[[System.Int32]]",
+        "System.Nullable`1[[System.Int32]]",
+        "System.Nullable`1[[System.Int32]]",
+    })]
+    [TestCase(typeof(GameObjectSpotTranslationPatch), "ArePerceptibleHostilesNearby", "XRL.World.GameObject", "System.Boolean", new[]
+    {
+        "System.Boolean",
+        "System.Boolean",
+        "System.String",
+        "XRL.OngoingAction",
+        "System.String",
+        "System.Int32",
+        "System.Int32",
+        "System.Boolean",
+        "System.Boolean",
+    })]
+    [TestCase(typeof(GameObjectDieTranslationPatch), "Die", "XRL.World.GameObject", "System.Boolean", new[]
+    {
+        "XRL.World.GameObject",
+        "System.String",
+        "System.String",
+        "System.String",
+        "System.Boolean",
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
+        "System.Boolean",
+        "System.Boolean",
+        "System.String",
+        "System.String",
+        "System.String",
+    })]
+    [TestCase(typeof(GameObjectRegeneraTranslationPatch), "FireEvent", "XRL.World.GameObject", "System.Boolean", new[] { "XRL.World.Event" })]
+    [TestCase(typeof(GameObjectEmitMessageTranslationPatch), "EmitMessage", "XRL.World.GameObject", "System.Void", new[] { "System.String", "XRL.World.GameObject", "System.String", "System.Boolean" })]
+    [TestCase(typeof(GameObjectToggleActivatedAbilityTranslationPatch), "ToggleActivatedAbility", "XRL.World.GameObject", "System.Boolean", new[] { "System.Guid", "System.Boolean", "System.Nullable`1[[System.Boolean]]" })]
+    [TestCase(typeof(ZoneManagerTryThawZoneTranslationPatch), "TryThawZone", "XRL.World.ZoneManager", "System.Boolean", new[] { "System.String", "XRL.World.Zone&" })]
+    [TestCase(typeof(ZoneManagerTickTranslationPatch), "Tick", "XRL.World.ZoneManager", "System.Void", new[] { "System.Boolean" })]
+    [TestCase(typeof(ZoneManagerSetActiveZoneMapNotesTranslationPatch), "SetActiveZone", "XRL.World.ZoneManager", "XRL.World.Zone", new[] { "XRL.World.Zone" })]
+    [TestCase(typeof(ZoneManagerGenerateZoneTranslationPatch), "GenerateZone", "XRL.World.ZoneManager", "System.Void", new[] { "System.String" })]
 #endif
 #if HAS_TMP
     [TestCase(typeof(TextMeshProUguiFontPatch), "OnEnable", "TMPro.TextMeshProUGUI", "System.Void", new string[0])]

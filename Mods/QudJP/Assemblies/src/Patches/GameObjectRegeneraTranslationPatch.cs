@@ -18,6 +18,12 @@ public static class GameObjectRegeneraTranslationPatch
     [ThreadStatic]
     private static Stack<bool>? prefixTrackStack;
 
+    [ThreadStatic]
+    private static bool accessorResolved;
+
+    [ThreadStatic]
+    private static Func<object, string?>? cachedIdAccessor;
+
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
@@ -93,34 +99,36 @@ public static class GameObjectRegeneraTranslationPatch
 
     private static bool ShouldTrack(object? eventObject)
     {
-        return TryGetEventId(eventObject, out var id)
-            && string.Equals(id, RegeneraEventId, StringComparison.Ordinal);
-    }
-
-    private static bool TryGetEventId(object? eventObject, out string id)
-    {
         if (eventObject is null)
         {
-            id = string.Empty;
             return false;
         }
 
-        var eventType = eventObject.GetType();
-        var property = eventType.GetProperty("ID", BindingFlags.Instance | BindingFlags.Public);
-        if (property?.GetValue(eventObject) is string propertyValue)
+        var id = GetEventIdCached(eventObject);
+        return string.Equals(id, RegeneraEventId, StringComparison.Ordinal);
+    }
+
+    private static string? GetEventIdCached(object eventObject)
+    {
+        if (!accessorResolved)
         {
-            id = propertyValue;
-            return true;
+            accessorResolved = true;
+            var eventType = eventObject.GetType();
+            var property = eventType.GetProperty("ID", BindingFlags.Instance | BindingFlags.Public);
+            if (property is not null)
+            {
+                cachedIdAccessor = obj => property.GetValue(obj) as string;
+            }
+            else
+            {
+                var field = eventType.GetField("ID", BindingFlags.Instance | BindingFlags.Public);
+                if (field is not null)
+                {
+                    cachedIdAccessor = obj => field.GetValue(obj) as string;
+                }
+            }
         }
 
-        var field = eventType.GetField("ID", BindingFlags.Instance | BindingFlags.Public);
-        if (field?.GetValue(eventObject) is string fieldValue)
-        {
-            id = fieldValue;
-            return true;
-        }
-
-        id = string.Empty;
-        return false;
+        return cachedIdAccessor?.Invoke(eventObject);
     }
 }
