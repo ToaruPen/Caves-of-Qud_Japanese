@@ -38,6 +38,7 @@ public static class EquipmentLineTranslationPatch
         return method;
     }
 
+    [HarmonyPriority(Priority.First)]
     public static void Postfix(object? __instance, object? data)
     {
         try
@@ -100,7 +101,12 @@ public static class EquipmentLineTranslationPatch
         }
 
         var equipped = GetMemberValue(bodyPart, "Equipped");
-        return equipped ?? GetMemberValue(bodyPart, "DefaultBehavior");
+        if (equipped is null)
+        {
+            return GetMemberValue(bodyPart, "DefaultBehavior");
+        }
+
+        return equipped;
     }
 
     private static string BuildIndentedDescription(object bodyPart, string cardinalDescription)
