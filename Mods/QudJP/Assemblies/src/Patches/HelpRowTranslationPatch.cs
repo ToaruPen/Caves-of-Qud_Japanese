@@ -53,13 +53,20 @@ public static class HelpRowTranslationPatch
                 return true;
             }
 
-            var rawDescription = GetStringMemberValue(data, "Description");
-            if (rawDescription is null) { rawDescription = string.Empty; }
+            var categoryDescription = GetMemberValue(__instance, "categoryDescription");
+            var description = GetMemberValue(__instance, "description");
+            if (categoryDescription is null || description is null)
+            {
+                Trace.TraceError("QudJP: HelpRowTranslationPatch required UI members not found.");
+                return true;
+            }
+
+            var rawDescription = GetStringMemberValue(data, "Description") ?? string.Empty;
             var categorySource = rawDescription.ToUpperInvariant();
             var categoryRoute = ObservabilityHelpers.ComposeContext(Context, "field=categoryDescription");
             var translatedCategory = TranslateVisibleText(categorySource, categoryRoute, "HelpRow.CategoryDescription");
             SetAppliedTranslatedText(
-                GetMemberValue(__instance, "categoryDescription"),
+                categoryDescription,
                 "{{C|" + categorySource + "}}",
                 "{{C|" + translatedCategory + "}}",
                 typeof(HelpRowTranslationPatch));
@@ -68,14 +75,13 @@ public static class HelpRowTranslationPatch
             var helpRoute = ObservabilityHelpers.ComposeContext(Context, "field=description");
             var translatedHelpText = TranslateVisibleText(materializedHelpText, helpRoute, "HelpRow.HelpText");
             SetAppliedTranslatedText(
-                GetMemberValue(__instance, "description"),
+                description,
                 materializedHelpText,
                 translatedHelpText,
                 typeof(HelpRowTranslationPatch));
 
             var collapsed = GetBoolMemberValue(data, "Collapsed");
-            var descriptionElement = GetMemberValue(__instance, "description");
-            if (descriptionElement is null) { descriptionElement = __instance; }
+            var descriptionElement = description;
             TrySetActive(GetMemberValue(descriptionElement, "gameObject"), !collapsed);
             var categoryExpander = GetMemberValue(__instance, "categoryExpander");
             if (categoryExpander is not null)
