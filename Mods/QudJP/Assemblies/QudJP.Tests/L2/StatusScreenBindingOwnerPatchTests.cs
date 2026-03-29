@@ -53,10 +53,10 @@ public sealed class StatusScreenBindingOwnerPatchTests
     }
 
     [Test]
-    public void CharacterAttributeLineTranslationPatch_TranslatesAttributeName_WhenPatched()
+    public void CharacterAttributeLineTranslationPatch_KeepsAbbreviationInEnglish_WhenPatched()
     {
-        WriteDictionary(("STR", "筋力"));
-
+        // Stat abbreviations (STR, AGI, MS, AV, DV, MA, etc.) are kept in English
+        // to avoid layout shifts (see commit 63cc3ad).
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
         try
@@ -82,20 +82,12 @@ public sealed class StatusScreenBindingOwnerPatchTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(target.attributeText.Text, Is.EqualTo("筋力"));
-                Assert.That(
-                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
-                        nameof(CharacterAttributeLineTranslationPatch),
-                        "CharacterStatus.AttributeName"),
-                    Is.GreaterThan(0));
-                Assert.That(
-                    SinkObservation.GetHitCountForTests(
-                        nameof(UITextSkinTranslationPatch),
-                        nameof(CharacterAttributeLineTranslationPatch),
-                        SinkObservation.ObservationOnlyDetail,
-                        "STR",
-                        "STR"),
-                    Is.EqualTo(0));
+                Assert.That(target.attributeText.Text, Is.EqualTo("STR"),
+                    "Stat abbreviations must remain in English to avoid layout shifts");
+                Assert.That(target.valueText.Text, Is.Not.Null.And.Not.Empty,
+                    "Value text should be populated by the prefix");
+                Assert.That(target.modifierText.Text, Is.Not.Null.And.Not.Empty,
+                    "Modifier text should be populated by the prefix");
             });
         }
         finally
