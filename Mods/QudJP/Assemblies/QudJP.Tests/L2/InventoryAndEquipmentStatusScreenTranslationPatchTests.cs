@@ -166,6 +166,79 @@ public sealed class InventoryAndEquipmentStatusScreenTranslationPatchTests
         }
     }
 
+    [Test]
+    public void InventoryAndEquipmentScreenPostfix_TranslatesMenuOptionsAndWeightText_WhenPatched()
+    {
+        WriteDictionary(
+            ("Toggle Cybernetics", "サイバネ切替"),
+            ("Display Options", "表示オプション"),
+            ("Set Primary Limb", "主肢設定"),
+            ("Show Tooltip", "ツールチップ表示"),
+            ("Quick Drop", "素早く落とす"),
+            ("Quick Eat", "素早く食べる"),
+            ("Quick Drink", "素早く飲む"),
+            ("Quick Apply", "素早く適用"),
+            ("lbs.", "ポンド"),
+            ("show cybernetics", "サイバネティクス表示"),
+            ("show equipment", "装備表示"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyInventoryAndEquipmentStatusScreen), nameof(DummyInventoryAndEquipmentStatusScreen.UpdateViewFromData)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(InventoryAndEquipmentStatusScreenTranslationPatch), nameof(InventoryAndEquipmentStatusScreenTranslationPatch.Postfix))));
+
+            var screen = new DummyInventoryAndEquipmentStatusScreen();
+            screen.UpdateViewFromData();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(screen.CMD_SHOWCYBERNETICS.Description, Is.EqualTo("サイバネ切替"));
+                Assert.That(screen.CMD_OPTIONS.Description, Is.EqualTo("表示オプション"));
+                Assert.That(screen.SET_PRIMARY_LIMB.Description, Is.EqualTo("主肢設定"));
+                Assert.That(screen.QUICK_DROP.Description, Is.EqualTo("素早く落とす"));
+                Assert.That(screen.QUICK_EAT.Description, Is.EqualTo("素早く食べる"));
+                Assert.That(screen.QUICK_DRINK.Description, Is.EqualTo("素早く飲む"));
+                Assert.That(screen.QUICK_APPLY.Description, Is.EqualTo("素早く適用"));
+                Assert.That(screen.weightText.Text, Does.Contain("ポンド"));
+                Assert.That(screen.cyberneticsHotkeySkin.Text, Does.Contain("サイバネティクス表示"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void InventoryAndEquipmentScreenPostfix_LeavesOriginalValues_WhenNoDictionaryEntries()
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyInventoryAndEquipmentStatusScreen), nameof(DummyInventoryAndEquipmentStatusScreen.UpdateViewFromData)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(InventoryAndEquipmentStatusScreenTranslationPatch), nameof(InventoryAndEquipmentStatusScreenTranslationPatch.Postfix))));
+
+            var screen = new DummyInventoryAndEquipmentStatusScreen();
+            screen.UpdateViewFromData();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(screen.CMD_SHOWCYBERNETICS.Description, Is.EqualTo("Toggle Cybernetics"));
+                Assert.That(screen.CMD_OPTIONS.Description, Is.EqualTo("Display Options"));
+                Assert.That(screen.weightText.Text, Does.Contain("lbs."));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";
