@@ -9,7 +9,8 @@ namespace QudJP.Patches;
 public static class ZoneManagerTickTranslationPatch
 {
     private const string Context = nameof(ZoneManagerTickTranslationPatch);
-    private const string WarningPrefix = "&RWARNING: You have the Disable Zone Caching option enabled, this will cause massive memory use over time.";
+    private const string WarningText = "WARNING: You have the Disable Zone Caching option enabled, this will cause massive memory use over time.";
+    private const string WarningPrefix = "&R" + WarningText;
 
     [ThreadStatic]
     private static int activeDepth;
@@ -45,7 +46,7 @@ public static class ZoneManagerTickTranslationPatch
         }
     }
 
-    public static void Postfix()
+    public static Exception? Finalizer(Exception? __exception)
     {
         try
         {
@@ -56,16 +57,18 @@ public static class ZoneManagerTickTranslationPatch
         }
         catch (Exception ex)
         {
-            Trace.TraceError("QudJP: ZoneManagerTickTranslationPatch.Postfix failed: {0}", ex);
+            Trace.TraceError("QudJP: ZoneManagerTickTranslationPatch.Finalizer failed: {0}", ex);
         }
+
+        return __exception;
     }
 
     internal static bool TryTranslateQueuedMessage(ref string message, string? color)
     {
-        _ = color;
-
         return activeDepth > 0
-            && string.Equals(message, WarningPrefix, StringComparison.Ordinal)
+            && (string.Equals(message, WarningPrefix, StringComparison.Ordinal)
+                || (string.Equals(color, "R", StringComparison.Ordinal)
+                    && string.Equals(message, WarningText, StringComparison.Ordinal)))
             && MessageLogProducerTranslationHelpers.TryPreparePatternMessage(ref message, Context, "Tick");
     }
 }

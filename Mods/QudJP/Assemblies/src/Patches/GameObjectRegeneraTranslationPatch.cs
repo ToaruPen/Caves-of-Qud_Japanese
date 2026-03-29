@@ -14,6 +14,9 @@ public static class GameObjectRegeneraTranslationPatch
     [ThreadStatic]
     private static int activeDepth;
 
+    [ThreadStatic]
+    private static bool lastPrefixTracked;
+
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
@@ -38,30 +41,34 @@ public static class GameObjectRegeneraTranslationPatch
     {
         try
         {
-            if (ShouldTrack(E))
+            lastPrefixTracked = ShouldTrack(E);
+            if (lastPrefixTracked)
             {
                 activeDepth++;
             }
         }
         catch (Exception ex)
         {
+            lastPrefixTracked = false;
             Trace.TraceError("QudJP: GameObjectRegeneraTranslationPatch.Prefix failed: {0}", ex);
         }
     }
 
-    public static void Postfix(object? E = null)
+    public static Exception? Finalizer(Exception? __exception)
     {
         try
         {
-            if (ShouldTrack(E) && activeDepth > 0)
+            if (lastPrefixTracked && activeDepth > 0)
             {
                 activeDepth--;
             }
         }
         catch (Exception ex)
         {
-            Trace.TraceError("QudJP: GameObjectRegeneraTranslationPatch.Postfix failed: {0}", ex);
+            Trace.TraceError("QudJP: GameObjectRegeneraTranslationPatch.Finalizer failed: {0}", ex);
         }
+
+        return __exception;
     }
 
     internal static bool TryTranslateQueuedMessage(ref string message, string? color)

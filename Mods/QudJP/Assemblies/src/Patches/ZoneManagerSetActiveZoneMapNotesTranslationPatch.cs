@@ -51,7 +51,7 @@ public static class ZoneManagerSetActiveZoneMapNotesTranslationPatch
         }
     }
 
-    public static void Postfix()
+    public static Exception? Finalizer(Exception? __exception)
     {
         try
         {
@@ -62,8 +62,10 @@ public static class ZoneManagerSetActiveZoneMapNotesTranslationPatch
         }
         catch (Exception ex)
         {
-            Trace.TraceError("QudJP: ZoneManagerSetActiveZoneMapNotesTranslationPatch.Postfix failed: {0}", ex);
+            Trace.TraceError("QudJP: ZoneManagerSetActiveZoneMapNotesTranslationPatch.Finalizer failed: {0}", ex);
         }
+
+        return __exception;
     }
 
     internal static bool TryTranslateQueuedMessage(ref string message, string? color)

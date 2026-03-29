@@ -59,7 +59,7 @@ public static class GameObjectPerformThrowTranslationPatch
         }
     }
 
-    public static void Postfix()
+    public static Exception? Finalizer(Exception? __exception)
     {
         try
         {
@@ -70,8 +70,10 @@ public static class GameObjectPerformThrowTranslationPatch
         }
         catch (Exception ex)
         {
-            Trace.TraceError("QudJP: GameObjectPerformThrowTranslationPatch.Postfix failed: {0}", ex);
+            Trace.TraceError("QudJP: GameObjectPerformThrowTranslationPatch.Finalizer failed: {0}", ex);
         }
+
+        return __exception;
     }
 
     internal static bool TryTranslateQueuedMessage(ref string message, string? color)

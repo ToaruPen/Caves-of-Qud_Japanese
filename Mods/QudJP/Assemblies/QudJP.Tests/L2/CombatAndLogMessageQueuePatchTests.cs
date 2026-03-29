@@ -394,7 +394,7 @@ public sealed class CombatAndLogMessageQueuePatchTests
             harmony.Patch(
                 original: RequireMethod(typeof(DummyGameObjectFireEventTarget), nameof(DummyGameObjectFireEventTarget.FireEvent), typeof(DummyGameEvent)),
                 prefix: new HarmonyMethod(RequireMethod(typeof(GameObjectRegeneraTranslationPatch), nameof(GameObjectRegeneraTranslationPatch.Prefix), typeof(object))),
-                postfix: new HarmonyMethod(RequireMethod(typeof(GameObjectRegeneraTranslationPatch), nameof(GameObjectRegeneraTranslationPatch.Postfix), typeof(object))));
+                finalizer: new HarmonyMethod(RequireMethod(typeof(GameObjectRegeneraTranslationPatch), nameof(GameObjectRegeneraTranslationPatch.Finalizer), typeof(Exception))));
 
             var target = new DummyGameObjectFireEventTarget
             {
@@ -623,7 +623,7 @@ public sealed class CombatAndLogMessageQueuePatchTests
         harmony.Patch(
             original: original,
             prefix: new HarmonyMethod(RequireMethod(patchType, "Prefix")),
-            postfix: new HarmonyMethod(RequireMethod(patchType, "Postfix")));
+            finalizer: new HarmonyMethod(RequireMethod(patchType, "Finalizer", typeof(Exception))));
     }
 
     private static string CreateHarmonyId()
