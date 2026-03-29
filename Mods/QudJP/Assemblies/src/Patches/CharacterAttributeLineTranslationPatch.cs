@@ -54,14 +54,12 @@ public static class CharacterAttributeLineTranslationPatch
             var shortDisplayName = statistic is null
                 ? stat ?? string.Empty
                 : ResolveShortDisplayName(statistic, stat);
-            var route = ObservabilityHelpers.ComposeContext(Context, "field=attributeText");
-            var translatedShortName = TranslateAttributeName(shortDisplayName, route);
-            OwnerTextSetter.SetTranslatedText(
+            // Attribute abbreviations (STR, AGI, MS, AV, DV, MA, etc.) are kept in English
+            // to avoid layout shifts. The help text explains each stat in Japanese.
+            _ = UITextSkinReflectionAccessor.SetCurrentText(
                 GetMemberValue(__instance, "attributeText"),
                 shortDisplayName,
-                translatedShortName,
-                Context,
-                typeof(CharacterAttributeLineTranslationPatch));
+                Context);
 
             var color = "C";
             var value = 0;
@@ -104,26 +102,6 @@ public static class CharacterAttributeLineTranslationPatch
             Trace.TraceError("QudJP: CharacterAttributeLineTranslationPatch.Prefix failed: {0}", ex);
             return true;
         }
-    }
-
-    private static string TranslateAttributeName(string source, string route)
-    {
-        if (string.IsNullOrEmpty(source))
-        {
-            return source;
-        }
-
-        var translated = ColorAwareTranslationComposer.TranslatePreservingColors(
-            source,
-            static visible => StringHelpers.TryGetTranslationExactOrLowerAscii(visible, out var candidate)
-                ? candidate
-                : visible);
-        if (!string.Equals(source, translated, StringComparison.Ordinal))
-        {
-            DynamicTextObservability.RecordTransform(route, "CharacterStatus.AttributeName", source, translated);
-        }
-
-        return translated;
     }
 
     private static string BuildValueText(
