@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using HarmonyLib;
@@ -15,7 +16,7 @@ public static class GameObjectRegeneraTranslationPatch
     private static int activeDepth;
 
     [ThreadStatic]
-    private static bool lastPrefixTracked;
+    private static Stack<bool>? prefixTrackStack;
 
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
@@ -41,15 +42,20 @@ public static class GameObjectRegeneraTranslationPatch
     {
         try
         {
-            lastPrefixTracked = ShouldTrack(E);
-            if (lastPrefixTracked)
+            var tracked = ShouldTrack(E);
+            if (prefixTrackStack is null)
+            {
+                prefixTrackStack = new Stack<bool>();
+            }
+
+            prefixTrackStack.Push(tracked);
+            if (tracked)
             {
                 activeDepth++;
             }
         }
         catch (Exception ex)
         {
-            lastPrefixTracked = false;
             Trace.TraceError("QudJP: GameObjectRegeneraTranslationPatch.Prefix failed: {0}", ex);
         }
     }
@@ -58,7 +64,10 @@ public static class GameObjectRegeneraTranslationPatch
     {
         try
         {
-            if (lastPrefixTracked && activeDepth > 0)
+            if (prefixTrackStack is not null
+                && prefixTrackStack.Count > 0
+                && prefixTrackStack.Pop()
+                && activeDepth > 0)
             {
                 activeDepth--;
             }
