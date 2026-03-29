@@ -138,7 +138,8 @@ public static class CharacterAttributeLineTranslationPatch
         if (string.Equals(stat, "CP", StringComparison.Ordinal))
         {
             color = "C";
-            return $"{{{{{color}|{GetStaticIntValue(instanceType, "CP")}}}}}";
+            var screenType = GameTypeResolver.FindType("Qud.UI.CharacterStatusScreen", "CharacterStatusScreen");
+            return $"{{{{{color}|{GetStaticIntValue(screenType ?? instanceType, "CP")}}}}}";
         }
 
         if (string.Equals(shortDisplayName, "MS", StringComparison.Ordinal))
@@ -173,8 +174,14 @@ public static class CharacterAttributeLineTranslationPatch
         return "{{" + color + "|" + value.ToString(CultureInfo.InvariantCulture) + "}}";
     }
 
-    private static int GetStaticIntValue(Type type, string fieldName)
+    private static int GetStaticIntValue(Type? type, string fieldName)
     {
+        if (type is null)
+        {
+            Trace.TraceError("QudJP: {0}.GetStaticIntValue: type is null for field '{1}'.", Context, fieldName);
+            return 0;
+        }
+
         var field = AccessTools.Field(type, fieldName);
         if (field?.FieldType == typeof(int))
         {
@@ -182,6 +189,7 @@ public static class CharacterAttributeLineTranslationPatch
             return value is null ? 0 : (int)value;
         }
 
+        Trace.TraceError("QudJP: {0}.GetStaticIntValue: field '{1}' not found on type '{2}'.", Context, fieldName, type.FullName);
         return 0;
     }
 
