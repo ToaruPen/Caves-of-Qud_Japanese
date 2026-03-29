@@ -128,11 +128,17 @@ public static class EquipmentLineTranslationPatch
         return depth is null ? 0 : Convert.ToInt32(depth, CultureInfo.InvariantCulture);
     }
 
+    // _indentBodyPartsResolved states: 0 = uninitialized, 1 = initializing, 2 = ready
     private static bool ShouldIndentBodyParts()
     {
         if (Interlocked.CompareExchange(ref _indentBodyPartsResolved, 1, 0) == 0)
         {
             ResolveIndentBodyPartsMembers();
+            Interlocked.Exchange(ref _indentBodyPartsResolved, 2);
+        }
+        else
+        {
+            SpinWait.SpinUntil(() => Volatile.Read(ref _indentBodyPartsResolved) == 2);
         }
 
         if (_indentBodyPartsProperty is not null && _indentBodyPartsProperty.CanRead)

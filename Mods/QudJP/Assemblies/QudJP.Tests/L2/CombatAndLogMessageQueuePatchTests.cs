@@ -671,6 +671,68 @@ public sealed class CombatAndLogMessageQueuePatchTests
     }
 
     [Test]
+    public void CombatGetDefenderHitDice_TranslatesStaggerMessage_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^You stagger (.+)!$", "{0}をよろめかせた！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyCombatGetDefenderHitDiceTarget), nameof(DummyCombatGetDefenderHitDiceTarget.HandleEvent), typeof(DummyCombatGetDefenderHitDiceEvent)),
+                typeof(CombatGetDefenderHitDiceTranslationPatch));
+
+            var target = new DummyCombatGetDefenderHitDiceTarget
+            {
+                MessageToSend = "You stagger Snapjaw Scavenger!",
+            };
+
+            target.HandleEvent(new DummyCombatGetDefenderHitDiceEvent());
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("Snapjaw Scavengerをよろめかせた！"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void CombatGetDefenderHitDice_TranslatesStaggeredByMessage_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^You are staggered by (.+)!$", "{0}によってよろめかされた！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyCombatGetDefenderHitDiceTarget), nameof(DummyCombatGetDefenderHitDiceTarget.HandleEvent), typeof(DummyCombatGetDefenderHitDiceEvent)),
+                typeof(CombatGetDefenderHitDiceTranslationPatch));
+
+            var target = new DummyCombatGetDefenderHitDiceTarget
+            {
+                MessageToSend = "You are staggered by {{G|Girsh Nephilim}}!",
+            };
+
+            target.HandleEvent(new DummyCombatGetDefenderHitDiceEvent());
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("{{G|Girsh Nephilim}}によってよろめかされた！"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void CombatMeleeAttack_TranslatesMissMessage_WhenPatched()
     {
         WritePatternDictionary(
