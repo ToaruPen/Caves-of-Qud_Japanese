@@ -131,10 +131,7 @@ public static class InventoryLineTranslationPatch
         TrySetActive(GetMemberValue(instance, "itemMode"), active: true);
 
         var go = GetMemberValue(data, "go");
-        if (go is not null)
-        {
-            SetMemberValue(instance, "tooltipGo", go);
-        }
+        SetMemberValue(instance, "tooltipGo", go);
 
         _ = UITextSkinReflectionAccessor.SetCurrentText(GetMemberValue(instance, "categoryWeightText"), string.Empty, Context);
 
@@ -165,10 +162,11 @@ public static class InventoryLineTranslationPatch
             Context,
             typeof(InventoryLineTranslationPatch));
 
-        if (go is not null)
+        var renderable = go is null ? null : InvokeMethod(go, "RenderForUI", "Inventory");
+        var icon = GetMemberValue(instance, "icon");
+        if (icon is not null)
         {
-            var renderable = InvokeMethod(go, "RenderForUI", "Inventory");
-            TryInvokeMethod(GetMemberValue(instance, "icon"), "FromRenderable", renderable);
+            _ = AccessTools.Method(icon.GetType(), "FromRenderable")?.Invoke(icon, new[] { renderable });
         }
     }
 
@@ -283,20 +281,6 @@ public static class InventoryLineTranslationPatch
     private static void TryInvokeParameterless(object instance, string methodName)
     {
         _ = AccessTools.Method(instance.GetType(), methodName)?.Invoke(instance, null);
-    }
-
-    private static void TryInvokeMethod(object? target, string methodName, object? arg)
-    {
-        if (target is null)
-        {
-            return;
-        }
-
-        var argType = arg?.GetType();
-        if (argType is null) { argType = typeof(object); }
-        var method = AccessTools.Method(target.GetType(), methodName, new[] { argType });
-        if (method is null) { method = AccessTools.Method(target.GetType(), methodName); }
-        _ = method?.Invoke(target, arg is null ? null : new[] { arg });
     }
 
     private static object? InvokeMethod(object instance, string methodName, params object?[]? args)

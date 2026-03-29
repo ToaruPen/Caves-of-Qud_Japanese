@@ -77,10 +77,16 @@ public static class HelpRowTranslationPatch
             var descriptionElement = GetMemberValue(__instance, "description");
             if (descriptionElement is null) { descriptionElement = __instance; }
             TrySetActive(GetMemberValue(descriptionElement, "gameObject"), !collapsed);
-            _ = UITextSkinReflectionAccessor.SetCurrentText(
-                GetMemberValue(__instance, "categoryExpander"),
-                collapsed ? "{{C|[+]}}" : "{{C|[-]}}",
-                Context);
+            var categoryExpander = GetMemberValue(__instance, "categoryExpander");
+            if (categoryExpander is not null)
+            {
+                _ = UITextSkinReflectionAccessor.SetCurrentText(
+                    categoryExpander,
+                    collapsed ? "{{C|[+]}}" : "{{C|[-]}}",
+                    Context);
+                _ = AccessTools.Method(categoryExpander.GetType(), "Apply")?.Invoke(categoryExpander, null);
+            }
+
             return false;
         }
         catch (Exception ex)
