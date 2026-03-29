@@ -68,10 +68,10 @@ public sealed class TradeScreenUpdateTotalsTranslationPatchTests
     }
 
     [Test]
-    public void Postfix_TranslatesWeightLabel_WhenPatched()
+    public void Postfix_LeavesWeightLabelInEnglish_WhenPatched()
     {
         WriteDictionary(
-            ("lbs.", "ポンド"));
+            (" drams", " ドラム"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -86,7 +86,7 @@ public sealed class TradeScreenUpdateTotalsTranslationPatchTests
 
             target.UpdateTotals();
 
-            Assert.That(target.freeDramsLabels[1].Text, Is.EqualTo("{{W|$50}} | {{K|123/200 ポンド}}"));
+            Assert.That(target.freeDramsLabels[1].Text, Is.EqualTo("{{W|$50}} | {{K|123/200 lbs.}}"));
         }
         finally
         {

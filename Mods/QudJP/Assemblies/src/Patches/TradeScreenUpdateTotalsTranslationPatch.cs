@@ -67,16 +67,7 @@ public static class TradeScreenUpdateTotalsTranslationPatch
 
     private static void TranslateFreeDramsLabels(object instance)
     {
-        var freeDramsLabels = GetMemberValue(instance, "freeDramsLabels");
-        if (freeDramsLabels is not Array freeDramsArray || freeDramsArray.Length < 2)
-        {
-            return;
-        }
-
-        TranslateLabelText(
-            freeDramsArray.GetValue(1),
-            "lbs.",
-            "TradeScreen.FreeDramsWeight");
+        // lbs. is intentionally kept in English — no translation needed
     }
 
     private static void TranslateLabelText(object? label, string token, string family)

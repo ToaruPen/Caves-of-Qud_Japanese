@@ -13,11 +13,6 @@
       "key": " drams",
       "context": "Qud.UI.TradeScreen.UpdateTotals",
       "text": " ドラム"
-    },
-    {
-      "key": "lbs.",
-      "context": "Qud.UI.TradeScreen.UpdateTotals",
-      "text": "ポンド"
     }
   ]
 }
