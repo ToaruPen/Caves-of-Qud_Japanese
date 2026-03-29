@@ -155,6 +155,7 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(SelectableTextMenuItemProbePatch), "Update", "Qud.UI.SelectableTextMenuItem", "System.Void", new string[0])]
     [TestCase(typeof(LoadingStatusTranslationPatch), "SetLoadingStatus", "XRL.UI.Loading", "System.Void", new[] { "System.String", "System.Boolean" })]
     [TestCase(typeof(CombatAndLogMessageQueuePatch), "AddPlayerMessage", "XRL.Messages.MessageQueue", "System.Void", new[] { "System.String", "System.String", "System.Boolean" })]
+    [TestCase(typeof(CombatGetDefenderHitDiceTranslationPatch), "HandleEvent", "XRL.World.Parts.Combat", "System.Boolean", new[] { "XRL.World.GetDefenderHitDiceEvent" })]
     [TestCase(typeof(PhysicsObjectEnteringCellTranslationPatch), "HandleEvent", "XRL.World.Parts.Physics", "System.Boolean", new[] { "XRL.World.ObjectEnteringCellEvent" })]
     [TestCase(typeof(PhysicsApplyDischargeTranslationPatch), "ApplyDischarge", "XRL.World.Parts.Physics", "System.Int32", new[]
     {
@@ -315,7 +316,7 @@ public sealed class TargetMethodResolutionTests
     {
         "System.String|System.String|System.String|System.Boolean|System.Boolean|System.Boolean|System.Boolean|Genkit.Location2D",
         "System.String|System.Collections.Generic.IReadOnlyList`1[[System.String]]|System.Collections.Generic.IReadOnlyList`1[[System.Char]]|System.Int32|System.String|System.Int32|System.Boolean|System.Boolean|System.Int32|System.String|System.Action`1[[System.Int32]]|XRL.World.GameObject|System.Collections.Generic.IReadOnlyList`1[[ConsoleLib.Console.IRenderable]]|ConsoleLib.Console.IRenderable|System.Collections.Generic.IReadOnlyList`1[[Qud.UI.QudMenuItem]]|System.Boolean|System.Boolean|System.Int32|System.Boolean",
-        "System.String|XRL.World.GameObject|System.String|System.Collections.Generic.List`1[[System.String]]|System.Boolean|System.Boolean|System.Boolean",
+        "System.String|ConsoleLib.Console.IRenderable|System.String|System.Collections.Generic.List`1[[System.String]]|System.Boolean|System.Boolean|System.Boolean",
     })]
     [TestCase(typeof(PopupShowTranslationPatch), new[]
     {
@@ -414,7 +415,7 @@ public sealed class TargetMethodResolutionTests
             $"Method not found: {declaringTypeName}.{methodName} with {parameterCount} parameter(s)");
     }
 
-    [TestCase("XRL.UI.Popup", "ShowConversation", 7, "System.Int32")]
+    [TestCase("XRL.UI.Popup", "ShowConversation", 7, "System.Int32", true)]
     [TestCase("XRL.GameText", "VariableReplace", 4, "System.String")]
     [TestCase("XRL.GameText", "Process", 6, "System.Void")]
     [TestCase("XRL.World.Text.ReplaceBuilder", "Process", 0, "System.Void")]
@@ -423,13 +424,14 @@ public sealed class TargetMethodResolutionTests
         string declaringTypeName,
         string methodName,
         int parameterCount,
-        string expectedReturnType)
+        string expectedReturnType,
+        bool expectNonObsolete = false)
     {
         var assembly = EnsureGameAssemblyLoaded();
         var declaringType = assembly.GetType(declaringTypeName, throwOnError: false);
         Assert.That(declaringType, Is.Not.Null, $"Type not found: {declaringTypeName}");
 
-        var method = FindMethodByNameAndParameterCount(declaringType!, methodName, parameterCount) as MethodInfo;
+        var method = FindMethodByNameAndParameterCount(declaringType!, methodName, parameterCount, expectNonObsolete) as MethodInfo;
         Assert.Multiple(() =>
         {
             Assert.That(
@@ -437,6 +439,10 @@ public sealed class TargetMethodResolutionTests
                 Is.Not.Null,
                 $"Method not found: {declaringTypeName}.{methodName} with {parameterCount} parameter(s)");
             Assert.That(method?.ReturnType.FullName, Is.EqualTo(expectedReturnType));
+            if (expectNonObsolete)
+            {
+                Assert.That(method?.IsDefined(typeof(ObsoleteAttribute), inherit: false), Is.False);
+            }
         });
     }
 
@@ -653,14 +659,21 @@ public sealed class TargetMethodResolutionTests
     private static MethodBase? FindMethodByNameAndParameterCount(
         Type declaringType,
         string methodName,
-        int parameterCount)
+        int parameterCount,
+        bool requireNonObsolete = false)
     {
         var methods = declaringType.GetMethods(
             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+
         for (var index = 0; index < methods.Length; index++)
         {
             var method = methods[index];
-            if (method.Name == methodName && method.GetParameters().Length == parameterCount)
+            if (method.Name != methodName || method.GetParameters().Length != parameterCount)
+            {
+                continue;
+            }
+
+            if (!requireNonObsolete || !method.IsDefined(typeof(ObsoleteAttribute), inherit: false))
             {
                 return method;
             }

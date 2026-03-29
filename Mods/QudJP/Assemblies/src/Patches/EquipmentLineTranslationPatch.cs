@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Threading;
 using HarmonyLib;
 
 namespace QudJP.Patches;
@@ -10,6 +11,10 @@ namespace QudJP.Patches;
 public static class EquipmentLineTranslationPatch
 {
     private const string Context = nameof(EquipmentLineTranslationPatch);
+
+    private static int _indentBodyPartsResolved;
+    private static PropertyInfo? _indentBodyPartsProperty;
+    private static FieldInfo? _indentBodyPartsField;
 
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
@@ -33,37 +38,21 @@ public static class EquipmentLineTranslationPatch
         return method;
     }
 
-    public static bool Prefix(object? __instance, object? data)
+    [HarmonyPriority(Priority.First)]
+    public static void Postfix(object? __instance, object? data)
     {
         try
         {
             if (__instance is null || data is null)
             {
-                return true;
+                return;
             }
 
             var bodyPart = GetMemberValue(data, "bodyPart");
             if (bodyPart is null)
             {
-                return true;
+                return;
             }
-
-            SetMemberValue(data, "line", __instance);
-            SetContextData(__instance, data);
-            SetMemberValue(__instance, "tooltipCompareGo", null);
-
-            var showCybernetics = GetBoolMemberValue(data, "showCybernetics");
-            object? tooltipGo;
-            if (showCybernetics)
-            {
-                tooltipGo = GetMemberValue(bodyPart, "Cybernetics");
-            }
-            else
-            {
-                tooltipGo = GetMemberValue(bodyPart, "Equipped");
-                if (tooltipGo is null) { tooltipGo = GetMemberValue(bodyPart, "DefaultBehavior"); }
-            }
-            SetMemberValue(__instance, "tooltipGo", tooltipGo);
 
             var cardinalDescription = InvokeStringMethod(bodyPart, "GetCardinalDescription");
             if (cardinalDescription is null) { cardinalDescription = string.Empty; }
@@ -85,16 +74,7 @@ public static class EquipmentLineTranslationPatch
                 Context,
                 typeof(EquipmentLineTranslationPatch));
 
-            object? gameObject;
-            if (showCybernetics)
-            {
-                gameObject = GetMemberValue(bodyPart, "Cybernetics");
-            }
-            else
-            {
-                gameObject = GetMemberValue(bodyPart, "Equipped");
-                if (gameObject is null) { gameObject = GetMemberValue(bodyPart, "DefaultBehavior"); }
-            }
+            var gameObject = ResolveDisplayedItem(data, bodyPart);
             var itemTarget = gameObject ?? data;
             var itemSource = GetStringMemberValue(itemTarget, "DisplayName");
             if (itemSource is null) { itemSource = "{{K|-}}"; }
@@ -106,20 +86,27 @@ public static class EquipmentLineTranslationPatch
                 translatedItem,
                 Context,
                 typeof(EquipmentLineTranslationPatch));
-
-            if (gameObject is not null)
-            {
-                var renderable = InvokeMethod(gameObject, "RenderForUI", "Equipment");
-                TryInvokeMethod(GetMemberValue(__instance, "icon"), "FromRenderable", renderable);
-            }
-
-            return false;
         }
         catch (Exception ex)
         {
-            Trace.TraceError("QudJP: EquipmentLineTranslationPatch.Prefix failed: {0}", ex);
-            return true;
+            Trace.TraceError("QudJP: EquipmentLineTranslationPatch.Postfix failed: {0}", ex);
         }
+    }
+
+    private static object? ResolveDisplayedItem(object data, object bodyPart)
+    {
+        if (GetBoolMemberValue(data, "showCybernetics"))
+        {
+            return GetMemberValue(bodyPart, "Cybernetics");
+        }
+
+        var equipped = GetMemberValue(bodyPart, "Equipped");
+        if (equipped is null)
+        {
+            return GetMemberValue(bodyPart, "DefaultBehavior");
+        }
+
+        return equipped;
     }
 
     private static string BuildIndentedDescription(object bodyPart, string cardinalDescription)
@@ -147,19 +134,45 @@ public static class EquipmentLineTranslationPatch
         return depth is null ? 0 : Convert.ToInt32(depth, CultureInfo.InvariantCulture);
     }
 
+    // _indentBodyPartsResolved states: 0 = uninitialized, 1 = initializing, 2 = ready
     private static bool ShouldIndentBodyParts()
     {
-        var optionsType = AccessTools.TypeByName("XRL.UI.Options");
-        if (optionsType is null) { optionsType = AccessTools.TypeByName("Options"); }
-        var property = optionsType is null ? null : AccessTools.Property(optionsType, "IndentBodyParts");
-        if (property is not null && property.CanRead)
+        if (Interlocked.CompareExchange(ref _indentBodyPartsResolved, 1, 0) == 0)
         {
-            var value = property.GetValue(null);
+            try
+            {
+                ResolveIndentBodyPartsMembers();
+            }
+            finally
+            {
+                Interlocked.Exchange(ref _indentBodyPartsResolved, 2);
+            }
+        }
+        else
+        {
+            SpinWait.SpinUntil(() => Volatile.Read(ref _indentBodyPartsResolved) == 2);
+        }
+
+        if (_indentBodyPartsProperty is not null && _indentBodyPartsProperty.CanRead)
+        {
+            var value = _indentBodyPartsProperty.GetValue(null);
             return value is bool indent && indent;
         }
 
-        var field = optionsType is null ? null : AccessTools.Field(optionsType, "IndentBodyParts");
-        return field?.GetValue(null) as bool? ?? false;
+        var fieldValue = _indentBodyPartsField?.GetValue(null);
+        return fieldValue is bool fieldIndent && fieldIndent;
+    }
+
+    private static void ResolveIndentBodyPartsMembers()
+    {
+        var optionsType = AccessTools.TypeByName("XRL.UI.Options");
+        if (optionsType is null) { optionsType = AccessTools.TypeByName("Options"); }
+
+        if (optionsType is not null)
+        {
+            _indentBodyPartsProperty = AccessTools.Property(optionsType, "IndentBodyParts");
+            _indentBodyPartsField = AccessTools.Field(optionsType, "IndentBodyParts");
+        }
     }
 
     private static string TranslateVisibleText(string source, string route, string family)
@@ -180,29 +193,6 @@ public static class EquipmentLineTranslationPatch
         }
 
         return translated;
-    }
-
-    private static void SetContextData(object instance, object data)
-    {
-        var context = GetMemberValue(instance, "context");
-        if (context is not null)
-        {
-            SetMemberValue(context, "data", data);
-        }
-    }
-
-    private static void TryInvokeMethod(object? target, string methodName, object? arg)
-    {
-        if (target is null)
-        {
-            return;
-        }
-
-        var argType = arg?.GetType();
-        if (argType is null) { argType = typeof(object); }
-        var method = AccessTools.Method(target.GetType(), methodName, new[] { argType });
-        if (method is null) { method = AccessTools.Method(target.GetType(), methodName); }
-        _ = method?.Invoke(target, arg is null ? null : new[] { arg });
     }
 
     private static object? InvokeMethod(object instance, string methodName, params object?[]? args)
@@ -238,19 +228,5 @@ public static class EquipmentLineTranslationPatch
     {
         var value = GetMemberValue(instance, memberName);
         return value is not null && Convert.ToBoolean(value, CultureInfo.InvariantCulture);
-    }
-
-    private static void SetMemberValue(object instance, string memberName, object? value)
-    {
-        var type = instance.GetType();
-        var property = AccessTools.Property(type, memberName);
-        if (property is not null && property.CanWrite)
-        {
-            property.SetValue(instance, value);
-            return;
-        }
-
-        var field = AccessTools.Field(type, memberName);
-        field?.SetValue(instance, value);
     }
 }
