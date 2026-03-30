@@ -448,7 +448,6 @@ internal static class MessageLogProducerTranslationHelpers
             var adjective = BiomeAdjectivesOrdered[index];
             if (workingSource.Length <= adjective.Length
                 || !workingSource.StartsWith(adjective + " ", StringComparison.OrdinalIgnoreCase)
-                || !IsBiomeAdjective(adjective)
                 || !StringHelpers.TryGetTranslationExactOrLowerAscii(adjective, out var translatedAdjective))
             {
                 continue;
@@ -614,12 +613,6 @@ internal static class MessageLogProducerTranslationHelpers
         remainder = source.Substring(0, separatorIndex);
         word = source.Substring(separatorIndex + 1);
         return true;
-    }
-
-    private static bool IsBiomeAdjective(string source)
-    {
-        return ZoneDisplayNameTranslationCatalog.PsychicBiomeAdjectives.Contains(source)
-            || Array.IndexOf(BiomeAdjectivesOrdered, source) >= 0;
     }
 
     private static string StripLeadingArticle(string source)
