@@ -472,6 +472,9 @@ internal static class MessageLogProducerTranslationHelpers
         }
 
         var translatedParts = new string[parts.Length];
+        // First part can be any translatable zone segment (TranslateZoneSubsegment).
+        // Tail parts must be known biome names validated by TryTranslateBiomeTail
+        // (FixedBiomeNames or PsychicBiomeEpithets); unknown tails abort the translation.
         translatedParts[0] = TranslateZoneSubsegment(parts[0]);
         for (var index = 1; index < parts.Length; index++)
         {
