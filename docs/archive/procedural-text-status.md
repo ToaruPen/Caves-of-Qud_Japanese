@@ -31,17 +31,17 @@
 - `HistoricStringExpanderPatch` 自体は再有効化していない
 - 代わりに、実際に表示される下流レイヤーへ限定して pattern 翻訳を追加した
 - 対応済みファミリー:
-  - `spice.cooking.ate`
-  - `spice.gossip.twoFaction`（journal observation 保存時）
-  - `spice.villages.description`
+  - `spice.cooking.ate` — `src/Patches/PopupTranslationPatch.cs` / テスト: `L2/PopupShowTranslationPatchTests.cs`
+  - `spice.gossip.twoFaction`（journal observation 保存時）— `src/Patches/JournalPatternTranslator.cs` / テスト: `L1/JournalPatternTranslatorTests.cs`, `L2/JournalApiAddTranslationPatchTests.cs`
+  - `spice.villages.description` — `src/Patches/DescriptionTextTranslator.cs` / テスト: `L2/DescriptionShortDescriptionPatchTests.cs`, `L2/DescriptionLongDescriptionPatchTests.cs`
 - このため、world generation / `HistorySpice` symbolic key 汚染のリスクを増やさずに、
   既知の表示英語断片だけを局所的に回収できる
 
 ## 未対応 / 今後の候補
 
-- `Popup.Show` 系の `spice.gossip.leadIns` など、未パターン化の HistorySpice 表示文
-- `spice.commonPhrases.*` のうち `historyspice-common.ja.json` がまだ持っていない語彙カテゴリ
-- ほかの `HistoricStringExpander` 呼び出しで、表示専用だと確認できた route の downstream 対応
+- `Popup.Show` 系の `spice.gossip.leadIns` など、未パターン化の HistorySpice 表示文 — 対応開始時は `src/Patches/PopupTranslationPatch.cs` と `L1/MessagePatternTranslatorTests.cs` を確認
+- `spice.commonPhrases.*` のうち `historyspice-common.ja.json` がまだ持っていない語彙カテゴリ — `Localization/Dictionaries/historyspice-common.ja.json` に語彙を追加し `L1/JournalPatternTranslatorTests.cs` でカバレッジを確認
+- ほかの `HistoricStringExpander` 呼び出しで、表示専用だと確認できた route の downstream 対応 — `src/Patches/HistoricStringExpanderPatch.cs` の `TargetMethods()` を起点に route を精査
 
 ## 今後の再導入条件
 
