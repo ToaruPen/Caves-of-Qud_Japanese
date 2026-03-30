@@ -60,7 +60,7 @@ dotnet_diagnostic.CA1307.severity = none
 dotnet_diagnostic.CA1865.severity = none
 
 # string.Concat(ReadOnlySpan<char>, ReadOnlySpan<char>) is .NET Core / .NET 5+; net48 lacks this overload
-# Use #pragma warning disable CA1845 with a comment at the suppression site
+# CA1845 is suppressed project-wide via severity = none; the Span-based overload is unavailable on net48
 dotnet_diagnostic.CA1845.severity = none
 
 # Harmony runtime patches must catch all exceptions to avoid crashing the game.
