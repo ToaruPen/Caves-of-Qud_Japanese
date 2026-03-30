@@ -22,7 +22,7 @@ internal static class ChargenStructuredTextTranslator
     private static readonly Regex BleedingSavePattern =
         new Regex(@"^(?<value>[+-]\d+)\s+to\s+saves\s+vs\.\s+bleeding$", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static readonly Regex CyberneticsSlotPattern =
-        new Regex(@"^(?<name>.+?) \((?<slot>Face|Body|Head|Back|Feet|Arm|Hands)\)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        new Regex(@"^(?<name>.+?) (?<slotSegment>\((?<slot>Face|Body|Head|Back|Feet|Arm|Hands)\))$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex PointsRemainingPattern =
         new Regex(@"^\s*Points Remaining:\s*(?<value>-?\d+)\s*$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex PointTokenPattern =
@@ -313,25 +313,23 @@ internal static class ChargenStructuredTextTranslator
         var sourceName = match.Groups["name"].Value;
         if (!StringHelpers.TryGetTranslationExactOrLowerAscii(sourceName, out var translatedName))
         {
-            translatedName = sourceName;
+            return false;
         }
 
         var sourceSlot = match.Groups["slot"].Value;
         if (!SlotNames.TryGetValue(sourceSlot, out var translatedSlot))
         {
-            translatedSlot = sourceSlot;
-        }
-
-        if (string.Equals(translatedName, sourceName, StringComparison.Ordinal)
-            && string.Equals(translatedSlot, sourceSlot, StringComparison.Ordinal))
-        {
             return false;
         }
 
+        var translatedSlotSegment = string.Concat("（", translatedSlot, "）");
         var restoredName = spans.Count == 0
             ? translatedName
             : ColorAwareTranslationComposer.RestoreCapture(translatedName, spans, match.Groups["name"]);
-        translated = string.Concat(restoredName, "（", translatedSlot, "）");
+        var restoredSlotSegment = spans.Count == 0
+            ? translatedSlotSegment
+            : ColorAwareTranslationComposer.RestoreCapture(translatedSlotSegment, spans, match.Groups["slotSegment"]);
+        translated = string.Concat(restoredName, restoredSlotSegment);
         return true;
     }
 

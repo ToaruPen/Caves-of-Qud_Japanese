@@ -285,6 +285,29 @@ public sealed class ChargenStructuredTextTranslatorTests
         Assert.That(translated, Is.EqualTo(slotName));
     }
 
+    [TestCase("made-up cyberware (Arm)")]
+    [TestCase("")]
+    [TestCase("\u0001optical bioscanner (Face)")]
+    public void Translate_PreservesCyberneticsSlotFallbackAndEdgeCases(string source)
+    {
+        WriteDictionary(("optical bioscanner", "光学バイオスキャナ"));
+
+        var translated = ChargenStructuredTextTranslator.Translate(source);
+
+        Assert.That(translated, Is.EqualTo(source));
+    }
+
+    [TestCase("{{y|optical bioscanner (Face)}}", "{{y|光学バイオスキャナ（顔）}}")]
+    [TestCase("optical bioscanner {{y|(Face)}}", "光学バイオスキャナ{{y|（顔）}}")]
+    public void Translate_PreservesCyberneticsSlotColorTags(string source, string expected)
+    {
+        WriteDictionary(("optical bioscanner", "光学バイオスキャナ"));
+
+        var translated = ChargenStructuredTextTranslator.Translate(source);
+
+        Assert.That(translated, Is.EqualTo(expected));
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();

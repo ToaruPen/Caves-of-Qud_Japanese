@@ -120,4 +120,26 @@ internal sealed class DummyCharGenCustomizeWindowTarget
             Title: "Choose Pet",
             Options: new List<string> { "<none>" });
     }
+
+    public static async Task ShowEmptyPromptAsync()
+    {
+        await Task.Yield();
+        DummyPopupTarget.ShowBlock(string.Empty);
+    }
+
+    public static async Task ShowMarkedChooseGenderAsync()
+    {
+        await Task.Yield();
+        DummyPopupTarget.ShowOptionList(
+            Title: "\u0001Choose Gender",
+            Options: new List<string> { "\u0001<create new>" });
+    }
+
+    public static async Task ShowColorTaggedChooseGenderAsync()
+    {
+        await Task.Yield();
+        DummyPopupTarget.ShowOptionList(
+            Title: string.Concat("{{y|", "Choose Gender", "}}"),
+            Options: new List<string> { string.Concat("{{y|", "<create new>", "}}") });
+    }
 }

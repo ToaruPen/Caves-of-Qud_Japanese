@@ -231,6 +231,45 @@ public sealed class CharGenProducerTranslationPatchTests
         });
     }
 
+    [Test]
+    public void CustomizeTranspiler_PreservesFallbackAndEdgeCases()
+    {
+        WriteDictionary(
+            ("Gender: ", "性別："),
+            ("Choose Gender", "性別を選択"),
+            ("<create new>", "<新規作成>"));
+
+        RunWithCustomizeTranspiler(() =>
+        {
+            var target = new DummyCharGenCustomizeWindowTarget();
+            var selections = target.GetSelections().ToList();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(selections[0].Prefix, Is.EqualTo("性別："));
+                Assert.That(selections[1].Prefix, Is.EqualTo("Pronoun Set: "));
+                Assert.That(selections[2].Prefix, Is.EqualTo("Pet: "));
+            });
+
+            DummyCharGenCustomizeWindowTarget.ShowEmptyPromptAsync().GetAwaiter().GetResult();
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo(string.Empty));
+
+            DummyCharGenCustomizeWindowTarget.ShowMarkedChooseGenderAsync().GetAwaiter().GetResult();
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupTarget.LastOptionListTitle, Is.EqualTo("\u0001Choose Gender"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions, Is.EqualTo(new[] { "\u0001<create new>" }));
+            });
+
+            DummyCharGenCustomizeWindowTarget.ShowColorTaggedChooseGenderAsync().GetAwaiter().GetResult();
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupTarget.LastOptionListTitle, Is.EqualTo("{{y|性別を選択}}"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions, Is.EqualTo(new[] { "{{y|<新規作成>}}" }));
+            });
+        });
+    }
+
     private static void RunWithBreadcrumbPostfix(Action assertion)
     {
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
@@ -333,6 +372,18 @@ public sealed class CharGenProducerTranslationPatchTests
                 harmony,
                 typeof(DummyCharGenCustomizeWindowTarget),
                 nameof(DummyCharGenCustomizeWindowTarget.ShowChoosePetAsync));
+            PatchStateMachineMoveNext(
+                harmony,
+                typeof(DummyCharGenCustomizeWindowTarget),
+                nameof(DummyCharGenCustomizeWindowTarget.ShowEmptyPromptAsync));
+            PatchStateMachineMoveNext(
+                harmony,
+                typeof(DummyCharGenCustomizeWindowTarget),
+                nameof(DummyCharGenCustomizeWindowTarget.ShowMarkedChooseGenderAsync));
+            PatchStateMachineMoveNext(
+                harmony,
+                typeof(DummyCharGenCustomizeWindowTarget),
+                nameof(DummyCharGenCustomizeWindowTarget.ShowColorTaggedChooseGenderAsync));
             assertion();
         }
         finally
