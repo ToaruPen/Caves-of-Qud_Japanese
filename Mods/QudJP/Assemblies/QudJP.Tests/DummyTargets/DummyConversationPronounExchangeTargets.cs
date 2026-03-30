@@ -71,18 +71,34 @@ internal static class DummyConversationPronounExchangeTarget
     }
 
     /// <summary>Returns null to exercise the Postfix null guard.</summary>
-    public static string PronounExchangeDescriptionNull(object player, DummyConversationSpeaker speaker)
+    public static string PronounExchangeDescriptionNull(
+        object player,
+        DummyConversationSpeaker speaker,
+        bool speakerGivePronouns,
+        bool speakerGetPronouns,
+        bool speakerGetNewPronouns)
     {
         _ = player;
         _ = speaker;
+        _ = speakerGivePronouns;
+        _ = speakerGetPronouns;
+        _ = speakerGetNewPronouns;
         return null!;
     }
 
     /// <summary>Returns a fixed unmatched string to exercise the Postfix no-op path.</summary>
-    public static string PronounExchangeDescriptionFixed(object player, DummyConversationSpeaker speaker)
+    public static string PronounExchangeDescriptionFixed(
+        object player,
+        DummyConversationSpeaker speaker,
+        bool speakerGivePronouns,
+        bool speakerGetPronouns,
+        bool speakerGetNewPronouns)
     {
         _ = player;
         _ = speaker;
+        _ = speakerGivePronouns;
+        _ = speakerGetPronouns;
+        _ = speakerGetNewPronouns;
         return "unmatched pronoun text";
     }
 }

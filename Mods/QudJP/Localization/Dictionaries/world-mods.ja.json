@@ -970,11 +970,6 @@
       "text": "変装: この品は装着者を{0}に見せかける。"
     },
     {
-      "context": "XRL.World.Parts.ModDisguise.GetShortDescription",
-      "key": "+{0} reputation with {1}",
-      "text": "{1}との評判+{0}"
-    },
-    {
       "context": "XRL.World.Parts.ModFactionSlayer.GetShortDescription",
       "key": "{0}% chance to behead {1} on hit.",
       "text": "命中時、{1}を斬首する確率は{0}%。"

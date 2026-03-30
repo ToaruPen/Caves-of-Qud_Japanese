@@ -36,6 +36,18 @@ public sealed class ConversationPronounExchangeTranslationPatchTests
                     "Conversation.PronounExchange"),
                 Is.GreaterThan(0));
         });
+
+        DynamicTextObservability.ResetForTests();
+
+        // Non-default speaker: verifies dynamic name and pronoun substitution.
+        var altSpeaker = new DummyConversationSpeaker
+        {
+            Name = "Yıldız",
+            its = "their",
+            PronounSet = new DummyConversationPronounSet { ShortName = "they/them/their" },
+        };
+        var altTranslated = InvokePatched(altSpeaker, speakerGivePronouns: true, speakerGetPronouns: true, speakerGetNewPronouns: false);
+        Assert.That(altTranslated, Is.EqualTo("Yıldızと代名詞を交換した。Yıldızの代名詞はthey/them/their。"));
     }
 
     [Test]
@@ -44,6 +56,18 @@ public sealed class ConversationPronounExchangeTranslationPatchTests
         var translated = InvokePatched(new DummyConversationSpeaker(), speakerGivePronouns: true, speakerGetPronouns: false, speakerGetNewPronouns: false);
 
         Assert.That(translated, Is.EqualTo("Mehmetが代名詞を教えてくれた。he/him/his。"));
+
+        DynamicTextObservability.ResetForTests();
+
+        // Non-default speaker: verifies dynamic name and pronoun substitution.
+        var altSpeaker = new DummyConversationSpeaker
+        {
+            Name = "Yıldız",
+            its = "their",
+            PronounSet = new DummyConversationPronounSet { ShortName = "they/them/their" },
+        };
+        var altTranslated = InvokePatched(altSpeaker, speakerGivePronouns: true, speakerGetPronouns: false, speakerGetNewPronouns: false);
+        Assert.That(altTranslated, Is.EqualTo("Yıldızが代名詞を教えてくれた。they/them/their。"));
     }
 
     [Test]
@@ -52,6 +76,13 @@ public sealed class ConversationPronounExchangeTranslationPatchTests
         var translated = InvokePatched(new DummyConversationSpeaker(), speakerGivePronouns: false, speakerGetPronouns: false, speakerGetNewPronouns: true);
 
         Assert.That(translated, Is.EqualTo("Mehmetに新しい代名詞を伝えた。"));
+
+        DynamicTextObservability.ResetForTests();
+
+        // Non-default speaker: verifies dynamic name substitution.
+        var altSpeaker = new DummyConversationSpeaker { Name = "Yıldız" };
+        var altTranslated = InvokePatched(altSpeaker, speakerGivePronouns: false, speakerGetPronouns: false, speakerGetNewPronouns: true);
+        Assert.That(altTranslated, Is.EqualTo("Yıldızに新しい代名詞を伝えた。"));
     }
 
     [Test]
@@ -60,6 +91,13 @@ public sealed class ConversationPronounExchangeTranslationPatchTests
         var translated = InvokePatched(new DummyConversationSpeaker(), speakerGivePronouns: false, speakerGetPronouns: true, speakerGetNewPronouns: false);
 
         Assert.That(translated, Is.EqualTo("Mehmetに代名詞を伝えた。"));
+
+        DynamicTextObservability.ResetForTests();
+
+        // Non-default speaker: verifies dynamic name substitution.
+        var altSpeaker = new DummyConversationSpeaker { Name = "Yıldız" };
+        var altTranslated = InvokePatched(altSpeaker, speakerGivePronouns: false, speakerGetPronouns: true, speakerGetNewPronouns: false);
+        Assert.That(altTranslated, Is.EqualTo("Yıldızに代名詞を伝えた。"));
     }
 
     [Test]
@@ -98,7 +136,7 @@ public sealed class ConversationPronounExchangeTranslationPatchTests
                 original: RequireMethod(typeof(DummyConversationPronounExchangeTarget), nameof(DummyConversationPronounExchangeTarget.PronounExchangeDescriptionNull)),
                 postfix: new HarmonyMethod(RequireMethod(typeof(ConversationPronounExchangeTranslationPatch), nameof(ConversationPronounExchangeTranslationPatch.Postfix))));
 
-            var result = DummyConversationPronounExchangeTarget.PronounExchangeDescriptionNull(new object(), new DummyConversationSpeaker());
+            var result = DummyConversationPronounExchangeTarget.PronounExchangeDescriptionNull(new object(), new DummyConversationSpeaker(), false, false, false);
 
             Assert.Multiple(() =>
             {
@@ -128,7 +166,7 @@ public sealed class ConversationPronounExchangeTranslationPatchTests
                 original: RequireMethod(typeof(DummyConversationPronounExchangeTarget), nameof(DummyConversationPronounExchangeTarget.PronounExchangeDescriptionFixed)),
                 postfix: new HarmonyMethod(RequireMethod(typeof(ConversationPronounExchangeTranslationPatch), nameof(ConversationPronounExchangeTranslationPatch.Postfix))));
 
-            var result = DummyConversationPronounExchangeTarget.PronounExchangeDescriptionFixed(new object(), new DummyConversationSpeaker());
+            var result = DummyConversationPronounExchangeTarget.PronounExchangeDescriptionFixed(new object(), new DummyConversationSpeaker(), false, false, false);
 
             Assert.Multiple(() =>
             {
