@@ -103,7 +103,10 @@
     { "key": "Starts with random junk and artifacts", "context": "TMP.Description", "text": "ランダムなガラクタとアーティファクトを所持して開始" },
 
     { "key": "Choose Variant", "context": "Chargen.Variant.Action", "text": "変種を選択" },
+    { "key": "Choose variant", "context": "Chargen.Variant.Popup", "text": "変種を選択" },
     { "key": "<none>", "context": "Chargen.Cybernetics.None", "text": "なし" },
+    { "key": "Back", "context": "Chargen.Cybernetics.Slot", "text": "背中" },
+    { "key": "Arm", "context": "Chargen.Cybernetics.Slot", "text": "腕" },
 
     { "key": "Stinger (Confusing Venom)", "context": "Chargen.Mutation.Option", "text": "毒針（混乱毒）" },
     { "key": "Stinger (Paralyzing Venom)", "context": "Chargen.Mutation.Option", "text": "毒針（麻痺毒）" },

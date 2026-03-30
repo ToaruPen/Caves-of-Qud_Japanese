@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace QudJP.Tests.DummyTargets;
 
@@ -59,5 +60,64 @@ internal sealed class DummyCharGenCategoryMenuControllerTarget
     public void setData(DummyFrameworkDataElement dataElement)
     {
         LastTitle = dataElement.Title;
+    }
+}
+
+internal sealed class DummyCharGenCustomizePrefixMenuOption
+{
+    public string? Prefix { get; set; }
+
+    public string? Description { get; set; }
+}
+
+internal sealed class DummyCharGenCustomizeWindowTarget
+{
+    public IEnumerable<DummyCharGenCustomizePrefixMenuOption> GetSelections()
+    {
+        yield return new DummyCharGenCustomizePrefixMenuOption
+        {
+            Prefix = "Gender: ",
+            Description = "Male",
+        };
+        yield return new DummyCharGenCustomizePrefixMenuOption
+        {
+            Prefix = "Pronoun Set: ",
+            Description = "<from gender>",
+        };
+        yield return new DummyCharGenCustomizePrefixMenuOption
+        {
+            Prefix = "Pet: ",
+            Description = "<none>",
+        };
+    }
+
+    public static async Task ShowNamePromptAsync()
+    {
+        await Task.Yield();
+        DummyPopupTarget.ShowBlock("Enter name:");
+    }
+
+    public static async Task ShowChooseGenderAsync()
+    {
+        await Task.Yield();
+        DummyPopupTarget.ShowOptionList(
+            Title: "Choose Gender",
+            Options: new List<string> { "<create new>" });
+    }
+
+    public static async Task ShowChoosePronounSetAsync()
+    {
+        await Task.Yield();
+        DummyPopupTarget.ShowOptionList(
+            Title: "Choose Pronoun Set",
+            Options: new List<string> { "<from gender>", "<create new>" });
+    }
+
+    public static async Task ShowChoosePetAsync()
+    {
+        await Task.Yield();
+        DummyPopupTarget.ShowOptionList(
+            Title: "Choose Pet",
+            Options: new List<string> { "<none>" });
     }
 }

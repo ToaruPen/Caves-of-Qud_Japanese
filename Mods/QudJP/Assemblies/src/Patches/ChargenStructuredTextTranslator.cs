@@ -21,6 +21,8 @@ internal static class ChargenStructuredTextTranslator
         new Regex(@"^(?<value>[+-]\d+)\s+reputation\s+with\s+(?<faction>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static readonly Regex BleedingSavePattern =
         new Regex(@"^(?<value>[+-]\d+)\s+to\s+saves\s+vs\.\s+bleeding$", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex CyberneticsSlotPattern =
+        new Regex(@"^(?<name>.+?) \((?<slot>Face|Body|Head|Back|Feet|Arm|Hands)\)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex PointsRemainingPattern =
         new Regex(@"^\s*Points Remaining:\s*(?<value>-?\d+)\s*$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex PointTokenPattern =
@@ -52,6 +54,12 @@ internal static class ChargenStructuredTextTranslator
         if (TryTranslatePointsRemaining(source, out var translated))
         {
             DynamicTextObservability.RecordTransform(nameof(ChargenStructuredTextTranslator), "Chargen.PointsRemaining", source, translated);
+            return translated;
+        }
+
+        if (TryTranslateCyberneticsSlot(source, out translated))
+        {
+            DynamicTextObservability.RecordTransform(nameof(ChargenStructuredTextTranslator), "Chargen.CyberneticsSlot", source, translated);
             return translated;
         }
 
@@ -275,6 +283,41 @@ internal static class ChargenStructuredTextTranslator
 
         translated = source;
         return false;
+    }
+
+    private static bool TryTranslateCyberneticsSlot(string source, out string translated)
+    {
+        translated = source;
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
+        var match = CyberneticsSlotPattern.Match(stripped);
+        if (!match.Success)
+        {
+            return false;
+        }
+
+        var sourceName = match.Groups["name"].Value;
+        if (!StringHelpers.TryGetTranslationExactOrLowerAscii(sourceName, out var translatedName))
+        {
+            translatedName = sourceName;
+        }
+
+        var sourceSlot = match.Groups["slot"].Value;
+        if (!StringHelpers.TryGetTranslationExactOrLowerAscii(sourceSlot, out var translatedSlot))
+        {
+            translatedSlot = sourceSlot;
+        }
+
+        if (string.Equals(translatedName, sourceName, StringComparison.Ordinal)
+            && string.Equals(translatedSlot, sourceSlot, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var restoredName = spans.Count == 0
+            ? translatedName
+            : ColorAwareTranslationComposer.RestoreCapture(translatedName, spans, match.Groups["name"]);
+        translated = string.Concat(restoredName, "（", translatedSlot, "）");
+        return true;
     }
 
     private static bool TryTranslatePointsRemaining(string source, out string translated)

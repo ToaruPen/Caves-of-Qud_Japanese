@@ -22,6 +22,10 @@ public static class PopupTranslationPatch
         new Regex("^Are you sure you want to delete the save game for (?<value>.+?)\\?$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex DeleteTitlePattern =
         new Regex("^Delete (?<value>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex DuplicateBuildCodePattern =
+        new Regex("^That code is already in your library\\. It's named (?<value>.+)\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex ManageBuildTitlePattern =
+        new Regex("^Manage Build: (?<value>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     // ShowBlock parameter count for game version 2.0.4
     private const int ShowBlockParameterCount = 8;
@@ -304,6 +308,32 @@ public static class PopupTranslationPatch
                 out var titleTranslated))
         {
             translated = titleTranslated;
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".DuplicateBuildCode",
+                DuplicateBuildCodePattern,
+                "That code is already in your library. It's named {0}.",
+                spans,
+                out var duplicateBuildCodeTranslated))
+        {
+            translated = duplicateBuildCodeTranslated;
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".ManageBuildTitle",
+                ManageBuildTitlePattern,
+                "Manage Build: {0}",
+                spans,
+                out var manageBuildTitleTranslated))
+        {
+            translated = manageBuildTitleTranslated;
             return true;
         }
 

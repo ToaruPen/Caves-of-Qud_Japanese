@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using HarmonyLib;
 using QudJP.Patches;
@@ -177,6 +178,59 @@ public sealed class CharGenProducerTranslationPatchTests
         });
     }
 
+    [Test]
+    public void CustomizeTranspiler_TranslatesSelectionPrefixesAndPopupStrings()
+    {
+        WriteDictionary(
+            ("Gender: ", "性別："),
+            ("Pronoun Set: ", "代名詞セット："),
+            ("Pet: ", "ペット："),
+            ("Enter name:", "名前を入力："),
+            ("Choose Gender", "性別を選択"),
+            ("Choose Pronoun Set", "代名詞セットを選択"),
+            ("Choose Pet", "ペットを選択"),
+            ("<create new>", "<新規作成>"),
+            ("<from gender>", "<性別に従う>"),
+            ("<none>", "<なし>"));
+
+        RunWithCustomizeTranspiler(() =>
+        {
+            var target = new DummyCharGenCustomizeWindowTarget();
+            var selections = target.GetSelections().ToList();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(selections[0].Prefix, Is.EqualTo("性別："));
+                Assert.That(selections[1].Prefix, Is.EqualTo("代名詞セット："));
+                Assert.That(selections[2].Prefix, Is.EqualTo("ペット："));
+            });
+
+            DummyCharGenCustomizeWindowTarget.ShowNamePromptAsync().GetAwaiter().GetResult();
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("名前を入力："));
+
+            DummyCharGenCustomizeWindowTarget.ShowChooseGenderAsync().GetAwaiter().GetResult();
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupTarget.LastOptionListTitle, Is.EqualTo("性別を選択"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions, Is.EqualTo(new[] { "<新規作成>" }));
+            });
+
+            DummyCharGenCustomizeWindowTarget.ShowChoosePronounSetAsync().GetAwaiter().GetResult();
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupTarget.LastOptionListTitle, Is.EqualTo("代名詞セットを選択"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions, Is.EqualTo(new[] { "<性別に従う>", "<新規作成>" }));
+            });
+
+            DummyCharGenCustomizeWindowTarget.ShowChoosePetAsync().GetAwaiter().GetResult();
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupTarget.LastOptionListTitle, Is.EqualTo("ペットを選択"));
+                Assert.That(DummyPopupTarget.LastOptionListOptions, Is.EqualTo(new[] { "<なし>" }));
+            });
+        });
+    }
+
     private static void RunWithBreadcrumbPostfix(Action assertion)
     {
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
@@ -252,6 +306,55 @@ public sealed class CharGenProducerTranslationPatchTests
         }
     }
 
+    private static void RunWithCustomizeTranspiler(Action assertion)
+    {
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            PatchStateMachineMoveNext(
+                harmony,
+                typeof(DummyCharGenCustomizeWindowTarget),
+                nameof(DummyCharGenCustomizeWindowTarget.GetSelections));
+            PatchStateMachineMoveNext(
+                harmony,
+                typeof(DummyCharGenCustomizeWindowTarget),
+                nameof(DummyCharGenCustomizeWindowTarget.ShowNamePromptAsync));
+            PatchStateMachineMoveNext(
+                harmony,
+                typeof(DummyCharGenCustomizeWindowTarget),
+                nameof(DummyCharGenCustomizeWindowTarget.ShowChooseGenderAsync));
+            PatchStateMachineMoveNext(
+                harmony,
+                typeof(DummyCharGenCustomizeWindowTarget),
+                nameof(DummyCharGenCustomizeWindowTarget.ShowChoosePronounSetAsync));
+            PatchStateMachineMoveNext(
+                harmony,
+                typeof(DummyCharGenCustomizeWindowTarget),
+                nameof(DummyCharGenCustomizeWindowTarget.ShowChoosePetAsync));
+            assertion();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    private static void PatchStateMachineMoveNext(Harmony harmony, Type targetType, string methodName)
+    {
+        var sourceMethod = RequireMethod(targetType, methodName);
+        var targetMethod = ResolveStateMachineMoveNext(sourceMethod);
+        Assert.That(targetMethod, Is.Not.Null, $"State machine MoveNext not found for {targetType.FullName}.{methodName}");
+
+        harmony.Patch(
+            original: targetMethod!,
+            transpiler: new HarmonyMethod(RequirePatchMethod(
+                "QudJP.Patches.CharGenCustomizeTranslationPatch",
+                "Transpiler",
+                typeof(IEnumerable<CodeInstruction>))));
+    }
+
     private static void AssertChromeTitles(
         string descriptorTitle,
         string categoryTitle,
@@ -302,6 +405,23 @@ public sealed class CharGenProducerTranslationPatchTests
             modifiers: null);
         Assert.That(method, Is.Not.Null, $"Method not found: {typeName}.{methodName}");
         return method!;
+    }
+
+    private static MethodInfo? ResolveStateMachineMoveNext(MethodInfo sourceMethod)
+    {
+        var asyncStateMachine = sourceMethod.GetCustomAttribute<AsyncStateMachineAttribute>();
+        if (asyncStateMachine?.StateMachineType is not null)
+        {
+            return AccessTools.Method(asyncStateMachine.StateMachineType, "MoveNext");
+        }
+
+        var iteratorStateMachine = sourceMethod.GetCustomAttribute<IteratorStateMachineAttribute>();
+        if (iteratorStateMachine?.StateMachineType is not null)
+        {
+            return AccessTools.Method(iteratorStateMachine.StateMachineType, "MoveNext");
+        }
+
+        return null;
     }
 
     private void WriteDictionary(params (string key, string text)[] entries)
