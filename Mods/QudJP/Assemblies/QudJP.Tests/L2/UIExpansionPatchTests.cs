@@ -211,6 +211,25 @@ public sealed class UIExpansionPatchTests
     }
 
     [Test]
+    public void CharGen_TargetCandidate_IncludesDataWarningsAndDataErrors()
+    {
+        var candidateMethod = typeof(CharGenLocalizationPatch).GetMethod(
+            "IsTextReturningMethodCandidate",
+            BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.That(candidateMethod, Is.Not.Null);
+
+        var dataWarningsMethod = RequireMethod(typeof(DummyCharGenValidationMethods), nameof(DummyCharGenValidationMethods.DataWarnings));
+        var dataErrorsMethod = RequireMethod(typeof(DummyCharGenValidationMethods), nameof(DummyCharGenValidationMethods.DataErrors));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That((bool)candidateMethod!.Invoke(null, new object[] { dataWarningsMethod })!, Is.True);
+            Assert.That((bool)candidateMethod.Invoke(null, new object[] { dataErrorsMethod })!, Is.True);
+        });
+    }
+
+    [Test]
     public void Inventory_TranslatesKnownText_WhenPatched()
     {
         WriteDictionary(("Total weight", "総重量"));
@@ -417,4 +436,17 @@ public sealed class UIExpansionPatchTests
 
     private static class DummyQudMutationModuleDataRow;
 #pragma warning restore S2094
+
+    private static class DummyCharGenValidationMethods
+    {
+        public static string DataWarnings()
+        {
+            return "warning";
+        }
+
+        public static string DataErrors()
+        {
+            return "error";
+        }
+    }
 }

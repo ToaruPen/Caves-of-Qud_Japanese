@@ -60,6 +60,11 @@
       "text": "ビルドライブラリ"
     },
     {
+      "key": "Pregens",
+      "context": "Chargen.Pregens.Breadcrumb",
+      "text": "プリセット"
+    },
+    {
       "key": "Previous Character",
       "context": "Chargen.Chartype.Option",
       "text": "前回のキャラクター"
@@ -475,9 +480,59 @@
       "text": "コードをクリップボードにコピー"
     },
     {
+      "key": "Re-Randomize Selections",
+      "context": "Chargen.Action.Rerandomize",
+      "text": "選択内容を再ランダム化"
+    },
+    {
       "key": "Save Build To Library",
       "context": "Chargen.Action.SaveToLibrary",
       "text": "ビルドをライブラリに保存"
+    },
+    {
+      "key": "Build code copied to clipboard.",
+      "context": "Chargen.BuildSummary.Popup",
+      "text": "ビルドコードをクリップボードにコピーしました。"
+    },
+    {
+      "key": "Add a new build code",
+      "context": "Chargen.BuildLibrary.Option",
+      "text": "新しいビルドコードを追加"
+    },
+    {
+      "key": "Paste build code:",
+      "context": "Chargen.BuildLibrary.Popup",
+      "text": "ビルドコードを貼り付け："
+    },
+    {
+      "key": "That code appears to be invalid.",
+      "context": "Chargen.BuildLibrary.Popup",
+      "text": "そのコードは無効のようです。"
+    },
+    {
+      "key": "That code is already in your library. It's named {0}.",
+      "context": "Chargen.BuildLibrary.Popup",
+      "text": "そのコードはすでにライブラリにあります。名前は{0}です。"
+    },
+    {
+      "key": "Name this build:",
+      "context": "Chargen.BuildLibrary.Popup",
+      "text": "このビルドに名前を付ける："
+    },
+    {
+      "key": "Manage Build: {0}",
+      "context": "Chargen.BuildLibrary.Popup",
+      "text": "ビルド管理：{0}"
+    },
+    {
+      "key": "Delete Build",
+      "context": "Chargen.BuildLibrary.Action",
+      "text": "ビルドを削除"
+    },
+    {
+      "key": "Rename Build",
+      "context": "Chargen.BuildLibrary.Action",
+      "text": "ビルド名を変更"
     },
     {
       "key": "Name: ",
@@ -488,6 +543,61 @@
       "key": "<random>",
       "context": "Chargen.Name.RandomPlaceholder",
       "text": "<ランダム>"
+    },
+    {
+      "key": "Gender: ",
+      "context": "Chargen.Customize.Prefix",
+      "text": "性別："
+    },
+    {
+      "key": "Pronoun Set: ",
+      "context": "Chargen.Customize.Prefix",
+      "text": "代名詞セット："
+    },
+    {
+      "key": "Pet: ",
+      "context": "Chargen.Customize.Prefix",
+      "text": "ペット："
+    },
+    {
+      "key": "Enter name:",
+      "context": "Chargen.Customize.Popup",
+      "text": "名前を入力："
+    },
+    {
+      "key": "Choose Gender",
+      "context": "Chargen.Customize.Popup",
+      "text": "性別を選択"
+    },
+    {
+      "key": "Select Base Gender",
+      "context": "Chargen.Customize.Popup",
+      "text": "基本の性別を選択"
+    },
+    {
+      "key": "Choose Pronoun Set",
+      "context": "Chargen.Customize.Popup",
+      "text": "代名詞セットを選択"
+    },
+    {
+      "key": "Select Base Set",
+      "context": "Chargen.Customize.Popup",
+      "text": "基本のセットを選択"
+    },
+    {
+      "key": "Choose Pet",
+      "context": "Chargen.Customize.Popup",
+      "text": "ペットを選択"
+    },
+    {
+      "key": "<create new>",
+      "context": "Chargen.Customize.Popup",
+      "text": "<新規作成>"
+    },
+    {
+      "key": "<from gender>",
+      "context": "Chargen.Customize.Popup",
+      "text": "<性別に従う>"
     },
     {
       "key": "You only manifest mental mutations, and all of your mutation choices when manifesting a new mutation are mental.\n\n",

@@ -63,6 +63,62 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
             });
     }
 
+    [Test]
+    public void CustomizePatch_TargetMethods_ResolveExpectedStateMachines()
+    {
+        var patchType = typeof(Translator).Assembly.GetType("QudJP.Patches.CharGenCustomizeTranslationPatch", throwOnError: false);
+        Assert.That(patchType, Is.Not.Null, "Patch type not found: QudJP.Patches.CharGenCustomizeTranslationPatch");
+
+        var targetMethodsMethod = patchType!.GetMethod("TargetMethods", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(targetMethodsMethod, Is.Not.Null, $"TargetMethods not found for {patchType.FullName}");
+
+        var result = targetMethodsMethod!.Invoke(null, null) as System.Collections.IEnumerable;
+        Assert.That(result, Is.Not.Null, $"TargetMethods returned null for {patchType.FullName}");
+
+        var methodMarkers = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var item in result!)
+        {
+            if (item is not MethodInfo methodInfo)
+            {
+                continue;
+            }
+
+            Assert.That(methodInfo.Name, Is.EqualTo("MoveNext"));
+            var declaringTypeName = methodInfo.DeclaringType?.FullName ?? string.Empty;
+            if (declaringTypeName.Contains("<GetSelections>", StringComparison.Ordinal))
+            {
+                methodMarkers.Add("GetSelections");
+            }
+            else if (declaringTypeName.Contains("<SelectMenuOption>", StringComparison.Ordinal))
+            {
+                methodMarkers.Add("SelectMenuOption");
+            }
+            else if (declaringTypeName.Contains("<OnChooseGenderAsync>", StringComparison.Ordinal))
+            {
+                methodMarkers.Add("OnChooseGenderAsync");
+            }
+            else if (declaringTypeName.Contains("<OnChoosePronounSetAsync>", StringComparison.Ordinal))
+            {
+                methodMarkers.Add("OnChoosePronounSetAsync");
+            }
+            else if (declaringTypeName.Contains("<OnChoosePet>", StringComparison.Ordinal))
+            {
+                methodMarkers.Add("OnChoosePet");
+            }
+        }
+
+        Assert.That(
+            methodMarkers,
+            Is.EquivalentTo(new[]
+            {
+                "GetSelections",
+                "SelectMenuOption",
+                "OnChooseGenderAsync",
+                "OnChoosePronounSetAsync",
+                "OnChoosePet",
+            }));
+    }
+
     private static void AssertTargetMethods(string patchTypeName, string[] expectedSignatures)
     {
         var patchType = typeof(Translator).Assembly.GetType(patchTypeName, throwOnError: false);

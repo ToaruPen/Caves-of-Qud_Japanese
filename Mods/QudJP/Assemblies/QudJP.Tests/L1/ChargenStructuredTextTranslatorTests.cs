@@ -239,6 +239,75 @@ public sealed class ChargenStructuredTextTranslatorTests
         Assert.That(translated, Is.EqualTo(expected));
     }
 
+    [TestCase("optical bioscanner (Face)", "光学バイオスキャナ（顔）")]
+    [TestCase("hyper-elastic ankle tendons (Feet)", "高弾性足首腱（足）")]
+    [TestCase("parabolic muscular subroutine (Arm)", "放物筋サブルーチン（腕）")]
+    [TestCase("translucent skin (Back)", "透明皮膚（背中）")]
+    [TestCase("dermal insulation (Body)", "皮膚用断熱材（胴）")]
+    [TestCase("dermal insulation (Head)", "皮膚用断熱材（頭）")]
+    [TestCase("night vision (Face)", "暗視システム（顔）")]
+    [TestCase("stabilizer arm locks (Arm)", "安定化アームロック（腕）")]
+    [TestCase("rapid release finger flexors (Hands)", "高速リリース屈筋（手）")]
+    [TestCase("carbide hand bones (Hands)", "カーバイド製手骨（手）")]
+    [TestCase("pentaceps (Feet)", "ペンタセプス（足）")]
+    [TestCase("inflatable axons (Head)", "膨張軸索（頭）")]
+    public void Translate_TranslatesCyberneticsSlotPatternWithEnglishKeys(string source, string expected)
+    {
+        WriteDictionary(
+            ("optical bioscanner", "光学バイオスキャナ"),
+            ("hyper-elastic ankle tendons", "高弾性足首腱"),
+            ("parabolic muscular subroutine", "放物筋サブルーチン"),
+            ("translucent skin", "透明皮膚"),
+            ("dermal insulation", "皮膚用断熱材"),
+            ("night vision", "暗視システム"),
+            ("stabilizer arm locks", "安定化アームロック"),
+            ("rapid release finger flexors", "高速リリース屈筋"),
+            ("carbide hand bones", "カーバイド製手骨"),
+            ("pentaceps", "ペンタセプス"),
+            ("inflatable axons", "膨張軸索"));
+
+        var translated = ChargenStructuredTextTranslator.Translate(source);
+
+        Assert.That(translated, Is.EqualTo(expected));
+    }
+
+    [TestCase("Back")]
+    [TestCase("Arm")]
+    [TestCase("Face")]
+    [TestCase("Body")]
+    [TestCase("Head")]
+    [TestCase("Feet")]
+    [TestCase("Hands")]
+    public void Translate_DoesNotTranslateStandaloneSlotNameViaSlotNamesTable(string slotName)
+    {
+        var translated = ChargenStructuredTextTranslator.Translate(slotName);
+
+        Assert.That(translated, Is.EqualTo(slotName));
+    }
+
+    [TestCase("made-up cyberware (Arm)")]
+    [TestCase("")]
+    [TestCase("\u0001optical bioscanner (Face)")]
+    public void Translate_PreservesCyberneticsSlotFallbackAndEdgeCases(string source)
+    {
+        WriteDictionary(("optical bioscanner", "光学バイオスキャナ"));
+
+        var translated = ChargenStructuredTextTranslator.Translate(source);
+
+        Assert.That(translated, Is.EqualTo(source));
+    }
+
+    [TestCase("{{y|optical bioscanner (Face)}}", "{{y|光学バイオスキャナ（顔）}}")]
+    [TestCase("optical bioscanner {{y|(Face)}}", "光学バイオスキャナ{{y|（顔）}}")]
+    public void Translate_PreservesCyberneticsSlotColorTags(string source, string expected)
+    {
+        WriteDictionary(("optical bioscanner", "光学バイオスキャナ"));
+
+        var translated = ChargenStructuredTextTranslator.Translate(source);
+
+        Assert.That(translated, Is.EqualTo(expected));
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();

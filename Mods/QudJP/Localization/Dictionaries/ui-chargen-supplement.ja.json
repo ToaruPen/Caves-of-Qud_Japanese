@@ -103,26 +103,24 @@
     { "key": "Starts with random junk and artifacts", "context": "TMP.Description", "text": "ランダムなガラクタとアーティファクトを所持して開始" },
 
     { "key": "Choose Variant", "context": "Chargen.Variant.Action", "text": "変種を選択" },
-    { "key": "<none>", "context": "Chargen.Cybernetics.None", "text": "なし" },
+    { "key": "Choose variant", "context": "Chargen.Variant.Popup", "text": "変種を選択" },
+    { "key": "<none>", "context": "Chargen.Cybernetics.None", "text": "<なし>" },
 
     { "key": "Stinger (Confusing Venom)", "context": "Chargen.Mutation.Option", "text": "毒針（混乱毒）" },
     { "key": "Stinger (Paralyzing Venom)", "context": "Chargen.Mutation.Option", "text": "毒針（麻痺毒）" },
     { "key": "Stinger (Poisoning Venom)", "context": "Chargen.Mutation.Option", "text": "毒針（猛毒）" },
 
-    { "key": "光学バイオスキャナ (Face)", "context": "Chargen.Cybernetics.Option", "text": "光学バイオスキャナ（顔）" },
-    { "key": "光学テクノスキャナ (Face)", "context": "Chargen.Cybernetics.Option", "text": "光学テクノスキャナ（顔）" },
-    { "key": "皮膚用断熱材 (Body)", "context": "Chargen.Cybernetics.Option", "text": "皮膚用断熱材（胴）" },
-    { "key": "皮膚用断熱材 (Head)", "context": "Chargen.Cybernetics.Option", "text": "皮膚用断熱材（頭）" },
-    { "key": "皮膚用断熱材 (Back)", "context": "Chargen.Cybernetics.Option", "text": "皮膚用断熱材（背中）" },
-    { "key": "暗視システム (Face)", "context": "Chargen.Cybernetics.Option", "text": "暗視システム（顔）" },
-    { "key": "高弾性足首腱 (Feet)", "context": "Chargen.Cybernetics.Option", "text": "高弾性足首腱（足）" },
-    { "key": "放物筋サブルーチン (Arm)", "context": "Chargen.Cybernetics.Option", "text": "放物筋サブルーチン（腕）" },
-    { "key": "透明皮膚 (Body)", "context": "Chargen.Cybernetics.Option", "text": "透明皮膚（胴）" },
-    { "key": "透明皮膚 (Back)", "context": "Chargen.Cybernetics.Option", "text": "透明皮膚（背中）" },
-    { "key": "安定化アームロック (Arm)", "context": "Chargen.Cybernetics.Option", "text": "安定化アームロック（腕）" },
-    { "key": "高速リリース屈筋 (Hands)", "context": "Chargen.Cybernetics.Option", "text": "高速リリース屈筋（手）" },
-    { "key": "カーバイド製手骨 (Hands)", "context": "Chargen.Cybernetics.Option", "text": "カーバイド製手骨（手）" },
-    { "key": "ペンタセプス (Feet)", "context": "Chargen.Cybernetics.Option", "text": "ペンタセプス（足）" },
-    { "key": "膨張軸索 (Head)", "context": "Chargen.Cybernetics.Option", "text": "膨張軸索（頭）" }
+    { "key": "optical bioscanner", "context": "Chargen.Cybernetics.ItemName", "text": "光学バイオスキャナ" },
+    { "key": "optical technoscanner", "context": "Chargen.Cybernetics.ItemName", "text": "光学テクノスキャナ" },
+    { "key": "dermal insulation", "context": "Chargen.Cybernetics.ItemName", "text": "皮膚用断熱材" },
+    { "key": "night vision", "context": "Chargen.Cybernetics.ItemName", "text": "暗視システム" },
+    { "key": "hyper-elastic ankle tendons", "context": "Chargen.Cybernetics.ItemName", "text": "高弾性足首腱" },
+    { "key": "parabolic muscular subroutine", "context": "Chargen.Cybernetics.ItemName", "text": "放物筋サブルーチン" },
+    { "key": "translucent skin", "context": "Chargen.Cybernetics.ItemName", "text": "透明皮膚" },
+    { "key": "stabilizer arm locks", "context": "Chargen.Cybernetics.ItemName", "text": "安定化アームロック" },
+    { "key": "rapid release finger flexors", "context": "Chargen.Cybernetics.ItemName", "text": "高速リリース屈筋" },
+    { "key": "carbide hand bones", "context": "Chargen.Cybernetics.ItemName", "text": "カーバイド製手骨" },
+    { "key": "pentaceps", "context": "Chargen.Cybernetics.ItemName", "text": "ペンタセプス" },
+    { "key": "inflatable axons", "context": "Chargen.Cybernetics.ItemName", "text": "膨張軸索" }
   ]
 }

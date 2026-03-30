@@ -21,6 +21,8 @@ internal static class ChargenStructuredTextTranslator
         new Regex(@"^(?<value>[+-]\d+)\s+reputation\s+with\s+(?<faction>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static readonly Regex BleedingSavePattern =
         new Regex(@"^(?<value>[+-]\d+)\s+to\s+saves\s+vs\.\s+bleeding$", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex CyberneticsSlotPattern =
+        new Regex(@"^(?<name>.+?) (?<slotSegment>\((?<slot>Face|Body|Head|Back|Feet|Arm|Hands)\))$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex PointsRemainingPattern =
         new Regex(@"^\s*Points Remaining:\s*(?<value>-?\d+)\s*$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex PointTokenPattern =
@@ -38,6 +40,21 @@ internal static class ChargenStructuredTextTranslator
         ["Intelligence"] = "知力",
     };
 
+    // Slot names for the "name (Slot)" pattern from CyberneticsChoice.GetDescription().
+    // Kept here instead of the dictionary to avoid false-positive hits on short English
+    // words like "Back" or "Arm" in unrelated UI strings. Ordinal is safe because the
+    // CyberneticsSlotPattern regex constrains the captured value to exactly these casings.
+    private static readonly IReadOnlyDictionary<string, string> SlotNames = new Dictionary<string, string>(StringComparer.Ordinal)
+    {
+        ["Face"] = "顔",
+        ["Body"] = "胴",
+        ["Head"] = "頭",
+        ["Back"] = "背中",
+        ["Feet"] = "足",
+        ["Arm"] = "腕",
+        ["Hands"] = "手",
+    };
+
     private static Dictionary<string, string>? subtypeDisplayNames;
     private static Dictionary<string, string>? mutationDisplayNames;
     private static Dictionary<string, string>? factionDisplayNames;
@@ -52,6 +69,12 @@ internal static class ChargenStructuredTextTranslator
         if (TryTranslatePointsRemaining(source, out var translated))
         {
             DynamicTextObservability.RecordTransform(nameof(ChargenStructuredTextTranslator), "Chargen.PointsRemaining", source, translated);
+            return translated;
+        }
+
+        if (TryTranslateCyberneticsSlot(source, out translated))
+        {
+            DynamicTextObservability.RecordTransform(nameof(ChargenStructuredTextTranslator), "Chargen.CyberneticsSlot", source, translated);
             return translated;
         }
 
@@ -275,6 +298,39 @@ internal static class ChargenStructuredTextTranslator
 
         translated = source;
         return false;
+    }
+
+    private static bool TryTranslateCyberneticsSlot(string source, out string translated)
+    {
+        translated = source;
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
+        var match = CyberneticsSlotPattern.Match(stripped);
+        if (!match.Success)
+        {
+            return false;
+        }
+
+        var sourceName = match.Groups["name"].Value;
+        if (!StringHelpers.TryGetTranslationExactOrLowerAscii(sourceName, out var translatedName))
+        {
+            return false;
+        }
+
+        var sourceSlot = match.Groups["slot"].Value;
+        if (!SlotNames.TryGetValue(sourceSlot, out var translatedSlot))
+        {
+            return false;
+        }
+
+        var translatedSlotSegment = string.Concat("（", translatedSlot, "）");
+        var restoredName = spans.Count == 0
+            ? translatedName
+            : ColorAwareTranslationComposer.RestoreCapture(translatedName, spans, match.Groups["name"]);
+        var restoredSlotSegment = spans.Count == 0
+            ? translatedSlotSegment
+            : ColorAwareTranslationComposer.RestoreCapture(translatedSlotSegment, spans, match.Groups["slotSegment"]);
+        translated = string.Concat(restoredName, restoredSlotSegment);
+        return true;
     }
 
     private static bool TryTranslatePointsRemaining(string source, out string translated)

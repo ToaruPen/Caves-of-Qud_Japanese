@@ -248,6 +248,54 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesDuplicateBuildCodeMessage_WhenPatched()
+    {
+        WriteDictionary(("That code is already in your library. It's named {0}.", "そのコードはすでにライブラリにあります。名前は{0}です。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock("That code is already in your library. It's named Salt Dunes.");
+
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("そのコードはすでにライブラリにあります。名前はSalt Dunesです。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesManageBuildTitle_WhenPatched()
+    {
+        WriteDictionary(("Manage Build: {0}", "ビルド管理：{0}"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock("Prompt", "Manage Build: Salt Dunes");
+
+            Assert.That(DummyPopupTarget.LastShowBlockTitle, Is.EqualTo("ビルド管理：Salt Dunes"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_StripsDirectTranslationMarkerAndSkipsTranslation()
     {
         // Set up a dictionary entry that would match the stripped text if translation were applied.

@@ -666,6 +666,34 @@ public sealed class TargetMethodResolutionTests
             Assert.That(foundKnownCharGenType, Is.True, "CharGenLocalizationPatch did not resolve any char-gen-related declaring types.");
         });
     }
+
+    [Test]
+    public void CharGenLocalizationPatch_TargetMethods_IncludeValidationMessages()
+    {
+        var targetMethodsMethod = typeof(CharGenLocalizationPatch).GetMethod("TargetMethods", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(targetMethodsMethod, Is.Not.Null, "TargetMethods not found for CharGenLocalizationPatch");
+
+        var result = targetMethodsMethod!.Invoke(null, null) as System.Collections.IEnumerable;
+        Assert.That(result, Is.Not.Null, "TargetMethods returned null for CharGenLocalizationPatch");
+
+        var signatures = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var item in result!)
+        {
+            if (item is not MethodInfo methodInfo)
+            {
+                continue;
+            }
+
+            signatures.Add((methodInfo.DeclaringType?.FullName ?? string.Empty) + "|" + methodInfo.Name);
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(signatures, Does.Contain("XRL.CharacterBuilds.Qud.QudAttributesModule|DataWarnings"));
+            Assert.That(signatures, Does.Contain("XRL.CharacterBuilds.Qud.QudAttributesModule|DataErrors"));
+            Assert.That(signatures, Does.Contain("XRL.CharacterBuilds.Qud.QudCyberneticsModule|DataErrors"));
+        });
+    }
 #endif
 
     private static MethodBase? InvokeTargetMethod(Type patchType)
