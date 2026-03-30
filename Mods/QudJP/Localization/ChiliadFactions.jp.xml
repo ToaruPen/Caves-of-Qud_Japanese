@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <factions Load="Merge">
   <!-- Base Merge -->
-  <faction Name="Entropic" DisplayName="エントロピック">
+  <faction Name="Entropic">
     <property Name="EndVisibility" Value="true" />
   </faction>
   <faction Name="Newly Sentient Beings" DisplayName="新知性体">
@@ -18,7 +18,7 @@
   <faction Name="Cragmensch" DisplayName="クラッグメンシュ">
     <property Name="EndVisibility" Value="Conceal" />
   </faction>
-  <faction Name="Issachari" DisplayName="イッサカリ">
+  <faction Name="Issachari">
     <property Name="EndVisibility" Value="Conceal" />
   </faction>
   <faction Name="Mechanimists" DisplayName="メカニマス教">
@@ -29,7 +29,7 @@
   <faction Name="Mopango" DisplayName="モパンゴ">
     <property Name="EndVisibility" Value="Conceal" />
   </faction>
-  <faction Name="Naphtaali" DisplayName="ナフタリ">
+  <faction Name="Naphtaali">
     <property Name="EndVisibility" Value="Conceal" />
   </faction>
   <faction Name="Svardym" DisplayName="スヴァーディム">
@@ -44,13 +44,13 @@
   <faction Name="Goatfolk" DisplayName="山羊人">
     <property Name="EndVisibility" Value="Conceal" />
   </faction>
-  <faction Name="Resheph" DisplayName="レシェフ">
+  <faction Name="Resheph">
     <property Name="EndVisibility" Value="false" />
   </faction>
-  <faction Name="Mamon" DisplayName="マモン">
+  <faction Name="Mamon">
     <property Name="EndVisibility" Value="false" />
   </faction>
-  <faction Name="Templar" DisplayName="テンプラー">
+  <faction Name="Templar">
     <property Name="EndVisibility" Value="false" />
   </faction>
 

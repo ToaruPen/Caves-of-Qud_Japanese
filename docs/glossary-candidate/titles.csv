@@ -1,0 +1,4 @@
+English,Japanese,Short,Notes,Status
+Imperial Biographer,帝国伝記官,,source: Conversations.jp.xml (ID=ImperialBiographer unique NPC Herododicus),draft
+Mechanimist Librarian,メカニマス教徒の司書,,source: Conversations.jp.xml (ID=MechanimistLibrarian unique NPC),draft
+Mechanimist Pilgrim,メカニマス教徒の巡礼者,,source: Conversations.jp.xml (ID=MechanimistPilgrim) + Creatures.jp.xml DisplayName confirmed,draft

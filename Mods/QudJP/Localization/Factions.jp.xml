@@ -51,7 +51,7 @@
   <faction Name="Tortoises" DisplayName="亀" />
   <faction Name="Robots" DisplayName="ロボット" />
   <faction Name="Baetyls" DisplayName="ベテル" />
-  <faction Name="Dromad" DisplayName="ドロマド商人" />
+  <faction Name="Dromad" DisplayName="ドロマド商団" />
   <faction Name="Entropic" DisplayName="高エントロピー存在" />
   <faction Name="Antelopes" DisplayName="アンテロープ" />
   <faction Name="Worms" DisplayName="ワーム" />

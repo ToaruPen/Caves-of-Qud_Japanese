@@ -270,6 +270,39 @@ public sealed class LocalizationCoverageTests
             .ToHashSet(StringComparer.Ordinal);
     }
 
+    [Test]
+    public void ChiliadFactions_DisplayNameOmissions_AreCoveredByFactionsXml()
+    {
+        var factionsDocument = XDocument.Load(Path.Combine(localizationRoot, "Factions.jp.xml"));
+        var chiliadDocument = XDocument.Load(Path.Combine(localizationRoot, "ChiliadFactions.jp.xml"));
+
+        var chiliadWithoutDisplayName = chiliadDocument.Root!
+            .Elements("faction")
+            .Where(element => element.Attribute("DisplayName") is null)
+            .Select(element => element.Attribute("Name")?.Value)
+            .Where(static value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .ToArray();
+
+        var factionsDisplayNames = factionsDocument.Root!
+            .Elements("faction")
+            .Where(element => element.Attribute("DisplayName") is not null)
+            .Select(element => element.Attribute("Name")?.Value)
+            .Where(static value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .ToHashSet(StringComparer.Ordinal);
+
+        var uncovered = chiliadWithoutDisplayName
+            .Where(name => !factionsDisplayNames.Contains(name))
+            .ToArray();
+
+        Assert.That(
+            uncovered,
+            Is.Empty,
+            "ChiliadFactions entries without DisplayName must be covered by Factions.jp.xml DisplayName. "
+            + "The game's LoadFactionNode skips null/empty DisplayName, so Factions.jp.xml values are preserved.");
+    }
+
     private static IReadOnlyList<DictionaryEntry> LoadEntries(string path)
     {
         using var document = JsonDocument.Parse(File.ReadAllText(path));
