@@ -40,6 +40,21 @@ internal static class ChargenStructuredTextTranslator
         ["Intelligence"] = "知力",
     };
 
+    // Slot names for the "name (Slot)" pattern from CyberneticsChoice.GetDescription().
+    // Kept here instead of the dictionary to avoid false-positive hits on short English
+    // words like "Back" or "Arm" in unrelated UI strings. Ordinal is safe because the
+    // CyberneticsSlotPattern regex constrains the captured value to exactly these casings.
+    private static readonly IReadOnlyDictionary<string, string> SlotNames = new Dictionary<string, string>(StringComparer.Ordinal)
+    {
+        ["Face"] = "顔",
+        ["Body"] = "胴",
+        ["Head"] = "頭",
+        ["Back"] = "背中",
+        ["Feet"] = "足",
+        ["Arm"] = "腕",
+        ["Hands"] = "手",
+    };
+
     private static Dictionary<string, string>? subtypeDisplayNames;
     private static Dictionary<string, string>? mutationDisplayNames;
     private static Dictionary<string, string>? factionDisplayNames;
@@ -302,7 +317,7 @@ internal static class ChargenStructuredTextTranslator
         }
 
         var sourceSlot = match.Groups["slot"].Value;
-        if (!StringHelpers.TryGetTranslationExactOrLowerAscii(sourceSlot, out var translatedSlot))
+        if (!SlotNames.TryGetValue(sourceSlot, out var translatedSlot))
         {
             translatedSlot = sourceSlot;
         }
