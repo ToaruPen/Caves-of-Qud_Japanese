@@ -55,7 +55,8 @@ public sealed class TradeScreenUiTranslationPatchTests
             ("navigate", "移動"),
             ("Close Menu", "メニューを閉じる"),
             ("offer", "提示"),
-            ("sort: a-z/by class", "並び替え: A-Z/カテゴリ別"));
+            ("sort: ", "ソート: "),
+            ("by class", "クラス別"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -73,12 +74,41 @@ public sealed class TradeScreenUiTranslationPatchTests
             {
                 Assert.That(target.renderedDefaultMenuOptions[0].Description, Is.EqualTo("メニューを閉じる"));
                 Assert.That(target.renderedDefaultMenuOptions[1].Description, Is.EqualTo("移動"));
-                Assert.That(target.renderedDefaultMenuOptions[2].Description, Is.EqualTo("並び替え: A-Z/カテゴリ別"));
+                Assert.That(target.renderedDefaultMenuOptions[2].Description, Is.EqualTo("ソート: a-z/クラス別"));
                 Assert.That(target.renderedDefaultMenuOptions[2].KeyDescription, Is.EqualTo("並び替え切替"));
                 Assert.That(target.renderedGetItemMenuOptions[4].Description, Is.EqualTo("取引"));
                 Assert.That(target.renderedGetItemMenuOptions[5].KeyDescription, Is.EqualTo("1つ追加"));
                 Assert.That(target.renderedGetItemMenuOptions[8].Description, Is.EqualTo("提示"));
             });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesSortModeDescription_PreservesColorTags_WhenPatched()
+    {
+        WriteDictionary(
+            ("sort: ", "ソート: "),
+            ("by class", "クラス別"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyTradeScreenUiTarget), nameof(DummyTradeScreenUiTarget.UpdateMenuBars)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(TradeScreenUiTranslationPatch), nameof(TradeScreenUiTranslationPatch.Prefix))));
+
+            DummyTradeScreenUiTarget.TOGGLE_SORT.Description = "sort: {{w|a-z}}/{{y|by class}}";
+
+            var target = new DummyTradeScreenUiTarget();
+            target.UpdateMenuBars();
+
+            Assert.That(target.renderedDefaultMenuOptions[2].Description, Is.EqualTo("ソート: {{w|a-z}}/{{y|クラス別}}"));
         }
         finally
         {

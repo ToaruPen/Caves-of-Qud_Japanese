@@ -23,6 +23,14 @@
       "text": "並び替え切替"
     },
     {
+      "key": "sort: ",
+      "text": "ソート: "
+    },
+    {
+      "key": "by class",
+      "text": "クラス別"
+    },
+    {
       "key": "select an action",
       "text": "操作を選択"
     },

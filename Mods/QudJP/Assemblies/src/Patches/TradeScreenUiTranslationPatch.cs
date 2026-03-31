@@ -17,6 +17,9 @@ public static class TradeScreenUiTranslationPatch
     private static readonly Regex TradeSomePromptPattern = new(
         "^Add how many (?<name>.+) to trade\\.$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex SortModeDescriptionPattern = new(
+        "^(?<prefix>sort: )(?<az>a-z)/(?<category>by class)$",
+        RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     [HarmonyTargetMethods]
     private static IEnumerable<MethodBase> TargetMethods()
@@ -193,11 +196,44 @@ public static class TradeScreenUiTranslationPatch
         }
 
         var route = ObservabilityHelpers.ComposeContext(Context, "field=" + routeSuffix);
-        var translated = UiBindingTranslationHelpers.TranslateVisibleText(current!, route, "TradeScreenUi.MenuOption");
+        var translated = TryTranslateSortModeDescription(current!, route, out var sortModeDescription)
+            ? sortModeDescription
+            : UiBindingTranslationHelpers.TranslateVisibleText(current!, route, "TradeScreenUi.MenuOption");
         if (!string.Equals(translated, current, StringComparison.Ordinal))
         {
             UiBindingTranslationHelpers.SetMemberValue(menuOption, memberName, translated);
         }
+    }
+
+    private static bool TryTranslateSortModeDescription(string source, string route, out string translated)
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
+        var match = SortModeDescriptionPattern.Match(stripped);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var translatedPrefix = Translator.Translate(match.Groups["prefix"].Value);
+        var translatedCategory = Translator.Translate(match.Groups["category"].Value);
+        var azLabel = ColorAwareTranslationComposer.RestoreCapture(
+            match.Groups["az"].Value,
+            spans,
+            match.Groups["az"]);
+        var categoryLabel = ColorAwareTranslationComposer.RestoreCapture(
+            translatedCategory,
+            spans,
+            match.Groups["category"]);
+
+        translated = translatedPrefix + azLabel + "/" + categoryLabel;
+        if (string.Equals(translated, source, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        DynamicTextObservability.RecordTransform(route, "TradeScreenUi.SortModeDescription", source, translated);
+        return true;
     }
 
     private static void TranslateAskNumberArgs(object[] args)
