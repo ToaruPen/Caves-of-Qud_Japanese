@@ -53,12 +53,20 @@ public static class PopupShowSpaceTranslationPatch
     {
         try
         {
-            if (__args.Length == 0 || __args[0] is not string message || string.IsNullOrEmpty(message))
+            if (__args.Length == 0)
             {
                 return;
             }
 
-            __args[0] = PopupTranslationPatch.TranslatePopupTextForProducerRoute(message, Context);
+            if (__args[0] is string message && !string.IsNullOrEmpty(message))
+            {
+                __args[0] = PopupTranslationPatch.TranslatePopupTextForProducerRoute(message, Context);
+            }
+
+            if (__args.Length > 1 && __args[1] is string title && !string.IsNullOrEmpty(title))
+            {
+                __args[1] = PopupTranslationPatch.TranslatePopupTextForProducerRoute(title, Context);
+            }
         }
         catch (Exception ex)
         {

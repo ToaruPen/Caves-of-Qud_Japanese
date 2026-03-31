@@ -61,6 +61,24 @@ public sealed class PopupShowSpaceTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesShowSpaceTitle()
+    {
+        WriteDictionary(
+            ("Game saved!", "ゲームをセーブしました！"),
+            ("Checkpoint", "チェックポイント"));
+
+        using var patch = PatchShowSpace();
+
+        DummyPopupGenericTarget.ShowSpace("Game saved!", Title: "Checkpoint");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceMessage, Is.EqualTo("ゲームをセーブしました！"));
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceTitle, Is.EqualTo("チェックポイント"));
+        });
+    }
+
+    [Test]
     public void Prefix_LeavesUnknownShowSpaceMessageUnchanged()
     {
         using var patch = PatchShowSpace();
@@ -71,15 +89,35 @@ public sealed class PopupShowSpaceTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_LeavesAlreadyLocalizedShowSpaceTextUnchanged()
+    {
+        using var patch = PatchShowSpace();
+
+        DummyPopupGenericTarget.ShowSpace("ゲームをセーブしました！", Title: "チェックポイント");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceMessage, Is.EqualTo("ゲームをセーブしました！"));
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceTitle, Is.EqualTo("チェックポイント"));
+        });
+    }
+
+    [Test]
     public void Prefix_PreservesMarkupAndColorTags()
     {
-        WriteDictionary(("Warning!", "警告！"));
+        WriteDictionary(
+            ("Warning!", "警告！"),
+            ("Alert", "警報"));
 
         using var patch = PatchShowSpace();
 
-        DummyPopupGenericTarget.ShowSpace("{{R|Warning!}}");
+        DummyPopupGenericTarget.ShowSpace("{{R|Warning!}}", Title: "{{C|Alert}}");
 
-        Assert.That(DummyPopupGenericTarget.LastShowSpaceMessage, Is.EqualTo("{{R|警告！}}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceMessage, Is.EqualTo("{{R|警告！}}"));
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceTitle, Is.EqualTo("{{C|警報}}"));
+        });
     }
 
     private static IDisposable PatchShowSpace()

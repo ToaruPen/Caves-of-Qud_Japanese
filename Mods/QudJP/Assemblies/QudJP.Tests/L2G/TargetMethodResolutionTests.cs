@@ -68,6 +68,16 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(StatisticGetHelpTextPatch), "GetHelpText", "XRL.World.Statistic", "System.String", new string[0])]
     [TestCase(typeof(CharacterStatusScreenAttributeHighlightPatch), "HandleHighlightAttribute", "Qud.UI.CharacterStatusScreen", "System.Void", new[] { "XRL.UI.Framework.FrameworkDataElement" })]
     [TestCase(typeof(SkillsAndPowersStatusScreenDetailsPatch), "UpdateDetailsFromNode", "Qud.UI.SkillsAndPowersStatusScreen", "System.Void", new[] { "XRL.UI.SPNode" })]
+    [TestCase(typeof(PopupShowSpaceTranslationPatch), "ShowSpace", "XRL.UI.Popup", "System.Void", new[]
+    {
+        "System.String",
+        "System.String",
+        "System.String",
+        "ConsoleLib.Console.Renderable",
+        "System.Boolean",
+        "System.Boolean",
+        "System.String",
+    })]
     [TestCase(typeof(PopupPickOptionTranslationPatch), "PickOption", "XRL.UI.Popup", "System.Int32", new[]
     {
         "System.String",
@@ -411,6 +421,16 @@ public sealed class TargetMethodResolutionTests
         "",
         "System.String|System.Int32|System.Int32|System.Int32|System.String|System.Boolean",
         "System.Double[]|System.Int32[]|System.Collections.Generic.List`1[[XRL.UI.TradeEntry]][]|System.Int32[][]",
+    })]
+    [TestCase(typeof(PopupAskStringTranslationPatch), new[]
+    {
+        "System.String|System.String|System.String|System.String|System.String|System.Int32|System.Int32|System.Boolean|System.Boolean|System.Nullable`1[[System.Boolean]]",
+        "System.String|System.String|System.Int32|System.Int32|System.String|System.Boolean|System.Boolean|System.Nullable`1[[System.Boolean]]|System.Boolean|System.String",
+    })]
+    [TestCase(typeof(PopupAskNumberTranslationPatch), new[]
+    {
+        "System.String|System.String|System.String|System.Int32|System.Int32|System.Int32",
+        "System.String|System.Int32|System.Int32|System.Int32|System.String|System.Boolean",
     })]
     public void TargetMethods_ResolveExpectedOverloads(Type patchType, string[] expectedSignatures)
     {

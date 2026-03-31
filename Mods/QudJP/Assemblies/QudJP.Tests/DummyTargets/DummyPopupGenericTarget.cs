@@ -8,7 +8,11 @@ internal static class DummyPopupGenericTarget
 
     public static string LastPickOptionIntro { get; private set; } = string.Empty;
 
+    public static string LastPickOptionSpacingText { get; private set; } = string.Empty;
+
     public static IReadOnlyList<string>? LastPickOptionOptions { get; private set; }
+
+    public static IReadOnlyList<DummyPopupMenuItem>? LastPickOptionButtons { get; private set; }
 
     public static string LastAskStringMessage { get; private set; } = string.Empty;
 
@@ -22,7 +26,9 @@ internal static class DummyPopupGenericTarget
     {
         LastPickOptionTitle = string.Empty;
         LastPickOptionIntro = string.Empty;
+        LastPickOptionSpacingText = string.Empty;
         LastPickOptionOptions = null;
+        LastPickOptionButtons = null;
         LastAskStringMessage = string.Empty;
         LastAskNumberMessage = string.Empty;
         LastShowSpaceMessage = string.Empty;
@@ -75,7 +81,9 @@ internal static class DummyPopupGenericTarget
 
         LastPickOptionTitle = Title;
         LastPickOptionIntro = Intro ?? string.Empty;
+        LastPickOptionSpacingText = SpacingText;
         LastPickOptionOptions = Options is null ? null : new List<string>(Options);
+        LastPickOptionButtons = Buttons is null ? null : new List<DummyPopupMenuItem>(Buttons);
         return 0;
     }
 

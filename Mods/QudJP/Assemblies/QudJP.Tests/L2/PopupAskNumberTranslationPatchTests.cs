@@ -72,6 +72,28 @@ public sealed class PopupAskNumberTranslationPatchTests
         Assert.That(DummyPopupGenericTarget.LastAskNumberMessage, Is.EqualTo("いくつ選びますか？"));
     }
 
+    [Test]
+    public void Prefix_LeavesAlreadyLocalizedAskNumberPromptUnchanged()
+    {
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskNumber));
+
+        DummyPopupGenericTarget.AskNumber("ウォータースキンはいくつですか？");
+
+        Assert.That(DummyPopupGenericTarget.LastAskNumberMessage, Is.EqualTo("ウォータースキンはいくつですか？"));
+    }
+
+    [Test]
+    public void Prefix_PreservesAskNumberMarkupAndColorTags()
+    {
+        WriteDictionary(("How many waterskins?", "ウォータースキンはいくつですか？"));
+
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskNumber));
+
+        DummyPopupGenericTarget.AskNumber("{{R|How many waterskins?}}");
+
+        Assert.That(DummyPopupGenericTarget.LastAskNumberMessage, Is.EqualTo("{{R|ウォータースキンはいくつですか？}}"));
+    }
+
     private static IDisposable PatchMethod(string methodName)
     {
         var harmonyId = CreateHarmonyId();

@@ -85,6 +85,31 @@ public sealed class PopupPickOptionTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesPickOptionSpacingText()
+    {
+        WriteDictionary(("Prompt", "案内"));
+
+        using var patch = PatchPickOption();
+
+        DummyPopupGenericTarget.PickOption(SpacingText: "Prompt");
+
+        Assert.That(DummyPopupGenericTarget.LastPickOptionSpacingText, Is.EqualTo("案内"));
+    }
+
+    [Test]
+    public void Prefix_TranslatesPickOptionButtons()
+    {
+        WriteDictionary(("Cancel", "キャンセル"));
+
+        using var patch = PatchPickOption();
+
+        DummyPopupGenericTarget.PickOption(Buttons: new[] { new DummyPopupMenuItem("{{W|Cancel}}") });
+
+        Assert.That(DummyPopupGenericTarget.LastPickOptionButtons, Is.Not.Null);
+        Assert.That(DummyPopupGenericTarget.LastPickOptionButtons![0].text, Is.EqualTo("{{W|キャンセル}}"));
+    }
+
+    [Test]
     public void Prefix_LeavesAlreadyLocalizedTextUnchanged()
     {
         using var patch = PatchPickOption();
@@ -92,13 +117,18 @@ public sealed class PopupPickOptionTranslationPatchTests
         DummyPopupGenericTarget.PickOption(
             Title: "セーブ一覧",
             Intro: "行き先を選んでください。",
-            Options: new[] { "続ける", "キャンセル" });
+            SpacingText: "案内",
+            Options: new[] { "続ける", "キャンセル" },
+            Buttons: new[] { new DummyPopupMenuItem("{{W|キャンセル}}") });
 
         Assert.Multiple(() =>
         {
             Assert.That(DummyPopupGenericTarget.LastPickOptionTitle, Is.EqualTo("セーブ一覧"));
             Assert.That(DummyPopupGenericTarget.LastPickOptionIntro, Is.EqualTo("行き先を選んでください。"));
+            Assert.That(DummyPopupGenericTarget.LastPickOptionSpacingText, Is.EqualTo("案内"));
             Assert.That(DummyPopupGenericTarget.LastPickOptionOptions, Is.EqualTo(new[] { "続ける", "キャンセル" }));
+            Assert.That(DummyPopupGenericTarget.LastPickOptionButtons, Is.Not.Null);
+            Assert.That(DummyPopupGenericTarget.LastPickOptionButtons![0].text, Is.EqualTo("{{W|キャンセル}}"));
         });
     }
 
@@ -108,20 +138,27 @@ public sealed class PopupPickOptionTranslationPatchTests
         WriteDictionary(
             ("Warning!", "警告！"),
             ("Choose wisely.", "慎重に選んでください。"),
-            ("Continue", "続ける"));
+            ("Prompt", "案内"),
+            ("Continue", "続ける"),
+            ("Cancel", "キャンセル"));
 
         using var patch = PatchPickOption();
 
         DummyPopupGenericTarget.PickOption(
             Title: "{{R|Warning!}}",
             Intro: "{{C|Choose wisely.}}",
-            Options: new[] { "{{W|Continue}}" });
+            SpacingText: "{{K|Prompt}}",
+            Options: new[] { "{{W|Continue}}" },
+            Buttons: new[] { new DummyPopupMenuItem("{{W|Cancel}}") });
 
         Assert.Multiple(() =>
         {
             Assert.That(DummyPopupGenericTarget.LastPickOptionTitle, Is.EqualTo("{{R|警告！}}"));
             Assert.That(DummyPopupGenericTarget.LastPickOptionIntro, Is.EqualTo("{{C|慎重に選んでください。}}"));
+            Assert.That(DummyPopupGenericTarget.LastPickOptionSpacingText, Is.EqualTo("{{K|案内}}"));
             Assert.That(DummyPopupGenericTarget.LastPickOptionOptions, Is.EqualTo(new[] { "{{W|続ける}}" }));
+            Assert.That(DummyPopupGenericTarget.LastPickOptionButtons, Is.Not.Null);
+            Assert.That(DummyPopupGenericTarget.LastPickOptionButtons![0].text, Is.EqualTo("{{W|キャンセル}}"));
         });
     }
 

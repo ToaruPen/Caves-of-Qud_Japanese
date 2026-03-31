@@ -72,6 +72,28 @@ public sealed class PopupAskStringTranslationPatchTests
         Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("このビルドを何と呼びますか？"));
     }
 
+    [Test]
+    public void Prefix_LeavesAlreadyLocalizedAskStringPromptUnchanged()
+    {
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskString));
+
+        DummyPopupGenericTarget.AskString("ペットに名前を付けてください。");
+
+        Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("ペットに名前を付けてください。"));
+    }
+
+    [Test]
+    public void Prefix_PreservesAskStringMarkupAndColorTags()
+    {
+        WriteDictionary(("Name your pet.", "ペットに名前を付けてください。"));
+
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskString));
+
+        DummyPopupGenericTarget.AskString("{{R|Name your pet.}}");
+
+        Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("{{R|ペットに名前を付けてください}}。"));
+    }
+
     private static IDisposable PatchMethod(string methodName)
     {
         var harmonyId = CreateHarmonyId();

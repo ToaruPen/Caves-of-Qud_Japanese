@@ -14,7 +14,9 @@ public static class PopupPickOptionTranslationPatch
     private const string TargetTypeName = "XRL.UI.Popup";
     private const int TitleIndex = 0;
     private const int IntroIndex = 1;
+    private const int SpacingTextIndex = 2;
     private const int OptionsIndex = 4;
+    private const int ButtonsIndex = 7;
 
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
@@ -88,7 +90,9 @@ public static class PopupPickOptionTranslationPatch
 
             TranslateStringArg(__args, TitleIndex);
             TranslateStringArg(__args, IntroIndex);
+            TranslateStringArg(__args, SpacingTextIndex);
             TranslateStringListArg(__args, OptionsIndex);
+            TranslatePopupMenuItemTextCollection(__args, ButtonsIndex);
         }
         catch (Exception ex)
         {
@@ -140,6 +144,44 @@ public static class PopupPickOptionTranslationPatch
         if (anyChanged)
         {
             args[index] = translated;
+        }
+    }
+
+    private static void TranslatePopupMenuItemTextCollection(object[] args, int index)
+    {
+        if (index < 0 || index >= args.Length || args[index] is null || args[index] is string || args[index] is not IList list)
+        {
+            return;
+        }
+
+        for (var itemIndex = 0; itemIndex < list.Count; itemIndex++)
+        {
+            var item = list[itemIndex];
+            if (item is null)
+            {
+                continue;
+            }
+
+            var textField = AccessTools.Field(item.GetType(), "text");
+            if (textField is null || textField.FieldType != typeof(string))
+            {
+                continue;
+            }
+
+            var current = textField.GetValue(item) as string;
+            if (string.IsNullOrEmpty(current))
+            {
+                continue;
+            }
+
+            var translated = PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute(current!, Context);
+            if (string.Equals(current, translated, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            textField.SetValue(item, translated);
+            list[itemIndex] = item;
         }
     }
 }
