@@ -1483,7 +1483,7 @@
     <part Name="EnergyCellSocket" SlotType="EnergyCell" />
     <part Name="Commerce" Value="900" />
     <part Name="Metal" />
-    <part Name="Description" Short="完全自律で気候制御されたバナナ園を夢見たヘゲモニック・フルーツ開発部は、無機物へ神経系を編み込むニューロアニメーターを考案した。当初は完全な感性付与で差別化していたが、数か月後には Spray-a-Brain のような廉価品に市場を奪われた。" />
+    <part Name="Description" Short="完全自律で気候制御されたバナナ園を夢見たヘゲモニック・フルーツ開発部は、無機物へ神経系を編み込むニューロアニメーターを考案した。当初は完全な感性付与で差別化していたが、数か月後にはスプレイ・ア・ブレインのような廉価品に市場を奪われた。" />
     <part Name="Examiner" Complexity="7" />
     <part Name="TinkerItem" Bits="0067" CanDisassemble="true" CanBuild="true" />
     <tag Name="Mods" Value="CommonMods,ElectronicsMods" />
@@ -1625,7 +1625,7 @@
   </object>
   <object Name="Fixit Spray" Inherits="Item" Replace="true">
     <part Name="Examiner" Complexity="2" Alternate="UnknownBottle" />
-    <part Name="Render" Tile="items/sw_spray.bmp" DisplayName="Fix-It 発泡スプレー" ColorString="&amp;y" RenderString="012" RenderLayer="5" />
+    <part Name="Render" Tile="items/sw_spray.bmp" DisplayName="フィックス・イット 発泡スプレー" ColorString="&amp;y" RenderString="012" RenderLayer="5" />
     <part Name="Physics" Category="Applicators" />
     <part Name="Description" Short="発泡性のコーキング材を詰め込んだエアゾール缶。" />
     <part Name="Commerce" Value="20" />
@@ -1671,7 +1671,7 @@
     <part Name="Examiner" Complexity="6" Alternate="UnknownBottle" />
     <part Name="Render" Tile="items/sw_spray.bmp" DisplayName="スプレイ{{r|-}}ア{{r|-}}ブレイン" ColorString="&amp;G" TileColor="&amp;G" DetailColor="r" RenderString="012" RenderLayer="5" />
     <part Name="Physics" Category="Applicators" />
-    <part Name="Description" Short="「SPRAY-A-BRAIN: 壁が喋る日が来たなら…」" />
+    <part Name="Description" Short="「スプレイ・ア・ブレイン: 壁が喋る日が来たなら…」" />
     <part Name="Commerce" Value="150" />
     <part Name="Applicator" />
     <part Name="AnimatorSpray" />
@@ -2403,7 +2403,7 @@
     <tag Name="EquipSound" Value="Sounds/Equip/sfx_equip_weapon_bludgeon_metal_heavy" />
   </object>
   <object Name="Cudgel6" Inherits="BaseCudgel" Replace="true">
-    <part Name="Render" DisplayName="{{K|{{crysteel|クリスティール}}製のメイス}}" Tile="Items/sw_cudgel_6.bmp" ColorString="&amp;g" DetailColor="K" />
+    <part Name="Render" DisplayName="{{K|{{crysteel|クリスティール}}のメイス}}" Tile="Items/sw_cudgel_6.bmp" ColorString="&amp;g" DetailColor="K" />
     <part Name="MeleeWeapon" MaxStrengthBonus="7" BaseDamage="2d6" Skill="Cudgel" Stat="Strength" />
     <part Name="Commerce" Value="390" />
     <part Name="Description" Short="高炉が惑星の潮汐エネルギーを吸い上げ、炭素を太陽温度まで熱して六角の鋳型に流し込む。鋳型を摘み上げる翡翠の鉗子が蒸散し、緑の煌めき――バナジウム――が金属に混ざって色を与える。" />
@@ -2416,7 +2416,7 @@
     <tag Name="EquipSound" Value="Sounds/Equip/sfx_equip_weapon_bludgeon_glass" />
   </object>
   <object Name="Cudgel6th" Inherits="BaseCudgel" Replace="true">
-    <part Name="Render" DisplayName="{{K|{{crysteel|クリスティール}}製のウォーハンマー}}" Tile="Items/sw_cudgel_7.bmp" ColorString="&amp;g" DetailColor="K" />
+    <part Name="Render" DisplayName="{{K|{{crysteel|クリスティール}}のウォーハンマー}}" Tile="Items/sw_cudgel_7.bmp" ColorString="&amp;g" DetailColor="K" />
     <part Name="MeleeWeapon" PenBonus="1" MaxStrengthBonus="7" BaseDamage="3d4+1" Skill="Cudgel" Stat="Strength" />
     <part Name="Commerce" Value="390" />
     <part Name="Description" Short="高炉が惑星の潮汐エネルギーを吸い上げ、炭素を太陽温度まで熱して六角の鋳型に流し込む。鋳型を摘み上げる翡翠の鉗子が蒸散し、緑の煌めき――バナジウム――が金属に混ざって色を与える。" />
@@ -2429,7 +2429,7 @@
     <tag Name="EquipSound" Value="Sounds/Equip/sfx_equip_weapon_bludgeon_glass" />
   </object>
   <object Name="Cudgel7" Inherits="BaseCudgel" Replace="true">
-    <part Name="Render" DisplayName="{{K|無垢の{{crysteel|クリスティール}}製のメイス}}" Tile="Items/sw_cudgel_6.bmp" ColorString="&amp;G" DetailColor="K" />
+    <part Name="Render" DisplayName="{{K|無垢の{{crysteel|クリスティール}}のメイス}}" Tile="Items/sw_cudgel_6.bmp" ColorString="&amp;G" DetailColor="K" />
     <part Name="MeleeWeapon" MaxStrengthBonus="8" BaseDamage="3d4" Skill="Cudgel" Stat="Strength" />
     <part Name="Commerce" Value="720" />
     <part Name="Description" Short="高炉が惑星の潮汐エネルギーを吸い上げ、炭素を太陽温度まで熱して六角の鋳型に流し込む。翡翠の鉗子が蒸散して緑の煌めきを与え、塵で斑になった鋳塊は選り分けて岩喰いに与え、完璧な六角柱だけが残された。" />
@@ -2443,7 +2443,7 @@
     <tag Name="EquipSound" Value="Sounds/Equip/sfx_equip_weapon_bludgeon_glass" />
   </object>
   <object Name="Cudgel7th" Inherits="BaseCudgel" Replace="true">
-    <part Name="Render" DisplayName="{{K|無垢の{{crysteel|クリスティール}}製のウォーハンマー}}" Tile="Items/sw_cudgel_7.bmp" ColorString="&amp;G" DetailColor="K" />
+    <part Name="Render" DisplayName="{{K|無垢の{{crysteel|クリスティール}}のウォーハンマー}}" Tile="Items/sw_cudgel_7.bmp" ColorString="&amp;G" DetailColor="K" />
     <part Name="MeleeWeapon" PenBonus="1" MaxStrengthBonus="8" BaseDamage="3d6" Skill="Cudgel" Stat="Strength" />
     <part Name="Commerce" Value="720" />
     <part Name="Description" Short="高炉が惑星の潮汐エネルギーを吸い上げ、炭素を太陽温度まで熱して六角の鋳型に流し込む。翡翠の鉗子が蒸散して緑の煌めきを与え、塵で斑になった鋳塊は選り分けて岩喰いに与え、完璧な六角柱だけが残された。" />
@@ -4102,7 +4102,7 @@
     <tag Name="ProjectileVFXConfiguration" Value="duration::0.25;;shaftColor::#b1c9c3;;headColor::#d74200;;trailColor::#808080" />
   </object>
   <object Name="Carbide Arrow" Inherits="BaseArrow" Replace="true">
-    <part Name="Render" DisplayName="{{b|カーバイド}}アロー" ColorString="&amp;b" />
+    <part Name="Render" DisplayName="{{b|カーバイドの矢}}" ColorString="&amp;b" />
     <part Name="AmmoArrow" ProjectileObject="ProjectileCarbideArrow" />
     <part Name="Description" Short="鳥の羽根で羽根飾りをした細いシャフトに、カーバイドの穂先を冠している。" />
     <part Name="MissileStatusColor" Color="b" />
@@ -4111,13 +4111,13 @@
     <tag Name="TurretStockWeight" Value="3" />
   </object>
   <object Name="ProjectileCarbideArrow" Inherits="BaseArrowProjectile" Replace="true">
-    <part Name="Render" DisplayName="{{b|カーバイド}}アロー" ColorString="&amp;b" />
+    <part Name="Render" DisplayName="{{b|カーバイドの矢}}" ColorString="&amp;b" />
     <part Name="Projectile" StrengthPenetration="4" BaseDamage="1d4+1" ColorString="&amp;b" />
     <tag Name="ProjectileVFX" Value="MissileWeaponsEffects/arrow" />
     <tag Name="ProjectileVFXConfiguration" Value="duration::0.25;;shaftColor::#b1c9c3;;headColor::#0048bd;;trailColor::#808080" />
   </object>
   <object Name="Folded Carbide Arrow" Inherits="BaseArrow" Replace="true">
-    <part Name="Render" DisplayName="{{B|折り重ねカーバイド}}アロー" ColorString="&amp;B" />
+    <part Name="Render" DisplayName="{{B|積層カーバイドの矢}}" ColorString="&amp;B" />
     <part Name="AmmoArrow" ProjectileObject="ProjectileFoldedCarbideArrow" />
     <part Name="Description" Short="鳥の羽根で羽根飾りをした細いシャフトに、折り重ねたカーバイドの穂先を冠している。" />
     <part Name="MissileStatusColor" Color="B" />
@@ -4126,7 +4126,7 @@
     <tag Name="TurretStockWeight" Value="2" />
   </object>
   <object Name="ProjectileFoldedCarbideArrow" Inherits="BaseArrowProjectile" Replace="true">
-    <part Name="Render" DisplayName="{{B|折り重ねカーバイド}}アロー" ColorString="&amp;B" />
+    <part Name="Render" DisplayName="{{B|積層カーバイドの矢}}" ColorString="&amp;B" />
     <part Name="Projectile" StrengthPenetration="5" BaseDamage="1d4+2" ColorString="&amp;B" />
     <tag Name="ProjectileVFX" Value="MissileWeaponsEffects/arrow" />
     <tag Name="ProjectileVFXConfiguration" Value="duration::0.25;;shaftColor::#b1c9c3;;headColor::#0096ff;;trailColor::#808080" />
@@ -4139,7 +4139,7 @@
     <part Name="Commerce" Value="0.4" />
   </object>
   <object Name="ProjectileFulleriteArrow" Inherits="BaseArrowProjectile" Replace="true">
-    <part Name="Render" DisplayName="{{K|フラーレン}}アロー" ColorString="&amp;K" />
+    <part Name="Render" DisplayName="{{K|フラーレンの矢}}" ColorString="&amp;K" />
     <part Name="Projectile" StrengthPenetration="6" BaseDamage="1d4+3" ColorString="&amp;K" />
     <tag Name="ProjectileVFX" Value="MissileWeaponsEffects/arrow" />
     <tag Name="ProjectileVFXConfiguration" Value="duration::0.25;;shaftColor::#b1c9c3;;headColor::#155352;;trailColor::#808080" />
@@ -7725,7 +7725,7 @@
   </object>
 
 <object Name="Flawless Crysteel Gauntlets" Inherits="BaseGauntlet" Replace="true">
-    <part Name="Render" DisplayName="{{K|無垢の{{crysteel|クリスティール}}製ガントレット}}" RenderString="]" ColorString="&amp;G" DetailColor="K" Tile="Items/sw_gauntlets_hightier1.bmp" />
+    <part Name="Render" DisplayName="{{K|無垢の{{crysteel|クリスティール}}のガントレット}}" RenderString="]" ColorString="&amp;G" DetailColor="K" Tile="Items/sw_gauntlets_hightier1.bmp" />
     <part Name="Description" Short="溶鉱炉が惑星の潮汐エネルギーを吸い上げ、炭素を太陽温度まで熱して六角の鋳型に流し込んだ。鋳塊を取り出したエメラルドの鋳物鉗子がバナジウム――あの緑の閃光――を霧化して多岐管へ放ち、金属をわずかに不完全にして特有の色調を与えた。塵で斑になった鋳塊はより分けられて岩喰らいの餌となり、完璧な六角柱だけが残された。" />
     <part Name="Armor" AV="4" DV="-2" Heat="5" Cold="5" Acid="5" Elec="5" WornOn="Hands" />
     <part Name="Commerce" Value="650" />
@@ -7774,7 +7774,7 @@
   </object>
 
 <object Name="Zetachrome Gloves" Inherits="BaseGlove" Replace="true">
-    <part Name="Render" DisplayName="{{zetachrome|ゼータクローム}}の手袋" RenderString="]" ColorString="&amp;m" TileColor="&amp;C" DetailColor="m" Tile="Items/sw_gauntlets_hightier2.bmp" />
+    <part Name="Render" DisplayName="{{zetachrome|ゼータクロームのガントレット}}" RenderString="]" ColorString="&amp;m" TileColor="&amp;C" DetailColor="m" Tile="Items/sw_gauntlets_hightier2.bmp" />
     <part Name="Description" Short="クォーク＝グルーオン・プラズマは宇宙初期の虚無峰で急冷されて消えたが、六次元時空の皺に捕らわれた滴だけは残った。それらは何十億年も滑空し、やがて発見した者たちが抽出と冷却の機械を築き、恒星炉で再加熱した。" />
     <part Name="Armor" AV="4" DV="0" Heat="6" Cold="6" Acid="6" Elec="6" WornOn="Hands" />
     <part Name="Physics" Weight="10" />
@@ -10248,7 +10248,7 @@
   </object>
 
 <object Name="DarkCalculus" Inherits="Book" Replace="true">
-    <part Name="Render" DisplayName="{{W|On the Origins and Nature of the Dark Calculus}}" ColorString="&amp;K" RenderString="=" RenderLayer="5" Tile="Items/sw_book_4.bmp" TileColor="&amp;K" DetailColor="C" />
+    <part Name="Render" DisplayName="{{W|暗黒計算の起源と本質について}}" ColorString="&amp;K" RenderString="=" RenderLayer="5" Tile="Items/sw_book_4.bmp" TileColor="&amp;K" DetailColor="C" />
     <part Name="Description" Short="" />
     <part Name="Book" ID="DarkCalculus" />
     <part Name="Commerce" Value="300" />
@@ -10262,19 +10262,19 @@
   </object>
 
 <object Name="MimicandMadpole" Inherits="Book" Replace="true">
-    <part Name="Render" DisplayName="{{W|The Mimic and the Madpole}}" ColorString="&amp;w" RenderString="=" RenderLayer="5" Tile="Items/sw_book_1.bmp" TileColor="&amp;w" DetailColor="r" />
+    <part Name="Render" DisplayName="{{W|ミミックと狂いオタマジャクシ}}" ColorString="&amp;w" RenderString="=" RenderLayer="5" Tile="Items/sw_book_1.bmp" TileColor="&amp;w" DetailColor="r" />
     <part Name="Book" ID="MimicandMadpole" />
     <part Name="Commerce" Value="50" />
   </object>
 
 <object Name="OnHumanMimicry" Inherits="Book" Replace="true">
-    <part Name="Render" DisplayName="{{W|On Humanoid Mimicry of Animals and Plants}}" ColorString="&amp;w" RenderString="=" RenderLayer="5" Tile="Items/sw_book_2.bmp" TileColor="&amp;w" DetailColor="g" />
+    <part Name="Render" DisplayName="{{W|動植物の人型模倣について}}" ColorString="&amp;w" RenderString="=" RenderLayer="5" Tile="Items/sw_book_2.bmp" TileColor="&amp;w" DetailColor="g" />
     <part Name="Book" ID="Animals" />
     <part Name="Commerce" Value="50" />
   </object>
 
 <object Name="FromEntropytoHierarchy" Inherits="Book" Replace="true">
-    <part Name="Render" DisplayName="{{W|From Entropy to Hierarchy}}" ColorString="&amp;m" RenderString="=" RenderLayer="5" Tile="Items/sw_book_3.bmp" TileColor="&amp;m" DetailColor="C" />
+    <part Name="Render" DisplayName="{{W|エントロピーからヒエラルキーへ}}" ColorString="&amp;m" RenderString="=" RenderLayer="5" Tile="Items/sw_book_3.bmp" TileColor="&amp;m" DetailColor="C" />
     <part Name="Book" ID="EntropytoHierarchy" />
     <part Name="Commerce" Value="300" />
   </object>
@@ -10293,7 +10293,7 @@
   </object>
 
 <object Name="Crime and Punishment" Inherits="Book" Replace="true">
-    <part Name="Render" DisplayName="{{W|Crime and Punishment}}" ColorString="&amp;w" RenderString="=" RenderLayer="5" Tile="Items/sw_book_2.bmp" TileColor="&amp;w" DetailColor="R" />
+    <part Name="Render" DisplayName="{{W|罪と罰}}" ColorString="&amp;w" RenderString="=" RenderLayer="5" Tile="Items/sw_book_2.bmp" TileColor="&amp;w" DetailColor="R" />
     <part Name="Description" Short="" />
     <part Name="Book" ID="CrimeandPunishment" />
     <part Name="SetBooleanStateOnRead" State="SawCrimePunishment" />
@@ -10302,7 +10302,7 @@
   </object>
 
 <object Name="AphorismsAboutBirds" Inherits="Book" Replace="true">
-    <part Name="Render" DisplayName="{{W|Aphorisms about Birds}}" ColorString="&amp;w" RenderString="=" RenderLayer="5" Tile="Items/sw_scroll1.bmp" TileColor="&amp;w" DetailColor="B" />
+    <part Name="Render" DisplayName="{{W|鳥についての箴言}}" ColorString="&amp;w" RenderString="=" RenderLayer="5" Tile="Items/sw_scroll1.bmp" TileColor="&amp;w" DetailColor="B" />
     <part Name="Book" ID="AphorismsAboutBirds" />
     <part Name="Commerce" Value="75" />
   </object>
@@ -10690,7 +10690,7 @@
 
 <object Name="Minstrel's Token" Inherits="Token" Replace="true">
     <part Name="Render" DisplayName="{{Y|吟遊詩人のトークン}}" ColorString="&amp;m" TileColor="&amp;y" DetailColor="m" RenderString="*" RenderLayer="5" />
-    <part Name="Description" Short="古い白金のシェケルに Very Old Bird の図像が刻まれている。" />
+    <part Name="Description" Short="古い白金のシェケルに年経た鳥の図像が刻まれている。" />
     <part Name="Commerce" Value="250" />
   </object>
 

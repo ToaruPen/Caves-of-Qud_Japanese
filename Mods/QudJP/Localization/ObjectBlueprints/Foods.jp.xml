@@ -905,7 +905,7 @@
     <part Name="Food" Message="苦い味がする。&#10;{{Y|Ego}} が {{C|1}} 低下した。" />
   </object>
   <object Name="Ripe Cucumber" Inherits="Snack" Replace="true">
-    <part Name="Render" DisplayName="{{G|熟れたきゅうり}}" Tile="Items/sw_cucumber.bmp" ColorString="&amp;G" DetailColor="g" />
+    <part Name="Render" DisplayName="{{G|熟れたキュウリ}}" Tile="Items/sw_cucumber.bmp" ColorString="&amp;G" DetailColor="g" />
     <part Name="Description" Short="薄いミントグリーンの長い瘤だらけの首が肥沃な蔓で実り、ぱきりと摘み取られた。" />
     <part Name="Food" Thirst="1000" Message="ひと噛み目は小気味よく、そのあと水が弾ける。" />
     <part Name="Commerce" Value="5" />
@@ -1158,116 +1158,6 @@
     <tag Name="Plant" />
     <tag Name="HiddenInInventory" />
     <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
-  </object>
-  <object Name="Bundle of Noisegrass" Inherits="Snack" Replace="true">
-    <part Name="Render" DisplayName="ノイズグラスの束" ColorString="&amp;m" DetailColor="y" RenderString="%" Tile="Items/sw_grass_bundle.bmp" />
-    <part Name="Description" Short="星光の草が意味の局所最大に達したのち刈り取られ、束ねられた。" />
-    <part Name="Commerce" Value="50" />
-    <part Name="Food" Satiation="Snack" Thirst="0" Healing="0" Message="ふわふわした味がする。" />
-    <part Name="PreservableItem" Result="Wild Rice" Number="3" />
-  </object>
-  <object Name="Qudzu Stem" Inherits="Snack" Replace="true">
-    <part Name="Render" DisplayName="{{r|クドズーの茎}}" Tile="Items/sw_stem.bmp" ColorString="&amp;r" DetailColor="w" />
-    <part Name="Description" Short="赤いセロリのような茎が、数世紀ぶんの摩耗した塵で粉まみれになっている。" />
-    <part Name="Commerce" Value="10" />
-  </object>
-  <object Name="Lover's Blossom" Inherits="Snack" Replace="true">
-    <part Name="Food" />
-    <part Name="Render" Tile="Items/lovers_blossom.bmp" DisplayName="{{R|ラバーズ・ブロッサム}}" ColorString="&amp;R" TileColor="&amp;r" DetailColor="R" />
-    <part Name="Description" Short="捨てられた恋人の心臓が熾き色の花弁の下で燃えつづけ、シトリンの葯に締め付けられて悲鳴をあげ、涙する萼の翡翠の床に横たわっている。" />
-    <part Name="Commerce" Value="20" />
-    <part Name="Physics" Category="Food" Weight="0" />
-  </object>
-  <object Name="Ripe Cucumber" Inherits="Snack" Replace="true">
-    <part Name="Render" DisplayName="{{G|熟れたキュウリ}}" Tile="Items/sw_cucumber.bmp" ColorString="&amp;G" DetailColor="g" />
-    <part Name="Description" Short="薄いミントグリーンの、長く瘤だらけの首が肥沃な蔓で実り、ぱきりと摘み取られた。" />
-    <part Name="Food" Thirst="1000" Message="ひと噛み目は小気味よく、そのあと水が弾ける。" />
-    <part Name="Commerce" Value="5" />
-    <part Name="Physics" Weight="1" />
-    <part Name="PreservableItem" Result="Pickles" Number="5" />
-    <tag Name="Plant" />
-  </object>
-  <object Name="Taco Suprema" Inherits="Food" Replace="true">
-    <part Name="Render" DisplayName="{{m|タコ・スプレーマ}}" Tile="Items/sw_taco.bmp" RenderString="%" RenderLayer="5" DetailColor="m" />
-    <part Name="Food" Thirst="15000" Message="神聖なサクサク感が溶けて塩のマナになる。" />
-    <part Name="Physics" Weight="0" />
-    <part Name="Commerce" Value="500" />
-    <part Name="Description" Short="薄く古びた紙――油に塗り重ねられた羊皮紙――が揚げた鞍形ウェイファーを包み、凝縮蜜の七層が裂け目を満たしている。" />
-  </object>
-  <object Name="Crystal of Eve" Inherits="Snack" Replace="true">
-    <part Name="Render" DisplayName="{{crystalline|イヴのクリスタル}}" Tile="Items/sw_eve_crystal.bmp" ColorString="&amp;b" DetailColor="M" />
-    <part Name="Description" Short="サイカルエネルギーは零点近傍で柔らかな綿毛となり四面体の結晶習性でピークを迎える。この結晶は系がチャイム感性を宿す前に根の花束から割り取られた。胎動する思考と感情が微振動している。" />
-    <part Name="Physics" Weight="1" />
-    <part Name="Springy" Factor="0.1" />
-    <part Name="Commerce" Value="475" />
-    <part Name="RefreshCooldownsOnEat" />
-    <part Name="Food" IllOnEat="false" Satiation="None" Message="結晶が砕け、凝縮思念の潮が膨らんで精神に染み渡る。" />
-    <tag Name="Tier" Value="8" />
-    <tag Name="TechTier" Value="8" />
-  </object>
-  <object Name="Hunk of Cheese" Inherits="Snack" Replace="true">
-    <part Name="Render" Tile="items/sw_cheese.bmp" ColorString="&amp;W" DetailColor="w" DisplayName="かたまりの{{W|チーズ}}" />
-    <part Name="Description" Short="チーズクロスが豚製の直方体に貼り付き、二年間微生物が面を植民して高貴な味へ熟成させた。" />
-  </object>
-  <object Name="Rubber Tree Seed" Inherits="Food" Replace="true">
-    <part Name="Render" DisplayName="{{r|ラバー・ツリーの種}}" Tile="Items/sw_seeds.bmp" ColorString="&amp;W" DetailColor="g" RenderString="'" RenderLayer="5" />
-    <part Name="Description" Short="滑らかで日焼け模様の殻が、これから爆ぜる木の芽を断熱している。" />
-    <part Name="Commerce" Value="10" />
-    <part Name="Food" Satiation="None" />
-  </object>
-  <object Name="Pickles" Inherits="Preservable" Replace="true">
-    <part Name="Render" DisplayName="{{g|ピクルス}}" RenderString="%" ColorString="&amp;y" TileColor="&amp;y" DetailColor="g" RenderLayer="5" Tile="Items/sw_pickles.bmp" />
-    <part Name="Commerce" Value="2" />
-    <part Name="Description" Short="瘤だらけの果実が塩水の海に島のように浮かべられ、世界のガラス瓶で封じられる。今や塩の歩調でしか朽ちない。" />
-    <part Name="PreparedCookingIngredient" type="thirst" charges="1" />
-    <tag Name="Plant" />
-    <tag Name="DynamicObjectsTable:Jungle_Ingredients" />
-    <tag Name="Gender" Value="plural" />
-    <xtagGrammar massNoun="true" />
-  </object>
-  <object Name="Cured Dawnglider Tail" Inherits="Preservable" Replace="true">
-    <part Name="Render" DisplayName="{{W|ドーングライダーの尾のくん製}}" RenderString="%" ColorString="&amp;y" TileColor="&amp;W" DetailColor="y" Tile="Items/sw_dawnglider_tail.bmp" />
-    <part Name="Commerce" Value="5" />
-    <part Name="Description" Short="塩が巻いた肉片から虹色のプリズムは抜けたが、煙の匂いがわずかに残っている。" />
-    <part Name="PreparedCookingIngredient" type="heat" charges="1" />
-    <tag Name="Meat" />
-    <tag Name="DynamicObjectsTable:Saltdunes_Ingredients" />
-    <stag Name="Heat" />
-  </object>
-  <object Name="Salthopper Chip" Inherits="Preservable" Replace="true">
-    <part Name="Render" DisplayName="ソルトホッパーのチップ" ColorString="&amp;Y" DetailColor="y" />
-    <part Name="Food" />
-    <tag Name="Meat" />
-    <part Name="Description" Short="捕まえたソルトホッパーの外骨格の脇腹からキチンを削ぎ、乾いて歯ざわりのよいチップに打ち延ばした。" />
-    <part Name="PreparedCookingIngredient" type="tastyMinor" charges="1" />
-    <part Name="Commerce" Value="0.5" />
-    <xtagGrammar iArticle="a" adjunctNoun="" />
-  </object>
-  <object Name="Phase Silk" Inherits="Preservable" Replace="true">
-    <part Name="Render" DisplayName="{{Y|フェイズ・シルク}}" RenderString="%" ColorString="&amp;Y" DetailColor="y" RenderLayer="5" Tile="Items/sw_phasesilk.bmp" />
-    <part Name="Commerce" Value="5" />
-    <part Name="Description" Short="フェイズ・スパイダーの二重次元の炉格子から切り取った糸を巻き取ってある。" />
-    <part Name="PreparedCookingIngredient" type="phase" charges="1" />
-    <tag Name="DynamicObjectsTable:Ruins_Ingredients" />
-    <tag Name="Plant" />
-  </object>
-  <object Name="Spark Tick Plasma" Inherits="Preservable" Replace="true">
-    <part Name="Render" DisplayName="{{W|スパーク・ティックのプラズマ}}" RenderString="%" ColorString="&amp;y" TileColor="&amp;y" DetailColor="W" RenderLayer="5" Tile="Items/sw_sparktick_plasma.bmp" />
-    <part Name="Commerce" Value="4" />
-    <part Name="Description" Short="頭盾を乾かして砕き粉にし、ダニから磁気を帯びた生命血を搾り出して瓶詰めにした。" />
-    <part Name="PreparedCookingIngredient" type="electric" charges="1" />
-    <tag Name="Meat" />
-    <tag Name="DynamicObjectsTable:Hills_Ingredients" />
-    <tag Name="DynamicObjectsTable:DesertCanyon_Ingredients" />
-    <tag Name="DynamicObjectsTable:Jungle_Ingredients" />
-    <tag Name="DynamicObjectsTable:Ruins_Ingredients" />
-    <stag Name="Energy" />
-  </object>
-  <object Name="Compacted Bone Meal" Inherits="Preservable" Replace="true">
-    <part Name="Render" DisplayName="{{Y|骨粉}}" RenderString="%" ColorString="&amp;Y" TileColor="&amp;y" DetailColor="Y" RenderLayer="5" Tile="Items/sw_paste.bmp" />
-    <part Name="Commerce" Value="8" />
-    <part Name="Description" Short="年経た骨を粉砕して骨虫の傷だらけの腸に詰め、圧搾してから粉に挽いた。" />
-    <part Name="PreparedCookingIngredient" type="armor" charges="1" />
   </object>
   <object Name="Mushroom" Inherits="Food" Replace="true">
     <part Name="Render" DisplayName="[キノコ]" ColorString="&amp;y" />

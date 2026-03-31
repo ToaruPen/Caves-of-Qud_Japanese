@@ -347,12 +347,12 @@
     {
       "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
       "key": "{{Y|lege{{W|n}}dary}}",
-      "text": "{{Y|伝{{W|説}}級}}"
+      "text": "{{Y|伝{{W|説}}的}}"
     },
     {
       "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
       "key": "{{rules|Legendary",
-      "text": "{{rules|伝説級"
+      "text": "{{rules|伝説的"
     },
     {
       "context": "XRL.World.Parts.ModLegendary.GetShortDescription",
@@ -502,12 +502,12 @@
     {
       "context": "XRL.World.Parts.ModPadded.GetShortDescription",
       "key": "% chance to prevent daze or stun effects, and it doubles the chance for the wearer to shake off daze and stun effects with the Shake It Off skill power.",
-      "text": "%の確率で朦朧やスタンを防ぎ、Shake It Off技能でそれらを振り払う確率を2倍にする。"
+      "text": "%の確率で朦朧やスタンを防ぎ、振り払う技能でそれらを振り払う確率を2倍にする。"
     },
     {
       "context": "XRL.World.Parts.ModPadded.GetShortDescription",
       "key": " % chance to prevent daze or stun effects, and it doubles the chance for the wearer to shake off daze and stun effects with the Shake It Off skill power.",
-      "text": "%の確率で朦朧やスタンを防ぎ、Shake It Off技能でそれらを振り払う確率を2倍にする。"
+      "text": "%の確率で朦朧やスタンを防ぎ、振り払う技能でそれらを振り払う確率を2倍にする。"
     },
     {
       "context": "XRL.World.Parts.ModPiping.GetShortDescription",
@@ -592,7 +592,7 @@
     {
       "context": "XRL.World.Parts.ModSereneVisage.GetShortDescription",
       "key": "Serene visage: This item grants bonus Willpower, reduces the cooldown of Meditate by 40 rounds, and is worn on both the head and face. It requires both the head and face to wear.",
-      "text": "静謐な面貌: 意志力が上昇し、Meditateのクールダウンを40ラウンド短縮する。頭部と顔の両方を占有する。"
+      "text": "静謐な面貌: 意志力が上昇し、瞑想のクールダウンを40ラウンド短縮する。頭部と顔の両方を占有する。"
     },
     {
       "context": "XRL.World.Parts.ModSerrated.GetShortDescription",
@@ -702,7 +702,7 @@
     {
       "context": "XRL.World.Parts.ModTerrifyingVisage.GetShortDescription",
       "key": "Terrifying visage: This item reduces the cooldowns of Berate, Intimidate, and Menacing Stare by 10 rounds. It requires both the head and face to wear.",
-      "text": "恐ろしい面貌: Berate/Intimidate/Menacing Stareのクールダウンを10ラウンド短縮する。頭部と顔の両方を占有する。"
+      "text": "恐ろしい面貌: 罵倒・威圧・威圧の眼光のクールダウンを10ラウンド短縮する。頭部と顔の両方を占有する。"
     },
     {
       "context": "XRL.World.Parts.ModTimereaver.GetShortDescription",

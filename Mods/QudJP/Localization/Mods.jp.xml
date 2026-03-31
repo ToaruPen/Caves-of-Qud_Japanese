@@ -39,8 +39,8 @@
   <mod Part="ModLanterned" Tables="HelmetMods,ExoskeletonMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" TinkerDisplayName="ランタン" Value="1.2" Description="ランタン: 光源を提供する。" TinkerCategory="armor" />
   <mod Part="ModFilters" Tables="HelmetMods,MaskMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" TinkerDisplayName="フィルター付き" Value="1.2" TinkerCategory="armor" />
   <mod Part="ModTwoFaced" Tables="HelmetMods" Rarity="R" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="双面" Value="1.3" Description="双面: 顔スロットを1枠追加する。" TinkerCategory="armor" />
-  <mod Part="ModTerrifyingVisage" Tables="HeadwearMods" Rarity="R" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="恐ろしい面貌の" Value="1.3" Description="恐ろしい面貌: Berate、Intimidate、Menacing Stareのクールダウンを10ラウンド短縮し、頭部と顔の両方を占有する。" TinkerCategory="armor" />
-  <mod Part="ModSereneVisage" Tables="HeadwearMods" Rarity="R" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="静謐な面貌の" Value="1.3" Description="静謐な面貌: 意志力+1でMeditateのクールダウンを40ラウンド短縮し、頭部と顔の両方を占有する。" TinkerCategory="armor" />
+  <mod Part="ModTerrifyingVisage" Tables="HeadwearMods" Rarity="R" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="恐ろしい面貌の" Value="1.3" Description="恐ろしい面貌: 罵倒・威圧・威圧の眼光のクールダウンを10ラウンド短縮し、頭部と顔の両方を占有する。" TinkerCategory="armor" />
+  <mod Part="ModSereneVisage" Tables="HeadwearMods" Rarity="R" TinkerTier="3" CanAutoTinker="false" TinkerDisplayName="静謐な面貌の" Value="1.3" Description="静謐な面貌: 意志力+1で瞑想のクールダウンを40ラウンド短縮し、頭部と顔の両方を占有する。" TinkerCategory="armor" />
   <mod Part="ModCoProcessor" Tables="HeadwearMods" Rarity="R" TinkerTier="6" NativeTier="4" CanAutoTinker="false" TinkerDisplayName="共同処理装置" Value="1.3" TinkerCategory="armor" />
 
   <mod Part="ModSpiked" Tables="ShieldMods,GauntletMods" Rarity="R" TinkerTier="3" TinkerDisplayName="スパイク" Value="1.3" TinkerCategory="armor" />

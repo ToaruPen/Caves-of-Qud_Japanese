@@ -3747,7 +3747,7 @@
   <object Name="Folding Cot" Inherits="BaseBed" Replace="true">
     <part Name="Render" DisplayName="折りたたみベッド" ColorString="&amp;w" DetailColor="y" Tile="Items/sw_folding_cot.bmp" Occluding="false" RenderIfDark="true" />
     <part Name="Physics" Weight="4" Takeable="true" />
-    <part Name="Description" Short="Watervine キャンバスを引き伸ばし、木の脚の上に折り畳む。" />
+    <part Name="Description" Short="ウォーターヴァインのキャンバスを引き伸ばし、木の脚の上に折り畳む。" />
     <stat Name="Hitpoints" Value="20" />
     <tag Name="Tier" Value="1" />
     <stag Name="Basic" />
