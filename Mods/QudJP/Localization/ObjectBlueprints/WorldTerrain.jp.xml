@@ -170,7 +170,7 @@
   </object>
 
 <object Name="TerrainMoonStair" Inherits="Terrain" Replace="true">
-    <part Name="Render" DisplayName="月階" RenderString="005" ColorString="&amp;y" DetailColor="M" Tile="Terrain/sw_moonstair_worldmap_1.bmp" HFlip="true" />
+    <part Name="Render" DisplayName="ムーン・ステアー" RenderString="005" ColorString="&amp;y" DetailColor="M" Tile="Terrain/sw_moonstair_worldmap_1.bmp" HFlip="true" />
     <part Name="TerrainTravel" Segments="2000" />
     <part Name="Description" Short="黒い大理石の床から六角柱が噴き出し、縁は暖かな静電気の露のようにほぐれていく。階段は低い周波で喉を鳴らす。" />
     <part Name="Physics" Solid="true" />
@@ -180,7 +180,7 @@
     <tag Name="IndefiniteArticle" Value="the" />
     <tag Name="DefiniteArticle" Value="the" />
     <xtagGrammar Proper="true" massNoun="false" />
-    <tag Name="OverlandBlockMessage" Value="月階の幾何は複雑すぎてワールドマップでは移動できない。地表で道を探すしかない。" />
+    <tag Name="OverlandBlockMessage" Value="ムーン・ステアーの幾何は複雑すぎてワールドマップでは移動できない。地表で道を探すしかない。" />
     <tag Name="DefaultWall" Value="Black Marble" />
     <tag Name="LairOwnerTable" Value="LairOwners_MoonStair" />
     <tag Name="RuinWalls" Value="HighTierRegionRuinWalls" />
@@ -364,7 +364,7 @@
   </object>
 
 <object Name="TerrainBaroqueRuins" Inherits="Terrain" Replace="true">
-    <part Name="Render" DisplayName="バロック廃墟" RenderString="204" ColorString="&amp;Y^k" Tile="Terrain/sw_ruins2.bmp" />
+    <part Name="Render" DisplayName="バロック遺構" RenderString="204" ColorString="&amp;Y^k" Tile="Terrain/sw_ruins2.bmp" />
     <part Name="TerrainTravel" Segments="3000" TravelClass="Survival_RuinsSurvival" />
     <part Name="Description" Short="繁茂する緑が喰らう者の豪奢な遺構を樹冠のように覆い、裂けた密林の隅からクリスチールの手摺りや星蘭の槍窓が覗く。" />
     <tag Name="Terrain" Value="BaroqueRuins" />
@@ -485,7 +485,7 @@
   </object>
 
 <object Name="TerrainRustWell" Inherits="Terrain" Replace="true">
-    <part Name="Render" DisplayName="ラスト・ウェルズ" Tile="terrain/tile_location3.bmp" DetailColor="R" RenderString="007" ColorString="&amp;r^k" />
+    <part Name="Render" DisplayName="ラスト・ウェル" Tile="terrain/tile_location3.bmp" DetailColor="R" RenderString="007" ColorString="&amp;r^k" />
     <part Name="Description" Short="赤いクッズーの蔓が、地に穿たれたクロームの井戸を棚として巻きつく。" />
     <tag Name="Gender" Value="plural" />
     <xtagGrammar iArticle="the" />

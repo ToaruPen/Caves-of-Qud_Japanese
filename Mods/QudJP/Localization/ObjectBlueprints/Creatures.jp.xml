@@ -5708,7 +5708,7 @@
   </object>
 
 <object Name="Knight Commander of the Holy Temple" Inherits="Templar" Replace="true">
-    <part Name="Render" ColorString="&amp;Y" TileColor="&amp;r" RenderString="t" Tile="Creatures/sw_templar_leader.bmp" DetailColor="Y" DisplayName="騎士団長" />
+    <part Name="Render" ColorString="&amp;Y" TileColor="&amp;r" RenderString="t" Tile="Creatures/sw_templar_leader.bmp" DetailColor="Y" DisplayName="聖堂騎士団長" />
     <part Name="Description" Short="油を引いて磨かれた鎖帷子が曲がった背骨と突き出た顎を覆う。絡み合った血統のせいで虹彩からも色が吸い取られ、湿った薔薇色の唇が光を受けて鋭い嘲笑に跳ね返す。胸は上位貴族を真似て誇張された造作へと膨らんでいる。" />
     <stat Name="Level" Value="25" />
     <stat Name="Hitpoints" Value="100" />

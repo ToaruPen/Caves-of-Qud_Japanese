@@ -109,11 +109,11 @@
       <interest Tags="historic" WillBuy="false" WillSell="true" />
     </interests>
   </faction>
-  <faction Name="Mechanimists" DisplayName="メカニマス教" />
+  <faction Name="Mechanimists" DisplayName="メカニマス教団" />
   <faction Name="MechaSub" DisplayName="メカサブ" />
   <faction Name="Gyre Wights" DisplayName="渦動ワイト" />
   <faction Name="Mamon" DisplayName="マモンの子ら" />
-  <faction Name="Seekers" DisplayName="盲道の求道者" />
+  <faction Name="Seekers" DisplayName="盲道の徒" />
   <faction Name="Wardens" DisplayName="監視官同胞団" />
   <faction Name="Water" DisplayName="水の男爵たち" />
   <faction Name="Flowers" DisplayName="花" />

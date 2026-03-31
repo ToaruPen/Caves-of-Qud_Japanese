@@ -122,7 +122,7 @@
         {
             "key": "{{neutronic|flux}}",
             "context": "XRL.Liquids",
-            "text": "{{neutronic|中性子フラックス}}"
+            "text": "{{neutronic|中性子 フラックス}}"
         },
         {
             "key": "{{neutronic|neutral}}",

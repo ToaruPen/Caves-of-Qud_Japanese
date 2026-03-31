@@ -334,7 +334,7 @@
       <choice GotoID="Chime" IfTestState="AttunedToChavvah" IfNotHaveQuest="If, Then, Else" IfNotFinishedQuest="If, Then, Else">エイン・ロジで話した存在が、鳴る石のことを言っていた……。</choice>
       <choice GotoID="ActiveQuest" IfHaveQuest="If, Then, Else" IfNotFinishedQuestStep="If, Then, Else~Reunite Tau with Her Chime">タウの鈴をどうすべきか、もう一度説明してくれ。</choice>
       <choice GotoID="DoneQuest" IfHaveActiveQuest="If, Then, Else" IfFinishedQuestStep="If, Then, Else~Reunite Tau with Her Chime">タウを鈴と再会させた。</choice>
-      <choice GotoID="DoneQuest" IfHaveActiveQuest="If, Then, Else" IfFinishedQuestStep="If, Then, Else~Go to the Bottom of Taproot" IfTestState="TauLostInSoft">鈴を破壊した、ディヴラク。</choice>
+      <choice GotoID="DoneQuest" IfHaveActiveQuest="If, Then, Else" IfFinishedQuestStep="If, Then, Else~Go to the Bottom of Taproot" IfTestState="TauLostInSoft">鈴を破壊した、ディヴラック。</choice>
       <choice GotoID="BarathrumChavvahDone" IfHaveQuest="The Golem" IfFinishedQuest="If, Then, Else" IfTestState="GyredreamKnown">-else の儀を完了した。言ったとおり、バラサラムの星登りに力を貸してくれるか？</choice>
       <choice GotoID="Barathrum" IfHaveQuest="The Golem">必要の名において来た。バラサラムが我らの星登りのため、君の精神力を求めている。</choice>
       <choice GotoID="End">生きて飲め。</choice>
@@ -364,28 +364,28 @@
     </node>
     <node ID="Accept"><text>ありがとう、旅人 =name=。</text><choice GotoID="Welcome">……</choice></node>
     <node ID="Tau" Inherits="Welcome"><text>私の小鈴、燃えて輝く、心は星光と直角で満ちている。彼女はチャヴァを去る――それは彼女の選択だ。私 は……。</text><choice GotoID="Work2" Priority="1">私は何をすべき？</choice><choice Target="Chime" Load="Remove" /><choice Target="Barathrum" Load="Remove" /></node>
-    <node ID="Name" Inherits="Welcome"><text>かつて〈自我〉の詩人が、私に〈生命の木〉の名をこぼした。私にとって私は、浸潤する〈柔(ソフト)〉から吸い上げた多数の〈自我〉だ。私はチャヴァ、そして私はディヴラクだ。</text><choice GotoID="ManySelves" Priority="99">多数の自我？ どういうことだ？</choice></node>
-    <node ID="ManySelves"><text>チャヴァとして私は多数。ディヴラクとして私は一。私は一であり多数。一なるものは私を〈樹の都市〉、〈知性ある場所〉と呼んだ。君は〈二堅(ツーファーム)〉から芽吹いた自我を、そのように思えばよい。</text></node>
+    <node ID="Name" Inherits="Welcome"><text>かつて〈自我〉の詩人が、私に〈生命の木〉の名をこぼした。私にとって私は、浸潤する〈柔(ソフト)〉から吸い上げた多数の〈自我〉だ。私はチャヴァ、そして私はディヴラックだ。</text><choice GotoID="ManySelves" Priority="99">多数の自我？ どういうことだ？</choice></node>
+    <node ID="ManySelves"><text>チャヴァとして私は多数。ディヴラックとして私は一。私は一であり多数。一なるものは私を〈樹の都市〉、〈知性ある場所〉と呼んだ。君は〈二堅(ツーファーム)〉から芽吹いた自我を、そのように思えばよい。</text></node>
     <node ID="Physiology" SetSpeakerIntProperty="PhysiologyExplained,1">
       <text>大地の深く、我らの根に浸潤しているのが〈柔(ソフト)〉、感じる物質だ。地圧に押され、それは導幹を遡って幹へと上がり、そこで〈二堅(ツーファーム)〉へと凝縮する。二つのセフィロト、-then と -else を含む両位相だ。</text>
       <choice GotoID="Physiology2">[聴き続ける]</choice>
     </node>
     <node ID="Physiology2" Inherits="WelcomeNoPhysiology"><text>これが私という区別ある〈自我〉の起源だ。-then（私がなるもの）と -else（私がならぬもの）の両方を内包する覚知。二堅は辺材(サップウッド)を上ってケテルへ至り、そこで -then がひとつの存在として顕現し、私は鳴る――語り、世界を聞く。</text></node>
-    <node ID="BarathrumChavvahDone"><text>{{emote|*ディヴラクが鳴る*}}</text><choice Target="BarathrumChavvahDone2">……</choice></node>
-    <node ID="BarathrumChavvahDone2"><text>君は -else の儀を完遂した。君は輝くタウを自由にした。いいだろう、=name=。私は鈴を紡錘へ向けて調律し、我らの活力の周波数で振動する。君たちの星登りに力を貸そう。チャヴァがこの約束をしたと、言うべき者に伝えるとよい。</text><choice Target="End">感謝する、ディヴラク。生きて飲め。</choice></node>
+    <node ID="BarathrumChavvahDone"><text>{{emote|*ディヴラックが鳴る*}}</text><choice Target="BarathrumChavvahDone2">……</choice></node>
+    <node ID="BarathrumChavvahDone2"><text>君は -else の儀を完遂した。君は輝くタウを自由にした。いいだろう、=name=。私は鈴を紡錘へ向けて調律し、我らの活力の周波数で振動する。君たちの星登りに力を貸そう。チャヴァがこの約束をしたと、言うべき者に伝えるとよい。</text><choice Target="End">感謝する、ディヴラック。生きて飲め。</choice></node>
     <node ID="Barathrum"><text>驚いたが、ティクヴァに宥められた。思い出す――子のころから、バラサラムは語りは弱く、願いは大胆だ。星登り？ 長く鳴る岩への登攀のことか？</text><choice GotoID="Ascent">バラサラムはスピンドルを登って信号の源を探すつもりだ。登攀機の動力が要る。電磁攪乱から隔離されたものが。</choice></node>
     <node ID="Ascent"><text>ああ、これか。ジァイドリームで感じたのか？ 君がケテルへ来たことを。問う、答えるな。</text><choice GotoID="Gyredream" SetBooleanState="GyredreamKnown,true">ジァイドリームとは？</choice></node>
     <node ID="Gyredream"><text>未来の衝撃だ。私の小鈴 _ は視を授かり、〈明日〉の海峡で岸岩に取り付く地衣だ。つい先ほど、海波が峰となって砕け、その退潮の中に彼女はすべての輝かしくも暴力的な水路の道を見た。皆が感じた。再来、そして渦は最終の緊張にある。私は……。</text><choice GotoID="GyredreamMore">[聴き続ける]</choice></node>
     <node ID="GyredreamMore" Inherits="Welcome"><text>それは私の小鈴タウには過ぎた。彼女は空気を求めて喘ぎ、鈴は止んだ。彼女はいま我らを去り、-else となる。それは彼女の選択だ。</text><choice GotoID="WillYouHelp" IfNotFinishedQuest="If, Then, Else" Priority="99">気の毒に。だが、バラサラムの頼みを聞いてくれるか？</choice><choice GotoID="WillYouHelp_ChavvahFinished" IfFinishedQuest="If, Then, Else" Priority="99">気の毒に。だが、バラサラムの頼みを聞いてくれるか？</choice></node>
-    <node ID="WillYouHelp"><text>{{emote|*ディヴラクが澄んだ音を鳴らす*}}</text><choice GotoID="WillYouHelp2">……</choice></node>
+    <node ID="WillYouHelp"><text>{{emote|*ディヴラックが澄んだ音を鳴らす*}}</text><choice GotoID="WillYouHelp2">……</choice></node>
     <node ID="WillYouHelp2"><text>力を貸そう。君がタウの鈴を根道へ運び、彼女が歩み去れるなら。-else の儀を終えるなら。</text><choice GotoID="Work" IfNotHaveQuest="If, Then, Else">-else の儀？</choice><choice GotoID="Welcome">わかった。</choice></node>
-    <node ID="WillYouHelp_ChavvahFinished"><text>{{emote|*ディヴラクが澄んだ音を鳴らす*}}</text><choice GotoID="BarathrumChavvahDone2">……</choice></node>
+    <node ID="WillYouHelp_ChavvahFinished"><text>{{emote|*ディヴラックが澄んだ音を鳴らす*}}</text><choice GotoID="BarathrumChavvahDone2">……</choice></node>
     <!-- Slynth settlement hooks for Chavvah -->
     <node ID="SlynthRequest">また落ち着かねばならぬが、驚きはやがて好奇へと移る。君が言う〈光帽子〉、手足を持ち自由に歩く民。彼らを我らのサントのように、ここへ迎えると？</node>
-    <node ID="SlynthRequestAccept"><text>先例はない。だが我らの水晶の腕には空間があり、内には開かれがある。合意しよう――彼らが我らの一部となるのであれば、ここへ来るがよい。</text><choice Target="End"><text>感謝する、ディヴラク。</text><part Name="AddSlynthCandidate" Sanctuary="the roaming keter of Chavvah" /></choice></node>
+    <node ID="SlynthRequestAccept"><text>先例はない。だが我らの水晶の腕には空間があり、内には開かれがある。合意しよう――彼らが我らの一部となるのであれば、ここへ来るがよい。</text><choice Target="End"><text>感謝する、ディヴラック。</text><part Name="AddSlynthCandidate" Sanctuary="the roaming keter of Chavvah" /></choice></node>
     <node ID="SlynthRequestReject">驚きが先に立ち、落ち着きは後から来る。=name=、彼らの住まいについて合意が見いだせぬ。すまぬ。</node>
     <node ID="SlynthAbout">我らは光帽子の決断を待っている。可能性の数多きを思い描いている。</node>
-    <node ID="SlynthArrived"><text>このケテルはざわめく！ スリンスが我らの中にあり、植物の民と我らが互いに慣れるのは緩やかだ。単一の感情を語ることはできないが、新しき伴侶と共に我らは -then に向かう。</text><choice Target="Start">感謝する、ディヴラク。</choice></node>
+    <node ID="SlynthArrived"><text>このケテルはざわめく！ スリンスが我らの中にあり、植物の民と我らが互いに慣れるのは緩やかだ。単一の感情を語ることはできないが、新しき伴侶と共に我らは -then に向かう。</text><choice Target="Start">感謝する、ディヴラック。</choice></node>
     <node ID="SlynthSettled"><text>よく来た、=name=。いく人かはすでに -else を選んだが、最初のスリンスたちは我らのサントのように我らに連なった。可動で別であり、共有で共だ。これは奇妙な -then だが、ここからどんな枝がこぼれ出るだろう？ 見届けるのが楽しみだ。</text><choice Target="Start">共に生き、飲もう、チャヴァ。</choice></node>
   </conversation>
 
@@ -649,7 +649,7 @@
 
         すべての存在は所作で、すべての所作は触感だ。手足で空気をたたき、私の水晶の腕の硬い面を押せ……私はそれを感じる。
 
-        君も感じねばならない。あるいは触れを失っているのか？ ディヴラクが触れを失い、百万番目の言葉を語ってもなお言葉が所作だということを忘れると、どこかで弦が弾かれる。すると私は草が水晶の指に触れてしなるのを感じ、ディヴラクも触れを取り戻す。
+        君も感じねばならない。あるいは触れを失っているのか？ ディヴラックが触れを失い、百万番目の言葉を語ってもなお言葉が所作だということを忘れると、どこかで弦が弾かれる。すると私は草が水晶の指に触れてしなるのを感じ、ディヴラックも触れを取り戻す。
       </text>			
     </node>
 
@@ -2427,7 +2427,7 @@
 
     <node ID="Cave" Replace="true">
       <text>
-        洞窟ならそこら中にあるだろ、この間抜け！湿原の表土を掬うか、東のラスト・ウェルズへ行くか、砂漠をうろつくか、好きにしろ…
+        洞窟ならそこら中にあるだろ、この間抜け！湿原の表土を掬うか、東のラスト・ウェルへ行くか、砂漠をうろつくか、好きにしろ…
       </text>
       <choice Target="End" StartQuest="Fetch Argyve a Knickknack">ガラクタを持って戻る。</choice>
       <choice Target="End">興味はない。</choice>
@@ -2475,7 +2475,7 @@
       <text>
         {{emote|*Argyve が両眉を跳ね上げる。*}}
 
-        よし、話のナットにボルトを噛ませよう！私は今、発見の瀬戸際にいる。ウィアードワイヤ導管の組み上げも終盤でな、完成しさえすれば、このジョッパからイドに至るまで誰とでも即時通信ができるようになる。だが仕上げるにはワイヤがいる。できるだけたくさん――最低でも二百フィートだ。ラスト・ウェルズを漁れば拾えるはずだ。
+        よし、話のナットにボルトを噛ませよう！私は今、発見の瀬戸際にいる。ウィアードワイヤ導管の組み上げも終盤でな、完成しさえすれば、このジョッパからイドに至るまで誰とでも即時通信ができるようになる。だが仕上げるにはワイヤがいる。できるだけたくさん――最低でも二百フィートだ。ラスト・ウェルを漁れば拾えるはずだ。
       </text>
       <choice GotoID="End" StartQuest="Weirdwire Conduit... Eureka!">ワイヤを集めてこよう。</choice>
       <choice GotoID="End">興味はない。</choice>
@@ -2669,7 +2669,7 @@
       <text>
         我らに刃向かう支配者どもに死を。
       </text>
-      <choice GotoID="TombQuest" IfHaveActiveQuest="Tomb of the Eaters">イーターの墓所からブライトシェオルへ入らねばならない。</choice>
+      <choice GotoID="TombQuest" IfHaveActiveQuest="Tomb of the Eaters">喰らう者の墓所からブライトシェオルへ入らねばならない。</choice>
       <choice GotoID="Greetings">この作業場のことだが……</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </start>
@@ -2890,7 +2890,7 @@
 
         それでも、準備はできていなかった。この侵害の感覚は電気焼灼のように焼けつく。
       </text>
-      <choice GotoID="TombQuest" IfHaveActiveQuest="Tomb of the Eaters">イーターの墓所からブライトシェオルへ入らねばならない。</choice>
+      <choice GotoID="TombQuest" IfHaveActiveQuest="Tomb of the Eaters">喰らう者の墓所からブライトシェオルへ入らねばならない。</choice>
       <choice GotoID="Greetings">話をしないか、アロイシウス。</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </start>
@@ -3062,7 +3062,7 @@
       <text>
         君の姿を見るだけで胸が満ちるよ、仔よ。無事でいてくれてありがとう。
       </text>
-      <choice GotoID="TombQuest" IfHaveActiveQuest="Tomb of the Eaters">イーターの墓所からブライトシェオルへ入らねばならない。</choice>
+      <choice GotoID="TombQuest" IfHaveActiveQuest="Tomb of the Eaters">喰らう者の墓所からブライトシェオルへ入らねばならない。</choice>
       <choice GotoID="Greetings">命をたっぷりと飲みな、ホーテンサ。話をしよう。</choice>
       <choice GotoID="End">あなたもね。生きて飲め。</choice>
     </start>
@@ -3373,7 +3373,7 @@
         
         何か必要なものはあるか、=name=?
       </text>
-      <choice GotoID="TombQuest" IfHaveActiveQuest="Tomb of the Eaters">イーターの墓所を通ってブライトシェオルへ入らなければならない。</choice>
+      <choice GotoID="TombQuest" IfHaveActiveQuest="Tomb of the Eaters">喰らう者の墓所を通ってブライトシェオルへ入らなければならない。</choice>
       <choice GotoID="Greetings">光があなたを透りますように、ヤコボ。話そう。</choice>
       <choice GotoID="End">いや、いい。生きて飲め。</choice>
     </start>
@@ -4803,7 +4803,7 @@
 
         無事でよかった。何か必要なものはあるかい？
       </text>
-      <choice GotoID="TombQuest"  IfHaveActiveQuest="Tomb of the Eaters">イーターの墓所からブライトシェオルへ入らねばならない。</choice>
+      <choice GotoID="TombQuest"  IfHaveActiveQuest="Tomb of the Eaters">喰らう者の墓所からブライトシェオルへ入らねばならない。</choice>
       <choice GotoID="GuestKlanq" IfFinishedQuestStep="Tomb of the Eaters~Disable the Spindle's Magnetic Field">この状況、どう見てる？</choice>
       <choice GotoID="End">今はない。生きて飲め。</choice>
     </start>
@@ -5082,7 +5082,7 @@
       <text>
         {{emote|*イルーダド長老がしばし沈黙する。*}}
 
-        -んむ、ネフィリム。七番目の疫病。月階で生まれ、命を吹き込まれて我らの子を食うギルシュの巨人だ。千年前、スルタン・レシェフが彼らを追い払い、眠りへと戻した。んむ、奴らは目覚めるのか？
+        -んむ、ネフィリム。七番目の疫病。ムーン・ステアーで生まれ、命を吹き込まれて我らの子を食うギルシュの巨人だ。千年前、スルタン・レシェフが彼らを追い払い、眠りへと戻した。んむ、奴らは目覚めるのか？
       </text>
     </node>
     <node ID="Defanged">
@@ -5453,7 +5453,7 @@
         この辺り一帯で一番の食い物！ クッドで一番！ レシピも試食もあるよ！~
         水に見合う価値を払うなら、=player.formalAddressTerm=、料理の秘訣を教えてやる。~
         料理はするかい、=player.formalAddressTerm=? その辺の瓦礫を鍋に放り込むタイプでなけりゃ、良い品を売ってやる。~
-        嘘じゃない、私はアゲート・セヴァランス・スターに師事した料理人の弟子だった。だから私のレシピが最高なんだ。~
+        嘘じゃない、私はアゲート・セヴァレンス・スターに師事した料理人の弟子だった。だから私のレシピが最高なんだ。~
         このレシピを試してみな。カーバイド・シェフの台所七角堂で審査してる気分になる。~
         料理書の名は心から付けるものだ。名前を笑うような奴は驚きへの感性を失ってる。~
         生きて食べろ、=player.formalAddressTerm=.~
@@ -5509,7 +5509,7 @@
         注ぎ、移し、集め、混ぜる。私はこの仕事が大好きなんだ。~
         流れるものは全部欲しい。君もそうすべきだ、=player.formalAddressTerm=.~
         液体について考え込むことはあるかい？ 神聖だろう？~
-        いつかベセスダ・サーサの底まで潜って、錬金術師に会うんだ。~
+        いつかベテスダ・サーサの底まで潜って、錬金術師に会うんだ。~
         生きて飲め、集めろ、混ぜろ……。
       </text>
       <choice GotoID="End">生きて飲め。</choice>
@@ -6076,7 +6076,7 @@
         じっくり見ていったか、へ？~
         ふん。まだ首はつながってるようだな。
       </text>
-      <choice GotoID="Rustwells" IfHaveActiveQuest="Weirdwire Conduit... Eureka!">ラスト・ウェルズを探らねばならない。</choice>
+      <choice GotoID="Rustwells" IfHaveActiveQuest="Weirdwire Conduit... Eureka!">ラスト・ウェルを探らねばならない。</choice>
       <choice GotoID="Red Rock" IfHaveActiveQuest="What's Eating the Watervine?">メフメトに言われてレッドロックへ向かうところだ。</choice>
       <choice GotoID="Grit Gate" IfHaveActiveQuest="A Canticle for Barathrum">まもなくグリット・ゲートへ旅立つ。</choice>
       <choice GotoID="Stilt" IfHaveActiveQuest="O Glorious Shekhinah!">北のスティルトへ巡礼する。</choice>
@@ -7530,7 +7530,7 @@
 
     <node ID="Golem">
       <text>
-        オモンポーチの上の峰では、聖堂騎士団が戦鏡越しにこちらを監視し、攻撃の準備を進めている。ネフィリムも月階のゆりかごで身を起こし、地獄めいた目的のためにうごめいている。要するに――準備時間の欠如と武装不足のせいで、パクス・クランクは Qガールのクライマー設計をもはや現実的とは見ていない。ここはクランクの言葉を信じるしかない……。
+        オモンポーチの上の峰では、聖堂騎士団が戦鏡越しにこちらを監視し、攻撃の準備を進めている。ネフィリムもムーン・ステアーのゆりかごで身を起こし、地獄めいた目的のためにうごめいている。要するに――準備時間の欠如と武装不足のせいで、パクス・クランクは Qガールのクライマー設計をもはや現実的とは見ていない。ここはクランクの言葉を信じるしかない……。
       </text>
       <choice GotoID="Golem2">*さらに耳を傾ける*</choice>
     </node>
@@ -7599,7 +7599,7 @@
       <text>
         ああ、動力の問題は難題だ。我々の標準電源でも動くかもしれんが、上昇中に電磁攻撃を受ければ無力化される。聖堂騎士団なら容易く行うだろう。
 
-        選択肢は二つ。クランクと Qガールが考案したニュートロニック電池なら、電磁スペクトルの弱点を回避できる。ただし中性子束3ドラムが必要だ。もう一つは遠隔給電だが、スピンドル全長を渡るには驚異的な供給源が要る。緊縛樹チャヴァーを頼れ。報告によれば、月階を再び巡行し始めたらしい。そちらの道を選ぶなら、エイン・ロージの幹を探せ。
+        選択肢は二つ。クランクと Qガールが考案したニュートロニック電池なら、電磁スペクトルの弱点を回避できる。ただし中性子束3ドラムが必要だ。もう一つは遠隔給電だが、スピンドル全長を渡るには驚異的な供給源が要る。緊縛樹チャヴァーを頼れ。報告によれば、ムーン・ステアーを再び巡行し始めたらしい。そちらの道を選ぶなら、エイン・ロージの幹を探せ。
       </text>
     </node>
 
@@ -7676,7 +7676,7 @@
       <choice GotoID="Signal" IfFinishedQuest="Pax Klanq, I Presume?">もう一度、信号について教えてほしい。</choice>
       <choice GotoID="PaxComplete" IfHaveActiveQuest="Pax Klanq, I Presume?" IfFinishedQuestStep="Pax Klanq, I Presume?~Convince Pax Klanq to Construct the Climber">パクス・クランクにクライマー建造を約束させた。</choice>
       <choice GotoID="TombIntro" IfFinishedQuest="Pax Klanq, I Presume?" IfNotHaveQuest="Tomb of the Eaters">パクス・クランクが引き受けた。次は？</choice>
-      <choice GotoID="TombExplain1" IfHaveActiveQuest="Tomb of the Eaters">イーターの墓所について、もう一度聞かせてくれ。</choice>
+      <choice GotoID="TombExplain1" IfHaveActiveQuest="Tomb of the Eaters">喰らう者の墓所について、もう一度聞かせてくれ。</choice>
       <choice GotoID="Golem" IfFinishedQuest="Tomb of the Eaters" IfNotHaveQuest="The Golem">磁場は止まった。スピンドルは自由だ。次はどうする？</choice>
       <choice GotoID="Golem4" IfHaveActiveQuest="The Golem">巨大な存在をこしらえる計画を、もう一度教えてくれ。</choice>
       <choice GotoID="GolemQuestDone" IfFinishedQuest="The Golem" IfNotHaveState="BarathrumGolemDone">あの存在は完成した。次の段階は？</choice>
@@ -7719,20 +7719,20 @@
       <text>
         クライマー設計は電磁石で惑星磁場と結合し、トルクを生み出す仕組みだ。だがスピンドル自身が干渉磁場を生み出しており、おそらく不法な上昇を防ぐ仕掛けなのだろう。
 
-        我々の目的はスピンドルの制御装置にアクセスして、その磁場を無効化すること。だが手段は謎だ。デジトゥムの断片的な記録をエレシュキガルが縫い合わせたところ、ブライトシェオルと呼ばれる場所から磁場を停止できるらしいとわかった。シン・ワールドに位置し、イーターの墓所にあるレシェフの墓を通ってのみ到達できる。
+        我々の目的はスピンドルの制御装置にアクセスして、その磁場を無効化すること。だが手段は謎だ。デジトゥムの断片的な記録をエレシュキガルが縫い合わせたところ、ブライトシェオルと呼ばれる場所から磁場を停止できるらしいとわかった。シン・ワールドに位置し、喰らう者の墓所にあるレシェフの墓を通ってのみ到達できる。
       </text>
       <choice GotoID="TombBody2">……</choice>
     </node>
 
     <node ID="TombBody2">
       <text>
-        奇妙で不確かだが、修理工なら知っているだろう？ 粗い設計図でも、何もないよりは良い。オモンポーチへ戻り、イーターの墓所に入るのだ。内部では、盗掘者たちが刻んだ迷走の道筋を辿り、レシェフの埋葬室へ昇れ。
+        奇妙で不確かだが、修理工なら知っているだろう？ 粗い設計図でも、何もないよりは良い。オモンポーチへ戻り、喰らう者の墓所に入るのだ。内部では、盗掘者たちが刻んだ迷走の道筋を辿り、レシェフの埋葬室へ昇れ。
 
         墓所への入り方については、レシェフが千年前に門を封じた。ただし封印には不備がある。古の死の印は時に失われたが、それを取り戻して身体に刻めば、是もなく死門が開く――かつて無数の喰らう者たちがそうであったように。
 
         死の印を取り戻せ、=name=。墓所へ入り、ブライトシェオルへ渡り、再びダイヤルと鼓を操作するのだ。
       </text>
-      <choice GotoID="TombBody3">言われた通り、イーターの墓所へ入ろう。</choice>
+      <choice GotoID="TombBody3">言われた通り、喰らう者の墓所へ入ろう。</choice>
       <choice GotoID="End">大きな頼みだ……考えさせてくれ。</choice>
     </node>
 
@@ -7750,14 +7750,14 @@
       <text>
         クライマー設計は電磁石で惑星磁場と結合し、トルクを得る。だがスピンドル自身が干渉磁場を発生させており、おそらく不法な上昇を妨げている。
 
-        我々の狙いはスピンドルの制御装置に接続し、この磁場を無効化することだが、まだ手段は判然としない。エレシュキガルが記録の断片から織り上げた謎めいた綴りによれば、シン・ワールドにあるブライトシェオルから停止でき、イーターの墓所のレシェフの墓を通ってのみ辿り着ける。
+        我々の狙いはスピンドルの制御装置に接続し、この磁場を無効化することだが、まだ手段は判然としない。エレシュキガルが記録の断片から織り上げた謎めいた綴りによれば、シン・ワールドにあるブライトシェオルから停止でき、喰らう者の墓所のレシェフの墓を通ってのみ辿り着ける。
       </text>
       <choice GotoID="TombExplain2">……</choice>
     </node>
 
     <node ID="TombExplain2">
       <text>
-        奇妙で不確かだが、粗い設計図でもないよりはましだ。オモンポーチに戻り、イーターの墓所に入れ。中では賊が刻んだ迷路を辿り、レシェフの埋葬室へ昇るのだ。
+        奇妙で不確かだが、粗い設計図でもないよりはましだ。オモンポーチに戻り、喰らう者の墓所に入れ。中では賊が刻んだ迷路を辿り、レシェフの埋葬室へ昇るのだ。
 
         墓所の門については、千年前にレシェフが封印した。ただし封印には綻びがある。失われた死の印を取り戻し、その印を肌に刻めば、死門がお前のために開くだろう。かつて無数の喰らう者の遺骸がそうであったように。
 
@@ -7799,7 +7799,7 @@
       <text>
         そうだ。お前の同胞団への奉仕は称賛に値する、=factionaddress:Barathrumites=。ベテスダ・スーサの蒸気深部に挑み、信号を解読し、スピンドル外輪を確保し、自称伯爵をあしらい、そして何より我らの飛地を聖堂騎士団から守った。
 
-        ベセスダから戻って以来、信号の中身を気にしていたことだろう。真実の重みから守るため、私は隠していた。今その荷を負うのは、オソと Qガール、そして私だけだった。だが状況は変わった。時の川が我らの仕掛けと機械の歯車を回し、流れを速めている。ここから先は、荷を分かち合わねばならん。お前も知るんだ。
+        ベテスダから戻って以来、信号の中身を気にしていたことだろう。真実の重みから守るため、私は隠していた。今その荷を負うのは、オソと Qガール、そして私だけだった。だが状況は変わった。時の川が我らの仕掛けと機械の歯車を回し、流れを速めている。ここから先は、荷を分かち合わねばならん。お前も知るんだ。
       </text>
       <choice GotoID="Signal">その信号とは何だ？ どこから来て、何を語る？</choice>
     </node>
@@ -7898,7 +7898,7 @@
       <choice ID="BethesdaSpara" GotoID="SparaSusa" IfHaveActiveQuest="Decoding the Signal">ベテスダ・スーサについて何か知ってるか？</choice>
       <choice ID="RumbleSpara" GotoID="GrimNod" IfHaveActiveQuest="Grave Thoughts">さっきの地鳴りを感じたか、スパラフチレ？</choice>
       <choice ID="KlanqSpara" GotoID="ShroomPal" IfHaveActiveQuest="Pax Klanq, I Presume?">パクス・クランクに会ったことは？</choice>
-      <choice ID="TombSpara" GotoID="Sparagon" IfHaveActiveQuest="Tomb of the Eaters">ブライトシェオルへ行くため、イーターの墓所に入らなきゃならない。</choice>
+      <choice ID="TombSpara" GotoID="Sparagon" IfHaveActiveQuest="Tomb of the Eaters">ブライトシェオルへ行くため、喰らう者の墓所に入らなきゃならない。</choice>
       <choice ID="GolemSpara" GotoID="SparaStumped" IfFinishedQuestStep="Tomb of the Eaters~Disable the Spindle's Magnetic Field">クランクがここにいることをどう思う？</choice>
       <choice ID="CarbineSpara" GotoID="PraiseCarbine" IfHaveBlueprint="MasterworkCarbine">君のカービンは、扱った中でも最高の一丁だ。</choice>
       <choice ID="PistolSpara" GotoID="PraiseCarbine" IfHaveBlueprint="MasterworkChainPistol">君のピストルは、扱った中でも最高の一丁だ。</choice>
@@ -12891,7 +12891,7 @@
       <text>
         {{emote|*高いブーン声で声に出して*}}
 
-        お客？ お客だ！ 入りな、=player.formalAddressTerm=、見てって、買ってって。コンソーシアム自慢の品をティリフェルガヴィッチが取りそろえ、売ってるよ！ ティリでいいけど、さあティリは……君に何をしてあげよう？
+        お客？ お客だ！ 入りな、=player.formalAddressTerm=、見てって、買ってって。コンソーシアム自慢の品をティリフェルガウィッチが取りそろえ、売ってるよ！ ティリでいいけど、さあティリは……君に何をしてあげよう？
       </text>
       <choice ID="TilliTalks" GotoID="Talking">声で話すのか。テレパスじゃないのか？</choice>
       <choice ID="TilliGreets" GotoID="Greeting">やあ、ティリ。私は =name=。</choice>

@@ -21,7 +21,7 @@
   <faction Name="Issachari">
     <property Name="EndVisibility" Value="Conceal" />
   </faction>
-  <faction Name="Mechanimists" DisplayName="メカニマス教">
+  <faction Name="Mechanimists" DisplayName="メカニマス教団">
     <property Name="EndVisibility" Value="Conceal" />
     <intproperty Name="EndReputationMin" Value="-300" />
     <intproperty Name="EndReputationMax" Value="300" />

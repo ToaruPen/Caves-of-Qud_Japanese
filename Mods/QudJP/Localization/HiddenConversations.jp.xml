@@ -655,7 +655,7 @@
       <text>
         求めを述べよ。
       </text>
-      <choice Target="EndCovenantGritGateGemaraAccess">グリットゲートの仲間とわたしに、ゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では、我ら全員が対等だ。</choice>
+      <choice Target="EndCovenantGritGateGemaraAccess">グリット・ゲートの仲間とわたしに、ゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では、我ら全員が対等だ。</choice>
       <choice Target="EndCovenantMeGemaraAccess">わたしだけにゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では我々が対等となり、地上の者たちは我らの計画のエージェントとなる。</choice>
     </node>
     <node ID="EndCovenantGritGateGemaraAccess">
@@ -790,7 +790,7 @@
       <text>
         求めを述べよ。
       </text>
-      <choice Target="EndCovenantGritGateGemaraAccessResigned">グリットゲートの仲間とわたしに、ゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では、我ら全員が対等だ。</choice>
+      <choice Target="EndCovenantGritGateGemaraAccessResigned">グリット・ゲートの仲間とわたしに、ゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では、我ら全員が対等だ。</choice>
       <choice Target="EndCovenantMeGemaraAccessResigned">わたしだけにゲマーラ・ソフィアとあなたの持つ宇宙・コヴンの知識すべてへのアクセスを許してくれ。この新たな協定では我々が対等となり、地上の者たちは我らの計画のエージェントとなる。</choice>
     </node>
     <node ID="EndCovenantGritGateGemaraAccessResigned">

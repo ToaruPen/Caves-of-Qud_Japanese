@@ -91,17 +91,17 @@
   </quest>
 
   <quest Name="A Canticle for Barathrum"
-         Accomplishment="グリットゲートのバラサラム派と話をした。"
+         Accomplishment="グリット・ゲートのバラサラム派と話をした。"
          Hagiograph="＝name＝は地下に住む平和的なウルシーブに捧げる賛歌を書き、歌った。"
          HagiographCategory="SingsASong"
          Gospel="西のジャングルをさまよううち、＝name＝は秘儀を行うウルシーブの一族に出会った。＝player.t＝の円盤のような瞳のおかげで彼らは＝name＝を受け入れ、秘密を授けた。">
     
     <step Name="Travel to Grit Gate" XP="100">
-      <text>ジョッパ北東の廃墟の地下門、グリットゲートへ向かう。</text>
+      <text>ジョッパ北東の廃墟の地下門、グリット・ゲートへ向かう。</text>
     </step>
 
     <step Name="Locate the Barathrumite Enclave" XP="100">
-      <text>グリットゲート内でバラサラム派の隠れ家を見つける。</text>
+      <text>グリット・ゲート内でバラサラム派の隠れ家を見つける。</text>
     </step>
 
     <step Name="Speak with the Barathrumites" XP="200">
@@ -111,17 +111,17 @@
   </quest>
 
   <quest Name="A Signal in the Noise"
-         Accomplishment="グリットゲートのバラサラム派と話をした。"
+         Accomplishment="グリット・ゲートのバラサラム派と話をした。"
          Hagiograph="＝name＝は地下に住む平和的なウルシーブに捧げる賛歌を書き、歌った。"
          HagiographCategory="SingsASong"
          Gospel="西のジャングルをさまよううち、＝name＝は秘儀を行うウルシーブの一族に出会った。＝player.t＝の円盤のような瞳のおかげで彼らは＝name＝を受け入れ、秘密を授けた。">
     
     <step Name="Travel to Grit Gate" XP="100">
-      <text>西のジャングルにある廃墟の地下門、グリットゲートへ向かう。</text>
+      <text>西のジャングルにある廃墟の地下門、グリット・ゲートへ向かう。</text>
     </step>
 
     <step Name="Locate the Barathrumite Enclave" XP="100">
-      <text>グリットゲート内でバラサラム派の隠れ家を見つける。</text>
+      <text>グリット・ゲート内でバラサラム派の隠れ家を見つける。</text>
     </step>
 
     <step Name="Speak with the Barathrumites" XP="200">
@@ -137,7 +137,7 @@
          Gospel="西のジャングルをさまよううち、＝name＝は秘儀を行うウルシーブの一族に出会った。＝player.t＝が悪臭のスライムに覆われていたおかげで彼らは＝name＝を受け入れ、秘密を授けた。">
     
     <step Name="Travel to Golgotha" XP="100">
-      <text>グリットゲート北の大洞窟ゴルゴタへ向かう。</text>
+      <text>グリット・ゲート北の大洞窟ゴルゴタへ向かう。</text>
     </step>
 
     <step Name="Find a Dysfunctional Waydroid" XP="200">
@@ -149,7 +149,7 @@
     </step>
 
     <step Name="Return to Grit Gate" XP="600">
-      <text>ウェイドロイドを持ってグリットゲートに戻り、バラサラム派と話す。</text>
+      <text>ウェイドロイドを持ってグリット・ゲートに戻り、バラサラム派と話す。</text>
     </step>
 
   </quest>
@@ -173,16 +173,16 @@
     </step>
 
     <step Name="Return to Grit Gate" XP="1000">
-      <text>グリットゲートに戻り、オソに報告する。</text>
+      <text>グリット・ゲートに戻り、オソに報告する。</text>
     </step>
 
   </quest>
 
   <quest Name="O Glorious Shekhinah!"
-         Accomplishment="求道者の頼みで、六日制スティルトの商人バザールと大聖堂を訪れた。"
-         Hagiograph="＝name＝は塩原を北西へ旅し、六日制スティルトの商人バザールと大聖堂に至った。そこではスルタンを讃える賛歌が歌われた。"
+         Accomplishment="求道者の頼みで、六日のスティルトの商人バザールと大聖堂を訪れた。"
+         Hagiograph="＝name＝は塩原を北西へ旅し、六日のスティルトの商人バザールと大聖堂に至った。そこではスルタンを讃える賛歌が歌われた。"
          HagiographCategory="Pilgrimage"
-         Gospel="荒れた平原を越えて旅し、＝name＝は六日制スティルトの商人バザールと大聖堂に向かった。そこで＝player.subjective＝はメカニマスと親交を結び、聖なる井戸へ遺物を投じた。">
+         Gospel="荒れた平原を越えて旅し、＝name＝は六日のスティルトの商人バザールと大聖堂に向かった。そこで＝player.subjective＝はメカニマスと親交を結び、聖なる井戸へ遺物を投じた。">
     
     <step Name="Make a Pilgrimage to the Six Day Stilt" XP="0">
       <text>大塩砂漠を越え、商人バザールとメカニマス大聖堂へ巡礼し、求道者に頼まれた小物を奉納する。</text>
@@ -205,7 +205,7 @@
     </step>
 
     <step Name="Return to Grit Gate" XP="5000">
-      <text>グリットゲートへ戻り、成功を報告する。</text>
+      <text>グリット・ゲートへ戻り、成功を報告する。</text>
     </step>
 
   </quest>
@@ -220,15 +220,15 @@
   </quest>
 
   <quest Name="A Call to Arms"
-         Accomplishment="プトゥス聖堂騎士団の攻撃からグリットゲートを勇敢に守った。"
+         Accomplishment="プトゥス聖堂騎士団の攻撃からグリット・ゲートを勇敢に守った。"
          Hagiograph="＝name＝はサンズとドーターズの大隊を巨大メインフレームに叩きつけ、周囲の寺院にガラスとガリウムの雨を降らせた。"
          HagiographCategory="DefendsSomething"
-         Gospel="＝month＝月＝year＝年、＝name＝は血塗れのグリットゲートの戦いでプトゥス騎士団連合に決定的勝利を収めた。熱いガリウムと砕けたガラスで荒廃したため、グリットゲートはオソの墓場と呼ばれるようになった。">
+         Gospel="＝month＝月＝year＝年、＝name＝は血塗れのグリット・ゲートの戦いでプトゥス騎士団連合に決定的勝利を収めた。熱いガリウムと砕けたガラスで荒廃したため、グリット・ゲートはオソの墓場と呼ばれるようになった。">
     <step Name="Prepare Defenses" XP="0">
       <text>プトゥス騎士団の攻撃に備えて、レーザー砲座・フォース・プロジェクターに電力を入れ、クロムリングをオーバークロックし、ロダニスYを起動する。</text>
     </step>
     <step Name="Defend Grit Gate" XP="0">
-      <text>グリットゲートを攻撃者から守る。</text>
+      <text>グリット・ゲートを攻撃者から守る。</text>
     </step>
   </quest>
 
@@ -259,7 +259,7 @@
       <text>パックス・クランクに、Qガールの設計でクライマーを作るよう同意させる。</text>
     </step>
     <step Name="Return to Grit Gate" XP="0">
-      <text>グリットゲートに戻り、バラサラムに報告する。</text>
+      <text>グリット・ゲートに戻り、バラサラムに報告する。</text>
     </step>
   </quest>
 
@@ -362,7 +362,7 @@
       <text>スピンドルの制御装置にアクセスし、磁場を停止させる。</text>
     </step>
     <step Name="Return to Grit Gate" XP="0">
-      <text>グリットゲートに戻り、バラサラムに報告する。</text>
+      <text>グリット・ゲートに戻り、バラサラムに報告する。</text>
     </step>
   </quest>
 

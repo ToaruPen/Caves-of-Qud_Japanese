@@ -382,7 +382,7 @@
     </cell>   
 
     <cell Name="MoonStairCell" Inherits="DefaultJoppaCell" ApplyTo="TerrainMoonStair">
-      <zone Level="5-9" x="0-2" y="0-2" Name="月階の上空" IndefiniteArticle="the" AmbientBed="Sounds/Ambiences/amb_bed_moonstair">
+      <zone Level="5-9" x="0-2" y="0-2" Name="ムーン・ステアーの上空" IndefiniteArticle="the" AmbientBed="Sounds/Ambiences/amb_bed_moonstair">
         <builder Class="Sky"></builder>
       </zone>
       <zone Level="10" x="0-2" y="0-2" Name="ムーン・ステアー" IndefiniteArticle="the" AmbientBed="Sounds/Ambiences/amb_bed_moonstair">
@@ -903,7 +903,7 @@
 
     <cell Name="ラスト・ウェル" Inherits="DesertCanyon" ApplyTo="TerrainRustWell" Mutable="false">
 
-      <zone Level="5-9" x="0-2" y="0-2" Name="ラスト・ウェルズの上空" IndefiniteArticle="the">
+      <zone Level="5-9" x="0-2" y="0-2" Name="ラスト・ウェルの上空" IndefiniteArticle="the">
         <builder Class="Sky"></builder>
       </zone>
 
@@ -2257,11 +2257,11 @@
     </cell>
 
     <cell Name="BaroqueRuinsCell" Inherits="DefaultJoppaCell" ApplyTo="TerrainBaroqueRuins" HasWeather="true" WindSpeed="0-60" WindDirections="N,NW,NW,W,W,SW,S,SE" WindDuration="50-3000">
-      <zone Level="5-9" x="0-2" y="0-2" Name="バロック遺跡の上空" IndefiniteArticle="the" AmbientBed="Sounds/Ambiences/amb_bed_baroqueRuins">
+      <zone Level="5-9" x="0-2" y="0-2" Name="バロック遺構の上空" IndefiniteArticle="the" AmbientBed="Sounds/Ambiences/amb_bed_baroqueRuins">
         <builder Class="Sky"></builder>
       </zone>
 
-      <zone Level="10" x="0-2" y="0-2" Name="バロック遺跡" AmbientBed="Sounds/Ambiences/amb_bed_baroqueRuins">
+      <zone Level="10" x="0-2" y="0-2" Name="バロック遺構" AmbientBed="Sounds/Ambiences/amb_bed_baroqueRuins">
         <builder Class="Ruins"></builder>
         <builder Class="StairsDown"></builder>
         <postbuilder Class="ZoneTemplate:BaroqueSurfaceRuins"></postbuilder>
@@ -2270,7 +2270,7 @@
         <music Track="Music/Overworld" />
       </zone>
 
-      <zone Level="11-15" x="0-2" y="0-2" Name="地下のバロック遺跡" Tier="7">
+      <zone Level="11-15" x="0-2" y="0-2" Name="地下のバロック遺構" Tier="7">
 		    <builder Class="Strata"></builder>
 		    <builder Class="Ruins" Name="Ruins"></builder>
   	    <builder Class="StairsUp"></builder>
@@ -2283,7 +2283,7 @@
         <music Track="Music/Binaural Concept" />
       </zone>
 
-      <zone Level="16-30" x="0-2" y="0-2" Name="地下のバロック遺跡" Tier="7">
+      <zone Level="16-30" x="0-2" y="0-2" Name="地下のバロック遺構" Tier="7">
         <builder Class="Strata"></builder>
         <builder Class="Ruins" Name="Ruins"></builder>
         <builder Class="StairsUp"></builder>
@@ -2296,7 +2296,7 @@
         <music Track="Music/Binaural Concept" />
       </zone>
 
-      <zone Level="31-40" x="0-2" y="0-2" Name="地下のバロック遺跡" Tier="8">
+      <zone Level="31-40" x="0-2" y="0-2" Name="地下のバロック遺構" Tier="8">
         <builder Class="Strata"></builder>
         <builder Class="Ruins" Name="Ruins"></builder>
         <builder Class="StairsUp"></builder>

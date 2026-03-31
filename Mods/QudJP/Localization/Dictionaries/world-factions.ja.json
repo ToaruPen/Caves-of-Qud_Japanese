@@ -292,7 +292,7 @@
     {
       "key": "Mechanimists",
       "context": "Faction.Name",
-      "text": "メカニマス教"
+      "text": "メカニマス教団"
     },
     {
       "key": "MechaSub",
@@ -627,7 +627,7 @@
     {
       "key": "dromad merchants",
       "context": "Faction.Name",
-      "text": "ドロマド商人"
+      "text": "ドロマド商団"
     },
     {
       "key": "Farmers' Guild",
@@ -767,7 +767,7 @@
     {
       "key": "the Mechanimists",
       "context": "Faction.Name",
-      "text": "メカニマス教"
+      "text": "メカニマス教団"
     },
     {
       "key": "the Merchants' Guild",
