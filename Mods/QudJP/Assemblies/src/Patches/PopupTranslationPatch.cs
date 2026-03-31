@@ -26,6 +26,16 @@ public static class PopupTranslationPatch
         new Regex("^That code is already in your library\\. It's named (?<value>.+)\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex ManageBuildTitlePattern =
         new Regex("^Manage Build: (?<value>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex SifrahChosenCorrectPattern =
+        new Regex("^You have already chosen the correct option for (?<value>.+)\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex SifrahUseWhichPattern =
+        new Regex("^Use which option for (?<value>.+)\\?$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex SifrahEliminatedPattern =
+        new Regex("^You have already eliminated (?<value>.+) as a possibility\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex SifrahDisabledPattern =
+        new Regex("^Choosing (?<value>.+) is disabled for this turn\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex SifrahInsightPattern =
+        new Regex("^You have gained insight into (?<value>.+)\\. In a future Sifrah task of this kind, you can use this insight to determine which of your game options are not correct for any requirement\\. This will expend your insight, unless there are no such options\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     // ShowBlock parameter count for game version 2.0.4
     private const int ShowBlockParameterCount = 8;
@@ -334,6 +344,71 @@ public static class PopupTranslationPatch
                 out var manageBuildTitleTranslated))
         {
             translated = manageBuildTitleTranslated;
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".SifrahChosenCorrect",
+                SifrahChosenCorrectPattern,
+                "You have already chosen the correct option for {0}.",
+                spans,
+                out var sifrahChosenCorrectTranslated))
+        {
+            translated = sifrahChosenCorrectTranslated;
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".SifrahUseWhich",
+                SifrahUseWhichPattern,
+                "Use which option for {0}?",
+                spans,
+                out var sifrahUseWhichTranslated))
+        {
+            translated = sifrahUseWhichTranslated;
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".SifrahEliminated",
+                SifrahEliminatedPattern,
+                "You have already eliminated {0} as a possibility.",
+                spans,
+                out var sifrahEliminatedTranslated))
+        {
+            translated = sifrahEliminatedTranslated;
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".SifrahDisabled",
+                SifrahDisabledPattern,
+                "Choosing {0} is disabled for this turn.",
+                spans,
+                out var sifrahDisabledTranslated))
+        {
+            translated = sifrahDisabledTranslated;
+            return true;
+        }
+
+        if (TryTranslateSinglePlaceholderTemplate(
+                stripped,
+                route,
+                family + ".SifrahInsight",
+                SifrahInsightPattern,
+                "You have gained insight into {0}. In a future Sifrah task of this kind, you can use this insight to determine which of your game options are not correct for any requirement. This will expend your insight, unless there are no such options.",
+                spans,
+                out var sifrahInsightTranslated))
+        {
+            translated = sifrahInsightTranslated;
             return true;
         }
 
