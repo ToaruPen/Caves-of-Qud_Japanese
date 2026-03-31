@@ -53,11 +53,11 @@ public sealed class TradeUiPopupTranslationPatchTests
     public void Prefix_TranslatesShowMessage_ForWaterDebt()
     {
         WriteDictionary(
-            ("{0} will not trade with you until you pay {1} the {2} you owe {3}.", "{0}は、あなたが{1}借りている{2}を支払うまで取引してくれない。"));
+            ("{0} will not trade with you until you pay {1} the {2} you owe {3}.", "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。"));
 
         using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
 
-        DummyTradeUiPopupTarget.Show("商人 will not trade with you until you pay 彼に the 5 drams of fresh water you owe 彼に.");
+        DummyTradeUiPopupTarget.Show("商人 will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼.");
 
         Assert.That(
             DummyTradeUiPopupTarget.LastShowMessage,
@@ -151,6 +151,7 @@ public sealed class TradeUiPopupTranslationPatchTests
             ?? throw new InvalidOperationException($"Method not found: {type.FullName}.{methodName}");
     }
 
+    // To-do: consolidate these JSON test helpers once the shared usage reaches 3+ files.
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();

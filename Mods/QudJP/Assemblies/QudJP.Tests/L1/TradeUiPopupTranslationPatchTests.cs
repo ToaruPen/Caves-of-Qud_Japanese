@@ -46,6 +46,11 @@ public sealed class TradeUiPopupTranslationPatchTests
     }
 
     [TestCase(
+        "You cannot carry things.",
+        "{0} cannot carry things.",
+        "{0}は物を運べない。",
+        "あなたは物を運べない。")]
+    [TestCase(
         "商人 cannot carry things.",
         "{0} cannot carry things.",
         "{0}は物を運べない。",
@@ -61,19 +66,19 @@ public sealed class TradeUiPopupTranslationPatchTests
         "{0}は燃えていて、あなたと取引している暇がない。",
         "商人は燃えていて、あなたと取引している暇がない。")]
     [TestCase(
-        "商人 will not trade with you until you pay 彼に the 5 drams of fresh water you owe 彼に.",
+        "商人 will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼.",
         "{0} will not trade with you until you pay {1} the {2} you owe {3}.",
-        "{0}は、あなたが{1}借りている{2}を支払うまで取引してくれない。",
+        "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。",
         "商人は、あなたが彼に借りている5ドラムの{{B|清水}}を支払うまで取引してくれない。")]
     [TestCase(
-        "商人 will not trade with you until you pay 彼に the 5 drams of fresh water you owe 彼に. Do you want to give 彼に your 3 drams now?",
+        "商人 will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼. Do you want to give 彼 your 3 drams now?",
         "{0} will not trade with you until you pay {1} the {2} you owe {3}. Do you want to give {4} your {5} now?",
-        "{0}は、あなたが{1}借りている{2}を支払うまで取引してくれない。今すぐあなたの{5}を{4}渡しますか？",
+        "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。今すぐあなたの{5}を{4}に渡しますか？",
         "商人は、あなたが彼に借りている5ドラムの{{B|清水}}を支払うまで取引してくれない。今すぐあなたの3ドラムを彼に渡しますか？")]
     [TestCase(
-        "商人 will not trade with you until you pay 彼に the 5 drams of fresh water you owe 彼に. Do you want to give it to 彼に now?",
+        "商人 will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼. Do you want to give it to 彼 now?",
         "{0} will not trade with you until you pay {1} the {2} you owe {3}. Do you want to give it to {4} now?",
-        "{0}は、あなたが{1}借りている{2}を支払うまで取引してくれない。今すぐそれを{4}渡しますか？",
+        "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。今すぐそれを{4}に渡しますか？",
         "商人は、あなたが彼に借りている5ドラムの{{B|清水}}を支払うまで取引してくれない。今すぐそれを彼に渡しますか？")]
     [TestCase(
         "You can't understand 商人の explanation.",

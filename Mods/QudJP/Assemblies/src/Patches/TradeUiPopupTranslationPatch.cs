@@ -187,24 +187,6 @@ public static class TradeUiPopupTranslationPatch
                 }),
             "Popup.ShowYesNo");
 
-        AddTarget(
-            methods,
-            AccessTools.Method(
-                popupType,
-                "ShowBlock",
-                new[]
-                {
-                    typeof(string),
-                    typeof(string),
-                    typeof(string),
-                    typeof(bool),
-                    typeof(bool),
-                    typeof(bool),
-                    typeof(bool),
-                    location2DType,
-                }),
-            "Popup.ShowBlock");
-
         if (methods.Count == 0)
         {
             Trace.TraceError("QudJP: {0} resolved zero target methods.", Context);
@@ -811,6 +793,7 @@ public static class TradeUiPopupTranslationPatch
         subject = StripTrailingSuffix(subject, " ponies");
         subject = StripTrailingSuffix(subject, " identify");
         subject = StripTrailingSuffix(subject, " identifies");
+        subject = TranslatePronoun(subject);
 
         return subject.Trim();
     }
@@ -821,6 +804,31 @@ public static class TradeUiPopupTranslationPatch
         {
             "you" => "あなた",
             "You" => "あなた",
+            "your" => "あなたの",
+            "Your" => "あなたの",
+            "me" => "私",
+            "Me" => "私",
+            "I" => "私",
+            "my" => "私の",
+            "My" => "私の",
+            "we" => "私たち",
+            "We" => "私たち",
+            "us" => "私たち",
+            "Us" => "私たち",
+            "they" => "彼ら",
+            "They" => "彼ら",
+            "them" => "彼ら",
+            "Them" => "彼ら",
+            "he" => "彼",
+            "He" => "彼",
+            "him" => "彼",
+            "Him" => "彼",
+            "she" => "彼女",
+            "She" => "彼女",
+            "her" => "彼女",
+            "Her" => "彼女",
+            "it" => "それ",
+            "It" => "それ",
             _ => value.Trim(),
         };
     }
