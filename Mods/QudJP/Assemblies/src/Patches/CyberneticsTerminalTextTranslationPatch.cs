@@ -12,13 +12,18 @@ public static class CyberneticsTerminalTextTranslationPatch
 {
     private const string Context = nameof(CyberneticsTerminalTextTranslationPatch);
 
-    private static readonly MethodInfo TranslateScreenMethod =
-        AccessTools.Method(typeof(CyberneticsTerminalTextTranslator), nameof(CyberneticsTerminalTextTranslator.TranslateScreen))
-        ?? throw new InvalidOperationException("CyberneticsTerminalTextTranslator.TranslateScreen not found.");
+    private static readonly MethodInfo? TranslateScreenMethod =
+        AccessTools.Method(typeof(CyberneticsTerminalTextTranslator), nameof(CyberneticsTerminalTextTranslator.TranslateScreen));
 
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
+        if (TranslateScreenMethod is null)
+        {
+            Trace.TraceWarning("QudJP: {0}.TranslateScreen() not found; patch will be skipped.", Context);
+            return null;
+        }
+
         var targetType = GameTypeResolver.FindType("XRL.UI.TerminalScreen", "TerminalScreen");
         if (targetType is null)
         {
@@ -37,6 +42,17 @@ public static class CyberneticsTerminalTextTranslationPatch
 
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
+        if (TranslateScreenMethod is null)
+        {
+            Trace.TraceWarning("QudJP: {0}.TranslateScreen() not found during transpile; leaving instructions unchanged.", Context);
+            foreach (var instruction in instructions)
+            {
+                yield return instruction;
+            }
+
+            yield break;
+        }
+
         var injected = false;
         foreach (var instruction in instructions)
         {

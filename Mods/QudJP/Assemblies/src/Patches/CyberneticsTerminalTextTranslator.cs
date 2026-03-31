@@ -10,7 +10,7 @@ namespace QudJP.Patches;
 
 internal static class CyberneticsTerminalTextTranslator
 {
-    private const string Context = nameof(CyberneticsTerminalTextTranslationPatch);
+    private const string Context = nameof(CyberneticsTerminalTextTranslator);
 
     private static readonly string[] ExactReplacementKeys =
     {

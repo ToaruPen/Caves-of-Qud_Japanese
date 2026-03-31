@@ -27,10 +27,10 @@ public sealed partial class Issue201OtherUiBindingPatchTests
                 Assert.That(screen.Options[1], Is.EqualTo("メインメニューに戻る"));
                 Assert.That(screen.RenderedText, Does.Contain("インプラントは何個まで装着できますか?"));
                 Assert.That(
-                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(CyberneticsTerminalTextTranslationPatch), "CyberneticsTerminal.MainText"),
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(CyberneticsTerminalTextTranslator), "CyberneticsTerminal.MainText"),
                     Is.GreaterThan(0));
                 Assert.That(
-                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(CyberneticsTerminalTextTranslationPatch), "CyberneticsTerminal.OptionText"),
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(CyberneticsTerminalTextTranslator), "CyberneticsTerminal.OptionText"),
                     Is.GreaterThan(0));
             });
         });
