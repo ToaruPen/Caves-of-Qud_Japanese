@@ -40,7 +40,7 @@
         <part Name="WaterRitualLearnSkill" />
       </choice>
       <choice ID="FungusColonizeChoice">
-        <text>私は菌類の友だ。私を植民させてくれ。</text>
+        <text>私は菌類の友だ。私の体に定着させてくれ。</text>
         <part Name="WaterRitualFungusColonize" />
       </choice>
       <choice ID="HermitOathChoice">
@@ -203,13 +203,13 @@
     <start ID="KilledTau" IfTestState="TauElse contains KilledByPlayer">
       <text>
         {{emote|*鈴が骨を震わせる警鐘を鳴らす。*}}
-        嘲りか？ 挑発か？ よくもこれだけのことをしておいて、通信を試みるなどという残酷さが持てるものだ。
+        嘲りか？ 挑発か？ これだけのことをしておいて、よくも交信を試みられるものだ。
       </text>
       <choice GotoID="Killed2">タウが去ったことをどう思う？</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </start>
     <node ID="Killed2">
-      <text>その嘲笑が吐き気を催す。君が吐き気を催す。落ち着きなどしない、ティクヴァ！</text>
+      <text>君の嘲りには吐き気がする。君自身にも吐き気がする。私は落ち着きなどしない、ティクヴァ！</text>
       <choice GotoID="End">生きて飲め。</choice>
     </node>
     <start ID="LostInSoft" IfHaveState="TauLostInSoft">
@@ -243,7 +243,7 @@
     </start>
     <node ID="Else2">
       <text>
-        私は引き裂かれている！ この結果、この結果、剪断が私を割く。なぜプトー？ どうして？ ずっとそうだったのか？ 我らの誰がこの -else を担い、圧の下で実体化へ至るのか？ 答えるな。言葉の答えはなく、そもそも答えがないのかもしれぬ。君は我らに奉仕し、この -elseing を為してくれた。感謝する。
+        私は引き裂かれている！ この結末が、この結末が私を裂く。なぜプトー？ どうして？ ずっとこうだったのか？ 我らのうち誰がこの -else を担い、圧の下で我らの実在へと結晶するのだ？ 答えるな。言葉で答えられることではない。そもそも答えなどないのかもしれぬ。君は我らに奉仕し、この -elseing を成してくれた。感謝する。
       </text>
       <choice GotoID="PostQuestions">どういたしまして。まだ質問がある。</choice>
       <choice GotoID="End">生きて飲め。</choice>
@@ -251,7 +251,7 @@
     <start ID="Declaration">
       <text>
         {{emote|*鈴が鋭く緊迫した音を打ち鳴らす*}}
-        存在よ！ 君は持続する意志と行為能力を与えられ、二度刻まれた肉体の建築と引く力の強い繊維を有する。濡れた髪で跳ね起き、充ちる。君の掴みは存在の織り糸を擦り削る。責務は認めようと認めまいと在り続ける。強くあれ。時は今だ。
+        存在よ！ 君には持続する意志と行為の力、二度刻まれた肉体の構造、そして強く引く繊維が与えられている。君は湿った髪のまま跳ね起き、その充実へと至る。君の掴みは存在の糸を擦り減らす。責務は認めようと認めまいと消えない。強くあれ。時は今だ。
       </text>
       <choice GotoID="What">……何だって？</choice>
       <choice GotoID="Name">私は =name=。君は？</choice>
@@ -271,7 +271,7 @@
     <node ID="What">
       <text>
         {{emote|*鈴が再び鳴り、君の精神の壁にこだまして大きくなる*}}
-        聞け！ 君が操縦者であると知るのは今まで以上に重要だ。君は自らを鍛え直し、選択的な残酷さを行使する道具とする。それは避けられぬ。君は形作る、血に塗れつつも花開く運命を。眠りから始まり、大地を震わせる。
+        聞け！ 今こそ、君が操縦者だと知ることが何より重要だ。君は鍛え直され、研ぎ澄まされ、選び取った残酷さを行使するための道具となる。避けられぬことだ。君は血にまみれながらも花開くこの道を形作る。眠りから立ち上がり、大地を震わせるのだ。
         皆がそうだが、君はとりわけそうだ。かつて軽かった重みも、今はひどく重い。
         受け入れるか？
       </text>
@@ -3086,7 +3086,7 @@
       <choice GotoID="Klanq" IfHaveActiveQuest="Pax Klanq, I Presume?">パクス・クランクに会ったことは？</choice>
       <choice GotoID="HowLong">ずいぶん髪が白い！ どれくらいグリット・ゲートで暮らしている？</choice>
       <choice GotoID="OtherBarathrumites">ほかのバラサラム派のことを教えてくれないか？</choice>
-      <choice GotoID="LiquidTinker">あなたは液体修理工なの？</choice>
+      <choice GotoID="LiquidTinker">あなたは液体職人なの？</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </start>
 
@@ -3094,14 +3094,14 @@
       <text>
         そこにはコンヴァレッセンスの水たまりがある。低温霧が凝縮すると、冷たくて発光する液体になって、入浴できれば回復に効くのさ。
 
-        ああ！ 廃墟の病棟のひとつに、錬金術師の店があるよ。錬金術師が誰かって？ なんとも謎めいた人物――素人の液体修理工、詩人、商人。方法は科学的じゃないけれど、特定の液体を探しているなら役に立つ。くれぐれも用心してね、=name=。
+        ああ！ 廃墟の病棟のひとつに、錬金術師の店があるよ。錬金術師が誰かって？ なんとも謎めいた人物――素人の液体職人、詩人、商人。方法は科学的じゃないけれど、特定の液体を探しているなら役に立つ。くれぐれも用心してね、=name=。
       </text>
       <choice GotoID="Omonporch" IfHaveActiveQuest="The Earl of Omonporch">オモンポーチと、自称の伯爵については？</choice>
       <choice GotoID="Rumbling" IfHaveActiveQuest="Grave Thoughts">あの地鳴りを感じたか、ホーテンサ？</choice>
       <choice GotoID="Klanq" IfHaveActiveQuest="Pax Klanq, I Presume?">パクス・クランクに会ったことは？</choice>
       <choice GotoID="HowLong">どれくらいグリット・ゲートで暮らしている？</choice>
       <choice GotoID="OtherBarathrumites">ほかのバラサラム派のことを教えてくれないか？</choice>
-      <choice GotoID="LiquidTinker">あなたは液体修理工なの？</choice>
+      <choice GotoID="LiquidTinker">あなたは液体職人なの？</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </node>
 
@@ -3114,7 +3114,7 @@
       <choice GotoID="Klanq" IfHaveActiveQuest="Pax Klanq, I Presume?">パクス・クランクに会ったことは？</choice>
       <choice GotoID="HowLong">どれくらいグリット・ゲートで暮らしている？</choice>
       <choice GotoID="OtherBarathrumites">ほかのバラサラム派のことを教えてくれないか？</choice>
-      <choice GotoID="LiquidTinker">あなたは液体修理工なの？</choice>
+      <choice GotoID="LiquidTinker">あなたは液体職人なの？</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </node>
 
@@ -3127,7 +3127,7 @@
       <choice GotoID="Klanq" IfHaveActiveQuest="Pax Klanq, I Presume?">パクス・クランクに会ったことは？</choice>
       <choice GotoID="HowLong">どれくらいグリット・ゲートで暮らしている？</choice>
       <choice GotoID="OtherBarathrumites">ほかのバラサラム派のことを教えてくれないか？</choice>
-      <choice GotoID="LiquidTinker">あなたは液体修理工なの？</choice>
+      <choice GotoID="LiquidTinker">あなたは液体職人なの？</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </node>
 
@@ -3142,7 +3142,7 @@
       <choice GotoID="Rumbling" IfHaveActiveQuest="Grave Thoughts">あの地鳴りを感じたか、ホーテンサ？</choice>
       <choice GotoID="HowLong">どれくらいグリット・ゲートで暮らしている？</choice>
       <choice GotoID="OtherBarathrumites">ほかのバラサラム派のことを教えてくれないか？</choice>
-      <choice GotoID="LiquidTinker">あなたは液体修理工なの？</choice>
+      <choice GotoID="LiquidTinker">あなたは液体職人なの？</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </node>
 
@@ -3153,7 +3153,7 @@
         何年も。何十年の上にまた何十年。ひょっとすると何世紀も。私がバラサラムのもとで学ぶために来た頃、ここにいる耳の濡れた仔たちの多くは母の夢日記の中の走り書きでしかなかった。あの頃は知らぬことばかりで、今もなお知らぬことばかりだよ。
       </text>
       <choice GotoID="OtherBarathrumites">ほかのバラサラム派のことを教えてくれないか？</choice>
-      <choice GotoID="LiquidTinker">あなたは液体修理工なの？</choice>
+      <choice GotoID="LiquidTinker">あなたは液体職人なの？</choice>
       <choice GotoID="End">生きて飲め。</choice>
     </node>
 
@@ -5628,7 +5628,7 @@
   <conversation ID="glover" Replace="true">
     <node ID="Start">
       <text>
-        手のコートありますよ！ 指を早死にさせないで！~
+        手袋ありますよ！ 指を早死にさせないで！~
         手は守っとけ、=player.formalAddressTerm=. マッドポールに一本持っていかれるまで重要性に気づかないぞ。~
         軽い手袋も重い手袋も篭手も揃ってる。=player.formalAddressTerm=、素手で歩くのはやめとけ。~
         サイズは全部フリーさ、=player.formalAddressTerm=. 私が売るなら、それは合う。~
@@ -8959,37 +8959,37 @@
     </node>
     <node ID="Atzmus" Inherits="GolemComponentQuestions">
       <text>
-        アツムスは存在の超越写し。生き物パーツの特性を型取り、本体と交差させる。
+        アツムスは存在の超越的な写し。クリーチャーの部位の特性を型取りし、本体と交差させる。
       </text>
     </node>
     <node ID="Armament" Inherits="GolemComponentQuestions">
       <text>
-        ゼータクローム武器。クリーチャーを武芸に同調させ、メタクロームの拳形（こぶしかた）をそのまま型取る。
+        ゼータクローム武器。クリーチャーを武芸に同調させ、メタクロームの拳の型をなぞる。
       </text>
     </node>
     <node ID="Incantation" Inherits="GolemComponentQuestions">
       <text>
-        君の経験から話して書き付け、存在のきずなを形成。クリーチャーの夢脳が最初に聞く音。
+        君の経験から生まれた言葉を書き付け、存在のきずなを形作る。クリーチャーの幼い夢脳が最初に聞く音。
       </text>
     </node>
     <node ID="Hamsa" Inherits="GolemComponentQuestions">
       <text>
-        掌にはんだ付けする選んだトークン。重さ5ポンド以下。選択次第でクリーチャーの性質と行動が変わる。
+        掌にはんだ付けし、物の意味に向きを合わせる選んだトークン。重さ5ポンド以下。他と同じく、選択次第でクリーチャーの性質と行動が変わる。
       </text>
     </node>
     <node ID="Power" Inherits="GolemComponentQuestions">
       <text>
-        スピンドル上昇クリーチャーには強い電池と珍しい電磁シールド必要。紫トゲでフラックス3ドラム使って中性子セル作る、または別電源探す。
+        スピンドルを昇るクリーチャーには強力な電池と希少な電磁遮蔽が要る。紫トゲならフラックス3ドラムで中性子セルを作れる。さもなくば別の電源を探す。
       </text>
     </node>
     <node ID="Mound" Inherits="GolemComponentQuestions">
       <text>
-        スクラップ粘土の盛り土と対話する。それからクランクと話して回路ハンダ付け、スープかき混ぜる。
+        スクラップ粘土の塚とやり取りする。それからクランクと話し、回路をはんだ付けしてスープをかき混ぜる。
       </text>
     </node>
     <node ID="GolemOtherQuestions">
       <text>
-        何聞く？ クランク話す。
+        何を聞く？ クランク、答える。
       </text>
       <choice Target="Work" IfHaveActiveQuest="The Golem">クリーチャーと結び付くって、どうなる？</choice>
       <choice Target="Work" IfFinishedQuest="The Golem">結び付いたあと、どうなる？</choice>
@@ -9001,27 +9001,27 @@
     </node>
     <node ID="Work" Inherits="GolemOtherQuestions">
       <text>
-        クリーチャーは友だちみたいに君についてくる。それから中に入って操作。友だちも一人なら一緒に入れる。
+        クリーチャーは友だちみたいについてくる。それに、中に入って操縦もできる。友だち一人なら一緒に乗れる。
       </text>
     </node>
     <node ID="Equip" Inherits="GolemOtherQuestions">
       <text>
-        クリーチャーは巨大クリーチャー。超大型ギアしか装備できない。クラーケンとかソルトバックみたい。
+        クリーチャーは大きな生き物。超大型装備しか身につけられない。クラーケンやソルトバックみたい。
       </text>
     </node>
     <node ID="Damage" Inherits="GolemOtherQuestions">
       <text>
-        トゲトゲがオモンポーチのスルタン法廷に修復の小部屋を作った。そこでサンスラグ1ドラムでクリーチャー塗り直す。失くしたら呼び戻す。
+        トゲトゲがオモンポーチのスルタン法廷に作り直しの小部屋をこしらえた。そこでサンスラグ1ドラムでクリーチャーを塗り直せる。失くしても呼び戻せる。
       </text>
     </node>
     <node ID="Spindle" Inherits="GolemOtherQuestions">
       <text>
-        そう！ でもそれまでにもクリーチャーと歩ける。話して、戦って、眠って……普通。友だち。
+        そう！ でもその前でもクリーチャーと一緒に歩き回れる。話す、戦う、眠る……ふつうのこと。友だち。
       </text>
     </node>
     <node ID="BarathrumsStudy" Inherits="Welcome">
       <text>
-        クランク、生きてる！ ジャロピー悲劇がクランクを薄暗いろうそく部屋に招いた。石床をぬいぐるみで柔らかくして、退屈な瓶棚を喜びと胞子で磨いた。トゲトゲ、見て。
+        クランク、生きる！ ジャロピーの悲劇がクランクを薄暗いろうそく部屋へ招いた。クランクは石床をぬいぐるみで柔らかくして、退屈な瓶棚に喜びと胞子をまぶした。トゲトゲ、見て。
       </text>
     </node>
   </conversation>
@@ -10261,7 +10261,7 @@
       <text>
         ああ、私は大丈夫、大丈夫さ。
 
-        何十年も奉仕したのちに、この臭いムサの林に配属されるのが大好きなんだ。昼夜問わず働き続ける肉の修理工と薄っぺらで伝導率抜群の壁を挟んで一つ屋根の下、音は全部こっちへ響いてくる。
+        何十年も奉仕したのちに、この臭いムサの林に配属されるのが大好きなんだ。昼夜問わず働き続ける生身の職人と、薄っぺらで伝導率抜群の壁を挟んで一つ屋根の下、音は全部こっちへ響いてくる。
 
         人間は何て言うんだったか？ 「夢の暮らし」とか？ そう、私はまさに夢の暮らしを送っている。
       </text>
@@ -13300,38 +13300,38 @@
     </node>
     <node ID="Atzmus" Inherits="GolemComponentQuestions">
       <text>
-        アツムスは存在の超越写し。生き物パーツの特性を型取り、本体と交差させる。
+        アツムスは存在の超越的な写し。クリーチャーの部位の特性を型取りし、本体と交差させる。
       </text>
     </node>
     <node ID="Armament" Inherits="GolemComponentQuestions">
       <text>
-        ゼータクローム武器。クリーチャーを武芸に同調させ、メタクロームの拳形（こぶしかた）をそのまま型取る。
+        ゼータクローム武器。クリーチャーを武芸に同調させ、メタクロームの拳の型をなぞる。
       </text>
     </node>
     <node ID="Incantation" Inherits="GolemComponentQuestions">
       <text>
-        君の経験から話して書き付け、存在のきずなを形成。クリーチャーの夢脳が最初に聞く音。
+        君の経験から生まれた言葉を書き付け、存在のきずなを形作る。クリーチャーの幼い夢脳が最初に聞く音。
       </text>
     </node>
     <node ID="Hamsa" Inherits="GolemComponentQuestions">
       <text>
-        掌にはんだ付けする選んだトークン。重さ5ポンド以下。選択次第でクリーチャーの性質と行動が変わる。
+        掌にはんだ付けし、物の意味に向きを合わせる選んだトークン。重さ5ポンド以下。他と同じく、選択次第でクリーチャーの性質と行動が変わる。
       </text>
     </node>
     <node ID="Power" Inherits="GolemComponentQuestions">
       <text>
-        スピンドル上昇クリーチャーには強い電池と珍しい電磁シールド必要。紫トゲでフラックス3ドラム使って中性子セル作る、または別電源探す。
+        スピンドルを昇るクリーチャーには強力な電池と希少な電磁遮蔽が要る。紫トゲならフラックス3ドラムで中性子セルを作れる。さもなくば別の電源を探す。
       </text>
     </node>
     <node ID="Mound" Inherits="GolemComponentQuestions">
       <text>
-        スクラップ粘土の盛り土と対話する。それからクランクと話して回路ハンダ付け、スープかき混ぜる。
+        スクラップ粘土の塚とやり取りする。それからクランクと話し、回路をはんだ付けしてスープをかき混ぜる。
       </text>
     </node>
 
     <node ID="GolemOtherQuestions">
       <text>
-        何聞く？ クランク話す。
+        何を聞く？ クランク、答える。
       </text>
       <choice Target="Work" IfHaveActiveQuest="The Golem">クリーチャーと結び付くって、どうなる？</choice>
       <choice Target="Work" IfFinishedQuest="The Golem">結び付いたあと、どうなる？</choice>
@@ -13342,28 +13342,28 @@
     </node>
     <node ID="Work" Inherits="GolemOtherQuestions">
       <text>
-        クリーチャーは友だちみたいに君についてくる。それから中に入って操作。友だちも一人なら一緒に入れる。
+        クリーチャーは友だちみたいについてくる。それに、中に入って操縦もできる。友だち一人なら一緒に乗れる。
       </text>
     </node>
     <node ID="Equip" Inherits="GolemOtherQuestions">
       <text>
-        クリーチャーは巨大クリーチャー。超大型ギアしか装備できない。クラーケンとかソルトバックみたい。
+        クリーチャーは大きな生き物。超大型装備しか身につけられない。クラーケンやソルトバックみたい。
       </text>
     </node>
     <node ID="Damage" Inherits="GolemOtherQuestions">
       <text>
-        トゲトゲがオモンポーチのスルタン法廷に修復の小部屋を作った。そこでサンスラグ1ドラムでクリーチャー塗り直す。失くしたら呼び戻す。
+        トゲトゲがオモンポーチのスルタン法廷に作り直しの小部屋をこしらえた。そこでサンスラグ1ドラムでクリーチャーを塗り直せる。失くしても呼び戻せる。
       </text>
     </node>
     <node ID="Spindle" Inherits="GolemOtherQuestions">
       <text>
-        そう！ でもそれまでにもクリーチャーと歩ける。話して、戦って、眠って……普通。友だち。
+        そう！ でもその前でもクリーチャーと一緒に歩き回れる。話す、戦う、眠る……ふつうのこと。友だち。
       </text>
     </node>
 
     <node ID="BarathrumsStudy" Inherits="Welcome">
       <text>
-        クランク、生きてる！ ジャロピー悲劇がクランクを薄暗いろうそく部屋に招いた。石床をぬいぐるみで柔らかくして、退屈な瓶棚を喜びと胞子で磨いた。トゲトゲ、見て。
+        クランク、生きる！ ジャロピーの悲劇がクランクを薄暗いろうそく部屋へ招いた。クランクは石床をぬいぐるみで柔らかくして、退屈な瓶棚に喜びと胞子をまぶした。トゲトゲ、見て。
       </text>
     </node>
   </conversation>

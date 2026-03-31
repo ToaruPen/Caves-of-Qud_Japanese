@@ -86,7 +86,7 @@
     },
     {
       "key": "Adventuring",
-      "text": "Adventuring",
+      "text": "冒険",
       "context": "CommandBinding.Category.Adventuring.Label"
     },
     {
@@ -811,7 +811,7 @@
     },
     {
       "key": "Wait a number of turns",
-      "text": "Wait a number of turns",
+      "text": "指定ターン待機",
       "context": "CommandBinding.CmdWaitN.Display"
     },
     {
@@ -821,12 +821,12 @@
     },
     {
       "key": "Rest until morning",
-      "text": "Rest until morning",
+      "text": "夜明けまで休む",
       "context": "CommandBinding.CmdWaitUntilMorning.Display"
     },
     {
       "key": "Rest until party is healed",
-      "text": "Rest until party is healed",
+      "text": "仲間が全快するまで休む",
       "context": "CommandBinding.CmdWaitUntilPartyHealed.Display"
     },
     {
@@ -926,22 +926,22 @@
     },
     {
       "key": "Look south",
-      "text": "Look south",
+      "text": "南を見る",
       "context": "CommandBinding.LookDirection/down.Display"
     },
     {
       "key": "Look west",
-      "text": "Look west",
+      "text": "西を見る",
       "context": "CommandBinding.LookDirection/left.Display"
     },
     {
       "key": "Look east",
-      "text": "Look east",
+      "text": "東を見る",
       "context": "CommandBinding.LookDirection/right.Display"
     },
     {
       "key": "Look north",
-      "text": "Look north",
+      "text": "北を見る",
       "context": "CommandBinding.LookDirection/up.Display"
     },
     {
@@ -1161,7 +1161,7 @@
     },
     {
       "key": "Compact",
-      "text": "Compact",
+      "text": "コンパクト",
       "context": "Options.Option.OptionAbilityBarMode.Value.Compact"
     },
     {
@@ -1246,12 +1246,12 @@
     },
     {
       "key": "Dehydrated",
-      "text": "Dehydrated",
+      "text": "脱水",
       "context": "Options.Option.OptionAutoSipLevel.Value.Dehydrated"
     },
     {
       "key": "Parched",
-      "text": "Parched",
+      "text": "乾き",
       "context": "Options.Option.OptionAutoSipLevel.Value.Parched"
     },
     {
@@ -1261,12 +1261,12 @@
     },
     {
       "key": "Thirsty",
-      "text": "Thirsty",
+      "text": "渇き",
       "context": "Options.Option.OptionAutoSipLevel.Value.Thirsty"
     },
     {
       "key": "Tumescent",
-      "text": "Tumescent",
+      "text": "膨満",
       "context": "Options.Option.OptionAutoSipLevel.Value.Tumescent"
     },
     {
@@ -1341,7 +1341,7 @@
     },
     {
       "key": "None",
-      "text": "None",
+      "text": "なし",
       "context": "Options.Option.OptionAutoexploreIgnoreDistantEnemies.Value.None"
     },
     {
@@ -1351,32 +1351,32 @@
     },
     {
       "key": "Average",
-      "text": "Average",
+      "text": "普通",
       "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Average"
     },
     {
       "key": "Easy",
-      "text": "Easy",
+      "text": "容易",
       "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Easy"
     },
     {
       "key": "Impossible",
-      "text": "Impossible",
+      "text": "不可能",
       "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Impossible"
     },
     {
       "key": "None",
-      "text": "None",
+      "text": "なし",
       "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.None"
     },
     {
       "key": "Tough",
-      "text": "Tough",
+      "text": "困難",
       "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Tough"
     },
     {
       "key": "Very Tough",
-      "text": "Very Tough",
+      "text": "非常に困難",
       "context": "Options.Option.OptionAutoexploreIgnoreEasyEnemies.Value.Very Tough"
     },
     {
@@ -1516,7 +1516,7 @@
     },
     {
       "key": "0|None",
-      "text": "0|None",
+      "text": "0|なし",
       "context": "Options.Option.OptionAutosaveInterval.Value.0|None"
     },
     {
@@ -1621,7 +1621,7 @@
     },
     {
       "key": "Auto",
-      "text": "Auto",
+      "text": "自動",
       "context": "Options.Option.OptionControllerFont.Value.Auto"
     },
     {
@@ -1636,7 +1636,7 @@
     },
     {
       "key": "PS Filled",
-      "text": "PS Filled",
+      "text": "PS 塗りつぶし",
       "context": "Options.Option.OptionControllerFont.Value.PS Filled"
     },
     {
@@ -1646,7 +1646,7 @@
     },
     {
       "key": "XBox Filled",
-      "text": "XBox Filled",
+      "text": "XBox 塗りつぶし",
       "context": "Options.Option.OptionControllerFont.Value.XBox Filled"
     },
     {
@@ -1886,7 +1886,7 @@
     },
     {
       "key": "Unlimited",
-      "text": "Unlimited",
+      "text": "無制限",
       "context": "Options.Option.OptionDisplayFramerate.Value.Unlimited"
     },
     {
@@ -1931,7 +1931,7 @@
     },
     {
       "key": "No Warning",
-      "text": "No Warning",
+      "text": "警告なし",
       "context": "Options.Option.OptionDisplayHPWarning.Value.No Warning"
     },
     {
@@ -1951,7 +1951,7 @@
     },
     {
       "key": "*Resolution",
-      "text": "*Resolution",
+      "text": "*解像度",
       "context": "Options.Option.OptionDisplayResolution.Value.*Resolution"
     },
     {
@@ -1971,22 +1971,22 @@
     },
     {
       "key": "Flip",
-      "text": "Flip",
+      "text": "反転",
       "context": "Options.Option.OptionDockMovable.Value.Flip"
     },
     {
       "key": "Left",
-      "text": "Left",
+      "text": "左",
       "context": "Options.Option.OptionDockMovable.Value.Left"
     },
     {
       "key": "Right",
-      "text": "Right",
+      "text": "右",
       "context": "Options.Option.OptionDockMovable.Value.Right"
     },
     {
       "key": "Unset",
-      "text": "Unset",
+      "text": "未設定",
       "context": "Options.Option.OptionDockMovable.Value.Unset"
     },
     {
@@ -2151,12 +2151,12 @@
     },
     {
       "key": "Classic",
-      "text": "Classic",
+      "text": "クラシック",
       "context": "Options.Option.OptionMainMenuBackground.Value.Classic"
     },
     {
       "key": "Modern",
-      "text": "Modern",
+      "text": "モダン",
       "context": "Options.Option.OptionMainMenuBackground.Value.Modern"
     },
     {
@@ -2201,17 +2201,17 @@
     },
     {
       "key": "Alternate",
-      "text": "Alternate",
+      "text": "代替",
       "context": "Options.Option.OptionMouseCursor.Value.Alternate"
     },
     {
       "key": "Default",
-      "text": "Default",
+      "text": "デフォルト",
       "context": "Options.Option.OptionMouseCursor.Value.Default"
     },
     {
       "key": "System",
-      "text": "System",
+      "text": "システム",
       "context": "Options.Option.OptionMouseCursor.Value.System"
     },
     {
@@ -2296,17 +2296,17 @@
     },
     {
       "key": "Cover",
-      "text": "Cover",
+      "text": "カバー",
       "context": "Options.Option.OptionPlayScale.Value.Cover"
     },
     {
       "key": "Fit",
-      "text": "Fit",
+      "text": "フィット",
       "context": "Options.Option.OptionPlayScale.Value.Fit"
     },
     {
       "key": "Pixel Perfect",
-      "text": "Pixel Perfect",
+      "text": "ピクセルパーフェクト",
       "context": "Options.Option.OptionPlayScale.Value.Pixel Perfect"
     },
     {
@@ -2431,7 +2431,7 @@
     },
     {
       "key": "None",
-      "text": "None",
+      "text": "なし",
       "context": "Options.Option.OptionSessionBackups.Value.None"
     },
     {

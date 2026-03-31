@@ -6222,192 +6222,192 @@
     {
       "context": "XRL.Annals.XRL.Annals.BloodyBattle",
       "key": "<spice.history.gospels.CommittedWrongAgainstSultan.",
-      "text": "スルタンへの罪"
+      "text": "<spice.history.gospels.CommittedWrongAgainstSultan."
     },
     {
       "context": "XRL.Annals.XRL.Annals.BloodyBattle",
       "key": "<spice.history.gospels.EnemyHostName.",
-      "text": "敵の呼び名"
+      "text": "<spice.history.gospels.EnemyHostName."
     },
     {
       "context": "XRL.Annals.XRL.Annals.CapturedByBandits",
       "key": "<spice.history.gospels.HumblePractice.",
-      "text": "慎ましい慣習"
+      "text": "<spice.history.gospels.HumblePractice."
     },
     {
       "context": "XRL.Annals.XRL.Annals.ChallengeSultan",
       "key": "<spice.history.gospels.",
-      "text": "スルタン史の語句"
+      "text": "<spice.history.gospels."
     },
     {
       "context": "XRL.Annals.XRL.Annals.ChariotDrivesOffCliff",
       "key": " <spice.history.gospels.",
-      "text": " <spice.history.gospels.>（乗り物）"
+      "text": " <spice.history.gospels."
     },
     {
       "context": "XRL.Annals.XRL.Annals.ChariotDrivesOffCliff",
       "key": " <spice.history.gospels.VehicularSabotage.",
-      "text": " <spice.history.gospels.VehicularSabotage.>（破壊工作）"
+      "text": " <spice.history.gospels.VehicularSabotage."
     },
     {
       "context": "XRL.Annals.XRL.Annals.ChariotDrivesOffCliff",
       "key": ".vehicle.!random> and <spice.history.gospels.CrashedVehicle.",
-      "text": "<spice.history.gospels.[時代].vehicle.!random>が<spice.history.gospels.CrashedVehicle.[時代].!random>"
+      "text": ".vehicle.!random>を制御できなくなり、<spice.history.gospels.CrashedVehicle."
     },
     {
       "context": "XRL.Annals.XRL.Annals.ChariotDrivesOffCliff",
       "key": "<entity.name> lost control of <entity.possessivePronoun> <spice.history.gospels.",
-      "text": "<entity.name>は<entity.possessivePronoun><spice.history.gospels.[時代].vehicle.!random>の制御を失い、"
+      "text": "<entity.name>は<entity.possessivePronoun>の<spice.history.gospels."
     },
     {
       "context": "XRL.Annals.XRL.Annals.ChariotDrivesOffCliff",
       "key": "<entity.subjectPronoun> lost control of <entity.possessivePronoun> <spice.history.gospels.",
-      "text": "<entity.subjectPronoun>は<entity.possessivePronoun><spice.history.gospels.[時代].vehicle.!random>の制御を失い、"
+      "text": "<entity.subjectPronoun>は<entity.possessivePronoun>の<spice.history.gospels."
     },
     {
       "context": "XRL.Annals.XRL.Annals.ChariotDrivesOffCliff",
       "key": "<spice.history.gospels.VehicularSabotageResult.",
-      "text": "車両破壊の結果"
+      "text": "<spice.history.gospels.VehicularSabotageResult."
     },
     {
       "context": "XRL.Annals.XRL.Annals.CorruptAdministrator",
       "key": "<spice.history.gospels.ImmoralPractice.",
-      "text": "不道徳な慣習"
+      "text": "<spice.history.gospels.ImmoralPractice."
     },
     {
       "context": "XRL.Annals.XRL.Annals.FakedDeath",
       "key": ".adjective.!random> <spice.history.gospels.",
-      "text": "形容詞付きの<spice.history.gospels.>"
+      "text": ".adjective.!random>の<spice.history.gospels."
     },
     {
       "context": "XRL.Annals.XRL.Annals.FakedDeath",
       "key": "<spice.history.gospels.",
-      "text": "スルタン史の語句"
+      "text": "<spice.history.gospels."
     },
     {
       "context": "XRL.Annals.XRL.Annals.FoundGuild",
       "key": "<spice.history.gospels.CivilizationActivity.",
-      "text": "文明活動"
+      "text": "<spice.history.gospels.CivilizationActivity."
     },
     {
       "context": "XRL.Annals.XRL.Annals.LiberateCity",
       "key": "<spice.history.gospels.Celebration.",
-      "text": "祝宴の行い"
+      "text": "<spice.history.gospels.Celebration."
     },
     {
       "context": "XRL.Annals.XRL.Annals.LoseItemAtTavern",
       "key": "<spice.history.gospels.LostItem.",
-      "text": "紛失した品"
+      "text": "<spice.history.gospels.LostItem."
     },
     {
       "context": "XRL.Annals.XRL.Annals.Marry",
       "key": "<spice.history.gospels.MarriageAllianceResult.",
-      "text": "婚姻同盟の結果"
+      "text": "<spice.history.gospels.MarriageAllianceResult."
     },
     {
       "context": "XRL.Annals.XRL.Annals.RampageRegion",
       "key": "<spice.history.gospels.CommittedWrongAgainstSultan.",
-      "text": "スルタンへの罪"
+      "text": "<spice.history.gospels.CommittedWrongAgainstSultan."
     },
     {
       "context": "XRL.Annals.XRL.Annals.SecretRitual",
       "key": "<spice.history.gospels.RitualName.",
-      "text": "儀式名"
+      "text": "<spice.history.gospels.RitualName."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.BloodyBattle",
       "key": "<spice.history.gospels.CommittedWrongAgainstSultan.",
-      "text": "スルタンへの罪"
+      "text": "<spice.history.gospels.CommittedWrongAgainstSultan."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.BloodyBattle",
       "key": "<spice.history.gospels.EnemyHostName.",
-      "text": "敵の呼び名"
+      "text": "<spice.history.gospels.EnemyHostName."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.CapturedByBandits",
       "key": "<spice.history.gospels.HumblePractice.",
-      "text": "慎ましい慣習"
+      "text": "<spice.history.gospels.HumblePractice."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.ChallengeSultan",
       "key": "<spice.history.gospels.",
-      "text": "スルタン史の語句"
+      "text": "<spice.history.gospels."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.ChariotDrivesOffCliff",
       "key": " <spice.history.gospels.",
-      "text": " <spice.history.gospels.>（乗り物）"
+      "text": " <spice.history.gospels."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.ChariotDrivesOffCliff",
       "key": " <spice.history.gospels.VehicularSabotage.",
-      "text": " <spice.history.gospels.VehicularSabotage.>（破壊工作）"
+      "text": " <spice.history.gospels.VehicularSabotage."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.ChariotDrivesOffCliff",
       "key": ".vehicle.!random> and <spice.history.gospels.CrashedVehicle.",
-      "text": "<spice.history.gospels.[時代].vehicle.!random>が<spice.history.gospels.CrashedVehicle.[時代].!random>"
+      "text": ".vehicle.!random>を制御できなくなり、<spice.history.gospels.CrashedVehicle."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.ChariotDrivesOffCliff",
       "key": "<entity.name> lost control of <entity.possessivePronoun> <spice.history.gospels.",
-      "text": "<entity.name>は<entity.possessivePronoun><spice.history.gospels.[時代].vehicle.!random>の制御を失い、"
+      "text": "<entity.name>は<entity.possessivePronoun>の<spice.history.gospels."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.ChariotDrivesOffCliff",
       "key": "<entity.subjectPronoun> lost control of <entity.possessivePronoun> <spice.history.gospels.",
-      "text": "<entity.subjectPronoun>は<entity.possessivePronoun><spice.history.gospels.[時代].vehicle.!random>の制御を失い、"
+      "text": "<entity.subjectPronoun>は<entity.possessivePronoun>の<spice.history.gospels."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.ChariotDrivesOffCliff",
       "key": "<spice.history.gospels.VehicularSabotageResult.",
-      "text": "車両破壊の結果"
+      "text": "<spice.history.gospels.VehicularSabotageResult."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.CorruptAdministrator",
       "key": "<spice.history.gospels.ImmoralPractice.",
-      "text": "不道徳な慣習"
+      "text": "<spice.history.gospels.ImmoralPractice."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.FakedDeath",
       "key": ".adjective.!random> <spice.history.gospels.",
-      "text": "形容詞付きの<spice.history.gospels.>"
+      "text": ".adjective.!random>の<spice.history.gospels."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.FakedDeath",
       "key": "<spice.history.gospels.",
-      "text": "スルタン史の語句"
+      "text": "<spice.history.gospels."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.FoundGuild",
       "key": "<spice.history.gospels.CivilizationActivity.",
-      "text": "文明活動"
+      "text": "<spice.history.gospels.CivilizationActivity."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.LiberateCity",
       "key": "<spice.history.gospels.Celebration.",
-      "text": "祝宴の行い"
+      "text": "<spice.history.gospels.Celebration."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.LoseItemAtTavern",
       "key": "<spice.history.gospels.LostItem.",
-      "text": "紛失した品"
+      "text": "<spice.history.gospels.LostItem."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.Marry",
       "key": "<spice.history.gospels.MarriageAllianceResult.",
-      "text": "婚姻同盟の結果"
+      "text": "<spice.history.gospels.MarriageAllianceResult."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.RampageRegion",
       "key": "<spice.history.gospels.CommittedWrongAgainstSultan.",
-      "text": "スルタンへの罪"
+      "text": "<spice.history.gospels.CommittedWrongAgainstSultan."
     },
     {
       "context": "XRL.World.Parts.XRL.Annals.SecretRitual",
       "key": "<spice.history.gospels.RitualName.",
-      "text": "儀式名"
+      "text": "<spice.history.gospels.RitualName."
     },
     {
       "context": "XRL.World.Parts.XRL.World.Effects.WakingDream",
@@ -6422,7 +6422,7 @@
     {
       "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe_HEB",
       "key": "<spice.history.gospels.EarlySultanate.location.!random>",
-      "text": "初期スルタン朝の場所"
+      "text": "<spice.history.gospels.EarlySultanate.location.!random>"
     },
     {
       "context": "XRL.World.Parts.XRL.World.Parts.HydroponSurface",
