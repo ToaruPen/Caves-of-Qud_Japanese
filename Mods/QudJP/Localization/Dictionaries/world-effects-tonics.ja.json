@@ -212,6 +212,171 @@
             "key": "Recovers 0.6 hit points per level (minimum 3) each turn.\nPurged of all short-term, biological debuffs and up to one severed appendage is regrown at the end of the tenth turn.",
             "context": "XRL.World.Effects.Ubernostrum_Tonic.Details",
             "text": "毎ターン、レベル×0.6（最低3）HPを回復する。\n短期の生物学的デバフがすべて浄化され、10ターン目の終了時に切断された肢を最大1本再生する。"
+        },
+        {
+            "key": "Your stomach swells with a burning sensation.",
+            "context": "XRL.World.Effects.Blaze_Tonic.Popup.Show",
+            "text": "胃が焼けるように膨れる。"
+        },
+        {
+            "key": "You start to cool off.",
+            "context": "XRL.World.Effects.Blaze_Tonic.Popup.Show",
+            "text": "熱が引き始める。"
+        },
+        {
+            "key": "Your mutant physiology reacts adversely to the tonic. You erupt into flames!",
+            "context": "XRL.World.Effects.Blaze_Tonic.Popup.Show",
+            "text": "変異体質がそのトニックに悪く反応する。あなたは燃え上がる！"
+        },
+        {
+            "key": "The tonics you ingested react adversely to each other. You erupt into flames!",
+            "context": "XRL.World.Effects.Blaze_Tonic.Popup.Show",
+            "text": "飲んだ薬液が互いに悪反応を起こす。あなたは炎を噴き上げる！"
+        },
+        {
+            "key": "You feel a cool swelling as your organs start to glow through your skin.",
+            "context": "XRL.World.Effects.Hoarshroom_Tonic.Popup.Show",
+            "text": "ひんやりした膨らみを感じ、臓器が皮膚越しに光り始める。"
+        },
+        {
+            "key": "The cool swelling deflates as your organs dim.",
+            "context": "XRL.World.Effects.Hoarshroom_Tonic.Popup.Show",
+            "text": "冷たい膨らみがしぼみ、内臓の輝きが弱まる。"
+        },
+        {
+            "key": "Your mutant physiology reacts adversely to the tonic. You feel awfully frigid.",
+            "context": "XRL.World.Effects.Hoarshroom_Tonic.Popup.Show",
+            "text": "変異体質がそのトニックに悪く反応する。ひどく冷え切った気分になる。"
+        },
+        {
+            "key": "The tonics you ingested react adversely to each other. You feel awfully frigid.",
+            "context": "XRL.World.Effects.Hoarshroom_Tonic.Popup.Show",
+            "text": "飲んだ薬液が互いに悪反応を起こす。ひどく凍えた気分だ。"
+        },
+        {
+            "key": "Your muscles bulge grotesquely.",
+            "context": "XRL.World.Effects.HulkHoney_Tonic.Popup.Show",
+            "text": "筋肉が醜悪に膨れ上がる。"
+        },
+        {
+            "key": "Your muscles deflate to their usual size.",
+            "context": "XRL.World.Effects.HulkHoney_Tonic.Popup.Show",
+            "text": "筋肉が元の大きさまでしぼむ。"
+        },
+        {
+            "key": "Your mutant physiology reacts adversely to the tonic. Aaaaaaaaargh!",
+            "context": "XRL.World.Effects.HulkHoney_Tonic.Popup.Show",
+            "text": "変異体質がそのトニックに悪く反応する。ぐあああああああああ！"
+        },
+        {
+            "key": "The tonics you ingested react adversely to each other. Aaaaaaaaargh!",
+            "context": "XRL.World.Effects.HulkHoney_Tonic.Popup.Show",
+            "text": "飲んだ薬液が互いに悪反応を起こす。あああああああ！"
+        },
+        {
+            "key": "You feel a soothing tingle in your chest as your wounds start to close.",
+            "context": "XRL.World.Effects.Salve_Tonic.Popup.Show",
+            "text": "胸に心地よいぴりつきを感じ、傷がふさがり始める。"
+        },
+        {
+            "key": "The soothing tingle fades.",
+            "context": "XRL.World.Effects.Salve_Tonic.Popup.Show",
+            "text": "心地よいぴりぴり感が消える。"
+        },
+        {
+            "key": "Your mutant physiology reacts adversely to the tonic. The soothing tingle fades.",
+            "context": "XRL.World.Effects.Salve_Tonic.Popup.Show",
+            "text": "変異体質がそのトニックに悪く反応する。心地よいしびれは消える。"
+        },
+        {
+            "key": "The tonics you ingested react adversely to each other. The soothing tingle fades.",
+            "context": "XRL.World.Effects.Salve_Tonic.Popup.Show",
+            "text": "飲んだ薬液が互いに悪反応を起こす。心地よいぴりぴり感が消える。"
+        },
+        {
+            "key": "Your mutant physiology reacts adversely to the tonic. You flicker through spacetime uncontrollably.",
+            "context": "XRL.World.Effects.ShadeOil_Tonic.Popup.Show",
+            "text": "変異体質がそのトニックに悪く反応する。時空の中で制御不能にちらつく。"
+        },
+        {
+            "key": "The tonics you ingested react adversely to each other. You flicker through spacetime uncontrollably.",
+            "context": "XRL.World.Effects.ShadeOil_Tonic.Popup.Show",
+            "text": "飲んだ薬液が互いに悪反応を起こす。時空を制御不能にちらつきながら抜ける。"
+        },
+        {
+            "key": "The clouds part in your mind and a ray of clarity strikes through.",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Popup.Show",
+            "text": "心の雲が晴れ、ひらめきの光が射し込む。"
+        },
+        {
+            "key": "Your mind clouds over once again.",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Popup.Show",
+            "text": "心が再び曇る。"
+        },
+        {
+            "key": "Your mutant physiology reacts adversely to the tonic. You cannot see to see -- your mind cracks as a bell struck by a hammer.",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Popup.Show",
+            "text": "変異体質がそのトニックに悪く反応する。見えも見えず、心はハンマーで打たれた鐘のようにひび割れる。"
+        },
+        {
+            "key": "The tonics you ingested react adversely to each other. You cannot see to see -- your mind cracks as a bell struck by a hammer.",
+            "context": "XRL.World.Effects.SphynxSalt_Tonic.Popup.Show",
+            "text": "飲んだ薬液が互いに悪反応を起こす。見ようにも見えない。心が槌で打たれた鈴のように砕ける。"
+        },
+        {
+            "key": "A torrent of life rushes over you.",
+            "context": "XRL.World.Effects.Ubernostrum_Tonic.Popup.Show",
+            "text": "生命の奔流が押し寄せる。"
+        },
+        {
+            "key": "The torrent of life sweeps away.",
+            "context": "XRL.World.Effects.Ubernostrum_Tonic.Popup.Show",
+            "text": "生命の奔流が押し流す。"
+        },
+        {
+            "key": "Your mutant physiology reacts adversely to the tonic. The torrent of life sweeps away.",
+            "context": "XRL.World.Effects.Ubernostrum_Tonic.Popup.Show",
+            "text": "変異体質がそのトニックに悪く反応する。生命の奔流に洗い流される。"
+        },
+        {
+            "key": "The tonics you ingested react adversely to each other. The torrent of life sweeps away.",
+            "context": "XRL.World.Effects.Ubernostrum_Tonic.Popup.Show",
+            "text": "飲んだ薬液が互いに悪反応を起こす。生命の奔流が押し流す。"
+        },
+        {
+            "key": "Your hearts begin to beat faster and your pupils dilate.",
+            "context": "XRL.World.Effects.Skulk_Tonic.Popup.Show",
+            "text": "複数の心臓の鼓動が速まり、瞳孔が開く。"
+        },
+        {
+            "key": "Your heart begins to beat faster and your pupils dilate.",
+            "context": "XRL.World.Effects.Skulk_Tonic.Popup.Show",
+            "text": "心臓の鼓動が速まり、瞳孔が開く。"
+        },
+        {
+            "key": "Your heart rate returns to normal and your pupils shrink.",
+            "context": "XRL.World.Effects.Skulk_Tonic.Popup.Show",
+            "text": "心拍が正常に戻り、瞳孔が縮む。"
+        },
+        {
+            "key": "Your mutant physiology reacts adversely to the tonic. Your field of vision erupts into a plane of blinding, white light.",
+            "context": "XRL.World.Effects.Skulk_Tonic.Popup.Show",
+            "text": "変異体質がそのトニックに悪く反応する。視界が目もくらむ白い平面へと爆ぜる。"
+        },
+        {
+            "key": "The tonics you ingested react adversely to each other. Your field of vision erupts into a plane of blinding, white light.",
+            "context": "XRL.World.Effects.Skulk_Tonic.Popup.Show",
+            "text": "飲んだ薬液が互いに悪反応を起こす。視界がまばゆい白光の平面と化す。"
+        },
+        {
+            "key": "Your heart swells with a burning sensation.",
+            "context": "XRL.World.Effects.LoveTonic.Popup.Show",
+            "text": "心臓が灼けつくように脹れる。"
+        },
+        {
+            "key": "Your heart rate slows again.",
+            "context": "XRL.World.Effects.LoveTonic.Popup.Show",
+            "text": "心拍が再び落ち着く。"
         }
     ]
 }

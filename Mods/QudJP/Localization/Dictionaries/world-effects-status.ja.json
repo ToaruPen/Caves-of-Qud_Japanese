@@ -1,0 +1,352 @@
+{
+    "meta": {
+        "id": "world-effects-status",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true
+    },
+    "entries": [
+        {
+            "key": "{{G|poisoned}}",
+            "context": "XRL.World.Effects.Poisoned.Description",
+            "text": "{{G|中毒}}"
+        },
+        {
+            "key": "({0})/2 damage per turn.\nDoesn't regenerate hit points.\nHealing effects are only half as effective.\nWill become ill once the poison runs its course.",
+            "context": "XRL.World.Effects.Poisoned.Details",
+            "text": "毎ターン ({0})/2 ダメージ。\nヒットポイントが自然再生しない。\n回復効果は半減する。\n毒が治まると病気になる。"
+        },
+        {
+            "key": "{{r|bleeding}}",
+            "context": "XRL.World.Effects.Bleeding.Description",
+            "text": "{{r|出血}}"
+        },
+        {
+            "key": "{{R|burning}}",
+            "context": "XRL.World.Effects.Burning.Description",
+            "text": "{{R|燃焼}}"
+        },
+        {
+            "key": "{0} damage per turn.",
+            "context": "XRL.World.Effects.Burning.Details",
+            "text": "毎ターン {0} ダメージ。"
+        },
+        {
+            "key": "{{freezing|frozen}}",
+            "context": "XRL.World.Effects.Frozen.Description",
+            "text": "{{freezing|凍結した}}"
+        },
+        {
+            "key": "Can't take physical actions.",
+            "context": "XRL.World.Effects.Frozen.Details",
+            "text": "物理行動を取れない。"
+        },
+        {
+            "key": "{{K|blind}}",
+            "context": "XRL.World.Effects.Blind.Description",
+            "text": "{{K|盲目}}"
+        },
+        {
+            "key": "Can't see.",
+            "context": "XRL.World.Effects.Blind.Details",
+            "text": "見えない。"
+        },
+        {
+            "key": "{{R|confused}}",
+            "context": "XRL.World.Effects.Confused.Description",
+            "text": "{{R|混乱}}"
+        },
+        {
+            "key": "Acts semi-randomly.\n-{0} DV\n-{0} MA",
+            "context": "XRL.World.Effects.Confused.Details",
+            "text": "半ばランダムに行動する。\n-{0} DV\n-{0} MA"
+        },
+        {
+            "key": "Acts semi-randomly.\n-{0} DV\n-{0} MA\n-{1} to all mental attributes",
+            "context": "XRL.World.Effects.Confused.Details",
+            "text": "半ばランダムに行動する。\n-{0} DV\n-{0} MA\n全精神属性に -{1}"
+        },
+        {
+            "key": "{{C|paralyzed}}",
+            "context": "XRL.World.Effects.Paralyzed.Description",
+            "text": "{{C|麻痺}}"
+        },
+        {
+            "key": "Can't move or attack.\n-{0} DV",
+            "context": "XRL.World.Effects.Paralyzed.Details",
+            "text": "移動も攻撃もできない。\n-{0} DV"
+        },
+        {
+            "key": "Can't move or attack.\nDV set to 0.",
+            "context": "XRL.World.Effects.Paralyzed.Details",
+            "text": "移動も攻撃もできない。\nDV は 0 になる。"
+        },
+        {
+            "key": "{{C|stunned}}",
+            "context": "XRL.World.Effects.Stun.Description",
+            "text": "{{C|スタン}}"
+        },
+        {
+            "key": "Can't take actions.\n-{0} DV",
+            "context": "XRL.World.Effects.Stun.Details",
+            "text": "行動できない。\n-{0} DV"
+        },
+        {
+            "key": "Can't take actions.\nDV set to 0.",
+            "context": "XRL.World.Effects.Stun.Details",
+            "text": "行動できない。\nDV は 0 になる。"
+        },
+        {
+            "key": "stuck",
+            "context": "XRL.World.Effects.Stuck.Description",
+            "text": "拘束"
+        },
+        {
+            "key": "{{W|terrified}}",
+            "context": "XRL.World.Effects.Terrified.Description",
+            "text": "{{W|恐怖}}"
+        },
+        {
+            "key": "Fleeing in panic.",
+            "context": "XRL.World.Effects.Terrified.Details",
+            "text": "恐慌して逃走している。"
+        },
+        {
+            "key": "berserk",
+            "context": "XRL.World.Effects.Berserk.Description",
+            "text": "バーサーク"
+        },
+        {
+            "key": "100% chance to dismember with axes.",
+            "context": "XRL.World.Effects.Berserk.Details",
+            "text": "斧による切断率が 100%。"
+        },
+        {
+            "key": "{{K|exhaustion}}",
+            "context": "XRL.World.Effects.Exhausted.Description",
+            "text": "{{K|疲弊}}"
+        },
+        {
+            "key": "Can't take actions.",
+            "context": "XRL.World.Effects.Exhausted.Details",
+            "text": "行動できない。"
+        },
+        {
+            "key": "{{m|beguiled}}",
+            "context": "XRL.World.Effects.Beguiled.Description",
+            "text": "{{m|魅了}}"
+        },
+        {
+            "key": "Charmed by another creature into following them.",
+            "context": "XRL.World.Effects.Beguiled.Details",
+            "text": "他の生き物に魅了され、従っている。"
+        },
+        {
+            "key": "Charmed by another creature into following them.\n+{0} hit points.",
+            "context": "XRL.World.Effects.Beguiled.Details",
+            "text": "他の生き物に魅了され、従っている。\nヒットポイント +{0}。"
+        },
+        {
+            "key": "dominated",
+            "context": "XRL.World.Effects.Dominated.Description",
+            "text": "支配された"
+        },
+        {
+            "key": "Under someone else's control.",
+            "context": "XRL.World.Effects.Dominated.Details",
+            "text": "他者に操られている。"
+        },
+        {
+            "key": "{{B|frenzied}}",
+            "context": "XRL.World.Effects.Frenzied.Description",
+            "text": "{{B|狂乱}}"
+        },
+        {
+            "key": "More likely to attack things.",
+            "context": "XRL.World.Effects.Frenzied.Details",
+            "text": "周囲を攻撃しやすくなる。"
+        },
+        {
+            "key": "Will prefer to attack creatures who are bleeding.",
+            "context": "XRL.World.Effects.Frenzied.Details",
+            "text": "出血している生き物を優先して攻撃する。"
+        },
+        {
+            "key": "{{c|asleep}}",
+            "context": "XRL.World.Effects.Asleep.Description",
+            "text": "{{c|睡眠}}"
+        },
+        {
+            "key": "{{c|sleep mode}}",
+            "context": "XRL.World.Effects.Asleep.GetDescription",
+            "text": "{{c|スリープモード}}"
+        },
+        {
+            "key": "In power conservation mode.\n-12 DV.\nAttackers receive +4 to penetration rolls.\nWill return to normal operations dazed if damage is taken.",
+            "context": "XRL.World.Effects.Asleep.Details",
+            "text": "省電力モード。\n-12 DV。\n攻撃者は penetration roll に +4 を得る。\nダメージを受けると朦朧状態で通常動作に戻る。"
+        },
+        {
+            "key": "Unconscious.\n-12 DV.\nAttackers receive +4 to penetration rolls.\nWill wake up dazed if damage is taken.",
+            "context": "XRL.World.Effects.Asleep.Details",
+            "text": "意識を失っている。\n-12 DV。\n攻撃者は penetration roll に +4 を得る。\nダメージを受けると朦朧状態で目を覚ます。"
+        },
+        {
+            "key": "{{C|prone}}",
+            "context": "XRL.World.Effects.Prone.Description",
+            "text": "{{C|伏せ}}"
+        },
+        {
+            "key": "-6 Agility.\n-5 DV.\n-80 move speed.\nMust spend a turn to stand up.",
+            "context": "XRL.World.Effects.Prone.Details",
+            "text": "-6 Agility。\n-5 DV。\n-80 Move Speed。\n立ち上がるには 1 ターン必要。"
+        },
+        {
+            "key": "{{y|astrally burdened}}",
+            "context": "XRL.World.Effects.RealityStabilized.GetDescription",
+            "text": "{{y|星界的に重く縛られた}}"
+        },
+        {
+            "key": "{{Y|astrally tethered}}",
+            "context": "XRL.World.Effects.RealityStabilized.Description",
+            "text": "{{Y|星界に繋ぎ留められた}}"
+        },
+        {
+            "key": "Has trouble distorting spacetime in the local region.",
+            "context": "XRL.World.Effects.RealityStabilized.Details",
+            "text": "この局所では時空を歪めにくい。"
+        },
+        {
+            "key": "Cannot distort spacetime in the local region.",
+            "context": "XRL.World.Effects.RealityStabilized.Details",
+            "text": "この局所では時空を歪められない。"
+        },
+        {
+            "key": "{{g|phased}}",
+            "context": "XRL.World.Effects.Phased.Description",
+            "text": "{{g|フェイズ化}}"
+        },
+        {
+            "key": "Can't physically interact with creatures and objects unless they're also phased.\nCan pass through solids.",
+            "context": "XRL.World.Effects.Phased.Details",
+            "text": "相手もフェイズしていない限り、生き物や物体と物理的に相互作用できない。\n固体をすり抜けられる。"
+        },
+        {
+            "key": "time-dilated ({{C|-{0}}} Quickness)",
+            "context": "XRL.World.Effects.ITimeDilated.GetDescription",
+            "text": "時間遅延 ({{C|-{0}}} Quickness)"
+        },
+        {
+            "key": "-{0} Quickness",
+            "context": "XRL.World.Effects.ITimeDilated.Details",
+            "text": "-{0} Quickness"
+        },
+        {
+            "key": "lost",
+            "context": "XRL.World.Effects.Lost.Description",
+            "text": "迷った"
+        },
+        {
+            "key": "Can't fast travel.",
+            "context": "XRL.World.Effects.Lost.Details",
+            "text": "ファストトラベルできない。"
+        },
+        {
+            "key": "{{r|rusted}}",
+            "context": "XRL.World.Effects.Rusted.Description",
+            "text": "{{r|錆びた}}"
+        },
+        {
+            "key": "-70 Quickness\nDoesn't function properly.",
+            "context": "XRL.World.Effects.Rusted.Details",
+            "text": "-70 Quickness\n正常に機能しない。"
+        },
+        {
+            "key": "Doesn't function properly and can't be equipped.\nWill erode into dust if rusted again.",
+            "context": "XRL.World.Effects.Rusted.Details",
+            "text": "正常に機能せず、装備できない。\n再び錆びると塵になって崩れる。"
+        },
+        {
+            "key": "{{K|choking on ash}}",
+            "context": "XRL.World.Effects.AshPoison.Description",
+            "text": "{{K|灰にむせる}}"
+        },
+        {
+            "key": "{{K|stony}}",
+            "context": "XRL.World.Effects.BasiliskPoison.Description",
+            "text": "{{K|石化しかけ}}"
+        },
+        {
+            "key": "-1d6 Move Speed per turn for 14-18 turns.\n[total:-{{C|{0}}} Move Speed]",
+            "context": "XRL.World.Effects.BasiliskPoison.Details",
+            "text": "14～18 ターンの間、毎ターン -1d6 Move Speed。\n[合計:-{{C|{0}}} Move Speed]"
+        },
+        {
+            "key": "{{r|anticoagulated}}",
+            "context": "XRL.World.Effects.AnemoneEffect.Description",
+            "text": "{{r|抗凝固}}"
+        },
+        {
+            "key": "Additional {0} bleeding damage per turn.",
+            "context": "XRL.World.Effects.AnemoneEffect.Details",
+            "text": "追加で {0} の出血ダメージ/ターン。"
+        },
+        {
+            "key": "{{g|hyper-responsive}}",
+            "context": "XRL.World.Effects.AxonsInflated.Description",
+            "text": "{{g|過敏応答}}"
+        },
+        {
+            "key": "+{0} Quickness\nWill become sluggish soon.",
+            "context": "XRL.World.Effects.AxonsInflated.Details",
+            "text": "+{0} Quickness\nまもなく鈍重になる。"
+        },
+        {
+            "key": "{{r|sluggish}}",
+            "context": "XRL.World.Effects.AxonsDeflated.Description",
+            "text": "{{r|鈍重}}"
+        },
+        {
+            "key": "{{G|boosted immunity}}",
+            "context": "XRL.World.Effects.BoostedImmunity.Description",
+            "text": "{{G|免疫強化}}"
+        },
+        {
+            "key": "+{0} to saves vs. disease onset.",
+            "context": "XRL.World.Effects.BoostedImmunity.Details",
+            "text": "病気の発症に対するセーヴ +{0}。"
+        },
+        {
+            "key": "boosted {0}",
+            "context": "XRL.World.Effects.BoostStatistic.GetDescription",
+            "text": "{0} 強化"
+        },
+        {
+            "key": "{{g|adjusted}}",
+            "context": "XRL.World.Effects.Adjusted.Description",
+            "text": "{{g|調整済み}}"
+        },
+        {
+            "key": "{{Y|astral friction}}",
+            "context": "XRL.World.Effects.AmbientRealityStabilized.Description",
+            "text": "{{Y|星界摩擦}}"
+        },
+        {
+            "key": "{{R|adrenaline flowing}}",
+            "context": "XRL.World.Effects.AdrenalControl2Boosted.Description",
+            "text": "{{R|アドレナリン全開}}"
+        },
+        {
+            "key": "+{0} Quickness\n+1 rank to physical mutations",
+            "context": "XRL.World.Effects.AdrenalControl2Boosted.Details",
+            "text": "+{0} Quickness\n肉体変異 +1ランク"
+        },
+        {
+            "key": "+{0} Quickness\n+{1} ranks to physical mutations",
+            "context": "XRL.World.Effects.AdrenalControl2Boosted.Details",
+            "text": "+{0} Quickness\n肉体変異 +{1}ランク"
+        }
+    ]
+}

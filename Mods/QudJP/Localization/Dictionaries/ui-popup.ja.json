@@ -1850,11 +1850,6 @@
             "text": "4つのプリズムがあなたの中から砕け散って成長する。各々は先端で5本の指状プリズムに分かれる。"
         },
         {
-            "key": "A torrent of life rushes over you.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "生命の奔流があなたに押し寄せる。"
-        },
-        {
             "key": "Access diodes flash in the affirmative.",
             "context": "XRL.UI.Popup.Show.Message",
             "text": "アクセスダイオードが肯定を示して点滅する。"
@@ -2070,19 +2065,9 @@
             "text": "クロームのプラットフォームがうなり始め、闇へ降りていく。"
         },
         {
-            "key": "The clouds part in your mind and a ray of clarity strikes through.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "心の雲が晴れ、ひらめきの光が射し込む。"
-        },
-        {
             "key": "The colossal lid slams shut. Darkness engulfs you.",
             "context": "XRL.UI.Popup.Show.Message",
             "text": "巨大な蓋が勢いよく閉じる。闇があなたを呑み込む。"
-        },
-        {
-            "key": "The cool swelling deflates as your organs dim.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "冷たい膨らみがしぼみ、内臓の輝きが弱まる。"
         },
         {
             "key": "The darkness recedes, and a new light breaks on the shores of your mind.",
@@ -2135,59 +2120,9 @@
             "text": "石棺は反応しない。"
         },
         {
-            "key": "The soothing tingle fades.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "心地よいぴりぴり感が消える。"
-        },
-        {
-            "key": "The tonics you ingested react adversely to each other. Aaaaaaaaargh!",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "飲んだ薬液が互いに悪反応を起こす。あああああああ！"
-        },
-        {
-            "key": "The tonics you ingested react adversely to each other. The soothing tingle fades.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "飲んだ薬液が互いに悪反応を起こす。心地よいぴりぴり感が消える。"
-        },
-        {
-            "key": "The tonics you ingested react adversely to each other. The torrent of life sweeps away.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "飲んだ薬液が互いに悪反応を起こす。生命の奔流が押し流す。"
-        },
-        {
-            "key": "The tonics you ingested react adversely to each other. You cannot see to see -- your mind cracks as a bell struck by a hammer.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "飲んだ薬液が互いに悪反応を起こす。見ようにも見えない。心が槌で打たれた鈴のように砕ける。"
-        },
-        {
-            "key": "The tonics you ingested react adversely to each other. You erupt into flames!",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "飲んだ薬液が互いに悪反応を起こす。あなたは炎を噴き上げる！"
-        },
-        {
-            "key": "The tonics you ingested react adversely to each other. You feel awfully frigid.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "飲んだ薬液が互いに悪反応を起こす。ひどく凍えた気分だ。"
-        },
-        {
-            "key": "The tonics you ingested react adversely to each other. You flicker through spacetime uncontrollably.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "飲んだ薬液が互いに悪反応を起こす。時空を制御不能にちらつきながら抜ける。"
-        },
-        {
-            "key": "The tonics you ingested react adversely to each other. Your field of vision erupts into a plane of blinding, white light.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "飲んだ薬液が互いに悪反応を起こす。視界がまばゆい白光の平面と化す。"
-        },
-        {
             "key": "The tonics you ingested react adversely to each other. Your skin starts to knot and misshape.",
             "context": "XRL.UI.Popup.Show.Message",
             "text": "飲んだ薬液が互いに悪反応を起こす。皮膚がこぶだらけに歪み始める。"
-        },
-        {
-            "key": "The torrent of life sweeps away.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "生命の奔流が押し流す。"
         },
         {
             "key": "The walls creak, loose objects skid about, and dust is stirred up in iridescent clouds.",
@@ -2425,16 +2360,6 @@
             "text": "きれいな絵を描く。"
         },
         {
-            "key": "You feel a cool swelling as your organs start to glow through your skin.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "ひんやりした膨らみを感じ、臓器が皮膚越しに光り始める。"
-        },
-        {
-            "key": "You feel a soothing tingle in your chest as your wounds start to close.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "胸に心地よいぴりつきを感じ、傷がふさがり始める。"
-        },
-        {
             "key": "You feel drowsy.",
             "context": "XRL.UI.Popup.Show.Message",
             "text": "眠気が差す。"
@@ -2555,11 +2480,6 @@
             "text": "斧を装備する前にツールチップを見ておけ。"
         },
         {
-            "key": "You start to cool off.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "熱が引き始める。"
-        },
-        {
             "key": "You staunch your wounds, though some are too deep to treat.",
             "context": "XRL.UI.Popup.Show.Message",
             "text": "傷口を止血するが、いくつかは深すぎて手当てできない。"
@@ -2625,31 +2545,6 @@
             "text": "頭が敏感すぎて、それを被れない。"
         },
         {
-            "key": "Your heart begins to beat faster and your pupils dilate.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "心臓の鼓動が速まり、瞳孔が開く。"
-        },
-        {
-            "key": "Your heart rate returns to normal and your pupils shrink.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "心拍が正常に戻り、瞳孔が縮む。"
-        },
-        {
-            "key": "Your heart rate slows again.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "心拍が再び落ち着く。"
-        },
-        {
-            "key": "Your heart swells with a burning sensation.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "心臓が灼けつくように脹れる。"
-        },
-        {
-            "key": "Your hearts begin to beat faster and your pupils dilate.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "複数の心臓の鼓動が速まり、瞳孔が開く。"
-        },
-        {
             "key": "Your legs bones are nearly fused at the joints.",
             "context": "XRL.UI.Popup.Show.Message",
             "text": "脚の骨は関節でほとんど癒着している。"
@@ -2668,61 +2563,6 @@
             "key": "Your mind begins to morph but the physiology of your brain restricts it.",
             "context": "XRL.UI.Popup.Show.Message",
             "text": "心が変容し始めるが、脳の生理がそれを制限する。"
-        },
-        {
-            "key": "Your mind clouds over once again.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "心が再び曇る。"
-        },
-        {
-            "key": "Your muscles bulge grotesquely.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "筋肉が醜悪に膨れ上がる。"
-        },
-        {
-            "key": "Your muscles deflate to their usual size.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "筋肉が元の大きさまでしぼむ。"
-        },
-        {
-            "key": "Your mutant physiology reacts adversely to the tonic. Aaaaaaaaargh!",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "変異体質がそのトニックに悪く反応する。ぐあああああああああ！"
-        },
-        {
-            "key": "Your mutant physiology reacts adversely to the tonic. The soothing tingle fades.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "変異体質がそのトニックに悪く反応する。心地よいしびれは消える。"
-        },
-        {
-            "key": "Your mutant physiology reacts adversely to the tonic. The torrent of life sweeps away.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "変異体質がそのトニックに悪く反応する。生命の奔流に洗い流される。"
-        },
-        {
-            "key": "Your mutant physiology reacts adversely to the tonic. You cannot see to see -- your mind cracks as a bell struck by a hammer.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "変異体質がそのトニックに悪く反応する。見えも見えず、心はハンマーで打たれた鐘のようにひび割れる。"
-        },
-        {
-            "key": "Your mutant physiology reacts adversely to the tonic. You erupt into flames!",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "変異体質がそのトニックに悪く反応する。あなたは燃え上がる！"
-        },
-        {
-            "key": "Your mutant physiology reacts adversely to the tonic. You feel awfully frigid.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "変異体質がそのトニックに悪く反応する。ひどく冷え切った気分になる。"
-        },
-        {
-            "key": "Your mutant physiology reacts adversely to the tonic. You flicker through spacetime uncontrollably.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "変異体質がそのトニックに悪く反応する。時空の中で制御不能にちらつく。"
-        },
-        {
-            "key": "Your mutant physiology reacts adversely to the tonic. Your field of vision erupts into a plane of blinding, white light.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "変異体質がそのトニックに悪く反応する。視界が目もくらむ白い平面へと爆ぜる。"
         },
         {
             "key": "Your mutant physiology reacts adversely to the tonic. Your skin starts to knot and misshape.",
@@ -2803,11 +2643,6 @@
             "key": "Your skin shrivels and dimples.",
             "context": "XRL.UI.Popup.Show.Message",
             "text": "皮膚が縮み、凹む。"
-        },
-        {
-            "key": "Your stomach swells with a burning sensation.",
-            "context": "XRL.UI.Popup.Show.Message",
-            "text": "胃が焼けるように膨れる。"
         },
         {
             "key": "Your tongue regrows.",

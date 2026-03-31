@@ -1,0 +1,127 @@
+{
+    "meta": {
+        "id": "world-effects-diseases",
+        "lang": "ja",
+        "version": "0.1.0"
+    },
+    "rules": {
+        "protectColorTags": true
+    },
+    "entries": [
+        {
+            "key": "glotrot",
+            "context": "XRL.World.Effects.Glotrot.Description",
+            "text": "グロットロット"
+        },
+        {
+            "key": "{{glotrot|glotrot}}",
+            "context": "XRL.World.Effects.Glotrot.GetDescription",
+            "text": "{{glotrot|グロットロット}}"
+        },
+        {
+            "key": "Tongue is rotting away.\nStarts bleeding when eating or drinking.",
+            "context": "XRL.World.Effects.Glotrot.Details",
+            "text": "舌が腐り落ちつつある。\n飲食すると出血する。"
+        },
+        {
+            "key": "Tongue has rotted away.\nCan't speak.",
+            "context": "XRL.World.Effects.Glotrot.Details",
+            "text": "舌が腐り落ちた。\n話せない。"
+        },
+        {
+            "key": "{{r|sore throat}}",
+            "context": "XRL.World.Effects.GlotrotOnset.Description",
+            "text": "{{r|喉の痛み}}"
+        },
+        {
+            "key": "Throat is sore and tongue is swollen.",
+            "context": "XRL.World.Effects.GlotrotOnset.Details",
+            "text": "喉が痛み、舌が腫れている。"
+        },
+        {
+            "key": "ironshank",
+            "context": "XRL.World.Effects.Ironshank.Description",
+            "text": "アイアンシャンク"
+        },
+        {
+            "key": "{{ironshank|ironshank}}",
+            "context": "XRL.World.Effects.Ironshank.GetDescription",
+            "text": "{{ironshank|アイアンシャンク}}"
+        },
+        {
+            "key": "Leg bones are fusing at the joints.\n{{C|-{0}}} Move Speed\n{{C|+{1}}} AV\nWill continue to lose Move Speed and gain AV until Move Speed penalty reaches -80.",
+            "context": "XRL.World.Effects.Ironshank.Details",
+            "text": "脚の骨が関節で癒着しつつある。\n{{C|-{0}}} Move Speed\n{{C|+{1}}} AV\nMove Speed の低下が -80 に達するまで、Move Speed を失い AV を得続ける。"
+        },
+        {
+            "key": "stiff legs",
+            "context": "XRL.World.Effects.IronshankOnset.Description",
+            "text": "脚のこわばり"
+        },
+        {
+            "key": "Legs ache at the joints.",
+            "context": "XRL.World.Effects.IronshankOnset.Details",
+            "text": "脚の関節が痛む。"
+        },
+        {
+            "key": "monochrome",
+            "context": "XRL.World.Effects.Monochrome.Description",
+            "text": "モノクローム"
+        },
+        {
+            "key": "Sees shades of only a single color.",
+            "context": "XRL.World.Effects.Monochrome.Details",
+            "text": "世界が単一の色の濃淡にしか見えない。"
+        },
+        {
+            "key": "blurry vision",
+            "context": "XRL.World.Effects.MonochromeOnset.Description",
+            "text": "ぼやけた視界"
+        },
+        {
+            "key": "Vision is blurred.",
+            "context": "XRL.World.Effects.MonochromeOnset.Details",
+            "text": "視界がぼやけている。"
+        },
+        {
+            "key": "{{B|acute blinking tic}}",
+            "context": "XRL.World.Effects.BlinkingTicSickness.Description",
+            "text": "{{B|急性瞬きチック}}"
+        },
+        {
+            "key": "{{B|blinking}}",
+            "context": "XRL.World.Effects.BlinkingTicSickness.GetDescription",
+            "text": "{{B|瞬き}}"
+        },
+        {
+            "key": "There is a small chance each round you're in combat that you randomly teleport to a nearby location.",
+            "context": "XRL.World.Effects.BlinkingTicSickness.Details",
+            "text": "戦闘中は各ラウンドごとに低確率で、近くの地点へランダムにテレポートする。"
+        },
+        {
+            "key": "{{w|itchy skin}}",
+            "context": "XRL.World.Effects.FungalSporeInfection.Description",
+            "text": "{{w|かゆむ肌}}"
+        },
+        {
+            "key": "Skin flakes and itches. Is something growing there?",
+            "context": "XRL.World.Effects.FungalSporeInfection.Details",
+            "text": "肌がかさついてかゆい。何かが育っているのか？"
+        },
+        {
+            "key": "{{g|illness}}",
+            "context": "XRL.World.Effects.Ill.Description",
+            "text": "{{g|病気}}"
+        },
+        {
+            "key": "{{g|ill}}",
+            "context": "XRL.World.Effects.Ill.GetDescription",
+            "text": "{{g|病気}}"
+        },
+        {
+            "key": "Doesn't heal hit points naturally.\nExternal healing is only half as effective.",
+            "context": "XRL.World.Effects.Ill.Details",
+            "text": "ヒットポイントが自然回復しない。\n外部からの回復は半減する。"
+        }
+    ]
+}
