@@ -121,6 +121,31 @@
             "text": "{0}を削除"
         },
         {
+            "key": "You have already chosen the correct option for {0}.",
+            "text": "{0}の正解はすでに選択済みだ。"
+        },
+        {
+            "key": "Use which option for {0}?",
+            "text": "{0}にどのオプションを使う？"
+        },
+        {
+            "key": "You have already eliminated {0} as a possibility.",
+            "text": "{0}はすでに候補から除外済みだ。"
+        },
+        {
+            "key": "Choosing {0} is disabled for this turn.",
+            "text": "{0}の選択はこのターン無効になっている。"
+        },
+        {
+            "key": "You have gained insight into {0}. In a future Sifrah task of this kind, you can use this insight to determine which of your game options are not correct for any requirement. This will expend your insight, unless there are no such options.",
+            "text": "{0}についての洞察を得た。今後この種のシフラで、この洞察を使って条件に合致しないオプションを判定できる。合致しないオプションがなければ洞察は消費されない。"
+        },
+        {
+            "key": "You determine these options to not be valid responses to any requirement:",
+            "context": "XRL.UI.Popup.Show.Message",
+            "text": "以下のオプションはどの条件にも合致しないと判断した:"
+        },
+        {
             "key": "You sense only hostility from {0}.",
             "text": "あなたには{0}から敵意しか感じられない。"
         },

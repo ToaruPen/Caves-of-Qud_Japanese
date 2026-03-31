@@ -296,6 +296,135 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesSifrahChosenCorrectMessage_WhenPatched()
+    {
+        WriteDictionary(("You have already chosen the correct option for {0}.", "{0}の正解はすでに選択済みだ。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock("You have already chosen the correct option for {{C|Salt Dunes}}.", "Warning");
+
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("{{C|Salt Dunes}}の正解はすでに選択済みだ。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesSifrahUseWhichTitle_WhenPatched()
+    {
+        WriteDictionary(("Use which option for {0}?", "{0}にどのオプションを使う？"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowOptionList)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowOptionList(
+                Title: "Use which option for {{Y|Salt Dunes}}?",
+                Options: new List<string> { "Option" },
+                Intro: "Prompt",
+                SpacingText: "Prompt",
+                Buttons: new List<DummyPopupMenuItem>());
+
+            Assert.That(DummyPopupTarget.LastOptionListTitle, Is.EqualTo("{{Y|Salt Dunes}}にどのオプションを使う？"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesSifrahEliminatedMessage_WhenPatched()
+    {
+        WriteDictionary(("You have already eliminated {0} as a possibility.", "{0}はすでに候補から除外済みだ。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock("You have already eliminated {{M|Salt Dunes}} as a possibility.", "Warning");
+
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("{{M|Salt Dunes}}はすでに候補から除外済みだ。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesSifrahDisabledMessage_WhenPatched()
+    {
+        WriteDictionary(("Choosing {0} is disabled for this turn.", "{0}の選択はこのターン無効になっている。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock("Choosing {{G|Salt Dunes}} is disabled for this turn.", "Warning");
+
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo("{{G|Salt Dunes}}の選択はこのターン無効になっている。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesSifrahInsightMessage_WhenPatched()
+    {
+        WriteDictionary((
+            "You have gained insight into {0}. In a future Sifrah task of this kind, you can use this insight to determine which of your game options are not correct for any requirement. This will expend your insight, unless there are no such options.",
+            "{0}についての洞察を得た。今後この種のシフラで、この洞察を使って条件に合致しないオプションを判定できる。合致しないオプションがなければ洞察は消費されない。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock("You have gained insight into {{B|Salt Dunes}}. In a future Sifrah task of this kind, you can use this insight to determine which of your game options are not correct for any requirement. This will expend your insight, unless there are no such options.", "Warning");
+
+            Assert.That(
+                DummyPopupTarget.LastShowBlockMessage,
+                Is.EqualTo("{{B|Salt Dunes}}についての洞察を得た。今後この種のシフラで、この洞察を使って条件に合致しないオプションを判定できる。合致しないオプションがなければ洞察は消費されない。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_StripsDirectTranslationMarkerAndSkipsTranslation()
     {
         // Set up a dictionary entry that would match the stripped text if translation were applied.
