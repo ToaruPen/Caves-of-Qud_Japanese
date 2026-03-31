@@ -83,6 +83,27 @@ public sealed class PopupAskStringTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_LeavesUnknownAskStringPromptUnchanged()
+    {
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskString));
+
+        const string source = "Untranslated popup prompt";
+        DummyPopupGenericTarget.AskString(source);
+
+        Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo(source));
+    }
+
+    [Test]
+    public void Prefix_LeavesEmptyAskStringPromptUnchanged()
+    {
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskString));
+
+        DummyPopupGenericTarget.AskString(string.Empty);
+
+        Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.Empty);
+    }
+
+    [Test]
     public void Prefix_PreservesAskStringMarkupAndColorTags()
     {
         WriteDictionary(("Name your pet.", "ペットに名前を付けてください。"));
@@ -92,6 +113,18 @@ public sealed class PopupAskStringTranslationPatchTests
         DummyPopupGenericTarget.AskString("{{R|Name your pet.}}");
 
         Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("{{R|ペットに名前を付けてください}}。"));
+    }
+
+    [Test]
+    public void Prefix_StripsDirectTranslationMarker_FromAskStringPrompt()
+    {
+        WriteDictionary(("既に翻訳済み", "別訳"));
+
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskString));
+
+        DummyPopupGenericTarget.AskString("\u0001既に翻訳済み");
+
+        Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("既に翻訳済み"));
     }
 
     private static IDisposable PatchMethod(string methodName)

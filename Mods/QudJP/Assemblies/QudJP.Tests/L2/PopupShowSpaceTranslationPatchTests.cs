@@ -120,6 +120,38 @@ public sealed class PopupShowSpaceTranslationPatchTests
         });
     }
 
+    [Test]
+    public void Prefix_LeavesEmptyShowSpaceTextUnchanged()
+    {
+        using var patch = PatchShowSpace();
+
+        DummyPopupGenericTarget.ShowSpace(string.Empty, Title: string.Empty);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceMessage, Is.Empty);
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceTitle, Is.Empty);
+        });
+    }
+
+    [Test]
+    public void Prefix_StripsDirectTranslationMarker_FromShowSpaceText()
+    {
+        WriteDictionary(
+            ("既に翻訳済みの本文", "別訳本文"),
+            ("既に翻訳済みのタイトル", "別訳タイトル"));
+
+        using var patch = PatchShowSpace();
+
+        DummyPopupGenericTarget.ShowSpace("\u0001既に翻訳済みの本文", Title: "\u0001既に翻訳済みのタイトル");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceMessage, Is.EqualTo("既に翻訳済みの本文"));
+            Assert.That(DummyPopupGenericTarget.LastShowSpaceTitle, Is.EqualTo("既に翻訳済みのタイトル"));
+        });
+    }
+
     private static IDisposable PatchShowSpace()
     {
         var harmonyId = CreateHarmonyId();

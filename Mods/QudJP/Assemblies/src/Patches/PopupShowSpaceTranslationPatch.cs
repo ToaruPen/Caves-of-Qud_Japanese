@@ -40,7 +40,11 @@ public static class PopupShowSpaceTranslationPatch
                 });
         }
 
-        method ??= AccessTools.Method(targetType, "ShowSpace");
+        if (method is null)
+        {
+            method = AccessTools.Method(targetType, "ShowSpace");
+        }
+
         if (method is null)
         {
             Trace.TraceError($"QudJP: {Context} method 'ShowSpace' not found on '{TargetTypeName}'.");

@@ -69,7 +69,11 @@ public static class PopupPickOptionTranslationPatch
                 });
         }
 
-        method ??= AccessTools.Method(targetType, "PickOption");
+        if (method is null)
+        {
+            method = AccessTools.Method(targetType, "PickOption");
+        }
+
         if (method is null)
         {
             Trace.TraceError($"QudJP: {Context} method 'PickOption' not found on '{TargetTypeName}'.");

@@ -83,6 +83,27 @@ public sealed class PopupAskNumberTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_LeavesUnknownAskNumberPromptUnchanged()
+    {
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskNumber));
+
+        const string source = "Untranslated popup prompt";
+        DummyPopupGenericTarget.AskNumber(source);
+
+        Assert.That(DummyPopupGenericTarget.LastAskNumberMessage, Is.EqualTo(source));
+    }
+
+    [Test]
+    public void Prefix_LeavesEmptyAskNumberPromptUnchanged()
+    {
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskNumber));
+
+        DummyPopupGenericTarget.AskNumber(string.Empty);
+
+        Assert.That(DummyPopupGenericTarget.LastAskNumberMessage, Is.Empty);
+    }
+
+    [Test]
     public void Prefix_PreservesAskNumberMarkupAndColorTags()
     {
         WriteDictionary(("How many waterskins?", "ウォータースキンはいくつですか？"));
@@ -92,6 +113,18 @@ public sealed class PopupAskNumberTranslationPatchTests
         DummyPopupGenericTarget.AskNumber("{{R|How many waterskins?}}");
 
         Assert.That(DummyPopupGenericTarget.LastAskNumberMessage, Is.EqualTo("{{R|ウォータースキンはいくつですか？}}"));
+    }
+
+    [Test]
+    public void Prefix_StripsDirectTranslationMarker_FromAskNumberPrompt()
+    {
+        WriteDictionary(("既に翻訳済み", "別訳"));
+
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskNumber));
+
+        DummyPopupGenericTarget.AskNumber("\u0001既に翻訳済み");
+
+        Assert.That(DummyPopupGenericTarget.LastAskNumberMessage, Is.EqualTo("既に翻訳済み"));
     }
 
     private static IDisposable PatchMethod(string methodName)
