@@ -330,6 +330,826 @@
             "key": "Right Missile Weapon",
             "context": "BodyPart.Slot.Missile Weapon",
             "text": "右射撃武器"
+        },
+        {
+            "key": "Back",
+            "context": "BodyPart.Slot.Back",
+            "text": "背中"
+        },
+        {
+            "key": "Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "腕"
+        },
+        {
+            "key": "Hand",
+            "context": "BodyPart.Slot.Hand",
+            "text": "手"
+        },
+        {
+            "key": "Fungal Outcrop",
+            "context": "BodyPart.Slot.Fungal Outcrop",
+            "text": "菌突起"
+        },
+        {
+            "key": "Icy Outcrop",
+            "context": "BodyPart.Slot.Icy Outcrop",
+            "text": "氷突起"
+        },
+        {
+            "key": "Root System",
+            "context": "BodyPart.Slot.Roots",
+            "text": "根系"
+        },
+        {
+            "key": "Tread",
+            "context": "BodyPart.Slot.Tread",
+            "text": "履帯"
+        },
+        {
+            "key": "Blossom",
+            "context": "BodyPart.Slot.Head",
+            "text": "花"
+        },
+        {
+            "key": "Cap",
+            "context": "BodyPart.Slot.Head",
+            "text": "菌傘"
+        },
+        {
+            "key": "Centerpiece",
+            "context": "BodyPart.Slot.Head",
+            "text": "センターピース"
+        },
+        {
+            "key": "Central Lobe",
+            "context": "BodyPart.Slot.Head",
+            "text": "中央葉片"
+        },
+        {
+            "key": "Central Mass",
+            "context": "BodyPart.Slot.Head",
+            "text": "中央塊"
+        },
+        {
+            "key": "Central Node",
+            "context": "BodyPart.Slot.Head",
+            "text": "中心節"
+        },
+        {
+            "key": "Control Unit",
+            "context": "BodyPart.Slot.Head",
+            "text": "制御ユニット"
+        },
+        {
+            "key": "Ear",
+            "context": "BodyPart.Slot.Head",
+            "text": "耳"
+        },
+        {
+            "key": "Easel",
+            "context": "BodyPart.Slot.Head",
+            "text": "イーゼル"
+        },
+        {
+            "key": "Head Section",
+            "context": "BodyPart.Slot.Head",
+            "text": "頭部セクション"
+        },
+        {
+            "key": "Header",
+            "context": "BodyPart.Slot.Head",
+            "text": "ヘッダー"
+        },
+        {
+            "key": "Neck",
+            "context": "BodyPart.Slot.Head",
+            "text": "首"
+        },
+        {
+            "key": "Nuclear Protrusion",
+            "context": "BodyPart.Slot.Head",
+            "text": "核状突起"
+        },
+        {
+            "key": "Pillow",
+            "context": "BodyPart.Slot.Head",
+            "text": "枕"
+        },
+        {
+            "key": "Skull",
+            "context": "BodyPart.Slot.Head",
+            "text": "頭蓋骨"
+        },
+        {
+            "key": "Top Rail",
+            "context": "BodyPart.Slot.Head",
+            "text": "上レール"
+        },
+        {
+            "key": "Top",
+            "context": "BodyPart.Slot.Head",
+            "text": "頂部"
+        },
+        {
+            "key": "Dome",
+            "context": "BodyPart.Slot.Head",
+            "text": "ドーム"
+        },
+        {
+            "key": "Access Panel",
+            "context": "BodyPart.Slot.Face",
+            "text": "アクセスパネル"
+        },
+        {
+            "key": "Antennae",
+            "context": "BodyPart.Slot.Face",
+            "text": "触角"
+        },
+        {
+            "key": "Decoration",
+            "context": "BodyPart.Slot.Face",
+            "text": "装飾"
+        },
+        {
+            "key": "Extra Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "追加の顔"
+        },
+        {
+            "key": "Faceplate",
+            "context": "BodyPart.Slot.Face",
+            "text": "フェイスプレート"
+        },
+        {
+            "key": "Feelers",
+            "context": "BodyPart.Slot.Face",
+            "text": "触手"
+        },
+        {
+            "key": "Knocker",
+            "context": "BodyPart.Slot.Face",
+            "text": "ノッカー"
+        },
+        {
+            "key": "Lip",
+            "context": "BodyPart.Slot.Face",
+            "text": "唇"
+        },
+        {
+            "key": "Pillowcase",
+            "context": "BodyPart.Slot.Face",
+            "text": "枕カバー"
+        },
+        {
+            "key": "Sensor Array",
+            "context": "BodyPart.Slot.Face",
+            "text": "センサーアレイ"
+        },
+        {
+            "key": "Sensory Bud",
+            "context": "BodyPart.Slot.Face",
+            "text": "感覚芽"
+        },
+        {
+            "key": "Sensory Bulb",
+            "context": "BodyPart.Slot.Face",
+            "text": "感覚球"
+        },
+        {
+            "key": "Sensory Nodule",
+            "context": "BodyPart.Slot.Face",
+            "text": "感覚結節"
+        },
+        {
+            "key": "Sensory Frill",
+            "context": "BodyPart.Slot.Face",
+            "text": "感覚ひだ"
+        },
+        {
+            "key": "Sensory Ganglion",
+            "context": "BodyPart.Slot.Face",
+            "text": "感覚神経節"
+        },
+        {
+            "key": "Skull Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "頭蓋面"
+        },
+        {
+            "key": "Splat",
+            "context": "BodyPart.Slot.Face",
+            "text": "飛沫"
+        },
+        {
+            "key": "Mouth",
+            "context": "BodyPart.Slot.Face",
+            "text": "口"
+        },
+        {
+            "key": "Eye",
+            "context": "BodyPart.Slot.Face",
+            "text": "目"
+        },
+        {
+            "key": "Reflective Surface",
+            "context": "BodyPart.Slot.Face",
+            "text": "反射面"
+        },
+        {
+            "key": "Smooth Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "滑面"
+        },
+        {
+            "key": "Writing Surface",
+            "context": "BodyPart.Slot.Face",
+            "text": "筆記面"
+        },
+        {
+            "key": "Hands-Face",
+            "context": "BodyPart.Slot.Face",
+            "text": "手顔"
+        },
+        {
+            "key": "Blanket",
+            "context": "BodyPart.Slot.Back",
+            "text": "毛布"
+        },
+        {
+            "key": "Breadth",
+            "context": "BodyPart.Slot.Back",
+            "text": "背幅"
+        },
+        {
+            "key": "Worn across Breadth",
+            "context": "BodyPart.Slot.Back",
+            "text": "背幅装備"
+        },
+        {
+            "key": "Case",
+            "context": "BodyPart.Slot.Back",
+            "text": "ケース"
+        },
+        {
+            "key": "Worn as Case",
+            "context": "BodyPart.Slot.Back",
+            "text": "ケース装備"
+        },
+        {
+            "key": "Chassis",
+            "context": "BodyPart.Slot.Back",
+            "text": "シャーシ"
+        },
+        {
+            "key": "Worn about Chassis",
+            "context": "BodyPart.Slot.Back",
+            "text": "シャーシ装備"
+        },
+        {
+            "key": "Equipment Rack",
+            "context": "BodyPart.Slot.Back",
+            "text": "装備ラック"
+        },
+        {
+            "key": "Rack",
+            "context": "BodyPart.Slot.Back",
+            "text": "ラック"
+        },
+        {
+            "key": "Frame",
+            "context": "BodyPart.Slot.Back",
+            "text": "フレーム"
+        },
+        {
+            "key": "Membrane",
+            "context": "BodyPart.Slot.Back",
+            "text": "膜"
+        },
+        {
+            "key": "Molding",
+            "context": "BodyPart.Slot.Back",
+            "text": "モールディング"
+        },
+        {
+            "key": "Tablecloth",
+            "context": "BodyPart.Slot.Back",
+            "text": "テーブルクロス"
+        },
+        {
+            "key": "Arm Section",
+            "context": "BodyPart.Slot.Arm",
+            "text": "腕部セクション"
+        },
+        {
+            "key": "Armature",
+            "context": "BodyPart.Slot.Arm",
+            "text": "アーマチュア"
+        },
+        {
+            "key": "Armbone",
+            "context": "BodyPart.Slot.Arm",
+            "text": "腕骨"
+        },
+        {
+            "key": "Bine",
+            "context": "BodyPart.Slot.Arm",
+            "text": "つる"
+        },
+        {
+            "key": "Branch",
+            "context": "BodyPart.Slot.Arm",
+            "text": "枝"
+        },
+        {
+            "key": "Cheliped",
+            "context": "BodyPart.Slot.Arm",
+            "text": "鋏脚"
+        },
+        {
+            "key": "Fibrous Node",
+            "context": "BodyPart.Slot.Arm",
+            "text": "繊維節"
+        },
+        {
+            "key": "Frond",
+            "context": "BodyPart.Slot.Arm",
+            "text": "葉状体"
+        },
+        {
+            "key": "Hinge",
+            "context": "BodyPart.Slot.Arm",
+            "text": "蝶番"
+        },
+        {
+            "key": "Knot",
+            "context": "BodyPart.Slot.Arm",
+            "text": "節"
+        },
+        {
+            "key": "Leg",
+            "context": "BodyPart.Slot.Arm",
+            "text": "脚"
+        },
+        {
+            "key": "Lobe",
+            "context": "BodyPart.Slot.Arm",
+            "text": "葉片"
+        },
+        {
+            "key": "Pipe",
+            "context": "BodyPart.Slot.Arm",
+            "text": "パイプ"
+        },
+        {
+            "key": "Reinforcement",
+            "context": "BodyPart.Slot.Arm",
+            "text": "補強材"
+        },
+        {
+            "key": "Robo-Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "ロボアーム"
+        },
+        {
+            "key": "Side Rail",
+            "context": "BodyPart.Slot.Arm",
+            "text": "側レール"
+        },
+        {
+            "key": "Stalk",
+            "context": "BodyPart.Slot.Arm",
+            "text": "柄"
+        },
+        {
+            "key": "Stem",
+            "context": "BodyPart.Slot.Arm",
+            "text": "茎"
+        },
+        {
+            "key": "Stud",
+            "context": "BodyPart.Slot.Arm",
+            "text": "鋲"
+        },
+        {
+            "key": "Support Pole",
+            "context": "BodyPart.Slot.Arm",
+            "text": "支柱"
+        },
+        {
+            "key": "Support Strut",
+            "context": "BodyPart.Slot.Arm",
+            "text": "支持材"
+        },
+        {
+            "key": "Taproot",
+            "context": "BodyPart.Slot.Arm",
+            "text": "主根"
+        },
+        {
+            "key": "Oral Arm",
+            "context": "BodyPart.Slot.Arm",
+            "text": "口腕"
+        },
+        {
+            "key": "Crystal Prism",
+            "context": "BodyPart.Slot.Arm",
+            "text": "クリスタルプリズム"
+        },
+        {
+            "key": "Arm Stump",
+            "context": "BodyPart.Slot.Hand",
+            "text": "腕の断端"
+        },
+        {
+            "key": "Bifurcation",
+            "context": "BodyPart.Slot.Hand",
+            "text": "分岐"
+        },
+        {
+            "key": "Bottom Drawer",
+            "context": "BodyPart.Slot.Hand",
+            "text": "下段引き出し"
+        },
+        {
+            "key": "Divider",
+            "context": "BodyPart.Slot.Hand",
+            "text": "仕切り"
+        },
+        {
+            "key": "Tray",
+            "context": "BodyPart.Slot.Hand",
+            "text": "トレイ"
+        },
+        {
+            "key": "Drawer",
+            "context": "BodyPart.Slot.Hand",
+            "text": "引き出し"
+        },
+        {
+            "key": "Fine Root",
+            "context": "BodyPart.Slot.Hand",
+            "text": "細根"
+        },
+        {
+            "key": "Hand Section",
+            "context": "BodyPart.Slot.Hand",
+            "text": "手部セクション"
+        },
+        {
+            "key": "Handbone",
+            "context": "BodyPart.Slot.Hand",
+            "text": "手骨"
+        },
+        {
+            "key": "Handle",
+            "context": "BodyPart.Slot.Hand",
+            "text": "取っ手"
+        },
+        {
+            "key": "Hypha",
+            "context": "BodyPart.Slot.Hand",
+            "text": "菌糸"
+        },
+        {
+            "key": "Knob",
+            "context": "BodyPart.Slot.Hand",
+            "text": "ノブ"
+        },
+        {
+            "key": "Leaf",
+            "context": "BodyPart.Slot.Hand",
+            "text": "葉"
+        },
+        {
+            "key": "Manipulator",
+            "context": "BodyPart.Slot.Hand",
+            "text": "マニピュレータ"
+        },
+        {
+            "key": "Opening",
+            "context": "BodyPart.Slot.Hand",
+            "text": "開口部"
+        },
+        {
+            "key": "Pincer",
+            "context": "BodyPart.Slot.Hand",
+            "text": "鋏"
+        },
+        {
+            "key": "Pinnule",
+            "context": "BodyPart.Slot.Hand",
+            "text": "小葉"
+        },
+        {
+            "key": "Pseudopod",
+            "context": "BodyPart.Slot.Hand",
+            "text": "仮足"
+        },
+        {
+            "key": "Rail",
+            "context": "BodyPart.Slot.Hand",
+            "text": "レール"
+        },
+        {
+            "key": "Robo-Hand",
+            "context": "BodyPart.Slot.Hand",
+            "text": "ロボハンド"
+        },
+        {
+            "key": "Shelf",
+            "context": "BodyPart.Slot.Hand",
+            "text": "棚"
+        },
+        {
+            "key": "Side Hypha",
+            "context": "BodyPart.Slot.Hand",
+            "text": "側生菌糸"
+        },
+        {
+            "key": "Side",
+            "context": "BodyPart.Slot.Hand",
+            "text": "側面"
+        },
+        {
+            "key": "Small Crack",
+            "context": "BodyPart.Slot.Hand",
+            "text": "小さな裂け目"
+        },
+        {
+            "key": "Tendril",
+            "context": "BodyPart.Slot.Hand",
+            "text": "巻きひげ"
+        },
+        {
+            "key": "Tentacle",
+            "context": "BodyPart.Slot.Hand",
+            "text": "触手"
+        },
+        {
+            "key": "Tie Point",
+            "context": "BodyPart.Slot.Hand",
+            "text": "係止点"
+        },
+        {
+            "key": "Top Drawer",
+            "context": "BodyPart.Slot.Hand",
+            "text": "上段引き出し"
+        },
+        {
+            "key": "Twig",
+            "context": "BodyPart.Slot.Hand",
+            "text": "小枝"
+        },
+        {
+            "key": "Vane",
+            "context": "BodyPart.Slot.Hand",
+            "text": "ベーン"
+        },
+        {
+            "key": "Quincunx",
+            "context": "BodyPart.Slot.Hand",
+            "text": "五点配列"
+        },
+        {
+            "key": "Arm Stumps",
+            "context": "BodyPart.Slot.Hands",
+            "text": "腕の断端"
+        },
+        {
+            "key": "Bifurcations",
+            "context": "BodyPart.Slot.Hands",
+            "text": "分岐"
+        },
+        {
+            "key": "Hand Sections",
+            "context": "BodyPart.Slot.Hands",
+            "text": "手部セクション"
+        },
+        {
+            "key": "Handbones",
+            "context": "BodyPart.Slot.Hands",
+            "text": "手骨"
+        },
+        {
+            "key": "Knobs",
+            "context": "BodyPart.Slot.Hands",
+            "text": "ノブ"
+        },
+        {
+            "key": "Lateral Hyphae",
+            "context": "BodyPart.Slot.Hands",
+            "text": "側生菌糸"
+        },
+        {
+            "key": "Leaves",
+            "context": "BodyPart.Slot.Hands",
+            "text": "葉"
+        },
+        {
+            "key": "Manipulators",
+            "context": "BodyPart.Slot.Hands",
+            "text": "マニピュレータ"
+        },
+        {
+            "key": "Pincers",
+            "context": "BodyPart.Slot.Hands",
+            "text": "鋏"
+        },
+        {
+            "key": "Pinnules",
+            "context": "BodyPart.Slot.Hands",
+            "text": "小葉"
+        },
+        {
+            "key": "Rails",
+            "context": "BodyPart.Slot.Hands",
+            "text": "レール"
+        },
+        {
+            "key": "Robo-Hands",
+            "context": "BodyPart.Slot.Hands",
+            "text": "ロボハンド"
+        },
+        {
+            "key": "Tendrils",
+            "context": "BodyPart.Slot.Hands",
+            "text": "巻きひげ"
+        },
+        {
+            "key": "Tentacles",
+            "context": "BodyPart.Slot.Hands",
+            "text": "触手"
+        },
+        {
+            "key": "Pseudopods",
+            "context": "BodyPart.Slot.Hands",
+            "text": "仮足"
+        },
+        {
+            "key": "Twigs",
+            "context": "BodyPart.Slot.Hands",
+            "text": "小枝"
+        },
+        {
+            "key": "Vanes",
+            "context": "BodyPart.Slot.Hands",
+            "text": "ベーン"
+        },
+        {
+            "key": "Quincunces",
+            "context": "BodyPart.Slot.Hands",
+            "text": "五点配列"
+        },
+        {
+            "key": "Small Cracks",
+            "context": "BodyPart.Slot.Hands",
+            "text": "小さな裂け目"
+        },
+        {
+            "key": "Shelves",
+            "context": "BodyPart.Slot.Hands",
+            "text": "棚"
+        },
+        {
+            "key": "Tie Points",
+            "context": "BodyPart.Slot.Hands",
+            "text": "係止点"
+        },
+        {
+            "key": "Fine Roots",
+            "context": "BodyPart.Slot.Hands",
+            "text": "細根"
+        },
+        {
+            "key": "Drawers",
+            "context": "BodyPart.Slot.Hands",
+            "text": "引き出し"
+        },
+        {
+            "key": "Openings",
+            "context": "BodyPart.Slot.Hands",
+            "text": "開口部"
+        },
+        {
+            "key": "Handles",
+            "context": "BodyPart.Slot.Hands",
+            "text": "取っ手"
+        },
+        {
+            "key": "Trays",
+            "context": "BodyPart.Slot.Hands",
+            "text": "トレイ"
+        },
+        {
+            "key": "Base",
+            "context": "BodyPart.Slot.Feet",
+            "text": "土台"
+        },
+        {
+            "key": "Bottom Rail",
+            "context": "BodyPart.Slot.Feet",
+            "text": "下部レール"
+        },
+        {
+            "key": "Bottom",
+            "context": "BodyPart.Slot.Feet",
+            "text": "下部"
+        },
+        {
+            "key": "Footbones",
+            "context": "BodyPart.Slot.Feet",
+            "text": "足骨"
+        },
+        {
+            "key": "Foundation",
+            "context": "BodyPart.Slot.Feet",
+            "text": "基礎"
+        },
+        {
+            "key": "Front Legs",
+            "context": "BodyPart.Slot.Feet",
+            "text": "前脚"
+        },
+        {
+            "key": "Legs",
+            "context": "BodyPart.Slot.Feet",
+            "text": "脚"
+        },
+        {
+            "key": "Rear Legs",
+            "context": "BodyPart.Slot.Feet",
+            "text": "後脚"
+        },
+        {
+            "key": "Rockers",
+            "context": "BodyPart.Slot.Feet",
+            "text": "揺り脚"
+        },
+        {
+            "key": "Support Struts",
+            "context": "BodyPart.Slot.Feet",
+            "text": "支持材"
+        },
+        {
+            "key": "Undercarriage",
+            "context": "BodyPart.Slot.Feet",
+            "text": "足回り"
+        },
+        {
+            "key": "Support Hyphae",
+            "context": "BodyPart.Slot.Roots",
+            "text": "支持菌糸"
+        },
+        {
+            "key": "Mulch",
+            "context": "BodyPart.Slot.Roots",
+            "text": "マルチ"
+        },
+        {
+            "key": "Stakes",
+            "context": "BodyPart.Slot.Roots",
+            "text": "杭"
+        },
+        {
+            "key": "Muscular Foot",
+            "context": "BodyPart.Slot.Tail",
+            "text": "筋足"
+        },
+        {
+            "key": "Wheels",
+            "context": "BodyPart.Slot.Tread",
+            "text": "車輪"
+        },
+        {
+            "key": "Wheel",
+            "context": "BodyPart.Slot.Tread",
+            "text": "車輪"
+        },
+        {
+            "key": "Dorsal Fin",
+            "context": "BodyPart.Slot.Fin",
+            "text": "背びれ"
+        },
+        {
+            "key": "Tail Fin",
+            "context": "BodyPart.Slot.Fin",
+            "text": "尾びれ"
+        },
+        {
+            "key": "Hardpoint",
+            "context": "BodyPart.Slot.Missile Weapon",
+            "text": "ハードポイント"
+        },
+        {
+            "key": "Middle Hardpoint",
+            "context": "BodyPart.Slot.Thrown Weapon",
+            "text": "中央ハードポイント"
+        },
+        {
+            "key": "Grafted Mirror Arm",
+            "context": "BodyPart.Slot.Thrown Weapon",
+            "text": "移植ミラーアーム"
         }
     ]
 }
