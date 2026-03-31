@@ -1,0 +1,163 @@
+using HarmonyLib;
+using QudJP.Patches;
+using QudJP.Tests.DummyTargets;
+
+namespace QudJP.Tests.L2;
+
+public sealed partial class Issue201OtherUiBindingPatchTests
+{
+    [Test]
+    public void TinkeringStatusScreenPostfix_TranslatesModeToggleAndCategoryInfos_WhenPatched()
+    {
+        WriteDictionary(
+            ("{{hotkey|[~Toggle]}} switch to modifications", "{{hotkey|[~Toggle]}} 改造に切り替え"),
+            ("{{hotkey|[~Toggle]}} switch to build", "{{hotkey|[~Toggle]}} 製作に切り替え"),
+            ("Build", "製作"),
+            ("Mod", "改造"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyTinkeringStatusScreenTarget), nameof(DummyTinkeringStatusScreenTarget.UpdateViewFromData)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(TinkeringStatusScreenTranslationPatch), nameof(TinkeringStatusScreenTranslationPatch.Postfix))));
+
+            var buildTarget = new DummyTinkeringStatusScreenTarget
+            {
+                CurrentCategory = 0,
+            };
+            buildTarget.UpdateViewFromData();
+
+            var modTarget = new DummyTinkeringStatusScreenTarget
+            {
+                CurrentCategory = 1,
+            };
+            modTarget.UpdateViewFromData();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(buildTarget.OriginalExecuted, Is.True);
+                Assert.That(buildTarget.modeToggleText.Text, Is.EqualTo("{{hotkey|[~Toggle]}} 改造に切り替え"));
+                Assert.That(buildTarget.categoryInfos[0].Name, Is.EqualTo("製作"));
+                Assert.That(buildTarget.categoryInfos[1].Name, Is.EqualTo("改造"));
+                Assert.That(modTarget.modeToggleText.Text, Is.EqualTo("{{hotkey|[~Toggle]}} 製作に切り替え"));
+                Assert.That(modTarget.categoryInfos[0].Name, Is.EqualTo("製作"));
+                Assert.That(modTarget.categoryInfos[1].Name, Is.EqualTo("改造"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(TinkeringStatusScreenTranslationPatch), "TinkeringStatus.ModeToggleText"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(TinkeringStatusScreenTranslationPatch), "TinkeringStatus.CategoryName"),
+                    Is.GreaterThan(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void TinkeringLinePostfix_TranslatesNoSchematicsAndNoApplicableItems_WhenPatched()
+    {
+        WriteDictionary(
+            ("{{K|You don't have any schematics.}}", "{{K|設計図がない。}}"),
+            ("<no applicable items>", "<適用可能なアイテムなし>"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyTinkeringLineTarget), nameof(DummyTinkeringLineTarget.setData)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(TinkeringLineTranslationPatch), nameof(TinkeringLineTranslationPatch.Postfix))));
+
+            var noSchematicsTarget = new DummyTinkeringLineTarget();
+            noSchematicsTarget.setData(new DummyTinkeringLineDataTarget
+            {
+                category = true,
+                categoryName = "~<none>",
+            });
+
+            var noApplicableItemsTarget = new DummyTinkeringLineTarget();
+            noApplicableItemsTarget.setData(new DummyTinkeringLineDataTarget
+            {
+                mode = 1,
+            });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(noSchematicsTarget.OriginalExecuted, Is.True);
+                Assert.That(noSchematicsTarget.categoryText.Text, Is.EqualTo("{{K|設計図がない。}}"));
+                Assert.That(noApplicableItemsTarget.OriginalExecuted, Is.True);
+                Assert.That(noApplicableItemsTarget.text.Text, Is.EqualTo("    <適用可能なアイテムなし>"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(TinkeringLineTranslationPatch), "TinkeringLine.CategoryText"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(TinkeringLineTranslationPatch), "TinkeringLine.Text"),
+                    Is.GreaterThan(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void TinkeringDetailsLinePostfix_TranslatesBitCostIngredientsAndOr_WhenPatched()
+    {
+        WriteDictionary(
+            ("{{K|| Bit Cost |}}", "{{K|| ビットコスト |}}"),
+            ("{{K || Bit Cost |}}", "{{K || ビットコスト |}}"),
+            ("{{K|| Ingredients |}}", "{{K|| 素材 |}}"),
+            ("-or-", "-または-"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyTinkeringDetailsLineTarget), nameof(DummyTinkeringDetailsLineTarget.setData)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(TinkeringDetailsLineTranslationPatch), nameof(TinkeringDetailsLineTranslationPatch.Postfix))));
+
+            var buildTarget = new DummyTinkeringDetailsLineTarget();
+            buildTarget.setData(new DummyTinkeringLineDataTarget
+            {
+                data = new DummyTinkeringRecipeData
+                {
+                    Type = "Build",
+                },
+            });
+
+            var modTarget = new DummyTinkeringDetailsLineTarget();
+            modTarget.setData(new DummyTinkeringLineDataTarget
+            {
+                data = new DummyTinkeringRecipeData
+                {
+                    Type = "Mod",
+                },
+            });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(buildTarget.OriginalExecuted, Is.True);
+                Assert.That(buildTarget.modBitCostText.Text, Does.Contain("{{K|| ビットコスト |}}"));
+                Assert.That(buildTarget.modBitCostText.Text, Does.Contain("{{K|| 素材 |}}"));
+                Assert.That(buildTarget.modBitCostText.Text, Does.Contain("-または-"));
+                Assert.That(modTarget.modBitCostText.Text, Does.Contain("{{K || ビットコスト |}}"));
+                Assert.That(modTarget.modBitCostText.Text, Does.Contain("{{K|| 素材 |}}"));
+                Assert.That(modTarget.modBitCostText.Text, Does.Contain("-または-"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(TinkeringDetailsLineTranslationPatch), "TinkeringDetails.ModBitCostText"),
+                    Is.GreaterThan(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+}
