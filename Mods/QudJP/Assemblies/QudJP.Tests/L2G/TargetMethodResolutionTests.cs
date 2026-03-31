@@ -68,6 +68,65 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(StatisticGetHelpTextPatch), "GetHelpText", "XRL.World.Statistic", "System.String", new string[0])]
     [TestCase(typeof(CharacterStatusScreenAttributeHighlightPatch), "HandleHighlightAttribute", "Qud.UI.CharacterStatusScreen", "System.Void", new[] { "XRL.UI.Framework.FrameworkDataElement" })]
     [TestCase(typeof(SkillsAndPowersStatusScreenDetailsPatch), "UpdateDetailsFromNode", "Qud.UI.SkillsAndPowersStatusScreen", "System.Void", new[] { "XRL.UI.SPNode" })]
+    [TestCase(typeof(PopupShowSpaceTranslationPatch), "ShowSpace", "XRL.UI.Popup", "System.Void", new[]
+    {
+        "System.String",
+        "System.String",
+        "System.String",
+        "ConsoleLib.Console.Renderable",
+        "System.Boolean",
+        "System.Boolean",
+        "System.String",
+    })]
+    [TestCase(typeof(PopupPickOptionTranslationPatch), "PickOption", "XRL.UI.Popup", "System.Int32", new[]
+    {
+        "System.String",
+        "System.String",
+        "System.String",
+        "System.String",
+        "System.Collections.Generic.IReadOnlyList`1[[System.String]]",
+        "System.Collections.Generic.IReadOnlyList`1[[System.Char]]",
+        "System.Collections.Generic.IReadOnlyList`1[[ConsoleLib.Console.IRenderable]]",
+        "System.Collections.Generic.IReadOnlyList`1[[Qud.UI.QudMenuItem]]",
+        "XRL.World.GameObject",
+        "ConsoleLib.Console.IRenderable",
+        "System.Action`1[[System.Int32]]",
+        "System.Int32",
+        "System.Int32",
+        "System.Int32",
+        "System.Int32",
+        "System.Boolean",
+        "System.Boolean",
+        "System.Boolean",
+        "System.Boolean",
+        "System.Boolean",
+        "Genkit.Location2D",
+        "System.String",
+    })]
+    [TestCase(typeof(PopupMessageTranslationPatch), "ShowPopup", "Qud.UI.PopupMessage", "System.Void", new[]
+    {
+        "System.String",
+        "System.Collections.Generic.List`1[[Qud.UI.QudMenuItem]]",
+        "System.Action`1[[Qud.UI.QudMenuItem]]",
+        "System.Collections.Generic.List`1[[Qud.UI.QudMenuItem]]",
+        "System.Action`1[[Qud.UI.QudMenuItem]]",
+        "System.String",
+        "System.Boolean",
+        "System.String",
+        "System.Int32",
+        "System.Action",
+        "ConsoleLib.Console.IRenderable",
+        "System.String",
+        "ConsoleLib.Console.IRenderable",
+        "System.Boolean",
+        "System.Boolean",
+        "System.Threading.CancellationToken",
+        "System.Boolean",
+        "System.String",
+        "System.String",
+        "Genkit.Location2D",
+        "System.String",
+    })]
     [TestCase(typeof(AbilityBarUpdateAbilitiesTextPatch), "UpdateAbilitiesText", "Qud.UI.AbilityBar", "System.Void", new string[0])]
     [TestCase(typeof(EffectDescriptionPatch), "GetDescription", "XRL.World.Effect", "System.String", new string[0])]
     [TestCase(typeof(EffectDetailsPatch), "GetDetails", "XRL.World.Effect", "System.String", new string[0])]
@@ -362,6 +421,16 @@ public sealed class TargetMethodResolutionTests
         "",
         "System.String|System.Int32|System.Int32|System.Int32|System.String|System.Boolean",
         "System.Double[]|System.Int32[]|System.Collections.Generic.List`1[[XRL.UI.TradeEntry]][]|System.Int32[][]",
+    })]
+    [TestCase(typeof(PopupAskStringTranslationPatch), new[]
+    {
+        "System.String|System.String|System.String|System.String|System.String|System.Int32|System.Int32|System.Boolean|System.Boolean|System.Nullable`1[[System.Boolean]]",
+        "System.String|System.String|System.Int32|System.Int32|System.String|System.Boolean|System.Boolean|System.Nullable`1[[System.Boolean]]|System.Boolean|System.String",
+    })]
+    [TestCase(typeof(PopupAskNumberTranslationPatch), new[]
+    {
+        "System.String|System.String|System.String|System.Int32|System.Int32|System.Int32",
+        "System.String|System.Int32|System.Int32|System.Int32|System.String|System.Boolean",
     })]
     public void TargetMethods_ResolveExpectedOverloads(Type patchType, string[] expectedSignatures)
     {
