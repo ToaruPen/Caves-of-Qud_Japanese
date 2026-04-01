@@ -102,8 +102,14 @@ public sealed class WorldModsTextTranslatorTests
         "Co-processor: When powered, this item grants +2 Intelligence and provides 13 units of compute power to the local lattice.",
         "共同処理装置: 通電中、知力に+2を与え、局所格子に13ユニットの演算力を供給する。")]
     [TestCase(
+        "Co-Processor: When powered, this item grants bonus Intelligence and provides compute power to the local lattice.",
+        "共同処理装置: 通電中、知力にボーナスを与え、局所格子に演算力を供給する。")]
+    [TestCase(
         "Counterweighted: Adds +2 to hit.",
         "つり合い調整: 命中に+2のボーナスを与える。")]
+    [TestCase(
+        "Counterweighted: Adds a bonus to hit.",
+        "つり合い調整: 命中にボーナスを与える。")]
     [TestCase(
         "Displacer: When powered, this weapon randomly teleports its target 1-6 tiles away on a successful hit.",
         "位相転移: 通電中、この武器は命中時に対象を無作為に1-6マス離れた場所へ転移させる。")]

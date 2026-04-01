@@ -22,7 +22,7 @@ internal static class WorldModsTextTranslator
         "^Anti-gravity: When powered, this item's weight is reduced by (?<percent>\\d+)% plus (?<force>\\d+) (?<unit>lb|lbs)\\.$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex CoProcessorPattern = new Regex(
-        "^[Cc]o-processor: When powered, this item grants (?<bonus>bonus|[+-]\\d+) (?<attribute>.+?) and provides (?:(?<units>\\d+) units of )?compute power to the local lattice\\.$",
+        "^[Cc]o-[Pp]rocessor: When powered, this item grants (?<bonus>bonus|[+-]\\d+) (?<attribute>.+?) and provides (?:(?<units>\\d+) units of )?compute power to the local lattice\\.$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex CounterweightedPattern = new Regex(
         "^Counterweighted: Adds (?<bonus>a bonus|[+-]\\d+) to hit\\.$",
