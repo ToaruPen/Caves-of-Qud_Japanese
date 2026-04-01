@@ -98,6 +98,37 @@ public sealed class AccessibilityLocalizationTranslationTests
         Assert.That(result, Is.EqualTo("unknown-value"));
     }
 
+    [Test]
+    public void Postfix_LeavesNullResultUnchanged_ForUnknownKey()
+    {
+        string result = null!;
+
+        AccessibilityLocalizationPatch.Postfix("Unknown_Key", ref result);
+
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void Postfix_LeavesEmptyResultUnchanged_ForUnknownKey()
+    {
+        var result = string.Empty;
+
+        AccessibilityLocalizationPatch.Postfix("Unknown_Key", ref result);
+
+        Assert.That(result, Is.Empty);
+    }
+
+    [Test]
+    public void Postfix_LeavesMarkedResultUnchanged_ForMarkedKey()
+    {
+        const string markedResult = "\u0001{{Y|Element_Button}}";
+        var result = markedResult;
+
+        AccessibilityLocalizationPatch.Postfix("\u0001Element_Button", ref result);
+
+        Assert.That(result, Is.EqualTo(markedResult));
+    }
+
     private static Dictionary<string, string> GetTranslations()
     {
         var field = typeof(AccessibilityLocalizationPatch).GetField("Translations", BindingFlags.NonPublic | BindingFlags.Static);
