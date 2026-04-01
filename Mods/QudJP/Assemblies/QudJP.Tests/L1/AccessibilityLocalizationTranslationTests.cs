@@ -99,6 +99,16 @@ public sealed class AccessibilityLocalizationTranslationTests
     }
 
     [Test]
+    public void Postfix_LeavesResultUnchanged_ForColorTagKey()
+    {
+        var result = "unknown-value";
+
+        AccessibilityLocalizationPatch.Postfix("{{Y|Element_Button}}", ref result);
+
+        Assert.That(result, Is.EqualTo("unknown-value"));
+    }
+
+    [Test]
     public void Postfix_LeavesNullResultUnchanged_ForUnknownKey()
     {
         string result = null!;
@@ -133,15 +143,15 @@ public sealed class AccessibilityLocalizationTranslationTests
     public void Postfix_LeavesResultUnchanged_WhenKeyIsNull()
     {
         string resultNull = null!;
-        AccessibilityLocalizationPatch.Postfix(null, ref resultNull);
+        AccessibilityLocalizationPatch.Postfix(null!, ref resultNull);
         Assert.That(resultNull, Is.Null);
 
         var resultEmpty = string.Empty;
-        AccessibilityLocalizationPatch.Postfix(null, ref resultEmpty);
+        AccessibilityLocalizationPatch.Postfix(null!, ref resultEmpty);
         Assert.That(resultEmpty, Is.Empty);
 
         var resultNonEmpty = "unknown-value";
-        AccessibilityLocalizationPatch.Postfix(null, ref resultNonEmpty);
+        AccessibilityLocalizationPatch.Postfix(null!, ref resultNonEmpty);
         Assert.That(resultNonEmpty, Is.EqualTo("unknown-value"));
     }
 
