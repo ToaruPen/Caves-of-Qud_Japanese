@@ -107,6 +107,35 @@ public sealed class MutationsApiTranslationPatchTests
     }
 
     [Test]
+    public void BuyRandomMutation_PreservesColorTagsInConfirmationMessage_WhenPatched()
+    {
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.ShowYesNo)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyMutationsApiTarget), nameof(DummyMutationsApiTarget.BuyRandomMutation)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(MutationsApiTranslationPatch), nameof(MutationsApiTranslationPatch.Prefix))),
+                finalizer: new HarmonyMethod(RequireMethod(typeof(MutationsApiTranslationPatch), nameof(MutationsApiTranslationPatch.Finalizer), typeof(Exception))));
+
+            DummyMutationsApiTarget.ConfirmMessageToShow =
+                "Are you sure you want to spend 4 mutation points to buy a new {{G|mutation}}?";
+
+            _ = DummyMutationsApiTarget.BuyRandomMutation(new DummyGameObject(), 4, MutationTerm: "mutation");
+
+            Assert.That(DummyPopupShow.LastShowYesNoMessage, Is.EqualTo("本当に4ポイントを消費して新しい{{G|突然変異}}を購入しますか？"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void TryTranslatePopupMessage_FallsBackToEnglishTerm_WhenDictionaryMisses()
     {
         var ok = TryTranslatePopupMessageDuringMutationPurchase(
