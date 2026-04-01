@@ -147,8 +147,7 @@ internal static class BedChairFragmentTranslator
         }
 
         var targetGroup = match.Groups["target"];
-        var normalizedTarget = NormalizeTarget(targetGroup.Value);
-        var visible = rule.Build(normalizedTarget, match);
+        var visible = rule.Build(NormalizeTarget(targetGroup.Value), match);
 
         if (spans.Count == 0)
         {
@@ -156,31 +155,38 @@ internal static class BedChairFragmentTranslator
             return true;
         }
 
-        // Extract color spans that belong to the target
-        var targetColorSpans = ColorCodePreserver.SliceSpans(spans, targetGroup.Index, targetGroup.Length);
-
-        // Apply the target's color spans to the normalized target in the translated sentence
-        var coloredTarget = targetColorSpans.Count > 0
-            ? ColorAwareTranslationComposer.Restore(normalizedTarget, targetColorSpans)
-            : normalizedTarget;
-
-        // Replace the normalized target in the visible translation with the colored version
-        if (targetColorSpans.Count > 0 && visible.StartsWith(normalizedTarget))
-        {
-            visible = coloredTarget + visible.Substring(normalizedTarget.Length);
-        }
-
-        // Create boundary-only spans for sentence-level color tags
-        var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(
-            spans,
-            match,
-            source.Length,
-            visible.Length);
-
+        var boundarySpans = BuildMovedTargetBoundarySpans(spans, targetGroup, visible.Length);
         translated = boundarySpans.Count > 0
             ? ColorAwareTranslationComposer.Restore(visible, boundarySpans)
             : visible;
         return true;
+    }
+
+    private static List<ColorSpan> BuildMovedTargetBoundarySpans(
+        IReadOnlyList<ColorSpan> spans,
+        Group targetGroup,
+        int translatedLength)
+    {
+        var boundarySpans = new List<ColorSpan>();
+        var targetStart = targetGroup.Index;
+        var targetEnd = targetGroup.Index + targetGroup.Length;
+
+        for (var index = 0; index < spans.Count; index++)
+        {
+            var span = spans[index];
+            if (span.Index <= targetStart)
+            {
+                boundarySpans.Add(new ColorSpan(0, span.Token));
+                continue;
+            }
+
+            if (span.Index >= targetEnd)
+            {
+                boundarySpans.Add(new ColorSpan(translatedLength, span.Token));
+            }
+        }
+
+        return boundarySpans;
     }
 
     private static string NormalizeTarget(string target)
