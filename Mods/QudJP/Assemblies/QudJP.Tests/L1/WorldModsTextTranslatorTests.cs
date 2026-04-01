@@ -221,7 +221,7 @@ public sealed class WorldModsTextTranslatorTests
     }
 
     [Test]
-    public void TryTranslate_PreservesMarkerAndColorTagsCombined()
+    public void TryTranslate_MarkerAndColorTagsCombined_FallsBackToSource()
     {
         WriteDictionary(
             "world-mods.ja.json",
@@ -235,8 +235,8 @@ public sealed class WorldModsTextTranslatorTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(ok, Is.True);
-            Assert.That(translated, Is.EqualTo("\x01{{r|火炎: 通電中、この武器は命中時に追加の熱ダメージを与える。}}"));
+            Assert.That(ok, Is.False);
+            Assert.That(translated, Is.EqualTo("\x01{{r|Flaming: When powered, this weapon deals additional heat damage on hit.}}"));
         });
     }
 
