@@ -54,6 +54,7 @@ public static class InventoryScreenTranslationPatch
         }
     }
 
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         try
