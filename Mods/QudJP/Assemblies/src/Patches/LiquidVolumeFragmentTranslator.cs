@@ -138,7 +138,7 @@ internal static class LiquidVolumeFragmentTranslator
         var normalized = NormalizeTarget(group.Value);
         return string.Equals(normalized, group.Value.Trim(), StringComparison.Ordinal)
             ? restored
-            : normalized;
+            : ColorAwareTranslationComposer.RestoreCapture(normalized, spans, group).Trim();
     }
 
     private static string RestoreVisible(Group group, IReadOnlyList<ColorSpan> spans)

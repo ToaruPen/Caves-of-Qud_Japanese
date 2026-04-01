@@ -122,7 +122,7 @@ public static class MutationsApiTranslationPatch
         }
 
         return StringHelpers.TryGetTranslationExactOrLowerAscii(termGroup.Value.Trim(), out translated)
-            ? translated
+            ? ColorAwareTranslationComposer.RestoreCapture(translated, spans, termGroup).Trim()
             : restored;
     }
 }

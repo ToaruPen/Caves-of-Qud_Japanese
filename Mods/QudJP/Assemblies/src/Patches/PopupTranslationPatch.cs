@@ -349,9 +349,9 @@ public static class PopupTranslationPatch
             return true;
         }
 
-        if (ClonelingVehicleTranslationPatch.TryTranslatePopupMessage(source, route, family, out var liquidFuelTranslated))
+        if (ClonelingVehicleTranslationPatch.TryTranslatePopupMessage(source, route, family, out var clonelingVehicleTranslated))
         {
-            translated = liquidFuelTranslated;
+            translated = clonelingVehicleTranslated;
             return true;
         }
 

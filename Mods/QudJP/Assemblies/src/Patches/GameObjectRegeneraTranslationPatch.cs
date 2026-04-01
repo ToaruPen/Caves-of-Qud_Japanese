@@ -115,7 +115,7 @@ public static class GameObjectRegeneraTranslationPatch
         var part = ColorAwareTranslationComposer.RestoreCapture(limbMatch.Groups["part"].Value, spans, limbMatch.Groups["part"]).Trim();
         var translated = string.Concat(part, "を再生した！");
         DynamicTextObservability.RecordTransform(Context, "Regenera.RegenerateLimb", message, translated);
-        message = translated;
+        message = MessageFrameTranslator.MarkDirectTranslation(translated);
         return true;
     }
 

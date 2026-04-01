@@ -219,6 +219,7 @@ public sealed class WorldPartsProducerTranslationPatchTests
                 postfix: new HarmonyMethod(RequireMethod(typeof(GivesRepShortDescriptionTranslationPatch), nameof(GivesRepShortDescriptionTranslationPatch.Postfix), typeof(object), typeof(int))));
 
             var evt = new DummyGetShortDescriptionEvent();
+            evt.Postfix.Append("既存の説明");
             var target = new DummyGivesRepProducerTarget
             {
                 PostfixTextToAppend = "\nYou are water-bonded with Mehmet.",
@@ -226,7 +227,7 @@ public sealed class WorldPartsProducerTranslationPatchTests
 
             _ = target.HandleEvent(evt);
 
-            Assert.That(evt.Postfix.ToString(), Is.EqualTo("\nMehmetと水の絆で結ばれている。"));
+            Assert.That(evt.Postfix.ToString(), Is.EqualTo("既存の説明\nMehmetと水の絆で結ばれている。"));
         }
         finally
         {

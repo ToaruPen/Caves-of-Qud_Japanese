@@ -14,6 +14,7 @@ public sealed class WorldPartsFragmentTranslatorTests
     [TestCase("canteen is sealed.", "canteenは密閉されている。")]
     [TestCase("canteen is empty.", "canteenは空だ。")]
     [TestCase("You can't pour from a container into itself.", "それ自身に容器から注ぐことはできない。")]
+    [TestCase("You can't pour from a container into {{Y|itself}}.", "{{Y|それ自身}}に容器から注ぐことはできない。")]
     [TestCase("Do you want to empty canteen first?", "canteenを先に空にしますか？")]
     public void LiquidVolumeTranslator_TranslatesPopupFragments(string input, string expected)
     {
@@ -63,6 +64,7 @@ public sealed class WorldPartsFragmentTranslatorTests
     }
 
     [TestCase("You extricate yourself from stasis pod.", "stasis podから抜け出した。")]
+    [TestCase("You extricate itself from stasis pod.", "stasis podからそれ自身を引き出した。")]
     [TestCase("You extricate snapjaw from stasis pod.", "stasis podからsnapjawを引き出した。")]
     public void EnclosingTranslator_TranslatesExtricatePopup(string input, string expected)
     {

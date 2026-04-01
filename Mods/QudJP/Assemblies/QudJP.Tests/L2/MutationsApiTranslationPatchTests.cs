@@ -106,6 +106,60 @@ public sealed class MutationsApiTranslationPatchTests
         }
     }
 
+    [Test]
+    public void TryTranslatePopupMessage_FallsBackToEnglishTerm_WhenDictionaryMisses()
+    {
+        var ok = TryTranslatePopupMessageDuringMutationPurchase(
+            "Are you sure you want to spend 4 mutation points to buy a new mystery mutation?",
+            out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ok, Is.True);
+            Assert.That(translated, Is.EqualTo("本当に4ポイントを消費して新しいmystery mutationを購入しますか？"));
+        });
+    }
+
+    [Test]
+    public void TryTranslatePopupMessage_ReturnsFalse_ForEmptyInput()
+    {
+        var ok = TryTranslatePopupMessageDuringMutationPurchase(string.Empty, out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ok, Is.False);
+            Assert.That(translated, Is.EqualTo(string.Empty));
+        });
+    }
+
+    [Test]
+    public void TryTranslatePopupMessage_PreservesColorTags_OnExactFallback()
+    {
+        var ok = TryTranslatePopupMessageDuringMutationPurchase(
+            "Are you sure you want to spend 4 mutation points to buy a new {{G|mutation}}?",
+            out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ok, Is.True);
+            Assert.That(translated, Is.EqualTo("本当に4ポイントを消費して新しい{{G|突然変異}}を購入しますか？"));
+        });
+    }
+
+    [Test]
+    public void TryTranslatePopupMessage_ReturnsFalse_ForDirectTranslationMarker()
+    {
+        var ok = TryTranslatePopupMessageDuringMutationPurchase(
+            "\u0001Are you sure you want to spend 4 mutation points to buy a new mutation?",
+            out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ok, Is.False);
+            Assert.That(translated, Is.EqualTo("\u0001Are you sure you want to spend 4 mutation points to buy a new mutation?"));
+        });
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();
@@ -149,5 +203,22 @@ public sealed class MutationsApiTranslationPatchTests
         return parameterTypes.Length == 0
             ? AccessTools.Method(type, methodName) ?? throw new InvalidOperationException($"Method not found: {type.FullName}.{methodName}")
             : AccessTools.Method(type, methodName, parameterTypes) ?? throw new InvalidOperationException($"Method not found: {type.FullName}.{methodName}");
+    }
+
+    private static bool TryTranslatePopupMessageDuringMutationPurchase(string source, out string translated)
+    {
+        MutationsApiTranslationPatch.Prefix();
+        try
+        {
+            return MutationsApiTranslationPatch.TryTranslatePopupMessage(
+                source,
+                nameof(MutationsApiTranslationPatchTests),
+                "Popup.ShowYesNo",
+                out translated);
+        }
+        finally
+        {
+            _ = MutationsApiTranslationPatch.Finalizer(null);
+        }
     }
 }
