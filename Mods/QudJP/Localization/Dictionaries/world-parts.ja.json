@@ -305,59 +305,9 @@
             "text": "容れ物"
         },
         {
-            "key": "[empty, sealed]",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "[空／密封]"
-        },
-        {
-            "key": "{{y|[{{K|empty, {{c|sealed}}}}]}}",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "{{y|[{{K|空、{{c|密封}}}}]}}"
-        },
-        {
-            "key": "[empty]",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "[空]"
-        },
-        {
-            "key": "{{y|[{{K|empty}}]}}",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "{{y|[{{K|空}}]}}"
-        },
-        {
-            "key": "[sealed]",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "[密封]"
-        },
-        {
-            "key": "{{y|[{{c|sealed}}]}}",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "{{y|[{{c|密封}}]}}"
-        },
-        {
-            "key": "[auto-collecting ",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "[自動採取 "
-        },
-        {
-            "key": "{{y|[{{c|auto-collecting ",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "{{y|[{{c|自動採取 "
-        },
-        {
             "key": "unknown AutoCollectLiquidType ",
             "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
             "text": "未知の自動採取液種 "
-        },
-        {
-            "key": "[auto-collecting]",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "[自動採取中]"
-        },
-        {
-            "key": "{{y|[{{c|auto-collecting}}]}}",
-            "context": "XRL.World.Parts.XRL.World.Parts.LiquidVolume",
-            "text": "{{y|[{{c|自動採取中}}]}}"
         },
         {
             "key": "Light scatters off the surface of the wide and yawning pool and gets lost in its depths.",

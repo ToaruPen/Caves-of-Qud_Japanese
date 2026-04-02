@@ -76,7 +76,9 @@ public sealed class AbilityBarAfterRenderTranslationPatchTests
     {
         WriteDictionary(
             ("TARGET:", "ターゲット:"),
-            ("snapjaw", "スナップジョー"),
+            ("snapjaw", "スナップジョー"));
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
             ("[empty]", "[空]"));
 
         var trace = TestTraceHelper.CaptureTrace(() =>

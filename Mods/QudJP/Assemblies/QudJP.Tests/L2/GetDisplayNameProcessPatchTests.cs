@@ -281,7 +281,9 @@ public sealed class GetDisplayNameProcessPatchTests
     [Test]
     public void Postfix_TranslatesBracketedInventoryState_WhenPatched()
     {
-        WriteDictionary(("[empty]", "[空]"));
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
+            ("[empty]", "[空]"));
 
         RunWithDisplayNameProcessPatch(() =>
         {

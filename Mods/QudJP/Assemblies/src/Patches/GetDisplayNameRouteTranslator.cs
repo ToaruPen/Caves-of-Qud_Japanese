@@ -532,8 +532,8 @@ internal static class GetDisplayNameRouteTranslator
     private static bool TryTranslateBracketedStateExact(string source, out string translated)
     {
         var bracketed = "[" + source + "]";
-        var direct = Translator.Translate(bracketed);
-        if (string.Equals(direct, bracketed, StringComparison.Ordinal))
+        var direct = ScopedDictionaryLookup.TranslateExactOrLowerAscii(bracketed, DisplayNameDictionaryFiles);
+        if (direct is null)
         {
             translated = source;
             return false;
