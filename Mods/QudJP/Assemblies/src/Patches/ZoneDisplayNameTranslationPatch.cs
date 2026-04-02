@@ -50,7 +50,7 @@ public static class ZoneDisplayNameTranslationPatch
                 return;
             }
 
-            __result = translated;
+            __result = MessageFrameTranslator.MarkDirectTranslation(translated);
         }
         catch (Exception ex)
         {

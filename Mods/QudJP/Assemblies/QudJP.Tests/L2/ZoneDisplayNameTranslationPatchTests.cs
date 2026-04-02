@@ -68,8 +68,9 @@ public sealed class ZoneDisplayNameTranslationPatchTests
                 postfix: new HarmonyMethod(RequireMethod(typeof(ZoneDisplayNameTranslationPatch), nameof(ZoneDisplayNameTranslationPatch.Postfix), typeof(string).MakeByRefType())));
 
             var result = target.GetZoneDisplayName("JoppaWorld.11.22.1.1.10", 10, new object());
+            Assert.That(MessageFrameTranslator.TryStripDirectTranslationMarker(result, out var stripped), Is.True);
 
-            Assert.That(result, Is.EqualTo("ジョッパ, 地表"));
+            Assert.That(stripped, Is.EqualTo("ジョッパ, 地表"));
         }
         finally
         {
@@ -111,8 +112,9 @@ public sealed class ZoneDisplayNameTranslationPatchTests
                 postfix: new HarmonyMethod(RequireMethod(typeof(ZoneDisplayNameTranslationPatch), nameof(ZoneDisplayNameTranslationPatch.Postfix), typeof(string).MakeByRefType())));
 
             var result = target.GetZoneDisplayName("zone", "world", 1, 1, 1, 1, 8);
+            Assert.That(MessageFrameTranslator.TryStripDirectTranslationMarker(result, out var stripped), Is.True);
 
-            Assert.That(result, Is.EqualTo("錆びたアーチ道, 地下2層"));
+            Assert.That(stripped, Is.EqualTo("錆びたアーチ道, 地下2層"));
         }
         finally
         {
@@ -152,11 +154,13 @@ public sealed class ZoneDisplayNameTranslationPatchTests
             var biomeResult = target.GetZoneDisplayName("zone");
             target.Result = "Joppa, goatfolk village";
             var goatfolkResult = target.GetZoneDisplayName("zone");
+            Assert.That(MessageFrameTranslator.TryStripDirectTranslationMarker(biomeResult, out var biomeStripped), Is.True);
+            Assert.That(MessageFrameTranslator.TryStripDirectTranslationMarker(goatfolkResult, out var goatfolkStripped), Is.True);
 
             Assert.Multiple(() =>
             {
-                Assert.That(biomeResult, Is.EqualTo("ジョッパとぬめり沼"));
-                Assert.That(goatfolkResult, Is.EqualTo("ジョッパ、ヤギ人の村"));
+                Assert.That(biomeStripped, Is.EqualTo("ジョッパとぬめり沼"));
+                Assert.That(goatfolkStripped, Is.EqualTo("ジョッパ、ヤギ人の村"));
             });
         }
         finally
@@ -190,12 +194,22 @@ public sealed class ZoneDisplayNameTranslationPatchTests
                     typeof(bool)),
                 postfix: new HarmonyMethod(RequireMethod(typeof(ZoneDisplayNameTranslationPatch), nameof(ZoneDisplayNameTranslationPatch.Postfix), typeof(string).MakeByRefType())));
 
-            const string source = "Joppa";
             var result = target.GetZoneDisplayName("zone");
+            Assert.That(MessageFrameTranslator.TryStripDirectTranslationMarker(result, out var stripped), Is.True);
+
+            var sinkSkin = new DummyUITextSkin
+            {
+                text = result,
+            };
+            UITextSkinTranslationPatch.TranslateStringField(
+                sinkSkin,
+                "text",
+                nameof(SinkPrereqUiMethodTranslationPatch));
 
             Assert.Multiple(() =>
             {
-                Assert.That(result, Is.EqualTo("ジョッパ"));
+                Assert.That(stripped, Is.EqualTo("ジョッパ"));
+                Assert.That(sinkSkin.text, Is.EqualTo("ジョッパ"));
                 Assert.That(
                     DynamicTextObservability.GetRouteFamilyHitCountForTests(
                         nameof(ZoneDisplayNameTranslationPatch),
@@ -204,10 +218,10 @@ public sealed class ZoneDisplayNameTranslationPatchTests
                 Assert.That(
                     SinkObservation.GetHitCountForTests(
                         nameof(UITextSkinTranslationPatch),
-                        nameof(ZoneDisplayNameTranslationPatch),
+                        nameof(SinkPrereqUiMethodTranslationPatch),
                         SinkObservation.ObservationOnlyDetail,
-                        source,
-                        source),
+                        stripped,
+                        stripped),
                     Is.EqualTo(0));
             });
         }
