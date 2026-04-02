@@ -121,22 +121,53 @@ public static class ColorCodePreserver
         }
 
         var endIndex = startIndex + length;
+        var hasAdjacentOpeningBoundary = false;
         for (var index = 0; index < spans.Count; index++)
         {
             var span = spans[index];
             if (span.Index == startIndex - 1 && IsOpeningBoundaryToken(span.Token))
             {
+                hasAdjacentOpeningBoundary = true;
                 sliced.Add(new ColorSpan(0, span.Token));
                 continue;
             }
 
-            if (span.Index == endIndex + 1 && IsClosingBoundaryToken(span.Token))
+            if (hasAdjacentOpeningBoundary
+                && span.Index == endIndex + 1
+                && IsClosingBoundaryToken(span.Token))
             {
                 sliced.Add(new ColorSpan(length, span.Token));
             }
         }
 
         return sliced;
+    }
+
+    internal static bool HasAdjacentCaptureWrapper(IReadOnlyList<ColorSpan>? spans, int startIndex, int length)
+    {
+        if (spans is null || spans.Count == 0 || length < 0)
+        {
+            return false;
+        }
+
+        var endIndex = startIndex + length;
+        var hasOpening = false;
+        var hasClosing = false;
+        for (var index = 0; index < spans.Count; index++)
+        {
+            var span = spans[index];
+            if (span.Index == startIndex - 1 && IsOpeningBoundaryToken(span.Token))
+            {
+                hasOpening = true;
+            }
+
+            if (span.Index == endIndex + 1 && IsClosingBoundaryToken(span.Token))
+            {
+                hasClosing = true;
+            }
+        }
+
+        return hasOpening && hasClosing;
     }
 
     private static int ResolveIndex(ColorSpan span, int textLength)

@@ -129,7 +129,8 @@ public sealed class ColorCodePreserverTests
             match,
             stripped.Length,
             firstCaptureStart,
-            lastCaptureEnd);
+            lastCaptureEnd,
+            skipAdjacentClosingBoundary: false);
 
         Assert.That(restored, Is.EqualTo("{{r|攻撃は外れた！}} [12 vs 14]"));
     }

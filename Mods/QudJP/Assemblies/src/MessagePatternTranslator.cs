@@ -464,6 +464,7 @@ internal static class MessagePatternTranslator
         if (spans is not null
             && spans.Count > 0
             && strippedSourceLength is not null
+            && HasInteriorBoundarySpans(spans, strippedSourceLength.Value)
             && TryApplySegmentedColorAwareTemplate(template, match, strippedSourceLength.Value, spans, out var segmented))
         {
             return segmented;
@@ -501,6 +502,7 @@ internal static class MessagePatternTranslator
 
         var translatedFirstCaptureStart = -1;
         var translatedLastCaptureEnd = -1;
+        var lastCaptureConsumesAdjacentClosingBoundary = false;
         for (var index = 0; index < template.Length; index++)
         {
             var character = template[index];
@@ -568,6 +570,10 @@ internal static class MessagePatternTranslator
             if (captureIndex + 1 == lastCaptureGroupIndex)
             {
                 translatedLastCaptureEnd = builder.Length;
+                lastCaptureConsumesAdjacentClosingBoundary =
+                    spans is not null
+                    && spans.Count > 0
+                    && ColorCodePreserver.HasAdjacentCaptureWrapper(spans, group.Index, group.Length);
             }
 
             index = closeIndex;
@@ -593,7 +599,8 @@ internal static class MessagePatternTranslator
             match,
             strippedSourceLength.Value,
             translatedFirstCaptureStart,
-            translatedLastCaptureEnd);
+            translatedLastCaptureEnd,
+            lastCaptureConsumesAdjacentClosingBoundary);
     }
 
     private static bool TryApplySegmentedColorAwareTemplate(
@@ -782,6 +789,22 @@ internal static class MessagePatternTranslator
         }
 
         return null;
+    }
+
+    private static bool HasInteriorBoundarySpans(IReadOnlyList<ColorSpan> spans, int strippedSourceLength)
+    {
+        for (var index = 0; index < spans.Count; index++)
+        {
+            var span = spans[index];
+            if (span.Index > 0
+                && span.Index < strippedSourceLength
+                && ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static string TranslateTemplateCapture(string source)

@@ -82,7 +82,9 @@ internal static class ColorAwareTranslationComposer
             return value;
         }
 
-        return Restore(value, ColorCodePreserver.SliceSpans(spans, startIndex, length));
+        var sliceSpans = ColorCodePreserver.SliceSpans(spans, startIndex, length);
+        sliceSpans = AnchorTrailingClosingBoundarySpans(sliceSpans, value, length);
+        return Restore(value, sliceSpans);
     }
 
     internal static List<ColorSpan> SliceBoundarySpans(
@@ -143,7 +145,8 @@ internal static class ColorAwareTranslationComposer
         Match match,
         int strippedSourceLength,
         int translatedFirstCaptureStart,
-        int translatedLastCaptureEnd)
+        int translatedLastCaptureEnd,
+        bool skipAdjacentClosingBoundary)
     {
         if (spans is null || spans.Count == 0)
         {
@@ -200,8 +203,33 @@ internal static class ColorAwareTranslationComposer
         var suffix = suffixStart >= translated.Length ? string.Empty : translated.Substring(suffixStart);
 
         var restoredPrefix = Restore(prefix, SlicePrefixBoundarySpans(spans, firstCaptureStart));
-        var restoredSuffix = Restore(suffix, SliceSuffixBoundarySpans(spans, lastCaptureEnd, strippedSourceLength));
+        var restoredSuffix = RestoreSuffixBoundarySegment(
+            suffix,
+            SliceSuffixBoundarySpans(
+                spans,
+                lastCaptureEnd,
+                strippedSourceLength,
+                HasInnerOpeningBoundaryBeforeCapture(spans, firstCaptureStart),
+                skipAdjacentClosingBoundary));
         return restoredPrefix + middle + restoredSuffix;
+    }
+
+    private static string RestoreSuffixBoundarySegment(string suffix, IReadOnlyList<ColorSpan> spans)
+    {
+        if (suffix.Length == 0 || spans.Count == 0)
+        {
+            return suffix;
+        }
+
+        var closingQuoteIndex = suffix.IndexOf('」');
+        if (closingQuoteIndex < 0 || closingQuoteIndex + 1 >= suffix.Length)
+        {
+            return Restore(suffix, spans);
+        }
+
+        var quotedSuffix = suffix.Substring(0, closingQuoteIndex + 1);
+        var trailingSuffix = suffix.Substring(closingQuoteIndex + 1);
+        return Restore(quotedSuffix, spans) + trailingSuffix;
     }
 
     private static List<ColorSpan> SlicePrefixBoundarySpans(IReadOnlyList<ColorSpan> spans, int prefixSourceLength)
@@ -227,7 +255,9 @@ internal static class ColorAwareTranslationComposer
     private static List<ColorSpan> SliceSuffixBoundarySpans(
         IReadOnlyList<ColorSpan> spans,
         int suffixSourceStart,
-        int strippedSourceLength)
+        int strippedSourceLength,
+        bool anchorClosingTokensToSourceSuffix,
+        bool skipAdjacentClosingBoundary)
     {
         var boundarySpans = new List<ColorSpan>();
         var suffixSourceLength = strippedSourceLength - suffixSourceStart;
@@ -239,7 +269,8 @@ internal static class ColorAwareTranslationComposer
         for (var index = 0; index < spans.Count; index++)
         {
             var span = spans[index];
-            if (span.Index == suffixSourceStart + 1
+            if (skipAdjacentClosingBoundary
+                && span.Index == suffixSourceStart + 1
                 && ColorCodePreserver.IsClosingBoundaryToken(span.Token))
             {
                 continue;
@@ -248,11 +279,23 @@ internal static class ColorAwareTranslationComposer
             if (span.Index > suffixSourceStart)
             {
                 var relativeIndex = span.Index - suffixSourceStart;
-                if (ColorCodePreserver.IsClosingBoundaryToken(span.Token)
-                    && relativeIndex >= suffixSourceLength)
+                if (ColorCodePreserver.IsClosingBoundaryToken(span.Token))
                 {
-                    boundarySpans.Add(new ColorSpan(suffixSourceLength, span.Token));
-                    continue;
+                    if (anchorClosingTokensToSourceSuffix && relativeIndex >= suffixSourceLength)
+                    {
+                        boundarySpans.Add(new ColorSpan(suffixSourceLength, span.Token));
+                        continue;
+                    }
+
+                    if (!anchorClosingTokensToSourceSuffix)
+                    {
+                        boundarySpans.Add(new ColorSpan(
+                            suffixSourceLength,
+                            span.Token,
+                            suffixSourceLength,
+                            usesRelativeIndex: true));
+                        continue;
+                    }
                 }
 
                 boundarySpans.Add(new ColorSpan(
@@ -264,6 +307,84 @@ internal static class ColorAwareTranslationComposer
         }
 
         return boundarySpans;
+    }
+
+    private static bool HasInnerOpeningBoundaryBeforeCapture(IReadOnlyList<ColorSpan> spans, int firstCaptureStart)
+    {
+        for (var index = 0; index < spans.Count; index++)
+        {
+            var span = spans[index];
+            if (span.Index <= 0 || span.Index >= firstCaptureStart)
+            {
+                continue;
+            }
+
+            if (ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static List<ColorSpan> AnchorTrailingClosingBoundarySpans(
+        List<ColorSpan> spans,
+        string translated,
+        int sourceLength)
+    {
+        if (spans.Count == 0 || translated.Length == 0 || sourceLength <= 0)
+        {
+            return spans;
+        }
+
+        var leadingBoundaryLength = MeasureLeadingClosingBoundaryLength(translated);
+        if (leadingBoundaryLength <= 0)
+        {
+            return spans;
+        }
+
+        var anchored = new List<ColorSpan>(spans.Count);
+        for (var index = 0; index < spans.Count; index++)
+        {
+            var span = spans[index];
+            if (span.UsesRelativeIndex
+                && span.SourceLength == sourceLength
+                && span.Index >= sourceLength
+                && ColorCodePreserver.IsClosingBoundaryToken(span.Token))
+            {
+                anchored.Add(new ColorSpan(leadingBoundaryLength, span.Token));
+                continue;
+            }
+
+            anchored.Add(span);
+        }
+
+        return anchored;
+    }
+
+    private static int MeasureLeadingClosingBoundaryLength(string translated)
+    {
+        var length = 0;
+        while (length < translated.Length && IsLeadingClosingBoundaryCharacter(translated[length]))
+        {
+            length++;
+        }
+
+        return length;
+    }
+
+    private static bool IsLeadingClosingBoundaryCharacter(char character)
+    {
+        return character switch
+        {
+            '!' or '?' or '.' or ',' or ':' or ';'
+                or '！' or '？' or '。' or '、' or '：' or '；'
+                or ')' or ']' or '}' or '〉' or '》' or '」' or '』' or '】' or '〕' or '〗' or '〙' or '〛' or '＞' or '）' or '］' or '｝'
+                or '\'' or '"' or '’' or '”'
+                => true,
+            _ => false,
+        };
     }
 
     private static bool ShouldRestoreWholeRelatively(IReadOnlyList<ColorSpan> spans, int sourceLength)
