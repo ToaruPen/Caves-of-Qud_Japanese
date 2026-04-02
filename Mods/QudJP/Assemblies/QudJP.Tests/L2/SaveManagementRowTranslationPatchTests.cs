@@ -81,6 +81,29 @@ public sealed class SaveManagementRowTranslationPatchTests
         }
     }
 
+    [Test]
+    public void Postfix_LeavesLastSavedUnchanged_WhenTranslationIsMissing()
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummySaveManagementRowTarget), nameof(DummySaveManagementRowTarget.setData)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(SaveManagementRowTranslationPatch), nameof(SaveManagementRowTranslationPatch.Postfix))));
+
+            var target = new DummySaveManagementRowTarget();
+            target.setData(new DummySaveInfoData());
+
+            Assert.That(target.TextSkins[2].Text, Is.EqualTo("{{C|Last saved:}} 1 hour ago"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";
