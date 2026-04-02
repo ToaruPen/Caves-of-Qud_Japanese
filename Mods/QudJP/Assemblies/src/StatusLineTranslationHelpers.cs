@@ -121,7 +121,7 @@ internal static class StatusLineTranslationHelpers
         var status = Translator.Translate(activeEffectsPrefix);
         if (string.Equals(status, activeEffectsPrefix, StringComparison.Ordinal))
         {
-            status = activeEffectsPrefix;
+            // Translation unchanged; continue translating known effect fragments.
         }
 
         var tail = source.Substring(activeEffectsPrefix.Length).Trim();
