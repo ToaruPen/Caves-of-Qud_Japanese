@@ -115,3 +115,67 @@ def test_load_existing_translations_rejects_duplicate_id_progress_without_indexe
                 {"index": 11, "id": 7, "en": "Second."},
             ]
         )
+
+
+@pytest.mark.parametrize(
+    ("payload", "message"),
+    [
+        ({"id": 1, "ja": "既存訳."}, "top-level JSON array"),
+        ([["not", "an", "object"]], r"row 0 must be an object"),
+        ([{"index": 0, "id": 1, "ja": 5}], r"row 0 field 'ja' must be a string"),
+    ],
+)
+def test_load_existing_translations_rejects_invalid_progress_shapes(
+    payload: object,
+    message: str,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Progress files must use the expected array-of-object schema."""
+    output_path = tmp_path / "corpus_ja_translated.json"
+    output_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(translate_corpus_batch, "OUTPUT_PATH", output_path)
+
+    with pytest.raises((TypeError, ValueError), match=message):
+        translate_corpus_batch.load_existing_translations([{"index": 0, "id": 1, "en": "One."}])
+
+
+def test_normalize_translation_text_rejects_mid_sentence_japanese_terminal_punctuation() -> None:
+    """Japanese sentence-final punctuation inside the body would break the one-sentence corpus rule."""
+    assert translate_corpus_batch._normalize_translation_text("文中。終端") is None
+    assert translate_corpus_batch._normalize_translation_text("文中\uFF01終端") is None
+    assert translate_corpus_batch._normalize_translation_text("文中\uFF1F終端") is None
+    assert translate_corpus_batch._normalize_translation_text("終端だけ。") == "終端だけ."
+
+
+def test_main_does_not_retry_non_transient_errors(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Validation/configuration errors should fail immediately instead of being retried."""
+    entries = [{"index": 0, "id": 1, "en": "One."}]
+    call_count = 0
+
+    def raise_error(_chunk: list[dict], _idx: int, _total: int) -> list[dict]:
+        nonlocal call_count
+        call_count += 1
+        msg = "bad chunk data"
+        raise ValueError(msg)
+
+    monkeypatch.setattr(translate_corpus_batch, "load_input", lambda: entries)
+    monkeypatch.setattr(translate_corpus_batch, "load_existing_translations", lambda _entries: {})
+    monkeypatch.setattr(translate_corpus_batch, "translate_chunk", raise_error)
+
+    with pytest.raises(ValueError, match="bad chunk data"):
+        translate_corpus_batch.main()
+
+    assert call_count == 1
+
+
+def test_main_exits_non_zero_when_any_chunk_fails(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Chunk failures should produce a non-zero process exit after all retries are exhausted."""
+    entries = [{"index": 0, "id": 1, "en": "One."}]
+
+    monkeypatch.setattr(translate_corpus_batch, "load_input", lambda: entries)
+    monkeypatch.setattr(translate_corpus_batch, "load_existing_translations", lambda _entries: {})
+    monkeypatch.setattr(translate_corpus_batch, "translate_chunk", lambda _chunk, _idx, _total: [])
+
+    with pytest.raises(SystemExit, match="1"):
+        translate_corpus_batch.main()

@@ -73,7 +73,8 @@ public sealed class MarkovCorpusTranslationPatchTests
             .Select(static element => element.GetString() ?? string.Empty)
             .ToArray();
 
-        // Protected lore terms must appear as single tokens (no space inside)
+        // Protected lore terms must appear as single tokens (no space inside).
+        // This is a representative sample; the full protected glossary lives in glossary.csv.
         var protectedTerms = new[]
         {
             "喰らう者",

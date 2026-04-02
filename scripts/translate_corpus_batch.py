@@ -1,5 +1,5 @@
 """Batch-translate English corpus to Japanese via Codex CLI."""
-# ruff: noqa: BLE001, C901, D103, PLR0912, PLR0915, PLW1510, PLW2901, RUF001, S603, S607, T201
+# ruff: noqa: C901, D103, PLW1510, PLW2901, RUF001, S603, S607, T201
 
 from __future__ import annotations
 
@@ -139,7 +139,15 @@ def _load_progress_file(
     if not path.exists():
         return progress
 
-    for row_index, entry in enumerate(json.loads(path.read_text(encoding="utf-8"))):
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, list):
+        msg = f"{label} must contain a top-level JSON array of progress rows."
+        raise TypeError(msg)
+
+    for row_index, entry in enumerate(payload):
+        if not isinstance(entry, dict):
+            msg = f"{label} row {row_index} must be an object: {entry!r}"
+            raise TypeError(msg)
         key = _resolve_progress_key(
             entry,
             all_entries=all_entries,
@@ -151,7 +159,11 @@ def _load_progress_file(
         if key in progress:
             msg = f"{label} row {row_index} duplicates index {key!r}."
             raise ValueError(msg)
-        progress[key] = entry["ja"]
+        translation = entry.get("ja")
+        if not isinstance(translation, str):
+            msg = f"{label} row {row_index} field 'ja' must be a string: {translation!r}"
+            raise TypeError(msg)
+        progress[key] = translation
     return progress
 
 
@@ -259,6 +271,8 @@ def _normalize_translation_text(text: str) -> str | None:
     normalized = re.sub(r"[。！？]+$", "", normalized)
     if not normalized:
         return None
+    if re.search(r"[。！？]", normalized):
+        return None
     if not normalized.endswith("."):
         normalized += "."
     return normalized
@@ -364,9 +378,6 @@ def main() -> None:
             except subprocess.TimeoutExpired:
                 print(f"  -> Timeout, retry {retries + 1}/{max_retries}")
                 retries += 1
-            except Exception as e:
-                print(f"  -> Error: {e}, retry {retries + 1}/{max_retries}")
-                retries += 1
 
         if retries > max_retries:
             failed_chunks.append(idx)
@@ -380,8 +391,8 @@ def main() -> None:
     print(f"Translated: {len(translations)}/{len(entries)}")
     if failed_chunks:
         print(f"Failed chunks: {failed_chunks}")
-    else:
-        print("All chunks succeeded!")
+        raise SystemExit(1)
+    print("All chunks succeeded!")
 
 
 if __name__ == "__main__":
