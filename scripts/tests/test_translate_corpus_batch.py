@@ -44,15 +44,19 @@ def test_main_does_not_merge_low_match_trials(monkeypatch: pytest.MonkeyPatch) -
         {"index": 1, "id": 2, "en": "Two."},
         {"index": 2, "id": 3, "en": "Three."},
         {"index": 3, "id": 4, "en": "Four."},
+        {"index": 4, "id": 5, "en": "Five."},
     ]
     attempts = iter(
         [
-            [{"index": 0, "id": 1, "ja": "一。"}, {"index": 1, "id": 2, "ja": "二。"}],
             [
-                {"index": 0, "id": 1, "ja": "一。"},
+                {"index": 0, "id": 1, "ja": "失敗一。"},
+                {"index": 1, "id": 2, "ja": "失敗二。"},
+            ],
+            [
                 {"index": 1, "id": 2, "ja": "二。"},
                 {"index": 2, "id": 3, "ja": "三。"},
                 {"index": 3, "id": 4, "ja": "四。"},
+                {"index": 4, "id": 5, "ja": "五。"},
             ],
         ]
     )
@@ -74,7 +78,7 @@ def test_main_does_not_merge_low_match_trials(monkeypatch: pytest.MonkeyPatch) -
 
     translate_corpus_batch.main()
 
-    assert snapshots == [{0: "一.", 1: "二.", 2: "三.", 3: "四."}]
+    assert snapshots == [{1: "二.", 2: "三.", 3: "四.", 4: "五."}]
 
 
 def test_collect_chunk_translations_tracks_duplicate_ids_by_index() -> None:
@@ -140,12 +144,55 @@ def test_load_existing_translations_rejects_invalid_progress_shapes(
         translate_corpus_batch.load_existing_translations([{"index": 0, "id": 1, "en": "One."}])
 
 
+def test_load_existing_translations_normalizes_saved_progress(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Resume data should be normalized through the same sentence validator as fresh output."""
+    output_path = tmp_path / "corpus_ja_translated.json"
+    output_path.write_text(
+        json.dumps([{"index": 0, "id": 1, "ja": "終端だけ。"}], ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(translate_corpus_batch, "OUTPUT_PATH", output_path)
+
+    translations = translate_corpus_batch.load_existing_translations([{"index": 0, "id": 1, "en": "One."}])
+
+    assert translations == {0: "終端だけ."}
+
+
+def test_load_existing_translations_rejects_invalid_saved_punctuation(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Resume data with body punctuation must fail instead of bypassing corpus validation."""
+    output_path = tmp_path / "corpus_ja_translated.json"
+    output_path.write_text(
+        json.dumps([{"index": 0, "id": 1, "ja": "文中。終端"}], ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(translate_corpus_batch, "OUTPUT_PATH", output_path)
+
+    with pytest.raises(ValueError, match="invalid punctuation"):
+        translate_corpus_batch.load_existing_translations([{"index": 0, "id": 1, "en": "One."}])
+
+
 def test_normalize_translation_text_rejects_mid_sentence_japanese_terminal_punctuation() -> None:
     """Japanese sentence-final punctuation inside the body would break the one-sentence corpus rule."""
     assert translate_corpus_batch._normalize_translation_text("文中。終端") is None
     assert translate_corpus_batch._normalize_translation_text("文中\uFF01終端") is None
     assert translate_corpus_batch._normalize_translation_text("文中\uFF1F終端") is None
     assert translate_corpus_batch._normalize_translation_text("終端だけ。") == "終端だけ."
+
+
+def test_collect_chunk_translations_rejects_non_object_results() -> None:
+    """Malformed array rows should be treated as invalid results instead of crashing the retry loop."""
+    chunk = [{"index": 10, "id": 7, "en": "First."}]
+
+    chunk_translations, invalid_results = translate_corpus_batch._collect_chunk_translations(
+        chunk,
+        [["oops"], []],
+    )
+
+    assert chunk_translations == {}
+    assert invalid_results == ["non-object result=['oops']", "non-object result=[]"]
 
 
 def test_main_does_not_retry_non_transient_errors(monkeypatch: pytest.MonkeyPatch) -> None:

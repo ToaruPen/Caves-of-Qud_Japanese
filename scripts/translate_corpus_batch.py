@@ -163,7 +163,11 @@ def _load_progress_file(
         if not isinstance(translation, str):
             msg = f"{label} row {row_index} field 'ja' must be a string: {translation!r}"
             raise TypeError(msg)
-        progress[key] = translation
+        normalized = _normalize_translation_text(translation)
+        if normalized is None:
+            msg = f"{label} row {row_index} field 'ja' has invalid punctuation: {translation!r}"
+            raise ValueError(msg)
+        progress[key] = normalized
     return progress
 
 
@@ -191,7 +195,7 @@ def load_existing_translations(all_entries: list[dict]) -> dict[int, str]:
     return existing
 
 
-def extract_json_array(text: str) -> list[dict] | None:
+def extract_json_array(text: str) -> list[object] | None:
     """Extract a JSON array from potentially noisy Codex output."""
     # Try direct parse first
     text = text.strip()
@@ -212,7 +216,7 @@ def extract_json_array(text: str) -> list[dict] | None:
     return None
 
 
-def translate_chunk(chunk: list[dict], chunk_idx: int, total_chunks: int) -> list[dict]:
+def translate_chunk(chunk: list[dict], chunk_idx: int, total_chunks: int) -> list[object]:
     """Call Codex to translate a chunk of sentences."""
     input_json = json.dumps(chunk, ensure_ascii=False, indent=1)
     prompt = build_translation_prompt(input_json)
@@ -278,13 +282,16 @@ def _normalize_translation_text(text: str) -> str | None:
     return normalized
 
 
-def _collect_chunk_translations(chunk: list[dict], translated: list[dict]) -> tuple[dict[int, str], list[str]]:
+def _collect_chunk_translations(chunk: list[dict], translated: list[object]) -> tuple[dict[int, str], list[str]]:
     """Collect only valid translations for the current chunk."""
     expected_entries = {_entry_index(entry, label="chunk entry"): entry for entry in chunk}
     chunk_translations: dict[int, str] = {}
     invalid_results: list[str] = []
 
     for item in translated:
+        if not isinstance(item, dict):
+            invalid_results.append(f"non-object result={item!r}")
+            continue
         translation_index = item.get(ENTRY_INDEX_FIELD)
         if not isinstance(translation_index, int):
             invalid_results.append(f"missing or invalid index={translation_index!r}")

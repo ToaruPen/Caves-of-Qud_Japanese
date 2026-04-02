@@ -50,6 +50,8 @@ public sealed class MarkovCorpusTranslationPatchTests
         {
             Assert.That(sentences.Length, Is.InRange(7000, 8500), "Tier 2 corpus should have 7,000-8,500 unique sentences.");
             Assert.That(wordCount, Is.GreaterThan(100000), "Tier 2 corpus should have >100,000 tokens.");
+            // The current production corpus averages ~23.6 tokens/sentence, so keep the broader
+            // temporary guardrail until the source material is retuned to the tighter 15-20 target.
             Assert.That(averageTokensPerSentence, Is.InRange(15.0, 25.0), "Tier 2 corpus should keep average sentence length within the documented 15-25 token quality band.");
             Assert.That(uniqueBigrams, Is.GreaterThan(60000), "Tier 2 corpus should have >60,000 unique bigrams.");
             Assert.That((double)uniqueSentences / sentences.Length, Is.GreaterThan(0.98), "Unique sentence ratio should exceed 98%.");
