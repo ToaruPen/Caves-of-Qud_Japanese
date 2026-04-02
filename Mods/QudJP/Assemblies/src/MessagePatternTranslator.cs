@@ -462,6 +462,37 @@ internal static class MessagePatternTranslator
         IReadOnlyList<ColorSpan>? spans)
     {
         var builder = new StringBuilder(template.Length);
+        var firstCaptureGroupIndex = -1;
+        var lastCaptureGroupIndex = -1;
+        if (strippedSourceLength is not null)
+        {
+            var firstCaptureStart = strippedSourceLength.Value;
+            var lastCaptureEnd = 0;
+            for (var groupIndex = 1; groupIndex < match.Groups.Count; groupIndex++)
+            {
+                var group = match.Groups[groupIndex];
+                if (!group.Success || group.Length == 0)
+                {
+                    continue;
+                }
+
+                if (firstCaptureGroupIndex < 0 || group.Index < firstCaptureStart)
+                {
+                    firstCaptureGroupIndex = groupIndex;
+                    firstCaptureStart = group.Index;
+                }
+
+                var groupEnd = group.Index + group.Length;
+                if (groupEnd >= lastCaptureEnd)
+                {
+                    lastCaptureGroupIndex = groupIndex;
+                    lastCaptureEnd = groupEnd;
+                }
+            }
+        }
+
+        var translatedFirstCaptureStart = -1;
+        var translatedLastCaptureEnd = -1;
         for (var index = 0; index < template.Length; index++)
         {
             var character = template[index];
@@ -520,7 +551,17 @@ internal static class MessagePatternTranslator
                 value = ColorAwareTranslationComposer.RestoreCapture(value, spans, group);
             }
 
+            if (captureIndex + 1 == firstCaptureGroupIndex && translatedFirstCaptureStart < 0)
+            {
+                translatedFirstCaptureStart = builder.Length;
+            }
+
             builder.Append(value);
+            if (captureIndex + 1 == lastCaptureGroupIndex)
+            {
+                translatedLastCaptureEnd = builder.Length;
+            }
+
             index = closeIndex;
         }
 
@@ -530,8 +571,21 @@ internal static class MessagePatternTranslator
             return translated;
         }
 
-        var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(spans, match, strippedSourceLength.Value, translated.Length);
-        return ColorAwareTranslationComposer.Restore(translated, boundarySpans);
+        if (translatedFirstCaptureStart < 0
+            || translatedLastCaptureEnd < 0
+            || translatedFirstCaptureStart > translatedLastCaptureEnd)
+        {
+            var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(spans, match, strippedSourceLength.Value, translated.Length);
+            return ColorAwareTranslationComposer.Restore(translated, boundarySpans);
+        }
+
+        return ColorAwareTranslationComposer.RestoreMatchBoundaries(
+            translated,
+            spans,
+            match,
+            strippedSourceLength.Value,
+            translatedFirstCaptureStart,
+            translatedLastCaptureEnd);
     }
 
     private static string TranslateTemplateCapture(string source)
