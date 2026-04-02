@@ -43,17 +43,34 @@ public sealed class GetDisplayNameRouteTranslatorTests
     }
 
     [Test]
-    public void TranslatePreservingColors_PreservesTmpColorMarkup()
+    public void TranslatePreservingColors_UsesDisplayNameScopedBracketedStateLookups()
     {
-        WriteDictionary(
-            ("water flask", "水袋"),
-            ("[empty]", "[空]"));
+        WriteDictionary(("water flask", "水袋"));
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
+            ("[empty]", "[空]"),
+            ("[empty, sealed]", "[空／密封]"),
+            ("[sealed]", "[密封]"),
+            ("[auto-collecting]", "[自動採取中]"));
 
-        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(
-            "<color=#44ff88>water flask [empty]</color>",
-            nameof(GetDisplayNamePatch));
-
-        Assert.That(translated, Is.EqualTo("<color=#44ff88>水袋 [空]</color>"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                GetDisplayNameRouteTranslator.TranslatePreservingColors(
+                    "<color=#44ff88>water flask [empty]</color>",
+                    nameof(GetDisplayNamePatch)),
+                Is.EqualTo("<color=#44ff88>水袋 [空]</color>"));
+            Assert.That(
+                GetDisplayNameRouteTranslator.TranslatePreservingColors(
+                    "<color=#44ff88>water flask [empty, sealed]</color>",
+                    nameof(GetDisplayNamePatch)),
+                Is.EqualTo("<color=#44ff88>水袋 [空／密封]</color>"));
+            Assert.That(
+                GetDisplayNameRouteTranslator.TranslatePreservingColors(
+                    "<color=#44ff88>water flask [auto-collecting]</color>",
+                    nameof(GetDisplayNamePatch)),
+                Is.EqualTo("<color=#44ff88>水袋 [自動採取中]</color>"));
+        });
     }
 
     [TestCase("花瓶 [空]")]

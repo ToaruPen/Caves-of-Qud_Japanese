@@ -135,6 +135,26 @@
       "text": "空の"
     },
     {
+      "key": "[empty]",
+      "context": "GetDisplayName.State",
+      "text": "[空]"
+    },
+    {
+      "key": "[empty, sealed]",
+      "context": "GetDisplayName.State",
+      "text": "[空／密封]"
+    },
+    {
+      "key": "[sealed]",
+      "context": "GetDisplayName.State",
+      "text": "[密封]"
+    },
+    {
+      "key": "[auto-collecting]",
+      "context": "GetDisplayName.State",
+      "text": "[自動採取中]"
+    },
+    {
       "key": "lit",
       "context": "GetDisplayName.Adjective",
       "text": "点灯した"

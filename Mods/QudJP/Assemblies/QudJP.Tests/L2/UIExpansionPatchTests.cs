@@ -290,8 +290,9 @@ public sealed class UIExpansionPatchTests
     [Test]
     public void Inventory_TranslatesStructuredDisplayName_WhenPatched()
     {
-        WriteDictionary(
-            ("water flask", "水袋"),
+        WriteDictionary(("water flask", "水袋"));
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
             ("[empty]", "[空]"));
 
         RunWithPostfixPatch(
@@ -386,6 +387,17 @@ public sealed class UIExpansionPatchTests
     {
         var path = Path.Combine(tempDirectory, "ui-expansion-l2.ja.json");
         File.WriteAllText(path, content, Utf8WithoutBom);
+    }
+
+    private void WriteDictionaryFile(string fileName, params (string key, string text)[] entries)
+    {
+        var builder = new StringBuilder();
+        builder.Append("{\"entries\":[");
+        AppendEntries(builder, entries);
+        builder.AppendLine("]}");
+
+        var path = Path.Combine(tempDirectory, fileName);
+        File.WriteAllText(path, builder.ToString(), Utf8WithoutBom);
     }
 
     private sealed class DummyCharGenScreen
