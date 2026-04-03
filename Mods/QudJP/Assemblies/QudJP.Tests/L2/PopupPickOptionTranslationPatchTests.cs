@@ -174,6 +174,44 @@ public sealed class PopupPickOptionTranslationPatchTests
         });
     }
 
+    [Test]
+    public void Prefix_TranslatesSiblingHotkeyOptionsConsistently()
+    {
+        WriteDictionary(
+            ("[l] look", "[l] 調べる"),
+            ("[w] show effects", "[w] 効果を表示"),
+            ("[n] detonate", "[n] 起爆"),
+            ("Quit Without Saving", "セーブせずに終了"),
+            ("[Esc] Cancel", "[Esc] キャンセル"));
+
+        using var patch = PatchPickOption();
+
+        DummyPopupGenericTarget.PickOption(
+            Options: new[]
+            {
+                "[l] look",
+                "[w] show effects",
+                "[n] detonate",
+                "Quit Without Saving",
+            },
+            Buttons: new[] { new DummyPopupMenuItem("{{W|[Esc]}} {{y|Cancel}}") });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                DummyPopupGenericTarget.LastPickOptionOptions,
+                Is.EqualTo(new[]
+                {
+                    "[l] 調べる",
+                    "[w] 効果を表示",
+                    "[n] 起爆",
+                    "セーブせずに終了",
+                }));
+            Assert.That(DummyPopupGenericTarget.LastPickOptionButtons, Is.Not.Null);
+            Assert.That(DummyPopupGenericTarget.LastPickOptionButtons![0].text, Is.EqualTo("{{W|[Esc]}} {{y|キャンセル}}"));
+        });
+    }
+
     private static IDisposable PatchPickOption()
     {
         var harmonyId = CreateHarmonyId();

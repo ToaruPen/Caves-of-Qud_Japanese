@@ -32,6 +32,7 @@ public sealed class PopupAskStringTranslationPatchTests
         SinkObservation.ResetForTests();
         File.WriteAllText(patternFilePath, "{\"patterns\":[]}\n", new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
         DummyPopupGenericTarget.Reset();
+        DummyPopupMessageTarget.Reset();
     }
 
     [TearDown]
@@ -41,6 +42,7 @@ public sealed class PopupAskStringTranslationPatchTests
         MessagePatternTranslator.ResetForTests();
         DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
+        DummyPopupMessageTarget.Reset();
 
         if (Directory.Exists(tempDirectory))
         {
@@ -137,6 +139,67 @@ public sealed class PopupAskStringTranslationPatchTests
         DummyPopupGenericTarget.AskString("\u0001既に翻訳済み");
 
         Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("既に翻訳済み"));
+    }
+
+    [Test]
+    public void Prefix_PreservesQuitPromptThroughPopupMessageHandoff()
+    {
+        WriteDictionary(
+            ("Are you sure you want to quit?", "本当に終了しますか？"),
+            ("Quit Without Saving", "セーブせずに終了"),
+            ("[Enter] Submit", "[Enter] 送信"),
+            ("[Esc] Cancel", "[Esc] キャンセル"));
+
+        var buttons = new List<DummyPopupMessageItem>
+        {
+            new("{{W|[Enter]}} {{y|Submit}}", "Accept", "Accept"),
+            new("{{W|[Esc]}} {{y|Cancel}}", "Cancel", "Cancel"),
+        };
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupGenericTarget), nameof(DummyPopupGenericTarget.AskStringAsync)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupAskStringTranslationPatch), nameof(PopupAskStringTranslationPatch.Prefix))));
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupMessageTarget), nameof(DummyPopupMessageTarget.ShowPopup)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupMessageTranslationPatch), nameof(PopupMessageTranslationPatch.Prefix))));
+
+            _ = DummyPopupGenericTarget.AskStringAsync(
+                "Are you sure you want to quit?",
+                WantsSpecificPrompt: "QUIT").GetAwaiter().GetResult();
+
+            var clippedMessage = DummyPopupGenericTarget.LastAskStringMessage;
+            new DummyPopupMessageTarget().ShowPopup(
+                clippedMessage,
+                buttons,
+                title: "Quit Without Saving",
+                WantsSpecificPrompt: "QUIT");
+
+            var renderedMessage = DummyPopupMessageTarget.LastMessage;
+            var renderedButton = DummyPopupMessageTarget.LastButtons![0].text;
+            UITextSkinTranslationPatch.Prefix(ref renderedMessage);
+            UITextSkinTranslationPatch.Prefix(ref renderedButton);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("本当に終了しますか？"));
+                Assert.That(DummyPopupMessageTarget.LastMessage, Is.EqualTo("本当に終了しますか？"));
+                Assert.That(DummyPopupMessageTarget.LastTitle, Is.EqualTo("セーブせずに終了"));
+                Assert.That(DummyPopupMessageTarget.LastButtons![0].text, Is.EqualTo("{{W|[Enter]}} {{y|送信}}"));
+                Assert.That(DummyPopupMessageTarget.LastButtons[1].text, Is.EqualTo("{{W|[Esc]}} {{y|キャンセル}}"));
+                Assert.That(DummyPopupMessageTarget.LastWantsSpecificPrompt, Is.EqualTo("QUIT"));
+                Assert.That(renderedMessage, Is.EqualTo("本当に終了しますか？"));
+                Assert.That(renderedButton, Is.EqualTo("{{W|[Enter]}} {{y|送信}}"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     private static IDisposable PatchMethod(string methodName)
