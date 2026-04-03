@@ -207,6 +207,22 @@ internal static class DummyPopupGenericTarget
         return Task.FromResult<int?>(Start);
     }
 
+    public static Task<int?> AskNumberAsyncGamepad(
+        string Message,
+        int Start = 0,
+        int Min = 0,
+        int Max = int.MaxValue,
+        string RestrictChars = "",
+        bool pushView = false)
+    {
+        _ = RestrictChars;
+        _ = pushView;
+
+        LastAskNumberMessage = Message;
+        _ = DummyAskNumberScreenTarget.Show(Message, Start, Min, Max);
+        return Task.FromResult<int?>(Start);
+    }
+
     public static void ShowSpace(
         string Message,
         string? Title = null,
@@ -224,5 +240,25 @@ internal static class DummyPopupGenericTarget
 
         LastShowSpaceMessage = Message;
         LastShowSpaceTitle = Title ?? string.Empty;
+    }
+}
+
+internal static class DummyAskNumberScreenTarget
+{
+    public static string LastMessage { get; private set; } = string.Empty;
+
+    public static void Reset()
+    {
+        LastMessage = string.Empty;
+    }
+
+    public static string Show(string Message, int Start = 0, int Min = 0, int Max = int.MaxValue)
+    {
+        _ = Start;
+        _ = Min;
+        _ = Max;
+
+        LastMessage = Message;
+        return Message;
     }
 }
