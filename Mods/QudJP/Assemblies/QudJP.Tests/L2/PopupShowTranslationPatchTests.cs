@@ -220,6 +220,54 @@ public sealed class PopupShowTranslationPatchTests
         }
     }
 
+    [Test]
+    public void Prefix_PreservesTranslatedShowFailMessage_ThroughPopupMessageAndUITextSkin()
+    {
+        WriteDictionary(
+            ("You do not have a missile weapon equipped!", "射撃武器を装備していない！"),
+            ("[Esc] Cancel", "[Esc] キャンセル"));
+        DummyPopupMessageTarget.Reset();
+
+        var buttons = new List<DummyPopupMessageItem>
+        {
+            new("{{W|[Esc]}} {{y|Cancel}}", "Cancel", "Cancel"),
+        };
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.ShowFail)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupMessageTarget), nameof(DummyPopupMessageTarget.ShowPopup)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupMessageTranslationPatch), nameof(PopupMessageTranslationPatch.Prefix))));
+
+            DummyPopupShow.ShowFail("You do not have a missile weapon equipped!");
+            new DummyPopupMessageTarget().ShowPopup($"{{{{y|{DummyPopupShow.LastShowMessage}}}}}", buttons);
+
+            var renderedMessage = DummyPopupMessageTarget.LastMessage;
+            var renderedButton = DummyPopupMessageTarget.LastButtons![0].text;
+            UITextSkinTranslationPatch.Prefix(ref renderedMessage);
+            UITextSkinTranslationPatch.Prefix(ref renderedButton);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo("射撃武器を装備していない！"));
+                Assert.That(DummyPopupMessageTarget.LastMessage, Is.EqualTo("{{y|射撃武器を装備していない！}}"));
+                Assert.That(DummyPopupMessageTarget.LastButtons![0].text, Is.EqualTo("{{W|[Esc]}} {{y|キャンセル}}"));
+                Assert.That(renderedMessage, Is.EqualTo("{{y|射撃武器を装備していない！}}"));
+                Assert.That(renderedButton, Is.EqualTo("{{W|[Esc]}} {{y|キャンセル}}"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
 #if !HAS_GAME_DLL
     [Test]
     public void TargetMethods_ResolvesShowFamilyOverloads()

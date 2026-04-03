@@ -382,6 +382,15 @@ public static class PopupTranslationPatch
             return true;
         }
 
+        if (!string.Equals(source, stripped, StringComparison.Ordinal)
+            && StringHelpers.TryGetTranslationExactOrLowerAscii(source, out var exactSource)
+            && !string.Equals(exactSource, source, StringComparison.Ordinal))
+        {
+            translated = exactSource;
+            DynamicTextObservability.RecordTransform(route, family + ".ExactSource", source, translated);
+            return true;
+        }
+
         if (TryTranslateSinglePlaceholderTemplate(
                 stripped,
                 route,
