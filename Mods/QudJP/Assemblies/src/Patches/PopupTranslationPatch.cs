@@ -316,10 +316,20 @@ public static class PopupTranslationPatch
 
         if (TryTranslatePopupProducerText(source, route, family, out var translated))
         {
-            return translated;
+            return NormalizeProducerText(translated);
         }
 
         return source;
+    }
+
+    private static string NormalizeProducerText(string translated)
+    {
+        if (string.IsNullOrEmpty(translated))
+        {
+            return translated ?? string.Empty;
+        }
+
+        return translated.Replace("{{hotkey|}}", string.Empty);
     }
 
     private static bool TryTranslatePopupProducerText(string source, string route, string family, out string translated)

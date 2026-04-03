@@ -12,12 +12,6 @@ public static class PopupPickOptionTranslationPatch
 {
     private const string Context = nameof(PopupPickOptionTranslationPatch);
     private const string TargetTypeName = "XRL.UI.Popup";
-    private const int TitleIndex = 0;
-    private const int IntroIndex = 1;
-    private const int SpacingTextIndex = 2;
-    private const int OptionsIndex = 4;
-    private const int ButtonsIndex = 7;
-
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
     {
@@ -78,21 +72,15 @@ public static class PopupPickOptionTranslationPatch
         return method;
     }
 
-    public static void Prefix(object[] __args)
+    public static void Prefix(ref string __0, ref string? __1, ref string __2, ref IReadOnlyList<string>? __4, object? __7)
     {
         try
         {
-            if (__args is null)
-            {
-                Trace.TraceError($"QudJP: {Context}.Prefix received null args.");
-                return;
-            }
-
-            TranslateStringArg(__args, TitleIndex);
-            TranslateStringArg(__args, IntroIndex);
-            TranslateStringArg(__args, SpacingTextIndex);
-            TranslateStringListArg(__args, OptionsIndex);
-            TranslatePopupMenuItemTextCollection(__args, ButtonsIndex);
+            __0 = TranslatePopupText(__0)!;
+            __1 = TranslatePopupText(__1);
+            __2 = TranslatePopupText(__2)!;
+            __4 = TranslateStringList(__4);
+            TranslatePopupMenuItemTextCollection(__7);
         }
         catch (Exception ex)
         {
@@ -100,39 +88,28 @@ public static class PopupPickOptionTranslationPatch
         }
     }
 
-    private static void TranslateStringArg(object[] args, int index)
+    private static string? TranslatePopupText(string? text)
     {
-        if (index < 0 || index >= args.Length || args[index] is not string text)
+        if (string.IsNullOrEmpty(text))
         {
-            return;
+            return text;
         }
 
-        args[index] = PopupTranslationPatch.TranslatePopupTextForProducerRoute(text, Context);
+        return PopupTranslationPatch.TranslatePopupTextForProducerRoute(text!, Context);
     }
 
-    private static void TranslateStringListArg(object[] args, int index)
+    private static IReadOnlyList<string>? TranslateStringList(IReadOnlyList<string>? source)
     {
-        if (index < 0 || index >= args.Length || args[index] is null || args[index] is string || args[index] is not IEnumerable enumerable)
+        if (source is null)
         {
-            return;
+            return null;
         }
 
         var translated = new List<string>();
         var anyChanged = false;
-        foreach (var item in enumerable)
+        foreach (var text in source)
         {
-            if (item is null)
-            {
-                translated.Add(string.Empty);
-                continue;
-            }
-
-            if (item is not string text)
-            {
-                return;
-            }
-
-            var result = PopupTranslationPatch.TranslatePopupTextForProducerRoute(text, Context);
+            var result = PopupTranslationPatch.TranslatePopupTextForProducerRoute(text ?? string.Empty, Context);
             if (!anyChanged && !string.Equals(text, result, StringComparison.Ordinal))
             {
                 anyChanged = true;
@@ -141,15 +118,12 @@ public static class PopupPickOptionTranslationPatch
             translated.Add(result);
         }
 
-        if (anyChanged)
-        {
-            args[index] = translated;
-        }
+        return anyChanged ? translated : source;
     }
 
-    private static void TranslatePopupMenuItemTextCollection(object[] args, int index)
+    private static void TranslatePopupMenuItemTextCollection(object? maybeList)
     {
-        if (index < 0 || index >= args.Length || args[index] is null || args[index] is string || args[index] is not IList list)
+        if (maybeList is null || maybeList is string || maybeList is not IList list)
         {
             return;
         }
