@@ -67,7 +67,15 @@ public static class GameManagerUpdateSelectedAbilityPatch
             return;
         }
 
-        _ = SetCurrentText(textComponent, translated);
+        if (!SetCurrentText(textComponent, translated))
+        {
+            var componentIdentifier = textComponent?.GetType().FullName ?? "<null>";
+            Trace.TraceError(
+                "QudJP: {0}.TranslateSelectedAbilityText failed to write translated text. component={1}, translated={2}",
+                Context,
+                componentIdentifier,
+                translated);
+        }
     }
 
     private static bool TryTranslateSelectedAbilityText(string source, string route, out string translated)

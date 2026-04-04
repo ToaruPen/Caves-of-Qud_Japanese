@@ -114,6 +114,93 @@ public sealed class GameManagerUpdateSelectedAbilityPatchTests
         });
     }
 
+    [Test]
+    public void Postfix_FallbackAndEdgeCases_IncludeEmptyMarkerAndAlreadyTranslatedInputs()
+    {
+        WriteDictionary(
+            ("[{0} turns]", "[{0}ターン]"),
+            ("<none>", "<なし>"));
+
+        RunWithPostfixPatch(() =>
+        {
+            const string fallbackSource =
+                "<color=#666666><sprite=0><sprite=1></color> <color=#FFFFFF><color=#FFFF00><sprite=2></color> mysterious snapjaw [2 turns]</color>";
+            var fallbackTarget = new DummyGameManagerSelectedAbilityTarget
+            {
+                NextSelectedAbilityText = fallbackSource,
+            };
+            fallbackTarget.UpdateSelectedAbility();
+
+            var emptyTarget = new DummyGameManagerSelectedAbilityTarget
+            {
+                NextSelectedAbilityText = string.Empty,
+            };
+            emptyTarget.UpdateSelectedAbility();
+
+            const string tagsOnlySource = "<color=#666666></color>";
+            var tagsOnlyTarget = new DummyGameManagerSelectedAbilityTarget
+            {
+                NextSelectedAbilityText = tagsOnlySource,
+            };
+            tagsOnlyTarget.UpdateSelectedAbility();
+
+            const string markerSource = "\u0001<color=#666666><sprite=0><sprite=1></color> <none>";
+            var markerTarget = new DummyGameManagerSelectedAbilityTarget
+            {
+                NextSelectedAbilityText = markerSource,
+            };
+            markerTarget.UpdateSelectedAbility();
+
+            const string alreadyTranslatedSource =
+                "<color=#666666><sprite=0><sprite=1></color> <color=#FFFFFF><color=#FFFF00><sprite=2></color> スナップジョー [空] [3ターン]</color>";
+            var alreadyTranslatedTarget = new DummyGameManagerSelectedAbilityTarget
+            {
+                NextSelectedAbilityText = alreadyTranslatedSource,
+            };
+            alreadyTranslatedTarget.UpdateSelectedAbility();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    fallbackTarget.selectedAbilityText.text,
+                    Is.EqualTo("<color=#666666><sprite=0><sprite=1></color> <color=#FFFFFF><color=#FFFF00><sprite=2></color> mysterious snapjaw [2ターン]</color>"));
+                Assert.That(emptyTarget.selectedAbilityText.text, Is.EqualTo(string.Empty));
+                Assert.That(tagsOnlyTarget.selectedAbilityText.text, Is.EqualTo(tagsOnlySource));
+                Assert.That(markerTarget.selectedAbilityText.text, Is.EqualTo(markerSource));
+                Assert.That(alreadyTranslatedTarget.selectedAbilityText.text, Is.EqualTo(alreadyTranslatedSource));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(QudJP.Patches.GameManagerUpdateSelectedAbilityPatch),
+                        "GameManager.SelectedAbility"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(QudJP.Patches.UITextSkinTranslationPatch),
+                        nameof(QudJP.Patches.GameManagerUpdateSelectedAbilityPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        fallbackSource,
+                        fallbackSource),
+                    Is.EqualTo(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(QudJP.Patches.UITextSkinTranslationPatch),
+                        nameof(QudJP.Patches.GameManagerUpdateSelectedAbilityPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        markerSource,
+                        markerSource),
+                    Is.EqualTo(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(QudJP.Patches.UITextSkinTranslationPatch),
+                        nameof(QudJP.Patches.GameManagerUpdateSelectedAbilityPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        alreadyTranslatedSource,
+                        alreadyTranslatedSource),
+                    Is.EqualTo(0));
+            });
+        });
+    }
+
     private static void RunWithPostfixPatch(Action assertion)
     {
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
