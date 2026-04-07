@@ -144,7 +144,20 @@ public static class PopupPickOptionTranslationPatch
 
     private static string TranslateOrEmpty(string? originalText)
     {
-        return PopupTranslationPatch.TranslatePopupTextForProducerRoute(originalText ?? string.Empty, Context);
+        string text;
+        if (originalText is null)
+        {
+            Trace.TraceWarning(
+                "QudJP: PopupPickOptionTranslationPatch.TranslateOrEmpty encountered null text. Context={0}",
+                Context);
+            text = string.Empty;
+        }
+        else
+        {
+            text = originalText;
+        }
+
+        return PopupTranslationPatch.TranslatePopupTextForProducerRoute(text, Context);
     }
 
     private static void TranslatePopupMenuItemTextCollection(object? maybeList)
