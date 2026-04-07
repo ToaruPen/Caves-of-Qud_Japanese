@@ -1,13 +1,13 @@
 {
   "entries": [],
   "patterns": [
-    {"pattern": "^You eat the meal\\.$", "template": "食事をとった。"},
-    {"pattern": "^(.+?), ((?i:someone|somebody|a mysterious person|a child|a woman|a man|a baby|some group|some sect|some organization|some party|some cabal|some group of friends|some group of lovers|people|folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) ((?i:gather|come together|habitate together|cluster|assemble|live together)) in ((?i:reverence|awe|worship|adoration|devotion|piety|deification|love|honor)) of (.+?)\\.$", "template": "{0}、{t1}が{4}に{t3}して{t2}。"},
-    {"pattern": "^((?i:someone|somebody|a mysterious person|a child|a woman|a man|a baby|some group|some sect|some organization|some party|some cabal|some group of friends|some group of lovers|people|folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) ((?i:gather|come together|habitate together|cluster|assemble|live together)) (.+?) in ((?i:reverence|awe|worship|adoration|devotion|piety|deification|love|honor)) of (.+?)\\.$", "template": "{2}に{t0}が{4}に{t3}して{t1}。"},
-    {"pattern": "^(.+?), ((?i:someone|somebody|a mysterious person|a child|a woman|a man|a baby|some group|some sect|some organization|some party|some cabal|some group of friends|some group of lovers|people|folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) ((?i:gather|come together|habitate together|cluster|assemble|live together)) to ((?i:profane|mock|scorn|violate|blaspheme)) (.+?)\\.$", "template": "{0}、{t1}が{4}を{t3}ために{t2}。"},
-    {"pattern": "^((?i:someone|somebody|a mysterious person|a child|a woman|a man|a baby|some group|some sect|some organization|some party|some cabal|some group of friends|some group of lovers|people|folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) ((?i:gather|come together|habitate together|cluster|assemble|live together)) (.+?) to ((?i:profane|mock|scorn|violate|blaspheme)) (.+?)\\.$", "template": "{2}に{t0}が{4}を{t3}ために{t1}。"},
-    {"pattern": "^(.+?), [Tt]here's a ((?i:gathering|conclave|congregation|settlement|band|flock|society)) of (.+?) and their ((?i:folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan))\\.$", "template": "{0}、{t2}とその{t3}の{t1}がある。"},
-    {"pattern": "^[Tt]here's a ((?i:gathering|conclave|congregation|settlement|band|flock|society)) of (.+?) and their ((?i:folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) (.+?)\\.$", "template": "{3}に{t1}とその{t2}の{t0}がある。"},
+    {"pattern": "^You eat the meal\\.$", "template": "食事をとった。", "route": "popup"},
+    {"pattern": "^(.+?), ((?i:someone|somebody|a mysterious person|a child|a woman|a man|a baby|some group|some sect|some organization|some party|some cabal|some group of friends|some group of lovers|people|folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) ((?i:gather|come together|habitate together|cluster|assemble|live together)) in ((?i:reverence|awe|worship|adoration|devotion|piety|deification|love|honor)) of (.+?)\\.$", "template": "{0}、{t1}が{4}に{t3}して{t2}。", "route": "unclassified"},
+    {"pattern": "^((?i:someone|somebody|a mysterious person|a child|a woman|a man|a baby|some group|some sect|some organization|some party|some cabal|some group of friends|some group of lovers|people|folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) ((?i:gather|come together|habitate together|cluster|assemble|live together)) (.+?) in ((?i:reverence|awe|worship|adoration|devotion|piety|deification|love|honor)) of (.+?)\\.$", "template": "{2}に{t0}が{4}に{t3}して{t1}。", "route": "unclassified"},
+    {"pattern": "^(.+?), ((?i:someone|somebody|a mysterious person|a child|a woman|a man|a baby|some group|some sect|some organization|some party|some cabal|some group of friends|some group of lovers|people|folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) ((?i:gather|come together|habitate together|cluster|assemble|live together)) to ((?i:profane|mock|scorn|violate|blaspheme)) (.+?)\\.$", "template": "{0}、{t1}が{4}を{t3}ために{t2}。", "route": "unclassified"},
+    {"pattern": "^((?i:someone|somebody|a mysterious person|a child|a woman|a man|a baby|some group|some sect|some organization|some party|some cabal|some group of friends|some group of lovers|people|folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) ((?i:gather|come together|habitate together|cluster|assemble|live together)) (.+?) to ((?i:profane|mock|scorn|violate|blaspheme)) (.+?)\\.$", "template": "{2}に{t0}が{4}を{t3}ために{t1}。", "route": "unclassified"},
+    {"pattern": "^(.+?), [Tt]here's a ((?i:gathering|conclave|congregation|settlement|band|flock|society)) of (.+?) and their ((?i:folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan))\\.$", "template": "{0}、{t2}とその{t3}の{t1}がある。", "route": "unclassified"},
+    {"pattern": "^[Tt]here's a ((?i:gathering|conclave|congregation|settlement|band|flock|society)) of (.+?) and their ((?i:folk|communities|kindred|families|kin|kind|kinsfolk|tribe|clan)) (.+?)\\.$", "template": "{3}に{t1}とその{t2}の{t0}がある。", "route": "unclassified"},
     {
       "pattern": "^You hit (?:the |a |an )?(.+?) in a vital area[.!]?$",
       "template": "{0}の急所に命中した",
@@ -1586,26 +1586,6 @@
     {
       "pattern": "^Your noses? stops? (.+)\\.$",
       "template": "あなたの鼻の{0}が止まった。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You harvest (.+?) from (.+)\\.$",
-      "template": "{1}から{0}を収穫した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^You harvest (.+?)\\.$",
-      "template": "{0}を収穫した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^(.+?) harvests? (.+?) from (.+)\\.$",
-      "template": "{0}が{2}から{1}を収穫した。",
-      "route": "emit-message"
-    },
-    {
-      "pattern": "^(.+?) harvests? (.+?)\\.$",
-      "template": "{0}が{1}を収穫した。",
       "route": "emit-message"
     },
     {
