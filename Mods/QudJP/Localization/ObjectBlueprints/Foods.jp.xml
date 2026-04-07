@@ -918,7 +918,7 @@
     <part Name="Food" Thirst="15000" Message="神聖なサクサク感が溶けて塩のマナになる。" />
     <part Name="Physics" Weight="0" />
     <part Name="Commerce" Value="500" />
-    <part Name="Description" Short="薄く古びた紙――油に塗り重ねられた羊皮紙――が揚げた鞍形ウェイファーを包み、凝縮蜜の七層がその裂け目を満たしている。" />
+    <part Name="Description" Short="薄く古びた紙――油に塗り重ねられた羊皮紙――が揚げた鞍形ウェハーを包み、凝縮蜜の七層がその裂け目を満たしている。" />
   </object>
   <object Name="Crystal of Eve" Inherits="Snack" Replace="true">
     <part Name="Render" DisplayName="{{crystalline|イヴの結晶}}" Tile="Items/sw_eve_crystal.bmp" ColorString="&amp;b" DetailColor="M" />
