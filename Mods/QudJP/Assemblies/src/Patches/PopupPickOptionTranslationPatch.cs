@@ -105,7 +105,7 @@ public static class PopupPickOptionTranslationPatch
             return null;
         }
 
-        var translated = new List<string>();
+        var translated = new List<string>(source.Count);
         var anyChanged = false;
         foreach (var text in source)
         {
