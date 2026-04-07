@@ -746,6 +746,31 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void ShippedPatternFile_DoesNotKeepShadowedHarvestFallbackRegexes()
+    {
+        var repositoryRoot = TestProjectPaths.GetRepositoryRoot();
+        var patternFile = Path.Combine(
+            repositoryRoot,
+            "Mods",
+            "QudJP",
+            "Localization",
+            "Dictionaries",
+            "messages.ja.json");
+        var text = File.ReadAllText(patternFile);
+        UseRepositoryPatternDictionary();
+        var translated = MessagePatternTranslator.Translate("You harvest a 果実 from the 茂み.");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(text, Does.Not.Contain("^You harvest (.+?) from (.+)\\.$"));
+            Assert.That(text, Does.Not.Contain("^You harvest (.+?)\\.$"));
+            Assert.That(text, Does.Not.Contain("^(.+?) harvests? (.+?) from (.+)\\.$"));
+            Assert.That(text, Does.Not.Contain("^(.+?) harvests? (.+?)\\.$"));
+            Assert.That(translated, Is.EqualTo("茂みから果実を収穫した"));
+        });
+    }
+
+    [Test]
     public void Translate_AppliesDeathPattern()
     {
         WritePatternDictionary(("^You died\\.\\n\\nYou were killed by (.+?)[.!]?$", "あなたは死んだ。\n\n{0}に殺された。"));
