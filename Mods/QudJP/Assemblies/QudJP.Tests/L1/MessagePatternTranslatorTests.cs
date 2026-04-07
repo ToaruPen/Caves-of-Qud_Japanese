@@ -450,6 +450,66 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void Translate_RepositoryDictionary_TranslatesPlayerBleedingDamageMessage()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("You take 1 damage from bleeding.");
+
+        Assert.That(translated, Is.EqualTo("あなたは出血で1ダメージを受けた。"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_UsesSpecificWoundStopBleedingPatternBeforeGenericBleedingStopPattern()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("One of タムの wounds stops bleeding.");
+
+        Assert.That(translated, Is.EqualTo("タムの傷のひとつの出血が止まった。"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_FallsBackToEnglishWhenNoPatternMatches()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("This message should remain in English.");
+
+        Assert.That(translated, Is.EqualTo("This message should remain in English."));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_HandlesEmptyInput()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate(string.Empty);
+
+        Assert.That(translated, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_PreservesColorCodesOnFallback()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("&GThis specific phrase has no matching pattern.^k");
+
+        Assert.That(translated, Is.EqualTo("&GThis specific phrase has no matching pattern.^k"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_PreservesMarkerAndColorCodesOnFallback()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("\u0001&GThis specific phrase has no matching pattern.^k");
+
+        Assert.That(translated, Is.EqualTo("\u0001&GThis specific phrase has no matching pattern.^k"));
+    }
+
+    [Test]
     public void Translate_AppliesPassByPattern()
     {
         WritePatternDictionary(("^You pass by a (.+?)[.!]?$", "{0}のそばを通り過ぎた。"));
