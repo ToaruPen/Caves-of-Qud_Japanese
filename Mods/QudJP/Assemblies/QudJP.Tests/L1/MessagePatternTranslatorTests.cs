@@ -470,6 +470,36 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void Translate_RepositoryDictionary_FallsBackToEnglishWhenNoPatternMatches()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("This message should remain in English.");
+
+        Assert.That(translated, Is.EqualTo("This message should remain in English."));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_HandlesEmptyInput()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate(string.Empty);
+
+        Assert.That(translated, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_PreservesColorCodesAndMarkerOnFallback()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("\u0001&GYou take 1 damage from bleeding.^k");
+
+        Assert.That(translated, Is.EqualTo("\u0001&GYou take 1 damage from bleeding.^k"));
+    }
+
+    [Test]
     public void Translate_AppliesPassByPattern()
     {
         WritePatternDictionary(("^You pass by a (.+?)[.!]?$", "{0}のそばを通り過ぎた。"));
