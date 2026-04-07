@@ -1,19 +1,26 @@
-# Caves of Qud Japanese Localization (QudJP) — Legacy
+# Caves of Qud Japanese Localization (QudJP) ~~— Legacy~~
 
-> **このリポジトリはアーカイブ済みです。**
-> 開発は後継リポジトリに移行しました。
+> ~~**このリポジトリはアーカイブ済みです。**~~
+> ~~開発は後継リポジトリに移行しました。~~
 
-## 移行先
+## ~~移行先~~
 
-### [ToaruPen/CoQ-Japanese_v2](https://github.com/ToaruPen/CoQ-Japanese_v2)
+### ~~[ToaruPen/CoQ-Japanese_v2](https://github.com/ToaruPen/CoQ-Japanese_v2)~~
 
-v2 はベータ版ローカライゼーションパイプラインに対応したグリーンフィールド再設計です。
+~~v2 はベータ版ローカライゼーションパイプラインに対応したグリーンフィールド再設計です。~~
 
-主な改善点:
-- ベータ版の `_S/_T`・`GameText`・`ReplaceBuilder`・`[LanguageProvider]` パイプラインに最適化
-- テスト駆動開発 (TDD): デコンパイルソースを忠実に再現する DummyTargets パターン
-- 434+ L1 テスト、64+ Python テスト
-- Harmony パッチは最終手段 — ベータネイティブ拡張ポイントを優先
+~~主な改善点:~~
+
+- ~~ベータ版の `_S/_T`・`GameText`・`ReplaceBuilder`・`[LanguageProvider]` パイプラインに最適化~~
+- ~~テスト駆動開発 (TDD): デコンパイルソースを忠実に再現する DummyTargets パターン~~
+- ~~434+ L1 テスト、64+ Python テスト~~
+- ~~Harmony パッチは最終手段 — ベータネイティブ拡張ポイントを優先~~
+
+---
+
+> **2026-04-07 更新**: まだしばらくはアルファ止まりな可能性があるため、Stable版の開発を続けます。適宜更新を確認しつつ、段階的に移行していきたいと思う。
+>
+> ベータブランチ調査の詳細は [`CoQ-Japanese_v2`](https://github.com/ToaruPen/CoQ-Japanese_v2) の README を参照。
 
 ---
 
