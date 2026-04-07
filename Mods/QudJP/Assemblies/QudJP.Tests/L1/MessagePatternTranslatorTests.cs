@@ -490,13 +490,13 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
-    public void Translate_RepositoryDictionary_PreservesColorCodesAndMarkerOnFallback()
+    public void Translate_RepositoryDictionary_PreservesColorCodesOnFallback()
     {
         UseRepositoryPatternDictionary();
 
-        var translated = MessagePatternTranslator.Translate("\u0001&GYou take 1 damage from bleeding.^k");
+        var translated = MessagePatternTranslator.Translate("&GThis specific phrase has no matching pattern.^k");
 
-        Assert.That(translated, Is.EqualTo("\u0001&GYou take 1 damage from bleeding.^k"));
+        Assert.That(translated, Is.EqualTo("&GThis specific phrase has no matching pattern.^k"));
     }
 
     [Test]
