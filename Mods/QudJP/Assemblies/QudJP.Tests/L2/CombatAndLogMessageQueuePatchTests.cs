@@ -266,6 +266,24 @@ public sealed class CombatAndLogMessageQueuePatchTests
     }
 
     [Test]
+    [TestCase("You cannot open the 扉.", "扉を開けられない")]
+    [TestCase("You are out of phase with the 扉.", "扉と位相がずれている")]
+    [TestCase("You cannot reach the 扉.", "扉に手が届かない")]
+    [TestCase("You can't unlock the 扉 from a distance.", "離れた位置から扉の鍵を開けることはできない")]
+    [TestCase("You can't unlock the 扉.", "扉の鍵を開けられない")]
+    [TestCase("You interface with the 扉 and unlock it.", "扉にインターフェースで接続して鍵を開けた")]
+    [TestCase("You lay your hand upon the 扉 and draw forth its passcode. You enter the code and the 扉 unlocks.", "扉に手を当ててパスコードを読み取った。コードを入力すると扉の鍵が開いた")]
+    [TestCase("You interface with the 扉 but nothing happens.", "You interface with the 扉 but nothing happens.")]
+    [TestCase("", "")]
+    [TestCase("You cannot open the <color=#ff0>扉</color>.", "<color=#ff0>扉</color>を開けられない")]
+    [TestCase("\u0001扉を開けられない", "扉を開けられない")]
+    public void DoorAttemptOpen_TranslatesAndPreservesExpectedMessages_WhenPatched(string message, string expected)
+    {
+        UseRepositoryPatternDictionary();
+        AssertDoorAttemptOpenMessage(message, expected);
+    }
+
+    [Test]
     public void GameObjectPerformThrow_TranslatesHitMessage_WhenPatched()
     {
         WritePatternDictionary(
@@ -1107,6 +1125,43 @@ public sealed class CombatAndLogMessageQueuePatchTests
             _ = target.MeleeAttackWithWeaponInternal(new DummyGameObject(), new DummyGameObject(), new DummyGameObject(), new DummyCombatBodyPart());
 
             Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("あなたの攻撃はダメージを与えられなかった！ [17]"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    private static void AssertDoorAttemptOpenMessage(string message, string expected)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(
+                    typeof(DummyDoorAttemptOpenTarget),
+                    nameof(DummyDoorAttemptOpenTarget.AttemptOpen),
+                    typeof(DummyGameObject),
+                    typeof(bool),
+                    typeof(bool),
+                    typeof(bool),
+                    typeof(bool),
+                    typeof(bool),
+                    typeof(bool),
+                    typeof(object)),
+                typeof(DoorAttemptOpenTranslationPatch));
+
+            var target = new DummyDoorAttemptOpenTarget
+            {
+                MessageToSend = message,
+            };
+
+            target.AttemptOpen();
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo(expected));
         }
         finally
         {
