@@ -196,7 +196,7 @@ public sealed class XDidYTranslationPatchTests
     [Test]
     public void Prefix_TranslatesXDidYToZWadeThroughLiquid()
     {
-        WriteDictionary(tier2: new[] { ("wade", "through {0}", "{0}の中をかき分けて進んだ") });
+        WriteDictionary(tier3: new[] { ("wade", "through {0}", "{0}の中をかき分けて進んだ") });
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);

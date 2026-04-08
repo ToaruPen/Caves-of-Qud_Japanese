@@ -347,8 +347,20 @@ public sealed class PopupShowTranslationPatchTests
 
     private static string GetLocalizationRoot()
     {
-        return Path.GetFullPath(
-            Path.Combine(TestContext.CurrentContext.TestDirectory, "../../../../../Localization"));
+        var directory = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
+        while (directory is not null)
+        {
+            var candidate = Path.Combine(directory.FullName, "Localization");
+            if (Directory.Exists(candidate))
+            {
+                return candidate;
+            }
+
+            directory = directory.Parent;
+        }
+
+        throw new DirectoryNotFoundException(
+            $"Localization directory not found from test directory: {TestContext.CurrentContext.TestDirectory}");
     }
 
     private static MethodInfo RequireMethod(Type type, string methodName)
