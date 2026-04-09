@@ -261,7 +261,7 @@ rsync -av --delete \
 
 ## コード品質要件
 
-### C#
+### `C#`
 
 - `<Nullable>enable</Nullable>` — null 安全を強制
 - `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>` — 警告ゼロを強制
