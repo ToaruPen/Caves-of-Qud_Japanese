@@ -327,6 +327,8 @@ public static class AbilityManagerScreenTranslationPatch
             translated = translated.Replace(key, fragmentTranslation);
         }
 
+        // Keep the standalone category replacement even though TranslateTypeLineClassToken
+        // covers details-pane Type: lines; "Maneuvers" can also appear outside that route.
         if (StringHelpers.TryGetTranslationExactOrLowerAscii("Maneuvers", out var maneuversTranslation))
         {
             translated = translated.Replace("Maneuvers", maneuversTranslation);
