@@ -111,9 +111,10 @@ public sealed class QudMutationsModuleWindowTranslationPatchTests
     {
         Translator.SetDictionaryDirectoryForTests(Path.Combine(tempRoot, "missing-dictionaries"));
 
-        var translated = QudMutationsModuleWindowTranslationPatch.TranslateFormattedDescription("Esper");
+        var source = "Esper [{{W|V}}]";
+        var translated = QudMutationsModuleWindowTranslationPatch.TranslateFormattedDescription(source);
 
-        Assert.That(translated, Is.EqualTo("Esper"));
+        Assert.That(translated, Is.EqualTo(source));
     }
 
     private static MethodInfo RequireMethod(Type type, string methodName)
