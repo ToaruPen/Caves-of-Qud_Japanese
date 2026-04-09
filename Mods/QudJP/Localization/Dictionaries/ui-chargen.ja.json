@@ -585,34 +585,34 @@
       "text": "精神変異しか発現せず、新たに変異を獲得する際に提示される候補もすべて精神系になります。\n\n"
     },
     {
-      "key": "Your Strength score determines how effectively you penetrate your opponents' armor with melee attacks, how much damage your melee attacks do, your ability to resist forced movement, and your carry capacity.",
+      "key": "Your {{W|Strength}} score determines how effectively you penetrate your opponents' armor with melee attacks, how much damage your melee attacks do, your ability to resist forced movement, and your carry capacity.",
       "context": "Chargen.Attributes.HelpText",
-      "text": "筋力は、近接攻撃で敵の装甲を貫通する効率、近接攻撃のダメージ量、強制移動への抵抗力、所持重量を決定します。"
+      "text": "あなたの{{W|筋力}}は、近接攻撃で敵の装甲を貫通する効率、近接攻撃のダメージ量、強制移動への抵抗力、所持重量を決定します。"
     },
     {
-      "key": "Your Agility score determines your accuracy with both melee and ranged weapons and your ability to dodge attacks.",
+      "key": "Your {{W|Agility}} score determines your accuracy with both melee and ranged weapons and your ability to dodge attacks.",
       "context": "Chargen.Attributes.HelpText",
-      "text": "敏捷性は、近接武器と遠隔武器の命中率、および攻撃を回避する能力を決定します。"
+      "text": "あなたの{{W|敏捷}}は、近接武器と遠隔武器の命中率、および攻撃を回避する能力を決定します。"
     },
     {
-      "key": "Your Toughness score determines your number of hit points, your natural healing rate, and your ability to resist poison and disease.",
+      "key": "Your {{W|Toughness}} score determines your number of hit points, your natural healing rate, and your ability to resist poison and disease.",
       "context": "Chargen.Attributes.HelpText",
-      "text": "耐久力は、ヒットポイント、自然治癒速度、毒や病気への抵抗力を決定します。"
+      "text": "あなたの{{W|頑健}}は、ヒットポイント、自然治癒速度、毒や病気への抵抗力を決定します。"
     },
     {
-      "key": "Your Intelligence score determines your number of skill points and your ability to examine artifacts.",
+      "key": "Your {{W|Intelligence}} score determines your number of skill points and your ability to examine artifacts.",
       "context": "Chargen.Attributes.HelpText",
-      "text": "知性は、スキルポイントの量とアーティファクトを鑑定する能力を決定します。"
+      "text": "あなたの{{W|知力}}は、スキルポイントの量とアーティファクトを鑑定する能力を決定します。"
     },
     {
-      "key": "Your Willpower score modifies the cooldowns of your activated abilities, determines your ability to resist mental attacks, and modifies your natural healing rate.",
+      "key": "Your {{W|Willpower}} score modifies the cooldowns of your activated abilities, determines your ability to resist mental attacks, and modifies your natural healing rate.",
       "context": "Chargen.Attributes.HelpText",
-      "text": "意志力は、起動能力のクールダウン、精神攻撃への抵抗力、自然治癒速度を左右します。"
+      "text": "あなたの{{W|意志力}}は、起動能力のクールダウン、精神攻撃への抵抗力、自然治癒速度を左右します。"
     },
     {
-      "key": "Your Ego score determines the potency of your mental mutations, your ability to haggle with merchants, and your ability to dominate the wills of other living creatures.",
+      "key": "Your {{W|Ego}} score determines the potency of your mental mutations, your ability to haggle with merchants, and your ability to dominate the wills of other living creatures.",
       "context": "Chargen.Attributes.HelpText",
-      "text": "自我は、精神変異の強さ、商人との値引き交渉力、他の生物を支配する能力を決定します。"
+      "text": "あなたの{{W|自我}}は、精神変異の強さ、商人との値引き交渉力、他の生物を支配する能力を決定します。"
     }
   ]
 }
