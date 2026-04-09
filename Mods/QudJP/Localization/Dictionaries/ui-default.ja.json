@@ -910,6 +910,10 @@
       "text": "検索"
     },
     {
+      "key": "search: ",
+      "text": "検索: "
+    },
+    {
       "key": "sort: ",
       "text": "並び替え: "
     },
@@ -920,6 +924,10 @@
     {
       "key": "by class",
       "text": "クラス別"
+    },
+    {
+      "key": "Toggle Sort",
+      "text": "並び替え切替"
     },
     {
       "key": "Activate Selected Ability",

@@ -150,6 +150,7 @@ public static class AbilityManagerScreenTranslationPatch
         }
 
         var index = 0;
+        var changed = false;
         foreach (var choice in enumerable)
         {
             if (choice is null)
@@ -158,9 +159,14 @@ public static class AbilityManagerScreenTranslationPatch
                 continue;
             }
 
-            TranslateMenuOptionMember(choice, "Description", "AbilityManagerScreen.Hotkey[" + index + "].Description");
-            TranslateMenuOptionMember(choice, "KeyDescription", "AbilityManagerScreen.Hotkey[" + index + "].KeyDescription");
+            changed |= TranslateMenuOptionMember(choice, "Description", "AbilityManagerScreen.Hotkey[" + index + "].Description");
+            changed |= TranslateMenuOptionMember(choice, "KeyDescription", "AbilityManagerScreen.Hotkey[" + index + "].KeyDescription");
             index++;
+        }
+
+        if (changed && hotkeyBar is not null)
+        {
+            InvokeBeforeShow(hotkeyBar, enumerable);
         }
     }
 
@@ -236,19 +242,22 @@ public static class AbilityManagerScreenTranslationPatch
         UiBindingTranslationHelpers.SetMemberValue(field, "text", value);
     }
 
-    private static void TranslateMenuOptionMember(object menuOption, string memberName, string routeSuffix)
+    private static bool TranslateMenuOptionMember(object menuOption, string memberName, string routeSuffix)
     {
         var current = UiBindingTranslationHelpers.GetStringMemberValue(menuOption, memberName);
         if (string.IsNullOrEmpty(current))
         {
-            return;
+            return false;
         }
 
         var translated = TranslateBindingText(current!, routeSuffix);
         if (!string.Equals(translated, current, StringComparison.Ordinal))
         {
             UiBindingTranslationHelpers.SetMemberValue(menuOption, memberName, translated);
+            return true;
         }
+
+        return false;
     }
 
     private static void TranslateAbilityMember(object ability, string memberName)
@@ -335,5 +344,29 @@ public static class AbilityManagerScreenTranslationPatch
 
         var field = AccessTools.Field(targetType, memberName);
         return field?.GetValue(null);
+    }
+
+    private static void InvokeBeforeShow(object hotkeyBar, IEnumerable menuOptions)
+    {
+        var beforeShow = AccessTools.Method(hotkeyBar.GetType(), "BeforeShow");
+        if (beforeShow is null)
+        {
+            return;
+        }
+
+        var parameterCount = beforeShow.GetParameters().Length;
+        if (parameterCount == 0)
+        {
+            _ = beforeShow.Invoke(hotkeyBar, null);
+            return;
+        }
+
+        if (parameterCount == 1)
+        {
+            _ = beforeShow.Invoke(hotkeyBar, new object?[] { menuOptions });
+            return;
+        }
+
+        _ = beforeShow.Invoke(hotkeyBar, new object?[] { null, menuOptions });
     }
 }

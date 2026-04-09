@@ -40,7 +40,8 @@ public sealed class AbilityManagerScreenTranslationPatchTests
     {
         WriteDictionary(
             ("Sprint", "スプリント"),
-            ("Maneuvers", "戦技"));
+            ("Maneuvers", "戦技"),
+            ("search: ", "検索: "));
 
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
         var harmony = new Harmony(harmonyId);
@@ -68,10 +69,12 @@ public sealed class AbilityManagerScreenTranslationPatchTests
                 },
             });
 
+            screen.searchText = "Sprint";
             screen.FilterItems();
 
             Assert.Multiple(() =>
             {
+                Assert.That(DummyAbilityManagerScreenTarget.FILTER_ITEMS.Description, Is.EqualTo("検索: {{w|Sprint}}"));
                 Assert.That(screen.filteredItems[0].category, Is.EqualTo("戦技"));
                 Assert.That(screen.filteredItems[1].ability?.DisplayName, Is.EqualTo("スプリント"));
                 Assert.That(screen.filteredItems[1].ability?.Class, Is.EqualTo("戦技"));
@@ -108,14 +111,106 @@ public sealed class AbilityManagerScreenTranslationPatchTests
             var screen = new DummyAbilityManagerScreenTarget();
             screen.UpdateMenuBars();
 
-            Assert.That(screen.hotkeyBar.choices.Select(static choice => choice.Description), Is.EqualTo(new[]
+            Assert.Multiple(() =>
             {
-                "メニューを閉じる",
-                "移動",
-                "並び替え: {{w|任意}}/{{y|クラス別}}",
-                "選択中の能力を起動",
-                "検索",
-            }));
+                Assert.That(screen.hotkeyBar.choices.Select(static choice => choice.Description), Is.EqualTo(new[]
+                {
+                    "メニューを閉じる",
+                    "移動",
+                    "並び替え: {{w|任意}}/{{y|クラス別}}",
+                    "選択中の能力を起動",
+                    "検索",
+                }));
+                Assert.That(screen.hotkeyBar.choices.Select(static choice => choice.KeyDescription), Is.EqualTo(new string?[]
+                {
+                    null,
+                    null,
+                    "並び替え切替",
+                    null,
+                    null,
+                }));
+                Assert.That(screen.hotkeyBar.renderedDescriptions, Is.EqualTo(new[]
+                {
+                    "メニューを閉じる",
+                    "移動",
+                    "並び替え: {{w|任意}}/{{y|クラス別}}",
+                    "選択中の能力を起動",
+                    "検索",
+                }));
+                Assert.That(screen.hotkeyBar.renderedKeyDescriptions, Is.EqualTo(new string?[]
+                {
+                    null,
+                    null,
+                    "並び替え切替",
+                    null,
+                    null,
+                }));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Postfix_FallsBackToEnglishForFilterAndHotkey_WhenDictionaryEntriesAreMissing()
+    {
+        WriteDictionary();
+
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyAbilityManagerScreenTarget), nameof(DummyAbilityManagerScreenTarget.FilterItems)),
+                postfix: new HarmonyMethod(RequirePatchPostfix()));
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyAbilityManagerScreenTarget), nameof(DummyAbilityManagerScreenTarget.UpdateMenuBars)),
+                postfix: new HarmonyMethod(RequirePatchPostfix()));
+
+            var screen = new DummyAbilityManagerScreenTarget();
+            screen.searchText = "Sprint";
+            screen.FilterItems();
+            screen.UpdateMenuBars();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyAbilityManagerScreenTarget.FILTER_ITEMS.Description, Is.EqualTo("search: {{w|Sprint}}"));
+                Assert.That(screen.hotkeyBar.choices.Select(static choice => choice.Description), Is.EqualTo(new[]
+                {
+                    "Close Menu",
+                    "navigate",
+                    "sort: {{w|custom}}/{{y|by class}}",
+                    "Activate Selected Ability",
+                    "search: {{w|Sprint}}",
+                }));
+                Assert.That(screen.hotkeyBar.choices.Select(static choice => choice.KeyDescription), Is.EqualTo(new string?[]
+                {
+                    null,
+                    null,
+                    "Toggle Sort",
+                    null,
+                    null,
+                }));
+                Assert.That(screen.hotkeyBar.renderedDescriptions, Is.EqualTo(new[]
+                {
+                    "Close Menu",
+                    "navigate",
+                    "sort: {{w|custom}}/{{y|by class}}",
+                    "Activate Selected Ability",
+                    "search: {{w|Sprint}}",
+                }));
+                Assert.That(screen.hotkeyBar.renderedKeyDescriptions, Is.EqualTo(new string?[]
+                {
+                    null,
+                    null,
+                    "Toggle Sort",
+                    null,
+                    null,
+                }));
+            });
         }
         finally
         {
@@ -156,6 +251,44 @@ public sealed class AbilityManagerScreenTranslationPatchTests
             {
                 Assert.That(screen.rightSideHeaderText.text, Is.EqualTo("スプリント"));
                 Assert.That(screen.rightSideDescriptionArea.text, Is.EqualTo("{{y|種別: }}戦技\n\n素早く移動する。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Postfix_FallsBackToEnglish_WhenDictionaryEntriesAreMissing()
+    {
+        WriteDictionary(("Maneuvers", "戦技"));
+
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyAbilityManagerScreenTarget), nameof(DummyAbilityManagerScreenTarget.HandleHighlightLeft)),
+                postfix: new HarmonyMethod(RequirePatchPostfix()));
+
+            var screen = new DummyAbilityManagerScreenTarget();
+            screen.HandleHighlightLeft(new DummyAbilityManagerScreenLineData
+            {
+                Id = "ability",
+                ability = new DummyAbilityManagerEntryTarget
+                {
+                    DisplayName = "Sprint",
+                    Class = "Maneuvers",
+                    Description = "素早く移動する。",
+                },
+            });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(screen.rightSideHeaderText.text, Is.EqualTo("Sprint"));
+                Assert.That(screen.rightSideDescriptionArea.text, Is.EqualTo("{{y|Type: }}戦技\n\n素早く移動する。"));
             });
         }
         finally

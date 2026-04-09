@@ -28,10 +28,14 @@ internal sealed class DummyAbilityManagerMenuOption
 internal sealed class DummyAbilityManagerHotkeyBar
 {
     public List<DummyAbilityManagerMenuOption> choices { get; private set; } = [];
+    public List<string?> renderedDescriptions { get; private set; } = [];
+    public List<string?> renderedKeyDescriptions { get; private set; } = [];
 
     public void BeforeShow(object? descriptor, IEnumerable<DummyAbilityManagerMenuOption> menuOptions)
     {
         choices = menuOptions.ToList();
+        renderedDescriptions = choices.Select(static option => option.Description).ToList();
+        renderedKeyDescriptions = choices.Select(static option => option.KeyDescription).ToList();
     }
 }
 
