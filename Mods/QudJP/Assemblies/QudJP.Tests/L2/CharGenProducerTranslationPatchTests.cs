@@ -150,6 +150,34 @@ public sealed class CharGenProducerTranslationPatchTests
     }
 
     [Test]
+    public void SubtypeSelectionPostfix_TranslatesCallingCarouselDescriptions()
+    {
+        WriteDictionary(
+            ("Short Blade", "短剣"),
+            ("Tinkering", "修理"),
+            ("Scavenger", "廃品漁り"),
+            ("Acrobatics", "軽業"),
+            ("Spry", "身軽"),
+            ("Starts with random junk and artifacts", "ランダムなガラクタとアーティファクトを所持して開始"));
+
+        RunWithSubtypeSelectionPostfix(() =>
+        {
+            var result = new DummyCharGenSubtypeModuleTarget().GetSelections().ToList();
+            var expected = """
+                {{c|ù}} 敏捷 +2
+                {{c|ù}} 短剣
+                {{c|ù}} 修理
+                  {{C|ù}} 廃品漁り
+                {{c|ù}} 軽業
+                  {{C|ù}} 身軽
+                {{c|ù}} ランダムなガラクタとアーティファクトを所持して開始
+                """;
+
+            Assert.That(result[0].Description, Is.EqualTo(expected));
+        });
+    }
+
+    [Test]
     public void ChromePrefix_TranslatesDescriptorAndCategoryTitles()
     {
         WriteDictionary(
@@ -337,6 +365,27 @@ public sealed class CharGenProducerTranslationPatchTests
                     "Prefix",
                     typeof(object[]),
                     typeof(MethodBase))));
+            assertion();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    private static void RunWithSubtypeSelectionPostfix(Action assertion)
+    {
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyCharGenSubtypeModuleTarget), nameof(DummyCharGenSubtypeModuleTarget.GetSelections)),
+                postfix: new HarmonyMethod(RequirePatchMethod(
+                    "QudJP.Patches.CharGenSubtypeSelectionTranslationPatch",
+                    "Postfix",
+                    typeof(IEnumerable))));
             assertion();
         }
         finally

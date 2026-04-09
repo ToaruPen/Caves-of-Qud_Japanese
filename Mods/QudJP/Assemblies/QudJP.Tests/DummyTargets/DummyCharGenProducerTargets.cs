@@ -70,6 +70,33 @@ internal sealed class DummyCharGenCustomizePrefixMenuOption
     public string? Description { get; set; }
 }
 
+internal sealed class DummyChoiceWithColorIcon
+{
+    public string? Title { get; set; }
+
+    public string? Description { get; set; }
+}
+
+internal sealed class DummyCharGenSubtypeModuleTarget
+{
+    public IEnumerable<DummyChoiceWithColorIcon> GetSelections()
+    {
+        yield return new DummyChoiceWithColorIcon
+        {
+            Title = "Arconaut",
+            Description = """
+                {{c|ù}} +2 Agility
+                {{c|ù}} Short Blade
+                {{c|ù}} Tinkering
+                  {{C|ù}} Scavenger
+                {{c|ù}} Acrobatics
+                  {{C|ù}} Spry
+                {{c|ù}} Starts with random junk and artifacts
+                """,
+        };
+    }
+}
+
 internal sealed class DummyCharGenCustomizeWindowTarget
 {
     public IEnumerable<DummyCharGenCustomizePrefixMenuOption> GetSelections()
