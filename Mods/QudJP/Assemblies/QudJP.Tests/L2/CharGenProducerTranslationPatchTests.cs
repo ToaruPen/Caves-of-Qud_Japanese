@@ -178,6 +178,32 @@ public sealed class CharGenProducerTranslationPatchTests
     }
 
     [Test]
+    public void SubtypeSelectionPostfix_PreservesFallbackAndEdgeCases()
+    {
+        WriteDictionary(("Short Blade", "短剣"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                TranslateSubtypeSelectionDescription("{{c|ù}} Untranslated Description"),
+                Is.EqualTo("{{c|ù}} Untranslated Description"),
+                "Missing entries should fall back to English.");
+            Assert.That(
+                TranslateSubtypeSelectionDescription(string.Empty),
+                Is.EqualTo(string.Empty),
+                "Empty strings should pass through unchanged.");
+            Assert.That(
+                TranslateSubtypeSelectionDescription("{{c|ù}} Short Blade"),
+                Is.EqualTo("{{c|ù}} 短剣"),
+                "Color-tagged bullet lines should preserve tags while translating visible text.");
+            Assert.That(
+                TranslateSubtypeSelectionDescription("\u0001{{c|ù}} Short Blade"),
+                Is.EqualTo("\u0001{{c|ù}} Short Blade"),
+                "Marker-prefixed strings should pass through unchanged.");
+        });
+    }
+
+    [Test]
     public void ChromePrefix_TranslatesDescriptorAndCategoryTitles()
     {
         WriteDictionary(
@@ -483,6 +509,14 @@ public sealed class CharGenProducerTranslationPatchTests
 
         var result = target.GetKeyMenuBar().ToList();
         return result[0].Description;
+    }
+
+    private static string? TranslateSubtypeSelectionDescription(string source)
+    {
+        var translatedSelections = CharGenSubtypeSelectionTranslationPatch.Postfix(
+            new[] { new DummyChoiceWithColorIcon { Description = source } })
+            ?? throw new AssertionException("Subtype selection translation returned null.");
+        return translatedSelections.Cast<DummyChoiceWithColorIcon>().Single().Description;
     }
 
     private static MethodInfo RequireMethod(Type type, string methodName)
