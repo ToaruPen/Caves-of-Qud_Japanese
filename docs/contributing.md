@@ -41,7 +41,7 @@ cd coq-japanese_stable
 
 **macOS (Steam)** — デフォルトのためオーバーライド不要:
 
-```
+```text
 ~/Library/Application Support/Steam/steamapps/common/Caves of Qud/CoQ.app/Contents/Resources/Data
 ```
 
