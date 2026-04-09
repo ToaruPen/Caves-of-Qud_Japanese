@@ -40,7 +40,7 @@ public sealed class QudMutationsModuleWindowTranslationPatchTests
     }
 
     [Test]
-    public void Patch_TranslatesMutationMenuRowsBeforeBeforeShowAndUpdatesLongDescription()
+    public void Patch_TranslatesMutationMenuRowsBeforeShowAndUpdatesLongDescription()
     {
         WriteXmlFile(
             "Mutations.jp.xml",
@@ -107,7 +107,7 @@ public sealed class QudMutationsModuleWindowTranslationPatchTests
     }
 
     [Test]
-    public void TranslateFormattedDescription_ReturnsSource_WhenTranslationThrows()
+    public void TranslateFormattedDescription_ReturnsSource_ForMissingDictionaries()
     {
         Translator.SetDictionaryDirectoryForTests(Path.Combine(tempRoot, "missing-dictionaries"));
 
