@@ -45,6 +45,8 @@ The best current decomposition is already captured in `docs/superpowers/plans/20
 - `emit-message-overlap`: **3**
 - `needs-harmony-patch`: **10**
 
+The four subtotals above sum to **157** because the manifest was written against the `2026-03-24` snapshot. The current inventory total is **283**, so roughly **126** additional rows have entered the bucket since the manifest was drafted and are not yet classified against this split. A full re-triage of the 126 newcomers against the same rules is a separate follow-up task; the manifest split is still the strongest first cut for the 157 rows it covers.
+
 This is more useful than treating all 283 rows as one undifferentiated bucket.
 
 ## Top file concentrations from current inventory

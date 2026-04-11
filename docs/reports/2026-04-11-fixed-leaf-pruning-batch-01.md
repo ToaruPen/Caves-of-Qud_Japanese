@@ -23,21 +23,23 @@ So the first pruning question is simple: does this candidate still satisfy the p
 
 `docs/reports/2026-04-11-fixed-leaf-owner-triage.md:54-96` already shows that the current non-translated fixed-leaf queue is only **27** rows and is dominated by non-import-ready values.
 
-Representative examples from that queue:
+Representative examples, drawn from the parent 27-row queue in `docs/reports/2026-04-11-fixed-leaf-owner-triage.md:64-92`. All 11 rows below share identical inventory provenance: `source_route=SetText`, `ownership_class=mid-pipeline-owned`, `confidence=high`, `destination_dictionary=global_flat`, no `rejection_reason`, `status=needs_translation`.
 
-- empty-string placeholders
-  - `Qud.UI/AchievementViewRow.cs:79,87,99`
-  - `Qud.UI/PopupMessage.cs:610`
-  - `Qud.UI/WorldGenerationScreen.cs:229-252`
-- blank spacer text
-  - `Qud.UI/WorldGenerationScreen.cs:223` -> `" "`
-- UI channel / widget identifiers rather than user-facing English
-  - `Qud.UI/OptionsRow.cs:60` -> `BodyText`
-  - `XRL.CharacterBuilds.Qud.UI/AttributeSelectionControl.cs:69` -> `BodyText`
-  - `XRL.UI/Look.cs:293,316` -> `BodyText`
-  - `SteamWorkshopUploaderView.cs:121` -> `SelectedModLabel`
+| File:Line | Key |
+| --- | --- |
+| `Qud.UI/AchievementViewRow.cs:79` | `""` |
+| `Qud.UI/AchievementViewRow.cs:87` | `""` |
+| `Qud.UI/AchievementViewRow.cs:99` | `""` |
+| `Qud.UI/PopupMessage.cs:610` | `""` |
+| `Qud.UI/WorldGenerationScreen.cs:223` | `" "` |
+| `Qud.UI/WorldGenerationScreen.cs:229` | `""` |
+| `Qud.UI/OptionsRow.cs:60` | `BodyText` |
+| `XRL.CharacterBuilds.Qud.UI/AttributeSelectionControl.cs:69` | `BodyText` |
+| `XRL.UI/Look.cs:293` | `BodyText` |
+| `XRL.UI/Look.cs:316` | `BodyText` |
+| `SteamWorkshopUploaderView.cs:121` | `SelectedModLabel` |
 
-These are not strong dictionary-registration candidates. They are mostly placeholders, spacing tokens, or sink/widget identifiers.
+These rows all satisfy the scanner's static `is_proven_fixed_leaf` gate with identical high-confidence provenance, yet none of them are strong dictionary-registration candidates: they are mostly placeholders, spacing tokens, or sink/widget identifiers. This contrast is exactly why human pruning is still required after the automated gate passes.
 
 ## Why these rows are pruning candidates
 

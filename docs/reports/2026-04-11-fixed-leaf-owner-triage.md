@@ -95,9 +95,9 @@ Pending fixed-leaf sites:
 
 Under the `docs/RULES.md` proven fixed-leaf policy, this batch is currently **noise-heavy rather than import-ready**. It should be treated as a pruning/reclassification target before any dictionary registration work.
 
-## Owner-side queue: highest-yield buckets
+## Sink + owner-side mixed triage queue: highest-yield buckets
 
-The owner-side side of the inventory is much larger (**3778 sites**) and already groups naturally by route family.
+The non-fixed-leaf side of the inventory is much larger (**3778 sites**) and already groups naturally by route family. Note that this queue is **sink-observation + owner-side mixed**, not pure owner-side: the `Popup` and `AddPlayerMessage` rows shown below are `sink`-class sites that happen to be reached by existing route patches and marked `translated`, so they still need upstream owner proof before they can be promoted out of this queue. The 3778 count here equals the total non-fixed-leaf sites in the inventory (4634 total − 856 `Leaf` = 3778); it coincides with the Phase 1a sink-hit count on line 20 above, but it is computed as the post-Phase 1b residue, not as the raw Phase 1a sink hit tally.
 
 Top buckets from the current run:
 
@@ -114,7 +114,7 @@ Top buckets from the current run:
 | 171 | `Effects.GetDetails` | `Unresolved` | `unresolved` | effect details family |
 | 143 | `GetDisplayName` | `Builder` | `translated` | builder/display-name route; not fixed-leaf |
 
-Rejection-reason totals in the owner-side queue:
+Rejection-reason totals in the mixed triage queue (same sink+owner scope as above):
 
 | Rejection reason | Count |
 | --- | ---: |
@@ -150,7 +150,7 @@ The current route-family review notes created from this run are:
 - `docs/reports/2026-04-11-description-families-batch-01.md`
 - `docs/reports/2026-04-11-fixed-leaf-pruning-batch-01.md`
 
-This means the snapshot is no longer only an inventory summary. It is now the umbrella entrypoint for the first concrete review batches across the highest-yield owner-side and fixed-leaf-pruning queues.
+This means the snapshot is no longer only an inventory summary. It is now the umbrella entrypoint for the first concrete review batches across the highest-yield route-family triage queue (sink + owner-side mixed) and the fixed-leaf pruning queue.
 
 ## Validation blockers from this run
 
