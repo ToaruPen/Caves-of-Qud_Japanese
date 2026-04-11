@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any, cast
 
 from scripts.scanner.cross_reference import (
     build_translation_index,
@@ -11,9 +12,12 @@ from scripts.scanner.cross_reference import (
 )
 from scripts.scanner.inventory import (
     Confidence,
+    DestinationDictionary,
+    FixedLeafRejectionReason,
     InventoryDraft,
     InventorySite,
     InventoryStats,
+    OwnershipClass,
     SiteStatus,
     SiteType,
     read_candidate_inventory_json,
@@ -38,6 +42,8 @@ def _draft(*sites: InventorySite) -> InventoryDraft:
             low_confidence=sum(site.confidence == Confidence.LOW for site in sites),
             needs_review=sum(site.needs_review for site in sites),
             needs_runtime=sum(site.needs_runtime for site in sites),
+            proven_fixed_leaf=sum(site.destination_dictionary is not None for site in sites),
+            rejected_fixed_leaf=sum(site.rejection_reason is not None for site in sites),
         ),
         sites=tuple(sites),
     )
@@ -48,23 +54,27 @@ def _site(
     **overrides: object,
 ) -> InventorySite:
     """Construct one InventorySite for test inputs."""
-    fields: dict[str, object] = {
+    fields: dict[str, Any] = {
         "id": site_id,
         "file": "XRL.World/Test.cs",
         "line": 1,
         "column": 1,
         "sink": "SetText",
+        "source_route": "SetText",
         "type": SiteType.LEAF,
         "confidence": Confidence.HIGH,
         "pattern": 'label.SetText("sample")',
         "key": None,
         "source": None,
         "source_id": None,
+        "ownership_class": OwnershipClass.MID_PIPELINE_OWNED,
+        "destination_dictionary": DestinationDictionary.GLOBAL_FLAT,
+        "rejection_reason": None,
         "needs_review": False,
         "needs_runtime": False,
     }
     fields.update(overrides)
-    return InventorySite(**fields)
+    return InventorySite(**cast("dict[str, Any]", fields))
 
 
 def _write_source_file(tmp_path: Path, relative_path: str, lines: list[str]) -> None:
@@ -79,6 +89,10 @@ def test_build_translation_index_reads_repo_samples() -> None:
     index = build_translation_index(REPO_ROOT)
 
     assert "Cancel" in index.dictionary_keys
+    assert index.dictionary_keys["Bow and Rifle"] == {
+        "Scoped/ui-chargen-skill-context.ja.json",
+        "Scoped/ui-skillsandpowers-skill-names.ja.json",
+    }
     assert "CommandAmputateLimb" in index.xml_ids
     assert "ActivatedAbilities.jp.xml" in index.xml_ids["CommandAmputateLimb"]
 
@@ -184,6 +198,17 @@ def test_cross_reference_marks_dictionary_xml_and_patch_matches(tmp_path: Path) 
             key="Needs translation",
         ),
         _site(
+            "scoped-leaf",
+            file="Qud.UI/Test.cs",
+            line=21,
+            sink="SetText",
+            source_route="SetText",
+            type=SiteType.LEAF,
+            pattern='label.SetText("Bow and Rifle")',
+            key="Bow and Rifle",
+            destination_dictionary=DestinationDictionary.SCOPED,
+        ),
+        _site(
             "needs-patch",
             file="XRL.World/Test.cs",
             line=30,
@@ -191,6 +216,9 @@ def test_cross_reference_marks_dictionary_xml_and_patch_matches(tmp_path: Path) 
             type=SiteType.MESSAGE_FRAME,
             pattern='ParentObject.DidX("charge")',
             confidence=Confidence.HIGH,
+            ownership_class=OwnershipClass.PRODUCER_OWNED,
+            destination_dictionary=None,
+            rejection_reason=FixedLeafRejectionReason.MESSAGE_FRAME,
         ),
         _site(
             "needs-review",
@@ -200,6 +228,32 @@ def test_cross_reference_marks_dictionary_xml_and_patch_matches(tmp_path: Path) 
             type=SiteType.VERB_COMPOSITION,
             pattern='Object.Does("begin")',
             confidence=Confidence.HIGH,
+            ownership_class=OwnershipClass.PRODUCER_OWNED,
+            destination_dictionary=None,
+            rejection_reason=FixedLeafRejectionReason.VERB_COMPOSITION,
+        ),
+        _site(
+            "builder-review",
+            file="XRL.World/Test.cs",
+            line=45,
+            sink="SetText",
+            type=SiteType.BUILDER,
+            pattern="label.SetText(obj.GetDisplayName())",
+            ownership_class=OwnershipClass.PRODUCER_OWNED,
+            destination_dictionary=None,
+            rejection_reason=FixedLeafRejectionReason.BUILDER_DISPLAY_NAME,
+        ),
+        _site(
+            "template-review",
+            file="XRL.World/Test.cs",
+            line=47,
+            sink="SetText",
+            type=SiteType.TEMPLATE,
+            pattern='label.SetText(string.Format("HP: {0}", hp))',
+            ownership_class=OwnershipClass.PRODUCER_OWNED,
+            destination_dictionary=None,
+            rejection_reason=FixedLeafRejectionReason.TEMPLATE,
+            needs_review=True,
         ),
         _site(
             "excluded",
@@ -209,6 +263,9 @@ def test_cross_reference_marks_dictionary_xml_and_patch_matches(tmp_path: Path) 
             type=SiteType.PROCEDURAL_TEXT,
             pattern='HistoricStringExpander.ExpandString("<spice.villages.warden.introDialog.!random>")',
             confidence=Confidence.LOW,
+            ownership_class=OwnershipClass.PRODUCER_OWNED,
+            destination_dictionary=None,
+            rejection_reason=FixedLeafRejectionReason.PROCEDURAL,
             needs_runtime=True,
         ),
         _site(
@@ -219,6 +276,9 @@ def test_cross_reference_marks_dictionary_xml_and_patch_matches(tmp_path: Path) 
             type=SiteType.UNRESOLVED,
             pattern="SetText(ComputeSomething())",
             confidence=Confidence.LOW,
+            ownership_class=OwnershipClass.SINK,
+            destination_dictionary=None,
+            rejection_reason=FixedLeafRejectionReason.UNRESOLVED,
             needs_runtime=True,
         ),
     )
@@ -242,14 +302,22 @@ def test_cross_reference_marks_dictionary_xml_and_patch_matches(tmp_path: Path) 
     assert "PopupTranslationPatch" in sites["popup-template"].existing_patch
 
     assert sites["message-template"].status is SiteStatus.TRANSLATED
+    assert sites["message-template"].existing_patch is not None
     assert (
         "MessageLogPatch" in sites["message-template"].existing_patch
         or "MessageQueuePatch" in sites["message-template"].existing_patch
     )
 
     assert sites["needs-translation"].status is SiteStatus.NEEDS_TRANSLATION
+    assert sites["scoped-leaf"].status is SiteStatus.TRANSLATED
+    assert sites["scoped-leaf"].existing_dictionary == (
+        "Scoped/ui-chargen-skill-context.ja.json, Scoped/ui-skillsandpowers-skill-names.ja.json"
+    )
     assert sites["needs-patch"].status is SiteStatus.NEEDS_PATCH
     assert sites["needs-review"].status is SiteStatus.NEEDS_REVIEW
+    assert sites["builder-review"].status is SiteStatus.TRANSLATED
+    assert sites["builder-review"].existing_patch is not None
+    assert sites["template-review"].status is SiteStatus.NEEDS_REVIEW
     assert sites["excluded"].status is SiteStatus.EXCLUDED
     assert sites["unresolved"].status is SiteStatus.UNRESOLVED
 

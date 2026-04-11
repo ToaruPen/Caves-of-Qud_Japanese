@@ -6,11 +6,14 @@ from dataclasses import dataclass
 from textwrap import dedent
 from typing import TYPE_CHECKING
 
-import pytest
+import pytest  # pyright: ignore[reportMissingImports]
 
 from scripts.scanner.inventory import (
     Confidence,
+    DestinationDictionary,
+    FixedLeafRejectionReason,
     HitKind,
+    OwnershipClass,
     RawHit,
     SiteType,
     read_inventory_draft_json,
@@ -110,14 +113,18 @@ TEMPLATE_CASES = [
     Case(
         id="template-combat-block",
         family="AddPlayerMessage",
-        matched_code='IComponent<GameObject>.AddPlayerMessage($"You block with {arg}! (+{part.AV} AV)", \'g\')',
-        source_text=_source('IComponent<GameObject>.AddPlayerMessage($"You block with {arg}! (+{part.AV} AV)", \'g\');'),
+        matched_code="IComponent<GameObject>.AddPlayerMessage($\"You block with {arg}! (+{part.AV} AV)\", 'g')",
+        source_text=_source(
+            "IComponent<GameObject>.AddPlayerMessage($\"You block with {arg}! (+{part.AV} AV)\", 'g');"
+        ),
     ),
     Case(
         id="template-exodus",
         family="EmitMessage",
-        matched_code='EmitMessage($"Exodus launch in {Timer}...", \' \', FromDialog: false, UsePopup: false, AlwaysVisible: true)',
-        source_text=_source('EmitMessage($"Exodus launch in {Timer}...", \' \', FromDialog: false, UsePopup: false, AlwaysVisible: true);'),
+        matched_code="EmitMessage($\"Exodus launch in {Timer}...\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: true)",
+        source_text=_source(
+            "EmitMessage($\"Exodus launch in {Timer}...\", ' ', FromDialog: false, UsePopup: false, AlwaysVisible: true);"
+        ),
     ),
 ]
 
@@ -126,13 +133,15 @@ BUILDER_CASES = [
         id="builder-status-screen",
         family="SetText",
         matched_code='mutationNameText.SetText("{{B|" + characterMutationLineData.mutation.GetDisplayName() + "}}")',
-        source_text=_source('mutationNameText.SetText("{{B|" + characterMutationLineData.mutation.GetDisplayName() + "}}");'),
+        source_text=_source(
+            'mutationNameText.SetText("{{B|" + characterMutationLineData.mutation.GetDisplayName() + "}}");'
+        ),
     ),
     Case(
         id="builder-journal-line",
         family="SetText",
-        matched_code='headerText.SetText(journalRecipeNote.Recipe.GetDisplayName())',
-        source_text=_source('headerText.SetText(journalRecipeNote.Recipe.GetDisplayName());'),
+        matched_code="headerText.SetText(journalRecipeNote.Recipe.GetDisplayName())",
+        source_text=_source("headerText.SetText(journalRecipeNote.Recipe.GetDisplayName());"),
     ),
     Case(
         id="builder-mutation-b-gone",
@@ -182,7 +191,9 @@ VERB_COMPOSITION_CASES = [
         id="verb-carapace",
         family="Does",
         matched_code='CarapaceObject.Does("loosen")',
-        source_text=_source('Popup.Show(CarapaceObject.Does("loosen") + ". Your AV decreases by {{R|" + ACModifier + "}}.");'),
+        source_text=_source(
+            'Popup.Show(CarapaceObject.Does("loosen") + ". Your AV decreases by {{R|" + ACModifier + "}}.");'
+        ),
     ),
 ]
 
@@ -199,7 +210,9 @@ VERB_FALSE_POSITIVE_CASES = [
         id="verb-false-domination",
         family="Does",
         matched_code='Target.Does("do")',
-        source_text=_source('FailureMessage = Target.Does("do") + " not have a consciousness you can make psychic contact with.";'),
+        source_text=_source(
+            'FailureMessage = Target.Does("do") + " not have a consciousness you can make psychic contact with.";'
+        ),
     ),
     Case(
         id="verb-false-cybernetics",
@@ -223,13 +236,15 @@ VARIABLE_TEMPLATE_CASES = [
     Case(
         id="variable-template-gametext",
         family="ReplaceBuilder",
-        matched_code='Message.StartReplace()',
-        source_text=_source('return Message.StartReplace().AddArgument(Subject).AddArgument(Object).StripColors(StripColors).ToString();'),
+        matched_code="Message.StartReplace()",
+        source_text=_source(
+            "return Message.StartReplace().AddArgument(Subject).AddArgument(Object).StripColors(StripColors).ToString();"
+        ),
     ),
     Case(
         id="variable-template-village-coda",
         family="ReplaceBuilder",
-        matched_code='text.StartReplace()',
+        matched_code="text.StartReplace()",
         source_text=_source(
             'string text = "=sultan.term= blessed =village.name= in =village.region=.";',
             'text.StartReplace().AddObject(System.Sultan).AddReplacer("village.name", villageName).AddReplacer("village.region", regionName).ToString();',
@@ -242,7 +257,9 @@ PROCEDURAL_TEXT_CASES = [
         id="procedural-village-warden",
         family="HistoricStringExpander",
         matched_code='HistoricStringExpander.ExpandString("<spice.villages.warden.introDialog.!random>")',
-        source_text=_source('string text = HistoricStringExpander.ExpandString("<spice.villages.warden.introDialog.!random>");'),
+        source_text=_source(
+            'string text = HistoricStringExpander.ExpandString("<spice.villages.warden.introDialog.!random>");'
+        ),
     ),
     Case(
         id="procedural-item-naming",
@@ -293,31 +310,31 @@ STRING_BUILDER_TEMPLATE_CASES = [
     Case(
         id="string-builder-sound-manager",
         family="Popup",
-        matched_code='Popup.Show(stringBuilder.ToString())',
+        matched_code="Popup.Show(stringBuilder.ToString())",
         source_text=_source(
-            'StringBuilder stringBuilder = new();',
-            'stringBuilder.Append(soundRequestLog.ToString()).Append(\'\\n\');',
-            'Popup.Show(stringBuilder.ToString());',
+            "StringBuilder stringBuilder = new();",
+            "stringBuilder.Append(soundRequestLog.ToString()).Append('\\n');",
+            "Popup.Show(stringBuilder.ToString());",
         ),
     ),
     Case(
         id="string-builder-skills-status",
         family="SetText",
-        matched_code='requirementsText.SetText(stringBuilder.ToString())',
+        matched_code="requirementsText.SetText(stringBuilder.ToString())",
         source_text=_source(
-            'StringBuilder stringBuilder = new();',
+            "StringBuilder stringBuilder = new();",
             'stringBuilder.Append(" ::\\n");',
-            'requirementsText.SetText(stringBuilder.ToString());',
+            "requirementsText.SetText(stringBuilder.ToString());",
         ),
     ),
     Case(
         id="string-builder-item-naming",
         family="Popup",
-        matched_code='Popup.Show(stringBuilder.ToString())',
+        matched_code="Popup.Show(stringBuilder.ToString())",
         source_text=_source(
-            'StringBuilder stringBuilder = new();',
+            "StringBuilder stringBuilder = new();",
             'stringBuilder.Append("[Debug: Created " + gameObject2.DebugName + " as InfluencedBy.]\\n");',
-            'Popup.Show(stringBuilder.ToString());',
+            "Popup.Show(stringBuilder.ToString());",
         ),
     ),
 ]
@@ -327,13 +344,15 @@ UNRESOLVED_CASES = [
         id="unresolved-exception",
         family="Popup",
         matched_code='Popup.ShowFail("Could not generate turret from blueprint \\"" + value + "\\"\\n\\n" + ex.ToString())',
-        source_text=_source('Popup.ShowFail("Could not generate turret from blueprint \\"" + value + "\\"\\n\\n" + ex.ToString());'),
+        source_text=_source(
+            'Popup.ShowFail("Could not generate turret from blueprint \\"" + value + "\\"\\n\\n" + ex.ToString());'
+        ),
     ),
     Case(
         id="unresolved-wish-list-entry",
         family="Popup",
-        matched_code='Popup.Show(list2[num].ToString())',
-        source_text=_source('Popup.Show(list2[num].ToString());'),
+        matched_code="Popup.Show(list2[num].ToString())",
+        source_text=_source("Popup.Show(list2[num].ToString());"),
     ),
     Case(
         id="unresolved-int-game-state",
@@ -354,8 +373,18 @@ def test_classifies_literal_string_args_as_leaf(tmp_path: Path, case: Case) -> N
     assert site is not None
     assert site.type is SiteType.LEAF
     assert site.confidence is Confidence.HIGH
+    assert site.key is not None
     assert site.key in case.matched_code
     assert site.pattern == case.matched_code
+    assert site.source_route == case.family
+    assert site.ownership_class is OwnershipClass.MID_PIPELINE_OWNED
+    expected_destination = (
+        DestinationDictionary.SCOPED
+        if case.family in {"Popup", "AddPlayerMessage"}
+        else DestinationDictionary.GLOBAL_FLAT
+    )
+    assert site.destination_dictionary is expected_destination
+    assert site.rejection_reason is None
 
 
 @pytest.mark.parametrize("case", TEMPLATE_CASES, ids=lambda case: case.id)
@@ -381,6 +410,9 @@ def test_classifies_get_display_name_routes_as_builders(tmp_path: Path, case: Ca
     assert site is not None
     assert site.type is SiteType.BUILDER
     assert site.confidence is Confidence.HIGH
+    assert site.ownership_class is OwnershipClass.PRODUCER_OWNED
+    assert site.destination_dictionary is None
+    assert site.rejection_reason is FixedLeafRejectionReason.BUILDER_DISPLAY_NAME
 
 
 @pytest.mark.parametrize(
@@ -388,7 +420,13 @@ def test_classifies_get_display_name_routes_as_builders(tmp_path: Path, case: Ca
     [
         (MESSAGE_FRAME_CASES[0], "charge", None, "DidX", 1),
         (MESSAGE_FRAME_CASES[1], "lock", "in place", "DidX", 2),
-        (MESSAGE_FRAME_CASES[2], "emit", '"a freezing ray" + ((registeredSlot != null) ? (" from " + mutation.ParentObject.its + " " + registeredSlot.GetOrdinalName()) : "")', "XDidY", 3),
+        (
+            MESSAGE_FRAME_CASES[2],
+            "emit",
+            '"a freezing ray" + ((registeredSlot != null) ? (" from " + mutation.ParentObject.its + " " + registeredSlot.GetOrdinalName()) : "")',
+            "XDidY",
+            3,
+        ),
     ],
     ids=lambda row: row.id if isinstance(row, Case) else str(row),
 )
@@ -418,8 +456,16 @@ def test_classifies_didx_family_as_message_frames(
     ("case", "verb", "source_context"),
     [
         (VERB_COMPOSITION_CASES[0], "begin", 'MessageQueue.AddPlayerMessage(Object.Does("begin") + " flying.");'),
-        (VERB_COMPOSITION_CASES[1], "miss", 'IComponent<GameObject>.AddPlayerMessage(Attacker.Does("miss") + " you!");'),
-        (VERB_COMPOSITION_CASES[2], "loosen", 'Popup.Show(CarapaceObject.Does("loosen") + ". Your AV decreases by {{R|" + ACModifier + "}}.");'),
+        (
+            VERB_COMPOSITION_CASES[1],
+            "miss",
+            'IComponent<GameObject>.AddPlayerMessage(Attacker.Does("miss") + " you!");',
+        ),
+        (
+            VERB_COMPOSITION_CASES[2],
+            "loosen",
+            'Popup.Show(CarapaceObject.Does("loosen") + ". Your AV decreases by {{R|" + ACModifier + "}}.");',
+        ),
     ],
     ids=lambda row: row.id if isinstance(row, Case) else str(row),
 )
@@ -474,6 +520,8 @@ def test_classifies_historic_string_expander_as_procedural_text(tmp_path: Path, 
     assert site.type is SiteType.PROCEDURAL_TEXT
     assert site.confidence is Confidence.LOW
     assert site.needs_runtime is True
+    assert site.ownership_class is OwnershipClass.PRODUCER_OWNED
+    assert site.rejection_reason is FixedLeafRejectionReason.PROCEDURAL
 
 
 @pytest.mark.parametrize("case", NARRATIVE_TEMPLATE_CASES, ids=lambda case: case.id)
@@ -487,6 +535,8 @@ def test_classifies_journal_api_as_narrative_templates(tmp_path: Path, case: Cas
     assert site.type is SiteType.NARRATIVE_TEMPLATE
     assert site.confidence is Confidence.MEDIUM
     assert site.needs_review is True
+    assert site.ownership_class is OwnershipClass.PRODUCER_OWNED
+    assert site.rejection_reason is FixedLeafRejectionReason.NARRATIVE_TEMPLATE
 
 
 @pytest.mark.parametrize("case", STRING_BUILDER_TEMPLATE_CASES, ids=lambda case: case.id)
@@ -500,6 +550,8 @@ def test_classifies_string_builder_to_string_as_medium_templates(tmp_path: Path,
     assert site.type is SiteType.TEMPLATE
     assert site.confidence is Confidence.MEDIUM
     assert site.needs_review is True
+    assert site.ownership_class is OwnershipClass.PRODUCER_OWNED
+    assert site.rejection_reason is FixedLeafRejectionReason.TEMPLATE
 
 
 @pytest.mark.parametrize("case", UNRESOLVED_CASES, ids=lambda case: case.id)
@@ -513,6 +565,8 @@ def test_leaves_non_string_builder_to_string_and_complex_calls_unresolved(tmp_pa
     assert site.type is SiteType.UNRESOLVED
     assert site.confidence is Confidence.LOW
     assert site.needs_runtime is True
+    assert site.ownership_class is OwnershipClass.SINK
+    assert site.rejection_reason is FixedLeafRejectionReason.UNRESOLVED
 
 
 def test_classify_raw_hits_file_writes_inventory_draft_and_stats(tmp_path: Path) -> None:
@@ -539,6 +593,8 @@ def test_classify_raw_hits_file_writes_inventory_draft_and_stats(tmp_path: Path)
     assert persisted == draft
     assert draft.stats.input_hits == 4
     assert draft.stats.filtered_hits == 1
+    assert draft.stats.proven_fixed_leaf == 1
+    assert draft.stats.rejected_fixed_leaf == 2
     assert [site.type for site in draft.sites] == [
         SiteType.LEAF,
         SiteType.VERB_COMPOSITION,

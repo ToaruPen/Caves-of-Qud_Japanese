@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -60,6 +60,48 @@ class SiteType(StrEnum):
     UNRESOLVED = "Unresolved"
 
 
+class OwnershipClass(StrEnum):
+    """Route ownership classes used by fixed-leaf provenance."""
+
+    PRODUCER_OWNED = "producer-owned"
+    MID_PIPELINE_OWNED = "mid-pipeline-owned"
+    SINK = "sink"
+    RENDERER = "renderer"
+
+
+class DestinationDictionary(StrEnum):
+    """Default dictionary destinations for proven fixed-leaf candidates."""
+
+    GLOBAL_FLAT = "global_flat"
+    SCOPED = "scoped"
+
+
+SCOPED_DESTINATION_ROUTES = frozenset({"AddPlayerMessage", "Popup"})
+
+
+class FixedLeafRejectionReason(StrEnum):
+    """Reasons a classified site is excluded from the proven fixed-leaf set."""
+
+    TEMPLATE = "template"
+    BUILDER_DISPLAY_NAME = "builder_display_name"
+    MESSAGE_FRAME = "message_frame"
+    VERB_COMPOSITION = "verb_composition"
+    VARIABLE_TEMPLATE = "variable_template"
+    PROCEDURAL = "procedural"
+    NARRATIVE_TEMPLATE = "narrative_template"
+    UNRESOLVED = "unresolved"
+    NEEDS_RUNTIME = "needs_runtime"
+
+
+def default_destination_dictionary_for_route(
+    *, source_route: str | None, sink: str | None = None
+) -> DestinationDictionary:
+    """Return the default destination tier for a proven fixed-leaf route."""
+    if source_route in SCOPED_DESTINATION_ROUTES or sink in SCOPED_DESTINATION_ROUTES:
+        return DestinationDictionary.SCOPED
+    return DestinationDictionary.GLOBAL_FLAT
+
+
 @dataclass(frozen=True, slots=True)
 class RawHit:
     """A Phase 1a source hit emitted by ast-grep or override grep."""
@@ -72,7 +114,7 @@ class RawHit:
     column: int
     matched_code: str
 
-    def to_dict(self) -> dict[str, object]:
+    def to_dict(self) -> dict[str, Any]:
         """Serialize the hit for JSONL output."""
         return {
             "hit_kind": self.hit_kind.value,
@@ -85,7 +127,7 @@ class RawHit:
         }
 
     @classmethod
-    def from_dict(cls, payload: dict[str, object]) -> RawHit:
+    def from_dict(cls, payload: dict[str, Any]) -> RawHit:
         """Deserialize a RawHit from a JSON-compatible dictionary."""
         return cls(
             hit_kind=HitKind(str(payload["hit_kind"])),
@@ -156,6 +198,7 @@ class InventorySite:
     type: SiteType
     confidence: Confidence
     pattern: str
+    source_route: str | None = None
     key: str | None = None
     verb: str | None = None
     extra: str | None = None
@@ -164,6 +207,9 @@ class InventorySite:
     source_context: str | None = None
     source: str | None = None
     source_id: str | None = None
+    ownership_class: OwnershipClass | None = None
+    destination_dictionary: DestinationDictionary | None = None
+    rejection_reason: FixedLeafRejectionReason | None = None
     needs_review: bool = False
     needs_runtime: bool = False
     status: SiteStatus | None = None
@@ -171,21 +217,39 @@ class InventorySite:
     existing_dictionary: str | None = None
     existing_xml: str | None = None
 
-    def to_dict(self) -> dict[str, object]:
+    @property
+    def is_proven_fixed_leaf(self) -> bool:
+        """Return whether this site belongs to the default proven fixed-leaf set."""
+        return (
+            self.type is SiteType.LEAF
+            and self.confidence is Confidence.HIGH
+            and not self.needs_review
+            and not self.needs_runtime
+            and self.destination_dictionary is not None
+            and self.rejection_reason is None
+        )
+
+    def to_dict(self) -> dict[str, Any]:
         """Serialize an inventory site as JSON-compatible data."""
-        payload: dict[str, object] = {
+        payload: dict[str, Any] = {
             "id": self.id,
             "file": self.file,
             "line": self.line,
             "column": self.column,
             "sink": self.sink,
+            "source_route": self.source_route,
             "type": self.type.value,
             "confidence": self.confidence.value,
             "pattern": self.pattern,
+            "ownership_class": self.ownership_class.value if self.ownership_class is not None else None,
+            "destination_dictionary": (
+                self.destination_dictionary.value if self.destination_dictionary is not None else None
+            ),
+            "rejection_reason": self.rejection_reason.value if self.rejection_reason is not None else None,
             "needs_review": self.needs_review,
             "needs_runtime": self.needs_runtime,
         }
-        optional_fields: dict[str, object | None] = {
+        optional_fields: dict[str, Any | None] = {
             "key": self.key,
             "verb": self.verb,
             "extra": self.extra,
@@ -203,7 +267,7 @@ class InventorySite:
         return payload
 
     @classmethod
-    def from_dict(cls, payload: dict[str, object]) -> InventorySite:
+    def from_dict(cls, payload: dict[str, Any]) -> InventorySite:
         """Deserialize an inventory site from JSON-compatible data."""
         return cls(
             id=str(payload["id"]),
@@ -211,6 +275,7 @@ class InventorySite:
             line=int(payload["line"]),
             column=int(payload["column"]),
             sink=str(payload["sink"]),
+            source_route=_optional_string(payload.get("source_route")),
             type=SiteType(str(payload["type"])),
             confidence=Confidence(str(payload["confidence"])),
             pattern=str(payload["pattern"]),
@@ -222,6 +287,9 @@ class InventorySite:
             source_context=_optional_string(payload.get("source_context")),
             source=_optional_string(payload.get("source")),
             source_id=_optional_string(payload.get("source_id")),
+            ownership_class=_optional_ownership_class(payload.get("ownership_class")),
+            destination_dictionary=_optional_destination_dictionary(payload.get("destination_dictionary")),
+            rejection_reason=_optional_rejection_reason(payload.get("rejection_reason")),
             needs_review=bool(payload.get("needs_review", False)),
             needs_runtime=bool(payload.get("needs_runtime", False)),
             status=_optional_status(payload.get("status")),
@@ -243,6 +311,8 @@ class InventoryStats:
     low_confidence: int
     needs_review: int
     needs_runtime: int
+    proven_fixed_leaf: int = 0
+    rejected_fixed_leaf: int = 0
 
     def to_dict(self) -> dict[str, int]:
         """Serialize summary stats."""
@@ -255,10 +325,12 @@ class InventoryStats:
             "low_confidence": self.low_confidence,
             "needs_review": self.needs_review,
             "needs_runtime": self.needs_runtime,
+            "proven_fixed_leaf": self.proven_fixed_leaf,
+            "rejected_fixed_leaf": self.rejected_fixed_leaf,
         }
 
     @classmethod
-    def from_dict(cls, payload: dict[str, object]) -> InventoryStats:
+    def from_dict(cls, payload: dict[str, Any]) -> InventoryStats:
         """Deserialize summary stats from JSON-compatible data."""
         return cls(
             input_hits=int(payload["input_hits"]),
@@ -269,6 +341,8 @@ class InventoryStats:
             low_confidence=int(payload["low_confidence"]),
             needs_review=int(payload["needs_review"]),
             needs_runtime=int(payload["needs_runtime"]),
+            proven_fixed_leaf=int(payload.get("proven_fixed_leaf", 0)),
+            rejected_fixed_leaf=int(payload.get("rejected_fixed_leaf", 0)),
         )
 
 
@@ -282,7 +356,7 @@ class InventoryDraft:
     stats: InventoryStats
     sites: tuple[InventorySite, ...]
 
-    def to_dict(self) -> dict[str, object]:
+    def to_dict(self) -> dict[str, Any]:
         """Serialize the draft as a stable JSON-compatible payload."""
         return {
             "version": self.version,
@@ -293,7 +367,7 @@ class InventoryDraft:
         }
 
     @classmethod
-    def from_dict(cls, payload: dict[str, object]) -> InventoryDraft:
+    def from_dict(cls, payload: dict[str, Any]) -> InventoryDraft:
         """Deserialize an inventory draft from JSON-compatible data."""
         stats = InventoryStats.from_dict(dict(payload["stats"]))
         sites = tuple(InventorySite.from_dict(site) for site in payload["sites"])
@@ -354,7 +428,9 @@ def _optional_int(value: object | None) -> int | None:
     """Convert an optional JSON number to int."""
     if value is None:
         return None
-    return int(value)
+    if isinstance(value, int):
+        return value
+    return int(str(value))
 
 
 def _optional_string(value: object | None) -> str | None:
@@ -369,3 +445,24 @@ def _optional_status(value: object | None) -> SiteStatus | None:
     if value is None:
         return None
     return SiteStatus(str(value))
+
+
+def _optional_ownership_class(value: object | None) -> OwnershipClass | None:
+    """Convert an optional JSON ownership-class string."""
+    if value is None:
+        return None
+    return OwnershipClass(str(value))
+
+
+def _optional_destination_dictionary(value: object | None) -> DestinationDictionary | None:
+    """Convert an optional JSON destination-dictionary string."""
+    if value is None:
+        return None
+    return DestinationDictionary(str(value))
+
+
+def _optional_rejection_reason(value: object | None) -> FixedLeafRejectionReason | None:
+    """Convert an optional JSON rejection-reason string."""
+    if value is None:
+        return None
+    return FixedLeafRejectionReason(str(value))

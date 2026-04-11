@@ -12,11 +12,14 @@ from pathlib import Path
 
 from scripts.scanner.inventory import (
     Confidence,
+    FixedLeafRejectionReason,
     InventoryDraft,
     InventorySite,
     InventoryStats,
+    OwnershipClass,
     RawHit,
     SiteType,
+    default_destination_dictionary_for_route,
     read_raw_hits_jsonl,
     write_inventory_draft_json,
 )
@@ -84,6 +87,8 @@ def classify_raw_hits(raw_hits: list[RawHit], source_root: Path) -> InventoryDra
         low_confidence=confidence_counts[Confidence.LOW],
         needs_review=sum(site.needs_review for site in sites),
         needs_runtime=sum(site.needs_runtime for site in sites),
+        proven_fixed_leaf=sum(site.is_proven_fixed_leaf for site in sites),
+        rejected_fixed_leaf=sum(site.rejection_reason is not None for site in sites),
     )
     return InventoryDraft(
         version="1.0",
@@ -196,7 +201,10 @@ def _build_site(
     fields: dict[str, object] | None = None,
 ) -> InventorySite:
     """Construct one classified inventory site."""
-    site_fields = fields or {}
+    site_fields = {
+        **_provenance_fields(raw_hit, site_type, confidence, fields or {}),
+        **(fields or {}),
+    }
     return InventorySite(
         id=f"{raw_hit.file}::L{raw_hit.line}:C{raw_hit.column}",
         file=raw_hit.file,
@@ -208,6 +216,65 @@ def _build_site(
         pattern=raw_hit.matched_code,
         **site_fields,
     )
+
+
+def _provenance_fields(
+    raw_hit: RawHit,
+    site_type: SiteType,
+    confidence: Confidence,
+    fields: dict[str, object],
+) -> dict[str, object | None]:
+    """Build default fixed-leaf provenance for one classified site."""
+    needs_review = bool(fields.get("needs_review", False))
+    needs_runtime = bool(fields.get("needs_runtime", False))
+    source_route = raw_hit.family
+
+    if site_type is SiteType.LEAF and confidence is Confidence.HIGH and not needs_review and not needs_runtime:
+        return {
+            "source_route": source_route,
+            "ownership_class": OwnershipClass.MID_PIPELINE_OWNED,
+            "destination_dictionary": default_destination_dictionary_for_route(
+                source_route=source_route,
+                sink=raw_hit.family,
+            ),
+            "rejection_reason": None,
+        }
+
+    return {
+        "source_route": source_route,
+        "ownership_class": _ownership_class(site_type),
+        "destination_dictionary": None,
+        "rejection_reason": _rejection_reason(site_type, needs_runtime=needs_runtime),
+    }
+
+
+def _ownership_class(site_type: SiteType) -> OwnershipClass:
+    """Map a site type to its default route ownership class."""
+    if site_type is SiteType.UNRESOLVED:
+        return OwnershipClass.SINK
+    if site_type is SiteType.LEAF:
+        return OwnershipClass.MID_PIPELINE_OWNED
+    return OwnershipClass.PRODUCER_OWNED
+
+
+def _rejection_reason(site_type: SiteType, *, needs_runtime: bool) -> FixedLeafRejectionReason:
+    """Map a site type to the reason it is excluded from proven fixed-leaf defaults."""
+    reasons = {
+        SiteType.TEMPLATE: FixedLeafRejectionReason.TEMPLATE,
+        SiteType.BUILDER: FixedLeafRejectionReason.BUILDER_DISPLAY_NAME,
+        SiteType.MESSAGE_FRAME: FixedLeafRejectionReason.MESSAGE_FRAME,
+        SiteType.VERB_COMPOSITION: FixedLeafRejectionReason.VERB_COMPOSITION,
+        SiteType.VARIABLE_TEMPLATE: FixedLeafRejectionReason.VARIABLE_TEMPLATE,
+        SiteType.PROCEDURAL_TEXT: FixedLeafRejectionReason.PROCEDURAL,
+        SiteType.NARRATIVE_TEMPLATE: FixedLeafRejectionReason.NARRATIVE_TEMPLATE,
+        SiteType.UNRESOLVED: FixedLeafRejectionReason.UNRESOLVED,
+    }
+    if site_type in reasons:
+        return reasons[site_type]
+    if needs_runtime:
+        return FixedLeafRejectionReason.NEEDS_RUNTIME
+    msg = f"No fixed-leaf rejection reason defined for {site_type.value}."
+    raise ValueError(msg)
 
 
 def _unresolved_site(raw_hit: RawHit) -> InventorySite:
