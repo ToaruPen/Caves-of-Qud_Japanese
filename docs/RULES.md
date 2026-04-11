@@ -62,6 +62,31 @@ Use C# route patches or translators for:
 
 Do not add compensating dictionary or XML entries when a route is dynamic, observation-only at the sink, or already owned by a producer or translator.
 
+## Proven fixed-leaf policy
+
+A candidate is a proven fixed-leaf only when the source is stable, owner-safe, markup-preserving, and not `needs_runtime`.
+
+- stable, the exact string shape is fixed and not assembled from live fragments
+- owner-safe, the route is not a `message-frame`, builder/display-name, procedural, unresolved, or observation-only sink route
+- markup-preserving, every required token, tag, placeholder, and escape sequence survives unchanged
+- not `needs_runtime`, the string does not depend on live runtime state or per-run data
+
+Acceptance of a proven fixed-leaf candidate does not change current Translator runtime semantics. `Translator` stays a flat key-only exact lookup path, and validation must reject duplicate or overly broad additions upstream instead of tolerating them at runtime.
+
+## Provenance requirements
+
+Every accepted candidate must record:
+
+- source route
+- ownership class
+- confidence
+- destination dictionary
+- rejection reason, when the candidate is excluded
+
+## Destination selection
+
+Use a global flat dictionary when the candidate is a proven fixed-leaf, exact, shared, and not route-specific. Use a scoped dictionary when the candidate belongs to one screen, family, or producer route and would be clearer with a narrower home. If a candidate can fit both, prefer the narrower scoped home. If it is dynamic, procedural, `message-frame`, builder/display-name, unresolved, or `needs_runtime`, do not route it to a dictionary unless it is separately proven safe.
+
 ## Color-tag rules
 
 Preserve all supported markup exactly while translating visible text:
