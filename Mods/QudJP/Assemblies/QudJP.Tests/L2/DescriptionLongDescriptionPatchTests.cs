@@ -226,6 +226,23 @@ public sealed class DescriptionLongDescriptionPatchTests
         });
     }
 
+    [Test]
+    public void Postfix_TranslatesPhysicalFeaturesAndEquippedLines_WhenPatched()
+    {
+        WriteDictionary(
+            ("stinger", "毒針"),
+            ("black robe", "黒のローブ"));
+
+        RunWithDescriptionPatch(() =>
+        {
+            var target = new DummyDescriptionTarget("Physical features: stinger\nEquipped: black robe");
+            var builder = new StringBuilder();
+            target.GetLongDescription(builder);
+
+            Assert.That(builder.ToString(), Is.EqualTo("身体的特徴: 毒針\n装備: 黒のローブ"));
+        });
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";

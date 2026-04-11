@@ -5,6 +5,12 @@ namespace QudJP.Patches;
 
 internal static class DescriptionTextTranslator
 {
+    private static readonly Regex FactionDispositionPattern =
+        new Regex("^(?<relation>Loved by|Hated by|Disliked by) (?<target>.+?)\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private static readonly Regex LabeledListPattern =
+        new Regex("^(?<label>Physical features:|Equipped:) (?<items>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
     private static readonly Regex StatAbbreviationPattern =
         new Regex("^[A-Z]{2,4}$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
@@ -70,6 +76,16 @@ internal static class DescriptionTextTranslator
 
     private static bool TryTranslateVisibleSegment(string source, string route, out string translated)
     {
+        if (TryTranslateFactionDispositionLine(source, route, out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateLabeledList(source, route, out translated))
+        {
+            return true;
+        }
+
         if (WorldModsTextTranslator.TryTranslate(source, route, "Description.WorldMods", out translated))
         {
             return true;
@@ -112,6 +128,71 @@ internal static class DescriptionTextTranslator
 
         translated = source;
         return false;
+    }
+
+    private static bool TryTranslateFactionDispositionLine(string source, string route, out string translated)
+    {
+        var match = FactionDispositionPattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var target = match.Groups["target"].Value;
+        var relation = match.Groups["relation"].Value switch
+        {
+            "Loved by" => "愛されている",
+            "Hated by" => "憎まれている",
+            "Disliked by" => "嫌われている",
+            _ => string.Empty,
+        };
+
+        if (string.IsNullOrEmpty(relation))
+        {
+            translated = source;
+            return false;
+        }
+
+        translated = target + "に" + relation + "。";
+        DynamicTextObservability.RecordTransform(route, "Description.FactionDisposition", source, translated);
+        return true;
+    }
+
+    private static bool TryTranslateLabeledList(string source, string route, out string translated)
+    {
+        var match = LabeledListPattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var label = match.Groups["label"].Value switch
+        {
+            "Physical features:" => "身体的特徴:",
+            "Equipped:" => "装備:",
+            _ => string.Empty,
+        };
+
+        if (string.IsNullOrEmpty(label))
+        {
+            translated = source;
+            return false;
+        }
+
+        var parts = match.Groups["items"].Value.Split(new[] { ", " }, StringSplitOptions.None);
+        for (var index = 0; index < parts.Length; index++)
+        {
+            if (StringHelpers.TryGetTranslationExactOrLowerAscii(parts[index], out var translatedPart))
+            {
+                parts[index] = translatedPart;
+            }
+        }
+
+        translated = label + " " + string.Join("、", parts);
+        DynamicTextObservability.RecordTransform(route, "Description.LabeledList", source, translated);
+        return true;
     }
 
     private static bool ShouldSkipExactLeafTranslation(string source)

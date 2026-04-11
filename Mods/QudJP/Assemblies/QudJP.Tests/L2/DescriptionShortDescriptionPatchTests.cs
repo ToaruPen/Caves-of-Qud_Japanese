@@ -200,6 +200,40 @@ public sealed class DescriptionShortDescriptionPatchTests
         }
     }
 
+    [Test]
+    public void DescriptionShortDescriptionPatch_TranslatesFactionDispositionLines_WhenPatched()
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyDescriptionShortDescriptionTarget), nameof(DummyDescriptionShortDescriptionTarget.GetShortDescription)),
+                postfix: new HarmonyMethod(RequirePostfix(typeof(DescriptionShortDescriptionPatch), nameof(DescriptionShortDescriptionPatch.Postfix))));
+
+            var lovedTarget = new DummyDescriptionShortDescriptionTarget("Loved by the Joppa villagers.");
+            var hatedTarget = new DummyDescriptionShortDescriptionTarget("Hated by apes.");
+            var dislikedTarget = new DummyDescriptionShortDescriptionTarget("Disliked by goatfolk.");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    lovedTarget.GetShortDescription(useShort: true, useLong: false, prefix: string.Empty),
+                    Is.EqualTo("the Joppa villagersに愛されている。"));
+                Assert.That(
+                    hatedTarget.GetShortDescription(useShort: true, useLong: false, prefix: string.Empty),
+                    Is.EqualTo("apesに憎まれている。"));
+                Assert.That(
+                    dislikedTarget.GetShortDescription(useShort: true, useLong: false, prefix: string.Empty),
+                    Is.EqualTo("goatfolkに嫌われている。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";
