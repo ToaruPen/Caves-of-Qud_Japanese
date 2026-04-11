@@ -27,6 +27,7 @@ public sealed class DescriptionTextTranslatorTests
         Translator.SetDictionaryDirectoryForTests(dictionaryDirectory);
         MessagePatternTranslator.ResetForTests();
         MessagePatternTranslator.SetPatternFileForTests(patternFilePath);
+        File.WriteAllText(patternFilePath, "{\"patterns\":[]}\n", Utf8WithoutBom);
     }
 
     [TearDown]
@@ -57,6 +58,78 @@ public sealed class DescriptionTextTranslatorTests
             "DescriptionTextTranslatorTests");
 
         Assert.That(translated, Is.EqualTo("sun-baked ruins、ある組織とその血縁の会合がある。"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_PreservesColoredFactionTarget_InDispositionLine()
+    {
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "Loved by {{C|the Barathrumites}}.",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("{{C|the Barathrumites}}に愛されている。"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_PreservesWholeLineWrapper_InDispositionLine()
+    {
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "{{W|Loved by {{C|the Barathrumites}}.}}",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("{{W|{{C|the Barathrumites}}に愛されている。}}"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_PreservesRelationWrapper_InDispositionLine()
+    {
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "{{C|Loved by}} the Barathrumites.",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("the Barathrumitesに{{C|愛されている}}。"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_TranslatesReasonBearingDispositionLine()
+    {
+        WriteExactDictionary(("giving alms to pilgrims", "巡礼者に施しをしたため"));
+
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "Admired by {{C|the Mechanimists}} for giving alms to pilgrims.",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("{{C|the Mechanimists}}に敬愛されている。理由: 巡礼者に施しをしたため。"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_FallbackToEnglish_WhenNoTranslationMatches()
+    {
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "Admired by {{C|the Mechanimists}} for an unknown deed.",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("{{C|the Mechanimists}}に敬愛されている。理由: an unknown deed。"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_EmptyInputReturnsEmpty()
+    {
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            string.Empty,
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void TranslateLongDescription_PreservesDirectTranslationMarker()
+    {
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "\u0001Already translated",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("\u0001Already translated"));
     }
 
     private void WritePatternDictionary(params (string pattern, string template)[] patterns)

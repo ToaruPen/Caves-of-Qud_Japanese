@@ -226,6 +226,38 @@ public sealed class DescriptionLongDescriptionPatchTests
         });
     }
 
+    [Test]
+    public void Postfix_TranslatesPhysicalFeaturesAndEquippedLines_WhenPatched()
+    {
+        WriteDictionary(
+            ("stinger", "毒針"),
+            ("black robe", "黒のローブ"));
+
+        RunWithDescriptionPatch(() =>
+        {
+            var target = new DummyDescriptionTarget("Physical features: stinger\nEquipped: black robe");
+            var builder = new StringBuilder();
+            target.GetLongDescription(builder);
+
+            Assert.That(builder.ToString(), Is.EqualTo("身体的特徴: 毒針\n装備: 黒のローブ"));
+        });
+    }
+
+    [Test]
+    public void Postfix_TranslatesReasonBearingDispositionLine_WithColoredFactionTarget_WhenPatched()
+    {
+        WriteDictionary(("giving alms to pilgrims", "巡礼者に施しをしたため"));
+
+        RunWithDescriptionPatch(() =>
+        {
+            var target = new DummyDescriptionTarget("Admired by {{C|the Mechanimists}} for giving alms to pilgrims.");
+            var builder = new StringBuilder();
+            target.GetLongDescription(builder);
+
+            Assert.That(builder.ToString(), Is.EqualTo("{{C|the Mechanimists}}に敬愛されている。理由: 巡礼者に施しをしたため。"));
+        });
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";
