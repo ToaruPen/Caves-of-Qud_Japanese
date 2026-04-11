@@ -6,6 +6,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Protocol
 
+import pytest  # pyright: ignore[reportMissingImports]
+
 from scripts.scan_text_producers import main
 from scripts.scanner.inventory import (
     DestinationDictionary,
@@ -237,3 +239,16 @@ def test_main_validate_fixed_leaf_succeeds_on_good_fixture(tmp_path: Path, capsy
     assert "0 issue(s)" in captured.out
     assert "Traceback" not in captured.out
     assert captured.err == ""
+
+
+def test_main_reraises_unexpected_execute_phase_value_errors(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Unexpected phase-execution ValueErrors should propagate instead of being flattened into CLI usage errors."""
+    msg = "unexpected classifier failure"
+
+    def _raise_unexpected_error(*_args: object, **_kwargs: object) -> None:
+        raise ValueError(msg)
+
+    monkeypatch.setattr("scripts.scan_text_producers._execute_phase", _raise_unexpected_error)
+
+    with pytest.raises(ValueError, match=msg):
+        main([])

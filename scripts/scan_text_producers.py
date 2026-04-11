@@ -37,6 +37,10 @@ PHASE_CHOICES = ("1a", "1b", "1c", "1d", "all")
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+class FixedLeafValidationPhaseError(ValueError):
+    """User-facing CLI error for fixed-leaf validation without Phase 1d output."""
+
+
 def run_phase_1a(source_root: Path, cache_dir: Path) -> Phase1aScanResult:
     """Run Phase 1a and persist raw hit caches."""
     return scan_source_tree(source_root, cache_dir=cache_dir)
@@ -148,7 +152,7 @@ def _write_fixed_leaf_validation(candidate: InventoryDraft | None, phase: str) -
     """Validate fixed-leaf candidates after Phase 1d output exists."""
     if candidate is None:
         msg = f"Fixed-leaf validation requires Phase 1d output (use --phase 1d or --phase all, got {phase})."
-        raise ValueError(msg)
+        raise FixedLeafValidationPhaseError(msg)
     report = validate_fixed_leaf_inventory(candidate)
     sys.stdout.write(render_fixed_leaf_validation_report(report))
     return 0 if report.is_valid else 1
@@ -203,12 +207,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         candidate = _execute_phase(args.phase, source_root, cache_dir, output_path)
-        if args.validate_fixed_leaf:
-            return _write_fixed_leaf_validation(candidate, args.phase)
     except FileNotFoundError as exc:
-        sys.stderr.write(f"Error: {exc}\n")
-        return 1
-    except ValueError as exc:
         sys.stderr.write(f"Error: {exc}\n")
         return 1
     except subprocess.CalledProcessError as exc:
@@ -216,6 +215,13 @@ def main(argv: list[str] | None = None) -> int:
         if exc.stderr:
             sys.stderr.write(f"{exc.stderr.rstrip()}\n")
         return exc.returncode or 1
+
+    if args.validate_fixed_leaf:
+        try:
+            return _write_fixed_leaf_validation(candidate, args.phase)
+        except FixedLeafValidationPhaseError as exc:
+            sys.stderr.write(f"Error: {exc}\n")
+            return 1
     return 0
 
 
