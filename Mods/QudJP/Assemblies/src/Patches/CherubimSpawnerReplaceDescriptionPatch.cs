@@ -43,12 +43,22 @@ public static class CherubimSpawnerReplaceDescriptionPatch
             }
 
             var displayName = GetDisplayName(__0);
-            if (displayName is null || displayName.Length == 0 || displayName.Any(static c => c == ' '))
+            if (displayName is null || displayName.Length == 0)
+            {
+                return false;
+            }
+
+            if (displayName.Any(static c => c == ' '))
             {
                 return true;
             }
 
-            return !TryReplaceDescription(__0, Description, Features, displayName);
+            if (!TryReplaceDescription(__0, Description, Features, displayName))
+            {
+                Trace.TraceError("QudJP: CherubimSpawnerReplaceDescriptionPatch failed to apply guarded no-space replacement.");
+            }
+
+            return false;
         }
         catch (Exception ex)
         {

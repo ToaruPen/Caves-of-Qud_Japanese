@@ -13,7 +13,7 @@ namespace QudJP.Tests.DummyTargets
         public string DisplayName { get; set; } = string.Empty;
     }
 
-    internal sealed class DummyCherubimGameObject
+    internal class DummyCherubimGameObject
     {
         private readonly Dictionary<string, string> tags = new(StringComparer.Ordinal);
         private readonly Dictionary<(string Category, string Name), string> xTags = new();
@@ -56,6 +56,14 @@ namespace QudJP.Tests.DummyTargets
         public void SetxTag(string category, string name, string value)
         {
             xTags[(category, name)] = value;
+        }
+    }
+
+    internal sealed class DummyCherubimGameObjectWithNullSkin : DummyCherubimGameObject
+    {
+        public new string? GetxTag(string category, string name)
+        {
+            return null;
         }
     }
 
