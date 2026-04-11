@@ -85,7 +85,7 @@ Every accepted candidate must record:
 
 ## Destination selection
 
-Use a global flat dictionary when the candidate is a proven fixed-leaf, exact, shared, and not route-specific. Use a scoped dictionary when the candidate belongs to one screen, family, or producer route and would be clearer with a narrower home. If a candidate can fit both, prefer the narrower scoped home. If it is dynamic, procedural, `message-frame`, builder/display-name, unresolved, or `needs_runtime`, do not route it to a dictionary unless it is separately proven safe.
+Use a global flat dictionary when the candidate is a proven fixed-leaf, exact, shared, and not route-specific. Use a scoped dictionary when the candidate belongs to one screen, family, or producer route and would be clearer with a narrower home. If a candidate can fit both, prefer the narrower-scoped home. If it is dynamic, procedural, `message-frame`, builder/display-name, unresolved, or `needs_runtime`, do not route it to a dictionary unless it is separately proven safe.
 
 ## Color-tag rules
 

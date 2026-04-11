@@ -55,7 +55,7 @@ python scripts/scan_text_producers.py \
 
 - `--phase 1d` は、すでに cache があるときの再レビュー向けです
 - `--phase all` は、スキャンから検証までを通して回す happy path です
-- accepted fixed-leaf candidates are promoted incrementally, and this does not change current `Translator` runtime semantics.
+- 受理した fixed-leaf candidate は段階的に昇格させるが、これによって現在の `Translator` のランタイム意味論は変わらない。
 
 ## check_encoding.py
 
