@@ -16,6 +16,10 @@ if __package__ in {None, ""}:
 
 from scripts.scanner.ast_grep_runner import Phase1aScanResult, scan_source_tree
 from scripts.scanner.cross_reference import cross_reference_inventory_file
+from scripts.scanner.fixed_leaf_validation import (
+    render_fixed_leaf_validation_report,
+    validate_fixed_leaf_inventory,
+)
 from scripts.scanner.inventory import (
     InventoryDraft,
     RawHit,
@@ -31,6 +35,10 @@ DEFAULT_OUTPUT_PATH = Path("docs/candidate-inventory.json")
 DEFAULT_INVENTORY_DRAFT_PATH = Path("inventory_draft.json")
 PHASE_CHOICES = ("1a", "1b", "1c", "1d", "all")
 REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+class FixedLeafValidationPhaseError(ValueError):
+    """User-facing CLI error for fixed-leaf validation without Phase 1d output."""
 
 
 def run_phase_1a(source_root: Path, cache_dir: Path) -> Phase1aScanResult:
@@ -103,6 +111,8 @@ def _write_inventory_summary(phase: str, draft: InventoryDraft) -> None:
     sys.stdout.write(
         f"Phase {phase} complete: "
         f"total sites: {len(draft.sites)}; "
+        f"proven fixed-leaf: {draft.stats.proven_fixed_leaf}; "
+        f"rejected fixed-leaf: {draft.stats.rejected_fixed_leaf}; "
         f"types: {_format_type_counts(draft)}; "
         f"translated: {_translated_count(draft)}\n"
     )
@@ -113,22 +123,39 @@ def _write_phase_1c_placeholder() -> None:
     sys.stdout.write("Phase 1c is interactive and not implemented in this orchestrator yet.\n")
 
 
-def _execute_phase(phase: str, source_root: Path, cache_dir: Path, output_path: Path) -> None:
+def _execute_phase(phase: str, source_root: Path, cache_dir: Path, output_path: Path) -> InventoryDraft | None:
     """Execute one requested phase, or the full non-interactive pipeline."""
     if phase == "1a":
         _write_phase_1a_summary(run_phase_1a(source_root, cache_dir))
-    elif phase == "1b":
+        return None
+    if phase == "1b":
         _write_inventory_summary("1b", run_phase_1b(source_root, cache_dir))
-    elif phase == "1c":
+        return None
+    if phase == "1c":
         _write_phase_1c_placeholder()
-    elif phase == "1d":
-        _write_inventory_summary("1d", run_phase_1d(source_root, cache_dir, output_path))
-    else:
-        phase_1a = run_phase_1a(source_root, cache_dir)
-        _write_phase_1a_summary(phase_1a)
-        _write_inventory_summary("1b", run_phase_1b(source_root, cache_dir))
-        _write_phase_1c_placeholder()
-        _write_inventory_summary("1d", run_phase_1d(source_root, cache_dir, output_path))
+        return None
+    if phase == "1d":
+        candidate = run_phase_1d(source_root, cache_dir, output_path)
+        _write_inventory_summary("1d", candidate)
+        return candidate
+
+    phase_1a = run_phase_1a(source_root, cache_dir)
+    _write_phase_1a_summary(phase_1a)
+    _write_inventory_summary("1b", run_phase_1b(source_root, cache_dir))
+    _write_phase_1c_placeholder()
+    candidate = run_phase_1d(source_root, cache_dir, output_path)
+    _write_inventory_summary("1d", candidate)
+    return candidate
+
+
+def _write_fixed_leaf_validation(candidate: InventoryDraft | None, phase: str) -> int:
+    """Validate fixed-leaf candidates after Phase 1d output exists."""
+    if candidate is None:
+        msg = f"Fixed-leaf validation requires Phase 1d output (use --phase 1d or --phase all, got {phase})."
+        raise FixedLeafValidationPhaseError(msg)
+    report = validate_fixed_leaf_inventory(candidate)
+    sys.stdout.write(render_fixed_leaf_validation_report(report))
+    return 0 if report.is_valid else 1
 
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -160,6 +187,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Reserved for future freshness-management diffs; currently a no-op.",
     )
+    parser.add_argument(
+        "--validate-fixed-leaf",
+        action="store_true",
+        help="Validate fixed-leaf candidate additions after Phase 1d output is available.",
+    )
     return parser.parse_args(argv)
 
 
@@ -174,7 +206,7 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write("Note: --diff is reserved for future freshness management and is not implemented yet.\n")
 
     try:
-        _execute_phase(args.phase, source_root, cache_dir, output_path)
+        candidate = _execute_phase(args.phase, source_root, cache_dir, output_path)
     except FileNotFoundError as exc:
         sys.stderr.write(f"Error: {exc}\n")
         return 1
@@ -183,6 +215,13 @@ def main(argv: list[str] | None = None) -> int:
         if exc.stderr:
             sys.stderr.write(f"{exc.stderr.rstrip()}\n")
         return exc.returncode or 1
+
+    if args.validate_fixed_leaf:
+        try:
+            return _write_fixed_leaf_validation(candidate, args.phase)
+        except FixedLeafValidationPhaseError as exc:
+            sys.stderr.write(f"Error: {exc}\n")
+            return 1
     return 0
 
 

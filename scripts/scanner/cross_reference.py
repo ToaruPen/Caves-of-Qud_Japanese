@@ -11,7 +11,6 @@ from dataclasses import dataclass, replace
 from pathlib import Path, PurePosixPath
 
 from scripts.scanner.inventory import (
-    Confidence,
     InventoryDraft,
     InventorySite,
     SiteStatus,
@@ -201,23 +200,24 @@ def _default_status(site: InventorySite) -> SiteStatus:
         return SiteStatus.EXCLUDED
     if site.type is SiteType.UNRESOLVED or site.needs_runtime:
         return SiteStatus.UNRESOLVED
-    if site.needs_review or site.confidence is not Confidence.HIGH or site.type is SiteType.VERB_COMPOSITION:
-        return SiteStatus.NEEDS_REVIEW
     if site.type is SiteType.MESSAGE_FRAME:
         return SiteStatus.NEEDS_PATCH
-    return SiteStatus.NEEDS_TRANSLATION
+    if site.is_proven_fixed_leaf:
+        return SiteStatus.NEEDS_TRANSLATION
+    return SiteStatus.NEEDS_REVIEW
 
 
 def _collect_dictionary_keys(dictionary_root: Path) -> dict[str, set[str]]:
     """Index exact dictionary keys by file name."""
     keys: dict[str, set[str]] = {}
-    for path in sorted(dictionary_root.glob("*.ja.json")):
+    for path in sorted(dictionary_root.rglob("*.ja.json")):
+        dictionary_name = path.relative_to(dictionary_root).as_posix()
         payload = json.loads(path.read_text(encoding="utf-8"))
         for entry in payload.get("entries", []):
             key = entry.get("key")
             if not isinstance(key, str) or not key:
                 continue
-            keys.setdefault(key, set()).add(path.name)
+            keys.setdefault(key, set()).add(dictionary_name)
     return keys
 
 
