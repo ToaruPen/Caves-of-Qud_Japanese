@@ -209,6 +209,42 @@ public sealed class LocalizationCoverageTests
     }
 
     [Test]
+    public void KnownRuntimeNoisyDuplicateKeys_AreExplicitlyAudited()
+    {
+        var dictionariesRoot = Path.Combine(localizationRoot, "Dictionaries");
+        var duplicateEntries = LoadEntries(Path.Combine(dictionariesRoot, "ui-default.ja.json"))
+            .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-phase3c-labels.ja.json")))
+            .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-auto-generated.ja.json")))
+            .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-chargen.ja.json")))
+            .Where(static entry => entry.Key is "Randomize Selection" or "Reset Selection" or "Sated" or "Quenched")
+            .GroupBy(static entry => entry.Key, StringComparer.Ordinal)
+            .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(duplicateEntries.TryGetValue("Randomize Selection", out var randomizeSelectionEntries), Is.True);
+            Assert.That(randomizeSelectionEntries!.Select(static entry => entry.Text).Distinct(StringComparer.Ordinal),
+                Is.EquivalentTo(new[] { "ランダムに選択", "選択をランダムにする" }));
+            Assert.That(randomizeSelectionEntries, Has.Length.EqualTo(3));
+
+            Assert.That(duplicateEntries.TryGetValue("Reset Selection", out var resetSelectionEntries), Is.True);
+            Assert.That(resetSelectionEntries!.Select(static entry => entry.Text).Distinct(StringComparer.Ordinal),
+                Is.EquivalentTo(new[] { "選択をリセット" }));
+            Assert.That(resetSelectionEntries, Has.Length.EqualTo(3));
+
+            Assert.That(duplicateEntries.TryGetValue("Sated", out var satedEntries), Is.True);
+            Assert.That(satedEntries!.Select(static entry => entry.Text).Distinct(StringComparer.Ordinal),
+                Is.EquivalentTo(new[] { "満腹" }));
+            Assert.That(satedEntries, Has.Length.EqualTo(2));
+
+            Assert.That(duplicateEntries.TryGetValue("Quenched", out var quenchedEntries), Is.True);
+            Assert.That(quenchedEntries!.Select(static entry => entry.Text).Distinct(StringComparer.Ordinal),
+                Is.EquivalentTo(new[] { "潤っている", "潤沢" }));
+            Assert.That(quenchedEntries, Has.Length.EqualTo(3));
+        });
+    }
+
+    [Test]
     public void UiDefaultDictionary_ContainsCurrentCalendarStatusKeys()
     {
         var uiDefaultKeys = LoadEntries(Path.Combine(localizationRoot, "Dictionaries", "ui-default.ja.json"))
