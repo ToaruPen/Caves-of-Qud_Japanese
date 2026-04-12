@@ -56,6 +56,30 @@ _DYNAMIC_PROBE_ESCAPED = (
     " payload_mode=full; payload_excerpt=You catch fire\\; route\\=Spoofed\\;"
     " family\\=spoof\\=value; payload_sha256=<missing>"
 )
+_MISSING_KEY_LITERAL_MISSING = (
+    "[QudJP] Translator: missing key 'Put away' (hit 3). (context: ExactKey);"
+    " route=ExactKey; family=missing_key; template_id=<missing>; rendered_text_sample=<missing>"
+)
+_DYNAMIC_PROBE_LITERAL_MISSING = (
+    "[QudJP] DynamicTextProbe/v1: route='DoesVerbRoute' family='verb' hit=1 changed=true"
+    " source='You catch fire' translated='あなたは燃え上がる'. (context: DoesVerbRoute);"
+    " route=DoesVerbRoute; family=verb; template_id=<missing>; payload_mode=full;"
+    " payload_excerpt=<missing>; payload_sha256=<missing>"
+)
+_DYNAMIC_PROBE_PREFIX_HASH_A = (
+    "[QudJP] DynamicTextProbe/v1: route='DoesVerbRoute' family='verb' hit=1 changed=true"
+    " source='Shared prefix payload' translated='あなたは燃え上がる'. (context: DoesVerbRoute);"
+    " route=DoesVerbRoute; family=verb; template_id=<missing>; payload_mode=prefix_hash;"
+    " payload_excerpt=Shared prefix payload;"
+    " payload_sha256=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+)
+_DYNAMIC_PROBE_PREFIX_HASH_B = (
+    "[QudJP] DynamicTextProbe/v1: route='DoesVerbRoute' family='verb' hit=1 changed=true"
+    " source='Shared prefix payload' translated='あなたは燃え上がる'. (context: DoesVerbRoute);"
+    " route=DoesVerbRoute; family=verb; template_id=<missing>; payload_mode=prefix_hash;"
+    " payload_excerpt=Shared prefix payload;"
+    " payload_sha256=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+)
 
 
 def _write_log(path: Path, lines: list[str]) -> None:
@@ -68,7 +92,9 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
     """Parse a single fixture line and return the stable observable fields."""
     log = tmp_path / "Player.log"
     _write_log(log, [line])
-    entry = parse_log(log)[0]
+    entries = parse_log(log)
+    assert len(entries) == 1
+    entry = entries[0]
     return {
         "kind": entry.kind.value,
         "route": entry.route,
@@ -83,6 +109,7 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
         "payload_mode": entry.payload_mode,
         "payload_excerpt": entry.payload_excerpt,
         "payload_sha256": entry.payload_sha256,
+        "structured_fields": sorted(entry.structured_fields),
     }
 
 
@@ -105,6 +132,7 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
                 "payload_mode": None,
                 "payload_excerpt": None,
                 "payload_sha256": None,
+                "structured_fields": [],
             },
         ),
         (
@@ -123,6 +151,7 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
                 "payload_mode": None,
                 "payload_excerpt": None,
                 "payload_sha256": None,
+                "structured_fields": ["family", "rendered_text_sample", "route", "template_id"],
             },
         ),
         (
@@ -141,6 +170,7 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
                 "payload_mode": None,
                 "payload_excerpt": None,
                 "payload_sha256": None,
+                "structured_fields": [],
             },
         ),
         (
@@ -159,6 +189,7 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
                 "payload_mode": None,
                 "payload_excerpt": None,
                 "payload_sha256": None,
+                "structured_fields": ["family", "rendered_text_sample", "route", "template_id"],
             },
         ),
         (
@@ -177,6 +208,7 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
                 "payload_mode": None,
                 "payload_excerpt": None,
                 "payload_sha256": None,
+                "structured_fields": [],
             },
         ),
         (
@@ -195,6 +227,14 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
                 "payload_mode": "full",
                 "payload_excerpt": "You catch fire",
                 "payload_sha256": None,
+                "structured_fields": [
+                    "family",
+                    "payload_excerpt",
+                    "payload_mode",
+                    "payload_sha256",
+                    "route",
+                    "template_id",
+                ],
             },
         ),
         (
@@ -213,6 +253,7 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
                 "payload_mode": None,
                 "payload_excerpt": None,
                 "payload_sha256": None,
+                "structured_fields": [],
             },
         ),
         (
@@ -231,6 +272,14 @@ def _entry_snapshot(tmp_path: Path, line: str) -> dict[str, object | None]:
                 "payload_mode": "full",
                 "payload_excerpt": "You catch fire",
                 "payload_sha256": None,
+                "structured_fields": [
+                    "family",
+                    "payload_excerpt",
+                    "payload_mode",
+                    "payload_sha256",
+                    "route",
+                    "template_id",
+                ],
             },
         ),
     ],
@@ -455,3 +504,31 @@ def test_parse_structured_suffix_unescapes_delimiter_like_values(
     assert entries[0].route == expected_route
     assert entries[0].family == expected_family
     assert getattr(entries[0], expected_field) == expected_value
+
+
+def test_parse_structured_suffix_preserves_literal_missing_in_text_fields(tmp_path: Path) -> None:
+    """Literal `<missing>` survives for text-bearing fields while nullable slots stay ``None``."""
+    log = tmp_path / "Player.log"
+    _write_log(log, [_MISSING_KEY_LITERAL_MISSING, _DYNAMIC_PROBE_LITERAL_MISSING])
+
+    entries = parse_log(log)
+
+    assert len(entries) == 2
+    assert entries[0].rendered_text_sample == "<missing>"
+    assert entries[0].template_id is None
+    assert entries[1].payload_excerpt == "<missing>"
+    assert entries[1].payload_sha256 is None
+
+
+def test_parse_phase_f_deduplication_keeps_distinct_payload_identities(tmp_path: Path) -> None:
+    """Phase F helper records with distinct payload identities must not collapse together."""
+    log = tmp_path / "Player.log"
+    _write_log(log, [_DYNAMIC_PROBE_PREFIX_HASH_A, _DYNAMIC_PROBE_PREFIX_HASH_B])
+
+    entries = parse_log(log)
+
+    assert len(entries) == 2
+    assert {entry.payload_sha256 for entry in entries} == {
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    }

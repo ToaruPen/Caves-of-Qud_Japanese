@@ -30,6 +30,7 @@ _SINK_OBSERVE_PATTERN = re.compile(
 _STRUCTURED_SUFFIX_TOKEN = re.compile(
     r"(?P<key>[a-z_][a-z0-9_]*)=(?P<value>.*?)(?=; [a-z_][a-z0-9_]*=|$)",
 )
+_NULLABLE_STRUCTURED_FIELDS = frozenset({"template_id", "payload_sha256"})
 
 
 def _extract_primary_context(context: str | None) -> str:
@@ -48,12 +49,17 @@ def _unescape_probe_value(value: str) -> str:
     )
 
 
-def _dedupe_key(entry: LogEntry) -> tuple[str, str, str, str]:
+def _dedupe_key(entry: LogEntry) -> tuple[str, str, str, str, str, str]:
     """Build the deduplication key for a parsed log entry."""
     family_key = entry.family or ""
+    payload_excerpt_key = ""
+    payload_sha256_key = ""
     if entry.kind in {LogEntryKind.MISSING_KEY, LogEntryKind.NO_PATTERN, LogEntryKind.SINK_OBSERVE}:
         family_key = ""
-    return (entry.kind.value, entry.route, entry.text, family_key)
+    if entry.kind in {LogEntryKind.DYNAMIC_TEXT_PROBE, LogEntryKind.SINK_OBSERVE}:
+        payload_excerpt_key = entry.payload_excerpt or ""
+        payload_sha256_key = entry.payload_sha256 or ""
+    return (entry.kind.value, entry.route, entry.text, family_key, payload_excerpt_key, payload_sha256_key)
 
 
 def _hits_value(hits: int | None) -> int:
@@ -73,7 +79,11 @@ def _parse_structured_suffix(line: str, prefix_end: int) -> tuple[dict[str, str 
         key = match.group("key")
         raw_value = match.group("value")
         present_fields.add(key)
-        parsed[key] = None if raw_value == "<missing>" else _unescape_structured_value(raw_value)
+        parsed[key] = (
+            None
+            if raw_value == "<missing>" and key in _NULLABLE_STRUCTURED_FIELDS
+            else _unescape_structured_value(raw_value)
+        )
     return parsed, frozenset(present_fields)
 
 
@@ -145,7 +155,7 @@ def parse_log(log_path: Path) -> list[LogEntry]:
     if not log_path.exists():
         return []
 
-    seen: dict[tuple[str, str, str, str], LogEntry] = {}
+    seen: dict[tuple[str, str, str, str, str, str], LogEntry] = {}
     for line_number, line in enumerate(
         log_path.read_text(encoding="utf-8", errors="replace").splitlines(),
         start=1,
