@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from typing import Any, cast
 
-from scripts.scanner.fixed_leaf_validation import (
+from scripts.legacies.scanner.fixed_leaf_validation import (
     FixedLeafFailureClass,
     render_fixed_leaf_validation_report,
     validate_fixed_leaf_inventory,
 )
-from scripts.scanner.inventory import (
+from scripts.legacies.scanner.inventory import (
     Confidence,
     DestinationDictionary,
     FixedLeafRejectionReason,

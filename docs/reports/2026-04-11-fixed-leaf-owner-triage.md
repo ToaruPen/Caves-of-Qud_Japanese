@@ -7,7 +7,7 @@ This snapshot records one scanner run on the `task/fixed-leaf-owner-triage` work
 Command used:
 
 ```bash
-python3 scripts/scan_text_producers.py \
+python3 scripts/legacies/scan_text_producers.py \
   --source-root "/Users/sankenbisha/dev/coq-decompiled_stable" \
   --cache-dir .scanner-cache \
   --output docs/candidate-inventory.json \
