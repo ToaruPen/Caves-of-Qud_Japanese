@@ -11,6 +11,12 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+if __package__ in {None, ""}:
+    _PROJECT_ROOT = Path(__file__).resolve().parents[3]
+    _PROJECT_ROOT_STR = str(_PROJECT_ROOT)
+    if _PROJECT_ROOT_STR not in sys.path:
+        sys.path.insert(0, _PROJECT_ROOT_STR)
+
 from scripts.legacies.scanner.inventory import (
     ExclusionReason,
     FileRecord,

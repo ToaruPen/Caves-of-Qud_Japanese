@@ -1,5 +1,7 @@
 """Tests for the scanner.ast_grep_runner module."""
 
+import subprocess
+import sys
 from collections import Counter
 from pathlib import Path
 
@@ -12,6 +14,7 @@ from scripts.legacies.scanner.ast_grep_runner import (
 from scripts.legacies.scanner.inventory import ExclusionReason, HitKind, read_raw_hits_jsonl
 
 FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "scanner"
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 class TestSourceInventory:
@@ -93,3 +96,17 @@ class TestScanSourceTree:
         assert override_hits_path.exists()
         assert read_raw_hits_jsonl(raw_hits_path) == result.raw_hits
         assert read_raw_hits_jsonl(override_hits_path) == result.override_hits
+
+
+def test_direct_script_help_runs_without_module_bootstrap_errors() -> None:
+    """Direct script execution should show help instead of import-path failures."""
+    completed = subprocess.run(  # noqa: S603 -- test invokes a repo-local fixed script path via the active interpreter.
+        [sys.executable, str(REPO_ROOT / "scripts" / "legacies" / "scanner" / "ast_grep_runner.py"), "--help"],
+        capture_output=True,
+        text=True,
+        cwd=REPO_ROOT,
+        check=False,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "Run Phase 1a source-first scanning." in completed.stdout
