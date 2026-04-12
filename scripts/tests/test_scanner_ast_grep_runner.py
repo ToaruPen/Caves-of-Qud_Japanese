@@ -3,13 +3,13 @@
 from collections import Counter
 from pathlib import Path
 
-from scripts.scanner.ast_grep_runner import (
+from scripts.legacies.scanner.ast_grep_runner import (
     OVERRIDE_PRODUCER_SPECS,
     SINK_FAMILY_SPECS,
     collect_source_inventory,
     scan_source_tree,
 )
-from scripts.scanner.inventory import ExclusionReason, HitKind, read_raw_hits_jsonl
+from scripts.legacies.scanner.inventory import ExclusionReason, HitKind, read_raw_hits_jsonl
 
 FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "scanner"
 
@@ -22,10 +22,7 @@ class TestSourceInventory:
         inventory = collect_source_inventory(FIXTURE_ROOT)
 
         assert inventory.included_file_count == 5
-        assert {
-            record.path
-            for record in inventory.included_files
-        } == {
+        assert {record.path for record in inventory.included_files} == {
             "Demo/PatternCoverage.cs",
             "XRL.World.Effects/TestEffect.cs",
             "XRL.World.Parts.Mutation/TestMutation.cs",

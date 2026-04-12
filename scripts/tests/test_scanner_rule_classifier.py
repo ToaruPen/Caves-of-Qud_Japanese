@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 
 import pytest  # pyright: ignore[reportMissingImports]
 
-from scripts.scanner.inventory import (
+from scripts.legacies.scanner.inventory import (
     Confidence,
     DestinationDictionary,
     FixedLeafRejectionReason,
@@ -19,7 +19,7 @@ from scripts.scanner.inventory import (
     read_inventory_draft_json,
     write_raw_hits_jsonl,
 )
-from scripts.scanner.rule_classifier import _rejection_reason, classify_raw_hit, classify_raw_hits_file
+from scripts.legacies.scanner.rule_classifier import _rejection_reason, classify_raw_hit, classify_raw_hits_file
 
 if TYPE_CHECKING:
     from pathlib import Path

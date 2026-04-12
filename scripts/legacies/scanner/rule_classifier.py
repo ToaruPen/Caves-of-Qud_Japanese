@@ -10,7 +10,7 @@ from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
 
-from scripts.scanner.inventory import (
+from scripts.legacies.scanner.inventory import (
     Confidence,
     FixedLeafRejectionReason,
     InventoryDraft,

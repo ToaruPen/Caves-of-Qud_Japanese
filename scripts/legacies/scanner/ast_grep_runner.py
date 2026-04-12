@@ -11,7 +11,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from scripts.scanner.inventory import (
+from scripts.legacies.scanner.inventory import (
     ExclusionReason,
     FileRecord,
     HitKind,
