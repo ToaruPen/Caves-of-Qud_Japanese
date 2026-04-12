@@ -24,7 +24,7 @@ The promotion set is empty in this batch. After pruning the current queue, no su
 
 ## Why no promotion happened
 
-`fixed_leaf_validation.py` validates every site whose `destination_dictionary` is non-null and then runs duplicate detection across the whole candidate set, regardless of `existing_dictionary` or `existing_patch` coverage.
+`fixed_leaf_validation.py` validates every site whose `destination_dictionary` is non-null; in the current scanner semantics, that means sites whose `status` is neither `translated` nor `excluded`. Duplicate detection still runs across the whole candidate set, regardless of `existing_dictionary` or `existing_patch` coverage.
 
 - `scripts/legacies/scanner/fixed_leaf_validation.py:61-74`
 - `scripts/legacies/scanner/fixed_leaf_validation.py:135-156`

@@ -52,7 +52,7 @@ Capture fresh Rosetta-backed runtime evidence, split actionable untranslated rou
 **Required commands**
 
 ```bash
-python3 scripts/triage_untranslated.py --log ~/Library/Logs/Freehold\ Games/CavesOfQud/Player.log --output .sisyphus/evidence/issue-364-runtime-triage.json
+python3 scripts/triage_untranslated.py --log ~/Library/Logs/Freehold\ Games/CavesOfQud/Player.log --output .sisyphus/evidence/task-4-runtime-triage.json
 dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L1
 dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L2
 pytest scripts/tests/test_triage_log_parser.py scripts/tests/test_triage_models.py scripts/tests/test_triage_classifier.py scripts/tests/test_triage_integration.py -q
@@ -60,7 +60,9 @@ pytest scripts/tests/test_triage_log_parser.py scripts/tests/test_triage_models.
 
 **Durable outputs**
 
-- `.sisyphus/evidence/issue-364-runtime-triage.json`
+- `.sisyphus/evidence/task-4-runtime-triage.json`
+- `.sisyphus/evidence/task-4-runtime-triage.stderr`
+- `.sisyphus/evidence/task-4-runtime-triage-error.txt`
 - A durable `docs/reports/` triage report for `#363`
 - Route-ownership notes for the first actionable batch
 
