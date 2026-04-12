@@ -414,38 +414,39 @@ def test_parse_sink_observe(tmp_path: Path) -> None:
 
 
 @pytest.mark.parametrize(
-    ("line", "expected_kind", "expected_route", "expected_family", "expected_field", "expected_value"),
+    ("line", "expected"),
     [
         (
             _MISSING_KEY_ESCAPED,
-            LogEntryKind.MISSING_KEY,
-            "ExactKey",
-            "missing_key",
-            "rendered_text_sample",
-            "Put away; route=Spoofed; family=spoof=value",
+            (
+                LogEntryKind.MISSING_KEY,
+                "ExactKey",
+                "missing_key",
+                "rendered_text_sample",
+                "Put away; route=Spoofed; family=spoof=value",
+            ),
         ),
         (
             _DYNAMIC_PROBE_ESCAPED,
-            LogEntryKind.DYNAMIC_TEXT_PROBE,
-            "DoesVerbRoute",
-            "verb",
-            "payload_excerpt",
-            "You catch fire; route=Spoofed; family=spoof=value",
+            (
+                LogEntryKind.DYNAMIC_TEXT_PROBE,
+                "DoesVerbRoute",
+                "verb",
+                "payload_excerpt",
+                "You catch fire; route=Spoofed; family=spoof=value",
+            ),
         ),
     ],
 )
 def test_parse_structured_suffix_unescapes_delimiter_like_values(
     tmp_path: Path,
     line: str,
-    expected_kind: LogEntryKind,
-    expected_route: str,
-    expected_family: str,
-    expected_field: str,
-    expected_value: str,
+    expected: tuple[LogEntryKind, str, str, str, str],
 ) -> None:
     """Escaped structured values round-trip without spoofing route/family fields."""
     log = tmp_path / "Player.log"
     _write_log(log, [line])
+    expected_kind, expected_route, expected_family, expected_field, expected_value = expected
 
     entries = parse_log(log)
 
