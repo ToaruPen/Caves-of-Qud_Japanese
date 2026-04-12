@@ -28,7 +28,7 @@ _SINK_OBSERVE_PATTERN = re.compile(
     r"detail='(?P<detail>.*?)' source='(?P<source>.*?)' stripped='(?P<stripped>.*?)'",
 )
 _STRUCTURED_SUFFIX_TOKEN = re.compile(
-    r"(?P<key>[a-z_][a-z0-9_]*)=(?P<value>.*?)(?=; [a-z_][a-z0-9_]*=|$)",
+    r"(?P<key>[a-z_][a-z0-9_]*)=(?P<value>[^\n]*?)(?=; [a-z_][a-z0-9_]*=|$)",
 )
 _NULLABLE_STRUCTURED_FIELDS = frozenset({"template_id", "payload_sha256"})
 
@@ -69,6 +69,8 @@ def _hits_value(hits: int | None) -> int:
 
 def _parse_structured_suffix(line: str, prefix_end: int) -> tuple[dict[str, str | None], frozenset[str]]:
     """Parse the deterministic `; key=value` suffix added by Phase F emitters."""
+    # Phase F suffix parsing assumes parse_log() has already split Player.log into
+    # one log entry per line, so structured values never span newlines here.
     suffix = line[prefix_end:]
     if not suffix.startswith("; "):
         return {}, frozenset()
