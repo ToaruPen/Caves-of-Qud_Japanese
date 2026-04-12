@@ -83,12 +83,6 @@ def _make_raw_hit(tmp_path: Path, case: Case) -> tuple[Path, RawHit]:
 
 LEAF_CASES = [
     Case(
-        id="leaf-flight",
-        family="AddPlayerMessage",
-        matched_code='MessageQueue.AddPlayerMessage("You begin flying!")',
-        source_text=_source('MessageQueue.AddPlayerMessage("You begin flying!");'),
-    ),
-    Case(
         id="leaf-precognition",
         family="Popup",
         matched_code='Popup.Show("You cannot access someone else\'s precognitive vision.")',
@@ -386,6 +380,30 @@ def test_classifies_literal_string_args_as_leaf(tmp_path: Path, case: Case) -> N
     )
     assert site.destination_dictionary is expected_destination
     assert site.rejection_reason is None
+
+
+def test_classifies_add_player_message_literal_as_sink_review_not_fixed_leaf(tmp_path: Path) -> None:
+    """Literal AddPlayerMessage leaves stay sink-observed until an upstream owner is proven."""
+    source_root, raw_hit = _make_raw_hit(
+        tmp_path,
+        Case(
+            id="leaf-flight",
+            family="AddPlayerMessage",
+            matched_code='MessageQueue.AddPlayerMessage("You begin flying!")',
+            source_text=_source('MessageQueue.AddPlayerMessage("You begin flying!");'),
+        ),
+    )
+
+    site = classify_raw_hit(raw_hit, source_root)
+
+    assert site is not None
+    assert site.type is SiteType.LEAF
+    assert site.confidence is Confidence.HIGH
+    assert site.key == "You begin flying!"
+    assert site.source_route == "AddPlayerMessage"
+    assert site.ownership_class is OwnershipClass.SINK
+    assert site.destination_dictionary is None
+    assert site.rejection_reason is FixedLeafRejectionReason.NEEDS_REVIEW
 
 
 @pytest.mark.parametrize("case", TEMPLATE_CASES, ids=lambda case: case.id)

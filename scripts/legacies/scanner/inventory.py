@@ -78,7 +78,7 @@ class DestinationDictionary(StrEnum):
     SCOPED = "scoped"
 
 
-SCOPED_DESTINATION_ROUTES = frozenset({"AddPlayerMessage", "Popup"})
+SCOPED_DESTINATION_ROUTES = frozenset({"Popup"})
 
 FIRST_PR_STATIC_CONSUMER_BOUNDARY: Final[Mapping[str, tuple[str, ...]]] = MappingProxyType(
     {

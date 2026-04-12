@@ -235,6 +235,14 @@ def _provenance_fields(
     needs_runtime = bool(fields.get("needs_runtime", False))
     source_route = raw_hit.family
 
+    if site_type is SiteType.LEAF and source_route == "AddPlayerMessage":
+        return {
+            "source_route": source_route,
+            "ownership_class": OwnershipClass.SINK,
+            "destination_dictionary": None,
+            "rejection_reason": FixedLeafRejectionReason.NEEDS_REVIEW,
+        }
+
     if site_type is SiteType.LEAF and confidence is Confidence.HIGH and not needs_review and not needs_runtime:
         return {
             "source_route": source_route,
