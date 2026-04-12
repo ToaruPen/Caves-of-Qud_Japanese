@@ -9,7 +9,7 @@ namespace QudJP.Analyzers;
 
 public static class StaticSotPilot
 {
-    private static readonly string[] RequiredRelativePaths =
+    public static readonly string[] RequiredRelativePaths =
     [
         "XRL.World.Effects/Prone.cs",
         "XRL.World.Capabilities/Firefighting.cs",

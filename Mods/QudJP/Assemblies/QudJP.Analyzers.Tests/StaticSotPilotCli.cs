@@ -7,14 +7,6 @@ namespace QudJP.Analyzers.Tests;
 
 public static class StaticSotPilotCli
 {
-    private static readonly string[] RequiredRelativePaths =
-    [
-        "XRL.World.Effects/Prone.cs",
-        "XRL.World.Capabilities/Firefighting.cs",
-        "XRL.World.Effects/HolographicBleeding.cs",
-        "XRL.World.Parts.Mutation/ElectricalGeneration.cs",
-    ];
-
     public static int Run(string[] args)
     {
         var sourceRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "dev", "coq-decompiled_stable");
@@ -55,15 +47,23 @@ public static class StaticSotPilotCli
             return 1;
         }
 
-        var sourceTexts = new string[RequiredRelativePaths.Length];
-        for (var index = 0; index < RequiredRelativePaths.Length; index++)
+        var sourceTexts = new string[StaticSotPilot.RequiredRelativePaths.Length];
+        for (var index = 0; index < StaticSotPilot.RequiredRelativePaths.Length; index++)
         {
-            var relativePath = RequiredRelativePaths[index];
+            var relativePath = StaticSotPilot.RequiredRelativePaths[index];
             var fullPath = Path.Combine(sourceRoot, relativePath.Replace('/', Path.DirectorySeparatorChar));
-            sourceTexts[index] = File.ReadAllText(fullPath);
+            try
+            {
+                sourceTexts[index] = File.ReadAllText(fullPath);
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or NotSupportedException)
+            {
+                Console.Error.WriteLine($"Failed to read pilot input '{fullPath}': {ex.Message}");
+                return 1;
+            }
         }
 
-        var jsonLines = StaticSotPilot.GenerateJsonLines(RequiredRelativePaths, sourceTexts);
+        var jsonLines = StaticSotPilot.GenerateJsonLines(StaticSotPilot.RequiredRelativePaths, sourceTexts);
         var outputDirectory = Path.GetDirectoryName(outputJsonlPath);
         if (!string.IsNullOrEmpty(outputDirectory))
         {

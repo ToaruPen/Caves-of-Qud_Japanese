@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Reflection;
 using NUnit.Framework;
 using QudJP.Analyzers;
 
@@ -9,14 +8,6 @@ namespace QudJP.Analyzers.Tests;
 [TestFixture]
 public sealed class StaticSotPilotTests
 {
-    private static readonly string[] RequiredRelativePaths =
-    [
-        "XRL.World.Effects/Prone.cs",
-        "XRL.World.Capabilities/Firefighting.cs",
-        "XRL.World.Effects/HolographicBleeding.cs",
-        "XRL.World.Parts.Mutation/ElectricalGeneration.cs",
-    ];
-
     private const string ExpectedJsonLines = """
 {"file":"XRL.World.Effects/Prone.cs","line":3,"col":8,"text":"alpha","literal_kind":"literal","enclosing_type":"Prone","enclosing_method":null,"containing_invocation":null,"argument_index":0,"argument_name":null,"concat_parts":null,"interpolation_parts":null,"attribute_context":"Label"}
 {"file":"XRL.World.Effects/Prone.cs","line":8,"col":22,"text":"named","literal_kind":"literal","enclosing_type":"Prone","enclosing_method":"Build","containing_invocation":"Log","argument_index":0,"argument_name":"message","concat_parts":null,"interpolation_parts":null,"attribute_context":null}
@@ -65,17 +56,7 @@ public sealed class StaticSotPilotTests
         WritePilotInputs(workspace.Path);
 
         var outputPath = Path.Combine(workspace.Path, "cli-output.jsonl");
-        var cliType = GetCliType();
-        var runMethod = cliType.GetMethod(
-            "Run",
-            BindingFlags.Public | BindingFlags.Static,
-            binder: null,
-            types: [typeof(string[])],
-            modifiers: null);
-
-        Assert.That(runMethod, Is.Not.Null, "Expected StaticSotPilotCli.Run(string[]) to exist.");
-
-        var result = runMethod!.Invoke(obj: null, parameters: [new[] { "--source-root", workspace.Path, "--output-jsonl", outputPath }]);
+        var result = StaticSotPilotCli.Run(["--source-root", workspace.Path, "--output-jsonl", outputPath]);
         Assert.That(result, Is.EqualTo(0));
         Assert.That(File.Exists(outputPath), Is.True);
         Assert.That(NormalizeLineEndings(File.ReadAllText(outputPath)), Is.EqualTo(NormalizeLineEndings(ExpectedJsonLines + "\n")));
@@ -83,60 +64,32 @@ public sealed class StaticSotPilotTests
 
     private static void InvokePilot(string sourceRoot, string outputJsonlPath)
     {
-        var pilotType = typeof(TraceLogPrefixAnalyzer).Assembly.GetType("QudJP.Analyzers.StaticSotPilot");
-        Assert.That(pilotType, Is.Not.Null, "Expected QudJP.Analyzers.StaticSotPilot to exist.");
-
-        var method = pilotType!.GetMethod(
-            "GenerateJsonLines",
-            BindingFlags.Public | BindingFlags.Static,
-            binder: null,
-            types: [typeof(string[]), typeof(string[])],
-            modifiers: null);
-        Assert.That(method, Is.Not.Null, "Expected StaticSotPilot.GenerateJsonLines(string[], string[]) to exist.");
-
-        var sourceTexts = new string[RequiredRelativePaths.Length];
-        for (var index = 0; index < RequiredRelativePaths.Length; index++)
+        var sourceTexts = new string[StaticSotPilot.RequiredRelativePaths.Length];
+        for (var index = 0; index < StaticSotPilot.RequiredRelativePaths.Length; index++)
         {
-            var relativePath = RequiredRelativePaths[index];
+            var relativePath = StaticSotPilot.RequiredRelativePaths[index];
             var fullPath = Path.Combine(sourceRoot, relativePath.Replace('/', Path.DirectorySeparatorChar));
             sourceTexts[index] = File.ReadAllText(fullPath);
         }
 
-        try
+        var lines = StaticSotPilot.GenerateJsonLines(StaticSotPilot.RequiredRelativePaths, sourceTexts);
+        var outputDirectory = Path.GetDirectoryName(outputJsonlPath);
+        if (!string.IsNullOrEmpty(outputDirectory))
         {
-            var result = method!.Invoke(obj: null, parameters: [RequiredRelativePaths, sourceTexts]);
-            Assert.That(result, Is.TypeOf<string[]>());
-
-            var lines = (string[])result!;
-            var outputDirectory = Path.GetDirectoryName(outputJsonlPath);
-            if (!string.IsNullOrEmpty(outputDirectory))
-            {
-                Directory.CreateDirectory(outputDirectory);
-            }
-
-            var contents = lines.Length == 0
-                ? string.Empty
-                : string.Join("\n", lines) + "\n";
-            File.WriteAllText(outputJsonlPath, contents);
+            Directory.CreateDirectory(outputDirectory);
         }
-        catch (TargetInvocationException ex) when (ex.InnerException is not null)
-        {
-            Assert.Fail(ex.InnerException.ToString());
-        }
-    }
 
-    private static Type GetCliType()
-    {
-        var cliType = typeof(StaticSotPilotTests).Assembly.GetType("QudJP.Analyzers.Tests.StaticSotPilotCli");
-        Assert.That(cliType, Is.Not.Null, "Expected QudJP.Analyzers.Tests.StaticSotPilotCli to exist.");
-        return cliType!;
+        var contents = lines.Length == 0
+            ? string.Empty
+            : string.Join("\n", lines) + "\n";
+        File.WriteAllText(outputJsonlPath, contents);
     }
 
     private static void WritePilotInputs(string sourceRoot)
     {
         WritePilotFile(
             sourceRoot,
-            "XRL.World.Effects/Prone.cs",
+            StaticSotPilot.RequiredRelativePaths[0],
             """
 namespace XRL.World.Effects;
 
@@ -153,7 +106,7 @@ public class Prone
 
         WritePilotFile(
             sourceRoot,
-            "XRL.World.Capabilities/Firefighting.cs",
+            StaticSotPilot.RequiredRelativePaths[1],
             """
 namespace XRL.World.Capabilities;
 
@@ -168,7 +121,7 @@ public static class Firefighting
 
         WritePilotFile(
             sourceRoot,
-            "XRL.World.Effects/HolographicBleeding.cs",
+            StaticSotPilot.RequiredRelativePaths[2],
             """
 namespace XRL.World.Effects;
 
@@ -183,7 +136,7 @@ public class HolographicBleeding
 
         WritePilotFile(
             sourceRoot,
-            "XRL.World.Parts.Mutation/ElectricalGeneration.cs",
+            StaticSotPilot.RequiredRelativePaths[3],
             """
 using System.Text;
 
