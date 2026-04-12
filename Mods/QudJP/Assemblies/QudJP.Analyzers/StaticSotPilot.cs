@@ -9,13 +9,15 @@ namespace QudJP.Analyzers;
 
 public static class StaticSotPilot
 {
-    public static readonly string[] RequiredRelativePaths =
+    private static readonly string[] requiredRelativePaths =
     [
         "XRL.World.Effects/Prone.cs",
         "XRL.World.Capabilities/Firefighting.cs",
         "XRL.World.Effects/HolographicBleeding.cs",
         "XRL.World.Parts.Mutation/ElectricalGeneration.cs",
     ];
+
+    public static string[] RequiredRelativePaths => (string[])requiredRelativePaths.Clone();
 
     public static string[] GenerateJsonLines(string[] relativePaths, string[] sourceTexts)
     {
@@ -29,16 +31,16 @@ public static class StaticSotPilot
             throw new ArgumentNullException(nameof(sourceTexts));
         }
 
-        if (relativePaths.Length != RequiredRelativePaths.Length || sourceTexts.Length != RequiredRelativePaths.Length)
+        if (relativePaths.Length != requiredRelativePaths.Length || sourceTexts.Length != requiredRelativePaths.Length)
         {
             throw new ArgumentException("The Roslyn pilot requires exactly four fixed inputs.");
         }
 
-        for (var index = 0; index < RequiredRelativePaths.Length; index++)
+        for (var index = 0; index < requiredRelativePaths.Length; index++)
         {
-            if (!string.Equals(relativePaths[index], RequiredRelativePaths[index], StringComparison.Ordinal))
+            if (!string.Equals(relativePaths[index], requiredRelativePaths[index], StringComparison.Ordinal))
             {
-                throw new ArgumentException($"Unexpected pilot input '{relativePaths[index]}'. Expected '{RequiredRelativePaths[index]}'.", nameof(relativePaths));
+                throw new ArgumentException($"Unexpected pilot input '{relativePaths[index]}'. Expected '{requiredRelativePaths[index]}'.", nameof(relativePaths));
             }
         }
 

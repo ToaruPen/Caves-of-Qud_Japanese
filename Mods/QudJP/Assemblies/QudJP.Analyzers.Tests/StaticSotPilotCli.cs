@@ -11,6 +11,7 @@ public static class StaticSotPilotCli
     {
         var sourceRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "dev", "coq-decompiled_stable");
         string? outputJsonlPath = null;
+        var requiredRelativePaths = StaticSotPilot.RequiredRelativePaths;
 
         for (var index = 0; index < args.Length; index++)
         {
@@ -47,10 +48,10 @@ public static class StaticSotPilotCli
             return 1;
         }
 
-        var sourceTexts = new string[StaticSotPilot.RequiredRelativePaths.Length];
-        for (var index = 0; index < StaticSotPilot.RequiredRelativePaths.Length; index++)
+        var sourceTexts = new string[requiredRelativePaths.Length];
+        for (var index = 0; index < requiredRelativePaths.Length; index++)
         {
-            var relativePath = StaticSotPilot.RequiredRelativePaths[index];
+            var relativePath = requiredRelativePaths[index];
             var fullPath = Path.Combine(sourceRoot, relativePath.Replace('/', Path.DirectorySeparatorChar));
             try
             {
@@ -63,19 +64,27 @@ public static class StaticSotPilotCli
             }
         }
 
-        var jsonLines = StaticSotPilot.GenerateJsonLines(StaticSotPilot.RequiredRelativePaths, sourceTexts);
-        var outputDirectory = Path.GetDirectoryName(outputJsonlPath);
-        if (!string.IsNullOrEmpty(outputDirectory))
+        var jsonLines = StaticSotPilot.GenerateJsonLines(requiredRelativePaths, sourceTexts);
+        try
         {
-            Directory.CreateDirectory(outputDirectory);
-        }
+            var outputDirectory = Path.GetDirectoryName(outputJsonlPath);
+            if (!string.IsNullOrEmpty(outputDirectory))
+            {
+                Directory.CreateDirectory(outputDirectory);
+            }
 
-        using var stream = new FileStream(outputJsonlPath, FileMode.Create, FileAccess.Write, FileShare.None);
-        using var writer = new StreamWriter(stream, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
-        for (var index = 0; index < jsonLines.Length; index++)
+            using var stream = new FileStream(outputJsonlPath, FileMode.Create, FileAccess.Write, FileShare.None);
+            using var writer = new StreamWriter(stream, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            for (var index = 0; index < jsonLines.Length; index++)
+            {
+                writer.Write(jsonLines[index]);
+                writer.Write('\n');
+            }
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or NotSupportedException)
         {
-            writer.Write(jsonLines[index]);
-            writer.Write('\n');
+            Console.Error.WriteLine($"Failed to write pilot output '{outputJsonlPath}': {ex.Message}");
+            return 1;
         }
 
         return 0;

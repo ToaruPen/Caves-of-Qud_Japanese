@@ -64,15 +64,16 @@ public sealed class StaticSotPilotTests
 
     private static void InvokePilot(string sourceRoot, string outputJsonlPath)
     {
-        var sourceTexts = new string[StaticSotPilot.RequiredRelativePaths.Length];
-        for (var index = 0; index < StaticSotPilot.RequiredRelativePaths.Length; index++)
+        var requiredRelativePaths = StaticSotPilot.RequiredRelativePaths;
+        var sourceTexts = new string[requiredRelativePaths.Length];
+        for (var index = 0; index < requiredRelativePaths.Length; index++)
         {
-            var relativePath = StaticSotPilot.RequiredRelativePaths[index];
+            var relativePath = requiredRelativePaths[index];
             var fullPath = Path.Combine(sourceRoot, relativePath.Replace('/', Path.DirectorySeparatorChar));
             sourceTexts[index] = File.ReadAllText(fullPath);
         }
 
-        var lines = StaticSotPilot.GenerateJsonLines(StaticSotPilot.RequiredRelativePaths, sourceTexts);
+        var lines = StaticSotPilot.GenerateJsonLines(requiredRelativePaths, sourceTexts);
         var outputDirectory = Path.GetDirectoryName(outputJsonlPath);
         if (!string.IsNullOrEmpty(outputDirectory))
         {
