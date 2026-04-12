@@ -8,7 +8,7 @@ Primary inputs:
 
 - `docs/reports/2026-04-12-issue-362-static-baseline-refresh.md`
 - `docs/reports/2026-04-12-issue-362-fixed-leaf-pruning-batch-02.md`
-- `docs/reports/2026-04-12-issue-364-execution-ledger.md:73-102, 345-385`
+- `docs/reports/2026-04-12-issue-364-execution-ledger.md:73-102`
 - reference set called out by the ledger: `docs/RULES.md`, `scripts/legacies/scanner/inventory.py`, `scripts/legacies/scanner/rule_classifier.py`
 
 ## What the fresh #362 outputs show

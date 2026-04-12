@@ -28,7 +28,7 @@ Evidence files:
 
 | Route | Count | Ownership note | Action |
 | --- | ---: | --- | --- |
-| `<no-context>` | 44 | intentionally unresolved | hold |
+| `<no-context>` | 48 | intentionally unresolved (44 unresolved, 3 logic_required, 1 static_leaf) | hold |
 | `DescriptionLongDescriptionPatch` | 16 | mid-pipeline-owned | **first actionable batch** |
 | `DescriptionShortDescriptionPatch` | 12 | mid-pipeline-owned | **first actionable batch** |
 | `GetDisplayNamePatch` | 4 | intentionally unresolved builder/display-name seam | hold |

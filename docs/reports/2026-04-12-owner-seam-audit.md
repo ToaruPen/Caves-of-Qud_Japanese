@@ -14,7 +14,7 @@ Audit the remaining owner seams and dictionary buckets with post-#362 / post-#36
 
 | Bucket | Representative family | Verdict | Why |
 | --- | --- | --- | --- |
-| DidX / MessageFrame | `Prone` | existing-seam asset-gap | `DidX` already has the `XDidYTranslationPatch` / `MessageFrameTranslator` seam. Batch 01 settled `Prone` as the existing seam plus three missing tier3 asset rows (`down on {0}`, `from {0}`, `up from {0}`), so this is a narrow asset gap, not a new route. |
+| DidX / MessageFrame | `Prone` | existing-seam asset-gap | `DidX` already has the `XDidYTranslationPatch` / `MessageFrameTranslator` seam. Batch 01 settled `Prone` as the existing seam plus three missing tier 3 asset rows (`down on {0}`, `from {0}`, `up from {0}`), so this is a narrow asset gap, not a new route. |
 | DidX / MessageFrame | `HolographicBleeding` | existing-seam verification | The batch notes already downgraded it to likely stale inventory / verification on the existing message-frame seam because the verbs already exist in `verbs.ja.json`. |
 | Does / VerbComposition | `message-frame-normalizable` quick wins (`stunned`, `open`, `already full`, `falls/returns to the ground`) | existing-seam verification | The repo already has a dedicated Does seam (`DoesFragmentMarkingPatch` + `DoesVerbRouteTranslator`). These rows are the normalizable quick wins that stay on that seam and mainly need verification/reclassification. |
 | Does / VerbComposition | `does-composition-specific` rows (`is empty`, `has no room for more {x}`, `encoded with ...`) | existing-seam asset-gap | The seam exists, but these families need producer-side helper/template handling rather than sink-side compensation. That is still seam-owned work, not a route discovery problem. |
