@@ -718,14 +718,14 @@ When the game updates (e.g., 2.0.4 → 2.0.5):
 
 ### Tooling
 
-Add `--diff` flag to `scan_text_producers.py`:
+Add `--diff` flag to `scripts/legacies/scan_text_producers.py`:
 
 ```bash
 # Full scan (initial or rebuild)
-python scripts/scan_text_producers.py
+python scripts/legacies/scan_text_producers.py
 
 # Incremental scan after game update
-python scripts/scan_text_producers.py --diff ~/Dev/coq-decompiled-new/
+python scripts/legacies/scan_text_producers.py --diff ~/Dev/coq-decompiled-new/
 ```
 
 ### Current Status

@@ -12,9 +12,9 @@ The immediate problem is not "which new strings should we import first?" It is "
   - a proven fixed-leaf must be stable, owner-safe, markup-preserving, and not `needs_runtime`
 - `docs/RULES.md:86-88`
   - dynamic, procedural, `message-frame`, builder/display-name, unresolved, and runtime-dependent candidates must not be routed into dictionary work unless separately proven safe
-- `scripts/scanner/inventory.py:221-233`
+- `scripts/legacies/scanner/inventory.py:221-233`
   - scanner-side `is_proven_fixed_leaf` requires `Leaf`, `HIGH` confidence, route provenance, ownership provenance, `destination_dictionary`, and no `needs_review` / `needs_runtime` / rejection reason
-- `scripts/scanner/fixed_leaf_validation.py:107-132`
+- `scripts/legacies/scanner/fixed_leaf_validation.py:107-132`
   - anything that fails that gate is rendered as a `BROAD_ENTRY`
 
 So the first pruning question is simple: does this candidate still satisfy the proven fixed-leaf contract after route ownership is considered?
@@ -45,10 +45,10 @@ These rows all satisfy the scanner's static `is_proven_fixed_leaf` gate with ide
 
 ### 1. Literal strings are not automatically safe fixed-leaf entries
 
-- `scripts/scanner/rule_classifier.py:131-154`
+- `scripts/legacies/scanner/rule_classifier.py:131-154`
   - generic sink scanning marks string literals as `Leaf`
   - but template syntax, `GetDisplayName`, `StringBuilder`, and unresolved expressions are classified out of the fixed-leaf default immediately
-- `scripts/scanner/rule_classifier.py:221-278`
+- `scripts/legacies/scanner/rule_classifier.py:221-278`
   - only a high-confidence `Leaf` with no review/runtime flags gets default fixed-leaf provenance
   - other types are assigned rejection reasons such as `template`, `builder_display_name`, `message_frame`, `verb_composition`, `procedural`, `narrative_template`, or `unresolved`
 
@@ -56,10 +56,10 @@ So the fixed-leaf queue must still be reviewed for "literal but not meaningful" 
 
 ### 2. Validator rejects broad or malformed promotions upstream
 
-- `scripts/scanner/fixed_leaf_validation.py:107-118,169-178`
+- `scripts/legacies/scanner/fixed_leaf_validation.py:107-118,169-178`
   - non-proven candidates fail as `BROAD_ENTRY`
   - failure factors are surfaced as ownership class, `needs_review`, and `needs_runtime`
-- `scripts/scanner/fixed_leaf_validation.py:135-166`
+- `scripts/legacies/scanner/fixed_leaf_validation.py:135-166`
   - duplicate keys fail separately as `DUPLICATE_KEY`
   - destination mismatch is also validated before promotion
 
@@ -70,8 +70,8 @@ That means pruning obvious pseudo-leaf rows is not optional cleanup. It directly
 Even outside the current 27-row queue, the scanner rules make the broader pruning target explicit:
 
 - `template` / `builder_display_name` / `message_frame` / `verb_composition` / `variable_template` / `procedural` / `narrative_template` / `unresolved`
-  - see `scripts/scanner/inventory.py:82-94`
-  - and `scripts/scanner/rule_classifier.py:260-279`
+  - see `scripts/legacies/scanner/inventory.py:82-94`
+  - and `scripts/legacies/scanner/rule_classifier.py:260-279`
 
 Representative current inventory examples in `docs/candidate-inventory.json`:
 
