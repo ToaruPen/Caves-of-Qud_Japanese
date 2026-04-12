@@ -40,6 +40,7 @@ internal static class DynamicTextObservability
         }
 
         var normalizedRoute = ObservabilityHelpers.ExtractPrimaryContext(route);
+        var structuredRoute = route ?? ObservabilityHelpers.NoContextLabel;
         var counterKey = BuildCounterKey(normalizedRoute, family);
         var hitCount = AddOrUpdateCapped(RouteFamilyCounts, counterKey, MaxRouteFamilies);
         if (!ObservabilityHelpers.ShouldLogMissingHit(hitCount))
@@ -56,7 +57,7 @@ internal static class DynamicTextObservability
             " source='" + ObservabilityHelpers.SanitizeForLog(sourceValue, MaxValueLength) +
             "' translated='" + ObservabilityHelpers.SanitizeForLog(translatedValue, MaxValueLength) +
             "'." + Translator.GetCurrentLogContextSuffix()
-            + ObservabilityHelpers.BuildHelperStructuredSuffix(normalizedRoute, family, sourceValue));
+            + ObservabilityHelpers.BuildHelperStructuredSuffix(structuredRoute, family, sourceValue));
     }
 
     private static string BuildCounterKey(string route, string family)
