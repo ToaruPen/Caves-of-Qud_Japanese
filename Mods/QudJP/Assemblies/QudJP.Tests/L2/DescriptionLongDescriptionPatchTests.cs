@@ -233,6 +233,40 @@ public sealed class DescriptionLongDescriptionPatchTests
     }
 
     [Test]
+    public void Postfix_PreservesOriginalVillageTarget_WhenVillageTemplateTranslationIsMissing()
+    {
+        WriteDictionary(("digging up the remains of their ancestors", "祖先の遺骸を掘り起こしたため"));
+
+        RunWithDescriptionPatch(() =>
+        {
+            const string source = "Hated by the villagers of アラガシュル for digging up the remains of their ancestors.";
+            var target = new DummyDescriptionTarget(source);
+            var builder = new StringBuilder();
+            target.GetLongDescription(builder);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    builder.ToString(),
+                    Is.EqualTo("the villagers of アラガシュルに憎まれている。理由: 祖先の遺骸を掘り起こしたため。"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(DescriptionLongDescriptionPatch),
+                        "Description.FactionDisposition"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(UITextSkinTranslationPatch),
+                        nameof(DescriptionLongDescriptionPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        source,
+                        source),
+                    Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
     public void Postfix_PreservesColorCodes_WhenWholeVillagersTargetIsWrapped()
     {
         WriteDictionary(
@@ -262,6 +296,42 @@ public sealed class DescriptionLongDescriptionPatchTests
                         SinkObservation.ObservationOnlyDetail,
                         "Hated by {{C|the villagers of アラガシュル}} for digging up the remains of their ancestors.",
                         "Hated by {{C|the villagers of アラガシュル}} for digging up the remains of their ancestors."),
+                    Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
+    public void Postfix_PreservesNestedWrappers_WhenVillagersTargetReorders()
+    {
+        WriteDictionary(
+            ("The villagers of {0}", "{0}の村人たち"),
+            ("digging up the remains of their ancestors", "祖先の遺骸を掘り起こしたため"));
+
+        RunWithDescriptionPatch(() =>
+        {
+            const string source = "Hated by {{W|the villagers of {{C|アラガシュル}}}} for digging up the remains of their ancestors.";
+            var target = new DummyDescriptionTarget(source);
+            var builder = new StringBuilder();
+            target.GetLongDescription(builder);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    builder.ToString(),
+                    Is.EqualTo("{{W|{{C|アラガシュル}}の村人たち}}に憎まれている。理由: 祖先の遺骸を掘り起こしたため。"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(DescriptionLongDescriptionPatch),
+                        "Description.FactionDisposition"),
+                    Is.GreaterThan(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(UITextSkinTranslationPatch),
+                        nameof(DescriptionLongDescriptionPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        source,
+                        source),
                     Is.EqualTo(0));
             });
         });

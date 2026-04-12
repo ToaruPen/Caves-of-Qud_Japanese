@@ -165,38 +165,46 @@ internal static class DescriptionTextTranslator
 
         relation = RestoreBalancedCapture(relation, spans, match.Groups["relation"]);
         var targetGroup = match.Groups["target"];
+        var isVillageDispositionTarget = VillageDispositionTargetPattern.IsMatch(targetGroup.Value);
         string target;
         if (!TryTranslateVillageDispositionTarget(targetGroup, spans, out target))
         {
-            var strippedTarget = StringHelpers.StripLeadingEnglishArticle(
-                targetGroup.Value,
-                includeCapitalizedDefiniteArticle: true);
-            target = TranslateDispositionTarget(targetGroup.Value);
-
-            if (!string.Equals(strippedTarget, targetGroup.Value, StringComparison.Ordinal) && spans is not null && spans.Count > 0)
+            if (isVillageDispositionTarget)
             {
-                var articleLength = targetGroup.Value.Length - strippedTarget.Length;
-                var strippedStart = targetGroup.Index + articleLength;
-                var hasOpeningBeforeStrippedStart = false;
-                for (var index = 0; index < spans.Count; index++)
-                {
-                    var span = spans[index];
-                    if (span.Index < strippedStart
-                        && span.Index >= targetGroup.Index
-                        && ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
-                    {
-                        hasOpeningBeforeStrippedStart = true;
-                        break;
-                    }
-                }
-
-                target = hasOpeningBeforeStrippedStart
-                    ? RestoreBalancedCapture(target, spans, targetGroup)
-                    : RestoreCaptureAtOffset(target, spans, strippedStart, strippedTarget.Length);
+                target = RestoreBalancedCapture(targetGroup.Value, spans, targetGroup);
             }
             else
             {
-                target = RestoreBalancedCapture(target, spans, targetGroup);
+                var strippedTarget = StringHelpers.StripLeadingEnglishArticle(
+                    targetGroup.Value,
+                    includeCapitalizedDefiniteArticle: true);
+                target = TranslateDispositionTarget(targetGroup.Value);
+
+                if (!string.Equals(strippedTarget, targetGroup.Value, StringComparison.Ordinal) && spans is not null && spans.Count > 0)
+                {
+                    var articleLength = targetGroup.Value.Length - strippedTarget.Length;
+                    var strippedStart = targetGroup.Index + articleLength;
+                    var hasOpeningBeforeStrippedStart = false;
+                    for (var index = 0; index < spans.Count; index++)
+                    {
+                        var span = spans[index];
+                        if (span.Index < strippedStart
+                            && span.Index >= targetGroup.Index
+                            && ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
+                        {
+                            hasOpeningBeforeStrippedStart = true;
+                            break;
+                        }
+                    }
+
+                    target = hasOpeningBeforeStrippedStart
+                        ? RestoreBalancedCapture(target, spans, targetGroup)
+                        : RestoreCaptureAtOffset(target, spans, strippedStart, strippedTarget.Length);
+                }
+                else
+                {
+                    target = RestoreBalancedCapture(target, spans, targetGroup);
+                }
             }
         }
         var reasonGroup = match.Groups["reason"];
@@ -397,15 +405,6 @@ internal static class DescriptionTextTranslator
             targetGroup.Index + match.Groups["name"].Index,
             match.Groups["name"].Length);
         translated = translatedTemplate.Replace("{0}", translatedName);
-        if (spans is not null && spans.Count > 0)
-        {
-            var nameStart = targetGroup.Index + match.Groups["name"].Index;
-            var nameSpans = ColorCodePreserver.SliceSpans(spans, nameStart, match.Groups["name"].Length);
-            if (nameSpans.Any(static span => ColorCodePreserver.IsOpeningBoundaryToken(span.Token)))
-            {
-                return true;
-            }
-        }
 
         var targetSpans = spans is not null && spans.Count > 0
             ? ColorCodePreserver.SliceSpans(spans, targetGroup.Index, targetGroup.Length)
@@ -418,10 +417,24 @@ internal static class DescriptionTextTranslator
             translated.Length);
         if (targetSpans is not null && targetSpans.Count > 0)
         {
+            var nameStart = match.Groups["name"].Index;
+            var openingStack = new Stack<ColorSpan>();
             for (var index = 0; index < targetSpans.Count; index++)
             {
                 var span = targetSpans[index];
-                if (span.Index == targetGroup.Length && ColorCodePreserver.IsClosingBoundaryToken(span.Token))
+                if (ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
+                {
+                    openingStack.Push(span);
+                    continue;
+                }
+
+                if (!ColorCodePreserver.IsClosingBoundaryToken(span.Token) || span.Index != targetGroup.Length || openingStack.Count == 0)
+                {
+                    continue;
+                }
+
+                var opening = openingStack.Pop();
+                if (opening.Index < nameStart)
                 {
                     targetBoundarySpans.Add(new ColorSpan(translated.Length, span.Token));
                 }
