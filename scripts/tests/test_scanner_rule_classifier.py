@@ -373,11 +373,7 @@ def test_classifies_literal_string_args_as_leaf(tmp_path: Path, case: Case) -> N
     assert site.pattern == case.matched_code
     assert site.source_route == case.family
     assert site.ownership_class is OwnershipClass.MID_PIPELINE_OWNED
-    expected_destination = (
-        DestinationDictionary.SCOPED
-        if case.family in {"Popup", "AddPlayerMessage"}
-        else DestinationDictionary.GLOBAL_FLAT
-    )
+    expected_destination = DestinationDictionary.SCOPED if case.family == "Popup" else DestinationDictionary.GLOBAL_FLAT
     assert site.destination_dictionary is expected_destination
     assert site.rejection_reason is None
 
