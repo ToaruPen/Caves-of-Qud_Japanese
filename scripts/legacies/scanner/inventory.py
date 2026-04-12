@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Final
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -77,6 +77,32 @@ class DestinationDictionary(StrEnum):
 
 
 SCOPED_DESTINATION_ROUTES = frozenset({"AddPlayerMessage", "Popup"})
+
+FIRST_PR_STATIC_CONSUMER_BOUNDARY: Final[dict[str, tuple[str, ...]]] = {
+    "pilot-aware": (
+        "Roslyn pilot schema contract",
+        "Roslyn pilot verification/tests",
+    ),
+    "bridge-only": (
+        "scripts/legacies/scanner/inventory.py stable/queryable view surface",
+        "scripts/legacies/scanner/cross_reference.py legacy scanner candidate-inventory bridge/view-only consumer",
+        "scripts/legacies/reconcile_inventory_status.py legacy scanner candidate-inventory bridge/view-only consumer",
+    ),
+    "deferred": (
+        "runtime observability consumers",
+        "scripts/triage/*",
+        "Phase F and unresolved full static consumer migration",
+    ),
+}
+
+
+def describe_first_pr_static_consumer_boundary() -> str:
+    """Return the frozen task-4 static-only consumer boundary for the first PR."""
+    lines = ["First-PR static consumer boundary (static-only):"]
+    for bucket, consumers in FIRST_PR_STATIC_CONSUMER_BOUNDARY.items():
+        lines.append(f"  {bucket}:")
+        lines.extend(f"    - {consumer}" for consumer in consumers)
+    return "\n".join(lines)
 
 
 class FixedLeafRejectionReason(StrEnum):
@@ -162,7 +188,7 @@ class FileRecord:
 
 @dataclass(frozen=True, slots=True)
 class SourceFileInventory:
-    """A stable, queryable view of files considered by the scanner."""
+    """A stable, queryable view surface in the first-PR bridge-only bucket."""
 
     files: tuple[FileRecord, ...]
 
@@ -418,12 +444,12 @@ def read_inventory_draft_json(path: Path) -> InventoryDraft:
 
 
 def write_candidate_inventory_json(path: Path, draft: InventoryDraft) -> None:
-    """Write a Phase 1d candidate inventory JSON payload."""
+    """Write a legacy bridge/view-only candidate inventory JSON payload."""
     write_inventory_draft_json(path, draft)
 
 
 def read_candidate_inventory_json(path: Path) -> InventoryDraft:
-    """Read a Phase 1d candidate inventory JSON payload."""
+    """Read a legacy bridge/view-only candidate inventory JSON payload."""
     return read_inventory_draft_json(path)
 
 

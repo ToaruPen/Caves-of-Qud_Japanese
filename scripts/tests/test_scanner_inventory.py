@@ -2,7 +2,8 @@
 
 from pathlib import Path
 
-from scripts.scanner.inventory import (
+import scripts.legacies.scanner.inventory as inventory_module
+from scripts.legacies.scanner.inventory import (
     Confidence,
     DestinationDictionary,
     ExclusionReason,
@@ -75,6 +76,35 @@ class TestSourceFileInventory:
         assert inventory.included_file_count == 1
         assert [record.path for record in inventory.included_files] == ["keep.cs"]
         assert [record.path for record in inventory.excluded_files] == ["drop.retry.cs"]
+
+    def test_first_pr_static_consumer_boundary_stays_static_only(self) -> None:
+        """Task 4 freezes the first-PR boundary to pilot-aware, bridge-only, and deferred buckets."""
+        assert hasattr(inventory_module, "FIRST_PR_STATIC_CONSUMER_BOUNDARY")
+
+        boundary = inventory_module.FIRST_PR_STATIC_CONSUMER_BOUNDARY
+
+        assert tuple(boundary) == ("pilot-aware", "bridge-only", "deferred")
+        assert boundary["pilot-aware"] == (
+            "Roslyn pilot schema contract",
+            "Roslyn pilot verification/tests",
+        )
+        assert boundary["bridge-only"] == (
+            "scripts/legacies/scanner/inventory.py stable/queryable view surface",
+            "scripts/legacies/scanner/cross_reference.py legacy scanner candidate-inventory bridge/view-only consumer",
+            (
+                "scripts/legacies/reconcile_inventory_status.py "
+                "legacy scanner candidate-inventory bridge/view-only consumer"
+            ),
+        )
+        assert boundary["deferred"] == (
+            "runtime observability consumers",
+            "scripts/triage/*",
+            "Phase F and unresolved full static consumer migration",
+        )
+        assert all("runtime" not in consumer for consumer in boundary["pilot-aware"])
+        assert all("scripts/triage" not in consumer for consumer in boundary["pilot-aware"])
+        assert all("runtime" not in consumer for consumer in boundary["bridge-only"])
+        assert all("scripts/triage" not in consumer for consumer in boundary["bridge-only"])
 
 
 class TestInventoryDraftJson:
