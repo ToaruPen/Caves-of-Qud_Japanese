@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import StrEnum
 
-from scripts.scanner.inventory import (
+from scripts.legacies.scanner.inventory import (
     DestinationDictionary,
     FixedLeafRejectionReason,
     InventoryDraft,
