@@ -164,8 +164,13 @@ internal static class DescriptionTextTranslator
         }
 
         relation = RestoreBalancedCapture(relation, spans, match.Groups["relation"]);
-        var target = TranslateDispositionTarget(match.Groups["target"].Value);
-        target = RestoreBalancedCapture(target, spans, match.Groups["target"]);
+        var targetGroup = match.Groups["target"];
+        string target;
+        if (!TryTranslateVillageDispositionTarget(targetGroup, spans, out target))
+        {
+            target = TranslateDispositionTarget(target);
+            target = RestoreBalancedCapture(target, spans, targetGroup);
+        }
         var reasonGroup = match.Groups["reason"];
         if (!reasonGroup.Success)
         {
@@ -325,11 +330,6 @@ internal static class DescriptionTextTranslator
             return translated;
         }
 
-        if (TryTranslateVillageDispositionTarget(source, out translated))
-        {
-            return translated;
-        }
-
         var strippedArticle = StringHelpers.StripLeadingEnglishArticle(source, includeCapitalizedDefiniteArticle: true);
         if (string.Equals(strippedArticle, source, StringComparison.Ordinal))
         {
@@ -347,24 +347,44 @@ internal static class DescriptionTextTranslator
             : source;
     }
 
-    private static bool TryTranslateVillageDispositionTarget(string source, out string translated)
+    private static bool TryTranslateVillageDispositionTarget(Group targetGroup, IReadOnlyList<ColorSpan>? spans, out string translated)
     {
-        var match = VillageDispositionTargetPattern.Match(source);
+        var match = VillageDispositionTargetPattern.Match(targetGroup.Value);
         if (!match.Success)
         {
-            translated = source;
+            translated = targetGroup.Value;
             return false;
         }
 
         var translatedTemplate = Translator.Translate("The villagers of {0}");
         if (string.Equals(translatedTemplate, "The villagers of {0}", StringComparison.Ordinal))
         {
-            translated = source;
+            translated = targetGroup.Value;
             return false;
         }
 
-        translated = translatedTemplate.Replace("{0}", match.Groups["name"].Value);
+        var translatedName = RestoreCaptureAtOffset(
+            match.Groups["name"].Value,
+            spans,
+            targetGroup.Index + match.Groups["name"].Index,
+            match.Groups["name"].Length);
+        translated = translatedTemplate.Replace("{0}", translatedName);
         return true;
+    }
+
+    private static string RestoreCaptureAtOffset(string value, IReadOnlyList<ColorSpan>? spans, int startIndex, int length)
+    {
+        if (spans is null || spans.Count == 0 || length < 0)
+        {
+            return value;
+        }
+
+        var captureSpans = ColorCodePreserver.SliceSpans(spans, startIndex, length);
+        captureSpans.AddRange(ColorCodePreserver.SliceAdjacentCaptureBoundarySpans(spans, startIndex, length));
+        captureSpans = FilterBalancedBoundarySpans(captureSpans);
+        return captureSpans.Count == 0
+            ? value
+            : ColorAwareTranslationComposer.Restore(value, captureSpans);
     }
 
     private static bool ContainsJapaneseCharacters(string source)

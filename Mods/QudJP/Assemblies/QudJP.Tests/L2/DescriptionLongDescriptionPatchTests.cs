@@ -165,6 +165,33 @@ public sealed class DescriptionLongDescriptionPatchTests
     }
 
     [Test]
+    public void Postfix_PreservesColorCodes_WhenVillagersTargetReorders()
+    {
+        WriteDictionary(
+            ("The villagers of {0}", "{0}の村人たち"),
+            ("digging up the remains of their ancestors", "祖先の遺骸を掘り起こしたため"));
+
+        RunWithDescriptionPatch(() =>
+        {
+            var target = new DummyDescriptionTarget("Hated by the villagers of {{C|アラガシュル}} for digging up the remains of their ancestors.");
+            var builder = new StringBuilder();
+            target.GetLongDescription(builder);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    builder.ToString(),
+                    Is.EqualTo("{{C|アラガシュル}}の村人たちに憎まれている。理由: 祖先の遺骸を掘り起こしたため。"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(DescriptionLongDescriptionPatch),
+                        "Description.FactionDisposition"),
+                    Is.GreaterThan(0));
+            });
+        });
+    }
+
+    [Test]
     public void Postfix_PassesThroughUnknownDescription_WhenPatched()
     {
         WriteDictionary(("Known text", "既知の文"));
