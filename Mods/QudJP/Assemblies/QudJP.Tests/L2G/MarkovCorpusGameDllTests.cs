@@ -1,4 +1,6 @@
 #if HAS_GAME_DLL
+using System.Collections;
+using System.Reflection;
 using QudJP.Patches;
 
 namespace QudJP.Tests.L2G;
@@ -85,6 +87,96 @@ public sealed class MarkovCorpusGameDllTests
         var sentence = MarkovCorpusTranslationPatch.GenerateSentence(chainData).TrimEnd();
 
         Assert.That(MarkovCorpusTranslationPatch.ContainsJapaneseCharacters(sentence), Is.True, "Generated sentences should retain Japanese content even when the corpus contains internal '.' tokens.");
+    }
+
+    [Test]
+    public void FindJapaneseSeed_PrefersJapaneseOpeningWord()
+    {
+        var chainData = MarkovCorpusTranslationPatch.BuildChainData("alpha beta gamma", 1);
+        SetOpeningWords(chainData, "alpha", "始まり", "beta");
+        SetChainEntries(chainData, ("連鎖", GetReusableChainValue(chainData)));
+
+        var seed = InvokeFindJapaneseSeed(chainData);
+
+        Assert.That(seed, Is.EqualTo("始まり"));
+    }
+
+    [Test]
+    public void FindJapaneseSeed_FallsBackToJapaneseChainKey()
+    {
+        var chainData = MarkovCorpusTranslationPatch.BuildChainData("alpha beta gamma", 1);
+        SetOpeningWords(chainData, "alpha", "beta");
+        SetChainEntries(chainData, ("連鎖", GetReusableChainValue(chainData)));
+
+        var seed = InvokeFindJapaneseSeed(chainData);
+
+        Assert.That(seed, Is.EqualTo("連鎖"));
+    }
+
+    [Test]
+    public void GenerateSentence_LogsWarningWhenJapaneseSeedCannotBeFound()
+    {
+        var chainData = MarkovCorpusTranslationPatch.BuildChainData("alpha beta gamma", 1);
+        SetOpeningWords(chainData, "alpha", "beta");
+        SetChainEntries(chainData, ("alpha", GetReusableChainValue(chainData)));
+
+        Assert.That(InvokeFindJapaneseSeed(chainData), Is.Null);
+
+        var trace = TestTraceHelper.CaptureTrace(() =>
+            Assert.That(() => MarkovCorpusTranslationPatch.GenerateSentence(chainData), Throws.Exception));
+
+        Assert.That(trace, Does.Contain("could not find a Japanese seed"));
+    }
+
+    private static string? InvokeFindJapaneseSeed(object chainData)
+    {
+        var method = typeof(MarkovCorpusTranslationPatch).GetMethod("FindJapaneseSeed", BindingFlags.NonPublic | BindingFlags.Static)
+            ?? throw new InvalidOperationException("FindJapaneseSeed method not found.");
+
+        return method.Invoke(null, new[] { chainData }) as string;
+    }
+
+    private static void SetOpeningWords(object chainData, params string[] values)
+    {
+        var openingWords = GetFieldValue<IList>(chainData, "OpeningWords");
+        openingWords.Clear();
+        foreach (var value in values)
+        {
+            openingWords.Add(value);
+        }
+    }
+
+    private static object GetReusableChainValue(object chainData)
+    {
+        var chain = GetFieldValue<IDictionary>(chainData, "Chain");
+        foreach (DictionaryEntry entry in chain)
+        {
+            if (entry.Value is not null)
+            {
+                return entry.Value;
+            }
+        }
+
+        throw new InvalidOperationException("No existing Markov chain entry is available for test reuse.");
+    }
+
+    private static void SetChainEntries(object chainData, params (string Key, object Value)[] entries)
+    {
+        var chain = GetFieldValue<IDictionary>(chainData, "Chain");
+        chain.Clear();
+        foreach (var (key, value) in entries)
+        {
+            chain.Add(key, value);
+        }
+    }
+
+    private static T GetFieldValue<T>(object target, string fieldName) where T : class
+    {
+        var field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException($"Field '{fieldName}' not found on '{target.GetType().FullName}'.");
+
+        return field.GetValue(target) as T
+            ?? throw new InvalidOperationException($"Field '{fieldName}' on '{target.GetType().FullName}' is not a {typeof(T).Name}.");
     }
 }
 #endif
