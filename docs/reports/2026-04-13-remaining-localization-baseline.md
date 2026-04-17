@@ -46,7 +46,7 @@ Deferred rule for this report: do not let sink-observed / builder-display-name u
 | --- | --- | --- | --- | ---: | --- | --- |
 | Popup producer/handoff routes | `PopupShowTranslationPatch`, `PopupMessageTranslationPatch`, `PopupPickOptionTranslationPatch`, `PopupAskStringTranslationPatch`, `PopupAskNumberTranslationPatch`, `PopupShowSpaceTranslationPatch`, `QudMenuBottomContextTranslationPatch` | `PopupTranslationPatch.TranslatePopupTextForProducerRoute`, `PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute` (`Mods/QudJP/Assemblies/src/Patches/PopupTranslationPatch.cs:238-276`) | `Unresolved`, `Leaf`, `Template`, `Builder` | 0 | `translated=1451` | Route-identifying only, hold only. Keep the popup handoff outside owner-safe backlog until a fresh Rosetta `Player.log` proves the upstream producer owns the text. |
 | Display-name builder/process routes | `GetDisplayNamePatch`, `GetDisplayNameProcessPatch` | `GetDisplayNameRouteTranslator.TranslatePreservingColors` (`Mods/QudJP/Assemblies/src/Patches/GetDisplayNameRouteTranslator.cs:66-185`) | `Builder` | 0 | `translated=143` | Route-identifying only, hold only. Keep the builder/process seam outside owner-safe backlog until a fresh Rosetta `Player.log` proves the composed name path is owned here. |
-| Sink-observed fallback boundary | `UITextSkinTranslationPatch` | `UITextSkinTranslationPatch.TranslatePreservingColors`, `SinkObservation.LogUnclaimed` (`Mods/QudJP/Assemblies/src/Patches/UITextSkinTranslationPatch.cs:65-119`) | observation only | n/a | observation only | Observation only, not backlog. This boundary records unclaimed text, but it does not justify promotion for `Popup*` or `GetDisplayName*`. |
+| Sink-observed fallback boundary | `UITextSkinTranslationPatch` | `UITextSkinTranslationPatch.TranslatePreservingColors`, `SinkObservation.LogUnclaimed` (`Mods/QudJP/Assemblies/src/Patches/UITextSkinTranslationPatch.cs:65-119`) | observation only | n/a | observation-only boundary | Observation only, not backlog. This boundary records unclaimed text, but it does not justify promotion for `Popup*` or `GetDisplayName*`. |
 | generic `AddPlayerMessage` | generic `AddPlayerMessage` | observation-only sink path | `Unresolved`, `Leaf`, `Template` | 0 | `translated=581` | sink-observed umbrella; keep observation-only, keep scanner provenance on the sink/review path, and peel off producer-owned overlays separately (`docs/reports/2026-04-11-emit-addplayermessage-batch-01.md:12-65`) |
 | `<no-context>` | `<no-context>` | actual upstream family as proven later | any | 0 | no current rows | keep separate from owner-safe backlog if it reappears; when runtime triage does surface it, preserve the mixed explicit outcomes (`static_leaf` / `logic_required` / `unresolved`) instead of collapsing it into one sink bucket; current scan still shows no `<no-context>` residue |
 | **deferred buckets total** |  |  |  | **0** | `translated-only footprint = 2175` |  |
@@ -85,7 +85,7 @@ Non-goal rule for this report: keep template/procedural/pseudo-generic families 
 | `EmitMessage` | `Template` | `needs_review=8` | 8 | emit-route template residue is not part of the producer-owned unresolved queue admitted above |
 | **non-goals total** |  |  | **801** |  |
 
-## Baseline closure check
+## Baseline-held partition closure check
 
 | Partition | Count |
 | --- | ---: |
@@ -93,7 +93,9 @@ Non-goal rule for this report: keep template/procedural/pseudo-generic families 
 | deferred buckets | 0 |
 | fixed-leaf residue | 27 |
 | non-goals | 801 |
-| **partitioned non-translated remainder** | **2278** |
+| **partitioned baseline-held total** | **2278** |
+
+This closure check tracks the baseline-held route-family partitions that were grouped before the reconciled bridge inventory status rollup. It is broader than the current `non-translated remainder = 1704` summary above because the partition tables still carry route-held baseline buckets instead of the reconciled bridge-only status tally.
 
 Current decision: no family in this partition is promoted to owner-safe backlog yet. `Popup*` and `GetDisplayName*` stay on hold until a fresh Rosetta `Player.log` closes the freshness gap, and `UITextSkinTranslationPatch` stays observation only.
 
