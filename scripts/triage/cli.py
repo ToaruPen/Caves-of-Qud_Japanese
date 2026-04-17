@@ -77,13 +77,13 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         report = _dispatch_command(args)
-    except ValueError as exc:
+        report_json = json.dumps(report, ensure_ascii=False, indent=2)
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(report_json, encoding="utf-8")
+    except (ValueError, OSError) as exc:
         print(f"Error: {exc}", file=sys.stderr)  # noqa: T201
         return 1
 
-    report_json = json.dumps(report, ensure_ascii=False, indent=2)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(report_json, encoding="utf-8")
     print(f"Triage report written to {args.output}", file=sys.stderr)  # noqa: T201
     return 0
 

@@ -276,6 +276,33 @@ def test_module_cli_classify_keeps_no_context_split_explicit(tmp_path: Path) -> 
     }
 
 
+def test_module_cli_classify_returns_error_when_output_parent_cannot_be_created(tmp_path: Path) -> None:
+    """The package CLI should flatten output-path OSErrors into a single-line failure."""
+    input_dir = tmp_path / "runtime"
+    blocked_parent = tmp_path / "occupied"
+    blocked_parent.write_text("not a directory", encoding="utf-8")
+
+    result = subprocess.run(  # noqa: S603 -- test invokes the repo-local package module via the active interpreter.
+        [
+            sys.executable,
+            "-m",
+            "scripts.triage.cli",
+            "classify",
+            "--input-dir",
+            str(input_dir),
+            "--output",
+            str(blocked_parent / "triage.json"),
+        ],
+        capture_output=True,
+        text=True,
+        cwd=REPO_ROOT,
+        check=False,
+    )
+
+    assert result.returncode == 1
+    assert "Error:" in result.stderr
+
+
 def test_cli_preserves_grouping_when_structured_values_contain_delimiter_like_text(tmp_path: Path) -> None:
     """Escaped Phase F values do not hijack actionable grouping or Phase F routes."""
     log = tmp_path / "Player.log"
