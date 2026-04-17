@@ -16,6 +16,7 @@ public static class MarkovCorpusTranslationPatch
     internal const string VanillaCorpusName = "LibraryCorpus.json";
 
     private const string JapaneseCorpusRelativePath = "Corpus/LibraryCorpus.ja.json";
+    private const int MaxSeedRetryAttempts = 32;
 
     private static readonly Regex WhitespacePattern = new(@"\s+", RegexOptions.Compiled);
     private static readonly Regex JapaneseCharacterPattern = new("[\\p{IsHiragana}\\p{IsKatakana}\\p{IsCJKUnifiedIdeographs}]", RegexOptions.Compiled);
@@ -182,7 +183,7 @@ public static class MarkovCorpusTranslationPatch
             effectiveSeed = discoveredSeed;
         }
 
-        var maxAttempts = string.IsNullOrEmpty(effectiveSeed) ? 32 : 1;
+        var maxAttempts = string.IsNullOrEmpty(effectiveSeed) ? MaxSeedRetryAttempts : 1;
         string? normalized = null;
         for (var attempt = 0; attempt < maxAttempts; attempt++)
         {
