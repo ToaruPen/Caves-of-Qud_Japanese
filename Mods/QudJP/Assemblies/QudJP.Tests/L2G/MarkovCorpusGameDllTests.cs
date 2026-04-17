@@ -80,7 +80,7 @@ public sealed class MarkovCorpusGameDllTests
     }
 
     [Test]
-    public void GenerateSentence_AvoidsFalseSentenceStartsWithoutJapanese()
+    public void GenerateSentence_RetainsJapaneseContentDespiteInternalPeriodTokens()
     {
         var chainData = MarkovCorpusTranslationPatch.BuildChainData("出力 ファイル . Love . log .", 2);
 
