@@ -9,13 +9,13 @@
 | Phase 1a sink hits | 3778 | `.sisyphus/evidence/task-2-baseline-refresh.txt` |
 | Phase 1a override hits | 874 | `.sisyphus/evidence/task-2-baseline-refresh.txt` |
 | total sites | 4634 | `.sisyphus/evidence/task-2-baseline-refresh.txt` |
-| translated | 2356 | `docs/candidate-inventory.json` status tally |
-| unresolved | 1199 | `docs/candidate-inventory.json` status tally |
-| needs_review | 476 | `docs/candidate-inventory.json` status tally |
-| needs_patch | 338 | `docs/candidate-inventory.json` status tally |
+| translated | 2930 | current reconciled bridge inventory status tally in `docs/candidate-inventory.json` |
+| unresolved | 1199 | current reconciled bridge inventory status tally in `docs/candidate-inventory.json` |
+| needs_review | 200 | current reconciled bridge inventory status tally in `docs/candidate-inventory.json` |
+| needs_patch | 40 | current reconciled bridge inventory status tally in `docs/candidate-inventory.json` |
 | excluded | 265 | `docs/candidate-inventory.json` status tally |
 | needs_translation | 0 | current scan; prior 27-row pseudo-leaf queue is now carried as `excluded` residue |
-| non-translated remainder | 2278 | `unresolved + needs_review + needs_patch + excluded` |
+| non-translated remainder | 1704 | `unresolved + needs_review + needs_patch + excluded` |
 | fixed-leaf validation | `0` checked / `0` issues | `.sisyphus/evidence/task-2-baseline-refresh.txt` |
 
 ## Partition 1 — owner-safe backlog
