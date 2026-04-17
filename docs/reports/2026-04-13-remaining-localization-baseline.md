@@ -49,7 +49,7 @@ Deferred rule for this report: do not let sink-observed / builder-display-name u
 | Sink-observed fallback boundary | `UITextSkinTranslationPatch` | `UITextSkinTranslationPatch.TranslatePreservingColors`, `SinkObservation.LogUnclaimed` (`Mods/QudJP/Assemblies/src/Patches/UITextSkinTranslationPatch.cs:65-119`) | observation only | n/a | observation only | Observation only, not backlog. This boundary records unclaimed text, but it does not justify promotion for `Popup*` or `GetDisplayName*`. |
 | generic `AddPlayerMessage` | generic `AddPlayerMessage` | observation-only sink path | `Unresolved`, `Leaf`, `Template` | 0 | `translated=581` | sink-observed umbrella; keep observation-only, keep scanner provenance on the sink/review path, and peel off producer-owned overlays separately (`docs/reports/2026-04-11-emit-addplayermessage-batch-01.md:12-65`) |
 | `<no-context>` | `<no-context>` | actual upstream family as proven later | any | 0 | no current rows | keep separate from owner-safe backlog if it reappears; when runtime triage does surface it, preserve the mixed explicit outcomes (`static_leaf` / `logic_required` / `unresolved`) instead of collapsing it into one sink bucket; current scan still shows no `<no-context>` residue |
-| **deferred buckets total** |  | **0** | `translated-only footprint = 2175` |  |
+| **deferred buckets total** |  |  |  | **0** | `translated-only footprint = 2175` |  |
 
 ## Partition 3 — fixed-leaf / duplicate / pseudo-leaf residue
 

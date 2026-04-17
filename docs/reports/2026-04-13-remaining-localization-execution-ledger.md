@@ -32,17 +32,17 @@
 
 ### Wave 2: existing-seam follow-through
 
-6. Execute Does message-frame-normalizable quick wins.
-7. Execute Does composition-specific helper/template batch.
-8. Expand description-family coverage on the existing owner seams.
-9. Expand active-effect description/details coverage on the existing owner seams.
-10. Expand EmitMessage producer-owned family coverage.
+1. Execute Does message-frame-normalizable quick wins.
+2. Execute Does composition-specific helper/template batch.
+3. Expand description-family coverage on the existing owner seams.
+4. Expand active-effect description/details coverage on the existing owner seams.
+5. Expand EmitMessage producer-owned family coverage.
 
 ### Wave 3: deferred resolution + final cleanup
 
-11. Resolve `Popup*` / `GetDisplayName*` route-proof batches.
-12. Rebucket `<no-context>` and audit generic `AddPlayerMessage` exclusions, using the existing `scripts.triage.cli` package entrypoint for deterministic directory-based triage classification and empty-report format checks.
-13. Close duplicate-family / destination / fixed-leaf residue and publish the final remaining-work report.
+1. Resolve `Popup*` / `GetDisplayName*` route-proof batches.
+2. Rebucket `<no-context>` and audit generic `AddPlayerMessage` exclusions, using the existing `scripts.triage.cli` package entrypoint for deterministic directory-based triage classification and empty-report format checks.
+3. Close duplicate-family / destination / fixed-leaf residue and publish the final remaining-work report.
 
 ## Owner-safe backlog
 

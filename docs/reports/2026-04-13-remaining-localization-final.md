@@ -2,8 +2,8 @@
 
 ## Final scan and branch state
 
-- Raw final scanner evidence: 4634 sites, 2356 translated, 1199 unresolved, 476 needs_review, 338 needs_patch, 265 excluded, fixed-leaf validation 0 issues. See `.sisyphus/evidence/task-13-final-static.txt`.
-- Reconciled bridge inventory: 2930 translated, 1199 unresolved, 200 needs_review, 40 needs_patch, 265 excluded. See `.sisyphus/evidence/task-13-final-reconcile.txt` and `docs/candidate-inventory.json`.
+- Current `docs/candidate-inventory.json` metadata reports 4634 output sites, 777 rows flagged with `needs_review=true`, 2688 rows flagged with `needs_runtime=true`, and fixed-leaf validation split as 692 proven vs 3942 rejected.
+- Reconciled bridge inventory status counts in `docs/candidate-inventory.json` are 2930 `translated`, 1199 `unresolved`, 200 `needs_review`, 40 `needs_patch`, and 265 `excluded`.
 - The last two audited DidX rows that needed final inventory alignment, `XRL.World.Capabilities/Firefighting.cs::L125:C5` and `XRL.World.Parts.Mutation/ElectricalGeneration.cs::L384:C5`, are now aligned to `MessageFrames/verbs.ja.json` in the final inventory.
 
 ## Completed owner-safe families and seams
