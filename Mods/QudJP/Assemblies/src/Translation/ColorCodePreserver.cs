@@ -187,7 +187,7 @@ public static class ColorCodePreserver
                 continue;
             }
 
-            if (IsClosingBoundaryToken(span.Token))
+            if (IsCaptureClosingToken(span.Token))
             {
                 return true;
             }
