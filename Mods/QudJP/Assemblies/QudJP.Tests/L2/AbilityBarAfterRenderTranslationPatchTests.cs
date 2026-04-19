@@ -159,6 +159,52 @@ public sealed class AbilityBarAfterRenderTranslationPatchTests
     }
 
     [Test]
+    public void Postfix_PreservesMarkupWrappedEnglishModifierInTargetDisplayName()
+    {
+        WriteDictionary(
+            ("TARGET:", "ターゲット:"),
+            ("dromad merchant", "ドロマド商人"));
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
+            ("bloody", "{{r|血まみれの}}"),
+            ("[sitting]", "[座っている]"));
+
+        RunWithPostfixPatch(() =>
+        {
+            var target = new DummyAbilityBarAfterRenderTarget
+            {
+                NextTargetText = "{{C|TARGET: {{r|bloody}} Tam, dromad merchant [sitting]}}",
+            };
+
+            target.AfterRender(core: null, sb: null);
+
+            Assert.That(
+                target.GetTargetText(),
+                Is.EqualTo("{{C|ターゲット: {{r|血まみれの}}Tam、ドロマド商人 [座っている]}}"));
+        });
+    }
+
+    [Test]
+    public void Postfix_PreservesTerminalEmptyWrapperInTargetText()
+    {
+        WriteDictionary(("TARGET:", "ターゲット:"));
+
+        RunWithPostfixPatch(() =>
+        {
+            var target = new DummyAbilityBarAfterRenderTarget
+            {
+                NextTargetText = "{{C|<color=#3e83a5>TARGET:</color> タム、ドロマド商団 [座っている]{{B|}}}}",
+            };
+
+            target.AfterRender(core: null, sb: null);
+
+            Assert.That(
+                target.GetTargetText(),
+                Is.EqualTo("{{C|<color=#3e83a5>ターゲット:</color> タム、ドロマド商団 [座っている]{{B|}}}}"));
+        });
+    }
+
+    [Test]
     public void Postfix_RecordsOwnerRouteTransforms_WithoutUITextSkinSinkObservation()
     {
         WriteDictionary(
