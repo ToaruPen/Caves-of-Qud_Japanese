@@ -712,6 +712,10 @@ internal static class MessagePatternTranslator
 
     private static List<ColorSpan> SliceWholeLineBoundaryWrappers(IReadOnlyList<ColorSpan> spans, int sourceLength)
     {
+        // Keep this stack walk local to the relative RestoreRelative(...) path.
+        // AbilityBarAfterRenderTranslationPatch uses the same boundary matching, but it emits
+        // absolute spans at translatedLength for Restore(...), so the duplication here is in the
+        // span anchoring contract rather than the wrapper matching itself.
         var wholeLinePairs = new List<(ColorSpan Opening, int OpeningOrder, ColorSpan Closing, int ClosingOrder)>();
         var openingStack = new Stack<(ColorSpan Span, int Order)>();
 
