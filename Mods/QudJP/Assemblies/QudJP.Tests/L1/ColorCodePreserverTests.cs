@@ -170,6 +170,20 @@ public sealed class ColorCodePreserverTests
     }
 
     [Test]
+    public void RestoreCapture_PreservesEmptyWrapperAtCaptureEnd()
+    {
+        var input = "{{C|TARGET: タム、ドロマド商団 [座っている]{{B|}}}}";
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(input);
+        var match = Regex.Match(stripped, "^(?<label>TARGET:) (?<name>.+)$");
+
+        Assert.That(match.Success, Is.True);
+
+        var restored = ColorAwareTranslationComposer.RestoreCapture("タム、ドロマド商団 [座っている]", spans, match.Groups["name"]);
+
+        Assert.That(restored, Is.EqualTo("タム、ドロマド商団 [座っている]{{B|}}}}"));
+    }
+
+    [Test]
     public void TranslatePreservingColors_PreservesTerminalSingleCharacterWrapper()
     {
         var translated = ColorAwareTranslationComposer.TranslatePreservingColors(
