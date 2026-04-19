@@ -115,6 +115,54 @@ public sealed class DoesVerbRouteTranslatorPropertyTests
         return true.ToProperty();
     }
 
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(DoesVerbRouteTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty TryTranslateMarkedMessage_LeavesUnchangedWhenParsingFails(DoesVerbUnchangedPassThroughCase sample)
+    {
+        var ok = DoesVerbRouteTranslator.TryTranslateMarkedMessage(sample.Source, out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ok, Is.False);
+            Assert.That(translated, Is.EqualTo(sample.Source));
+        });
+
+        return true.ToProperty();
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(DoesVerbRouteTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty TryTranslateMarkedMessage_PreservesVisibleTextWhenTranslationFails(DoesVerbVisiblePassThroughCase sample)
+    {
+        var ok = DoesVerbRouteTranslator.TryTranslateMarkedMessage(sample.Source, out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ok, Is.False);
+            Assert.That(translated, Is.EqualTo(sample.ExpectedVisible));
+        });
+
+        return true.ToProperty();
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(DoesVerbRouteTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty TryTranslateRoutes_PreserveWholeMessageColorWrapper(DoesVerbColorCase sample)
+    {
+        var markedOk = DoesVerbRouteTranslator.TryTranslateMarkedMessage(sample.Source, out var markedTranslated);
+        if (markedOk)
+        {
+            Assert.That(markedTranslated, Is.EqualTo(sample.Expected));
+            return true.ToProperty();
+        }
+
+        var plainOk = DoesVerbRouteTranslator.TryTranslatePlainSentenceForTests(sample.Source, out var plainTranslated);
+        Assert.Multiple(() =>
+        {
+            Assert.That(plainOk, Is.True);
+            Assert.That(plainTranslated, Is.EqualTo(sample.Expected));
+        });
+
+        return true.ToProperty();
+    }
+
     private void WriteDictionary(
         IEnumerable<(string verb, string text)>? tier1 = null,
         IEnumerable<(string verb, string extra, string text)>? tier2 = null,
