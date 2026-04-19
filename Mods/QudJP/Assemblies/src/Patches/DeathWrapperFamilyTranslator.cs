@@ -320,7 +320,7 @@ internal static class DeathWrapperFamilyTranslator
         }
 
         var killer = TranslateEntityReference(match.Groups["killer"].Value, translationContext);
-        if (spans is not null && spans.Count > 0)
+        if (spans is not null && spans.Count > 0 && !HasColorMarkup(killer))
         {
             killer = ColorAwareTranslationComposer.RestoreCapture(killer, spans, match.Groups["killer"]);
         }
@@ -427,5 +427,11 @@ internal static class DeathWrapperFamilyTranslator
         return match.Groups["accidental"].Success
             ? "QudJP.DeathWrapper.AccidentalSuicide.Bare"
             : "QudJP.DeathWrapper.Suicide.Bare";
+    }
+
+    private static bool HasColorMarkup(string source)
+    {
+        var (stripped, _) = ColorAwareTranslationComposer.Strip(source);
+        return !string.Equals(stripped, source, StringComparison.Ordinal);
     }
 }
