@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Globalization;
+using System.Text;
 
 namespace QudJP;
 
@@ -90,27 +91,26 @@ internal static class FinalOutputObservability
 
     private static string BuildCounterKey(NormalizedObservation observation)
     {
-        return observation.Sink
-            + ObservabilityHelpers.ContextSeparator
-            + observation.Route
-            + ObservabilityHelpers.ContextSeparator
-            + observation.Detail
-            + ObservabilityHelpers.ContextSeparator
-            + observation.Phase
-            + ObservabilityHelpers.ContextSeparator
-            + observation.TranslationStatus
-            + ObservabilityHelpers.ContextSeparator
-            + observation.MarkupStatus
-            + ObservabilityHelpers.ContextSeparator
-            + observation.DirectMarkerStatus
-            + ObservabilityHelpers.ContextSeparator
-            + observation.SourceText
-            + ObservabilityHelpers.ContextSeparator
-            + observation.StrippedText
-            + ObservabilityHelpers.ContextSeparator
-            + observation.TranslatedText
-            + ObservabilityHelpers.ContextSeparator
-            + observation.FinalText;
+        var builder = new StringBuilder();
+        AppendCounterKeyPart(builder, observation.Sink);
+        AppendCounterKeyPart(builder, observation.Route);
+        AppendCounterKeyPart(builder, observation.Detail);
+        AppendCounterKeyPart(builder, observation.Phase);
+        AppendCounterKeyPart(builder, observation.TranslationStatus);
+        AppendCounterKeyPart(builder, observation.MarkupStatus);
+        AppendCounterKeyPart(builder, observation.DirectMarkerStatus);
+        AppendCounterKeyPart(builder, observation.SourceText);
+        AppendCounterKeyPart(builder, observation.StrippedText);
+        AppendCounterKeyPart(builder, observation.TranslatedText);
+        AppendCounterKeyPart(builder, observation.FinalText);
+        return builder.ToString();
+    }
+
+    private static void AppendCounterKeyPart(StringBuilder builder, string value)
+    {
+        builder.Append(value.Length.ToString(CultureInfo.InvariantCulture));
+        builder.Append(':');
+        builder.Append(value);
     }
 
     private static int AddOrUpdateCapped(ConcurrentDictionary<string, int> counters, string key, int maxKeys)

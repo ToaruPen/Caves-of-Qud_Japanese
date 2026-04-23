@@ -107,6 +107,27 @@ public sealed class FinalOutputObservabilityTests
         Assert.That(output, Does.Contain("final_text_sample=You don't penetrate the snapjaw."));
     }
 
+    [Test]
+    public void Record_DoesNotMergeCounterKeys_WhenFieldsContainContextSeparator()
+    {
+        var first = CreateObservation(sourceText: "A > B", strippedText: "C", finalText: "same");
+        var second = CreateObservation(sourceText: "A", strippedText: "B > C", finalText: "same");
+
+        var output = TestTraceHelper.CaptureTrace(() =>
+        {
+            FinalOutputObservability.Record(first);
+            FinalOutputObservability.Record(second);
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(FinalOutputObservability.GetHitCountForTests(first), Is.EqualTo(1));
+            Assert.That(FinalOutputObservability.GetHitCountForTests(second), Is.EqualTo(1));
+            Assert.That(CountOccurrences(output, "hit=1"), Is.EqualTo(2));
+            Assert.That(output, Does.Not.Contain("hit=2"));
+        });
+    }
+
     private static FinalOutputObservation CreateObservation(
         string sourceText = "Unknown text",
         string strippedText = "Unknown text",

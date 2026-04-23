@@ -525,6 +525,27 @@ def test_parse_final_output_probe_keeps_phase_and_sink_distinct(tmp_path: Path) 
     assert {entry.phase for entry in entries} == {"before_sink", "after_sink"}
 
 
+def test_parse_final_output_probe_keeps_stripped_and_translated_distinct(tmp_path: Path) -> None:
+    """Same source/final status with different intermediate samples must not collapse."""
+    log = tmp_path / "Player.log"
+    _write_log(
+        log,
+        [
+            _FINAL_OUTPUT_PROBE_NEW,
+            _FINAL_OUTPUT_PROBE_NEW.replace("stripped='You catch fire'", "stripped='You catch flames'", 1)
+            .replace("translated=''", "translated='あなたは燃える'", 1)
+            .replace("; stripped_text_sample=You catch fire;", "; stripped_text_sample=You catch flames;")
+            .replace("; translated_text_sample=;", "; translated_text_sample=あなたは燃える;"),
+        ],
+    )
+
+    entries = parse_log(log)
+
+    assert len(entries) == 2
+    assert {entry.stripped_text_sample for entry in entries} == {"You catch fire", "You catch flames"}
+    assert {entry.translated_text_sample for entry in entries} == {"", "あなたは燃える"}
+
+
 def test_parse_final_output_probe_unescapes_apostrophes(tmp_path: Path) -> None:
     """Apostrophes in final-output text do not truncate the prefix parse."""
     log = tmp_path / "Player.log"
