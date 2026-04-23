@@ -53,6 +53,7 @@ def classify(entry: LogEntry) -> TriageResult:
         classify_preserved_english,
         _classify_dynamic_probe,
         _classify_sink_observe,
+        _classify_final_output_probe,
         _classify_fragment,
         _classify_japanese_text,
         _classify_no_pattern,
@@ -94,6 +95,18 @@ def _classify_sink_observe(entry: LogEntry) -> TriageResult | None:
         entry=entry,
         classification=TriageClassification.UNRESOLVED,
         reason="SinkObserve is Phase F route-proof evidence — keep it separate from actionable triage",
+    )
+
+
+def _classify_final_output_probe(entry: LogEntry) -> TriageResult | None:
+    """Classify FinalOutputProbe observations as separate Phase F evidence."""
+    if entry.kind != LogEntryKind.FINAL_OUTPUT_PROBE:
+        return None
+    status = entry.translation_status or "<unknown-status>"
+    return TriageResult(
+        entry=entry,
+        classification=TriageClassification.UNRESOLVED,
+        reason=f"FinalOutputProbe is Phase F final-output evidence ({status}) — keep it non-actionable",
     )
 
 

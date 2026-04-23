@@ -60,6 +60,21 @@ _ASCII_WORD_PATTERN = re.compile(r"[A-Za-z]{2,}")
 _MARKUP_TOKEN_PATTERN = re.compile(
     r"\{\{[A-Za-z0-9#]+\||\}\}|&&|\^\^|&[A-Za-z]|\^[A-Za-z]|</?color(?:=[^>]+)?>|=[A-Za-z0-9_.]+=",
 )
+_FINAL_OUTPUT_OBSERVATION_FIELDS = (
+    "sink",
+    "detail",
+    "phase",
+    "translation_status",
+    "markup_status",
+    "direct_marker_status",
+    "source_text_sample",
+    "stripped_text_sample",
+    "translated_text_sample",
+    "final_text_sample",
+    "payload_mode",
+    "payload_excerpt",
+    "payload_sha256",
+)
 _DEFAULT_INVENTORY_TAB_PAGE_RIGHTS = 8
 _DEFAULT_INVENTORY_ITEM_SCAN_COUNT = 8
 _DEFAULT_INVENTORY_ITEM_ACTION_ROW_OFFSET = 1
@@ -1458,6 +1473,7 @@ def _build_stage_verification(stage: _StageCapture, log_path: Path) -> dict[str,
         "sink_observed_untranslated_candidates": [
             _serialize_result(result) for result in _sink_observed_untranslated_candidates(results)
         ],
+        "final_output_observations": [_serialize_result(result) for result in _final_output_observations(results)],
         "message_log_candidates": [_serialize_result(result) for result in _message_log_candidates(results)],
         "markup_color_tag_issue_candidates": markup_issues,
         "preserved_english": [_serialize_result(result) for result in _preserved_english_results(results)],
@@ -1470,6 +1486,7 @@ def _build_stage_summary(results: list[TriageResult]) -> dict[str, object]:
         "missing_key_candidates": len(_missing_key_candidates(results)),
         "message_pattern_gaps": len(_message_pattern_gaps(results)),
         "sink_observed_untranslated_candidates": len(_sink_observed_untranslated_candidates(results)),
+        "final_output_observations": len(_final_output_observations(results)),
         "message_log_candidates": len(_message_log_candidates(results)),
         "preserved_english": len(_preserved_english_results(results)),
     }
@@ -1486,6 +1503,7 @@ def _build_verification_summary(stages: list[dict[str, object]]) -> dict[str, ob
         "missing_key_candidates": 0,
         "message_pattern_gaps": 0,
         "sink_observed_untranslated_candidates": 0,
+        "final_output_observations": 0,
         "message_log_candidates": 0,
         "markup_color_tag_issue_candidates": 0,
         "preserved_english": 0,
@@ -1541,11 +1559,16 @@ def _sink_observed_untranslated_candidates(results: list[TriageResult]) -> list[
     ]
 
 
+def _final_output_observations(results: list[TriageResult]) -> list[TriageResult]:
+    return [result for result in results if result.entry.kind == LogEntryKind.FINAL_OUTPUT_PROBE]
+
+
 def _message_log_candidates(results: list[TriageResult]) -> list[TriageResult]:
     return [
         result
         for result in results
-        if result.entry.kind == LogEntryKind.NO_PATTERN or result.entry.route in _MESSAGE_LOG_ROUTES
+        if result.entry.kind != LogEntryKind.FINAL_OUTPUT_PROBE
+        and (result.entry.kind == LogEntryKind.NO_PATTERN or result.entry.route in _MESSAGE_LOG_ROUTES)
     ]
 
 
@@ -1613,6 +1636,11 @@ def _serialize_result(result: TriageResult) -> dict[str, object]:
         payload["translated_text"] = entry.translated_text
     if entry.changed is not None:
         payload["changed"] = entry.changed
+    if entry.kind == LogEntryKind.FINAL_OUTPUT_PROBE:
+        for field_name in _FINAL_OUTPUT_OBSERVATION_FIELDS:
+            value = getattr(entry, field_name)
+            if value is not None:
+                payload[field_name] = value
     if result.slot_evidence:
         payload["slot_evidence"] = result.slot_evidence
     return payload
@@ -2013,13 +2041,12 @@ def _main(argv: list[str] | None = None) -> int:
         if process is not None:
             _stop_game(process, args.quit_confirm_key, args.quit_timeout, args.input_backend)
         _stop_process(caffeinate_process)
-        should_restore_save = (
+        if (
             args.flow in {"final-smoke", "combat-smoke"}
             and args.restore_save
             and save_dir is not None
             and save_backup_dir is not None
-        )
-        if should_restore_save:
+        ):
             try:
                 _restore_save_dir(save_dir, save_backup_dir)
             except OSError as exc:

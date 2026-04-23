@@ -13,6 +13,7 @@ class LogEntryKind(Enum):
     NO_PATTERN = "no_pattern"
     DYNAMIC_TEXT_PROBE = "dynamic_text_probe"
     SINK_OBSERVE = "sink_observe"
+    FINAL_OUTPUT_PROBE = "final_output_probe"
 
 
 class TriageClassification(Enum):
@@ -49,6 +50,16 @@ class LogEntry:
     payload_mode: str | None = None
     payload_excerpt: str | None = None
     payload_sha256: str | None = None
+    sink: str | None = None
+    detail: str | None = None
+    phase: str | None = None
+    translation_status: str | None = None
+    markup_status: str | None = None
+    direct_marker_status: str | None = None
+    source_text_sample: str | None = None
+    stripped_text_sample: str | None = None
+    translated_text_sample: str | None = None
+    final_text_sample: str | None = None
     structured_fields: frozenset[str] = field(default_factory=frozenset)
 
     def has_structured_field(self, field_name: str) -> bool:

@@ -72,6 +72,9 @@ public sealed class SinkObservationTests
             output,
             Does.Contain(
                 "[QudJP] SinkObserve/v1: sink='UITextSkinTranslationPatch' route='PopupTranslationPatch' detail='Translator' source='Line 1\\nLine 2' stripped='Line 1\\nLine 2'; route=PopupTranslationPatch; family=sink_observe; template_id=<missing>; payload_mode=full; payload_excerpt=Line 1\\\\nLine 2; payload_sha256=<missing>"));
+        Assert.That(output, Does.Contain("FinalOutputProbe/v1"));
+        Assert.That(output, Does.Contain("translation_status='sink_unclaimed'"));
+        Assert.That(output, Does.Contain("payload_excerpt=Line 1\\\\nLine 2"));
     }
 
     [Test]

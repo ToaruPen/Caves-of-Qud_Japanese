@@ -171,3 +171,17 @@ def test_classify_sink_observe_stays_non_actionable() -> None:
     )
     assert result.classification == TriageClassification.UNRESOLVED
     assert "phase f" in result.reason.lower() or "non-actionable" in result.reason.lower()
+
+
+def test_classify_final_output_probe_stays_non_actionable() -> None:
+    """FinalOutputProbe observations are Phase F evidence, not static-label candidates."""
+    result = classify(
+        _mk(
+            "Inventory",
+            route="UITextSkinTranslationPatch",
+            kind=LogEntryKind.FINAL_OUTPUT_PROBE,
+            family="final_output",
+        ),
+    )
+    assert result.classification == TriageClassification.UNRESOLVED
+    assert "phase f" in result.reason.lower() or "non-actionable" in result.reason.lower()

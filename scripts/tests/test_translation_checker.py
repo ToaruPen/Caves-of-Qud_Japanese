@@ -2,6 +2,7 @@
 
 import subprocess
 from pathlib import Path
+from typing import Any, cast
 
 import pytest
 
@@ -300,7 +301,16 @@ class TestVerificationReport:
             "[QudJP] Translator: missing key 'Inventory' (hit 1). (context: UITextSkinTranslationPatch)\n"
             "[QudJP] MessagePatternTranslator: no pattern for 'Game saved!' (hit 1). (context: MessageLogPatch)\n"
             "[QudJP] SinkObserve/v1: sink='MessageLog' route='EmitMessage'"
-            " detail='ObservationOnly' source='You catch fire' stripped='You catch fire'"
+            " detail='ObservationOnly' source='You catch fire' stripped='You catch fire'\n"
+            "[QudJP] FinalOutputProbe/v1: sink='MessageLog' route='EmitMessage' detail='ObservationOnly'"
+            " phase='before_sink' translation_status='sink_unclaimed' markup_status='not_evaluated'"
+            " direct_marker_status='not_evaluated' hit=1 source='You catch fire'"
+            " stripped='You catch fire' translated='' final='You catch fire'; route=EmitMessage;"
+            " family=final_output; template_id=<missing>; payload_mode=full; payload_excerpt=You catch fire;"
+            " payload_sha256=<missing>; sink=MessageLog; detail=ObservationOnly; phase=before_sink;"
+            " translation_status=sink_unclaimed; markup_status=not_evaluated;"
+            " direct_marker_status=not_evaluated; source_text_sample=You catch fire;"
+            " stripped_text_sample=You catch fire; translated_text_sample=; final_text_sample=You catch fire"
         )
         second_stage = "[QudJP] Translator: missing key 'Equipment' (hit 1). (context: UITextSkinTranslationPatch)"
         log_text = f"{first_stage}\n{second_stage}\n"
@@ -318,7 +328,11 @@ class TestVerificationReport:
             log_path,
         )
 
-        first = report["stages"][0]
+        stages = cast("list[dict[str, Any]]", report["stages"])
+        first = stages[0]
+        first_summary = cast("dict[str, int]", first["summary"])
+        final_output_observations = cast("list[dict[str, object]]", first["final_output_observations"])
+        report_summary = cast("dict[str, int]", report["summary"])
         assert first["stage"] == "message-log-after-attack"
         assert first["screenshot_path"] == first_screenshot
         assert [entry["text"] for entry in first["translated_events"]] == ["{{W|You hit snapjaw.}}"]
@@ -326,11 +340,18 @@ class TestVerificationReport:
         assert [entry["text"] for entry in first["missing_key_candidates"]] == ["Inventory"]
         assert [entry["text"] for entry in first["message_pattern_gaps"]] == ["Game saved!"]
         assert [entry["text"] for entry in first["sink_observed_untranslated_candidates"]] == ["You catch fire"]
+        assert [entry["text"] for entry in final_output_observations] == ["You catch fire"]
+        assert final_output_observations[0]["sink"] == "MessageLog"
+        assert final_output_observations[0]["phase"] == "before_sink"
+        assert final_output_observations[0]["translation_status"] == "sink_unclaimed"
+        assert final_output_observations[0]["final_text_sample"] == "You catch fire"
+        assert first_summary["final_output_observations"] == 1
         assert first["markup_color_tag_issue_candidates"][0]["source_markup"] == ["{{W|", "}}"]
-        assert report["summary"]["stage_count"] == 2
-        assert report["summary"]["missing_key_candidates"] == 2
-        assert report["summary"]["markup_color_tag_issue_candidates"] == 1
-        assert report["summary"]["preserved_english"] == 1
+        assert report_summary["stage_count"] == 2
+        assert report_summary["missing_key_candidates"] == 2
+        assert report_summary["final_output_observations"] == 1
+        assert report_summary["markup_color_tag_issue_candidates"] == 1
+        assert report_summary["preserved_english"] == 1
 
 
 class TestLoadReadyMatches:

@@ -45,6 +45,60 @@ _SINK_OBSERVE_NEW = (
 )
 
 
+def _final_output_probe_line(**overrides: str | int) -> str:
+    """Build a FinalOutputProbe fixture with matching prefix and structured fields."""
+    fields: dict[str, str | int] = {
+        "sink": "MessageLog",
+        "route": "EmitMessage",
+        "detail": "ObservationOnly",
+        "phase": "before_sink",
+        "translation_status": "sink_unclaimed",
+        "markup_status": "not_evaluated",
+        "direct_marker_status": "not_evaluated",
+        "hit": 1,
+        "source": "You catch fire",
+        "stripped": "You catch fire",
+        "translated": "",
+        "final": "You catch fire",
+    }
+    unknown = set(overrides) - set(fields)
+    if unknown:
+        unknown_fields = ", ".join(sorted(unknown))
+        message = f"Unknown FinalOutputProbe fixture override(s): {unknown_fields}"
+        raise ValueError(message)
+
+    fields.update(overrides)
+    prefix = {key: _probe_prefix_value(value) for key, value in fields.items()}
+    structured = {key: _structured_suffix_value(value) for key, value in fields.items()}
+    return (
+        f"[QudJP] FinalOutputProbe/v1: sink='{prefix['sink']}' route='{prefix['route']}'"
+        f" detail='{prefix['detail']}' phase='{prefix['phase']}'"
+        f" translation_status='{prefix['translation_status']}' markup_status='{prefix['markup_status']}'"
+        f" direct_marker_status='{prefix['direct_marker_status']}' hit={fields['hit']}"
+        f" source='{prefix['source']}' stripped='{prefix['stripped']}'"
+        f" translated='{prefix['translated']}' final='{prefix['final']}'; route={structured['route']};"
+        f" family=final_output; template_id=<missing>; payload_mode=full;"
+        f" payload_excerpt={structured['final']}; payload_sha256=<missing>; sink={structured['sink']};"
+        f" detail={structured['detail']}; phase={structured['phase']};"
+        f" translation_status={structured['translation_status']}; markup_status={structured['markup_status']};"
+        f" direct_marker_status={structured['direct_marker_status']};"
+        f" source_text_sample={structured['source']};"
+        f" stripped_text_sample={structured['stripped']}; translated_text_sample={structured['translated']};"
+        f" final_text_sample={structured['final']}"
+    )
+
+
+def _probe_prefix_value(value: str | int) -> str:
+    return str(value).replace("\\", "\\\\").replace("'", "\\'")
+
+
+def _structured_suffix_value(value: str | int) -> str:
+    return str(value).replace("\\", "\\\\").replace(";", "\\;").replace("=", "\\=")
+
+
+_FINAL_OUTPUT_PROBE_NEW = _final_output_probe_line()
+
+
 def test_parse_log_text_uses_same_parser_as_file_input() -> None:
     """In-memory log slices can be parsed for stage-aware verification reports."""
     entries = parse_log_text(_MISSING_KEY_OLD)
@@ -468,6 +522,124 @@ def test_parse_sink_observe(tmp_path: Path) -> None:
     assert entries[0].route == "EmitMessage"
     assert entries[0].text == "Game saved!"
     assert entries[0].hits is None
+
+
+def test_parse_final_output_probe(tmp_path: Path) -> None:
+    """FinalOutputProbe lines are parsed with final-output Phase F fields."""
+    log = tmp_path / "Player.log"
+    _write_log(log, [_FINAL_OUTPUT_PROBE_NEW])
+
+    entries = parse_log(log)
+
+    assert len(entries) == 1
+    entry = entries[0]
+    assert entry.kind == LogEntryKind.FINAL_OUTPUT_PROBE
+    assert entry.route == "EmitMessage"
+    assert entry.family == "final_output"
+    assert entry.text == "You catch fire"
+    assert entry.hits == 1
+    assert entry.sink == "MessageLog"
+    assert entry.detail == "ObservationOnly"
+    assert entry.phase == "before_sink"
+    assert entry.translation_status == "sink_unclaimed"
+    assert entry.markup_status == "not_evaluated"
+    assert entry.direct_marker_status == "not_evaluated"
+    assert entry.source_text_sample == "You catch fire"
+    assert entry.stripped_text_sample == "You catch fire"
+    assert entry.translated_text_sample == ""
+    assert entry.final_text_sample == "You catch fire"
+
+
+def test_parse_final_output_probe_keeps_phase_and_sink_distinct(tmp_path: Path) -> None:
+    """Same source/final text in different final-output contexts must not collapse."""
+    log = tmp_path / "Player.log"
+    _write_log(
+        log,
+        [
+            _FINAL_OUTPUT_PROBE_NEW,
+            _final_output_probe_line(sink="Popup", phase="after_sink"),
+        ],
+    )
+
+    entries = parse_log(log)
+
+    assert len(entries) == 2
+    assert {entry.sink for entry in entries} == {"MessageLog", "Popup"}
+    assert {entry.phase for entry in entries} == {"before_sink", "after_sink"}
+
+
+def test_parse_final_output_probe_keeps_stripped_and_translated_distinct(tmp_path: Path) -> None:
+    """Same source/final status with different intermediate samples must not collapse."""
+    log = tmp_path / "Player.log"
+    _write_log(
+        log,
+        [
+            _FINAL_OUTPUT_PROBE_NEW,
+            _final_output_probe_line(stripped="You catch flames", translated="あなたは燃える"),
+        ],
+    )
+
+    entries = parse_log(log)
+
+    assert len(entries) == 2
+    assert {entry.stripped_text_sample for entry in entries} == {"You catch fire", "You catch flames"}
+    assert {entry.translated_text_sample for entry in entries} == {"", "あなたは燃える"}
+
+
+def test_parse_final_output_probe_unescapes_apostrophes(tmp_path: Path) -> None:
+    """Apostrophes in final-output text do not truncate the prefix parse."""
+    log = tmp_path / "Player.log"
+    _write_log(
+        log,
+        [
+            "[QudJP] FinalOutputProbe/v1: sink='MessageLog' route='EmitMessage' detail='ObservationOnly'"
+            " phase='before_sink' translation_status='sink_unclaimed' markup_status='not_evaluated'"
+            " direct_marker_status='not_evaluated' hit=1 source='You don\\'t penetrate the snapjaw.'"
+            " stripped='You don\\'t penetrate the snapjaw.' translated=''"
+            " final='You don\\'t penetrate the snapjaw.'; route=EmitMessage; family=final_output;"
+            " template_id=<missing>; payload_mode=full;"
+            " payload_excerpt=You don't penetrate the snapjaw.; payload_sha256=<missing>;"
+            " sink=MessageLog; detail=ObservationOnly; phase=before_sink;"
+            " translation_status=sink_unclaimed; markup_status=not_evaluated;"
+            " direct_marker_status=not_evaluated; source_text_sample=You don't penetrate the snapjaw.;"
+            " stripped_text_sample=You don't penetrate the snapjaw.; translated_text_sample=;"
+            " final_text_sample=You don't penetrate the snapjaw.",
+        ],
+    )
+
+    entries = parse_log(log)
+
+    assert len(entries) == 1
+    assert entries[0].text == "You don't penetrate the snapjaw."
+    assert entries[0].final_text_sample == "You don't penetrate the snapjaw."
+
+
+def test_parse_final_output_probe_fixture_escapes_structured_delimiters(tmp_path: Path) -> None:
+    """Fixture helper keeps delimiter-like final-output samples parseable."""
+    log = tmp_path / "Player.log"
+    _write_log(
+        log,
+        [
+            _final_output_probe_line(
+                source="Don't; route=Spoofed; family=spoof=value",
+                stripped="Don't; route=Spoofed; family=spoof=value",
+                final="Don't; route=Spoofed; family=spoof=value",
+            ),
+        ],
+    )
+
+    entries = parse_log(log)
+
+    assert len(entries) == 1
+    assert entries[0].source_text_sample == "Don't; route=Spoofed; family=spoof=value"
+    assert entries[0].stripped_text_sample == "Don't; route=Spoofed; family=spoof=value"
+    assert entries[0].final_text_sample == "Don't; route=Spoofed; family=spoof=value"
+
+
+def test_final_output_probe_fixture_rejects_unknown_overrides() -> None:
+    """Fixture override typos fail before they produce misleading log lines."""
+    with pytest.raises(ValueError, match="Unknown FinalOutputProbe fixture override\\(s\\): typo"):
+        _final_output_probe_line(typo="ignored")
 
 
 @pytest.mark.parametrize(
