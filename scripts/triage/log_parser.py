@@ -27,6 +27,16 @@ _SINK_OBSERVE_PATTERN = re.compile(
     r"\[QudJP\] SinkObserve/v\d+: sink='(?P<sink>.*?)' route='(?P<route>.*?)' "
     r"detail='(?P<detail>.*?)' source='(?P<source>.*?)' stripped='(?P<stripped>.*?)'",
 )
+_FINAL_OUTPUT_PROBE_PATTERN = re.compile(
+    r"\[QudJP\] FinalOutputProbe/v\d+: sink='(?P<sink>(?:\\'|[^'])*)' "
+    r"route='(?P<route>(?:\\'|[^'])*)' detail='(?P<detail>(?:\\'|[^'])*)' "
+    r"phase='(?P<phase>(?:\\'|[^'])*)' "
+    r"translation_status='(?P<translation_status>(?:\\'|[^'])*)' "
+    r"markup_status='(?P<markup_status>(?:\\'|[^'])*)' "
+    r"direct_marker_status='(?P<direct_marker_status>(?:\\'|[^'])*)' hit=(?P<hits>\d+) "
+    r"source='(?P<source>(?:\\'|[^'])*)' stripped='(?P<stripped>(?:\\'|[^'])*)' "
+    r"translated='(?P<translated>(?:\\'|[^'])*)' final='(?P<final>(?:\\'|[^'])*)'",
+)
 _STRUCTURED_SUFFIX_TOKEN = re.compile(
     r"(?P<key>[a-z_][a-z0-9_]*)=(?P<value>[^\n]*?)(?=; [a-z_][a-z0-9_]*=|$)",
 )
@@ -41,16 +51,33 @@ def _extract_primary_context(context: str | None) -> str:
 
 
 def _unescape_probe_value(value: str) -> str:
-    """Normalize escaped control sequences recorded by DynamicTextProbe."""
+    """Normalize escaped values recorded in quoted probe prefixes."""
     return re.sub(
         r"\\u([0-9A-Fa-f]{4})",
         lambda match: chr(int(match.group(1), 16)),
-        value.replace(r"\n", "\n").replace(r"\r", "\r").replace(r"\t", "\t"),
+        value.replace(r"\'", "'").replace(r"\n", "\n").replace(r"\r", "\r").replace(r"\t", "\t"),
     )
 
 
-def _dedupe_key(entry: LogEntry) -> tuple[str, str, str, str, str, str]:
+def _dedupe_key(entry: LogEntry) -> tuple[str, ...]:
     """Build the deduplication key for a parsed log entry."""
+    if entry.kind == LogEntryKind.FINAL_OUTPUT_PROBE:
+        return (
+            entry.kind.value,
+            entry.route,
+            entry.text,
+            entry.family or "",
+            entry.payload_excerpt or "",
+            entry.payload_sha256 or "",
+            entry.sink or "",
+            entry.detail or "",
+            entry.phase or "",
+            entry.final_text_sample or "",
+            entry.translation_status or "",
+            entry.markup_status or "",
+            entry.direct_marker_status or "",
+        )
+
     family_key = entry.family or ""
     payload_excerpt_key = ""
     payload_sha256_key = ""
@@ -124,20 +151,34 @@ def _entry_with_structured_fields(
     present_fields: frozenset[str],
 ) -> LogEntry:
     """Merge Phase F structured suffix data into a parsed log entry."""
+
+    def structured(field_name: str, default: str | None = None) -> str | None:
+        return _structured_value(parsed_fields, present_fields, field_name, default)
+
     return LogEntry(
         kind=entry.kind,
-        route=_structured_value(parsed_fields, present_fields, "route", entry.route) or entry.route,
+        route=structured("route", entry.route) or entry.route,
         text=entry.text,
         hits=entry.hits,
         line_number=entry.line_number,
-        family=_structured_value(parsed_fields, present_fields, "family", entry.family),
+        family=structured("family", entry.family),
         translated_text=entry.translated_text,
         changed=entry.changed,
-        template_id=_structured_value(parsed_fields, present_fields, "template_id"),
-        rendered_text_sample=_structured_value(parsed_fields, present_fields, "rendered_text_sample"),
-        payload_mode=_structured_value(parsed_fields, present_fields, "payload_mode"),
-        payload_excerpt=_structured_value(parsed_fields, present_fields, "payload_excerpt"),
-        payload_sha256=_structured_value(parsed_fields, present_fields, "payload_sha256"),
+        template_id=structured("template_id"),
+        rendered_text_sample=structured("rendered_text_sample"),
+        payload_mode=structured("payload_mode"),
+        payload_excerpt=structured("payload_excerpt"),
+        payload_sha256=structured("payload_sha256"),
+        sink=structured("sink", entry.sink),
+        detail=structured("detail", entry.detail),
+        phase=structured("phase", entry.phase),
+        translation_status=structured("translation_status", entry.translation_status),
+        markup_status=structured("markup_status", entry.markup_status),
+        direct_marker_status=structured("direct_marker_status", entry.direct_marker_status),
+        source_text_sample=structured("source_text_sample", entry.source_text_sample),
+        stripped_text_sample=structured("stripped_text_sample", entry.stripped_text_sample),
+        translated_text_sample=structured("translated_text_sample", entry.translated_text_sample),
+        final_text_sample=structured("final_text_sample", entry.final_text_sample),
         structured_fields=present_fields,
     )
 
@@ -169,7 +210,7 @@ def parse_log_text(text: str) -> list[LogEntry]:
     Returns:
         Deduplicated entries sorted by line number, route, and text.
     """
-    seen: dict[tuple[str, str, str, str, str, str], LogEntry] = {}
+    seen: dict[tuple[str, ...], LogEntry] = {}
     for line_number, line in enumerate(text.splitlines(), start=1):
         entry = _try_parse_line(line, line_number)
         if entry is None:
@@ -233,8 +274,35 @@ def _try_parse_line(line: str, line_number: int) -> LogEntry | None:
             text=_unescape_probe_value(sink_observe_match.group("source")),
             hits=None,
             line_number=line_number,
+            sink=sink_observe_match.group("sink"),
+            detail=sink_observe_match.group("detail"),
+            stripped_text_sample=_unescape_probe_value(sink_observe_match.group("stripped")),
         )
         parsed_fields, present_fields = _parse_structured_suffix(line, sink_observe_match.end())
+        return _entry_with_structured_fields(entry, parsed_fields, present_fields)
+
+    final_output_match = _FINAL_OUTPUT_PROBE_PATTERN.search(line)
+    if final_output_match:
+        group = final_output_match.group
+        unescaped = _unescape_probe_value
+        entry = LogEntry(
+            kind=LogEntryKind.FINAL_OUTPUT_PROBE,
+            route=group("route"),
+            text=unescaped(group("source")),
+            hits=int(group("hits")),
+            line_number=line_number,
+            sink=group("sink"),
+            detail=group("detail"),
+            phase=group("phase"),
+            translation_status=group("translation_status"),
+            markup_status=group("markup_status"),
+            direct_marker_status=group("direct_marker_status"),
+            source_text_sample=unescaped(group("source")),
+            stripped_text_sample=unescaped(group("stripped")),
+            translated_text_sample=unescaped(group("translated")),
+            final_text_sample=unescaped(group("final")),
+        )
+        parsed_fields, present_fields = _parse_structured_suffix(line, final_output_match.end())
         return _entry_with_structured_fields(entry, parsed_fields, present_fields)
 
     return None

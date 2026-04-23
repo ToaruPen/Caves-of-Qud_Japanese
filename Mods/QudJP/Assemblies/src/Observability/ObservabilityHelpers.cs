@@ -13,6 +13,7 @@ internal static class ObservabilityHelpers
     internal const string NoContextLabel = "<no-context>";
     private const string MissingStructuredValue = "<missing>";
     private const int HelperPayloadExcerptLimit = 512;
+    private const int StructuredSampleLimit = 512;
 
     internal static string ComposeContext(string? primaryContext, params string?[] details)
     {
@@ -174,6 +175,32 @@ internal static class ObservabilityHelpers
             + "; payload_sha256=" + ComputeSha256Hex(sanitizedPayload);
     }
 
+    internal static string BuildFinalOutputStructuredSuffix(
+        string route,
+        string sink,
+        string detail,
+        string phase,
+        string translationStatus,
+        string markupStatus,
+        string directMarkerStatus,
+        string sourceText,
+        string strippedText,
+        string translatedText,
+        string finalText)
+    {
+        return BuildHelperStructuredSuffix(route, FinalOutputObservability.Family, finalText)
+            + "; sink=" + EscapeStructuredValue(sink)
+            + "; detail=" + EscapeStructuredSample(detail)
+            + "; phase=" + EscapeStructuredValue(phase)
+            + "; translation_status=" + EscapeStructuredValue(translationStatus)
+            + "; markup_status=" + EscapeStructuredValue(markupStatus)
+            + "; direct_marker_status=" + EscapeStructuredValue(directMarkerStatus)
+            + "; source_text_sample=" + EscapeStructuredSample(sourceText)
+            + "; stripped_text_sample=" + EscapeStructuredSample(strippedText)
+            + "; translated_text_sample=" + EscapeStructuredSample(translatedText)
+            + "; final_text_sample=" + EscapeStructuredSample(finalText);
+    }
+
     internal static string EscapeStructuredValue(string value)
     {
         var builder = new StringBuilder(value.Length);
@@ -189,6 +216,11 @@ internal static class ObservabilityHelpers
         }
 
         return builder.ToString();
+    }
+
+    private static string EscapeStructuredSample(string value)
+    {
+        return EscapeStructuredValue(SanitizeForLog(value, StructuredSampleLimit));
     }
 
     private static string EscapeControlCharacters(string value)

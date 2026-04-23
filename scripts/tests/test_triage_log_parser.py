@@ -43,6 +43,17 @@ _SINK_OBSERVE_NEW = (
     " family=sink_observe; template_id=<missing>; payload_mode=full;"
     " payload_excerpt=You catch fire; payload_sha256=<missing>"
 )
+_FINAL_OUTPUT_PROBE_NEW = (
+    "[QudJP] FinalOutputProbe/v1: sink='MessageLog' route='EmitMessage' detail='ObservationOnly'"
+    " phase='before_sink' translation_status='sink_unclaimed' markup_status='not_evaluated'"
+    " direct_marker_status='not_evaluated' hit=1 source='You catch fire'"
+    " stripped='You catch fire' translated='' final='You catch fire'; route=EmitMessage;"
+    " family=final_output; template_id=<missing>; payload_mode=full; payload_excerpt=You catch fire;"
+    " payload_sha256=<missing>; sink=MessageLog; detail=ObservationOnly; phase=before_sink;"
+    " translation_status=sink_unclaimed; markup_status=not_evaluated;"
+    " direct_marker_status=not_evaluated; source_text_sample=You catch fire;"
+    " stripped_text_sample=You catch fire; translated_text_sample=; final_text_sample=You catch fire"
+)
 
 
 def test_parse_log_text_uses_same_parser_as_file_input() -> None:
@@ -468,6 +479,78 @@ def test_parse_sink_observe(tmp_path: Path) -> None:
     assert entries[0].route == "EmitMessage"
     assert entries[0].text == "Game saved!"
     assert entries[0].hits is None
+
+
+def test_parse_final_output_probe(tmp_path: Path) -> None:
+    """FinalOutputProbe lines are parsed with final-output Phase F fields."""
+    log = tmp_path / "Player.log"
+    _write_log(log, [_FINAL_OUTPUT_PROBE_NEW])
+
+    entries = parse_log(log)
+
+    assert len(entries) == 1
+    entry = entries[0]
+    assert entry.kind == LogEntryKind.FINAL_OUTPUT_PROBE
+    assert entry.route == "EmitMessage"
+    assert entry.family == "final_output"
+    assert entry.text == "You catch fire"
+    assert entry.hits == 1
+    assert entry.sink == "MessageLog"
+    assert entry.detail == "ObservationOnly"
+    assert entry.phase == "before_sink"
+    assert entry.translation_status == "sink_unclaimed"
+    assert entry.markup_status == "not_evaluated"
+    assert entry.direct_marker_status == "not_evaluated"
+    assert entry.final_text_sample == "You catch fire"
+
+
+def test_parse_final_output_probe_keeps_phase_and_sink_distinct(tmp_path: Path) -> None:
+    """Same source/final text in different final-output contexts must not collapse."""
+    log = tmp_path / "Player.log"
+    _write_log(
+        log,
+        [
+            _FINAL_OUTPUT_PROBE_NEW,
+            _FINAL_OUTPUT_PROBE_NEW.replace("sink='MessageLog'", "sink='Popup'", 1)
+            .replace("; sink=MessageLog;", "; sink=Popup;")
+            .replace("phase='before_sink'", "phase='after_sink'", 1)
+            .replace("; phase=before_sink;", "; phase=after_sink;"),
+        ],
+    )
+
+    entries = parse_log(log)
+
+    assert len(entries) == 2
+    assert {entry.sink for entry in entries} == {"MessageLog", "Popup"}
+    assert {entry.phase for entry in entries} == {"before_sink", "after_sink"}
+
+
+def test_parse_final_output_probe_unescapes_apostrophes(tmp_path: Path) -> None:
+    """Apostrophes in final-output text do not truncate the prefix parse."""
+    log = tmp_path / "Player.log"
+    _write_log(
+        log,
+        [
+            "[QudJP] FinalOutputProbe/v1: sink='MessageLog' route='EmitMessage' detail='ObservationOnly'"
+            " phase='before_sink' translation_status='sink_unclaimed' markup_status='not_evaluated'"
+            " direct_marker_status='not_evaluated' hit=1 source='You don\\'t penetrate the snapjaw.'"
+            " stripped='You don\\'t penetrate the snapjaw.' translated=''"
+            " final='You don\\'t penetrate the snapjaw.'; route=EmitMessage; family=final_output;"
+            " template_id=<missing>; payload_mode=full;"
+            " payload_excerpt=You don't penetrate the snapjaw.; payload_sha256=<missing>;"
+            " sink=MessageLog; detail=ObservationOnly; phase=before_sink;"
+            " translation_status=sink_unclaimed; markup_status=not_evaluated;"
+            " direct_marker_status=not_evaluated; source_text_sample=You don't penetrate the snapjaw.;"
+            " stripped_text_sample=You don't penetrate the snapjaw.; translated_text_sample=;"
+            " final_text_sample=You don't penetrate the snapjaw.",
+        ],
+    )
+
+    entries = parse_log(log)
+
+    assert len(entries) == 1
+    assert entries[0].text == "You don't penetrate the snapjaw."
+    assert entries[0].final_text_sample == "You don't penetrate the snapjaw."
 
 
 @pytest.mark.parametrize(

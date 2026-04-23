@@ -35,6 +35,17 @@ _SINK_OBSERVE_NEW = (
     " family=sink_observe; template_id=<missing>; payload_mode=full;"
     " payload_excerpt=You catch fire; payload_sha256=<missing>"
 )
+_FINAL_OUTPUT_PROBE_NEW = (
+    "[QudJP] FinalOutputProbe/v1: sink='MessageLog' route='EmitMessage' detail='ObservationOnly'"
+    " phase='before_sink' translation_status='sink_unclaimed' markup_status='not_evaluated'"
+    " direct_marker_status='not_evaluated' hit=1 source='You catch fire'"
+    " stripped='You catch fire' translated='' final='You catch fire'; route=EmitMessage;"
+    " family=final_output; template_id=<missing>; payload_mode=full; payload_excerpt=You catch fire;"
+    " payload_sha256=<missing>; sink=MessageLog; detail=ObservationOnly; phase=before_sink;"
+    " translation_status=sink_unclaimed; markup_status=not_evaluated;"
+    " direct_marker_status=not_evaluated; source_text_sample=You catch fire;"
+    " stripped_text_sample=You catch fire; translated_text_sample=; final_text_sample=You catch fire"
+)
 _MISSING_KEY_ESCAPED = (
     "[QudJP] Translator: missing key 'Put away; route=Spoofed; family=spoof=value'"
     " (hit 3). (context: ExactKey); route=ExactKey; family=missing_key;"
@@ -126,7 +137,12 @@ def test_cli_ignores_dynamic_text_probe_entries(tmp_path: Path) -> None:
     assert all(
         entry["kind"] != "dynamic_text_probe" for entries in data["by_classification"].values() for entry in entries
     )
-    assert data["phase_f"]["summary"] == {"total": 1, "dynamic_text_probe": 1, "sink_observe": 0}
+    assert data["phase_f"]["summary"] == {
+        "total": 1,
+        "dynamic_text_probe": 1,
+        "sink_observe": 0,
+        "final_output_probe": 0,
+    }
     assert len(data["phase_f"]["entries"]) == 1
     assert data["phase_f"]["entries"][0]["kind"] == "dynamic_text_probe"
 
@@ -171,7 +187,12 @@ def test_cli_reports_sink_observe_in_phase_f_section(tmp_path: Path) -> None:
 
     data = json.loads(out.read_text(encoding="utf-8"))
     assert data["summary"]["total"] == 0
-    assert data["phase_f"]["summary"] == {"total": 1, "dynamic_text_probe": 0, "sink_observe": 1}
+    assert data["phase_f"]["summary"] == {
+        "total": 1,
+        "dynamic_text_probe": 0,
+        "sink_observe": 1,
+        "final_output_probe": 0,
+    }
     assert data["phase_f"]["entries"][0]["kind"] == "sink_observe"
     assert data["phase_f"]["entries"][0]["phase_f"] == {
         "route": "EmitMessage",
@@ -181,6 +202,31 @@ def test_cli_reports_sink_observe_in_phase_f_section(tmp_path: Path) -> None:
         "payload_excerpt": "You catch fire",
         "payload_sha256": None,
     }
+
+
+def test_cli_reports_final_output_probe_in_phase_f_section(tmp_path: Path) -> None:
+    """FinalOutputProbe stays outside actionable triage and appears in Phase F output."""
+    log = tmp_path / "Player.log"
+    out = tmp_path / "triage.json"
+    _write_log(log, [_FINAL_OUTPUT_PROBE_NEW])
+
+    result = main(["--log", str(log), "--output", str(out)])
+    assert result == 0
+
+    data = json.loads(out.read_text(encoding="utf-8"))
+    assert data["summary"]["total"] == 0
+    assert data["phase_f"]["summary"] == {
+        "total": 1,
+        "dynamic_text_probe": 0,
+        "sink_observe": 0,
+        "final_output_probe": 1,
+    }
+    entry = data["phase_f"]["entries"][0]
+    assert entry["kind"] == "final_output_probe"
+    assert entry["phase_f"]["sink"] == "MessageLog"
+    assert entry["phase_f"]["phase"] == "before_sink"
+    assert entry["phase_f"]["translation_status"] == "sink_unclaimed"
+    assert entry["phase_f"]["final_text_sample"] == "You catch fire"
 
 
 def test_module_cli_classify_treats_missing_runtime_dir_as_empty_report(tmp_path: Path) -> None:
@@ -231,6 +277,7 @@ def test_module_cli_classify_treats_missing_runtime_dir_as_empty_report(tmp_path
                 "total": 0,
                 "dynamic_text_probe": 0,
                 "sink_observe": 0,
+                "final_output_probe": 0,
             },
             "entries": [],
         },
@@ -353,7 +400,12 @@ def test_cli_preserves_grouping_when_structured_values_contain_delimiter_like_te
         "template_id": None,
         "rendered_text_sample": "Put away; route=Spoofed; family=spoof=value",
     }
-    assert data["phase_f"]["summary"] == {"total": 1, "dynamic_text_probe": 1, "sink_observe": 0}
+    assert data["phase_f"]["summary"] == {
+        "total": 1,
+        "dynamic_text_probe": 1,
+        "sink_observe": 0,
+        "final_output_probe": 0,
+    }
     assert data["phase_f"]["entries"][0]["route"] == "DoesVerbRoute"
     assert data["phase_f"]["entries"][0]["phase_f"]["payload_excerpt"] == (
         "You catch fire; route=Spoofed; family=spoof=value"
@@ -366,9 +418,9 @@ def test_sample_log_smoke(tmp_path: Path) -> None:
     lines = [_MISSING_KEY_NEW, _NO_PATTERN_NEW, _DYNAMIC_PROBE_NEW, _SINK_OBSERVE_NEW]
     _write_log(log, lines)
 
-    structured_output = []
+    structured_output: list[dict[str, object]] = []
     for entry in parse_log(log):
-        payload = {
+        payload: dict[str, object] = {
             "kind": entry.kind.value,
             "route": entry.route,
             "text": entry.text,

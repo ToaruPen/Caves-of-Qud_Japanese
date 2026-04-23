@@ -21,7 +21,30 @@ from scripts.triage.models import LogEntry, LogEntryKind, TriageClassification, 
 
 _DEFAULT_LOG = Path.home() / "Library" / "Logs" / "Freehold Games" / "CavesOfQud" / "Player.log"
 _ACTIONABLE_KINDS = frozenset({LogEntryKind.MISSING_KEY, LogEntryKind.NO_PATTERN})
-_PHASE_F_ONLY_KINDS = frozenset({LogEntryKind.DYNAMIC_TEXT_PROBE, LogEntryKind.SINK_OBSERVE})
+_PHASE_F_ONLY_KINDS = frozenset(
+    {
+        LogEntryKind.DYNAMIC_TEXT_PROBE,
+        LogEntryKind.SINK_OBSERVE,
+        LogEntryKind.FINAL_OUTPUT_PROBE,
+    },
+)
+_PHASE_F_STRUCTURED_FIELDS = (
+    "template_id",
+    "rendered_text_sample",
+    "payload_mode",
+    "payload_excerpt",
+    "payload_sha256",
+    "sink",
+    "detail",
+    "phase",
+    "translation_status",
+    "markup_status",
+    "direct_marker_status",
+    "source_text_sample",
+    "stripped_text_sample",
+    "translated_text_sample",
+    "final_text_sample",
+)
 
 
 def _find_project_root() -> Path:
@@ -139,6 +162,9 @@ def _build_phase_f_report(results: list[TriageResult]) -> dict[str, Any]:
             1 for result in results if result.entry.kind == LogEntryKind.DYNAMIC_TEXT_PROBE
         ),
         LogEntryKind.SINK_OBSERVE.value: sum(1 for result in results if result.entry.kind == LogEntryKind.SINK_OBSERVE),
+        LogEntryKind.FINAL_OUTPUT_PROBE.value: sum(
+            1 for result in results if result.entry.kind == LogEntryKind.FINAL_OUTPUT_PROBE
+        ),
     }
     entries = [
         _serialize_result(result, include_phase_f_runtime_fields=True)
@@ -200,13 +226,7 @@ def _serialize_phase_f_fields(
     if entry.family is not None and (include_runtime_fields or entry.has_structured_field("family")):
         payload["family"] = entry.family
 
-    for field_name in (
-        "template_id",
-        "rendered_text_sample",
-        "payload_mode",
-        "payload_excerpt",
-        "payload_sha256",
-    ):
+    for field_name in _PHASE_F_STRUCTURED_FIELDS:
         if entry.has_structured_field(field_name):
             payload[field_name] = getattr(entry, field_name)
 
