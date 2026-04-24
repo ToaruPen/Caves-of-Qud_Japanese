@@ -105,6 +105,10 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
 
         instance.BeginEndTurn(core: null);
         instance.MarkPlayerStringsFlushedForTests();
+        Assert.That(
+            instance.PlayerStringsDirtyForTests,
+            Is.False,
+            "Precondition: UI flush marker should clear playerStringsDirty before translation.");
 
         translateMethod.Invoke(null, new object?[] { instance });
 
