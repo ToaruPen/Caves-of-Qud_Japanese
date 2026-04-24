@@ -65,10 +65,16 @@ public sealed class AbilityBarButtonTextTranslationPatchTests
             var freezingRay = new DummyAbilityBarButton("&CFreezing Ray {{C|[5]}} {{K|[{{g|on}}]}}");
             var toggle = new DummyAbilityBarButton("&CToggle {{K|[{{r|off}}]}} {{K|[offhand]}}");
             var sense = new DummyAbilityBarButton("&CSense {{K|[condition]}} {{K|[{{g|on}}]}}");
+            var englishFallback = new DummyAbilityBarButton("UnregisteredText");
+            var empty = new DummyAbilityBarButton(string.Empty);
+            var marker = new DummyAbilityBarButton("\u0001SomeText");
             target.AbilityButtons.Add(sprint);
             target.AbilityButtons.Add(freezingRay);
             target.AbilityButtons.Add(toggle);
             target.AbilityButtons.Add(sense);
+            target.AbilityButtons.Add(englishFallback);
+            target.AbilityButtons.Add(empty);
+            target.AbilityButtons.Add(marker);
 
             target.Update();
 
@@ -78,6 +84,9 @@ public sealed class AbilityBarButtonTextTranslationPatchTests
                 Assert.That(freezingRay.Text.text, Is.EqualTo("&C凍結線 {{C|[5]}} {{K|[{{g|オン}}]}}"));
                 Assert.That(toggle.Text.text, Is.EqualTo("&C切替 {{K|[{{r|オフ}}]}} {{K|[offhand]}}"));
                 Assert.That(sense.Text.text, Is.EqualTo("&C感知 {{K|[condition]}} {{K|[{{g|オン}}]}}"));
+                Assert.That(englishFallback.Text.text, Is.EqualTo("UnregisteredText"));
+                Assert.That(empty.Text.text, Is.EqualTo(string.Empty));
+                Assert.That(marker.Text.text, Is.EqualTo("\u0001SomeText"));
                 Assert.That(
                     DynamicTextObservability.GetRouteFamilyHitCountForTests(
                         nameof(AbilityBarButtonTextTranslationPatch),

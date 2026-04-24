@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -12,6 +13,13 @@ namespace QudJP.Patches;
 public static class AbilityBarButtonTextTranslationPatch
 {
     private const string Context = nameof(AbilityBarButtonTextTranslationPatch);
+    private static readonly object CacheLock = new object();
+    private static readonly Dictionary<Type, FieldInfo?> AbilityButtonsFields = new Dictionary<Type, FieldInfo?>();
+    private static readonly Dictionary<Type, FieldInfo?> TextFields = new Dictionary<Type, FieldInfo?>();
+    private static readonly Dictionary<Type, MethodInfo?> GetComponentByTypeMethods = new Dictionary<Type, MethodInfo?>();
+    private static readonly Dictionary<Type, MethodInfo?> GetComponentGenericMethods = new Dictionary<Type, MethodInfo?>();
+    private static bool abilityBarButtonComponentTypeResolved;
+    private static Type? abilityBarButtonComponentType;
 
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
@@ -46,7 +54,7 @@ public static class AbilityBarButtonTextTranslationPatch
 
     private static void TranslateAbilityButtons(object instance)
     {
-        var buttonsField = AccessTools.Field(instance.GetType(), "AbilityButtons");
+        var buttonsField = GetCachedField(AbilityButtonsFields, instance.GetType(), "AbilityButtons");
         if (buttonsField?.GetValue(instance) is not IEnumerable buttons)
         {
             return;
@@ -60,7 +68,7 @@ public static class AbilityBarButtonTextTranslationPatch
                 continue;
             }
 
-            var textObject = AccessTools.Field(component.GetType(), "Text")?.GetValue(component);
+            var textObject = GetCachedField(TextFields, component.GetType(), "Text")?.GetValue(component);
             var current = UITextSkinReflectionAccessor.GetCurrentText(textObject, Context);
             if (string.IsNullOrEmpty(current))
             {
@@ -88,30 +96,82 @@ public static class AbilityBarButtonTextTranslationPatch
             return null;
         }
 
-        if (AccessTools.Field(buttonObject.GetType(), "Text") is not null)
+        if (GetCachedField(TextFields, buttonObject.GetType(), "Text") is not null)
         {
             return buttonObject;
         }
 
-        var componentType = GameTypeResolver.FindType("Qud.UI.AbilityBarButton", "AbilityBarButton");
+        var componentType = GetAbilityBarButtonComponentType();
         if (componentType is null)
         {
             return null;
         }
 
-        var getComponentByType = AccessTools.Method(buttonObject.GetType(), "GetComponent", new[] { typeof(Type) });
+        var buttonType = buttonObject.GetType();
+        var getComponentByType = GetCachedMethod(GetComponentByTypeMethods, buttonType, static type =>
+            AccessTools.Method(type, "GetComponent", new[] { typeof(Type) }));
         if (getComponentByType is not null)
         {
             return getComponentByType.Invoke(buttonObject, new object[] { componentType });
         }
 
-        var getComponentGeneric = buttonObject.GetType()
-            .GetMethods(BindingFlags.Public | BindingFlags.Instance)
-            .FirstOrDefault(static method =>
+        var getComponentGeneric = GetCachedMethod(GetComponentGenericMethods, buttonType, type =>
+            type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                .FirstOrDefault(static method =>
                 string.Equals(method.Name, "GetComponent", StringComparison.Ordinal)
                 && method.IsGenericMethodDefinition
-                && method.GetParameters().Length == 0);
+                && method.GetParameters().Length == 0));
         return getComponentGeneric?.MakeGenericMethod(componentType).Invoke(buttonObject, Array.Empty<object>());
+    }
+
+    private static FieldInfo? GetCachedField(Dictionary<Type, FieldInfo?> cache, Type type, string fieldName)
+    {
+        lock (CacheLock)
+        {
+            if (!cache.TryGetValue(type, out var field))
+            {
+                field = AccessTools.Field(type, fieldName);
+                cache[type] = field;
+            }
+
+            return field;
+        }
+    }
+
+    private static MethodInfo? GetCachedMethod(
+        Dictionary<Type, MethodInfo?> cache,
+        Type type,
+        Func<Type, MethodInfo?> resolve)
+    {
+        lock (CacheLock)
+        {
+            if (!cache.TryGetValue(type, out var method))
+            {
+                method = resolve(type);
+                cache[type] = method;
+            }
+
+            return method;
+        }
+    }
+
+    private static Type? GetAbilityBarButtonComponentType()
+    {
+        if (abilityBarButtonComponentTypeResolved)
+        {
+            return abilityBarButtonComponentType;
+        }
+
+        lock (CacheLock)
+        {
+            if (!abilityBarButtonComponentTypeResolved)
+            {
+                abilityBarButtonComponentType = GameTypeResolver.FindType("Qud.UI.AbilityBarButton", "AbilityBarButton");
+                abilityBarButtonComponentTypeResolved = true;
+            }
+
+            return abilityBarButtonComponentType;
+        }
     }
 
     private static bool TryTranslateAbilityButtonText(string source, string route, out string translated)
