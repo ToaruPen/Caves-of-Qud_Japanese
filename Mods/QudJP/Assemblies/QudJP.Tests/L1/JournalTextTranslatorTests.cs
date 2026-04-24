@@ -134,10 +134,14 @@ public sealed class JournalTextTranslatorTests
             AssertTranslatedMapNote("a slime bog", "\u0001スライム沼");
             AssertTranslatedMapNote("some flaming tar pits", "\u0001燃えるタール沼");
             AssertTranslatedMapNote("a dromad caravan", "\u0001ドロマド商隊");
+            AssertTranslatedMapNote("{{Y|a slime bog}}", "\u0001{{Y|スライム沼}}");
             AssertTranslatedMapNote("the lair of Mamon Souldrinker", "\u0001Mamon Souldrinkerの巣");
             AssertTranslatedMapNote("the village lair of Mamon Souldrinker", "\u0001Mamon Souldrinkerの村落の巣");
             AssertTranslatedMapNote("the cradle of Girsh Rermadon", "\u0001Girsh Rermadonの揺籃");
             AssertTranslatedMapNote("the chuppah of Girsh Qas and Girsh Qon", "\u0001Girsh Qas and Girsh Qonのフッパー");
+            AssertTranslatedMapNote("\u0001a slime bog", "\u0001a slime bog");
+            AssertUntranslatedMapNote("an unknown landmark");
+            AssertUntranslatedMapNote(string.Empty);
         });
     }
 
@@ -154,8 +158,16 @@ public sealed class JournalTextTranslatorTests
                 "The lost Mark of Death from the late sultanate was %*//*%.",
                 "\u0001亡きスルタンの死の刻印は%*//*%だった。");
             AssertTranslatedObservation(
+                "The lost Mark of Death from the late sultanate was {{R|%*//*%}}.",
+                "\u0001亡きスルタンの死の刻印は{{R|%*//*%}}だった。");
+            AssertTranslatedObservation(
                 "You recover the Mark of Death from the ruins.",
                 "\u0001the ruinsから死の刻印を回収した。");
+            AssertTranslatedObservation(
+                "\u0001You recover the Mark of Death from the ruins.",
+                "\u0001You recover the Mark of Death from the ruins.");
+            AssertUntranslatedObservation("The Mark of Death is gone.");
+            AssertUntranslatedObservation(string.Empty);
         });
     }
 
@@ -203,6 +215,29 @@ public sealed class JournalTextTranslatorTests
 
         Assert.That(ok, Is.True, source);
         Assert.That(translated, Is.EqualTo(expected), source);
+    }
+
+    private static void AssertUntranslatedMapNote(string source)
+    {
+        var ok = JournalTextTranslator.TryTranslateMapNoteTextForStorage(
+            source,
+            "Locations",
+            "JournalTextTranslatorTests",
+            out var translated);
+
+        Assert.That(ok, Is.False, source);
+        Assert.That(translated, Is.EqualTo(source), source);
+    }
+
+    private static void AssertUntranslatedObservation(string source)
+    {
+        var ok = JournalTextTranslator.TryTranslateObservationRevealTextForStorage(
+            source,
+            "JournalTextTranslatorTests",
+            out var translated);
+
+        Assert.That(ok, Is.False, source);
+        Assert.That(translated, Is.EqualTo(source), source);
     }
 
     private void WriteExactDictionary(params (string key, string text)[] entries)
