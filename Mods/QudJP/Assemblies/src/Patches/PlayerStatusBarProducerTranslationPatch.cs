@@ -16,6 +16,7 @@ public static class PlayerStatusBarProducerTranslationPatch
     private static FieldInfo? playerStringsDirtyField;
     private static FieldInfo? xpBarField;
     private static FieldInfo? xpBarTextField;
+    private static bool playerStringsDirtyMissingWarningLogged;
 
     [HarmonyTargetMethods]
     private static IEnumerable<MethodBase> TargetMethods()
@@ -134,7 +135,32 @@ public static class PlayerStatusBarProducerTranslationPatch
             playerStringsDirtyField = field;
         }
 
-        field?.SetValue(instance, true);
+        if (field is null)
+        {
+            if (!playerStringsDirtyMissingWarningLogged)
+            {
+                playerStringsDirtyMissingWarningLogged = true;
+                WriteWarning(
+                    "QudJP: {0} could not find playerStringsDirty on {1}. Translated playerStringData may not refresh immediately.",
+                    Context,
+                    instance.GetType().FullName);
+            }
+
+            return;
+        }
+
+        field.SetValue(instance, true);
+    }
+
+    private static void WriteWarning(string format, params object?[] args)
+    {
+        var message = string.Format(System.Globalization.CultureInfo.InvariantCulture, format, args);
+        foreach (TraceListener listener in Trace.Listeners)
+        {
+            listener.TraceEvent(null, "QudJP", TraceEventType.Warning, 0, message);
+        }
+
+        Trace.Flush();
     }
 
     private static void TranslateXpBar(object instance)

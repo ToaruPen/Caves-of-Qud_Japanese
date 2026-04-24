@@ -104,3 +104,24 @@ internal sealed class DummyPlayerStatusBarTarget
         }
     }
 }
+
+internal sealed class DummyPlayerStatusBarTargetWithoutDirtyFlag
+{
+    private enum DummyStringDataType
+    {
+        Zone
+    }
+
+    private readonly Dictionary<DummyStringDataType, string> playerStringData = new Dictionary<DummyStringDataType, string>
+    {
+        { DummyStringDataType.Zone, "World Map" },
+    };
+
+    public string? GetStringData(string name)
+    {
+        return Enum.TryParse<DummyStringDataType>(name, ignoreCase: false, out var key)
+            && playerStringData.TryGetValue(key, out var value)
+            ? value
+            : null;
+    }
+}

@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Diagnostics;
 using System.Text;
 using HarmonyLib;
 using QudJP.Patches;
@@ -116,6 +117,45 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
                 Is.True,
                 "Translated playerStringData must force PlayerStatusBar.Update to flush the new Japanese values.");
         });
+    }
+
+    [Test]
+    public void TranslatePlayerStringData_WarnsOnce_WhenDirtyFlagFieldIsMissing()
+    {
+        WriteDictionary(("World Map", "ワールドマップ"));
+        ResetPatchField("playerStringDataField");
+        ResetPatchField("playerStringsDirtyField");
+        ResetPatchField("playerStringsDirtyMissingWarningLogged");
+
+        var listener = new CapturingTraceListener();
+        Trace.Listeners.Add(listener);
+
+        try
+        {
+            var translateMethod = RequirePatchMethod("TranslatePlayerStringData", typeof(object));
+            var instance = new DummyPlayerStatusBarTargetWithoutDirtyFlag();
+
+            translateMethod.Invoke(null, new object?[] { instance });
+            translateMethod.Invoke(null, new object?[] { instance });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(instance.GetStringData("Zone"), Is.EqualTo("ワールドマップ"));
+                Assert.That(
+                    listener.WarningMessages.Count(message =>
+                        message.Contains("playerStringsDirty", StringComparison.Ordinal)
+                        && message.Contains(nameof(DummyPlayerStatusBarTargetWithoutDirtyFlag), StringComparison.Ordinal)),
+                    Is.EqualTo(1));
+            });
+        }
+        finally
+        {
+            Trace.Listeners.Remove(listener);
+            listener.Dispose();
+            ResetPatchField("playerStringDataField");
+            ResetPatchField("playerStringsDirtyField");
+            ResetPatchField("playerStringsDirtyMissingWarningLogged");
+        }
     }
 
     [Test]
@@ -430,6 +470,16 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
         return method!;
     }
 
+    private static void ResetPatchField(string fieldName)
+    {
+        var patchType = typeof(Translator).Assembly.GetType("QudJP.Patches.PlayerStatusBarProducerTranslationPatch", throwOnError: false);
+        Assert.That(patchType, Is.Not.Null, "PlayerStatusBarProducerTranslationPatch type not found.");
+
+        var field = patchType!.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(field, Is.Not.Null, $"Field not found: {patchType.FullName}.{fieldName}");
+        field!.SetValue(null, field.FieldType == typeof(bool) ? false : null);
+    }
+
     private static MethodInfo RequireMethod(Type type, string methodName)
     {
         var method = AccessTools.Method(type, methodName);
@@ -465,5 +515,31 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
         return value
             .Replace("\\", "\\\\", StringComparison.Ordinal)
             .Replace("\"", "\\\"", StringComparison.Ordinal);
+    }
+
+    private sealed class CapturingTraceListener : TraceListener
+    {
+        internal readonly List<string> WarningMessages = new List<string>();
+
+        public override void Write(string? message)
+        {
+        }
+
+        public override void WriteLine(string? message)
+        {
+        }
+
+        public override void TraceEvent(
+            TraceEventCache? eventCache,
+            string source,
+            TraceEventType eventType,
+            int id,
+            string? message)
+        {
+            if (eventType == TraceEventType.Warning && message is not null)
+            {
+                WarningMessages.Add(message);
+            }
+        }
     }
 }
