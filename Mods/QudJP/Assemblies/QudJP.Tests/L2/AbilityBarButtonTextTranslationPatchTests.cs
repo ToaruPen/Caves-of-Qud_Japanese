@@ -46,8 +46,11 @@ public sealed class AbilityBarButtonTextTranslationPatchTests
         WriteDictionary(
             ("Sprint", "ダッシュ"),
             ("Freezing Ray", "凍結線"),
+            ("Toggle", "切替"),
+            ("Sense", "感知"),
             ("[disabled]", "[無効]"),
-            ("on", "オン"));
+            ("on", "オン"),
+            ("off", "オフ"));
 
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
         var harmony = new Harmony(harmonyId);
@@ -60,8 +63,12 @@ public sealed class AbilityBarButtonTextTranslationPatchTests
             var target = new DummyAbilityBarButtonTextTarget();
             var sprint = new DummyAbilityBarButton("&CSprint {{K|[disabled]}} {{Y|<{{w|S}}>}}");
             var freezingRay = new DummyAbilityBarButton("&CFreezing Ray {{C|[5]}} {{K|[{{g|on}}]}}");
+            var toggle = new DummyAbilityBarButton("&CToggle {{K|[{{r|off}}]}} {{K|[offhand]}}");
+            var sense = new DummyAbilityBarButton("&CSense {{K|[condition]}} {{K|[{{g|on}}]}}");
             target.AbilityButtons.Add(sprint);
             target.AbilityButtons.Add(freezingRay);
+            target.AbilityButtons.Add(toggle);
+            target.AbilityButtons.Add(sense);
 
             target.Update();
 
@@ -69,11 +76,13 @@ public sealed class AbilityBarButtonTextTranslationPatchTests
             {
                 Assert.That(sprint.Text.text, Is.EqualTo("&Cダッシュ {{K|[無効]}} {{Y|<{{w|S}}>}}"));
                 Assert.That(freezingRay.Text.text, Is.EqualTo("&C凍結線 {{C|[5]}} {{K|[{{g|オン}}]}}"));
+                Assert.That(toggle.Text.text, Is.EqualTo("&C切替 {{K|[{{r|オフ}}]}} {{K|[offhand]}}"));
+                Assert.That(sense.Text.text, Is.EqualTo("&C感知 {{K|[condition]}} {{K|[{{g|オン}}]}}"));
                 Assert.That(
                     DynamicTextObservability.GetRouteFamilyHitCountForTests(
                         nameof(AbilityBarButtonTextTranslationPatch),
                         "AbilityBar.ButtonText"),
-                    Is.EqualTo(2));
+                    Is.EqualTo(4));
                 Assert.That(
                     SinkObservation.GetHitCountForTests(
                         nameof(UITextSkinTranslationPatch),

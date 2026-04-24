@@ -3,6 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using HarmonyLib;
 
 namespace QudJP.Patches;
@@ -161,8 +162,21 @@ public static class AbilityBarButtonTextTranslationPatch
     private static string ReplaceExactToken(string source, string token)
     {
         var translated = StringHelpers.TranslateExactOrLowerAscii(token);
-        return translated is null
-            ? source
-            : source.Replace(token, translated);
+        if (translated is null)
+        {
+            return source;
+        }
+
+        var pattern = token.All(IsAsciiLetterOrDigit)
+            ? $@"(?<![A-Za-z0-9]){Regex.Escape(token)}(?![A-Za-z0-9])"
+            : Regex.Escape(token);
+        return Regex.Replace(source, pattern, translated, RegexOptions.CultureInvariant);
+    }
+
+    private static bool IsAsciiLetterOrDigit(char character)
+    {
+        return (character >= 'A' && character <= 'Z')
+            || (character >= 'a' && character <= 'z')
+            || (character >= '0' && character <= '9');
     }
 }
