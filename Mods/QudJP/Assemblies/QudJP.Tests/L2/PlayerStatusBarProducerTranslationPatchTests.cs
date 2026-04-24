@@ -88,7 +88,7 @@ public sealed class PlayerStatusBarProducerTranslationPatchTests
     }
 
     [Test]
-    public void Postfix_MarksPlayerStringsDirty_WhenTranslatedAfterUiFlush()
+    public void TranslatePlayerStringData_MarksPlayerStringsDirty_WhenTranslatedAfterUiFlush()
     {
         WriteDictionary(
             ("Sated", "満腹"),
