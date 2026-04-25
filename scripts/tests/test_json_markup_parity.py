@@ -45,12 +45,23 @@ def _literal_multiset(value: str) -> Counter[str]:
 def _all_dictionary_files() -> list[Path]:
     # Intentionally scans all *.json (not just *.ja.json): the downstream _entries
     # function filters to files with the expected key/text dictionary structure.
-    return sorted(DICTIONARIES_ROOT.rglob("*.json"))
+    files = sorted(DICTIONARIES_ROOT.rglob("*.json"))
+    if not files:
+        msg = (
+            f"No *.json files found under {DICTIONARIES_ROOT}; "
+            "DICTIONARIES_ROOT may be misconfigured or the directory is missing."
+        )
+        raise AssertionError(msg)
+    return files
 
 
 def _entries(path: Path) -> list[tuple[int, str, str]]:
     """Return [(index, key, text), ...] for every entry in a dictionary file."""
-    data = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        msg = f"Failed to parse JSON in {path}: {exc}"
+        raise ValueError(msg) from exc
     raw_entries = data.get("entries", []) if isinstance(data, dict) else data
     if not isinstance(raw_entries, list):
         return []

@@ -16,7 +16,7 @@
 
 | Action | Path | Responsibility |
 | --- | --- | --- |
-| Create | `scripts/tests/test_json_markup_parity.py` | Dict-wide pytest: every entry's `text` must preserve every `{{NAME|` opener and `&&` / `^^` literal that `key` carries (text may add more; key-side tokens must not be lost) |
+| Create | `scripts/tests/test_json_markup_parity.py` | Dict-wide pytest: every entry's `text` must preserve every `{{NAME\|` opener and `&&` / `^^` literal that `key` carries (text may add more; key-side tokens must not be lost) |
 | Modify | `Mods/QudJP/Localization/Dictionaries/ui-displayname-adjectives.ja.json` | 33 `text` field updates (substance-stained adjectives + nested-color adjectives) |
 | Modify | `Mods/QudJP/Localization/Dictionaries/ui-chargen.ja.json` | 4 biome-village `text` updates |
 | Modify | `Mods/QudJP/Localization/Dictionaries/ui-default.ja.json` | 2 `&&` literal restorations |
@@ -176,7 +176,7 @@ This is the largest file: 33 entries to fix. Each is a single `text` field repla
 
 The fixes split into three patterns:
 
-**Pattern 2A — substance-stained color spans** (24 entries):
+**Pattern 2A — substance-stained color spans** (27 entries):
 
 For each entry where the key is `{{COLOR|substance}}-stained` and the current text drops the wrapper, restore the wrapper around the Japanese substance name. Concrete edits:
 
