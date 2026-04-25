@@ -48,7 +48,7 @@ The existing `LoadTranslations_TranslatedTemplatesPreserveVariableReplaceSlots` 
 ## How
 
 1. Update `BlueprintTemplateTranslationPatchTests.cs`: change the existing entry-7 TestCase's expected value, then add 5 new TestCase lines for entries 5, 9, 12, 22, 26 with the new Japanese strings.
-2. Run the L1 test. Expect 5–6 failures (entry 7 because the existing TestCase now expects new text; entries 5/9/12/22/26 because their TestCases assert text that does not yet exist in JSON).
+2. Run the L1 test. Expect exactly 6 failures (entry 7 because the existing TestCase now expects new text; entries 5/9/12/22/26 because their TestCases assert text that does not yet exist in JSON).
 3. Apply the six text-field edits to `templates.ja.json`.
 4. Re-run the L1 test. Expect green.
 5. Run the standard repo verification suite.
