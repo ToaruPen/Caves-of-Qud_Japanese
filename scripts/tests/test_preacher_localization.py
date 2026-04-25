@@ -76,6 +76,7 @@ def test_preacher_frozen_is_japanese(book: str, preacher_parts: list[ET.Element]
 def test_creatures_xml_has_no_unbalanced_color_warning() -> None:
     """validate_xml.py must produce no 'Unbalanced color code' warning on Creatures.jp.xml."""
     result = validate_xml_file(CREATURES_XML)
+    assert result.errors == [], f"validate_xml_file() returned fatal errors: {result.errors}."
     color_warnings = [w for w in result.warnings if "Unbalanced color code" in w]
     assert color_warnings == [], (
         f"Expected no unbalanced-color warnings; got: {color_warnings}. "
