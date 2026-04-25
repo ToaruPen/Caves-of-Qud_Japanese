@@ -59,8 +59,9 @@ def _entries(path: Path) -> list[tuple[int, str, str]]:
     """Return [(index, key, text), ...] for every entry in a dictionary file."""
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        msg = f"Failed to parse JSON in {path}: {exc}"
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        rel = path.relative_to(REPO_ROOT)
+        msg = f"Failed to read/parse {rel}: {exc}"
         raise ValueError(msg) from exc
     raw_entries = data.get("entries", []) if isinstance(data, dict) else data
     if not isinstance(raw_entries, list):

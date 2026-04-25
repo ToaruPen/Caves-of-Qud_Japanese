@@ -47,7 +47,7 @@ Add `scripts/tests/test_json_markup_parity.py`. It scans every `*.json` under `M
 
 The opener-prefix regex is `\{\{(?P<name>[^|}]+)\|` — captures the color/shader name before the pipe. This deliberately ignores bare `{{phase-conjugate}}` (no pipe) which the runtime rejects anyway, and ignores the inner content (which legitimately changes across translation).
 
-The test goes red on today's data (49 cases) and green after the fixes. It runs as part of the standard pytest suite. No allowlist is needed.
+The test fails before the fixes (49 cases) and passes after the fixes. It runs as part of the standard pytest suite. No allowlist is needed.
 
 ## How
 
