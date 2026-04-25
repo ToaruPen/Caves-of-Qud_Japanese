@@ -427,7 +427,7 @@
     {
       "key": "You have spent too many mutation points.",
       "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.Qud.QudMutationsModule",
-      "text": "変異ポイントを使いすぎています。"
+      "text": "突然変異ポイントを使いすぎています。"
     },
     {
       "key": "{{r|Error!}}",
