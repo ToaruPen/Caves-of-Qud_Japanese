@@ -49,11 +49,10 @@ def test_unbalanced_color_code_reports_warning(tmp_path: Path, capsys: pytest.Ca
 
 
 def test_generic_duplicate_id_no_longer_reported(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    """Duplicate sibling IDs under arbitrary parents are no longer flagged.
+    """Duplicate sibling IDs under arbitrary parents are not flagged.
 
-    The validator dropped generic Name/ID detection in favor of an explicit
-    schema allowlist. This regression test pins that behavior so future
-    additions are made consciously.
+    Only schema-allowlisted (parent_tag, child_tag, key_attribute) triples
+    in DUPLICATE_DETECTION_RULES trigger duplicate detection.
     """
     xml_path = tmp_path / "duplicate_id.xml"
     _write_xml(xml_path, '<root><item ID="A"/><item ID="A"/></root>')
@@ -275,11 +274,7 @@ def test_empty_text_only_flagged_for_text_tag(tmp_path: Path, capsys: pytest.Cap
 
 
 def test_empty_text_self_closing_flagged(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    """Self-closing ``<text/>`` is still flagged as empty.
-
-    Behavior parity with the old detector for the genuine empty-translation
-    case found in Conversations.jp.xml:261.
-    """
+    """Self-closing ``<text/>`` is flagged as empty."""
     xml_path = tmp_path / "selfclose.xml"
     _write_xml(xml_path, "<root><text/></root>")
 
