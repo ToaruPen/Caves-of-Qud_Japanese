@@ -387,7 +387,7 @@
     {
       "key": "You have unspent mutation points.",
       "context": "Chargen.Mutations.UnspentWarning",
-      "text": "未使用の突然変異ポイントが残っています。"
+      "text": "未使用の突然変異ポイントがあります。"
     },
     {
       "key": "You have spent too many mutation points.",
@@ -422,12 +422,12 @@
     {
       "key": "You have unspent mutation points.",
       "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.Qud.QudMutationsModule",
-      "text": "未使用の変異ポイントがあります。"
+      "text": "未使用の突然変異ポイントがあります。"
     },
     {
       "key": "You have spent too many mutation points.",
       "context": "XRL.CharacterBuilds.Qud.XRL.CharacterBuilds.Qud.QudMutationsModule",
-      "text": "変異ポイントを使いすぎています。"
+      "text": "突然変異ポイントを使いすぎています。"
     },
     {
       "key": "{{r|Error!}}",

@@ -843,7 +843,7 @@
     },
     {
       "key": "Cudgel (dazes on critical hit)",
-      "text": "棍棒（クリティカル時に朦朧付与）"
+      "text": "鈍器（クリティカル時に朦朧付与）"
     },
     {
       "key": "Short Blades (causes bleeding on critical hit)",
@@ -987,7 +987,7 @@
     {
       "key": "Cudgel (dazes on critical hit)",
       "context": "Look.TooltipValue",
-      "text": "棍棒（クリティカル時に朦朧付与）"
+      "text": "鈍器（クリティカル時に朦朧付与）"
     },
     {
       "key": "Short Blades (causes bleeding on critical hit)",
