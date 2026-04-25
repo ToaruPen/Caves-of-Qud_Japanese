@@ -43,6 +43,8 @@ def _literal_multiset(value: str) -> Counter[str]:
 
 
 def _all_dictionary_files() -> list[Path]:
+    # Intentionally scans all *.json (not just *.ja.json): the downstream _entries
+    # function filters to files with the expected key/text dictionary structure.
     return sorted(DICTIONARIES_ROOT.rglob("*.json"))
 
 

@@ -4,7 +4,7 @@
 
 **Goal:** Restore `{{X|...}}` color spans and `&&` / `^^` literal escapes in 49 shipped translation entries across 9 JSON dictionaries, and lock the multiset-parity invariant behind a new pytest contract.
 
-**Architecture:** Pure data fix in 9 JSON files plus one new pytest module that owns the dict-wide multiset-equality contract for markup tokens.
+**Architecture:** Pure data fix in 9 JSON files plus one new pytest module that owns the dict-wide markup-preservation contract for markup tokens.
 
 **Tech Stack:** Python 3.12 + pytest, `re` for regex extraction, `json` for parsing.
 
@@ -16,7 +16,7 @@
 
 | Action | Path | Responsibility |
 | --- | --- | --- |
-| Create | `scripts/tests/test_json_markup_parity.py` | Dict-wide pytest: every entry's `key` and `text` must agree on `{{NAME|` opener multiset and `&&` / `^^` literal counts |
+| Create | `scripts/tests/test_json_markup_parity.py` | Dict-wide pytest: every entry's `text` must preserve every `{{NAME|` opener and `&&` / `^^` literal that `key` carries (text may add more; key-side tokens must not be lost) |
 | Modify | `Mods/QudJP/Localization/Dictionaries/ui-displayname-adjectives.ja.json` | 33 `text` field updates (substance-stained adjectives + nested-color adjectives) |
 | Modify | `Mods/QudJP/Localization/Dictionaries/ui-chargen.ja.json` | 4 biome-village `text` updates |
 | Modify | `Mods/QudJP/Localization/Dictionaries/ui-default.ja.json` | 2 `&&` literal restorations |
@@ -39,16 +39,24 @@ No new module files outside the test. No production C# changes.
 - [ ] **Step 1: Write the failing test**
 
 ```python
-"""Issue #401 — every JSON dictionary entry must preserve markup token parity.
+"""Issue #401 — every JSON dictionary entry must preserve markup tokens carried by `key`.
 
-Two invariants:
-- The multiset of `{{NAME|` opener prefixes in `key` must equal that in `text`.
-- The count of `&&` and `^^` literal escapes must match.
+Two invariants checked, both asymmetric (preservation, not exact equality):
 
-The opener regex captures the color/shader name before the pipe; bare `{{phase-conjugate}}`
-forms (no pipe) are intentionally ignored because the Caves of Qud runtime rejects them.
-The inner content of color spans legitimately changes across translation, so it is not
-compared.
+- For every `{{NAME|` opener present in `key`, `text` must carry at least the same
+  count under the same color/shader name (key_multiset - text_multiset must be empty).
+- For every `&&` / `^^` literal escape count in `key`, `text` must carry at least
+  the same count.
+
+Adding decoration in `text` that is not in `key` is allowed — some dictionaries
+(e.g. `mutation-descriptions.ja.json`, `mutation-ranktext.ja.json`) use
+identifier-style keys without markup and style the rendered text. The contract is
+"do not LOSE source-side tokens", not "match exactly".
+
+The opener regex captures the name before the pipe; bare `{{phase-conjugate}}`
+forms (no pipe) are intentionally ignored because the Caves of Qud runtime
+rejects them. The inner content of color spans legitimately changes across
+translation, so it is not compared.
 """
 
 from __future__ import annotations
@@ -72,10 +80,12 @@ def _opener_multiset(value: str) -> Counter[str]:
 
 
 def _literal_multiset(value: str) -> Counter[str]:
-    return Counter({token: value.count(token) for token in LITERALS})
+    return Counter({token: count for token in LITERALS if (count := value.count(token)) > 0})
 
 
 def _all_dictionary_files() -> list[Path]:
+    # Intentionally scans all *.json (not just *.ja.json): the downstream _entries
+    # function filters to files with the expected key/text dictionary structure.
     return sorted(DICTIONARIES_ROOT.rglob("*.json"))
 
 
@@ -97,39 +107,39 @@ def _entries(path: Path) -> list[tuple[int, str, str]]:
 
 
 @pytest.mark.parametrize("path", _all_dictionary_files(), ids=lambda p: p.relative_to(REPO_ROOT).as_posix())
-def test_json_dictionary_markup_opener_multiset_matches(path: Path) -> None:
-    """Every entry's `{{NAME|` opener multiset must match between key and text."""
+def test_json_dictionary_markup_openers_preserved(path: Path) -> None:
+    """`text` must carry at least the `{{NAME|` openers present in `key`."""
     mismatches: list[str] = []
     for index, key, text in _entries(path):
         key_sig = _opener_multiset(key)
+        if not key_sig:
+            continue
         text_sig = _opener_multiset(text)
-        if key_sig != text_sig:
+        missing = key_sig - text_sig
+        if missing:
             mismatches.append(
                 f"  entry #{index}\n    key={key!r}\n    text={text!r}\n"
-                f"    key_openers={dict(key_sig)} text_openers={dict(text_sig)}"
+                f"    missing_openers={dict(missing)} key_openers={dict(key_sig)} text_openers={dict(text_sig)}"
             )
-    assert not mismatches, (
-        f"Markup opener multiset mismatch in {path.relative_to(REPO_ROOT)}:\n"
-        + "\n".join(mismatches)
-    )
+    assert not mismatches, f"Markup opener loss in {path.relative_to(REPO_ROOT)}:\n" + "\n".join(mismatches)
 
 
 @pytest.mark.parametrize("path", _all_dictionary_files(), ids=lambda p: p.relative_to(REPO_ROOT).as_posix())
-def test_json_dictionary_literal_escape_multiset_matches(path: Path) -> None:
-    """Every entry's `&&` / `^^` literal escape counts must match between key and text."""
+def test_json_dictionary_literal_escapes_preserved(path: Path) -> None:
+    """`text` must carry at least the `&&` / `^^` literal escape counts present in `key`."""
     mismatches: list[str] = []
     for index, key, text in _entries(path):
         key_sig = _literal_multiset(key)
+        if not key_sig:
+            continue
         text_sig = _literal_multiset(text)
-        if key_sig != text_sig:
+        missing = key_sig - text_sig
+        if missing:
             mismatches.append(
                 f"  entry #{index}\n    key={key!r}\n    text={text!r}\n"
-                f"    key_literals={dict(key_sig)} text_literals={dict(text_sig)}"
+                f"    missing_literals={dict(missing)} key_literals={dict(key_sig)} text_literals={dict(text_sig)}"
             )
-    assert not mismatches, (
-        f"Literal escape multiset mismatch in {path.relative_to(REPO_ROOT)}:\n"
-        + "\n".join(mismatches)
-    )
+    assert not mismatches, f"Literal escape loss in {path.relative_to(REPO_ROOT)}:\n" + "\n".join(mismatches)
 ```
 
 - [ ] **Step 2: Run the test and confirm exactly the expected failure pattern**
@@ -236,7 +246,7 @@ Expected: no output, exit 0.
 
 - [ ] **Step 3: Re-run the markup-parity test**
 
-Run: `uv run pytest scripts/tests/test_json_markup_parity.py::test_json_dictionary_markup_opener_multiset_matches -v 2>&1 | tail -30`
+Run: `uv run pytest scripts/tests/test_json_markup_parity.py::test_json_dictionary_markup_openers_preserved -v 2>&1 | tail -30`
 
 Expected: `ui-displayname-adjectives.ja.json` parametrized case PASSES. Other files still fail.
 

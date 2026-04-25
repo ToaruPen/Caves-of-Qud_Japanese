@@ -39,11 +39,11 @@ The chargen biome village entries (`{{G|salt marsh}}\nvillage` etc.) drop the so
 
 ### New test contract
 
-Add `scripts/tests/test_json_markup_parity.py`. It scans every `*.ja.json` under `Mods/QudJP/Localization/Dictionaries/` (recursively, so `Scoped/` is included). For each entry:
+Add `scripts/tests/test_json_markup_parity.py`. It scans every `*.json` under `Mods/QudJP/Localization/Dictionaries/` (recursively, so `Scoped/` is included); the `_entries` helper filters to files with the expected key/text dictionary structure. For each entry:
 
-- Multiset of `{{NAME|` opener prefixes in `key` must equal that in `text`.
-- Count of `&&` literals in `key` must equal that in `text`.
-- Count of `^^` literals in `key` must equal that in `text`.
+- `text` must contain at least the same occurrences of each `{{NAME|` opener prefix as `key` does (i.e. `key_multiset - text_multiset` must be empty). Text may add opener prefixes not present in `key`.
+- `text` must carry at least the same count of `&&` literals as `key`. Text may add more.
+- `text` must carry at least the same count of `^^` literals as `key`. Text may add more.
 
 The opener-prefix regex is `\{\{(?P<name>[^|}]+)\|` — captures the color/shader name before the pipe. This deliberately ignores bare `{{phase-conjugate}}` (no pipe) which the runtime rejects anyway, and ignores the inner content (which legitimately changes across translation).
 
