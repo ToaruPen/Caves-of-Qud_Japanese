@@ -366,9 +366,13 @@ internal sealed class Extractor
                 var close = sample.IndexOf('}', i);
                 if (close > i)
                 {
-                    sb.Append("(.+?)");
-                    i = close + 1;
-                    continue;
+                    var inner = sample[(i + 1)..close];
+                    if (inner.Length > 0 && inner.All(char.IsDigit))
+                    {
+                        sb.Append("(.+?)");
+                        i = close + 1;
+                        continue;
+                    }
                 }
             }
             sb.Append(Regex.Escape(sample[i].ToString()));

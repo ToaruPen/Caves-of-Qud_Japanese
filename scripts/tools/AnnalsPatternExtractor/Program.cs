@@ -12,9 +12,15 @@ for (var i = 0; i < args.Length; i++)
 {
     switch (args[i])
     {
-        case "--source-root": sourceRoot = args[++i]; break;
-        case "--include": include = args[++i]; break;
-        case "--output": output = args[++i]; break;
+        case "--source-root":
+            if (i + 1 >= args.Length) { Console.Error.WriteLine("Missing value for --source-root"); return 2; }
+            sourceRoot = args[++i]; break;
+        case "--include":
+            if (i + 1 >= args.Length) { Console.Error.WriteLine("Missing value for --include"); return 2; }
+            include = args[++i]; break;
+        case "--output":
+            if (i + 1 >= args.Length) { Console.Error.WriteLine("Missing value for --output"); return 2; }
+            output = args[++i]; break;
         case "--help":
             Console.Out.WriteLine("Usage: AnnalsPatternExtractor --source-root <dir> --include <glob> --output <json-path>");
             return 0;

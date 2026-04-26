@@ -47,17 +47,27 @@ public sealed class AnnalsPatternsMarkupInvariantTests
     public static IEnumerable<TestCaseData> AllPatterns()
     {
         var assetPath = GetAssetPath();
-        if (!File.Exists(assetPath)) yield break;
+        if (!File.Exists(assetPath))
+            throw new FileNotFoundException($"annals-patterns.ja.json not found: {assetPath}", assetPath);
 
         using var stream = File.OpenRead(assetPath);
         var serializer = new DataContractJsonSerializer(typeof(JournalPatternDocumentDto));
         var document = serializer.ReadObject(stream) as JournalPatternDocumentDto;
-        if (document?.Patterns is null) yield break;
+        if (document is null)
+            throw new InvalidDataException($"Failed to deserialize annals-patterns.ja.json as JournalPatternDocumentDto");
+        if (document.Patterns is null)
+            throw new InvalidDataException("annals-patterns.ja.json: 'patterns' array is null");
 
         for (var i = 0; i < document.Patterns.Count; i++)
         {
             var p = document.Patterns[i];
-            yield return new TestCaseData(p?.Pattern ?? "", p?.Template ?? "")
+            if (p is null)
+                throw new InvalidDataException($"annals-patterns.ja.json: patterns[{i}] is null");
+            if (p.Pattern is null)
+                throw new InvalidDataException($"annals-patterns.ja.json: patterns[{i}].pattern is null");
+            if (p.Template is null)
+                throw new InvalidDataException($"annals-patterns.ja.json: patterns[{i}].template is null");
+            yield return new TestCaseData(p.Pattern, p.Template)
                 .SetName($"AnnalsPattern_{i:D3}");
         }
     }
@@ -119,6 +129,10 @@ public sealed class AnnalsPatternsMarkupInvariantTests
             $"<color=...> open-count differs: pattern={patternOpens} template={templateOpens}");
         Assert.That(patternCloses, Is.EqualTo(templateCloses),
             $"</color> close-count differs: pattern={patternCloses} template={templateCloses}");
+        Assert.That(patternOpens, Is.EqualTo(patternCloses),
+            $"<color=...> open/close imbalance in pattern: {patternOpens} opens / {patternCloses} closes");
+        Assert.That(templateOpens, Is.EqualTo(templateCloses),
+            $"<color=...> open/close imbalance in template: {templateOpens} opens / {templateCloses} closes");
     }
 
     [TestCaseSource(nameof(AllPatterns))]

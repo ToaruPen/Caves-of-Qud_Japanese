@@ -43,11 +43,15 @@ public sealed class ReshephHistoryTranslationTests
     public static IEnumerable<TestCaseData> Samples()
     {
         var path = GetFixturePath();
-        if (!File.Exists(path)) yield break;
+        if (!File.Exists(path))
+            throw new FileNotFoundException($"Fixture file not found: {path}", path);
         using var stream = File.OpenRead(path);
         var serializer = new DataContractJsonSerializer(typeof(ReshephSampleDocument));
         var doc = serializer.ReadObject(stream) as ReshephSampleDocument;
-        if (doc is null || doc.SchemaVersion != ExpectedSchemaVersion) yield break;
+        if (doc is null)
+            throw new InvalidDataException($"Failed to deserialize fixture: {path}");
+        if (doc.SchemaVersion != ExpectedSchemaVersion)
+            throw new InvalidDataException($"Fixture schema_version mismatch: expected '{ExpectedSchemaVersion}', got '{doc.SchemaVersion}' in {path}");
         foreach (var sample in doc.Samples)
         {
             yield return new TestCaseData(sample).SetName($"Resheph_{sample.CandidateId}");

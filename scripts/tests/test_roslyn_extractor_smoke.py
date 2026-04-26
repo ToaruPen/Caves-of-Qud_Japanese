@@ -9,7 +9,8 @@ from pathlib import Path
 
 import pytest
 
-PROJECT_PATH = Path("scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj")
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_PATH = _REPO_ROOT / "scripts" / "tools" / "AnnalsPatternExtractor" / "AnnalsPatternExtractor.csproj"
 
 
 @pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")

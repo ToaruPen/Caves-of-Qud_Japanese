@@ -10,8 +10,9 @@ from pathlib import Path
 
 import pytest
 
-PROJECT_PATH = Path("scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj")
-FIXTURES = Path("scripts/tests/fixtures/annals")
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_PATH = _REPO_ROOT / "scripts" / "tools" / "AnnalsPatternExtractor" / "AnnalsPatternExtractor.csproj"
+FIXTURES = Path(__file__).resolve().parent / "fixtures" / "annals"
 
 
 def _run_extractor(include: str, output: Path) -> subprocess.CompletedProcess[str]:
@@ -67,7 +68,6 @@ def test_extractor_matches_golden(fixture: str, tmp_path: Path) -> None:
     assert actual == expected, f"extractor output diverged from golden for {fixture}"
 
 
-@pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
 @pytest.mark.parametrize(
     "fixture",
     [

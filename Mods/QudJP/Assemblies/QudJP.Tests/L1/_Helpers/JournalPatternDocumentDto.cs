@@ -6,6 +6,9 @@ namespace QudJP.Tests.L1;
 [DataContract]
 internal sealed class JournalPatternDocumentDto
 {
+    [DataMember(Name = "entries")]
+    public List<JournalPatternEntryDto>? Entries { get; set; }
+
     [DataMember(Name = "patterns")]
     public List<JournalPatternEntryDto>? Patterns { get; set; }
 }
