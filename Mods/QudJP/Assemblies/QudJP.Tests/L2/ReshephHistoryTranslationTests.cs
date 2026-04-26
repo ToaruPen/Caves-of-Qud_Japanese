@@ -17,11 +17,9 @@ public sealed class ReshephSampleEntry
     public string InputSource { get; set; } = "";
     [DataMember(Name = "expected_japanese_contains")]
     public List<string> ExpectedJapaneseContains { get; set; } = new();
-    // expected_japanese_exact locks down deterministic translator output in full.
-    [DataMember(Name = "expected_japanese_exact", IsRequired = false, EmitDefaultValue = false)]
+    [DataMember(Name = "expected_japanese_exact")]
     public string? ExpectedJapaneseExact { get; set; }
-    // expected_unchanged covers the English-fallback / passthrough contract.
-    [DataMember(Name = "expected_unchanged", IsRequired = false, EmitDefaultValue = false)]
+    [DataMember(Name = "expected_unchanged")]
     public bool ExpectedUnchanged { get; set; }
 }
 
