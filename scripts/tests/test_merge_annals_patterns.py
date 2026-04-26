@@ -3,13 +3,19 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
-import sys
 from pathlib import Path
 from typing import Any
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-import merge_annals_patterns as mer
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_spec = importlib.util.spec_from_file_location(
+    "merge_annals_patterns", _REPO_ROOT / "scripts" / "merge_annals_patterns.py"
+)
+assert _spec is not None
+assert _spec.loader is not None
+mer = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(mer)  # type: ignore[attr-defined]
 
 
 def _candidate(**overrides: Any) -> dict[str, Any]:

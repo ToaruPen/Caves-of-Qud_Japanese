@@ -59,6 +59,8 @@ def test_validate_passes_for_accepted_with_template(tmp_path: Path) -> None:
 
 
 def test_validate_fails_when_schema_version_missing(tmp_path: Path) -> None:
+    # Bypasses _run() intentionally: the doc is missing "schema_version" entirely,
+    # so it cannot be constructed via _doc() which always injects schema_version.
     p = tmp_path / "candidates.json"
     p.write_text(json.dumps({"candidates": [_candidate()]}), encoding="utf-8")
     result = subprocess.run([sys.executable, str(SCRIPT), str(p)], capture_output=True, text=True, check=False)

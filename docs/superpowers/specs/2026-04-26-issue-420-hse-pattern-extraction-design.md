@@ -43,7 +43,7 @@ Translate Caves of Qud's Sultan history (the Resheph entry in the Sultan Histori
 
 ### System Overview
 
-```
+```text
 [Build time, developer host]                              [Runtime, player game session]
 ─────────────────────────────────                         ──────────────────────────────────
   XRL.Annals/Resheph*.cs (decompiled)                      Generated History (post-HSE-expansion of <spice...>)
@@ -112,7 +112,7 @@ internal static void SetPatternFileForTests(string? path) =>
 
 Each script reads previous output, writes next. Stateless between runs. Re-runnable.
 
-```
+```text
 extract → candidates_pending.json
         (human edits in place; status, ja_template, reason)
 validate → read-only check
@@ -148,7 +148,7 @@ The build-time pipeline runs on a developer host, not in CI. An operator running
 - **Precedent:** `Mods/QudJP/Assemblies/QudJP.Analyzers/QudJP.Analyzers.csproj` already uses Roslyn.
 - **CLI:**
 
-  ```
+  ```bash
   dotnet run --project scripts/tools/AnnalsPatternExtractor -- \
       --source-root <decompiled-XRL.Annals-path> \
       --include "Resheph*.cs" \
@@ -181,7 +181,7 @@ The build-time pipeline runs on a developer host, not in CI. An operator running
 
 - **CLI:**
 
-  ```
+  ```bash
   python3.12 scripts/extract_annals_patterns.py \
       --source-root ~/dev/coq-decompiled_stable/XRL.Annals \
       --include "Resheph*.cs" \
@@ -328,7 +328,7 @@ The build-time pipeline runs on a developer host, not in CI. An operator running
 
 ### 3.9 Artifact directory & gitignore
 
-```
+```text
 scripts/_artifacts/annals/
 ├── candidates_pending.json     # extract output, human edits in place
 ├── candidates_pending.json.bak-YYYYMMDDHHMMSS  # extract --force backups
@@ -452,7 +452,7 @@ Fixtures use plain `.cs` extension (existing convention `scripts/tests/fixtures/
 
 | File | Coverage |
 |---|---|
-| `JournalPatternTranslatorMultiFileTests.cs` | Ordered load (journal first, annals second). `null` reset → defaults. Empty list → defaults. First file missing → `FileNotFoundException`. Second file missing → `FileNotFoundException`. Second file malformed JSON → `InvalidDataException`. Second file invalid regex → `InvalidDataException`. Duplicate pattern across files → warn + first-file wins (per existing `JournalPatternTranslator.cs:181, 247`). |
+| `JournalPatternTranslatorMultiFileTests.cs` | Ordered load (journal first, annals second). `null` reset → defaults. Empty list → defaults. First file missing → `FileNotFoundException`. Second file missing → `FileNotFoundException`. Malformed JSON in second file → `InvalidDataException`. Invalid regex in second file → `InvalidDataException`. Duplicate pattern across files → warn + first-file wins (per existing `JournalPatternTranslator.cs:181, 247`). |
 | `AnnalsPatternsMarkupInvariantTests.cs` | Load `annals-patterns.ja.json`. Each pattern: regex compile, placeholder index ≤ capture count, multiset parity of markup tokens (`&W`, `^k`, `{{X|y}}`, `<color=...>`, `\n`, `=name=` etc.) between source/template, `entries` field present. |
 | `AnnalsPatternsCollisionTests.cs` | Annals samples (test fixture) do not shadow existing 86 `journal-patterns.ja.json` patterns (raw + normalized). |
 | `AnnalsPatternsAssetReachabilityTests.cs` | `LocalizationAssetResolver` resolves the path; `patterns` array non-empty. (Moved from L2G — asset path resolution is game-DLL-independent per `LocalizationAssetResolver.cs:12`.) |

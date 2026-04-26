@@ -293,6 +293,8 @@ def main(argv: list[str] | None = None) -> int:
                 target["status"] = "needs_manual"
                 target["reason"] = "translation retries exhausted; review manually"
                 any_failure = True
+        # Second save persists downgrade decisions; deliberate trade-off for
+        # crash-safety against modest disk I/O cost.
         save_progress(args.path, doc)
 
     return 1 if any_failure else 0
