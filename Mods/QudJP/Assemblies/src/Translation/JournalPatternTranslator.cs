@@ -164,7 +164,7 @@ internal static class JournalPatternTranslator
         var summaries = new List<string>(paths.Count);
         var totalDuplicates = 0;
         var distinctDuplicates = new Dictionary<string, int>(StringComparer.Ordinal);
-        var seenPatternsAcrossFiles = new Dictionary<string, int>(StringComparer.Ordinal);
+        var seenPatternsAcrossFiles = new HashSet<string>(StringComparer.Ordinal);
 
         for (var fileIndex = 0; fileIndex < paths.Count; fileIndex++)
         {
@@ -216,7 +216,7 @@ internal static class JournalPatternTranslator
                 }
 
                 _ = GetCompiledRegex(pattern);
-                if (seenPatternsAcrossFiles.ContainsKey(pattern))
+                if (seenPatternsAcrossFiles.Contains(pattern))
                 {
                     fileDuplicateCount++;
                     totalDuplicates++;
@@ -225,7 +225,7 @@ internal static class JournalPatternTranslator
                     continue;
                 }
 
-                seenPatternsAcrossFiles[pattern] = allDefinitions.Count;
+                seenPatternsAcrossFiles.Add(pattern);
                 allDefinitions.Add(new JournalPatternDefinition(pattern, template));
             }
 
@@ -242,6 +242,7 @@ internal static class JournalPatternTranslator
         return allDefinitions;
     }
 
+    // Must be called while holding SyncRoot (only call site is LoadPatterns).
     private static IReadOnlyList<string> ResolvePatternFilePaths()
     {
         var overrides = patternFileOverrides;

@@ -171,4 +171,20 @@ public sealed class JournalPatternTranslatorMultiFileTests
 
         Assert.Throws<InvalidDataException>(() => JournalPatternTranslator.Translate("Hello"));
     }
+
+    [Test]
+    public void LoadPatterns_DuplicateAcrossFiles_LogsDuplicateInLoadSummary()
+    {
+        var first = WritePatternFile("first.json",
+            PatternFileBody(("^Hello world$", "First template")));
+        var second = WritePatternFile("second.json",
+            PatternFileBody(("^Hello world$", "Second template")));
+
+        JournalPatternTranslator.SetPatternFilesForTests(first, second);
+        _ = JournalPatternTranslator.Translate("Hello world");  // force load
+
+        var summary = JournalPatternTranslator.GetPatternLoadSummaryForTests();
+        Assert.That(summary, Does.Contain("duplicate"),
+            "load summary must report cross-file duplicate count for observability");
+    }
 }
