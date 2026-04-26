@@ -6,12 +6,18 @@ namespace QudJP.Patches;
 
 internal static class SultanShrineWrapperTranslator
 {
-    private const string TemplateKey = "QudJP.ShrineWrapper.AncientSultan";
-    private const string FamilyTag = "ShrineWrapper.AncientSultan";
+    private const string TemplateKeyWithQuality = "QudJP.ShrineWrapper.AncientSultan";
+    private const string TemplateKeyWithoutQuality = "QudJP.ShrineWrapper.AncientSultan.NoQuality";
+    private const string FamilyTagWithQuality = "ShrineWrapper.AncientSultan";
+    private const string FamilyTagWithoutQuality = "ShrineWrapper.AncientSultan.NoQuality";
 
+    // The trailing "\n\n{quality}" segment is appended only on the tooltip / popup path. Routes
+    // that surface the bare Description.Short (set by SultanShrine.ShrineInitialize) see only
+    // the prefix + gospel, so the quality block must be optional or those routes pass through
+    // English.
     private static readonly Regex CompositePattern =
         new Regex(
-            "^The shrine depicts a significant event from the life of the ancient sultan (?<sultan>.+?):\\n\\n(?<gospel>.+?)\\n\\n(?<quality>.+?)$",
+            "^The shrine depicts a significant event from the life of the ancient sultan (?<sultan>.+?):\\n\\n(?<gospel>.+?)(?:\\n\\n(?<quality>.+?))?$",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
     // Quality strings come from XRL.Rules.Strings.WoundLevel. The set is finite and shipped in
@@ -43,34 +49,52 @@ internal static class SultanShrineWrapperTranslator
             return false;
         }
 
-        if (!Translator.TryGetTranslation(TemplateKey, out var template))
+        var qualityGroup = match.Groups["quality"];
+        var hasQuality = qualityGroup.Success;
+        var templateKey = hasQuality ? TemplateKeyWithQuality : TemplateKeyWithoutQuality;
+        if (!Translator.TryGetTranslation(templateKey, out var template))
         {
             translated = source;
             return false;
         }
 
-        var sultanRaw = match.Groups["sultan"].Value;
-        var gospelRaw = match.Groups["gospel"].Value;
-        var qualityRaw = match.Groups["quality"].Value;
+        var sultan = TranslateSultanName(match.Groups["sultan"].Value);
+        var gospel = TranslateGospel(match.Groups["gospel"].Value, route);
 
-        var sultan = TranslateSultanName(sultanRaw);
-        var gospel = TranslateGospel(gospelRaw, route);
-        var quality = TranslateQuality(qualityRaw);
-
-        if (!TryComposeWithKnownQualityOffset(template, sultan, gospel, quality, out var composed, out var qualityStart))
+        string composed;
+        int qualityStart;
+        int qualityLength;
+        if (hasQuality)
         {
-            translated = source;
-            return false;
+            var quality = TranslateQuality(qualityGroup.Value);
+            if (!TryComposeWithQuality(template, sultan, gospel, quality, out composed, out qualityStart))
+            {
+                translated = source;
+                return false;
+            }
+
+            qualityLength = quality.Length;
+        }
+        else
+        {
+            if (!TryComposeWithoutQuality(template, sultan, gospel, out composed))
+            {
+                translated = source;
+                return false;
+            }
+
+            qualityStart = -1;
+            qualityLength = 0;
         }
 
-        if (spans is not null && spans.Count > 0 && qualityStart >= 0)
+        if (hasQuality && spans is not null && spans.Count > 0 && qualityStart >= 0)
         {
-            composed = WrapTranslatedQualityWithSourceColors(composed, qualityStart, quality.Length, spans, match.Groups["quality"]);
+            composed = WrapTranslatedQualityWithSourceColors(composed, qualityStart, qualityLength, spans, qualityGroup);
         }
 
         DynamicTextObservability.RecordTransform(
             nameof(MessagePatternTranslator),
-            FamilyTag,
+            hasQuality ? FamilyTagWithQuality : FamilyTagWithoutQuality,
             source,
             composed);
 
@@ -123,7 +147,7 @@ internal static class SultanShrineWrapperTranslator
     // Computes the substituted output AND the absolute index where {quality} ends up after
     // {sultan} and {gospel} have been replaced. Defensive: requires the template to contain
     // each placeholder exactly once and {quality} to follow {sultan}/{gospel} in template order.
-    private static bool TryComposeWithKnownQualityOffset(
+    private static bool TryComposeWithQuality(
         string template,
         string sultan,
         string gospel,
@@ -154,6 +178,29 @@ internal static class SultanShrineWrapperTranslator
         var sultanDelta = sultan.Length - sultanPlaceholder.Length;
         var gospelDelta = gospel.Length - gospelPlaceholder.Length;
         qualityStart = qualityIndex + sultanDelta + gospelDelta;
+        return true;
+    }
+
+    private static bool TryComposeWithoutQuality(
+        string template,
+        string sultan,
+        string gospel,
+        out string composed)
+    {
+        const string sultanPlaceholder = "{sultan}";
+        const string gospelPlaceholder = "{gospel}";
+
+        var sultanIndex = template.IndexOf(sultanPlaceholder, StringComparison.Ordinal);
+        var gospelIndex = template.IndexOf(gospelPlaceholder, StringComparison.Ordinal);
+        if (sultanIndex < 0 || gospelIndex < 0 || sultanIndex >= gospelIndex)
+        {
+            composed = string.Empty;
+            return false;
+        }
+
+        composed = template
+            .Replace(sultanPlaceholder, sultan)
+            .Replace(gospelPlaceholder, gospel);
         return true;
     }
 

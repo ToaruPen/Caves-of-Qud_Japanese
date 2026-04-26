@@ -114,4 +114,41 @@ public sealed class SultanShrineWrapperTranslatorTests
             Assert.That(translated, Does.EndWith("{{Y|完璧}}"));
         });
     }
+
+    [Test]
+    public void Translate_TranslatesTwoParagraphShape_WhenQualitySuffixAbsent()
+    {
+        // Shape produced directly by SultanShrine.ShrineInitialize (Description.Short).
+        // Quality rating is appended only on the tooltip / popup path, so routes that show
+        // the long description without the wound suffix must still translate the wrapper.
+        const string source =
+            "The shrine depicts a significant event from the life of the ancient sultan Resheph:"
+            + "\n\nIn 3 AR, Resheph cleansed the marshlands of the plagues of the Gyre and taught Abram to sow watervine along its fertile tracks.";
+
+        var translated = MessagePatternTranslator.Translate(source, nameof(DescriptionLongDescriptionPatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Does.StartWith("この祠は古のスルタン"), "wrapper prefix should be Japanese");
+            Assert.That(translated, Does.Contain("レシェフ"), "sultan name should be translated");
+            Assert.That(translated, Does.Contain("3年、レシェフは"), "annals gospel should be translated");
+            Assert.That(translated, Does.Not.Contain("The shrine depicts"), "no English wrapper should remain");
+            Assert.That(translated, Does.Not.Contain("Resheph"), "no English sultan name should remain");
+            Assert.That(translated, Does.Not.Contain("{quality}"), "quality placeholder should not leak");
+            Assert.That(translated, Does.Not.EndWith("\n\n"), "no dangling separator should remain when quality is absent");
+        });
+    }
+
+    [Test]
+    public void Translate_DoesNotOverMatchUnrelatedTwoParagraphTextStartingWithTheShrine()
+    {
+        // Plausible-but-unrelated two-paragraph text that begins with "The shrine" must not
+        // be claimed by the wrapper translator. Without the canonical "depicts a significant
+        // event from the life of the ancient sultan ...:" prefix the regex must miss.
+        const string source = "The shrine looks weathered.\n\nMoss has overgrown its base.";
+
+        var translated = MessagePatternTranslator.Translate(source, nameof(DescriptionLongDescriptionPatch));
+
+        Assert.That(translated, Is.EqualTo(source), "unrelated two-paragraph inputs must fall through unchanged");
+    }
 }

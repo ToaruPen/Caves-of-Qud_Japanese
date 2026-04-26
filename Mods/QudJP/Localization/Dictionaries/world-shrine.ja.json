@@ -5,6 +5,10 @@
             "text": "この祠は古のスルタン{sultan}の生涯における重要な出来事を描いている：\n\n{gospel}\n\n{quality}"
         },
         {
+            "key": "QudJP.ShrineWrapper.AncientSultan.NoQuality",
+            "text": "この祠は古のスルタン{sultan}の生涯における重要な出来事を描いている：\n\n{gospel}"
+        },
+        {
             "key": "QudJP.ShrineWrapper.Quality.Perfect",
             "text": "完璧"
         },
