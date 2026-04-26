@@ -2,7 +2,7 @@
   "schema_version": "1",
   "candidates": [
     {
-      "id": "switch_cases#switch0",
+      "id": "switch_cases#gospel#switch0",
       "source_file": "switch_cases.cs",
       "annal_class": "switch_cases",
       "switch_case": "0",
@@ -18,7 +18,7 @@
       "en_template_hash": "sha256:90ccde0f68d4fb151d2f01fb75df3213e78cbaa0f439bf5186dbfc91f8552552"
     },
     {
-      "id": "switch_cases#switch1",
+      "id": "switch_cases#gospel#switch1",
       "source_file": "switch_cases.cs",
       "annal_class": "switch_cases",
       "switch_case": "1",
@@ -34,7 +34,7 @@
       "en_template_hash": "sha256:1ff7f4d9badfccd400cde406951066cb33d61f0d74d98fd7a34d7122300f99af"
     },
     {
-      "id": "switch_cases#switch2",
+      "id": "switch_cases#gospel#switch2",
       "source_file": "switch_cases.cs",
       "annal_class": "switch_cases",
       "switch_case": "default",

@@ -2,7 +2,7 @@
   "schema_version": "1",
   "candidates": [
     {
-      "id": "simple_concat#default",
+      "id": "simple_concat#gospel",
       "source_file": "simple_concat.cs",
       "annal_class": "simple_concat",
       "switch_case": "default",

@@ -51,13 +51,15 @@ internal sealed class Extractor
             if (eventProperty is null || valueExpr is null) continue;
             if (eventProperty != "gospel" && eventProperty != "tombInscription") continue;
 
-            var candidateId = $"{className}#default";
+            // Include event_property in the id so a single Generate() that sets both
+            // "gospel" and "tombInscription" produces distinct ids (no downstream collision).
+            var candidateId = $"{className}#{eventProperty}";
             // PR1 does not handle switch/case; if the call is inside a SwitchSectionSyntax, mark needs_manual.
             var switchSection = invocation.Ancestors().OfType<SwitchSectionSyntax>().FirstOrDefault();
             if (switchSection is not null)
             {
                 candidates.Add(NeedsManual(
-                    id: $"{className}#switch{i}",
+                    id: $"{className}#{eventProperty}#switch{i}",
                     sourceFile: fileName,
                     annalClass: className,
                     switchCase: ExtractSwitchLabel(switchSection),
@@ -209,8 +211,10 @@ internal sealed class Extractor
                     pieces.Add(literalValue);
                     return true;
                 }
-                // Treat as a dynamic slot (entity-property style)
-                AddSlot(slots, id.Identifier.ValueText, type: "entity-property");
+                // Degrade to a slot rather than failing: the identifier resolves to something we
+                // cannot statically inline (e.g. method-call result), so surface it for the human
+                // reviewer in the candidate JSON instead of dropping the whole pattern.
+                AddSlot(slots, id.Identifier.ValueText, type: "unresolved-local");
                 pieces.Add($"{{{slots.Count - 1}}}");
                 return true;
 
@@ -305,7 +309,6 @@ internal sealed class Extractor
         // Replace each "{N}" placeholder in the sample with a non-greedy capture group, escape literals.
         var sb = new StringBuilder("^");
         var i = 0;
-        var slotIndex = 0;
         while (i < sample.Length)
         {
             if (sample[i] == '{' && i + 2 < sample.Length && char.IsDigit(sample[i + 1]))
@@ -315,7 +318,6 @@ internal sealed class Extractor
                 {
                     sb.Append("(.+?)");
                     i = close + 1;
-                    slotIndex++;
                     continue;
                 }
             }

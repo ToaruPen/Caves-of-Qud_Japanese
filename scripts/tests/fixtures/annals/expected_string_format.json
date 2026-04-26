@@ -2,7 +2,7 @@
   "schema_version": "1",
   "candidates": [
     {
-      "id": "string_format#default",
+      "id": "string_format#tombInscription",
       "source_file": "string_format.cs",
       "annal_class": "string_format",
       "switch_case": "default",
