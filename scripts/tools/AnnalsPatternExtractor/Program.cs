@@ -65,9 +65,49 @@ foreach (var diag in extractor.Diagnostics)
     Console.Error.WriteLine($"[warn] {diag}");
 }
 
+// Pre-pass: collapse if-branch siblings whose patterns turned out structurally identical so the
+// `#if:then`/`#if:else` suffix only survives when the branches *differ*. We pair them by the
+// "id with the if-suffix stripped" — if all members of the group share one hash, replace their
+// ids with the stripped form and keep one. This realises Option A (dedupe identical shapes) for
+// if-branches without losing distinctness in the divergent-shape case.
+var groups = new Dictionary<string, List<CandidateEntry>>(StringComparer.Ordinal);
+foreach (var candidate in extractor.Candidates)
+{
+    var key = StripIfBranchSuffix(candidate.Id);
+    if (!groups.TryGetValue(key, out var bucket))
+    {
+        bucket = new List<CandidateEntry>();
+        groups[key] = bucket;
+    }
+    bucket.Add(candidate);
+}
+
+var collapsed = new List<CandidateEntry>();
+foreach (var bucket in groups.Values)
+{
+    if (bucket.Count == 1)
+    {
+        collapsed.Add(bucket[0]);
+        continue;
+    }
+    var firstHash = bucket[0].EnTemplateHash;
+    var allSameShape = bucket.All(c => c.EnTemplateHash == firstHash);
+    if (allSameShape)
+    {
+        var first = bucket[0];
+        first.Id = StripIfBranchSuffix(first.Id);
+        first.EnTemplateHash = HashHelper.ComputeEnTemplateHash(first);
+        collapsed.Add(first);
+    }
+    else
+    {
+        collapsed.AddRange(bucket);
+    }
+}
+
 var deduped = new List<CandidateEntry>();
 var seenById = new Dictionary<string, CandidateEntry>(StringComparer.Ordinal);
-foreach (var candidate in extractor.Candidates)
+foreach (var candidate in collapsed)
 {
     if (seenById.TryGetValue(candidate.Id, out var prior))
     {
@@ -80,6 +120,12 @@ foreach (var candidate in extractor.Candidates)
     }
     seenById[candidate.Id] = candidate;
     deduped.Add(candidate);
+}
+
+static string StripIfBranchSuffix(string id)
+{
+    var idx = id.IndexOf("#if:", StringComparison.Ordinal);
+    return idx < 0 ? id : id[..idx];
 }
 
 var doc = new CandidateDocument

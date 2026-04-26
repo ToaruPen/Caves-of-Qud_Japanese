@@ -59,14 +59,17 @@ internal sealed class Extractor
             var idPrefix = switchSection is null
                 ? $"{className}#{eventProperty}"
                 : $"{className}#{eventProperty}#case:{switchLabel}";
+            var ifBranchSuffix = ResolveIfBranchSuffix(invocation, setterCalls, eventProperty);
+            if (ifBranchSuffix is not null) idPrefix += $"#if:{ifBranchSuffix}";
 
-            var armings = ExpandSwitchExpressionArms(valueExpr, localInitializers);
+            var setterLocals = BuildSetterScopedLocals(invocation, localInitializers);
+            var armings = ExpandSwitchExpressionArms(valueExpr, setterLocals);
             foreach (var (armLabel, armLocals) in armings)
             {
                 var armSwitchCase = armLabel is null ? switchLabel : armLabel;
                 var armId = armLabel is null ? idPrefix : $"{idPrefix}#arm:{armLabel}";
 
-                var optExpansions = ExpandOptionalAppends(valueExpr, armLocals, appendsByLocal);
+                var optExpansions = ExpandOptionalAppends(valueExpr, armLocals, FilterAppendsToLocals(armLocals, appendsByLocal));
                 foreach (var (optLabel, optLocals) in optExpansions)
                 {
                     var optId = optLabel is null ? armId : $"{armId}#opt:{optLabel}";
@@ -174,6 +177,104 @@ internal sealed class Extractor
             var initValue = declarators[0].Initializer?.Value;
             if (initValue is null) continue;
             dict[name] = initValue;
+        }
+        return dict;
+    }
+
+    /// <summary>
+    /// When two SetEventProperty calls for the same event property appear in distinct branches of
+    /// the same `if/else` statement, return a `then`/`else`/`elseN` suffix so the extractor can
+    /// emit one candidate per branch (each with its own shape). If only one setter for the event
+    /// exists in this if (i.e., a `tombInscription` fallback like `If.Chance(80) tomb=long; else
+    /// tomb=short;`), still suffix to keep the runtime variants distinct.
+    /// </summary>
+    private static string? ResolveIfBranchSuffix(
+        InvocationExpressionSyntax setter,
+        List<InvocationExpressionSyntax> allSetters,
+        string eventProperty)
+    {
+        var ifStmt = setter.Ancestors().OfType<IfStatementSyntax>().FirstOrDefault();
+        if (ifStmt is null) return null;
+        // Only suffix when at least one other setter for this same event property exists in a
+        // distinct branch of the *same* if statement.
+        var siblingsInSameIf = allSetters.Where(other =>
+        {
+            if (other == setter) return false;
+            if (ParseSetterArgs(other).property != eventProperty) return false;
+            var otherIf = other.Ancestors().OfType<IfStatementSyntax>().FirstOrDefault();
+            return otherIf == ifStmt;
+        }).ToList();
+        if (siblingsInSameIf.Count == 0) return null;
+
+        // Determine which branch this setter lives in.
+        if (IsInThenBranch(setter, ifStmt)) return "then";
+        if (IsInElseBranch(setter, ifStmt)) return "else";
+        return null;
+    }
+
+    private static bool IsInThenBranch(SyntaxNode node, IfStatementSyntax ifStmt)
+    {
+        return ifStmt.Statement.Span.Contains(node.Span);
+    }
+
+    private static bool IsInElseBranch(SyntaxNode node, IfStatementSyntax ifStmt)
+    {
+        return ifStmt.Else is not null && ifStmt.Else.Statement.Span.Contains(node.Span);
+    }
+
+    /// <summary>
+    /// Add per-setter overrides for locals that were excluded from method-scope locals because of
+    /// SimpleAssignmentExpression reassignment, when a flow-sensitive lookup at the setter's
+    /// location identifies a single dominating assignment (the most recent assignment within the
+    /// nearest enclosing block, e.g. a switch case body or an if branch). This recovers `value`
+    /// in patterns like `string value; if (cond) { value = ...; SetEventProperty(_, value); }`.
+    /// </summary>
+    private static IReadOnlyDictionary<string, ExpressionSyntax> BuildSetterScopedLocals(
+        InvocationExpressionSyntax setter,
+        IReadOnlyDictionary<string, ExpressionSyntax> methodLocals)
+    {
+        var overrides = new Dictionary<string, ExpressionSyntax>(methodLocals, StringComparer.Ordinal);
+        var alreadyOverridden = new HashSet<string>(StringComparer.Ordinal);
+        // Walk enclosing statement-containers (BlockSyntax or SwitchSectionSyntax) from innermost
+        // to outermost; within each container, scan preceding sibling statements for simple
+        // assignments to names that aren't already in the method-scope locals table.
+        SyntaxNode? cursor = setter;
+        while (cursor?.Parent is not null)
+        {
+            cursor = cursor.Parent;
+            IEnumerable<StatementSyntax>? statements = cursor switch
+            {
+                BlockSyntax b => b.Statements,
+                SwitchSectionSyntax s => s.Statements,
+                _ => null,
+            };
+            if (statements is null) continue;
+            foreach (var stmt in statements)
+            {
+                if (stmt.SpanStart >= setter.SpanStart) break;
+                foreach (var assign in stmt.DescendantNodesAndSelf().OfType<AssignmentExpressionSyntax>())
+                {
+                    if (!assign.IsKind(SyntaxKind.SimpleAssignmentExpression)) continue;
+                    if (assign.Left is not IdentifierNameSyntax lhs) continue;
+                    var name = lhs.Identifier.ValueText;
+                    if (alreadyOverridden.Contains(name)) continue;
+                    if (methodLocals.ContainsKey(name)) continue;
+                    overrides[name] = assign.Right;
+                    alreadyOverridden.Add(name);
+                }
+            }
+        }
+        return overrides;
+    }
+
+    private static IReadOnlyDictionary<string, List<ExpressionSyntax>> FilterAppendsToLocals(
+        IReadOnlyDictionary<string, ExpressionSyntax> activeLocals,
+        IReadOnlyDictionary<string, List<ExpressionSyntax>> appendsByLocal)
+    {
+        var dict = new Dictionary<string, List<ExpressionSyntax>>(StringComparer.Ordinal);
+        foreach (var (name, appends) in appendsByLocal)
+        {
+            if (activeLocals.ContainsKey(name)) dict[name] = appends;
         }
         return dict;
     }
@@ -381,65 +482,131 @@ internal sealed class Extractor
 
     private static void ApplyHistoryKitTokenLexer(List<string> pieces, List<SlotEntry> slots)
     {
-        // Renumbering is required because we splice new slots into the middle of the slot list.
-        // Strategy: rebuild pieces+slots from scratch, scanning every existing piece. Existing
-        // slot references (e.g. `{0}` already produced by FlattenConcat) are remapped to the new
-        // index space.
+        // Strategy: scan the joined character stream, treating each existing slot reference
+        // (`{N}`) as a single atomic "metachar" so cross-piece HistoryKit tokens
+        // (e.g. `<spice.elements.{0}.babeTrait.!random>` formed by `"<...." + local + "....>"`
+        // get collapsed into a single `historykit-token` slot.
         var oldSlots = new List<SlotEntry>(slots);
-        var oldPieces = new List<string>(pieces);
+        var streamItems = new List<StreamItem>();
+        foreach (var piece in pieces)
+        {
+            ParsePieceIntoStream(piece, oldSlots, streamItems);
+        }
+
         slots.Clear();
         pieces.Clear();
 
-        foreach (var piece in oldPieces)
+        // Two-pass: scan streamItems for `<...>` runs; emit slots/pieces per run.
+        var i = 0;
+        var sb = new StringBuilder();
+        while (i < streamItems.Count)
         {
-            if (piece.Length >= 3 && piece[0] == '{' && piece[^1] == '}'
-                && int.TryParse(piece.AsSpan(1, piece.Length - 2), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var oldIndex)
-                && (uint)oldIndex < (uint)oldSlots.Count)
+            var item = streamItems[i];
+            if (item.Kind == StreamItemKind.Literal && item.Char == '<')
             {
-                var slot = oldSlots[oldIndex];
-                slot.Index = slots.Count;
-                slot.Default = $"{{t{slots.Count}}}";
-                slots.Add(slot);
-                pieces.Add($"{{{slot.Index}}}");
-                continue;
-            }
-
-            // Literal piece: scan for `<...>` tokens.
-            var i = 0;
-            var sb = new StringBuilder();
-            while (i < piece.Length)
-            {
-                if (piece[i] != '<')
+                // Find matching '>' in subsequent items
+                var close = -1;
+                for (var j = i + 1; j < streamItems.Count; j++)
                 {
-                    sb.Append(piece[i]);
-                    i++;
-                    continue;
+                    if (streamItems[j].Kind == StreamItemKind.Literal && streamItems[j].Char == '>')
+                    {
+                        close = j;
+                        break;
+                    }
                 }
-                var close = piece.IndexOf('>', i + 1);
-                if (close < 0)
+                if (close >= 0)
                 {
-                    sb.Append(piece[i]);
-                    i++;
-                    continue;
-                }
-                var token = piece.Substring(i, close - i + 1);
-                if (IsHistoryKitAssignmentToken(token))
-                {
-                    // Zero-width: assignment-form tokens (`<$var=...>`) emit "" at runtime.
+                    if (sb.Length > 0)
+                    {
+                        pieces.Add(sb.ToString());
+                        sb.Clear();
+                    }
+                    var (rawSpan, isAssignment) = BuildTokenRaw(streamItems, i, close, oldSlots);
+                    if (!isAssignment)
+                    {
+                        AddSlot(slots, rawSpan, type: HistoryKitTokenType);
+                        pieces.Add($"{{{slots.Count - 1}}}");
+                    }
                     i = close + 1;
                     continue;
                 }
+            }
+            if (item.Kind == StreamItemKind.SlotRef)
+            {
                 if (sb.Length > 0)
                 {
                     pieces.Add(sb.ToString());
                     sb.Clear();
                 }
-                AddSlot(slots, token, type: HistoryKitTokenType);
-                pieces.Add($"{{{slots.Count - 1}}}");
-                i = close + 1;
+                var slot = oldSlots[item.SlotIndex];
+                slot.Index = slots.Count;
+                slot.Default = $"{{t{slots.Count}}}";
+                slots.Add(slot);
+                pieces.Add($"{{{slot.Index}}}");
+                i++;
+                continue;
             }
-            if (sb.Length > 0) pieces.Add(sb.ToString());
+            sb.Append(item.Char);
+            i++;
         }
+        if (sb.Length > 0) pieces.Add(sb.ToString());
+    }
+
+    private enum StreamItemKind { Literal, SlotRef }
+
+    private readonly struct StreamItem
+    {
+        public StreamItemKind Kind { get; init; }
+        public char Char { get; init; }
+        public int SlotIndex { get; init; }
+    }
+
+    private static void ParsePieceIntoStream(string piece, List<SlotEntry> slots, List<StreamItem> items)
+    {
+        var i = 0;
+        while (i < piece.Length)
+        {
+            if (piece[i] == '{')
+            {
+                var close = piece.IndexOf('}', i);
+                if (close > i
+                    && int.TryParse(piece.AsSpan(i + 1, close - i - 1), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var idx)
+                    && (uint)idx < (uint)slots.Count)
+                {
+                    items.Add(new StreamItem { Kind = StreamItemKind.SlotRef, SlotIndex = idx });
+                    i = close + 1;
+                    continue;
+                }
+            }
+            items.Add(new StreamItem { Kind = StreamItemKind.Literal, Char = piece[i] });
+            i++;
+        }
+    }
+
+    private static (string raw, bool isAssignment) BuildTokenRaw(
+        List<StreamItem> stream,
+        int openIdx,
+        int closeIdx,
+        List<SlotEntry> oldSlots)
+    {
+        var sb = new StringBuilder();
+        var hasEquals = false;
+        for (var k = openIdx; k <= closeIdx; k++)
+        {
+            var item = stream[k];
+            if (item.Kind == StreamItemKind.Literal)
+            {
+                sb.Append(item.Char);
+                if (k > openIdx + 1 && item.Char == '=') hasEquals = true;
+            }
+            else
+            {
+                sb.Append('{').Append(oldSlots[item.SlotIndex].Raw).Append('}');
+            }
+        }
+        var raw = sb.ToString();
+        var isAssignment = raw.Length > 3 && raw[1] == '$' && hasEquals;
+        return (raw, isAssignment);
     }
 
     private static bool IsHistoryKitAssignmentToken(string token)
@@ -550,6 +717,13 @@ internal sealed class Extractor
             case InvocationExpressionSyntax invoc when IsStringFormatCall(invoc):
                 return FlattenStringFormat(invoc, locals, pieces, slots, visited, out unsupportedReason);
 
+            case InvocationExpressionSyntax invoc when IsExpandStringWrapper(invoc) && IsTokenShapedExpression(invoc.ArgumentList.Arguments[0].Expression, locals):
+            {
+                AddSlot(slots, RenderTokenRaw(invoc.ArgumentList.Arguments[0].Expression), type: HistoryKitTokenType);
+                pieces.Add($"{{{slots.Count - 1}}}");
+                return true;
+            }
+
             case InvocationExpressionSyntax invoc when IsPatternPreservingWrapper(invoc):
                 return FlattenConcat(invoc.ArgumentList.Arguments[0].Expression, locals, pieces, slots, visited, out unsupportedReason);
 
@@ -560,6 +734,11 @@ internal sealed class Extractor
 
             case InvocationExpressionSyntax invoc when IsRandomCall(invoc):
                 AddSlot(slots, "Random(...)", type: "string-format-arg");
+                pieces.Add($"{{{slots.Count - 1}}}");
+                return true;
+
+            case InvocationExpressionSyntax invoc:
+                AddSlot(slots, ClassifyHelperCallRaw(invoc), type: ClassifyHelperCallSlotType(invoc));
                 pieces.Add($"{{{slots.Count - 1}}}");
                 return true;
 
@@ -679,6 +858,35 @@ internal sealed class Extractor
         return string.Join(" ", expr.ToString().Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()));
     }
 
+    /// <summary>
+    /// Render a HistoryKit-token-shaped expression's raw text by concatenating its leaf literals
+    /// (unquoted) and any non-literal sub-expressions wrapped in `{...}` placeholders. This keeps
+    /// the raw stable across re-runs and avoids embedding C# string literal quotes.
+    /// </summary>
+    private static string RenderTokenRaw(ExpressionSyntax expr)
+    {
+        var sb = new StringBuilder();
+        AppendTokenRaw(expr, sb);
+        return sb.ToString();
+    }
+
+    private static void AppendTokenRaw(ExpressionSyntax expr, StringBuilder sb)
+    {
+        switch (expr)
+        {
+            case LiteralExpressionSyntax lit when lit.IsKind(SyntaxKind.StringLiteralExpression):
+                sb.Append(lit.Token.ValueText);
+                break;
+            case BinaryExpressionSyntax bin when bin.IsKind(SyntaxKind.AddExpression):
+                AppendTokenRaw(bin.Left, sb);
+                AppendTokenRaw(bin.Right, sb);
+                break;
+            default:
+                sb.Append('{').Append(ClassifyHelperCallRaw(expr)).Append('}');
+                break;
+        }
+    }
+
     private static string ClassifyHelperCallSlotType(ExpressionSyntax expr)
     {
         // Helper-call slot type for invocations from the known game-helper namespaces, format-arg
@@ -713,6 +921,54 @@ internal sealed class Extractor
     {
         if (invoc.Expression is IdentifierNameSyntax id && id.Identifier.ValueText == "Random") return true;
         return false;
+    }
+
+    // True when the wrapper invocation is `ExpandString(...)` (free function or member).
+    private static bool IsExpandStringWrapper(InvocationExpressionSyntax invoc)
+    {
+        if (invoc.ArgumentList.Arguments.Count < 1) return false;
+        if (invoc.Expression is IdentifierNameSyntax bareId && bareId.Identifier.ValueText == "ExpandString") return true;
+        if (invoc.Expression is MemberAccessExpressionSyntax m && m.Name.Identifier.ValueText == "ExpandString") return true;
+        return false;
+    }
+
+    /// <summary>
+    /// True when the expression is a concat that begins with a `<` literal and ends with a `>`
+    /// literal — a HistoryKit token spanning multiple pieces. The runtime ExpandString collapses
+    /// the whole assembled string into a single arbitrary-text expansion, so we model it as a
+    /// single `historykit-token` slot rather than letting the inner structure leak through as
+    /// brittle literal-and-slot fragments.
+    /// </summary>
+    private static bool IsTokenShapedExpression(ExpressionSyntax expr, IReadOnlyDictionary<string, ExpressionSyntax> locals)
+    {
+        var leftmost = LeftmostLiteral(expr, locals, new HashSet<string>(StringComparer.Ordinal));
+        var rightmost = RightmostLiteral(expr, locals, new HashSet<string>(StringComparer.Ordinal));
+        if (leftmost is null || rightmost is null) return false;
+        return leftmost.Length > 0 && leftmost[0] == '<' && rightmost.Length > 0 && rightmost[^1] == '>';
+    }
+
+    private static string? LeftmostLiteral(ExpressionSyntax expr, IReadOnlyDictionary<string, ExpressionSyntax> locals, HashSet<string> visited)
+    {
+        return expr switch
+        {
+            LiteralExpressionSyntax lit when lit.IsKind(SyntaxKind.StringLiteralExpression) => lit.Token.ValueText,
+            BinaryExpressionSyntax bin when bin.IsKind(SyntaxKind.AddExpression) => LeftmostLiteral(bin.Left, locals, visited),
+            IdentifierNameSyntax id when locals.TryGetValue(id.Identifier.ValueText, out var init) && visited.Add(id.Identifier.ValueText)
+                => LeftmostLiteral(init, locals, visited),
+            _ => null,
+        };
+    }
+
+    private static string? RightmostLiteral(ExpressionSyntax expr, IReadOnlyDictionary<string, ExpressionSyntax> locals, HashSet<string> visited)
+    {
+        return expr switch
+        {
+            LiteralExpressionSyntax lit when lit.IsKind(SyntaxKind.StringLiteralExpression) => lit.Token.ValueText,
+            BinaryExpressionSyntax bin when bin.IsKind(SyntaxKind.AddExpression) => RightmostLiteral(bin.Right, locals, visited),
+            IdentifierNameSyntax id when locals.TryGetValue(id.Identifier.ValueText, out var init) && visited.Add(id.Identifier.ValueText)
+                => RightmostLiteral(init, locals, visited),
+            _ => null,
+        };
     }
 
     // Wrappers whose return value matches their first argument modulo capitalization /
