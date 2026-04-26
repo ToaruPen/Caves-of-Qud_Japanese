@@ -112,6 +112,11 @@ public sealed class ReshephHistoryTranslationTests
                 $"sample {sample.CandidateId}: 期待値が未設定です。expected_unchanged / expected_japanese_exact / expected_japanese_contains のいずれかを設定してください。");
             return;
         }
+        if (sample.ExpectedJapaneseContains.Exists(static needle => string.IsNullOrWhiteSpace(needle)))
+        {
+            Assert.Fail(
+                $"sample {sample.CandidateId}: expected_japanese_contains に空文字または空白要素は設定できません。");
+        }
         foreach (var needle in sample.ExpectedJapaneseContains)
         {
             Assert.That(actual, Does.Contain(needle),
