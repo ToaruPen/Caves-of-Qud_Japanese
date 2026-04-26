@@ -263,9 +263,15 @@ internal sealed class Extractor
                 _ => null,
             };
             if (statements is null) continue;
-            foreach (var stmt in statements)
+            // Walk pre-setter siblings in REVERSE source order so the most-recent assignment
+            // (closest to the setter) wins per local. With forward iteration the first-seen-wins
+            // logic of `alreadyOverridden` would lock the EARLIEST assignment, which is the
+            // opposite of the runtime semantic.
+            foreach (var stmt in statements.Reverse())
             {
-                if (stmt.SpanStart >= setter.SpanStart) break;
+                // `continue` (not `break`) for post-setter stmts: in reverse order they appear
+                // first, but earlier siblings still need to be visited.
+                if (stmt.SpanStart >= setter.SpanStart) continue;
                 // Skip stmts that *contain* the setter — they're an ancestor of the setter and
                 // are handled at deeper cursor levels. Their descendants include assignments
                 // that lexically follow the setter (e.g. inside the same if-branch), which must
@@ -800,12 +806,11 @@ internal sealed class Extractor
             return false;
         }
         var fmtExpr = args[0].Expression;
-        if (fmtExpr is not LiteralExpressionSyntax fmtLit || !fmtLit.IsKind(SyntaxKind.StringLiteralExpression))
+        if (!TryResolveStringLiteral(fmtExpr, locals, out var format))
         {
             unsupportedReason = $"string.Format format string is not a literal: {fmtExpr.Kind()}";
             return false;
         }
-        var format = fmtLit.Token.ValueText;
 
         // Walk the format string. Each `{N}` (with optional `,W` or `:fmt`) substitutes args[N+1].
         var i = 0;
@@ -954,6 +959,34 @@ internal sealed class Extractor
     {
         if (invoc.Expression is IdentifierNameSyntax id && id.Identifier.ValueText == "Random") return true;
         return false;
+    }
+
+    // Follow IdentifierNameSyntax through the locals table until a string literal is found
+    // (or the chain breaks). Bounded by the locals dictionary size via a visited set so a
+    // malformed `a = b; b = a;` cycle terminates instead of recursing forever.
+    private static bool TryResolveStringLiteral(
+        ExpressionSyntax expr,
+        IReadOnlyDictionary<string, ExpressionSyntax> locals,
+        out string value)
+    {
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        var current = expr;
+        while (true)
+        {
+            switch (current)
+            {
+                case LiteralExpressionSyntax lit when lit.IsKind(SyntaxKind.StringLiteralExpression):
+                    value = lit.Token.ValueText;
+                    return true;
+                case IdentifierNameSyntax id when visited.Add(id.Identifier.ValueText)
+                    && locals.TryGetValue(id.Identifier.ValueText, out var init):
+                    current = init;
+                    continue;
+                default:
+                    value = "";
+                    return false;
+            }
+        }
     }
 
     // True when the wrapper invocation is `ExpandString(...)` (free function or member).

@@ -124,8 +124,13 @@ foreach (var candidate in collapsed)
 
 static string StripIfBranchSuffix(string id)
 {
-    var idx = id.IndexOf("#if:", StringComparison.Ordinal);
-    return idx < 0 ? id : id[..idx];
+    // Remove ONLY the `#if:<label>` segment, preserving downstream suffixes like
+    // `#arm:` or `#opt:`. Otherwise `foo#if:then#arm:0` and `foo#if:else#opt:with1`
+    // would both collapse to `foo` and either falsely merge or false-collide.
+    var idx = id.IndexOf(CandidateIdSuffix.If, StringComparison.Ordinal);
+    if (idx < 0) return id;
+    var nextSuffix = id.IndexOf('#', idx + CandidateIdSuffix.If.Length);
+    return nextSuffix < 0 ? id[..idx] : id[..idx] + id[nextSuffix..];
 }
 
 var doc = new CandidateDocument
