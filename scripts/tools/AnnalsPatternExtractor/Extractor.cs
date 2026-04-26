@@ -242,19 +242,25 @@ internal sealed class Extractor
                 var name = id.Identifier.ValueText;
                 if (locals.TryGetValue(name, out var initExpr) && !visited.Contains(name))
                 {
-                    // Recurse into the initializer expression with cycle protection
+                    // Recurse into the initializer expression with cycle protection.
+                    // Snapshot list counts before recursion so we can roll back any partial
+                    // state written by a partially-succeeded binary sub-expression (e.g.
+                    // `"lit" + SomeUnsupported()` writes "lit" to pieces before failing).
+                    var piecesSnapshot = pieces.Count;
+                    var slotsSnapshot = slots.Count;
                     visited.Add(name);
                     try
                     {
-                        if (FlattenConcat(initExpr, locals, pieces, slots, visited, out var innerReason))
+                        if (FlattenConcat(initExpr, locals, pieces, slots, visited, out _))
                         {
                             return true;
                         }
-                        // Recursion failed (unsupported AST shape): degrade to a slot
-                        // rather than propagating the failure upward.
+                        // Recursion failed: roll back partial state, then degrade to a
+                        // single slot for the whole variable rather than propagating failure.
+                        pieces.RemoveRange(piecesSnapshot, pieces.Count - piecesSnapshot);
+                        slots.RemoveRange(slotsSnapshot, slots.Count - slotsSnapshot);
                         AddSlot(slots, name, type: "unresolved-local");
                         pieces.Add($"{{{slots.Count - 1}}}");
-                        // Clear the reason — we've handled this gracefully
                         return true;
                     }
                     finally
@@ -290,6 +296,10 @@ internal sealed class Extractor
         }
     }
 
+    // NOTE: Receiver type is intentionally not validated here. PR1's Resheph 16
+    // candidate set contains no false-positive cases (all `GetProperty` callers
+    // in scope are entity accessors), so SemanticModel-based receiver resolution
+    // is deferred to PR2+ when the tool gains a full Compilation / SemanticModel.
     private static bool IsEntityGetProperty(InvocationExpressionSyntax invoc)
     {
         if (invoc.Expression is MemberAccessExpressionSyntax m

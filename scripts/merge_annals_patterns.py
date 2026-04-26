@@ -14,7 +14,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import validate_candidate_schema as schema
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATES = REPO_ROOT / "scripts/_artifacts/annals/candidates_pending.json"
 DEFAULT_JOURNAL = REPO_ROOT / "Mods/QudJP/Localization/Dictionaries/journal-patterns.ja.json"
 DEFAULT_ANNALS = REPO_ROOT / "Mods/QudJP/Localization/Dictionaries/annals-patterns.ja.json"
@@ -22,7 +22,13 @@ DEFAULT_CONFLICTS = REPO_ROOT / "scripts/_artifacts/annals/merge_conflicts.json"
 
 
 def normalize_sample(sample: str, slots: list[dict[str, Any]]) -> str:
-    """Replace each slot's raw form in the sample with `SLOT<index>`."""
+    """Replace each slot's raw form in the sample with `SLOT<index>`.
+
+    str.replace() replaces ALL occurrences of the same raw value with the same
+    SLOT{index} token.  This is intentional for PR1: each unique raw string maps
+    to exactly one slot index, so repeated occurrences of the same raw value
+    should normalize to the same placeholder.
+    """
     out = sample
     for slot in slots:
         raw = slot.get("raw", "")

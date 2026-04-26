@@ -69,6 +69,9 @@ public sealed class AnnalsPatternsCollisionTests
     private static string StripCapturesToPlaceholder(string pattern, string placeholder)
     {
         // Remove anchors and replace any (...) with the placeholder. Crude but adequate for L1.
+        // NOTE: The regex \([^)]*\) does not handle nested capture groups (e.g. `(a(b)c)`).
+        // PR1's annals patterns do not use nested groups, so this is intentionally simple.
+        // PR2+ should revisit if nested capture groups become necessary.
         var noAnchors = pattern.TrimStart('^').TrimEnd('$');
         return Regex.Replace(noAnchors, @"\([^)]*\)", placeholder);
     }

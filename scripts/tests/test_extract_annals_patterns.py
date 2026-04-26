@@ -47,6 +47,7 @@ def _run_extractor(include: str, output: Path) -> subprocess.CompletedProcess[st
         "unresolved_variable",
         "concat_initialized_local",
         "cyclic_locals",
+        "partial_rollback",
     ],
 )
 def test_extractor_matches_golden(fixture: str, tmp_path: Path) -> None:
@@ -77,14 +78,19 @@ def test_extractor_matches_golden(fixture: str, tmp_path: Path) -> None:
         "unresolved_variable",
         "concat_initialized_local",
         "cyclic_locals",
+        "partial_rollback",
     ],
 )
 def test_csharp_and_python_hashes_match(fixture: str) -> None:
     """The C# extractor and Python translator must compute the same en_template_hash."""
-    import sys as _sys  # noqa: PLC0415
+    import importlib.util  # noqa: PLC0415
 
-    _sys.path.insert(0, str(Path("scripts").resolve()))
-    import translate_annals_patterns as tap  # noqa: PLC0415
+    _script = _REPO_ROOT / "scripts" / "translate_annals_patterns.py"
+    _spec = importlib.util.spec_from_file_location("translate_annals_patterns", _script)
+    assert _spec is not None
+    assert _spec.loader is not None
+    tap = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(tap)  # type: ignore[attr-defined]
 
     doc = json.loads((FIXTURES / f"expected_{fixture}.json").read_text(encoding="utf-8"))
     for candidate in doc["candidates"]:

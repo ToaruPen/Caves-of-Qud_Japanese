@@ -30,6 +30,7 @@ REQUIRED_CANDIDATE_KEYS = {
 ALLOWED_CANDIDATE_KEYS = REQUIRED_CANDIDATE_KEYS | {"review_notes"}
 VALID_STATUSES = {"pending", "accepted", "needs_manual", "skip"}
 VALID_SLOT_TYPES = {"spice", "entity-property", "grammar-helper", "string-format-arg", "unresolved-local"}
+VALID_EVENT_PROPERTIES = {"gospel", "tombInscription"}
 PLACEHOLDER_RE = re.compile(r"\{(t?)(\d+)\}")
 
 
@@ -81,7 +82,7 @@ def validate_candidate(candidate: Any, index: int) -> None:
     if status not in VALID_STATUSES:
         raise ValidationError(f"candidate[{index}] invalid status: {status!r} (allowed: {sorted(VALID_STATUSES)})")
 
-    if candidate["event_property"] not in {"gospel", "tombInscription"}:
+    if candidate["event_property"] not in VALID_EVENT_PROPERTIES:
         raise ValidationError(f"candidate[{index}] invalid event_property: {candidate['event_property']!r}")
 
     pattern = candidate["extracted_pattern"]
