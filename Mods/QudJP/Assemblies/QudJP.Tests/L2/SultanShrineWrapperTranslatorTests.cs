@@ -215,12 +215,12 @@ public sealed class SultanShrineWrapperTranslatorTests
     }
 
     [Test]
-    public void Translate_DoesNotMatch_WhenDirectTranslationMarkerSitsInsideColoredQuality()
+    public void Translate_PassesThroughUnknownQuality_WhenDirectTranslationMarkerSitsInsideColoredQuality()
     {
-        // Defensive: marker inside the quality color wrapper still must not trigger the
-        // shrine translator. The regex is anchored at ^ so anything that breaks the canonical
-        // prefix fails to match. This pins the behavior so a future regex relaxation cannot
-        // silently start consuming marker-bearing inputs.
+        // The quality token \x01Perfect is not in QualityKeys, so the wrapper translates
+        // sultan + gospel + prefix as usual but the quality segment falls through unchanged.
+        // This pins the asymmetric behavior: outer wrapper still matches, only quality is
+        // passthrough, no empty {{Y|}} pair leaks.
         var source = "The shrine depicts a significant event from the life of the ancient sultan Resheph:"
             + "\n\nIn 3 AR, Resheph cleansed the marshlands of the plagues of the Gyre and taught Abram to sow watervine along its fertile tracks."
             + "\n\n{{Y|\x01Perfect}}";
