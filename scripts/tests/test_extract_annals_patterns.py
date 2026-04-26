@@ -48,6 +48,7 @@ _FIXTURES = [
     "hse_marker_year",
     "historykit_tokens",
     "string_format_local",
+    "string_format_with_helpers",
 ]
 
 

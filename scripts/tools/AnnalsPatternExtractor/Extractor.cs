@@ -388,6 +388,9 @@ internal sealed class Extractor
             case InvocationExpressionSyntax invoc when IsStringFormatCall(invoc):
                 return FlattenStringFormat(invoc, locals, pieces, slots, visited, out unsupportedReason);
 
+            case InvocationExpressionSyntax invoc when IsPatternPreservingWrapper(invoc):
+                return FlattenConcat(invoc.ArgumentList.Arguments[0].Expression, locals, pieces, slots, visited, out unsupportedReason);
+
             case InvocationExpressionSyntax invoc when IsEntityGetProperty(invoc):
                 AddSlot(slots, $"entity.GetProperty({GetFirstStringArg(invoc)})", type: "entity-property");
                 pieces.Add($"{{{slots.Count - 1}}}");
@@ -547,6 +550,26 @@ internal sealed class Extractor
     private static bool IsRandomCall(InvocationExpressionSyntax invoc)
     {
         if (invoc.Expression is IdentifierNameSyntax id && id.Identifier.ValueText == "Random") return true;
+        return false;
+    }
+
+    // Wrappers whose return value matches their first argument modulo capitalization /
+    // HSE expansion — both invisible to a runtime regex match. Unwrapping lets us see
+    // the inner pattern (e.g. `Grammar.InitCap(string.Format(...))`).
+    private static bool IsPatternPreservingWrapper(InvocationExpressionSyntax invoc)
+    {
+        if (invoc.ArgumentList.Arguments.Count < 1) return false;
+        if (invoc.Expression is IdentifierNameSyntax bareId && bareId.Identifier.ValueText == "ExpandString") return true;
+        if (invoc.Expression is MemberAccessExpressionSyntax m)
+        {
+            var receiver = m.Expression.ToString();
+            var name = m.Name.Identifier.ValueText;
+            if (name == "ExpandString") return true;
+            if (receiver == "Grammar")
+            {
+                return name is "InitCap" or "InitialCap" or "MakeTitleCase" or "MakeTitleCaseWithArticle";
+            }
+        }
         return false;
     }
 
