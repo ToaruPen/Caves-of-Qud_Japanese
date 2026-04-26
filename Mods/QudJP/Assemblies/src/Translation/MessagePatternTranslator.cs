@@ -184,6 +184,16 @@ internal static class MessagePatternTranslator
             return deathTranslated;
         }
 
+        var currentLogContext = Translator.GetCurrentLogContext();
+        var shrineRoute = string.IsNullOrEmpty(currentLogContext)
+            ? nameof(MessagePatternTranslator)
+            : currentLogContext!;
+
+        if (SultanShrineWrapperTranslator.TryTranslateMessage(source, spans, shrineRoute, out var shrineTranslated))
+        {
+            return shrineTranslated;
+        }
+
         if (TryGetLeafTranslation(source, out var exactTranslation))
         {
             DynamicTextObservability.RecordTransform(
