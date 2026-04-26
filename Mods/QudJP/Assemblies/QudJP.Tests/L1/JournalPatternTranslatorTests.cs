@@ -142,8 +142,7 @@ public sealed class JournalPatternTranslatorTests
         try
         {
             LocalizationAssetResolver.SetLocalizationRootForTests(emptyLocalizationRoot);
-            // Clear overrides → production mode (no patternFileOverrides).
-            JournalPatternTranslator.SetPatternFilesForTests(null);
+            // ResetForTests() internally clears patternFileOverrides → production mode.
             JournalPatternTranslator.ResetForTests();
 
             // Act & Assert: primary file missing in production must throw, not silently skip.

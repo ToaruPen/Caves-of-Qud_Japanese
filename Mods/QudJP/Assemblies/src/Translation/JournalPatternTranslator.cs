@@ -219,7 +219,9 @@ internal static class JournalPatternTranslator
                 var patternEntry = document.Patterns[index];
                 var pattern = patternEntry?.Pattern;
                 var template = patternEntry?.Template;
-                if (pattern is null || pattern.Length == 0 || template is null)
+                if (pattern is null || template is null
+                    || string.IsNullOrWhiteSpace(pattern)
+                    || string.IsNullOrWhiteSpace(template))
                 {
                     throw new InvalidDataException(
                         $"QudJP: malformed journal pattern entry at index {index} in '{patternFilePath}'.");
