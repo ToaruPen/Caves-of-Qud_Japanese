@@ -27,7 +27,7 @@ Translate Caves of Qud's Sultan history (the Resheph entry in the Sultan Histori
 
 - The remaining 30 Annals files (`FoundAsBabe`, `BloodyBattle`, `ChallengeSultan`, marriage/death/guild)
 - Reorganization of the existing `world-gospels.ja.json` (issue #420 Open Question 4)
-- CI integration of the extraction pipeline (issue #420 Open Question 3)
+- CI integration of the **pipeline body** (`extract` / `validate` / `translate` / `merge` runtime invocation in CI) — issue #420 Open Question 3. Note: the Roslyn console project's `dotnet build` IS added to CI so its csproj does not silently rot — see §5.6.
 - Automatic glossary construction (e.g. extracting from `world-factions.ja.json`)
 - Pattern dictionary i18n beyond ja
 
@@ -130,6 +130,17 @@ merge → emits annals-patterns.ja.json (or merge_conflicts.json + nonzero exit)
 
 ## 3. Pipeline Components
 
+### 3.0 Operator prerequisites
+
+The build-time pipeline runs on a developer host, not in CI. An operator running the full pipeline needs:
+
+- **.NET SDK** matching `10.0.x` (CI uses `10.0.x` matrix; local dev typically `10.0.100+`). No `global.json` pins a specific patch.
+- **Python** `3.12+` with `pytest` and `ruff` available
+- **Node.js** with `@ast-grep/cli` (already required by repo for other scanners)
+- **`codex` CLI** authenticated via `codex login` (used by `translate_annals_patterns.py`; CI runners deliberately do not have this — see §5.6)
+- **Decompiled game source** at `~/dev/coq-decompiled_stable/XRL.Annals/Resheph*.cs`. This directory is not part of the repo and must be regenerated via `scripts/decompile_game_dll.sh` if absent.
+- **Apple Silicon hosts only**: Rosetta is required to run the live verification flow (Caves of Qud is x64-only; Rosetta is the standard target environment per `docs/RULES.md`).
+
 ### 3.1 AnnalsPatternExtractor (C# console)
 
 - **Location:** `scripts/tools/AnnalsPatternExtractor/`
@@ -147,12 +158,23 @@ merge → emits annals-patterns.ja.json (or merge_conflicts.json + nonzero exit)
 - **Logic:**
   1. Parse each `.cs` with `CSharpSyntaxTree.ParseText`
   2. Visitor finds `SetEventProperty("gospel"|"tombInscription", value)` calls inside `Generate()`
-  3. Decompose `switch`/`case` (each case → separate candidate)
-  4. Per-case AST analysis: literal / `+` concat / `string.Format` / local-variable references resolved within the same method
-  5. Classify each slot: `spice` / `entity-property` / `grammar-helper` / `string-format-arg`
-  6. Unresolved local variable → emit candidate with `status: "needs_manual"`, `reason: "unresolved variable: <name>"`
-  7. Write JSON to `--output` path (NOT stdout — stdout/stderr reserved for diagnostic logs)
+  3. Per-call AST analysis of the value expression (see PR1 AST subset below)
+  4. Classify each slot: `spice` / `entity-property` / `grammar-helper` / `string-format-arg`
+  5. **Anything not in the PR1 AST subset → emit candidate with `status: "needs_manual"` and `reason` describing the unsupported shape**
+  6. Write JSON to `--output` path (NOT stdout — stdout/stderr reserved for diagnostic logs)
 
+- **PR1 AST subset (required):**
+  - Single-literal value: `SetEventProperty("gospel", "<spice...> ...")`
+  - `+` concatenation of literals and local-variable references whose initializer is a literal in the same `Generate()` method (e.g. `string text = "..."; ... value = text + "..." + property;`)
+  - Local variable references where the initializer is a literal, an `entity.GetProperty(...)` call, or a year-like `int Random(...)` call. Unresolved/non-literal initializers → `needs_manual`.
+  - Resheph 16 files are dominated by these shapes (Codex review confirmed: mostly fixed-literal compositions with a `year` and one `newRegion`).
+- **PR1 AST out of scope (degrade to `needs_manual`):**
+  - `switch`/`case` decomposition (none of the Resheph 16 files use this; deferred to #422 PR2+)
+  - `string.Format(...)` with multiple positional args (deferred to #422 PR2+)
+  - Helper-call resolution beyond a single hop (e.g. `QudHistoryHelpers.GetNewRegion(...)` chains)
+  - Ternary / conditional expressions in the value
+  - Class fields, static helpers, closure captures
+- **Architectural extensibility:** the visitor and slot classifier are designed so that PR2+ can add support for the deferred shapes without changing the candidate JSON schema or the Python pipeline.
 - **Output schema:** see §3.5
 
 ### 3.2 extract_annals_patterns.py
@@ -367,7 +389,7 @@ dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj
 
 | Stage | Error | Detection | Exit |
 |---|---|---|---|
-| extract | `dotnet` not installed | subprocess errno | `1` ("dotnet 10.0.100 required") |
+| extract | `dotnet` not installed | subprocess errno | `1` ("dotnet 10.0.x SDK required; install via standard means") |
 | extract | source-root missing | os check | `1` |
 | extract | C# parse error in some `.cs` | Roslyn diagnostics | `0` (warn + skip + summary) |
 | extract | unresolved local variable | Roslyn visitor | `0` (emit `status=needs_manual` + reason) |
@@ -443,7 +465,25 @@ Naming: `Subject_Condition_Behavior` (existing pattern from `JournalPatternTrans
 |---|---|
 | `ReshephHistoryTranslationTests.cs` | Build dummy `History`/`HistoricEntity` with Resheph-related `eventProperties` content. Run walker. Assert each accepted candidate's synthetic sample is translated. Per-candidate-id coverage: N accepted → N translated. |
 
-L2 reads the committed `annals-patterns.ja.json` directly; the Roslyn extractor is NOT invoked at test time. Synthetic samples live in `QudJP.Tests/L2/Fixtures/annals-samples.json`.
+L2 reads the committed `annals-patterns.ja.json` directly; the Roslyn extractor is NOT invoked at test time. Synthetic samples live in `QudJP.Tests/L2/Fixtures/annals-samples.json` with the schema below.
+
+**`annals-samples.json` schema:**
+
+```jsonc
+{
+  "schema_version": "1",
+  "samples": [
+    {
+      "candidate_id": "ReshephIsBorn#default",      // matches a candidate in annals-patterns.ja.json provenance (informational)
+      "event_property": "gospel",                    // gospel | tombInscription
+      "input_source": "Resheph was born in the salt marsh.",  // post-HSE-expansion English text the walker would receive
+      "expected_japanese_contains": ["レシェフ"]      // substring-set assertion; loose match tolerates template variation
+    }
+  ]
+}
+```
+
+Test asserts that running `input_source` through the walker (per #408 path) produces output containing every string in `expected_japanese_contains`. Substring-set assertion is intentional — exact-string equality is brittle against future template edits.
 
 ### 5.5 L2G tests
 
@@ -451,20 +491,31 @@ No new L2G tests in PR1. Existing `HistoricNarrativePatchPresenceTests.cs` alrea
 
 ### 5.6 CI integration
 
-Add to existing `.github/workflows/ci.yml` (which currently runs a single `dotnet test ... --no-build`):
+Existing `.github/workflows/ci.yml` already runs (verified at HEAD `883dd13`):
 
-```yaml
-- run: dotnet build scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj
-- run: ruff check scripts/
-- run: uv run pytest scripts/tests/
-- run: python3.12 scripts/check_encoding.py Mods/QudJP/Localization scripts
-- run: python3.12 scripts/validate_xml.py Mods/QudJP/Localization --strict --warning-baseline scripts/validate_xml_warning_baseline.json
-- run: python3.12 scripts/sync_mod.py --dry-run
-```
+- `dotnet build` (Release) for `QudJP.csproj` and `QudJP.Tests.csproj`
+- `dotnet test` for `QudJP.Tests.csproj` (`--no-build`)
+- `actions/setup-python@v6` with Python 3.12, plus `ruff check scripts/` and `pytest scripts/tests/` (each gated on file existence)
+- `npm install -g @ast-grep/cli`
+- dotnet matrix: `8.0.x` and `10.0.x` (no `global.json`; runtime resolves the highest)
 
-Existing `dotnet test ... --no-build` step is unchanged. L2G tests skip naturally on game-DLL-absent CI runners via `#if HAS_GAME_DLL`.
+**PR1 additions to CI** (only these two):
 
-`translate` step is **NOT** in CI: Codex CLI access is developer-local only.
+1. Build the Roslyn extractor so its csproj does not silently rot:
+
+   ```yaml
+   - name: Build AnnalsPatternExtractor
+     run: dotnet build scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj --configuration Release
+   ```
+
+2. New pytest files under `scripts/tests/` are picked up by the existing `pytest scripts/tests/` step automatically; new C# tests under `QudJP.Tests/L1/` and `QudJP.Tests/L2/` are picked up by the existing `dotnet test` step automatically — no workflow edit beyond (1).
+
+**Explicitly out of CI scope for PR1:**
+
+- The pipeline body (`extract` / `validate` / `translate` / `merge`) is dev-local only. `translate` requires `codex` CLI access which CI runners lack.
+- `scripts/check_encoding.py`, `scripts/validate_xml.py`, `scripts/sync_mod.py --dry-run` are existing manual-run developer tooling; adding them to CI is its own initiative (issue #420 OQ3 follow-up, not in PR1 or in #422).
+
+L2G tests skip naturally on game-DLL-absent CI runners via `#if HAS_GAME_DLL`.
 
 ### 5.7 Coverage targets
 
@@ -517,15 +568,14 @@ A coverage gate may be introduced in a future PR.
 
 - [ ] All existing L1/L2/L2G tests green
 - [ ] No new symbolic-key-pollution errors (`spice reference <日本語> wasn't a node`) in runtime log
-- [ ] CI all-pass:
-  - `ruff check scripts/`
-  - `uv run pytest scripts/tests/`
-  - `dotnet build Mods/QudJP/Assemblies/QudJP.csproj`
-  - `dotnet build scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj`
-  - `dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --no-build`
-  - `python3.12 scripts/check_encoding.py Mods/QudJP/Localization scripts`
-  - `python3.12 scripts/validate_xml.py Mods/QudJP/Localization --strict --warning-baseline scripts/validate_xml_warning_baseline.json`
-  - `python3.12 scripts/sync_mod.py --dry-run`
+- [ ] CI all-pass (existing steps + PR1 addition):
+  - existing: `dotnet build Mods/QudJP/Assemblies/QudJP.csproj` (Release)
+  - existing: `dotnet build Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj` (Release)
+  - existing: `dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --no-build`
+  - existing: `ruff check scripts/`
+  - existing: `pytest scripts/tests/`
+  - **new (PR1):** `dotnet build scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj` (Release)
+- [ ] Existing 86 patterns regression: `JournalPatternTranslatorMultiFileTests` includes a parametrized assertion that every existing pattern in `journal-patterns.ja.json` continues to match its current behaviour after the multi-file load change
 
 ### 6.7 Documentation
 
