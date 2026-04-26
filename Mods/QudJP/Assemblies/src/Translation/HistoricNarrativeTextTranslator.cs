@@ -1,5 +1,3 @@
-using System;
-
 namespace QudJP;
 
 /// <summary>
@@ -13,6 +11,10 @@ internal static class HistoricNarrativeTextTranslator
 {
     internal static string Translate(string? source, string? context = null)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(source))
+        {
+            return source ?? string.Empty;
+        }
+        return JournalPatternTranslator.Translate(source, context);
     }
 }
