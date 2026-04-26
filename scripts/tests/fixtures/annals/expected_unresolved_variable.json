@@ -1,0 +1,28 @@
+{
+  "schema_version": "1",
+  "candidates": [
+    {
+      "id": "unresolved_variable#default",
+      "source_file": "unresolved_variable.cs",
+      "annal_class": "unresolved_variable",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "prefix {0} suffix.",
+      "extracted_pattern": "^prefix\\ (.+?)\\ suffix\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "entity-property",
+          "raw": "mystery",
+          "default": "{t0}"
+        }
+      ],
+      "status": "pending",
+      "reason": "",
+      "ja_template": "",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:73c8bbb57e24e5cc73883c68fc8b27d34500735b877cc7d921d14c3829b60bf4"
+    }
+  ]
+}

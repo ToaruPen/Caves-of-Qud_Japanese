@@ -1,0 +1,21 @@
+{
+  "schema_version": "1",
+  "candidates": [
+    {
+      "id": "simple_concat#default",
+      "source_file": "simple_concat.cs",
+      "annal_class": "simple_concat",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "<spice.commonPhrases.oneStarryNight.!random.capitalize>, a sultan was born in the salt marsh.",
+      "extracted_pattern": "^<spice\\.commonPhrases\\.oneStarryNight\\.!random\\.capitalize>,\\ a\\ sultan\\ was\\ born\\ in\\ the\\ salt\\ marsh\\.$",
+      "slots": [],
+      "status": "pending",
+      "reason": "",
+      "ja_template": "",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:4f08e6f386869951544be12a606e02cf20a90eef494269eb90991459399105b9"
+    }
+  ]
+}
