@@ -245,7 +245,7 @@ internal sealed class Extractor
             if (!left.EndsWith("%", StringComparison.Ordinal)) continue;
             if (!right.StartsWith("%", StringComparison.Ordinal)) continue;
             if (!TryGetSlotIndex(middle, out var slotIndex)) continue;
-            if (slotIndex >= slots.Count) continue;
+            if ((uint)slotIndex >= (uint)slots.Count) continue;
             var slot = slots[slotIndex];
             if (!HseExpansions.TryGetValue(slot.Raw, out var expansion)) continue;
 
@@ -260,7 +260,7 @@ internal sealed class Extractor
         index = -1;
         if (piece.Length < 3) return false;
         if (piece[0] != '{' || piece[^1] != '}') return false;
-        return int.TryParse(piece[1..^1], out index);
+        return int.TryParse(piece[1..^1], System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out index);
     }
 
     private static bool FlattenConcat(
@@ -418,7 +418,7 @@ internal sealed class Extractor
                 {
                     sb.Append("(.+?)");
                     i = close + 1;
-                    if (slotIndex < slots.Count
+                    if ((uint)slotIndex < (uint)slots.Count
                         && slots[slotIndex].Type == HseExpansionType
                         && HseExpansions.TryGetValue(slots[slotIndex].Raw, out var expansion)
                         && sample.AsSpan(i).StartsWith(expansion.SampleSuffix))
