@@ -37,6 +37,7 @@ public sealed class AnnalsPatternsMarkupInvariantTests
     private static readonly Regex ColorCloseRe = new(@"</color>", RegexOptions.Compiled);
     private static readonly Regex EqualsTokenRe = new(@"=[a-zA-Z]+=", RegexOptions.Compiled);
     private static readonly Regex CaptureRefRe = new(@"\{t?\d+\}", RegexOptions.Compiled);
+    private static readonly Regex JapaneseTextRe = new(@"[\p{IsHiragana}\p{IsKatakana}\p{IsCJKUnifiedIdeographs}]", RegexOptions.Compiled);
 
     private static string GetAssetPath()
     {
@@ -63,10 +64,10 @@ public sealed class AnnalsPatternsMarkupInvariantTests
             var p = document.Patterns[i];
             if (p is null)
                 throw new InvalidDataException($"annals-patterns.ja.json: patterns[{i}] is null");
-            if (p.Pattern is null)
-                throw new InvalidDataException($"annals-patterns.ja.json: patterns[{i}].pattern is null");
-            if (p.Template is null)
-                throw new InvalidDataException($"annals-patterns.ja.json: patterns[{i}].template is null");
+            if (string.IsNullOrWhiteSpace(p.Pattern))
+                throw new InvalidDataException($"annals-patterns.ja.json: patterns[{i}].pattern must be non-empty");
+            if (string.IsNullOrWhiteSpace(p.Template))
+                throw new InvalidDataException($"annals-patterns.ja.json: patterns[{i}].template must be non-empty");
             yield return new TestCaseData(p.Pattern, p.Template)
                 .SetName($"AnnalsPattern_{i:D3}");
         }
@@ -133,6 +134,13 @@ public sealed class AnnalsPatternsMarkupInvariantTests
             $"<color=...> open/close imbalance in pattern: {patternOpens} opens / {patternCloses} closes");
         Assert.That(templateOpens, Is.EqualTo(templateCloses),
             $"<color=...> open/close imbalance in template: {templateOpens} opens / {templateCloses} closes");
+    }
+
+    [TestCaseSource(nameof(AllPatterns))]
+    public void Template_ContainsJapaneseText(string pattern, string template)
+    {
+        Assert.That(JapaneseTextRe.IsMatch(template), Is.True,
+            $"template must contain Japanese text: {template}");
     }
 
     [TestCaseSource(nameof(AllPatterns))]

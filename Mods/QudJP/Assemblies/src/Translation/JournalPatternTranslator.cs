@@ -171,17 +171,27 @@ internal static class JournalPatternTranslator
             var patternFilePath = paths[fileIndex];
             if (!File.Exists(patternFilePath))
             {
-                // Default-asset paths may be missing during incremental rollout
-                // (e.g. annals-patterns.ja.json before Task 8 lands). For test
-                // overrides, missing is always a hard fail.
-                if (patternFileOverrides is null)
+                // For test overrides, any missing file is always a hard fail.
+                // In production (patternFileOverrides is null):
+                //   - fileIndex == 0 is the primary file (journal-patterns.ja.json) and must exist.
+                //   - Later defaults (e.g. annals-patterns.ja.json) may be absent during
+                //     incremental rollout; log and skip them.
+                if (patternFileOverrides is not null)
                 {
-                    LogObservability($"[QudJP] JournalPatternTranslator: default pattern file not present, skipping: {patternFilePath}");
-                    continue;
+                    throw new FileNotFoundException(
+                        $"QudJP: journal pattern dictionary file not found: {patternFilePath}",
+                        patternFilePath);
                 }
-                throw new FileNotFoundException(
-                    $"QudJP: journal pattern dictionary file not found: {patternFilePath}",
-                    patternFilePath);
+
+                if (fileIndex == 0)
+                {
+                    throw new FileNotFoundException(
+                        $"QudJP: primary journal pattern dictionary file not found: {patternFilePath}",
+                        patternFilePath);
+                }
+
+                LogObservability($"[QudJP] JournalPatternTranslator: default pattern file not present, skipping: {patternFilePath}");
+                continue;
             }
 
             JournalPatternDocument? document;

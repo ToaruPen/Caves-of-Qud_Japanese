@@ -20,6 +20,18 @@ public sealed class JournalPatternTranslatorMultiFileTests
             "qudjp-multifile-l1",
             Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(tempDirectory);
+
+        // Create a Dictionaries subdirectory with an empty journal-patterns.ja.json so that
+        // production-mode path resolution (fileIndex==0) finds the primary file and does not throw.
+        var dictDirectory = Path.Combine(tempDirectory, "Dictionaries");
+        Directory.CreateDirectory(dictDirectory);
+        File.WriteAllText(
+            Path.Combine(dictDirectory, "journal-patterns.ja.json"),
+            "{\"entries\":[],\"patterns\":[]}\n",
+            Utf8WithoutBom);
+
+        LocalizationAssetResolver.SetLocalizationRootForTests(tempDirectory);
+
         Translator.ResetForTests();
         JournalPatternTranslator.ResetForTests();
     }
@@ -29,6 +41,7 @@ public sealed class JournalPatternTranslatorMultiFileTests
     {
         Translator.ResetForTests();
         JournalPatternTranslator.ResetForTests();
+        LocalizationAssetResolver.SetLocalizationRootForTests(null);
         if (Directory.Exists(tempDirectory))
         {
             Directory.Delete(tempDirectory, recursive: true);
