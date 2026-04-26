@@ -37,6 +37,7 @@ internal sealed class Extractor
 
         // Build local-variable initializer table (expression-level resolution within Generate())
         var localInitializers = CollectResolvableLocals(generateMethod);
+        var appendsByLocal = CollectCompoundAppends(generateMethod);
 
         // Find SetEventProperty calls
         var setterCalls = generateMethod.DescendantNodes()
@@ -65,26 +66,31 @@ internal sealed class Extractor
                 var armSwitchCase = armLabel is null ? switchLabel : armLabel;
                 var armId = armLabel is null ? idPrefix : $"{idPrefix}#arm:{armLabel}";
 
-                var resolution = ResolveValueExpression(valueExpr, armLocals);
-                if (!resolution.Resolved)
+                var optExpansions = ExpandOptionalAppends(valueExpr, armLocals, appendsByLocal);
+                foreach (var (optLabel, optLocals) in optExpansions)
                 {
-                    candidates.Add(NeedsManual(
-                        id: armId,
+                    var optId = optLabel is null ? armId : $"{armId}#opt:{optLabel}";
+                    var resolution = ResolveValueExpression(valueExpr, optLocals);
+                    if (!resolution.Resolved)
+                    {
+                        candidates.Add(NeedsManual(
+                            id: optId,
+                            sourceFile: fileName,
+                            annalClass: className,
+                            switchCase: armSwitchCase,
+                            eventProperty: eventProperty,
+                            reason: resolution.Reason));
+                        continue;
+                    }
+
+                    candidates.Add(BuildCandidate(
+                        id: optId,
                         sourceFile: fileName,
                         annalClass: className,
                         switchCase: armSwitchCase,
                         eventProperty: eventProperty,
-                        reason: resolution.Reason));
-                    continue;
+                        resolved: resolution));
                 }
-
-                candidates.Add(BuildCandidate(
-                    id: armId,
-                    sourceFile: fileName,
-                    annalClass: className,
-                    switchCase: armSwitchCase,
-                    eventProperty: eventProperty,
-                    resolved: resolution));
             }
         }
     }
@@ -170,6 +176,107 @@ internal sealed class Extractor
             dict[name] = initValue;
         }
         return dict;
+    }
+
+    /// <summary>
+    /// Collect compound `+=` reassignments (`local += expr`) per local. These typically come from
+    /// `if (flag) local += suffix;` blocks and represent optional-append branches we want to fan
+    /// out as additional candidates.
+    /// </summary>
+    private static IReadOnlyDictionary<string, List<ExpressionSyntax>> CollectCompoundAppends(MethodDeclarationSyntax method)
+    {
+        var dict = new Dictionary<string, List<ExpressionSyntax>>(StringComparer.Ordinal);
+        foreach (var assignment in method.DescendantNodes().OfType<AssignmentExpressionSyntax>())
+        {
+            if (!assignment.IsKind(SyntaxKind.AddAssignmentExpression)) continue;
+            if (assignment.Left is not IdentifierNameSyntax lhs) continue;
+            var name = lhs.Identifier.ValueText;
+            if (!dict.TryGetValue(name, out var list))
+            {
+                list = new List<ExpressionSyntax>();
+                dict[name] = list;
+            }
+            list.Add(assignment.Right);
+        }
+        return dict;
+    }
+
+    /// <summary>
+    /// If the value expression depends on a local that has compound `+=` appends, fan out one
+    /// (label="base", initializer-only) entry plus one (label="withN", initializer + N-th append)
+    /// entry per append. Otherwise returns a single (label=null, original-locals) pair.
+    /// Only the first such local found is expanded; nested cross-products are not emitted (target
+    /// files have at most one optionally-appended local in the value-expression tree).
+    /// </summary>
+    private static List<(string? optLabel, IReadOnlyDictionary<string, ExpressionSyntax> locals)>
+        ExpandOptionalAppends(
+            ExpressionSyntax valueExpr,
+            IReadOnlyDictionary<string, ExpressionSyntax> locals,
+            IReadOnlyDictionary<string, List<ExpressionSyntax>> appendsByLocal)
+    {
+        var result = new List<(string?, IReadOnlyDictionary<string, ExpressionSyntax>)>();
+        if (appendsByLocal.Count == 0)
+        {
+            result.Add((null, locals));
+            return result;
+        }
+        var (appendLocalName, appends) = FindAppendableLocal(valueExpr, locals, appendsByLocal, new HashSet<string>(StringComparer.Ordinal));
+        if (appendLocalName is null || appends is null)
+        {
+            result.Add((null, locals));
+            return result;
+        }
+        if (!locals.TryGetValue(appendLocalName, out var baseInit))
+        {
+            result.Add((null, locals));
+            return result;
+        }
+
+        result.Add(("base", BuildAppendOverride(locals, appendLocalName, baseInit)));
+        for (var i = 0; i < appends.Count; i++)
+        {
+            var combined = Microsoft.CodeAnalysis.CSharp.SyntaxFactory.BinaryExpression(
+                SyntaxKind.AddExpression, baseInit, appends[i]);
+            result.Add(($"with{i + 1}", BuildAppendOverride(locals, appendLocalName, combined)));
+        }
+        return result;
+    }
+
+    private static IReadOnlyDictionary<string, ExpressionSyntax> BuildAppendOverride(
+        IReadOnlyDictionary<string, ExpressionSyntax> locals,
+        string name,
+        ExpressionSyntax newInit)
+    {
+        var copy = new Dictionary<string, ExpressionSyntax>(locals, StringComparer.Ordinal)
+        {
+            [name] = newInit,
+        };
+        return copy;
+    }
+
+    private static (string? name, List<ExpressionSyntax>? appends) FindAppendableLocal(
+        ExpressionSyntax expr,
+        IReadOnlyDictionary<string, ExpressionSyntax> locals,
+        IReadOnlyDictionary<string, List<ExpressionSyntax>> appendsByLocal,
+        HashSet<string> visited)
+    {
+        foreach (var id in expr.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>())
+        {
+            var name = id.Identifier.ValueText;
+            if (visited.Contains(name)) continue;
+            if (appendsByLocal.TryGetValue(name, out var appends) && appends.Count > 0
+                && locals.ContainsKey(name))
+            {
+                return (name, appends);
+            }
+            if (locals.TryGetValue(name, out var init))
+            {
+                visited.Add(name);
+                var nested = FindAppendableLocal(init, locals, appendsByLocal, visited);
+                if (nested.name is not null) return nested;
+            }
+        }
+        return (null, null);
     }
 
     /// <summary>
