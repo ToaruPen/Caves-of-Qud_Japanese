@@ -225,10 +225,8 @@ internal sealed class Extractor
     }
 
     // HistoricStringExpander rewrites %name% in the runtime value before the regex matches.
-    // The extractor mirrors that rewrite so the emitted regex matches the post-HSE gospel string.
-    // SampleSuffix is the human-readable form embedded in sample_source; RegexSuffix is the
-    // unescaped regex fragment emitted in extracted_pattern (year expands to either era per
-    // QudHistoryHelpers.ConvertYearToSultanateCalendarEra).
+    private const string HseExpansionType = "hse-expansion";
+
     private sealed record HseExpansion(string SampleSuffix, string RegexSuffix);
 
     private static readonly IReadOnlyDictionary<string, HseExpansion> HseExpansions =
@@ -253,22 +251,16 @@ internal sealed class Extractor
 
             pieces[i] = left[..^1];
             pieces[i + 2] = expansion.SampleSuffix + right[1..];
-            slot.Type = "hse-expansion";
+            slot.Type = HseExpansionType;
         }
     }
 
-    private static bool TryGetSlotIndex(string piece, out int index)
+    private static bool TryGetSlotIndex(ReadOnlySpan<char> piece, out int index)
     {
         index = -1;
         if (piece.Length < 3) return false;
         if (piece[0] != '{' || piece[^1] != '}') return false;
-        var inner = piece[1..^1];
-        if (inner.Length == 0) return false;
-        foreach (var ch in inner)
-        {
-            if (!char.IsDigit(ch)) return false;
-        }
-        return int.TryParse(inner, out index);
+        return int.TryParse(piece[1..^1], out index);
     }
 
     private static bool FlattenConcat(
@@ -415,34 +407,26 @@ internal sealed class Extractor
 
     private static string BuildAnchoredRegex(string sample, List<SlotEntry> slots)
     {
-        // Replace each "{N}" placeholder in the sample with a non-greedy capture group, escape literals.
-        // For hse-expansion slots, also consume the slot's SampleSuffix and emit the matching
-        // RegexSuffix unescaped (so e.g. " AR" in sample becomes "\ (?:BR|AR)" in the regex).
         var sb = new StringBuilder("^");
         var i = 0;
         while (i < sample.Length)
         {
-            if (sample[i] == '{' && i + 2 < sample.Length && char.IsDigit(sample[i + 1]))
+            if (sample[i] == '{')
             {
                 var close = sample.IndexOf('}', i);
-                if (close > i)
+                if (close > i && TryGetSlotIndex(sample.AsSpan(i, close - i + 1), out var slotIndex))
                 {
-                    var inner = sample[(i + 1)..close];
-                    if (inner.Length > 0 && inner.All(char.IsDigit) && int.TryParse(inner, out var slotIndex))
+                    sb.Append("(.+?)");
+                    i = close + 1;
+                    if (slotIndex < slots.Count
+                        && slots[slotIndex].Type == HseExpansionType
+                        && HseExpansions.TryGetValue(slots[slotIndex].Raw, out var expansion)
+                        && sample.AsSpan(i).StartsWith(expansion.SampleSuffix))
                     {
-                        sb.Append("(.+?)");
-                        i = close + 1;
-                        if (slotIndex < slots.Count
-                            && slots[slotIndex].Type == "hse-expansion"
-                            && HseExpansions.TryGetValue(slots[slotIndex].Raw, out var expansion)
-                            && i + expansion.SampleSuffix.Length <= sample.Length
-                            && sample.AsSpan(i, expansion.SampleSuffix.Length).SequenceEqual(expansion.SampleSuffix))
-                        {
-                            sb.Append(expansion.RegexSuffix);
-                            i += expansion.SampleSuffix.Length;
-                        }
-                        continue;
+                        sb.Append(expansion.RegexSuffix);
+                        i += expansion.SampleSuffix.Length;
                     }
+                    continue;
                 }
             }
             sb.Append(Regex.Escape(sample[i].ToString()));
