@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -84,7 +86,13 @@ internal static class HashHelper
         var payload = new SortedDictionary<string, object?>(System.StringComparer.Ordinal)
         {
             ["extracted_pattern"] = candidate.ExtractedPattern,
-            ["slots"] = candidate.Slots,
+            ["slots"] = candidate.Slots.Select(s => new SortedDictionary<string, object?>(System.StringComparer.Ordinal)
+            {
+                ["default"] = s.Default,
+                ["index"] = (object?)s.Index,
+                ["raw"] = s.Raw,
+                ["type"] = s.Type,
+            }).ToList(),
             ["sample_source"] = candidate.SampleSource,
             ["event_property"] = candidate.EventProperty,
             ["switch_case"] = candidate.SwitchCase,
@@ -93,6 +101,7 @@ internal static class HashHelper
         {
             WriteIndented = false,
             DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         });
         var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(canonical));
         var sb = new StringBuilder("sha256:");

@@ -63,3 +63,29 @@ def test_extractor_matches_golden(fixture: str, tmp_path: Path) -> None:
 
     # Direct equality. If the extractor changes output shape, the golden must be regenerated.
     assert actual == expected, f"extractor output diverged from golden for {fixture}"
+
+
+@pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
+@pytest.mark.parametrize(
+    "fixture",
+    [
+        "simple_concat",
+        "string_format",
+        "switch_cases",
+        "unresolved_variable",
+    ],
+)
+def test_csharp_and_python_hashes_match(fixture: str) -> None:
+    """The C# extractor and Python translator must compute the same en_template_hash."""
+    import sys as _sys  # noqa: PLC0415
+
+    _sys.path.insert(0, str(Path("scripts").resolve()))
+    import translate_annals_patterns as tap  # noqa: PLC0415
+
+    doc = json.loads((FIXTURES / f"expected_{fixture}.json").read_text(encoding="utf-8"))
+    for candidate in doc["candidates"]:
+        csharp_hash = candidate["en_template_hash"]
+        python_hash = tap.compute_en_template_hash(candidate)
+        assert csharp_hash == python_hash, (
+            f"Hash divergence for {fixture} {candidate['id']}: C#={csharp_hash}, py={python_hash}"
+        )
