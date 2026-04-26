@@ -61,7 +61,11 @@ public sealed class SultanShrineWrapperTranslatorTests
     [TestCase("Lightly Damaged", "軽微な損傷")]
     [TestCase("Damaged", "損傷")]
     [TestCase("Badly Damaged", "重度の損傷")]
-    public void Translate_TranslatesAllNonOrganicQualityRatings(string qualityEn, string qualityJa)
+    [TestCase("Undamaged", "無傷")]
+    [TestCase("Badly Wounded", "重傷")]
+    [TestCase("Wounded", "負傷")]
+    [TestCase("Injured", "軽傷")]
+    public void Translate_TranslatesAllShippedQualityRatings(string qualityEn, string qualityJa)
     {
         var source =
             "The shrine depicts a significant event from the life of the ancient sultan Resheph:"
@@ -85,7 +89,7 @@ public sealed class SultanShrineWrapperTranslatorTests
     }
 
     [Test]
-    public void Translate_TranslatesArbitrarySultanName_ViaTranslatorLeaf()
+    public void Translate_TranslatesResheph_ViaTranslatorLeaf()
     {
         const string source =
             "The shrine depicts a significant event from the life of the ancient sultan Resheph:"
@@ -150,5 +154,91 @@ public sealed class SultanShrineWrapperTranslatorTests
         var translated = MessagePatternTranslator.Translate(source, nameof(DescriptionLongDescriptionPatch));
 
         Assert.That(translated, Is.EqualTo(source), "unrelated two-paragraph inputs must fall through unchanged");
+    }
+
+    [Test]
+    public void TranslateLongDescription_KeepsQualityWrapperAroundJapaneseQuality_ForProductionColorFlow()
+    {
+        // Production color flow: Description.GetLongDescription -> DescriptionLongDescription-
+        // Patch.Postfix -> DescriptionTextTranslator.TranslateLongDescription -> Color-
+        // AwareTranslationComposer.TranslatePreservingColors strips colors BEFORE the inner
+        // visible-segment lambda calls MessagePatternTranslator. If shrine wrapper composes
+        // its color restoration only against the inner spans (which are empty on this path),
+        // the outer Restore re-applies absolute span positions from the long English source
+        // onto the much shorter Japanese output, producing "...完璧{{Y|}}" instead of
+        // "...{{Y|完璧}}". This test guards that path.
+        const string source =
+            "The shrine depicts a significant event from the life of the ancient sultan Resheph:"
+            + "\n\nIn 3 AR, Resheph cleansed the marshlands of the plagues of the Gyre and taught Abram to sow watervine along its fertile tracks."
+            + "\n\n{{Y|Perfect}}";
+
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            source,
+            nameof(DescriptionLongDescriptionPatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Does.EndWith("{{Y|完璧}}"),
+                "color wrapper must enclose the translated quality word, not appear as an empty trailing pair");
+            Assert.That(translated, Does.Not.Contain("{{Y|}}"),
+                "empty color wrapper indicates spans were re-applied with stale source-length positions");
+            Assert.That(translated, Does.Contain("3年、レシェフは"),
+                "annals gospel must be translated");
+            Assert.That(translated, Does.Not.Contain("The shrine depicts"),
+                "wrapper prefix must be Japanese");
+        });
+    }
+
+    [Test]
+    public void Translate_ReturnsEmpty_WhenInputIsEmpty()
+    {
+        var translated = MessagePatternTranslator.Translate(string.Empty, nameof(DescriptionLongDescriptionPatch));
+
+        Assert.That(translated, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void Translate_DoesNotMatch_WhenDirectTranslationMarkerIsPresent()
+    {
+        // \x01-prefixed text is the direct-translation marker: producers signal "already
+        // translated, do not retranslate" by prepending it. The shrine wrapper must not
+        // claim such input, so it falls through MessagePatternTranslator unchanged (the
+        // outer patch is responsible for stripping the marker on its way to the sink).
+        var source = "\x01The shrine depicts a significant event from the life of the ancient sultan Resheph:"
+            + "\n\nIn 3 AR, Resheph cleansed the marshlands of the plagues of the Gyre and taught Abram to sow watervine along its fertile tracks."
+            + "\n\n{{Y|Perfect}}";
+
+        var translated = MessagePatternTranslator.Translate(source, nameof(DescriptionLongDescriptionPatch));
+
+        Assert.That(translated, Is.EqualTo(source),
+            "direct-marker-prefixed input must not be claimed by the shrine wrapper translator");
+    }
+
+    [Test]
+    public void Translate_DoesNotMatch_WhenDirectTranslationMarkerSitsInsideColoredQuality()
+    {
+        // Defensive: marker inside the quality color wrapper still must not trigger the
+        // shrine translator. The regex is anchored at ^ so anything that breaks the canonical
+        // prefix fails to match. This pins the behavior so a future regex relaxation cannot
+        // silently start consuming marker-bearing inputs.
+        var source = "The shrine depicts a significant event from the life of the ancient sultan Resheph:"
+            + "\n\nIn 3 AR, Resheph cleansed the marshlands of the plagues of the Gyre and taught Abram to sow watervine along its fertile tracks."
+            + "\n\n{{Y|\x01Perfect}}";
+
+        var translated = MessagePatternTranslator.Translate(source, nameof(DescriptionLongDescriptionPatch));
+
+        // The quality token "\x01Perfect" is not in the QualityKeys map, so quality
+        // translation falls through to the original. The wrapper still translates because
+        // sultan name + gospel + prefix all match — but the quality stays as the source
+        // marker-prefixed token, which is correct passthrough behavior for unknown qualities.
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Does.StartWith("この祠は古のスルタン"),
+                "wrapper prefix should still translate around the unknown marker-prefixed quality");
+            Assert.That(translated, Does.Contain("\x01Perfect"),
+                "marker-bearing quality token must pass through unchanged when not in QualityKeys");
+            Assert.That(translated, Does.Not.Contain("{{Y|}}"),
+                "no empty color wrapper should be left behind");
+        });
     }
 }
