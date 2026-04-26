@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 #if HAS_GAME_DLL
 using HistoryKit;
 #endif
@@ -37,9 +36,7 @@ internal static class HistoricNarrativeDictionaryWalker
         "pet_dialogWhy_Q",
     };
 
-#pragma warning disable S1144, CA1823 // field used in Task 4 (Green) implementation
     private const string GospelEventIdSeparator = "|";
-#pragma warning restore S1144, CA1823
 
     /// <summary>
     /// L1-testable. Splits <paramref name="raw"/> on <see cref="GospelEventIdSeparator"/>
@@ -47,13 +44,43 @@ internal static class HistoricNarrativeDictionaryWalker
     /// </summary>
     internal static string TranslateGospelEntry(string raw, string? context = null)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(raw))
+        {
+            return raw ?? string.Empty;
+        }
+
+        var separatorIndex = raw.IndexOf(GospelEventIdSeparator, StringComparison.Ordinal);
+        if (separatorIndex < 0)
+        {
+            return HistoricNarrativeTextTranslator.Translate(raw, context);
+        }
+
+        var prose = raw.Substring(0, separatorIndex);
+        var suffix = raw.Substring(separatorIndex); // includes the leading "|"
+        var translatedProse = HistoricNarrativeTextTranslator.Translate(prose, context);
+        return translatedProse + suffix;
     }
 
     /// <summary>L1-testable. Mutates the dict in place per the event-property allowlist.</summary>
     internal static void TranslateEventPropertiesDict(IDictionary<string, string> properties, string? context = null)
     {
-        throw new NotImplementedException();
+        if (properties == null || properties.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var key in EventPropertyAllowlist)
+        {
+            if (!properties.TryGetValue(key, out var current) || string.IsNullOrEmpty(current))
+            {
+                continue;
+            }
+            var translated = HistoricNarrativeTextTranslator.Translate(current, context);
+            if (!string.Equals(translated, current, StringComparison.Ordinal))
+            {
+                properties[key] = translated;
+            }
+        }
     }
 
     /// <summary>
@@ -69,18 +96,94 @@ internal static class HistoricNarrativeDictionaryWalker
         Action<string, Func<string, string>> mutateList,
         string? context = null)
     {
-        throw new NotImplementedException();
+        if (readProperty == null || readList == null || writeProperty == null || mutateList == null)
+        {
+            return;
+        }
+
+        foreach (var key in EntityPropertyAllowlist)
+        {
+            var current = readProperty(key);
+            if (string.IsNullOrEmpty(current))
+            {
+                continue;
+            }
+            var translated = HistoricNarrativeTextTranslator.Translate(current, context);
+            if (!string.Equals(translated, current, StringComparison.Ordinal))
+            {
+                writeProperty(key, translated);
+            }
+        }
+
+        foreach (var key in EntityListPropertyAllowlist)
+        {
+            var current = readList(key);
+            if (current == null || current.Count == 0)
+            {
+                continue;
+            }
+            Func<string, string> mutation = key == "Gospels"
+                ? (raw => TranslateGospelEntry(raw, context))
+                : (raw => HistoricNarrativeTextTranslator.Translate(raw, context));
+
+            // Pre-compute translated values to detect whether any element actually changes.
+            // MutateListPropertyAtCurrentYear unconditionally adds a MutateListProperty event
+            // (see decompiled MutateListProperty.Generate); avoid event noise on full passthrough.
+            var changed = false;
+            for (var i = 0; i < current.Count; i++)
+            {
+                if (!string.Equals(mutation(current[i]), current[i], StringComparison.Ordinal))
+                {
+                    changed = true;
+                    break;
+                }
+            }
+            if (changed)
+            {
+                mutateList(key, mutation);
+            }
+        }
     }
 
 #if HAS_GAME_DLL
     internal static void TranslateEventProperties(HistoricEvent ev, string? context = null)
     {
-        throw new NotImplementedException();
+        if (ev?.eventProperties == null)
+        {
+            return;
+        }
+        TranslateEventPropertiesDict(ev.eventProperties, context);
     }
 
     internal static void TranslateEntity(HistoricEntity entity, string? context = null)
     {
-        throw new NotImplementedException();
+        if (entity == null)
+        {
+            return;
+        }
+
+        var snapshot = entity.GetCurrentSnapshot();
+        if (snapshot == null)
+        {
+            return;
+        }
+
+        TranslateEntityViaCallbacks(
+            readProperty: name =>
+            {
+                if (!snapshot.hasProperty(name))
+                {
+                    return null;
+                }
+                var value = snapshot.GetProperty(name);
+                return string.IsNullOrEmpty(value) ? null : value;
+            },
+            readList: name => snapshot.hasListProperty(name)
+                ? (IReadOnlyList<string>)snapshot.GetList(name)
+                : null,
+            writeProperty: (name, value) => entity.SetEntityPropertyAtCurrentYear(name, value),
+            mutateList: (name, mutation) => entity.MutateListPropertyAtCurrentYear(name, mutation),
+            context: context);
     }
 #endif
 }
