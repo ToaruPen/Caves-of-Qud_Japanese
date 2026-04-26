@@ -42,7 +42,6 @@ public sealed class HistoricNarrativeDictionaryWalkerTests
 
     private void WritePatternDictionary(params (string Pattern, string Template)[] entries)
     {
-        // identical to the helper in HistoricNarrativeTextTranslatorTests; duplicated for test isolation
         var sb = new StringBuilder();
         sb.Append("{\"patterns\":[");
         for (var i = 0; i < entries.Length; i++)

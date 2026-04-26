@@ -13,20 +13,20 @@ namespace QudJP;
 /// </summary>
 internal static class HistoricNarrativeDictionaryWalker
 {
-    internal static readonly HashSet<string> EventPropertyAllowlist = new(StringComparer.Ordinal)
+    private static readonly HashSet<string> EventPropertyAllowlist = new(StringComparer.Ordinal)
     {
         "gospel",
         "tombInscription",
     };
 
-    internal static readonly HashSet<string> EntityPropertyAllowlist = new(StringComparer.Ordinal)
+    private static readonly HashSet<string> EntityPropertyAllowlist = new(StringComparer.Ordinal)
     {
         "proverb",
         "defaultSacredThing",
         "defaultProfaneThing",
     };
 
-    internal static readonly HashSet<string> EntityListPropertyAllowlist = new(StringComparer.Ordinal)
+    private static readonly HashSet<string> EntityListPropertyAllowlist = new(StringComparer.Ordinal)
     {
         "Gospels",
         "sacredThings",
@@ -39,8 +39,8 @@ internal static class HistoricNarrativeDictionaryWalker
     private const string GospelEventIdSeparator = "|";
 
     /// <summary>
-    /// L1-testable. Splits <paramref name="raw"/> on <see cref="GospelEventIdSeparator"/>
-    /// and translates only the prose portion, preserving the trailing <c>|eventId</c> verbatim.
+    /// Splits <paramref name="raw"/> on <see cref="GospelEventIdSeparator"/> and translates
+    /// only the prose portion, preserving the trailing <c>|eventId</c> verbatim.
     /// </summary>
     internal static string TranslateGospelEntry(string raw, string? context = null)
     {
@@ -61,7 +61,7 @@ internal static class HistoricNarrativeDictionaryWalker
         return translatedProse + suffix;
     }
 
-    /// <summary>L1-testable. Mutates the dict in place per the event-property allowlist.</summary>
+    /// <summary>Mutates the dict in place per the event-property allowlist.</summary>
     internal static void TranslateEventPropertiesDict(IDictionary<string, string> properties, string? context = null)
     {
         if (properties == null || properties.Count == 0)
@@ -84,7 +84,7 @@ internal static class HistoricNarrativeDictionaryWalker
     }
 
     /// <summary>
-    /// L1-testable. Reads current snapshot via <paramref name="readProperty"/> / <paramref name="readList"/>,
+    /// Reads current snapshot via <paramref name="readProperty"/> / <paramref name="readList"/>,
     /// translates each allowlisted value, writes back via <paramref name="writeProperty"/> /
     /// <paramref name="mutateList"/>. The list mutation callback is invoked only when at least one
     /// element changed (sequence equality guard).
