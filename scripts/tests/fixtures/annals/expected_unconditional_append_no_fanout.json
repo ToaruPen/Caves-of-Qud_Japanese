@@ -1,0 +1,21 @@
+{
+  "schema_version": "1",
+  "candidates": [
+    {
+      "id": "unconditional_append_no_fanout#gospel",
+      "source_file": "unconditional_append_no_fanout.cs",
+      "annal_class": "unconditional_append_no_fanout",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "Hello",
+      "extracted_pattern": "^Hello$",
+      "slots": [],
+      "status": "pending",
+      "reason": "",
+      "ja_template": "",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:d1113a4e6ceb378b6dd09c48172cc6098ee1838a78a7fd0fb92f3105cdce52d1"
+    }
+  ]
+}

@@ -347,6 +347,16 @@ internal sealed class Extractor
     /// `if (flag) local += suffix;` blocks and represent optional-append branches we want to fan
     /// out as additional candidates.
     /// </summary>
+    /// <remarks>
+    /// Only `+=` statements with an enclosing `IfStatementSyntax` are collected. A `+=` inside a
+    /// switch-case body but not inside an `if` is unconditional within that case's runtime path
+    /// (case selection itself is already modelled by the `#case:N` id suffix), so fanning out a
+    /// `#opt:base` variant that omits it would emit a candidate for a runtime state that never
+    /// occurs. Filtering them here means an unconditional `+=` becomes invisible to the resolved
+    /// local's value (BuildSetterScopedLocals only follows simple assignments), but trading
+    /// "false candidate" for "less-detailed candidate with a slot" is preferred — translation
+    /// review can fill the gap, while a phantom variant cannot be reasoned about post-hoc.
+    /// </remarks>
     private static IReadOnlyDictionary<string, List<ExpressionSyntax>> CollectCompoundAppends(MethodDeclarationSyntax method)
     {
         var dict = new Dictionary<string, List<ExpressionSyntax>>(StringComparer.Ordinal);
@@ -354,6 +364,11 @@ internal sealed class Extractor
         {
             if (!assignment.IsKind(SyntaxKind.AddAssignmentExpression)) continue;
             if (assignment.Left is not IdentifierNameSyntax lhs) continue;
+            // Skip unconditional appends — only `+=` wrapped in an `if` represents a fanout.
+            if (!assignment.Ancestors().OfType<IfStatementSyntax>().Any())
+            {
+                continue;
+            }
             var name = lhs.Identifier.ValueText;
             if (!dict.TryGetValue(name, out var list))
             {
