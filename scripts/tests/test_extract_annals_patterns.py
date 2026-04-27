@@ -37,29 +37,21 @@ def _run_extractor(include: str, output: Path) -> subprocess.CompletedProcess[st
     )
 
 
-_FIXTURES = [
-    "simple_concat",
-    "string_format",
-    "switch_cases",
-    "unresolved_variable",
-    "concat_initialized_local",
-    "cyclic_locals",
-    "partial_rollback",
-    "hse_marker_year",
-    "historykit_tokens",
-    "string_format_local",
-    "string_format_with_helpers",
-    "switch_branch_candidates",
-    "switch_expression_local",
-    "if_optional_append",
-    "duplicate_event_property_dedupe",
-    "append_after_setter",
-    "branch_assign_after_setter",
-    "latest_assignment_wins",
-    "latest_assignment_inside_block",
-    "string_format_via_local_fmt",
-    "if_dedupe_preserves_arm_suffix",
-]
+def _discover_fixtures() -> list[str]:
+    """Discover fixture names from `expected_*.json` files paired with a sibling `.cs` file.
+
+    Auto-discovery prevents the parametrize list from rotting when new fixtures are added.
+    Sorted to keep test-run order deterministic.
+    """
+    fixtures: list[str] = []
+    for expected in FIXTURES.glob("expected_*.json"):
+        name = expected.name.removeprefix("expected_").removesuffix(".json")
+        if (FIXTURES / f"{name}.cs").exists():
+            fixtures.append(name)
+    return sorted(fixtures)
+
+
+_FIXTURES = _discover_fixtures()
 
 
 @pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
