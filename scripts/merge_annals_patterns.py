@@ -1,5 +1,5 @@
 """Merge translated annals candidates into Mods/QudJP/Localization/Dictionaries/annals-patterns.ja.json."""
-# ruff: noqa: T201, D103, C901, PLR0911
+# ruff: noqa: T201, D103, PLR0911
 
 from __future__ import annotations
 
@@ -88,36 +88,67 @@ def detect_collisions(
     return conflicts
 
 
-def run_merge(
+def dedupe_by_pattern(
+    candidates: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Group candidates by extracted_pattern, return dedup + divergent errors.
+
+    Same regex from multiple ids (one local feeding two SetEventProperty calls,
+    branch arms with different slot raws but same regex shape) is legitimate —
+    but runtime first-match-wins drops everything past the first occurrence, so
+    identical templates collapse silently and divergent ones are surfaced as
+    errors so the operator reconciles to a single canonical translation.
+    """
+    by_pattern: dict[str, list[dict[str, Any]]] = {}
+    for candidate in candidates:
+        by_pattern.setdefault(candidate["extracted_pattern"], []).append(candidate)
+    duplicate_errors: list[str] = []
+    deduped: list[dict[str, Any]] = []
+    for pattern, members in by_pattern.items():
+        if len(members) == 1:
+            deduped.append(members[0])
+            continue
+        templates = {m["ja_template"] for m in members}
+        if len(templates) > 1:
+            ids_and_templates = "; ".join(f"{m['id']!r}={m['ja_template']!r}" for m in members)
+            duplicate_errors.append(
+                f"pattern {pattern!r} has divergent ja_templates across ids: {ids_and_templates}. "
+                "Reconcile to a single canonical translation or split the pattern."
+            )
+            continue
+        deduped.append(members[0])
+    return deduped, duplicate_errors
+
+
+def load_inputs(
     candidates_path: Path,
     existing_journal: Path,
     annals_output: Path,
-    conflicts_output: Path,
-) -> int:
+) -> tuple[dict[str, Any], list[dict[str, Any]]] | int:
+    """Load + validate candidates JSON and existing journal/annals dicts.
+
+    Returns (candidates_doc, journal_patterns) on success, or an int exit code on
+    any failure (with a message already printed to stderr).
+    """
     try:
         doc = json.loads(candidates_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         print(f"error: cannot read candidates from {candidates_path}: {exc}", file=sys.stderr)
         return 1
-
     try:
         schema.validate_doc(doc)
     except schema.ValidationError as exc:
         print(f"error: candidate schema invalid: {exc}", file=sys.stderr)
         return 1
-
     try:
         journal_doc = json.loads(existing_journal.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         print(f"error: cannot read existing journal-patterns from {existing_journal}: {exc}", file=sys.stderr)
         return 1
-
     journal_patterns = journal_doc.get("patterns", [])
     if not isinstance(journal_patterns, list):
         print("error: journal-patterns.ja.json has no 'patterns' array", file=sys.stderr)
         return 1
-
-    # Verify any pre-existing annals-patterns.ja.json is well-formed
     if annals_output.exists():
         try:
             existing_annals = json.loads(annals_output.read_text(encoding="utf-8"))
@@ -127,6 +158,19 @@ def run_merge(
         if "patterns" not in existing_annals:
             print("error: existing annals-patterns.ja.json missing 'patterns' field", file=sys.stderr)
             return 1
+    return doc, journal_patterns
+
+
+def run_merge(
+    candidates_path: Path,
+    existing_journal: Path,
+    annals_output: Path,
+    conflicts_output: Path,
+) -> int:
+    loaded = load_inputs(candidates_path, existing_journal, annals_output)
+    if isinstance(loaded, int):
+        return loaded
+    doc, journal_patterns = loaded
 
     accepted = [c for c in doc["candidates"] if c["status"] == "accepted" and c["ja_template"]]
 
@@ -156,30 +200,7 @@ def run_merge(
     # Within equal pattern length, sort by id for deterministic output.
     accepted_sorted = sorted(accepted, key=lambda c: (-len(c["extracted_pattern"]), c["id"]))
 
-    # Deduplicate: multiple candidate ids may share an extracted_pattern (e.g. one local
-    # feeding two SetEventProperty calls, or branch arms differing only in slot raw).
-    # Runtime keeps only the first match per pattern, so divergent translations for the
-    # same pattern would silently lose all but the first. Group by pattern; within a
-    # group, all ja_templates must agree — otherwise fail loudly.
-    by_pattern: dict[str, list[dict[str, Any]]] = {}
-    for candidate in accepted_sorted:
-        by_pattern.setdefault(candidate["extracted_pattern"], []).append(candidate)
-    duplicate_errors: list[str] = []
-    deduped: list[dict[str, Any]] = []
-    for pattern, members in by_pattern.items():
-        if len(members) == 1:
-            deduped.append(members[0])
-            continue
-        templates = {m["ja_template"] for m in members}
-        if len(templates) > 1:
-            ids_and_templates = "; ".join(f"{m['id']!r}={m['ja_template']!r}" for m in members)
-            duplicate_errors.append(
-                f"pattern {pattern!r} has divergent ja_templates across ids: {ids_and_templates}. "
-                "Reconcile to a single canonical translation or split the pattern."
-            )
-            continue
-        # Identical translations — keep the first (sort-canonical) entry, drop the rest.
-        deduped.append(members[0])
+    deduped, duplicate_errors = dedupe_by_pattern(accepted_sorted)
     if duplicate_errors:
         for err in duplicate_errors:
             print(f"error: {err}", file=sys.stderr)
