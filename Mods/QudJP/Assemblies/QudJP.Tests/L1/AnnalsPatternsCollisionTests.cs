@@ -75,4 +75,39 @@ public sealed class AnnalsPatternsCollisionTests
         var noAnchors = pattern.TrimStart('^').TrimEnd('$');
         return Regex.Replace(noAnchors, @"\([^)]*\)", placeholder);
     }
+
+    [Test]
+    public void EarlierAnnalsPattern_DoesNotSwallowLaterAnnalsPattern_FirstMatchWins()
+    {
+        // Intra-annals collision: a generic PR2+ pattern (FoundAsBabe with `(.+?)` slots)
+        // can share its literal anchor structure with a concrete Resheph pattern. The
+        // runtime regex iterates patterns in file order and uses the first match, so a
+        // generic pattern appearing BEFORE a concrete one masks the concrete one and its
+        // crafted translation is lost. The merge step sorts by length descending so
+        // concrete (longer literal) patterns win — this test guards that invariant.
+        var localizationRoot = GetLocalizationRoot();
+        var annals = LoadPatterns(Path.Combine(localizationRoot, "Dictionaries", "annals-patterns.ja.json"));
+        for (var i = 0; i < annals.Count; i++)
+        {
+            var earlier = annals[i];
+            if (earlier?.Pattern is null) continue;
+            Regex earlierRe;
+            try { earlierRe = new Regex(earlier.Pattern); } catch { continue; }
+            for (var j = i + 1; j < annals.Count; j++)
+            {
+                var later = annals[j];
+                if (later?.Pattern is null) continue;
+                // Build a literal sample by replacing the LATER pattern's capture groups with
+                // a placeholder, then unescaping the regex source so that `\.` becomes `.` etc.
+                // Without unescape we'd be matching regex source against regex source — duplicate
+                // and swallowing patterns silently slip through. Exact-equal patterns are
+                // intentionally NOT skipped: a duplicate pattern means later entries are
+                // first-match-wins-unreachable and must surface as a test failure.
+                var laterSample = Regex.Unescape(StripCapturesToPlaceholder(later.Pattern, "X"));
+                Assert.That(earlierRe.IsMatch(laterSample), Is.False,
+                    $"earlier annals pattern '{earlier.Pattern}' (index {i}) swallows later pattern '{later.Pattern}' (index {j}, sample={laterSample}). "
+                    + "Reorder so concrete patterns precede generic ones, fix the merge sort, or deduplicate.");
+            }
+        }
+    }
 }

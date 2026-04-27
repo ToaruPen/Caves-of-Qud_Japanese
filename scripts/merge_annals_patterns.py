@@ -1,5 +1,5 @@
 """Merge translated annals candidates into Mods/QudJP/Localization/Dictionaries/annals-patterns.ja.json."""
-# ruff: noqa: T201, D103, C901, PLR0911
+# ruff: noqa: T201, D103, PLR0911
 
 from __future__ import annotations
 
@@ -88,45 +88,168 @@ def detect_collisions(
     return conflicts
 
 
+def _strip_captures_to_placeholder(pattern: str, placeholder: str = "X") -> str:
+    """Replace `(.+?)` style capture groups with a literal placeholder for sampling.
+
+    Mirrors the L1 test's `StripCapturesToPlaceholder` so the merge-time and
+    test-time shadowing checks treat patterns the same way.
+    """
+    no_anchors = pattern.lstrip("^").rstrip("$")
+    return re.sub(r"\([^)]*\)", placeholder, no_anchors)
+
+
+def detect_intra_annals_shadowing(candidates: list[dict[str, Any]]) -> list[str]:
+    """Fail-loud guard against earlier patterns swallowing later patterns at runtime.
+
+    The runtime regex iterates patterns in file order and uses the first match,
+    so when a generic pattern precedes a concrete one whose literal text it covers,
+    the concrete pattern's translation is unreachable. The merge sort puts longer
+    patterns first, but equal-length patterns sort by id alone, which can leave a
+    generic-with-many-captures ahead of a concrete-with-fewer-captures of the same
+    overall length. Mirrors `AnnalsPatternsCollisionTests.EarlierAnnalsPattern_
+    DoesNotSwallowLaterAnnalsPattern_FirstMatchWins` so merge fails the same way
+    L1 would.
+
+    Returns a list of human-readable error strings (one per shadowing pair); empty
+    list means no shadowing detected.
+    """
+    errors: list[str] = []
+    compiled: list[tuple[re.Pattern[str], dict[str, Any]]] = []
+    for cand in candidates:
+        try:
+            cand_re = re.compile(cand["extracted_pattern"])
+        except re.error:
+            continue
+        sample_source = _strip_captures_to_placeholder(cand["extracted_pattern"])
+        # Crude unescape: backslash + any single char -> that char. Matches the
+        # `Regex.Unescape` semantic used by the L1 test for our limited pattern set
+        # (no octal / hex / character-class escapes are emitted by the extractor).
+        sample_literal = re.sub(r"\\(.)", r"\1", sample_source)
+        for earlier_re, earlier_cand in compiled:
+            if earlier_cand["extracted_pattern"] == cand["extracted_pattern"]:
+                continue
+            if earlier_re.match(sample_literal):
+                errors.append(
+                    f"earlier pattern {earlier_cand['extracted_pattern']!r} "
+                    f"(id {earlier_cand['id']!r}) swallows later pattern "
+                    f"{cand['extracted_pattern']!r} (id {cand['id']!r}, "
+                    f"sample {sample_literal!r}). Reorder so concrete patterns "
+                    "precede generic ones."
+                )
+        compiled.append((cand_re, cand))
+    return errors
+
+
+def dedupe_by_pattern(
+    candidates: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Group candidates by extracted_pattern, return dedup + divergent errors.
+
+    Same regex from multiple ids (one local feeding two SetEventProperty calls,
+    branch arms with different slot raws but same regex shape) is legitimate —
+    but runtime first-match-wins drops everything past the first occurrence, so
+    identical templates collapse silently and divergent ones are surfaced as
+    errors so the operator reconciles to a single canonical translation.
+    """
+    by_pattern: dict[str, list[dict[str, Any]]] = {}
+    for candidate in candidates:
+        by_pattern.setdefault(candidate["extracted_pattern"], []).append(candidate)
+    duplicate_errors: list[str] = []
+    deduped: list[dict[str, Any]] = []
+    for pattern, members in by_pattern.items():
+        if len(members) == 1:
+            deduped.append(members[0])
+            continue
+        templates = {m["ja_template"] for m in members}
+        if len(templates) > 1:
+            ids_and_templates = "; ".join(f"{m['id']!r}={m['ja_template']!r}" for m in members)
+            duplicate_errors.append(
+                f"pattern {pattern!r} has divergent ja_templates across ids: {ids_and_templates}. "
+                "Reconcile to a single canonical translation or split the pattern."
+            )
+            continue
+        deduped.append(members[0])
+    return deduped, duplicate_errors
+
+
+def load_inputs(
+    candidates_path: Path,
+    existing_journal: Path,
+    annals_output: Path,
+) -> tuple[dict[str, Any], list[dict[str, Any]]] | int:
+    """Load + validate candidates JSON and existing journal/annals dicts.
+
+    Returns (candidates_doc, journal_patterns) on success, or an int exit code on
+    any failure (with a message already printed to stderr).
+    """
+    try:
+        doc = json.loads(candidates_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"error: cannot read candidates from {candidates_path}: {exc}", file=sys.stderr)
+        return 1
+    try:
+        schema.validate_doc(doc)
+    except schema.ValidationError as exc:
+        print(f"error: candidate schema invalid: {exc}", file=sys.stderr)
+        return 1
+    try:
+        journal_doc = json.loads(existing_journal.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"error: cannot read existing journal-patterns from {existing_journal}: {exc}", file=sys.stderr)
+        return 1
+    journal_patterns = journal_doc.get("patterns", [])
+    if not isinstance(journal_patterns, list):
+        print("error: journal-patterns.ja.json has no 'patterns' array", file=sys.stderr)
+        return 1
+    if annals_output.exists():
+        try:
+            existing_annals = json.loads(annals_output.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            print(
+                f"error: cannot read existing annals-patterns from {annals_output}: {exc}",
+                file=sys.stderr,
+            )
+            return 1
+        if "patterns" not in existing_annals:
+            print("error: existing annals-patterns.ja.json missing 'patterns' field", file=sys.stderr)
+            return 1
+    return doc, journal_patterns
+
+
 def run_merge(
     candidates_path: Path,
     existing_journal: Path,
     annals_output: Path,
     conflicts_output: Path,
 ) -> int:
-    try:
-        doc = json.loads(candidates_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        print(f"error: cannot read candidates from {candidates_path}: {exc}", file=sys.stderr)
-        return 1
+    """Merge translated annals candidates into the shipped annals dictionary.
 
-    try:
-        schema.validate_doc(doc)
-    except schema.ValidationError as exc:
-        print(f"error: candidate schema invalid: {exc}", file=sys.stderr)
-        return 1
+    Loads accepted candidates from `candidates_path`, checks each for collisions
+    against the existing `journal-patterns.ja.json` at `existing_journal`,
+    deduplicates candidates that share an `extracted_pattern`, and writes the
+    final pattern set to `annals_output`. When collisions are found, the
+    detail is written to `conflicts_output` and the run fails.
 
-    try:
-        journal_doc = json.loads(existing_journal.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        print(f"error: cannot read existing journal-patterns from {existing_journal}: {exc}", file=sys.stderr)
-        return 1
+    Args:
+        candidates_path: JSON produced by `translate_annals_patterns.py` (status,
+            extracted_pattern, ja_template per candidate).
+        existing_journal: Existing `journal-patterns.ja.json` used as the
+            collision baseline.
+        annals_output: Destination `annals-patterns.ja.json`. Overwritten on
+            success, left untouched on failure.
+        conflicts_output: Where collision detail JSON is written when collisions
+            are detected; removed on a clean run.
 
-    journal_patterns = journal_doc.get("patterns", [])
-    if not isinstance(journal_patterns, list):
-        print("error: journal-patterns.ja.json has no 'patterns' array", file=sys.stderr)
-        return 1
-
-    # Verify any pre-existing annals-patterns.ja.json is well-formed
-    if annals_output.exists():
-        try:
-            existing_annals = json.loads(annals_output.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as exc:
-            print(f"error: existing annals-patterns is malformed JSON: {exc}", file=sys.stderr)
-            return 1
-        if "patterns" not in existing_annals:
-            print("error: existing annals-patterns.ja.json missing 'patterns' field", file=sys.stderr)
-            return 1
+    Returns:
+        0 on success, 1 on any input/parse error, schema-validation failure,
+        collision-against-journal-patterns, or divergent-template duplicate
+        within the accepted set. Error detail is printed to stderr; collision
+        detail is also written to `conflicts_output`.
+    """
+    loaded = load_inputs(candidates_path, existing_journal, annals_output)
+    if isinstance(loaded, int):
+        return loaded
+    doc, journal_patterns = loaded
 
     accepted = [c for c in doc["candidates"] if c["status"] == "accepted" and c["ja_template"]]
 
@@ -148,7 +271,26 @@ def run_merge(
     if conflicts_output.exists():
         conflicts_output.unlink()
 
-    accepted_sorted = sorted(accepted, key=lambda c: c["id"])
+    # Sort by pattern length descending so concrete (longer) patterns match before
+    # general (shorter, more `(.+?)` captures) patterns at runtime. The runtime regex
+    # iterates patterns in file order and uses the first match — without this ordering,
+    # a generic FoundAsBabe pattern from PR2a would swallow specific Resheph patterns
+    # whose literal text is fully covered by the FoundAsBabe template's `(.+?)` slots.
+    # Within equal pattern length, sort by id for deterministic output.
+    accepted_sorted = sorted(accepted, key=lambda c: (-len(c["extracted_pattern"]), c["id"]))
+
+    deduped, duplicate_errors = dedupe_by_pattern(accepted_sorted)
+    if duplicate_errors:
+        for err in duplicate_errors:
+            print(f"error: {err}", file=sys.stderr)
+        return 1
+    accepted_sorted = deduped
+
+    shadowing_errors = detect_intra_annals_shadowing(accepted_sorted)
+    if shadowing_errors:
+        for err in shadowing_errors:
+            print(f"error: {err}", file=sys.stderr)
+        return 1
     annals_doc = {
         "entries": [],
         "patterns": [
