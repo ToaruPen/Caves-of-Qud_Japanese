@@ -97,11 +97,16 @@ public sealed class AnnalsPatternsCollisionTests
             {
                 var later = annals[j];
                 if (later?.Pattern is null) continue;
-                if (earlier.Pattern == later.Pattern) continue;
-                var laterSample = StripCapturesToPlaceholder(later.Pattern, "X");
+                // Build a literal sample by replacing the LATER pattern's capture groups with
+                // a placeholder, then unescaping the regex source so that `\.` becomes `.` etc.
+                // Without unescape we'd be matching regex source against regex source — duplicate
+                // and swallowing patterns silently slip through. Exact-equal patterns are
+                // intentionally NOT skipped: a duplicate pattern means later entries are
+                // first-match-wins-unreachable and must surface as a test failure.
+                var laterSample = Regex.Unescape(StripCapturesToPlaceholder(later.Pattern, "X"));
                 Assert.That(earlierRe.IsMatch(laterSample), Is.False,
                     $"earlier annals pattern '{earlier.Pattern}' (index {i}) swallows later pattern '{later.Pattern}' (index {j}, sample={laterSample}). "
-                    + "Reorder so concrete patterns precede generic ones, or fix the merge sort.");
+                    + "Reorder so concrete patterns precede generic ones, fix the merge sort, or deduplicate.");
             }
         }
     }
