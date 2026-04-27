@@ -92,6 +92,11 @@
       "route": "annals"
     },
     {
+      "pattern": "^At\\ the\\ Battle\\ of\\ (.+?),\\ (.+?)\\ fought\\ as\\ a\\ mercenary\\ (?:sultan\\ )?to\\ subjugate\\ (.+?)\\.\\ (.+?)\\ wielded\\ (.+?)\\ (.+?)\\ with\\ such\\ (.+?)\\ that\\ it\\ became\\ forever\\ known\\ as\\ (.+?)\\.$",
+      "template": "{t0}の戦いにおいて、{t1}は傭兵として{t2}を征服せんと戦った。{t3}は{t4}{t5}を{t6}なる妙技をもって振るい、それは永く{t7}として知られることとなった。",
+      "route": "annals"
+    },
+    {
       "pattern": "^Let\\ us\\ (.+?)\\ the\\ (.+?),\\ when,\\ while\\ wandering\\ around\\ (.+?),\\ (.+?)\\ (.+?)\\ (.+?)\\ and\\ (.+?)\\ the\\ (.+?)\\ (.+?)\\ who\\ lived\\ there\\.\\ To\\ (.+?)\\ (.+?)\\ (.+?)\\ to\\ them,\\ (.+?)\\ (.+?)\\.$",
       "template": "われら{t1}を{t0}ん。その時、{t2}をさまよううち、{t3}は{t5}を{t4}、そこに住まいし{t7}{t8}を{t6}たり。彼らに{t10}{t11}を{t9}さんとして、{t12}は{t13}。",
       "route": "annals"
@@ -102,6 +107,11 @@
       "route": "annals"
     },
     {
+      "pattern": "^At\\ the\\ Battle\\ of\\ (.+?),\\ (.+?)\\ fought\\ as\\ a\\ mercenary\\ (?:sultan\\ )?to\\ liberate\\ (.+?)\\.\\ (.+?)\\ wielded\\ (.+?)\\ (.+?)\\ with\\ such\\ (.+?)\\ that\\ it\\ became\\ forever\\ known\\ as\\ (.+?)\\.$",
+      "template": "{t0}の戦いにおいて、{t1}は傭兵として{t2}を解放せんと戦った。{t3}は{t4}{t5}を{t6}なる妙技をもって振るい、それは永く{t7}として知られることとなった。",
+      "route": "annals"
+    },
+    {
       "pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ Resheph\\ closed\\ the\\ gates\\ to\\ the\\ Tomb\\ of\\ the\\ Eaters,\\ abdicated\\ the\\ throne,\\ and\\ dissolved\\ the\\ sultanate\\ in\\ order\\ to\\ lift\\ the\\ curse\\ of\\ the\\ Gyre\\.$",
       "template": "{0}年、レシェフはジャイアの呪いを解くため、喰らう者の墓所の門を閉ざし、王座を退き、スルタン国を解いた。",
       "route": "annals"
@@ -109,16 +119,6 @@
     {
       "pattern": "^In\\ the\\ (.+?),\\ (.+?)\\ (.+?)\\ the\\ (.+?),\\ who\\ (.+?)\\.\\ Let\\ the\\ (.+?)\\ of\\ (.+?)\\ serve\\ as\\ testament\\ to\\ the\\ (.+?)\\ of\\ (.+?)\\ and\\ a\\ (.+?)\\ to\\ those\\ who\\ would\\ (.+?)\\ (.+?)\\.$",
       "template": "{t0}において、{t1}は{t4}ところの{t3}を{t2}。{t6}の{t5}をして、{t8}の{t7}の証となし、また{t11}に{t10}せんとする者どもへの{t9}となさしめよ。",
-      "route": "annals"
-    },
-    {
-      "pattern": "^At\\ the\\ Battle\\ of\\ (.+?),\\ (.+?)\\ fought\\ as\\ a\\ mercenary\\ (.*?)to\\ subjugate\\ (.+?)\\.\\ (.+?)\\ wielded\\ (.+?)\\ (.+?)\\ with\\ such\\ (.+?)\\ that\\ it\\ became\\ forever\\ known\\ as\\ (.+?)\\.$",
-      "template": "{t0}の戦いにおいて、{t1}は傭兵として{t2}{t3}を征服せんと戦った。{t4}は{t5}{t6}を{t7}なる妙技をもって振るい、それは永く{t8}として知られることとなった。",
-      "route": "annals"
-    },
-    {
-      "pattern": "^At\\ the\\ Battle\\ of\\ (.+?),\\ (.+?)\\ fought\\ as\\ a\\ mercenary\\ (.*?)to\\ liberate\\ (.+?)\\.\\ (.+?)\\ wielded\\ (.+?)\\ (.+?)\\ with\\ such\\ (.+?)\\ that\\ it\\ became\\ forever\\ known\\ as\\ (.+?)\\.$",
-      "template": "{t0}の戦いにおいて、{t1}は傭兵として{t2}{t3}を解放せんと戦った。{t4}は{t5}{t6}を{t7}なる妙技をもって振るい、それは永く{t8}として知られることとなった。",
       "route": "annals"
     },
     {
