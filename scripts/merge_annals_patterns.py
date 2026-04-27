@@ -170,6 +170,30 @@ def run_merge(
     annals_output: Path,
     conflicts_output: Path,
 ) -> int:
+    """Merge translated annals candidates into the shipped annals dictionary.
+
+    Loads accepted candidates from `candidates_path`, checks each for collisions
+    against the existing `journal-patterns.ja.json` at `existing_journal`,
+    deduplicates candidates that share an `extracted_pattern`, and writes the
+    final pattern set to `annals_output`. When collisions are found, the
+    detail is written to `conflicts_output` and the run fails.
+
+    Args:
+        candidates_path: JSON produced by `translate_annals_patterns.py` (status,
+            extracted_pattern, ja_template per candidate).
+        existing_journal: Existing `journal-patterns.ja.json` used as the
+            collision baseline.
+        annals_output: Destination `annals-patterns.ja.json`. Overwritten on
+            success, left untouched on failure.
+        conflicts_output: Where collision detail JSON is written when collisions
+            are detected; removed on a clean run.
+
+    Returns:
+        0 on success, 1 on any input/parse error, schema-validation failure,
+        collision-against-journal-patterns, or divergent-template duplicate
+        within the accepted set. Error detail is printed to stderr; collision
+        detail is also written to `conflicts_output`.
+    """
     loaded = load_inputs(candidates_path, existing_journal, annals_output)
     if isinstance(loaded, int):
         return loaded
