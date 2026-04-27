@@ -275,7 +275,12 @@ internal sealed class Extractor
             if (other == setter) return false;
             if (ParseSetterArgs(other).property != eventProperty) return false;
             var otherArm = ResolveChainArm(other);
-            return otherArm is not null && otherArm.Value.Root == root;
+            // Same arm of same chain is a setter chain, not a branched pair: keep them
+            // distinguished by setter-chain logic (`#if:then`/`#if:else` or downstream
+            // `#bl:` suffixes), not by labelling both with the SAME arm label here.
+            return otherArm is not null
+                && otherArm.Value.Root == root
+                && otherArm.Value.ArmIndex != armIndex;
         });
         if (!hasSibling) return null;
         return BuildArmLabel(armIndex, totalArms);
@@ -289,13 +294,25 @@ internal sealed class Extractor
     /// </summary>
     private static (IfStatementSyntax Root, int ArmIndex, int TotalArms)? ResolveChainArm(SyntaxNode node)
     {
-        var nearestIf = node.Ancestors().OfType<IfStatementSyntax>().FirstOrDefault();
-        if (nearestIf is null) return null;
-        var root = NormalizeToChainRoot(nearestIf);
-        var arms = EnumerateChainArms(root);
-        for (var i = 0; i < arms.Count; i++)
+        // Walk inner-to-outer and pick the FIRST containing chain that actually has
+        // multiple arms — a single-arm `if (cond) { ... }` doesn't differentiate the
+        // setter from any sibling, so we need to keep walking up until we find a
+        // chain with an else branch. This rule keeps two cases right:
+        //   1. `if (outer) { if (inner) SET1; } else { SET2; }` — inner has 1 arm,
+        //      so we skip past it and resolve SET1 to outer's arm 0 (matching SET2 at
+        //      outer's arm 1 for sibling detection).
+        //   2. `if (outer) { if (inner) { SET1 } else { SET2 } } else { SET3 }` —
+        //      inner has 2 arms and IS the branching chain for SET1/SET2, so we
+        //      resolve them to inner; SET3 belongs to outer.
+        foreach (var ancestor in node.Ancestors().OfType<IfStatementSyntax>())
         {
-            if (arms[i].Span.Contains(node.Span)) return (root, i, arms.Count);
+            var root = NormalizeToChainRoot(ancestor);
+            var arms = EnumerateChainArms(root);
+            if (arms.Count < 2) continue;
+            for (var i = 0; i < arms.Count; i++)
+            {
+                if (arms[i].Span.Contains(node.Span)) return (root, i, arms.Count);
+            }
         }
         return null;
     }

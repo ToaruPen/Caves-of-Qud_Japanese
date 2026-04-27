@@ -136,7 +136,7 @@ foreach (var candidate in collapsed)
             + $"(priorHash={prior.EnTemplateHash}, newHash={candidate.EnTemplateHash}, "
             + $"priorStatus={prior.Status}, newStatus={candidate.Status}, "
             + $"priorReason={prior.Reason}, newReason={candidate.Reason}). "
-            + "Resolve via branch/path id suffixes (`#case:`, `#arm:`, `#opt:`, `#bl:`) or preserve both reasons.");
+            + "Resolve via branch/path id suffixes (`#if:`, `#bl:`, `#case:`, `#arm:`, `#opt:`) or preserve both reasons.");
         return 1;
     }
     seenById[candidate.Id] = candidate;
