@@ -65,15 +65,16 @@ foreach (var diag in extractor.Diagnostics)
     Console.Error.WriteLine($"[warn] {diag}");
 }
 
-// Pre-pass: collapse if-branch siblings whose patterns turned out structurally identical so the
-// `#if:then`/`#if:else` suffix only survives when the branches *differ*. We pair them by the
-// "id with the if-suffix stripped" — if all members of the group share one hash, replace their
-// ids with the stripped form and keep one. This realises Option A (dedupe identical shapes) for
-// if-branches without losing distinctness in the divergent-shape case.
+// Pre-pass: collapse branch siblings whose patterns turned out structurally identical so the
+// `#if:then`/`#if:else` and `#bl:then`/`#bl:else` (etc.) suffixes only survive when the
+// branches *differ*. We pair them by the "id with all branch-suffixes stripped" — if all
+// members of the group share one hash, replace their ids with the stripped form and keep one.
+// This realises Option A (dedupe identical shapes) for both setter-chain (#if:) and
+// branched-local fanout (#bl:) without losing distinctness in the divergent-shape case.
 var groups = new Dictionary<string, List<CandidateEntry>>(StringComparer.Ordinal);
 foreach (var candidate in extractor.Candidates)
 {
-    var key = StripIfBranchSuffix(candidate.Id);
+    var key = StripBranchSuffixes(candidate.Id);
     if (!groups.TryGetValue(key, out var bucket))
     {
         bucket = new List<CandidateEntry>();
@@ -100,7 +101,7 @@ foreach (var bucket in groups.Values)
     if (allPending && allSameShape)
     {
         var first = bucket[0];
-        first.Id = StripIfBranchSuffix(first.Id);
+        first.Id = StripBranchSuffixes(first.Id);
         first.EnTemplateHash = HashHelper.ComputeEnTemplateHash(first);
         collapsed.Add(first);
     }
@@ -137,18 +138,30 @@ foreach (var candidate in collapsed)
     deduped.Add(candidate);
 }
 
-static string StripIfBranchSuffix(string id)
+static string StripBranchSuffixes(string id)
 {
-    // Remove ONLY the `#if:<label>` segment(s), preserving downstream suffixes like
-    // `#arm:` or `#opt:`. Otherwise `foo#if:then#arm:0` and `foo#if:else#opt:with1`
+    // Remove ONLY the `#if:<label>` and `#bl:<label>` segment(s), preserving downstream
+    // suffixes like `#arm:` or `#opt:`. Otherwise `foo#if:then#arm:0` and `foo#if:else#opt:with1`
     // would both collapse to `foo` and either falsely merge or false-collide.
-    // Loop until no `#if:` remains so any future nested-if extraction stays in sync.
+    // Loop until no `#if:` or `#bl:` remains so collapse pairs both setter-chain siblings
+    // (`#if:`) and branched-local-fanout siblings (`#bl:`).
+    string[] markers = { CandidateIdSuffix.If, CandidateIdSuffix.BranchedLocal };
     while (true)
     {
-        var idx = id.IndexOf(CandidateIdSuffix.If, StringComparison.Ordinal);
-        if (idx < 0) return id;
-        var nextSuffix = id.IndexOf('#', idx + CandidateIdSuffix.If.Length);
-        id = nextSuffix < 0 ? id[..idx] : id[..idx] + id[nextSuffix..];
+        var earliestIdx = -1;
+        var earliestMarker = "";
+        foreach (var marker in markers)
+        {
+            var idx = id.IndexOf(marker, StringComparison.Ordinal);
+            if (idx >= 0 && (earliestIdx < 0 || idx < earliestIdx))
+            {
+                earliestIdx = idx;
+                earliestMarker = marker;
+            }
+        }
+        if (earliestIdx < 0) return id;
+        var nextSuffix = id.IndexOf('#', earliestIdx + earliestMarker.Length);
+        id = nextSuffix < 0 ? id[..earliestIdx] : id[..earliestIdx] + id[nextSuffix..];
     }
 }
 
