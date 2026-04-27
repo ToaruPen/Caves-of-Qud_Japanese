@@ -25,6 +25,14 @@ internal sealed class Extractor
 
     private static readonly char[] FormatAlignmentSeparators = { ',', ':' };
 
+    // Sentinels that survive ParsePieceIntoStream / BuildAnchoredRegex without colliding with the
+    // slot-ref braces (`{N}`) that the same passes use as control characters. FlattenStringFormat
+    // emits these in place of `{`/`}` produced by `{{`/`}}` escapes; the regex builder translates
+    // them to `\{`/`\}` and BuildCandidate restores them to literal braces in the human-facing
+    // sample_source. Using PUA codepoints keeps them unambiguous and well outside any source text.
+    private const char LiteralBraceOpenSentinel = '';
+    private const char LiteralBraceCloseSentinel = '';
+
     private readonly List<CandidateEntry> candidates = new();
     private readonly List<string> diagnostics = new();
 
@@ -825,13 +833,16 @@ internal sealed class Extractor
             var c = format[i];
             if (c == '{' && i + 1 < format.Length && format[i + 1] == '{')
             {
-                literalSb.Append('{');
+                // Use a sentinel so downstream passes that interpret `{N}` as a slot reference
+                // (ParsePieceIntoStream, BuildAnchoredRegex) cannot mistake an escaped literal
+                // brace for one. Translated back to `{` for sample_source / `\{` for the regex.
+                literalSb.Append(LiteralBraceOpenSentinel);
                 i += 2;
                 continue;
             }
             if (c == '}' && i + 1 < format.Length && format[i + 1] == '}')
             {
-                literalSb.Append('}');
+                literalSb.Append(LiteralBraceCloseSentinel);
                 i += 2;
                 continue;
             }
@@ -1083,8 +1094,15 @@ internal sealed class Extractor
         string eventProperty,
         ResolutionResult resolved)
     {
+        // BuildAnchoredRegex MUST run on the sentinel-bearing sample so it can distinguish
+        // literal-brace sentinels (→ `\{`/`\}`) from real slot-ref braces (→ `(.+?)`). Only
+        // after the regex is built do we restore the sentinels to literal `{`/`}` for the
+        // human-facing sample_source field.
         var sample = resolved.SampleSource;
         var pattern = BuildAnchoredRegex(sample, resolved.Slots);
+        var humanSample = sample
+            .Replace(LiteralBraceOpenSentinel, '{')
+            .Replace(LiteralBraceCloseSentinel, '}');
         var c = new CandidateEntry
         {
             Id = id,
@@ -1092,7 +1110,7 @@ internal sealed class Extractor
             AnnalClass = annalClass,
             SwitchCase = switchCase,
             EventProperty = eventProperty,
-            SampleSource = sample,
+            SampleSource = humanSample,
             ExtractedPattern = pattern,
             Slots = resolved.Slots,
             Status = "pending",
@@ -1128,6 +1146,21 @@ internal sealed class Extractor
                     }
                     continue;
                 }
+            }
+            // Translate literal-brace sentinels (planted by FlattenStringFormat for `{{`/`}}`)
+            // back to regex-escaped literal braces. Regex.Escape on the sentinel codepoint would
+            // emit the bare PUA char, which would silently fail to match the runtime `{`/`}`.
+            if (sample[i] == LiteralBraceOpenSentinel)
+            {
+                sb.Append(Regex.Escape("{"));
+                i++;
+                continue;
+            }
+            if (sample[i] == LiteralBraceCloseSentinel)
+            {
+                sb.Append(Regex.Escape("}"));
+                i++;
+                continue;
             }
             sb.Append(Regex.Escape(sample[i].ToString()));
             i++;
