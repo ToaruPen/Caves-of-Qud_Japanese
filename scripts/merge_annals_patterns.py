@@ -88,6 +88,58 @@ def detect_collisions(
     return conflicts
 
 
+def _strip_captures_to_placeholder(pattern: str, placeholder: str = "X") -> str:
+    """Replace `(.+?)` style capture groups with a literal placeholder for sampling.
+
+    Mirrors the L1 test's `StripCapturesToPlaceholder` so the merge-time and
+    test-time shadowing checks treat patterns the same way.
+    """
+    no_anchors = pattern.lstrip("^").rstrip("$")
+    return re.sub(r"\([^)]*\)", placeholder, no_anchors)
+
+
+def detect_intra_annals_shadowing(candidates: list[dict[str, Any]]) -> list[str]:
+    """Fail-loud guard against earlier patterns swallowing later patterns at runtime.
+
+    The runtime regex iterates patterns in file order and uses the first match,
+    so when a generic pattern precedes a concrete one whose literal text it covers,
+    the concrete pattern's translation is unreachable. The merge sort puts longer
+    patterns first, but equal-length patterns sort by id alone, which can leave a
+    generic-with-many-captures ahead of a concrete-with-fewer-captures of the same
+    overall length. Mirrors `AnnalsPatternsCollisionTests.EarlierAnnalsPattern_
+    DoesNotSwallowLaterAnnalsPattern_FirstMatchWins` so merge fails the same way
+    L1 would.
+
+    Returns a list of human-readable error strings (one per shadowing pair); empty
+    list means no shadowing detected.
+    """
+    errors: list[str] = []
+    compiled: list[tuple[re.Pattern[str], dict[str, Any]]] = []
+    for cand in candidates:
+        try:
+            cand_re = re.compile(cand["extracted_pattern"])
+        except re.error:
+            continue
+        sample_source = _strip_captures_to_placeholder(cand["extracted_pattern"])
+        # Crude unescape: backslash + any single char -> that char. Matches the
+        # `Regex.Unescape` semantic used by the L1 test for our limited pattern set
+        # (no octal / hex / character-class escapes are emitted by the extractor).
+        sample_literal = re.sub(r"\\(.)", r"\1", sample_source)
+        for earlier_re, earlier_cand in compiled:
+            if earlier_cand["extracted_pattern"] == cand["extracted_pattern"]:
+                continue
+            if earlier_re.match(sample_literal):
+                errors.append(
+                    f"earlier pattern {earlier_cand['extracted_pattern']!r} "
+                    f"(id {earlier_cand['id']!r}) swallows later pattern "
+                    f"{cand['extracted_pattern']!r} (id {cand['id']!r}, "
+                    f"sample {sample_literal!r}). Reorder so concrete patterns "
+                    "precede generic ones."
+                )
+        compiled.append((cand_re, cand))
+    return errors
+
+
 def dedupe_by_pattern(
     candidates: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], list[str]]:
@@ -233,6 +285,12 @@ def run_merge(
             print(f"error: {err}", file=sys.stderr)
         return 1
     accepted_sorted = deduped
+
+    shadowing_errors = detect_intra_annals_shadowing(accepted_sorted)
+    if shadowing_errors:
+        for err in shadowing_errors:
+            print(f"error: {err}", file=sys.stderr)
+        return 1
     annals_doc = {
         "entries": [],
         "patterns": [
