@@ -92,7 +92,12 @@ foreach (var bucket in groups.Values)
     }
     var firstHash = bucket[0].EnTemplateHash;
     var allSameShape = bucket.All(c => c.EnTemplateHash == firstHash);
-    if (allSameShape)
+    // Only collapse buckets where every member is `pending`. EnTemplateHash does not
+    // include status/reason, so a bucket of `needs_manual` candidates with identical
+    // empty patterns but DIFFERENT failure reasons would otherwise collapse to one,
+    // losing the per-branch reason.
+    var allPending = bucket.All(c => c.Status == "pending");
+    if (allPending && allSameShape)
     {
         var first = bucket[0];
         first.Id = StripIfBranchSuffix(first.Id);
