@@ -30,6 +30,56 @@ def test_extractor_csproj_builds_in_release() -> None:
 
 
 @pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
+def test_threeplus_arm_chain_does_not_collide_with_sibling_if(tmp_path: Path) -> None:
+    """3+-arm else-if chains must produce arm-distinct ids that don't collide with sibling ifs.
+
+    Regression guard for issue-430 follow-up (ChallengeSultan): when a 3-arm chain drives a
+    branched local for a setter that has NO `ResolveIfBranchSuffix` of its own, while a
+    sibling 2-arm `if/else` carries setters that DO get `#if:then` / `#if:else`, the pre-fix
+    extractor labelled BOTH paths with `then`/`else` and the dedupe pass bailed out with
+    "duplicate candidate id with divergent outcome: ...#gospel#if:then".
+
+    Post-fix, the 3-arm chain emits `case0` / `case1` / `case2` and the 2-arm chain keeps
+    `then` / `else`, so the five gospel candidates have distinct ids. This is a true smoke
+    test (extractor exits 0) on top of the golden-file equality test that the auto-discovered
+    fixture parametrize set already runs.
+    """
+    output = tmp_path / "elseif_chain_collision_with_sibling_if.json"
+    result = subprocess.run(
+        [
+            "dotnet",
+            "run",
+            "--project",
+            str(PROJECT_PATH),
+            "--",
+            "--source-root",
+            str(FIXTURES),
+            "--include",
+            "elseif_chain_collision_with_sibling_if.cs",
+            "--output",
+            str(output),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, (
+        "extractor must extract ChallengeSultan-style chains without bailing on "
+        f"duplicate-id collision. exit={result.returncode}\n"
+        f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+    )
+    actual = json.loads(output.read_text(encoding="utf-8"))
+    ids = [c["id"] for c in actual["candidates"]]
+    # Three case-labelled arms from the 3-arm chain (branched-local fanout).
+    assert "elseif_chain_collision_with_sibling_if#gospel#if:case0" in ids
+    assert "elseif_chain_collision_with_sibling_if#gospel#if:case1" in ids
+    assert "elseif_chain_collision_with_sibling_if#gospel#if:case2" in ids
+    # Plus the legacy then/else from the 2-arm sibling if.
+    assert "elseif_chain_collision_with_sibling_if#gospel#if:then" in ids
+    assert "elseif_chain_collision_with_sibling_if#gospel#if:else" in ids
+
+
+@pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
 def test_flatten_concat_partial_rollback(tmp_path: Path) -> None:
     """FlattenConcat must roll back stale pieces when a sub-expression fails.
 
