@@ -41,13 +41,18 @@ def _discover_fixtures() -> list[str]:
     """Discover fixture names from `expected_*.json` files paired with a sibling `.cs` file.
 
     Auto-discovery prevents the parametrize list from rotting when new fixtures are added.
-    Sorted to keep test-run order deterministic.
+    Sorted to keep test-run order deterministic. Fails loud at import time if the fixture
+    directory is empty — pytest 8.x silently `skip`s an empty `parametrize` list, which
+    would let CI go green even with no extractor coverage.
     """
     fixtures: list[str] = []
     for expected in FIXTURES.glob("expected_*.json"):
         name = expected.name.removeprefix("expected_").removesuffix(".json")
         if (FIXTURES / f"{name}.cs").exists():
             fixtures.append(name)
+    if not fixtures:
+        msg = f"no annals extractor fixtures discovered under {FIXTURES}"
+        raise RuntimeError(msg)
     return sorted(fixtures)
 
 
