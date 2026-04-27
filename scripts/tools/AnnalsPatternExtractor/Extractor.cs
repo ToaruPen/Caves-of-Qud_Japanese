@@ -544,7 +544,10 @@ internal sealed class Extractor
         IReadOnlyDictionary<string, ExpressionSyntax> methodLocals,
         HashSet<string> alreadyOverridden)
     {
-        var arms = EnumerateChainArms(ifStmt);
+        // Normalize to the chain root so an inner-if passed in here resolves the same arms
+        // ResolveIfBranchSuffix would; otherwise the two paths can disagree on arm membership.
+        var root = NormalizeToChainRoot(ifStmt);
+        var arms = EnumerateChainArms(root);
         var totalArms = arms.Count;
         // For 2-arm chains keep the legacy 2-entry shape (then + else, where else may be empty).
         // For chain-length 1 (`if A` with no else), still expose 2 arms so the no-assign else
@@ -562,7 +565,7 @@ internal sealed class Extractor
 
         // Walk chain-internal SimpleAssignments in source order; first qualifying name wins.
         // Skip post-setter assigns? Not applicable — caller filters via stmt.Span checks.
-        foreach (var assign in ifStmt.DescendantNodes().OfType<AssignmentExpressionSyntax>())
+        foreach (var assign in root.DescendantNodes().OfType<AssignmentExpressionSyntax>())
         {
             if (!assign.IsKind(SyntaxKind.SimpleAssignmentExpression)) continue;
             if (assign.Left is not IdentifierNameSyntax lhs) continue;

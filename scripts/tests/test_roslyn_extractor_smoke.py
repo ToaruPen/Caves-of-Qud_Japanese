@@ -71,13 +71,19 @@ def test_threeplus_arm_chain_does_not_collide_with_sibling_if(tmp_path: Path) ->
     actual = json.loads(output.read_text(encoding="utf-8"))
     ids = [c["id"] for c in actual["candidates"]]
     # Three case-labelled arms from the 3-arm chain (branched-local fanout
-    # uses `#bl:` to avoid collision with setter-chain `#if:`).
-    assert "elseif_chain_collision_with_sibling_if#gospel#bl:case0" in ids
-    assert "elseif_chain_collision_with_sibling_if#gospel#bl:case1" in ids
-    assert "elseif_chain_collision_with_sibling_if#gospel#bl:case2" in ids
-    # Plus the legacy then/else from the 2-arm sibling if (setter-chain).
-    assert "elseif_chain_collision_with_sibling_if#gospel#if:then" in ids
-    assert "elseif_chain_collision_with_sibling_if#gospel#if:else" in ids
+    # uses `#bl:` to avoid collision with setter-chain `#if:`) plus the
+    # legacy then/else from the 2-arm sibling if (setter-chain).
+    # Pin the FULL set so a regression that emits extra candidates or
+    # duplicates an id cannot pass with only membership checks.
+    expected_ids = {
+        "elseif_chain_collision_with_sibling_if#gospel#bl:case0",
+        "elseif_chain_collision_with_sibling_if#gospel#bl:case1",
+        "elseif_chain_collision_with_sibling_if#gospel#bl:case2",
+        "elseif_chain_collision_with_sibling_if#gospel#if:then",
+        "elseif_chain_collision_with_sibling_if#gospel#if:else",
+    }
+    assert set(ids) == expected_ids, f"unexpected ids: {sorted(set(ids) ^ expected_ids)}"
+    assert len(ids) == len(expected_ids), f"duplicate ids in output: {ids}"
 
 
 @pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
