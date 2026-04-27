@@ -33,7 +33,10 @@ public sealed class ColorTagAllowlistCoverageTests
     public void EveryStripCallSite_HasMatchingRestoreCallSite()
     {
         // Production rule (to encode here):
-        //   for each *.cs under Mods/QudJP/Assemblies/src/Patches:
+        //   for each *.cs under Mods/QudJP/Assemblies/src/ that actually calls
+        //   ColorAwareTranslationComposer.Strip / RestoreCapture (i.e. NOT limited to
+        //   src/Patches/ — translator-layer files like
+        //   Translation/MessagePatternTranslator.cs are equally subject to the rule):
         //     each `Strip(` call site must have at least one Restore* / TranslatePreservingColors
         //     reachable in the same control-flow path (function or method). Files where
         //     `TranslatePreservingColors(` already encapsulates the round-trip do NOT need
