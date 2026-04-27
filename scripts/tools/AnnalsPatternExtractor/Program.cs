@@ -116,11 +116,21 @@ foreach (var candidate in collapsed)
 {
     if (seenById.TryGetValue(candidate.Id, out var prior))
     {
-        if (prior.EnTemplateHash == candidate.EnTemplateHash) continue;
+        // Hash equality alone is not enough to silently dedupe: EnTemplateHash does not
+        // include Status/Reason, so two `needs_manual` candidates with identical empty
+        // shapes but DIFFERENT failure reasons would otherwise merge and lose one reason.
+        var sameShape = prior.EnTemplateHash == candidate.EnTemplateHash;
+        var sameOutcome =
+            string.Equals(prior.Status, candidate.Status, StringComparison.Ordinal)
+            && string.Equals(prior.Reason, candidate.Reason, StringComparison.Ordinal);
+        if (sameShape && sameOutcome) continue;
+
         Console.Error.WriteLine(
-            $"[error] duplicate candidate id with divergent shape: {candidate.Id} "
-            + $"(prior={prior.EnTemplateHash}, new={candidate.EnTemplateHash}). "
-            + "Resolve via branch/path id suffixes (`#case:`, `#arm:`, `#opt:`).");
+            $"[error] duplicate candidate id with divergent outcome: {candidate.Id} "
+            + $"(priorHash={prior.EnTemplateHash}, newHash={candidate.EnTemplateHash}, "
+            + $"priorStatus={prior.Status}, newStatus={candidate.Status}, "
+            + $"priorReason={prior.Reason}, newReason={candidate.Reason}). "
+            + "Resolve via branch/path id suffixes (`#case:`, `#arm:`, `#opt:`) or preserve both reasons.");
         return 1;
     }
     seenById[candidate.Id] = candidate;
