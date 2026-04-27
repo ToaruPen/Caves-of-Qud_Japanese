@@ -7,17 +7,19 @@ namespace QudJP.Tests.L1;
 // project does not use xUnit; see ColorTagStaticAnalysisTests.cs for rationale).
 //
 // Layer rationale per docs/test-architecture.md:
-//   L1 here is a static catalog over `Mods/QudJP/Assemblies/src/`. No HarmonyLib,
-//   no Assembly-CSharp.dll, no Unity. Pair this with the L2 DummyTarget tests in
-//   ColorTagStaticAnalysisTests.cs which exercise the runtime code path.
+//   Both this file and ColorTagStaticAnalysisTests.cs sit at L1 (no HarmonyLib,
+//   no Assembly-CSharp.dll, no Unity). This file is the static catalog scan
+//   layer; ColorTagStaticAnalysisTests.cs is the translator-surface drop-scenario
+//   layer. Catalog-1/-2/-3 here scan `Mods/QudJP/Assemblies/src/`; Catalog-4
+//   scans `Mods/QudJP/Localization/Dictionaries/*.json`.
 
 [TestFixture]
 [Category("L1")]
 public sealed class ColorTagAllowlistCoverageTests
 {
-    // Common prefix `"issue-376 — production code pending"` is shared with the L2
-    // counterpart (ColorTagStaticAnalysisTests.SkipReason) so a single grep
-    // surfaces every scaffold the production PR must address.
+    // Common prefix `"issue-376 — production code pending"` is shared with
+    // ColorTagStaticAnalysisTests.SkipReason so a single grep surfaces every
+    // scaffold the production PR must address.
     private const string SkipReason = "issue-376 — production code pending; catalog allowlist not yet defined";
 
     // Catalog-1: every Patches/*.cs that calls ColorAwareTranslationComposer.Strip
@@ -74,16 +76,18 @@ public sealed class ColorTagAllowlistCoverageTests
     [Ignore(SkipReason)]
     public void RestoreCapture_OnNameLikeCapture_HasMarkupGuard()
     {
-        // Production rule:
-        //   files matching `RestoreCapture\(.*Groups\["(killer|name|subject|target)"\]\)`
-        //   must also match ONE OF the equivalent guards the plan doc enumerates:
-        //     `HasColorMarkup(`            (current canonical guard)
-        //     `MarkupAwareRestoreCapture(` (planned wrapper from Phase C)
-        //     `IsAlreadyLocalized*(`       (broader idempotency guard family)
-        //   Pin the guard NAMES in a `static readonly string[] AllowedGuardSymbols`
-        //   constant so renames stay one-line edits and a future MarkupAware* wrapper
-        //   doesn't false-positive trip this test. Otherwise the file is a candidate
-        //   for the double-restoration regression seen in issue-376.
+        // Production rule (the GUARD side is intentionally an OPEN set, not a literal):
+        //   trigger: file contains `RestoreCapture(` against any name-like capture group
+        //            (current corpus uses killer / name / subject / target — extend as
+        //            new owner routes appear).
+        //   guard:   file must also contain a call into ANY symbol from
+        //            `static readonly string[] AllowedGuardSymbols` defined in this test.
+        //            Initial set: { "HasColorMarkup(", "MarkupAwareRestoreCapture(",
+        //            "IsAlreadyLocalized" }. Renames or new abstractions land as one-line
+        //            additions to that constant; the test must NOT pin to a single
+        //            literal like `HasColorMarkup\(`.
+        //   exempt:  pre-rendered sinks listed in an explicit (path -> reason) allowlist
+        //            this test reads.
         Assert.Pass("Scaffold; replace with regex-based catalog scan when production lands.");
     }
 

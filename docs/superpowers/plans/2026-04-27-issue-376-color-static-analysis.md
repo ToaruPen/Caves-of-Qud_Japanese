@@ -139,7 +139,7 @@ code pending")]` which has the same "discoverable but not run" semantics.
 
 - The six representative drop scenarios in `ColorTagStaticAnalysisTests.cs`
   flip from skipped to passing under one production PR (no skips remain
-  cited to issue-376 outside of intentional, allowlisted exemptions).
+  cited to issue-376 outside intentional, allowlisted exemptions).
 - The L1 catalog asserts non-empty coverage and rejects new `Strip`
   call sites that lack a paired `Restore*`.
 - A fresh `Player.log` from a death-popup smoke run shows zero

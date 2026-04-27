@@ -23,11 +23,17 @@ namespace QudJP.Tests.L1;
 // expected post-fix behavior. Implementation hooks are deliberately sketched
 // (commented out) — wiring them up is the responsibility of the future production PR.
 
-// `[NonParallelizable]` because the un-ignored production tests will mutate the
-// shared MessagePatternTranslator / Translator / DynamicTextObservability /
-// SinkObservation static state (see PopupPickOptionTranslationPatchTests for the
-// full reset surface). The scaffold itself is read-only, but flipping any
-// `[Ignore]` should not require remembering to add the attribute.
+// NonParallelizable: the un-ignored production tests will mutate shared static
+// state on MessagePatternTranslator, Translator, DynamicTextObservability, and
+// SinkObservation. The scaffold itself is read-only, but flipping any Ignore
+// must not require remembering to add the attribute.
+//
+// When un-ignoring, the production PR must add a SetUp/TearDown pair modeled on
+// PopupPickOptionTranslationPatchTests — SetUp seeds the dictionary directory
+// and any pattern fixtures via the *ForTests entry points; TearDown calls the
+// matching ResetForTests on each translator surface. Without that pair, the
+// translator surfaces see uninitialized dictionary state and either throw or
+// pass through the input unchanged.
 [TestFixture]
 [Category("L1")]
 [NonParallelizable]
@@ -136,13 +142,13 @@ public sealed class ColorTagStaticAnalysisTests
                 messageTranslated,
                 Does.Contain("血まみれの").And.Contain("殺された"),
                 "Expected localized killer phrase and death verb.");
-            // No stray "}}" inside the Japanese display name body.
-            // NOTE: this regex assumes `Tam` survives un-translated. The production PR
-            // must update the right-hand anchor to whatever the actual dictionary entry
-            // emits (e.g. `タム`) — otherwise this assertion becomes vacuously true.
+            // No stray "}}" inside the Japanese display name body. The right-hand
+            // anchor is the localized display name `タム`, NOT the source-side `Tam` —
+            // pinning to English here would make the assertion vacuously true on a
+            // pass-through.
             Assert.That(
                 messageTranslated,
-                Does.Not.Match("血まみれの.*}}.*Tam"),
+                Does.Not.Match("血まみれの.*}}.*タム"),
                 "RestoreCapture inserted close tag into translated display-name body.");
         });
     }
@@ -159,10 +165,20 @@ public sealed class ColorTagStaticAnalysisTests
         var first = ColorAwareTranslationComposer.TranslatePreservingColors(preLocalized);
         var second = ColorAwareTranslationComposer.TranslatePreservingColors(first);
 
-        Assert.That(
-            second,
-            Is.EqualTo(first),
-            "Second pass through TranslatePreservingColors must be identity on already-localized text.");
+        Assert.Multiple(() =>
+        {
+            // Positive: the first pass must keep the Japanese form intact (no
+            // English fragments leaking back in) — otherwise idempotency could
+            // hold on a damaged-but-stable string.
+            Assert.That(
+                first,
+                Does.Contain("血まみれの").And.Contain("タム").And.Contain("座っている"),
+                "Localized fragments must survive the first pass unchanged.");
+            Assert.That(
+                second,
+                Is.EqualTo(first),
+                "Second pass through TranslatePreservingColors must be identity on already-localized text.");
+        });
     }
 
     // Scenario 5: MessagePatternTranslator capture restoration must not duplicate
