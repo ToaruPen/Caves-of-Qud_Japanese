@@ -140,18 +140,17 @@ public sealed class ColorTagStaticAnalysisTests
     [Ignore(SkipReason)]
     public void MessagePattern_CaptureRestoration_DoesNotDoubleWrapMarkupCarryingCapture()
     {
-        const string source = "{{Y|You hit {{r|bloody Tam}} for {{R|10}} damage.}}";
-
-        var translated = MessagePatternTranslator.Translate(
-            source,
-            context: nameof(ColorTagStaticAnalysisTests));
-
-        // Contract: pass-through (no pattern) and pattern-match paths must both leave the
-        // inner `{{r|...}}` capture singly wrapped — never `{{r|{{r|...}}}}`.
-        Assert.That(
-            translated,
-            Does.Not.Contain("{{r|{{r|"),
-            "MessagePatternTranslator double-wrapped a capture that already carried its own markup.");
+        // Production PR prerequisites (replace this body):
+        //   1. Use `MessagePatternTranslator.SetPatternFileForTests(path)` to load a fixture
+        //      pattern whose template wraps a capture (e.g. `{{r|{0}}}`).
+        //   2. Pick a `source` whose Strip+pattern-match path actually fires that template,
+        //      and whose capture value already carries its own `{{r|...}}` markup.
+        //   3. Translate; assert exact output equals the markup-aware expectation, AND
+        //      `Does.Not.Contain("{{r|{{r|")`. The exact-output assertion catches the case
+        //      where the translator silently passes through and the negative assertion
+        //      becomes vacuously true.
+        // Reset state in `[TearDown]` via `MessagePatternTranslator.ResetForTests()`.
+        Assert.Pass("Scaffold; production PR replaces with pattern-fixture-driven exact-output test.");
     }
 
     // Scenario 6: sentence-specific owner route (DescriptionTextTranslator) must
@@ -160,19 +159,17 @@ public sealed class ColorTagStaticAnalysisTests
     [Ignore(SkipReason)]
     public void DescriptionText_BalancedCapture_DoesNotSpliceColorAcrossSentences()
     {
-        // Two-sentence English description with the color span fully enclosing the
-        // first sentence only.
-        const string source = "{{W|This is a Tam.}} It is bloody.";
-
-        var translated = DescriptionTextTranslator.TranslateLongDescription(
-            source,
-            route: nameof(ColorTagStaticAnalysisTests));
-
-        // Contract: the {{W|...}} span must stay confined to sentence 1. A regression
-        // would let the opening `{{W|` survive into sentence 2 (e.g. as `{{W|...It is`).
-        Assert.That(
-            translated,
-            Does.Not.Match(@"\{\{W\|[^}]*It is bloody"),
-            "DescriptionTextTranslator spliced the {{W|...}} span across the sentence boundary.");
+        // Production PR prerequisites (replace this body):
+        //   1. Pick an input that actually engages a `DescriptionTextTranslator`
+        //      regex route (FactionDispositionPattern / LabeledListPattern /
+        //      VillageDispositionTargetPattern), e.g. multiline
+        //      `"{{W|Hated by the bandits for stealing.}}\nIt is dangerous."`
+        //      and inject a matching dictionary entry via the test scope.
+        //   2. Call `TranslateLongDescription`; assert exact output equals the
+        //      translated-with-confined-wrapper expectation (e.g. line 1 fully
+        //      Japanese-translated and re-wrapped, line 2 left alone) AND that
+        //      no `{{W|` survives onto line 2.
+        //   3. Reset dictionary scope in `[TearDown]`.
+        Assert.Pass("Scaffold; production PR replaces with regex-fixture-driven exact-output test.");
     }
 }
