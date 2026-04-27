@@ -136,24 +136,26 @@ foreach (var candidate in collapsed)
             + $"(priorHash={prior.EnTemplateHash}, newHash={candidate.EnTemplateHash}, "
             + $"priorStatus={prior.Status}, newStatus={candidate.Status}, "
             + $"priorReason={prior.Reason}, newReason={candidate.Reason}). "
-            + "Resolve via branch/path id suffixes (`#case:`, `#arm:`, `#opt:`) or preserve both reasons.");
+            + "Resolve via branch/path id suffixes (`#case:`, `#arm:`, `#opt:`, `#bl:`) or preserve both reasons.");
         return 1;
     }
     seenById[candidate.Id] = candidate;
     deduped.Add(candidate);
 }
 
-static string MakeBucketKey(string id)
+// `MakeBucketKey` keeps each `#if:`/`#bl:` marker but normalizes its label to `*`, so siblings
+// within ONE family bucket together while different markers stay in separate buckets.
+// `StripBranchSuffixes` removes the entire `#marker:label` segment, preserving downstream
+// suffixes like `#arm:`/`#opt:` so collapse pairs siblings across both families.
+static string MakeBucketKey(string id) => RewriteBranchSegments(id, labelReplacement: "*");
+static string StripBranchSuffixes(string id) => RewriteBranchSegments(id, labelReplacement: null);
+
+static string RewriteBranchSegments(string id, string? labelReplacement)
 {
-    // Replace each `#if:<label>` and `#bl:<label>` segment with `#if:*` / `#bl:*` so siblings
-    // within ONE family bucket together (different labels collapse), but `#if:` and `#bl:`
-    // themselves stay separate (different markers don't bucket together).
     string[] markers = { CandidateIdSuffix.If, CandidateIdSuffix.BranchedLocal };
     var result = id;
     foreach (var marker in markers)
     {
-        // Advance `searchFrom` past each replacement so the loop terminates: after writing `*`
-        // the marker text is still present, and re-searching from 0 would re-find it forever.
         var searchFrom = 0;
         while (true)
         {
@@ -162,38 +164,22 @@ static string MakeBucketKey(string id)
             var labelStart = idx + marker.Length;
             var nextHash = result.IndexOf('#', labelStart);
             var labelEnd = nextHash < 0 ? result.Length : nextHash;
-            result = result[..labelStart] + "*" + result[labelEnd..];
-            searchFrom = labelStart + 1;
+            if (labelReplacement is null)
+            {
+                // Strip the whole `#marker:label` segment.
+                result = result[..idx] + result[labelEnd..];
+                searchFrom = idx;
+            }
+            else
+            {
+                // Keep marker, replace just the label. Advance past the replacement so the loop
+                // terminates: the marker text remains and re-searching from 0 would re-find it.
+                result = result[..labelStart] + labelReplacement + result[labelEnd..];
+                searchFrom = labelStart + labelReplacement.Length;
+            }
         }
     }
     return result;
-}
-
-static string StripBranchSuffixes(string id)
-{
-    // Remove ONLY the `#if:<label>` and `#bl:<label>` segment(s), preserving downstream
-    // suffixes like `#arm:` or `#opt:`. Otherwise `foo#if:then#arm:0` and `foo#if:else#opt:with1`
-    // would both collapse to `foo` and either falsely merge or false-collide.
-    // Loop until no `#if:` or `#bl:` remains so collapse pairs both setter-chain siblings
-    // (`#if:`) and branched-local-fanout siblings (`#bl:`).
-    string[] markers = { CandidateIdSuffix.If, CandidateIdSuffix.BranchedLocal };
-    while (true)
-    {
-        var earliestIdx = -1;
-        var earliestMarker = "";
-        foreach (var marker in markers)
-        {
-            var idx = id.IndexOf(marker, StringComparison.Ordinal);
-            if (idx >= 0 && (earliestIdx < 0 || idx < earliestIdx))
-            {
-                earliestIdx = idx;
-                earliestMarker = marker;
-            }
-        }
-        if (earliestIdx < 0) return id;
-        var nextSuffix = id.IndexOf('#', earliestIdx + earliestMarker.Length);
-        id = nextSuffix < 0 ? id[..earliestIdx] : id[..earliestIdx] + id[nextSuffix..];
-    }
 }
 
 var doc = new CandidateDocument

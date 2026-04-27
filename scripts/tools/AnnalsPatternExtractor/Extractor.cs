@@ -330,10 +330,6 @@ internal sealed class Extractor
     /// <paramref name="root"/> is enumerated. The shared <see cref="ResolveChainArm"/> caller
     /// is what determines arm membership for descendants, and it uses each arm body's Span,
     /// so a node inside a nested-but-unrelated if still resolves to the OUTER chain's arm.
-    /// TODO (post-#430-followup): if a future Annals file needs per-nested-arm labels (e.g.
-    /// `case0_then` for the inner if's then-branch), recurse on each arm body when it is
-    /// itself an `IfStatementSyntax` and compose labels. The current Annals corpus does not
-    /// require this, so the simpler flat enumeration is preserved.
     /// </remarks>
     private static IReadOnlyList<StatementSyntax> EnumerateChainArms(IfStatementSyntax root)
     {
@@ -355,8 +351,8 @@ internal sealed class Extractor
     }
 
     /// <summary>
-    /// Map an arm index to a stable id-suffix label. 2-arm chains keep the historical
-    /// `then`/`else` so PR1/PR2a output stays byte-identical; 3+-arm chains use `case{i}`.
+    /// Map an arm index to a stable id-suffix label. 2-arm chains use `then`/`else`;
+    /// 3+-arm chains use `case{i}`.
     /// </summary>
     private static string BuildArmLabel(int armIndex, int totalArms)
     {
@@ -540,8 +536,8 @@ internal sealed class Extractor
     ///   which is runtime-faithfully a distinct value worth a separate candidate.</item>
     /// </list>
     /// Search order is the chain's source-DFS assignment order so the FIRST qualifying name
-    /// wins deterministically. Labels are `then`/`else` for 2-arm chains (preserving PR1
-    /// byte-identical output) and `case0`..`caseN-1` for 3+-arm chains (issue #430 follow-up).
+    /// wins deterministically. Labels are `then`/`else` for 2-arm chains and
+    /// `case0`..`caseN-1` for 3+-arm chains.
     /// </remarks>
     private static (string? Name, IReadOnlyList<ExpressionSyntax?> ArmRhs, IReadOnlyList<string> ArmLabels) TryDetectBranchedLocal(
         IfStatementSyntax ifStmt,
@@ -561,6 +557,8 @@ internal sealed class Extractor
                 ? CollectBranchAssignments(arms[i])
                 : new Dictionary<string, ExpressionSyntax>(StringComparer.Ordinal);
         }
+        var labels = new string[effectiveCount];
+        for (var i = 0; i < effectiveCount; i++) labels[i] = BuildArmLabel(i, effectiveCount);
 
         // Walk chain-internal SimpleAssignments in source order; first qualifying name wins.
         // Skip post-setter assigns? Not applicable — caller filters via stmt.Span checks.
@@ -597,8 +595,6 @@ internal sealed class Extractor
             }
             if (allAssigned && allEqual) continue;
 
-            var labels = new string[effectiveCount];
-            for (var i = 0; i < effectiveCount; i++) labels[i] = BuildArmLabel(i, effectiveCount);
             return (name, rhsPerArm, labels);
         }
         return (null, Array.Empty<ExpressionSyntax?>(), Array.Empty<string>());
