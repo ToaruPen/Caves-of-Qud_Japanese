@@ -167,6 +167,11 @@
       "route": "annals"
     },
     {
+      "pattern": "^(?:In|Throughout(?:\\ the\\ entirety\\ of)?)\\ (\\d+)\\ (?:BR|AR),\\ (.+?)\\ (.+?)\\ all\\ of\\ (.+?),\\ (.+?)\\ of\\ (.+?)\\ and\\ (.+?)\\.\\ (.+?)\\ became\\ known\\ as\\ (.+?)\\.$",
+      "template": "{0}年、{t1}は{t3}全土を{t2}、{t5}と{t6}に{t4}をもたらした。{t7}は{t8}として知られるようになった。",
+      "route": "annals"
+    },
+    {
       "pattern": "^Near\\ the\\ location\\ of\\ (.+?),\\ (.+?)\\ was\\ captured\\ by\\ bandits\\.\\ (.+?)\\ languished\\ in\\ captivity\\ for\\ (.+?)\\ years,\\ eventually\\ escaping\\ to\\ (.+?)\\.$",
       "template": "{t0}の地の近くで、{t1}は盗賊に捕らえられた。{t2}は捕囚のうちに{t3}年を苦しみ、ついには{t4}へ逃れ出た。",
       "route": "annals"
@@ -199,11 +204,6 @@
     {
       "pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ Resheph\\ appointed\\ Rebekah\\ administrator\\ of\\ (.+?)\\.\\ She\\ tendered\\ alms\\ for\\ the\\ sick\\ in\\ his\\ name\\.$",
       "template": "{0}年、レシェフはレベカを{t1}の施政官に任じた。彼女は彼の名において病める者へ施しを捧げた。",
-      "route": "annals"
-    },
-    {
-      "pattern": "^(.+?)\\ (\\d+)\\ (?:BR|AR),\\ (.+?)\\ (.+?)\\ all\\ of\\ (.+?),\\ (.+?)\\ of\\ (.+?)\\ and\\ (.+?)\\.\\ (.+?)\\ became\\ known\\ as\\ (.+?)\\.$",
-      "template": "{1}年、{t2}は{t4}全土を{t3}、{t6}と{t7}に{t5}をもたらした。{t8}は{t9}として知られるようになった。",
       "route": "annals"
     },
     {
