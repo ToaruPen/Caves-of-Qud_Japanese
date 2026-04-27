@@ -368,6 +368,27 @@ internal sealed class Extractor
     }
 
     /// <summary>
+    /// True iff the chain ends in a non-`if` `else` clause. `if A`, `if A else if B`, and
+    /// `if A else if B else if C` all return false; `if A else B`, `if A else if B else C`
+    /// return true. Used by branched-local detection to decide whether to add an implicit
+    /// no-op arm for the runtime path where every condition is false.
+    /// </summary>
+    private static bool HasTerminalElse(IfStatementSyntax root)
+    {
+        var current = root;
+        while (current.Else is not null)
+        {
+            if (current.Else.Statement is IfStatementSyntax inner)
+            {
+                current = inner;
+                continue;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Map an arm index to a stable id-suffix label. 2-arm chains use `then`/`else`;
     /// 3+-arm chains use `case{i}`.
     /// </summary>
@@ -566,10 +587,12 @@ internal sealed class Extractor
         var root = NormalizeToChainRoot(ifStmt);
         var arms = EnumerateChainArms(root);
         var totalArms = arms.Count;
-        // For 2-arm chains keep the legacy 2-entry shape (then + else, where else may be empty).
-        // For chain-length 1 (`if A` with no else), still expose 2 arms so the no-assign else
-        // arm can fall back to the declared initializer at the caller (single-branch-assign).
-        var effectiveCount = totalArms < 2 ? 2 : totalArms;
+        // Whenever the chain has no terminal `else`, append an implicit no-op arm to stand
+        // in for the runtime path where every condition is false (the local keeps its
+        // initializer). This covers `if A`, `if A else if B`, `if A else if B else if C`,
+        // etc. — only chains that already end in a non-`if` else skip the implicit arm.
+        var hasTerminalElse = HasTerminalElse(root);
+        var effectiveCount = hasTerminalElse ? totalArms : totalArms + 1;
         var armAssigns = new Dictionary<string, ExpressionSyntax>[effectiveCount];
         for (var i = 0; i < effectiveCount; i++)
         {
@@ -622,14 +645,18 @@ internal sealed class Extractor
 
     /// <summary>
     /// Build a name → source-latest-rhs map for SimpleAssignments inside one branch's
-    /// statement subtree. When the same local is assigned multiple times within the branch
-    /// (e.g. `value = "first"; value = "second";`), the LATER assignment wins, matching the
-    /// runtime semantic of "the last write before the branch ends is the observed value".
+    /// statement subtree, EXCLUDING assignments inside nested `if` statements. When the
+    /// same local is assigned multiple times within the branch
+    /// (e.g. `value = "first"; value = "second";`), the LATER assignment wins, matching
+    /// the runtime semantic of "the last write before the branch ends is the observed
+    /// value". Nested-if assigns are skipped because they only happen on a sub-condition
+    /// — folding them as the arm's confirmed value would over-attribute conditional
+    /// writes to the unconditional arm path.
     /// </summary>
     private static Dictionary<string, ExpressionSyntax> CollectBranchAssignments(StatementSyntax branch)
     {
         var map = new Dictionary<string, ExpressionSyntax>(StringComparer.Ordinal);
-        foreach (var assign in branch.DescendantNodesAndSelf().OfType<AssignmentExpressionSyntax>())
+        foreach (var assign in branch.DescendantNodesAndSelf(node => !(node is IfStatementSyntax)).OfType<AssignmentExpressionSyntax>())
         {
             if (!assign.IsKind(SyntaxKind.SimpleAssignmentExpression)) continue;
             if (assign.Left is not IdentifierNameSyntax lhs) continue;
