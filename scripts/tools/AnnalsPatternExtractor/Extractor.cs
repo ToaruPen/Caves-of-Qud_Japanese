@@ -234,28 +234,62 @@ internal sealed class Extractor
     /// exists in this if (i.e., a `tombInscription` fallback like `If.Chance(80) tomb=long; else
     /// tomb=short;`), still suffix to keep the runtime variants distinct.
     /// </summary>
+    /// <remarks>
+    /// CR R8: For `else if` chains, the C# parser models `else if (...) { ... }` as the outer
+    /// if's `Else.Statement` being a NESTED `IfStatementSyntax`. `Ancestors().OfType&lt;
+    /// IfStatementSyntax&gt;().FirstOrDefault()` therefore returns the INNER if for setters in
+    /// the inner branch, and the OUTER if for setters in the outer-then branch — siblings in
+    /// the same chain stop matching, and no `#if:` suffix is emitted, leading to id collision
+    /// at dedupe time. We normalize the resolved if to the OUTERMOST `IfStatementSyntax` in the
+    /// chain (walking up `Parent.Parent` through `ElseClauseSyntax` → `IfStatementSyntax` links)
+    /// for both the sibling check and the then/else branch test.
+    ///
+    /// Limitation: 3+ branch chains (e.g. `if A else if B else C`) collapse the trailing `else`
+    /// into the outermost-if's else and would label B as `else` (because B lives in the
+    /// outer-else span) and C also as `else`, causing collision. PR1/PR2a target files do not
+    /// contain 3+ branch chains, so the normalize-to-outermost approach is sufficient for the
+    /// current scope; a richer per-arm labelling is deferred.
+    /// </remarks>
     private static string? ResolveIfBranchSuffix(
         InvocationExpressionSyntax setter,
         List<InvocationExpressionSyntax> allSetters,
         string eventProperty)
     {
-        var ifStmt = setter.Ancestors().OfType<IfStatementSyntax>().FirstOrDefault();
-        if (ifStmt is null) return null;
+        var nearestIf = setter.Ancestors().OfType<IfStatementSyntax>().FirstOrDefault();
+        if (nearestIf is null) return null;
+        var ifStmt = NormalizeToChainRoot(nearestIf);
         // Only suffix when at least one other setter for this same event property exists in a
-        // distinct branch of the *same* if statement.
+        // distinct branch of the *same* if-chain (using the chain root for both sides).
         var siblingsInSameIf = allSetters.Where(other =>
         {
             if (other == setter) return false;
             if (ParseSetterArgs(other).property != eventProperty) return false;
-            var otherIf = other.Ancestors().OfType<IfStatementSyntax>().FirstOrDefault();
-            return otherIf == ifStmt;
+            var otherNearest = other.Ancestors().OfType<IfStatementSyntax>().FirstOrDefault();
+            if (otherNearest is null) return false;
+            return NormalizeToChainRoot(otherNearest) == ifStmt;
         }).ToList();
         if (siblingsInSameIf.Count == 0) return null;
 
-        // Determine which branch this setter lives in.
+        // Determine which branch this setter lives in (relative to the chain root).
         if (IsInThenBranch(setter, ifStmt)) return "then";
         if (IsInElseBranch(setter, ifStmt)) return "else";
         return null;
+    }
+
+    /// <summary>
+    /// Walk up an else-if chain to the OUTERMOST `IfStatementSyntax`. C# models `else if` as
+    /// `IfStatementSyntax.Else.Statement` being a nested `IfStatementSyntax`; this method
+    /// follows the `Parent`/`Parent.Parent` chain until it reaches the chain root.
+    /// </summary>
+    private static IfStatementSyntax NormalizeToChainRoot(IfStatementSyntax ifStmt)
+    {
+        var current = ifStmt;
+        while (current.Parent is ElseClauseSyntax elseClause
+            && elseClause.Parent is IfStatementSyntax outer)
+        {
+            current = outer;
+        }
+        return current;
     }
 
     private static bool IsInThenBranch(SyntaxNode node, IfStatementSyntax ifStmt)
