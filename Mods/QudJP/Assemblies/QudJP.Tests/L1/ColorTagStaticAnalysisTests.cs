@@ -1,13 +1,15 @@
 using QudJP.Patches;
 
-namespace QudJP.Tests.L2;
+namespace QudJP.Tests.L1;
 
 // issue-376: color tag application/restoration static analysis.
 //
-// These DummyTarget-shape L2 tests pin the post-translation behavior we expect once
-// the static-analysis-driven detection layer lands. They are intentionally skipped
-// (NUnit Ignore) so CI stays green; they become discoverable failures the moment a
-// production fix is wired up that flips them to passing.
+// These tests pin the post-translation behavior we expect once the static-analysis-
+// driven detection layer lands. They sit in L1 (no HarmonyLib, no Assembly-CSharp.dll,
+// no UnityEngine — see docs/test-architecture.md): every translator path they touch
+// is pure C# string logic. Tests are intentionally skipped (NUnit Ignore) so CI stays
+// green; they become discoverable failures the moment a production fix is wired up
+// that flips them to passing.
 //
 // Skip pattern note:
 //   The umbrella prompt asked for `[Fact(Skip = "...")]` (xUnit). The QudJP test
@@ -27,13 +29,13 @@ namespace QudJP.Tests.L2;
 // full reset surface). The scaffold itself is read-only, but flipping any
 // `[Ignore]` should not require remembering to add the attribute.
 [TestFixture]
-[Category("L2")]
+[Category("L1")]
 [NonParallelizable]
 public sealed class ColorTagStaticAnalysisTests
 {
-    // Common prefix `"issue-376 — production code pending"` is shared with the L1
-    // counterpart (ColorTagAllowlistCoverageTests.SkipReason) so a single grep
-    // surfaces every scaffold the production PR must address.
+    // Common prefix `"issue-376 — production code pending"` is shared with
+    // ColorTagAllowlistCoverageTests.SkipReason so a single grep surfaces every
+    // scaffold the production PR must address.
     private const string SkipReason = "issue-376 — production code pending; static analysis layer not yet implemented";
 
     // Scenario 1: triple-nested {{r|...}} accumulation reproduced in Player.log
@@ -61,6 +63,14 @@ public sealed class ColorTagStaticAnalysisTests
         Assert.Multiple(() =>
         {
             Assert.That(translated, Is.True);
+            // Positive: the actual death-popup translation must contain the
+            // Japanese localizations the production PR is responsible for emitting.
+            // Without these positive anchors, an English pass-through would also
+            // satisfy the negative assertions vacuously.
+            Assert.That(
+                popupTranslated,
+                Does.Contain("血まみれの").And.Contain("殺された"),
+                "Expected the localized killer fragment and the death-verb in the output.");
             Assert.That(
                 popupTranslated,
                 Does.Not.Contain("{{r|{{r|"),
@@ -89,6 +99,12 @@ public sealed class ColorTagStaticAnalysisTests
         Assert.Multiple(() =>
         {
             Assert.That(translated, Is.True);
+            // Positive: the localized death-message body must be present so a
+            // pass-through (English or partial) cannot satisfy the negative below.
+            Assert.That(
+                messageTranslated,
+                Does.Contain("血まみれの").And.Contain("殺された"),
+                "Expected localized killer fragment and death verb.");
             Assert.That(
                 messageTranslated,
                 Does.Not.Match("\\[座ってい&[a-zA-Z]る\\]"),
@@ -114,6 +130,12 @@ public sealed class ColorTagStaticAnalysisTests
         Assert.Multiple(() =>
         {
             Assert.That(translated, Is.True);
+            // Positive: the localized killer phrase must be present so a pass-through
+            // can't satisfy the negative regex vacuously.
+            Assert.That(
+                messageTranslated,
+                Does.Contain("血まみれの").And.Contain("殺された"),
+                "Expected localized killer phrase and death verb.");
             // No stray "}}" inside the Japanese display name body.
             // NOTE: this regex assumes `Tam` survives un-translated. The production PR
             // must update the right-hand anchor to whatever the actual dictionary entry

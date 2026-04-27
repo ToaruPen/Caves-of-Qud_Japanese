@@ -61,15 +61,25 @@ False-positive mitigation:
 
 ## Test architecture per `docs/test-architecture.md`
 
-- **L1** — pure-string catalog scan over `src/Patches/*.cs`. No HarmonyLib,
-  no `Assembly-CSharp.dll`. Lives in
-  `Mods/QudJP/Assemblies/QudJP.Tests/L1/ColorTagAllowlistCoverageTests.cs`.
-- **L2** — DummyTarget tests for each drop scenario in the issue body. Lives
-  in `Mods/QudJP/Assemblies/QudJP.Tests/L2/ColorTagStaticAnalysisTests.cs`.
-- **No L0.** This work has no math/algorithm core that can be tested in
-  isolation from the existing translator surfaces; the smallest meaningful
-  unit is "translator pipeline output", which is already L1.
-- **No L3 in the first cut.** Once the L1+L2 layer is green we add a smoke
+Both files live in **L1** (pure C#, no HarmonyLib, no `Assembly-CSharp.dll`,
+no UnityEngine — see `docs/test-architecture.md` for layer boundaries):
+
+- `Mods/QudJP/Assemblies/QudJP.Tests/L1/ColorTagAllowlistCoverageTests.cs` —
+  static catalog scans (Catalog-1, Catalog-2, Catalog-3 over
+  `Mods/QudJP/Assemblies/src/`; Catalog-4 over
+  `Mods/QudJP/Localization/Dictionaries/*.json`). The scan target is
+  per-Catalog, not "all of L1 is `src/Patches/*.cs`".
+- `Mods/QudJP/Assemblies/QudJP.Tests/L1/ColorTagStaticAnalysisTests.cs` —
+  six representative drop-scenario tests that call the pure-C# translator
+  surface (`ColorAwareTranslationComposer`, `DeathWrapperFamilyTranslator`,
+  `MessagePatternTranslator`, `DescriptionTextTranslator`) directly. No
+  HarmonyLib / DummyTarget, so L1 not L2.
+- **No L0.** No math/algorithm core that can be tested in isolation from the
+  translator surface.
+- **No L2 / L2G.** None of the scenarios need Harmony patch resolution or
+  game-DLL signature integration to verify the contract. Phase F runtime
+  proof remains separate per `docs/RULES.md`.
+- **No L3 in the first cut.** Once the L1 layer is green we add a smoke
   step that diffs a fresh `Player.log`. Captured separately in the
   acceptance criteria below.
 
@@ -95,7 +105,7 @@ code pending")]` which has the same "discoverable but not run" semantics.
 1. L1 catalog test: every `Strip` has a matching `Restore*` (with allowlist).
 2. L1 catalog test: every `RestoreCapture` on a name-like group has a
    markup guard in the same file (allowlist exempts pre-rendered sinks).
-3. L2 DummyTarget tests for the six representative drop scenarios captured in
+3. L1 translator-surface tests for the six representative drop scenarios in
    `ColorTagStaticAnalysisTests.cs` (four canonical drops from the issue body
    plus two adjacent-translator contract tests for `MessagePatternTranslator`
    and `DescriptionTextTranslator`).
@@ -106,7 +116,8 @@ code pending")]` which has the same "discoverable but not run" semantics.
    `ColorAwareTranslationComposer` that delegates to `RestoreCapture` only
    when `!HasColorMarkup(value)`.
 2. Migrate the `MessagePatternTranslator.cs:575` call site first (highest
-   blast radius). DummyTarget tests must flip from skipped to passing.
+   blast radius). The L1 translator-surface tests must flip from skipped
+   to passing.
 3. Migrate remaining call sites flagged by the L1 catalog.
 4. Tighten the L1 allowlist to forbid the un-guarded `RestoreCapture` shape
    project-wide.
@@ -134,8 +145,9 @@ code pending")]` which has the same "discoverable but not run" semantics.
 - A fresh `Player.log` from a death-popup smoke run shows zero
   `{{r|{{r|...}}` occurrences and zero `&<letter>` codes inside Japanese
   bracketed tokens.
-- `dotnet test ... --filter TestCategory=L1` and `--filter TestCategory=L2`
-  remain green (target counts: current totals + new tests, all passing).
+- `dotnet test ... --filter TestCategory=L1` remains green (target counts:
+  current totals + new tests, all passing). L2 / L2G are not affected by
+  this work.
 
 ## Open questions
 
