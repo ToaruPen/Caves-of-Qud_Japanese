@@ -66,5 +66,7 @@ node_modules/
 # Claude scheduled-task runtime lock
 .claude/scheduled_tasks.lock
 
-# Issue #420 build-time pipeline artifacts (candidate JSON, conflict reports, .bak files)
-scripts/_artifacts/annals/
+# Issue #420 build-time pipeline artifacts (transient: conflict reports, .bak files)
+# candidates_pending.json IS committed as the source-of-truth input that produces annals-patterns.ja.json
+scripts/_artifacts/annals/*.bak
+scripts/_artifacts/annals/conflict_*.json
