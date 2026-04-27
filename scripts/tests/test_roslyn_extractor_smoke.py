@@ -70,11 +70,12 @@ def test_threeplus_arm_chain_does_not_collide_with_sibling_if(tmp_path: Path) ->
     )
     actual = json.loads(output.read_text(encoding="utf-8"))
     ids = [c["id"] for c in actual["candidates"]]
-    # Three case-labelled arms from the 3-arm chain (branched-local fanout).
-    assert "elseif_chain_collision_with_sibling_if#gospel#if:case0" in ids
-    assert "elseif_chain_collision_with_sibling_if#gospel#if:case1" in ids
-    assert "elseif_chain_collision_with_sibling_if#gospel#if:case2" in ids
-    # Plus the legacy then/else from the 2-arm sibling if.
+    # Three case-labelled arms from the 3-arm chain (branched-local fanout
+    # uses `#bl:` to avoid collision with setter-chain `#if:`).
+    assert "elseif_chain_collision_with_sibling_if#gospel#bl:case0" in ids
+    assert "elseif_chain_collision_with_sibling_if#gospel#bl:case1" in ids
+    assert "elseif_chain_collision_with_sibling_if#gospel#bl:case2" in ids
+    # Plus the legacy then/else from the 2-arm sibling if (setter-chain).
     assert "elseif_chain_collision_with_sibling_if#gospel#if:then" in ids
     assert "elseif_chain_collision_with_sibling_if#gospel#if:else" in ids
 

@@ -2,7 +2,7 @@
   "schema_version": "1",
   "candidates": [
     {
-      "id": "elseif_chain_four_branches#gospel#if:case0",
+      "id": "elseif_chain_four_branches#gospel#bl:case0",
       "source_file": "elseif_chain_four_branches.cs",
       "annal_class": "elseif_chain_four_branches",
       "switch_case": "default",
@@ -18,7 +18,7 @@
       "en_template_hash": "sha256:2f1468e07e4991989d45d46aa27143ab687d3e5f1528a6a729180f0c98254898"
     },
     {
-      "id": "elseif_chain_four_branches#gospel#if:case1",
+      "id": "elseif_chain_four_branches#gospel#bl:case1",
       "source_file": "elseif_chain_four_branches.cs",
       "annal_class": "elseif_chain_four_branches",
       "switch_case": "default",
@@ -34,7 +34,7 @@
       "en_template_hash": "sha256:0f034a5574913678e47c4c46abd3fdf0cae12e7c61c74f12e66ab22e79fcb2d6"
     },
     {
-      "id": "elseif_chain_four_branches#gospel#if:case2",
+      "id": "elseif_chain_four_branches#gospel#bl:case2",
       "source_file": "elseif_chain_four_branches.cs",
       "annal_class": "elseif_chain_four_branches",
       "switch_case": "default",
@@ -50,7 +50,7 @@
       "en_template_hash": "sha256:456748a58793132a8385e660108cc78f7a95e00bf4cef51f491ffdc88f41b061"
     },
     {
-      "id": "elseif_chain_four_branches#gospel#if:case3",
+      "id": "elseif_chain_four_branches#gospel#bl:case3",
       "source_file": "elseif_chain_four_branches.cs",
       "annal_class": "elseif_chain_four_branches",
       "switch_case": "default",

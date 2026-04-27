@@ -16,6 +16,13 @@ internal static class CandidateIdSuffix
     public const string Arm = "#arm:";
     public const string Opt = "#opt:";
     public const string If = "#if:";
+    /// <summary>
+    /// Suffix for branched-local fanout (a setter consumes a local that is assigned with
+    /// distinct rhs across the arms of a sibling if/else-if chain). Distinct from
+    /// <see cref="If"/> (setter-INSIDE-if-chain fanout) so independent 3+-arm chains in the
+    /// same generator don't collide on `#if:caseN` ids.
+    /// </summary>
+    public const string BranchedLocal = "#bl:";
 }
 
 internal sealed class Extractor
@@ -88,14 +95,16 @@ internal sealed class Extractor
             // has branch-distinct SimpleAssignments in a pre-setter `if/else` sibling. The
             // branch-fanout case is mutually exclusive with `ResolveIfBranchSuffix` (setter
             // INSIDE an if-branch with a sibling setter for the same property in the other
-            // branch); when that fires, we suppress branch-fanout to avoid `#if:then#if:else`
-            // double-suffixing.
+            // branch); when that fires, we suppress branch-fanout to avoid combining
+            // `#if:caseN` (setter-chain) with `#bl:caseM` (branched-local) on a single id.
+            // Branched-local fanout uses the dedicated `#bl:` suffix so independent 3+-arm
+            // chains in the same generator don't collide on `#if:caseN` ids.
             var suppressBranchFanout = ifBranchSuffix is not null;
             var setterLocalsBranches = BuildSetterScopedLocals(invocation, localInitializers, generateMethod, suppressBranchFanout);
             var setterScopedAppends = FilterAppendsBeforeSetter(appendsByLocal, invocation);
             foreach (var (branchLabel, setterLocals) in setterLocalsBranches)
             {
-                var branchedIdPrefix = branchLabel is null ? idPrefix : idPrefix + CandidateIdSuffix.If + branchLabel;
+                var branchedIdPrefix = branchLabel is null ? idPrefix : idPrefix + CandidateIdSuffix.BranchedLocal + branchLabel;
                 var armings = ExpandSwitchExpressionArms(valueExpr, setterLocals);
                 foreach (var (armLabel, armLocals) in armings)
                 {
@@ -392,7 +401,7 @@ internal sealed class Extractor
     ///     <b>Mutual exclusion with `ResolveIfBranchSuffix`</b>: when the setter is INSIDE an
     ///     if-branch and a sibling setter exists in the other branch (driving an `#if:then` /
     ///     `#if:else` suffix), branch-fanout is suppressed by the caller via
-    ///     <paramref name="suppressBranchFanout"/> so the id never carries two `#if:` segments.
+    ///     <paramref name="suppressBranchFanout"/> so the id never combines `#if:` with `#bl:`.
     ///   </item>
     /// </list>
     /// </remarks>

@@ -6,7 +6,8 @@ namespace XRL.Annals;
 // drives a branched local for a setter that has NO `ResolveIfBranchSuffix` suffix of its own,
 // while a sibling 2-arm `if/else` carries setters that DO get `#if:then` / `#if:else`. Pre-fix
 // both paths emit `then` / `else` and collide on `gospel#if:then`. Post-fix the 3-arm chain
-// emits `case0` / `case1` / `case2`, eliminating the collision.
+// emits `#bl:case0` / `#bl:case1` / `#bl:case2` (separate branched-local namespace),
+// eliminating the collision.
 [Serializable]
 public class ElseifChainCollisionWithSiblingIfFixture : HistoricEvent
 {
