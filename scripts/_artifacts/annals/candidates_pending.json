@@ -1,0 +1,3041 @@
+{
+  "schema_version": "1",
+  "candidates": [
+    {
+      "id": "Adopted#gospel",
+      "source_file": "Adopted.cs",
+      "annal_class": "Adopted",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "{0} was adopted by {1} who love {2}.",
+      "extracted_pattern": "^(.+?)\\ was\\ adopted\\ by\\ (.+?)\\ who\\ love\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<$chosenSpice.professions.!random>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<$chosenSpice.practices.!random>",
+          "default": "{t2}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}は、{t2}を愛する{t1}に養子として迎えられた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:2e19049f5919fa0b80215755cf4f95bddf48fa6f8922296f3e61833cbf075c67"
+    },
+    {
+      "id": "BattleItem#gospel#if:else",
+      "source_file": "BattleItem.cs",
+      "annal_class": "BattleItem",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "At the Battle of {0}, {1} fought as a mercenary {2}to subjugate {3}. {4} wielded {5} {6} with such {7} that it became forever known as {8}.",
+      "extracted_pattern": "^At\\ the\\ Battle\\ of\\ (.+?),\\ (.+?)\\ fought\\ as\\ a\\ mercenary\\ (?:sultan\\ )?to\\ subjugate\\ (.+?)\\.\\ (.+?)\\ wielded\\ (.+?)\\ (.+?)\\ with\\ such\\ (.+?)\\ that\\ it\\ became\\ forever\\ known\\ as\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property2, property)",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "unresolved-local",
+          "raw": "text6",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(text4)",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Grammar.A(text2)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.items.weapons.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.finesse.!random>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "unresolved-local",
+          "raw": "Name",
+          "default": "{t8}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の戦いにおいて、{t1}は傭兵として{t2}を征服せんと戦った。{t3}は{t4}{t5}を{t6}なる妙技をもって振るい、それは永く{t7}として知られることとなった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:bfe15066e362a0968c6122d9b560bb28c4ceec3d4a4dd76851e60f022b45abc1"
+    },
+    {
+      "id": "BattleItem#gospel#if:then",
+      "source_file": "BattleItem.cs",
+      "annal_class": "BattleItem",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "At the Battle of {0}, {1} fought to subjugate {2}. {3} wielded {4} {5} with such {6} that it became forever known as {7}.",
+      "extracted_pattern": "^At\\ the\\ Battle\\ of\\ (.+?),\\ (.+?)\\ fought\\ to\\ subjugate\\ (.+?)\\.\\ (.+?)\\ wielded\\ (.+?)\\ (.+?)\\ with\\ such\\ (.+?)\\ that\\ it\\ became\\ forever\\ known\\ as\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property2, property)",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(text4)",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Grammar.A(text2)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.items.weapons.!random>",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.finesse.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "unresolved-local",
+          "raw": "Name",
+          "default": "{t7}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の戦いにおいて、{t1}は{t2}を征服せんと戦った。{t3}は{t4}{t5}を{t6}なる妙技をもって振るい、それは永く{t7}として知られることとなった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:37dee4fdcaa73536239f3b5172723b0b06e28c2072d0a1110d3dca02c62dad0e"
+    },
+    {
+      "id": "BattleItem#tombInscription",
+      "source_file": "BattleItem.cs",
+      "annal_class": "BattleItem",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "{0}",
+      "extracted_pattern": "^(.+?)$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "value2",
+          "default": "{t0}"
+        }
+      ],
+      "status": "needs_manual",
+      "reason": "unresolved-local in ternary string.Format on local declaration; extractor cannot expose two arms — defer until extractor handles ternary RHS in local decls",
+      "ja_template": "",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": ""
+    },
+    {
+      "id": "BloodyBattle#gospel#if:else",
+      "source_file": "BloodyBattle.cs",
+      "annal_class": "BloodyBattle",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, {1} won a decisive victory against the combined forces of {2} at the bloody Battle of {3}. As a result of the battle, {4} was so {5} that it was renamed {6}.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ (.+?)\\ won\\ a\\ decisive\\ victory\\ against\\ the\\ combined\\ forces\\ of\\ (.+?)\\ at\\ the\\ bloody\\ Battle\\ of\\ (.+?)\\.\\ As\\ a\\ result\\ of\\ the\\ battle,\\ (.+?)\\ was\\ so\\ (.+?)\\ that\\ it\\ was\\ renamed\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property, property2)",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property, property2)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.ruinReason>",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "unresolved-local",
+          "raw": "text",
+          "default": "{t6}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、{t1}は血塗られし{t3}の戦いにて、{t2}の連合軍に決定的勝利を収めた。この戦いの結果、{t4}はあまりに{t5}となり、{t6}と改め名づけられた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:0dfa903e8cf267cfbafe8983e0e0e5425027b00027788ec67239fc8421a9daba"
+    },
+    {
+      "id": "BloodyBattle#gospel#if:then",
+      "source_file": "BloodyBattle.cs",
+      "annal_class": "BloodyBattle",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, {1} won a decisive victory against the combined forces of {2} at the bloody Battle of {3}, though {4} lost {5} prized {6} during the course of the conflict. As a result of the battle, {7} was so {8} that it was renamed {9}.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ (.+?)\\ won\\ a\\ decisive\\ victory\\ against\\ the\\ combined\\ forces\\ of\\ (.+?)\\ at\\ the\\ bloody\\ Battle\\ of\\ (.+?),\\ though\\ (.+?)\\ lost\\ (.+?)\\ prized\\ (.+?)\\ during\\ the\\ course\\ of\\ the\\ conflict\\.\\ As\\ a\\ result\\ of\\ the\\ battle,\\ (.+?)\\ was\\ so\\ (.+?)\\ that\\ it\\ was\\ renamed\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property, property2)",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<entity.possessivePronoun>",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "format-arg",
+          "raw": "snapshotAtYear.GetList(\"items\").GetRandomElement()",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property, property2)",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.ruinReason>",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "unresolved-local",
+          "raw": "text",
+          "default": "{t9}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、{t1}は血塗られし{t3}の戦いにて、{t2}の連合軍に決定的勝利を収めた。されどその争いのさなか、{t4}は大切な{t5}{t6}を失った。この戦いの結果、{t7}はあまりに{t8}となり、{t9}と改め名づけられた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:6a587be77687282fade9bdb5667dfac710cbc7faf02ab8ccc85a2acc2a24c983"
+    },
+    {
+      "id": "BloodyBattle#tombInscription",
+      "source_file": "BloodyBattle.cs",
+      "annal_class": "BloodyBattle",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "In the {0}, {1} {2} the {3}, who {4}. Let the {5} of {6} serve as testament to the {7} of {8} and a {9} to those who would {10} {11}.",
+      "extracted_pattern": "^In\\ the\\ (.+?),\\ (.+?)\\ (.+?)\\ the\\ (.+?),\\ who\\ (.+?)\\.\\ Let\\ the\\ (.+?)\\ of\\ (.+?)\\ serve\\ as\\ testament\\ to\\ the\\ (.+?)\\ of\\ (.+?)\\ and\\ a\\ (.+?)\\ to\\ those\\ who\\ would\\ (.+?)\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GenerateSultanateYearName()",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.vanquished.!random>",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<spice.history.gospels.EnemyHostName.{QudHistoryHelpers.GetSultanateEra(snapshotAtYear)}.!random>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<spice.history.gospels.CommittedWrongAgainstSultan.{QudHistoryHelpers.GetSultanateEra(snapshotAtYear)}.!random>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.ruinDescription>",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "unresolved-local",
+          "raw": "text",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.might.!random>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.warning.!random>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.challenge.!random>",
+          "default": "{t10}"
+        },
+        {
+          "index": 11,
+          "type": "historykit-token",
+          "raw": "<entity.objectPronoun>",
+          "default": "{t11}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}において、{t1}は{t4}ところの{t3}を{t2}。{t6}の{t5}をして、{t8}の{t7}の証となし、また{t11}に{t10}せんとする者どもへの{t9}となさしめよ。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:22c3deceacede274dd2b45ffab63be4729ea41b3b12182bc65a7ed730a4529fe"
+    },
+    {
+      "id": "BornAsHeir#gospel",
+      "source_file": "BornAsHeir.cs",
+      "annal_class": "BornAsHeir",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "{0} in {1}, a healthy child was born to the sultan at {2}. At the moment of {3} birth, {4}, and in celebration the people {5}. The babe was named {6}, but the people called {7} {8}.",
+      "extracted_pattern": "^(.+?)\\ in\\ (.+?),\\ a\\ healthy\\ child\\ was\\ born\\ to\\ the\\ sultan\\ at\\ (.+?)\\.\\ At\\ the\\ moment\\ of\\ (.+?)\\ birth,\\ (.+?),\\ and\\ in\\ celebration\\ the\\ people\\ (.+?)\\.\\ The\\ babe\\ was\\ named\\ (.+?),\\ but\\ the\\ people\\ called\\ (.+?)\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.oneStarryNight.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"region\")",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"location\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "helper-call",
+          "raw": "Grammar.PossessivePronoun(property2)",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "format-arg",
+          "raw": "ExpandString(\"<spice.elements.\" + randomElement + \".mythicalEvent.!random>\").Replace(\"*var*\", text2)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.celebrated.!random>",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "unresolved-local",
+          "raw": "text5",
+          "default": "{t8}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、{t1}の{t2}にて、スルタンに健やかなる子が生まれた。{t3}誕生の瞬間、{t4}、祝賀として民は{t5}。その嬰児は{t6}と名づけられたが、民は{t7}を{t8}と呼んだ。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:b629addf0e49ec9a1f65d76bbac0b9c8b815f81e3ea3289841adb95a3a4a4562"
+    },
+    {
+      "id": "BornAsHeir#tombInscription",
+      "source_file": "BornAsHeir.cs",
+      "annal_class": "BornAsHeir",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "{0}! {1} the life of {2} -- called {3}! -- scion of the Fossilized Saads and {4} who was dowered the {5}. Observe the twin miracles of the {6}: the {7} was born, and {8}.",
+      "extracted_pattern": "^(.+?)!\\ (.+?)\\ the\\ life\\ of\\ (.+?)\\ --\\ called\\ (.+?)!\\ --\\ scion\\ of\\ the\\ Fossilized\\ Saads\\ and\\ (.+?)\\ who\\ was\\ dowered\\ the\\ (.+?)\\.\\ Observe\\ the\\ twin\\ miracles\\ of\\ the\\ (.+?):\\ the\\ (.+?)\\ was\\ born,\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.onlooker.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.observeInWonder.!random.capitalize>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "unresolved-local",
+          "raw": "text5",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetMaskName(snapshotAtYear)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GenerateSultanateYearName()",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "unresolved-local",
+          "raw": "text6",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "unresolved-local",
+          "raw": "text4",
+          "default": "{t8}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}よ！ {t2}の生涯を{t1}、すなわち{t3}と呼ばれし者の生涯を！ 化石化せしサアドの裔にして、{t5}を授けられし{t4}なり。{t6}の双つの奇跡を見よ。{t7}が生まれ、そして{t8}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:7f067f9f7f2cf3cc71235083167ff3372be511c37b65f4d7e7bea997dfb7434e"
+    },
+    {
+      "id": "CapturedByBandits#gospel#case:0",
+      "source_file": "CapturedByBandits.cs",
+      "annal_class": "CapturedByBandits",
+      "switch_case": "0",
+      "event_property": "gospel",
+      "sample_source": "Near the location of {0}, {1} was captured by bandits. {2} murdered their leader {3}, and was thenceforth known as {4}.",
+      "extracted_pattern": "^Near\\ the\\ location\\ of\\ (.+?),\\ (.+?)\\ was\\ captured\\ by\\ bandits\\.\\ (.+?)\\ murdered\\ their\\ leader\\ (.+?),\\ and\\ was\\ thenceforth\\ known\\ as\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"location\")",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<spice.elements.entity$elements[random].murdermethods.!random>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Grammar.MakeCompoundWord(Grammar.GetRandomMeaningfulWord(ExpandString(\"<spice.elements.\" + text3 + \".nouns.!random.capitalize>\")), ExpandString(\"<spice.actornouns.!random>\"))",
+          "default": "{t4}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の地の近くで、{t1}は盗賊に捕らえられた。{t2}はその頭目を{t3}殺害し、以後{t4}として知られるようになった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:d7a427046bef2d57a17cd123a903cc744a6d321df1c7c740ce82f6788546abf1"
+    },
+    {
+      "id": "CapturedByBandits#gospel#case:1",
+      "source_file": "CapturedByBandits.cs",
+      "annal_class": "CapturedByBandits",
+      "switch_case": "1",
+      "event_property": "gospel",
+      "sample_source": "Near the location of {0}, {1} was captured by bandits. {2} languished in captivity for {3} years, eventually escaping to {4}.",
+      "extracted_pattern": "^Near\\ the\\ location\\ of\\ (.+?),\\ (.+?)\\ was\\ captured\\ by\\ bandits\\.\\ (.+?)\\ languished\\ in\\ captivity\\ for\\ (.+?)\\ years,\\ eventually\\ escaping\\ to\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"location\")",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "helper-call",
+          "raw": "Grammar.Cardinal((int)duration)",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property2, property)",
+          "default": "{t4}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の地の近くで、{t1}は盗賊に捕らえられた。{t2}は捕囚のうちに{t3}年を苦しみ、ついには{t4}へ逃れ出た。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:d69116f841491486ea177797db97fa58dc1109fed9b9fcc0badbbb0e764be619"
+    },
+    {
+      "id": "CapturedByBandits#tombInscription",
+      "source_file": "CapturedByBandits.cs",
+      "annal_class": "CapturedByBandits",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "For the sake of {0}, {1} {2} at {3} in {4} to {5} among the {6} and {7}. After {8} {9} years, {10} {11} at {12}.",
+      "extracted_pattern": "^For\\ the\\ sake\\ of\\ (.+?),\\ (.+?)\\ (.+?)\\ at\\ (.+?)\\ in\\ (.+?)\\ to\\ (.+?)\\ among\\ the\\ (.+?)\\ and\\ (.+?)\\.\\ After\\ (.+?)\\ (.+?)\\ years,\\ (.+?)\\ (.+?)\\ at\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.wisdom.!random>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.settled.!random>",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"location\")",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"region\")",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.dwellOrWork.!random>",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.commonFolk.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<spice.history.gospels.HumblePractice.{QudHistoryHelpers.GetSultanateEra(snapshotAtYear)}.!random>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "helper-call",
+          "raw": "Grammar.Cardinal((int)duration)",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.humble.!random>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t10}"
+        },
+        {
+          "index": 11,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.reemerged.!random>",
+          "default": "{t11}"
+        },
+        {
+          "index": 12,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property2, property)",
+          "default": "{t12}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}のため、{t1}は{t4}の{t3}にて{t2}、{t6}と{t7}の間に{t5}せんとした。{t8}年もの{t9}年月ののち、{t10}は{t12}にて{t11}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:e2e8e9d1b598df78a73b73b6121223817bcc4612a8e51ecd80c3057a50552b3b"
+    },
+    {
+      "id": "FoundAsBabe#gospel#case:0",
+      "source_file": "FoundAsBabe.cs",
+      "annal_class": "FoundAsBabe",
+      "switch_case": "0",
+      "event_property": "gospel",
+      "sample_source": "{0}, a babe was found swaddled {1} {2}. That babe came to be known as {3}.",
+      "extracted_pattern": "^(.+?),\\ a\\ babe\\ was\\ found\\ swaddled\\ (.+?)\\ (.+?)\\.\\ That\\ babe\\ came\\ to\\ be\\ known\\ as\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.oneStarryNight.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.myth.mythicPrepPlaces.!random>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.babeTrait.!random>",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t3}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、ひとりの嬰児が{t1}{t2}に包まれて見いだされた。その嬰児はのちに{t3}として知られるようになった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:6fbf28ab6a0678c1bca70cd301450c85f25bb72a6ceb3ca660572e9748147fab"
+    },
+    {
+      "id": "FoundAsBabe#gospel#case:1",
+      "source_file": "FoundAsBabe.cs",
+      "annal_class": "FoundAsBabe",
+      "switch_case": "1",
+      "event_property": "gospel",
+      "sample_source": "{0}, a {1} found a babe {2} outside {3} {4}. {5} and {6} fellow {7} adopted the babe and named {8} {9}.",
+      "extracted_pattern": "^(.+?),\\ a\\ (.+?)\\ found\\ a\\ babe\\ (.+?)\\ outside\\ (.+?)\\ (.+?)\\.\\ (.+?)\\ and\\ (.+?)\\ fellow\\ (.+?)\\ adopted\\ the\\ babe\\ and\\ named\\ (.+?)\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.oneStarryNight.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{<spice.elements.{randomElement}.professions.!random>}.singular>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.babeTrait.!random>",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "helper-call",
+          "raw": "Grammar.PossessivePronoun(text4)",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{<spice.elements.{randomElement}.professions.!random>}.guildhall>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Grammar.RandomShePronoun()",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "helper-call",
+          "raw": "Grammar.PossessivePronoun(text4)",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{<spice.elements.{randomElement}.professions.!random>}.plural>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t9}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、ひとりの{t1}が、{t3}{t4}の外で{t2}嬰児を見いだした。{t5}と{t6}仲間の{t7}はその嬰児を養子に迎え、{t8}を{t9}と名づけた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:b00507f2eb74835d6e32f873d5513a9677479a6be73e54ab967ea88853f8fedc"
+    },
+    {
+      "id": "FoundAsBabe#gospel#case:default#opt:base",
+      "source_file": "FoundAsBabe.cs",
+      "annal_class": "FoundAsBabe",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "{0}, a babe was found swaddled {1} by a group of {2} in {3}. They took {4} into their fold and fostered {5}, and {6} became known as {7}, {8} {9} of {10}.",
+      "extracted_pattern": "^(.+?),\\ a\\ babe\\ was\\ found\\ swaddled\\ (.+?)\\ by\\ a\\ group\\ of\\ (.+?)\\ in\\ (.+?)\\.\\ They\\ took\\ (.+?)\\ into\\ their\\ fold\\ and\\ fostered\\ (.+?),\\ and\\ (.+?)\\ became\\ known\\ as\\ (.+?),\\ (.+?)\\ (.+?)\\ of\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.oneStarryNight.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.babeTrait.!random>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"region\")",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"subjectPronoun\")",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.adjectives.!random.capitalize>",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.scion.!random.capitalize>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t10}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、ひとりの嬰児が{t3}にて、{t2}の一団により{t1}に包まれて見いだされた。彼らは{t4}を仲間に迎えて{t5}を育み、{t6}は{t7}、{t10}の{t8}{t9}として知られるようになった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:0c6feb19703058699fc68cf9cb8997c3cbd744c7c5e6cf0918f4ea5de40bf5b0"
+    },
+    {
+      "id": "FoundAsBabe#gospel#case:default#opt:with1",
+      "source_file": "FoundAsBabe.cs",
+      "annal_class": "FoundAsBabe",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "{0}, a babe was found swaddled {1} by a group of {2} in {3}. They took {4} into their fold and fostered {5}, and {6} became known as {7}, the {8} {9} of {10}.",
+      "extracted_pattern": "^(.+?),\\ a\\ babe\\ was\\ found\\ swaddled\\ (.+?)\\ by\\ a\\ group\\ of\\ (.+?)\\ in\\ (.+?)\\.\\ They\\ took\\ (.+?)\\ into\\ their\\ fold\\ and\\ fostered\\ (.+?),\\ and\\ (.+?)\\ became\\ known\\ as\\ (.+?),\\ the\\ (.+?)\\ (.+?)\\ of\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.oneStarryNight.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.babeTrait.!random>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"region\")",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"subjectPronoun\")",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.adjectives.!random.capitalize>",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.scion.!random.capitalize>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t10}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、ひとりの嬰児が{t3}にて、{t2}の一団により{t1}に包まれて見いだされた。彼らは{t4}を仲間に迎えて{t5}を育み、{t6}は{t7}、{t10}の{t8}{t9}として知られるようになった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:24325b4bb5d7a306dcef4c524b45c65f67afd8eced0998e75dac590041db0350"
+    },
+    {
+      "id": "FoundAsBabe#tombInscription#opt:base",
+      "source_file": "FoundAsBabe.cs",
+      "annal_class": "FoundAsBabe",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "{0}, a babe was found swaddled {1} by a group of {2} in {3}. They took {4} into their fold and fostered {5}, and {6} became known as {7}, {8} {9} of {10}.",
+      "extracted_pattern": "^(.+?),\\ a\\ babe\\ was\\ found\\ swaddled\\ (.+?)\\ by\\ a\\ group\\ of\\ (.+?)\\ in\\ (.+?)\\.\\ They\\ took\\ (.+?)\\ into\\ their\\ fold\\ and\\ fostered\\ (.+?),\\ and\\ (.+?)\\ became\\ known\\ as\\ (.+?),\\ (.+?)\\ (.+?)\\ of\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.oneStarryNight.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.babeTrait.!random>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"region\")",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"subjectPronoun\")",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.adjectives.!random.capitalize>",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.scion.!random.capitalize>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t10}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、ひとりの嬰児が{t3}にて、{t2}の一団により{t1}に包まれて見いだされた。彼らは{t4}を仲間に迎えて{t5}を育み、{t6}は{t7}、{t10}の{t8}{t9}として知られるようになった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:162b226fb4fc3d8060cfe7618e1e748ccba74adbc9b5c2f41e898bb734893f15"
+    },
+    {
+      "id": "FoundAsBabe#tombInscription#opt:with1",
+      "source_file": "FoundAsBabe.cs",
+      "annal_class": "FoundAsBabe",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "{0}, a babe was found swaddled {1} by a group of {2} in {3}. They took {4} into their fold and fostered {5}, and {6} became known as {7}, the {8} {9} of {10}.",
+      "extracted_pattern": "^(.+?),\\ a\\ babe\\ was\\ found\\ swaddled\\ (.+?)\\ by\\ a\\ group\\ of\\ (.+?)\\ in\\ (.+?)\\.\\ They\\ took\\ (.+?)\\ into\\ their\\ fold\\ and\\ fostered\\ (.+?),\\ and\\ (.+?)\\ became\\ known\\ as\\ (.+?),\\ the\\ (.+?)\\ (.+?)\\ of\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.oneStarryNight.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.babeTrait.!random>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"region\")",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Grammar.ObjectPronoun(property2)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"subjectPronoun\")",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{snapshotAtYear.GetList(\"elements\").GetRandomElement()}.adjectives.!random.capitalize>",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.scion.!random.capitalize>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t10}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、ひとりの嬰児が{t3}にて、{t2}の一団により{t1}に包まれて見いだされた。彼らは{t4}を仲間に迎えて{t5}を育み、{t6}は{t7}、{t10}の{t8}{t9}として知られるようになった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:c3f4d61110c484e777616cb51a308c5a2d31e03045bdd66605bf7096c369abf4"
+    },
+    {
+      "id": "Marry#gospel#opt:base",
+      "source_file": "Marry.cs",
+      "annal_class": "Marry",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "{0}, {1} cemented {2} friendship with {3} by marrying {4}.",
+      "extracted_pattern": "^(.+?),\\ (.+?)\\ cemented\\ (.+?)\\ friendship\\ with\\ (.+?)\\ by\\ marrying\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{randomElement}.weddingConditions.!random>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"possessivePronoun\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{text9}.plural>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "NameMaker.MakeName(null, null, null, null, \"Qudish\", null, null, null, null, null, null, \"Site\")",
+          "default": "{t4}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}友誼を固めた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:ce29afe90ea02a33072c19a58b557c71dd15a9413973c79856cccd47ab006d37"
+    },
+    {
+      "id": "Marry#gospel#opt:with1",
+      "source_file": "Marry.cs",
+      "annal_class": "Marry",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "{0}, {1} cemented {2} friendship with {3} by marrying {4}. {5}, the {6} bestowed upon {7} a wedding gift they called {8}.",
+      "extracted_pattern": "^(.+?),\\ (.+?)\\ cemented\\ (.+?)\\ friendship\\ with\\ (.+?)\\ by\\ marrying\\ (.+?)\\.\\ (.+?),\\ the\\ (.+?)\\ bestowed\\ upon\\ (.+?)\\ a\\ wedding\\ gift\\ they\\ called\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.elements.{randomElement}.weddingConditions.!random>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"possessivePronoun\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{text9}.plural>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "NameMaker.MakeName(null, null, null, null, \"Qudish\", null, null, null, null, null, null, \"Site\")",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.inHonorOf.!random>",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{text9}.plural>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.Ansify(text7)",
+          "default": "{t8}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}友誼を固めた。{t5}、{t6}は{t7}に、彼らが{t8}と呼ぶ婚礼の贈り物を授けた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:beb11a404551ddefab0ccec7a96775047d89865691612f445d8c2524ff48bc91"
+    },
+    {
+      "id": "Marry#tombInscription",
+      "source_file": "Marry.cs",
+      "annal_class": "Marry",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "{0}, {1} and {2}, whose {3} alliance by marriage {4}.",
+      "extracted_pattern": "^(.+?),\\ (.+?)\\ and\\ (.+?),\\ whose\\ (.+?)\\ alliance\\ by\\ marriage\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.marriageBlessing.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "NameMaker.MakeName(null, null, null, null, \"Qudish\", null, null, null, null, null, null, \"Site\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.historic.!random>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "format-arg",
+          "raw": "ExpandString(\"<spice.history.gospels.MarriageAllianceResult.\" + QudHistoryHelpers.GetSultanateEra(currentSnapshot) + \".!random>\").Replace(\"*group*\", text3).Replace(\"*hall*\", text8)",
+          "default": "{t4}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、{t1}と{t2}、その{t3}婚姻の同盟は{t4}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:b40c0d7b8c072dd75501dcf5f2613ab440441e5d5e90e873dab328282e7f5e3f"
+    },
+    {
+      "id": "MeetFaction#gospel#if:else#arm:0",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "0",
+      "event_property": "gospel",
+      "sample_source": "Deep in {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^Deep\\ in\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の奥深くにて、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:a35c0e2bf020f2107946358c20d3c89f93f99a79d2a09333179238419b2b4d8d"
+    },
+    {
+      "id": "MeetFaction#gospel#if:else#arm:1",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "1",
+      "event_property": "gospel",
+      "sample_source": "While wandering around {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^While\\ wandering\\ around\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の辺りをさまよううち、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:58a142e9ab8f50cf7dcd0dc56b2280d9ea237b13b724ff22416c099dd6eb6a68"
+    },
+    {
+      "id": "MeetFaction#gospel#if:else#arm:_",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "_",
+      "event_property": "gospel",
+      "sample_source": "Deep in the wilds of {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^Deep\\ in\\ the\\ wilds\\ of\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の荒野の奥深くにて、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:add0bfcc3dd08c93f3911cccb6fc3e012b4257ae88496817d3b32642769453f7"
+    },
+    {
+      "id": "MeetFaction#gospel#if:then#arm:0",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "0",
+      "event_property": "gospel",
+      "sample_source": "Deep in {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^Deep\\ in\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{text3}.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の奥深くにて、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:117fff4821bc2b6e89c2520e32f1c023bf0b4da48d8637c44d2ca269bc9d5141"
+    },
+    {
+      "id": "MeetFaction#gospel#if:then#arm:1",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "1",
+      "event_property": "gospel",
+      "sample_source": "While wandering around {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^While\\ wandering\\ around\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{text3}.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の辺りをさまよううち、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:74f41982171f74ca1f79756701c261c849a9a8ed8b8bd78aaa7328d20e63e076"
+    },
+    {
+      "id": "MeetFaction#gospel#if:then#arm:_",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "_",
+      "event_property": "gospel",
+      "sample_source": "Deep in the wilds of {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^Deep\\ in\\ the\\ wilds\\ of\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.{text3}.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の荒野の奥深くにて、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:af9df14c0d9f7ab705b712f3597a49921c5e5fb806b4d49ecad8c3ecdfb61316"
+    },
+    {
+      "id": "MeetFaction#tombInscription#if:else#arm:0",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "0",
+      "event_property": "tombInscription",
+      "sample_source": "Deep in {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^Deep\\ in\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の奥深くにて、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:4fc71c85fe8311fcc6a14a1640d320a0900b788441ddcc4f433facf16f948d0c"
+    },
+    {
+      "id": "MeetFaction#tombInscription#if:else#arm:1",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "1",
+      "event_property": "tombInscription",
+      "sample_source": "While wandering around {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^While\\ wandering\\ around\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の辺りをさまよううち、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:107809b0ba8759d8835ad49f09fb9f3894409770e13d88da97af35b22381b835"
+    },
+    {
+      "id": "MeetFaction#tombInscription#if:else#arm:_",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "_",
+      "event_property": "tombInscription",
+      "sample_source": "Deep in the wilds of {0}, {1} discovered {2}. There {3} befriended {4} and {5}.",
+      "extracted_pattern": "^Deep\\ in\\ the\\ wilds\\ of\\ (.+?),\\ (.+?)\\ discovered\\ (.+?)\\.\\ There\\ (.+?)\\ befriended\\ (.+?)\\ and\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t5}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の荒野の奥深くにて、{t1}は{t2}を見いだした。そこで{t3}は{t4}と親交を結び、{t5}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:8b3736073215af9524ad5f8e9fb8fbd4363af0e69f19c005d9d59752f7a9fa30"
+    },
+    {
+      "id": "MeetFaction#tombInscription#if:then#arm:0",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "0",
+      "event_property": "tombInscription",
+      "sample_source": "Let us {0} the {1}, when, deep in {2}, {3} {4} {5} and {6} the {7} {8} who lived there. To {9} {10} {11} to them, {12} {13}.",
+      "extracted_pattern": "^Let\\ us\\ (.+?)\\ the\\ (.+?),\\ when,\\ deep\\ in\\ (.+?),\\ (.+?)\\ (.+?)\\ (.+?)\\ and\\ (.+?)\\ the\\ (.+?)\\ (.+?)\\ who\\ lived\\ there\\.\\ To\\ (.+?)\\ (.+?)\\ (.+?)\\ to\\ them,\\ (.+?)\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.remember.!random>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GenerateSultanateYearName()",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.conquered.!random>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.tamed.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.wild.!random>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.demonstrate.!random>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "historykit-token",
+          "raw": "<entity.possessivePronoun>",
+          "default": "{t10}"
+        },
+        {
+          "index": 11,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.wisdom.!random>",
+          "default": "{t11}"
+        },
+        {
+          "index": 12,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t12}"
+        },
+        {
+          "index": 13,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t13}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "われら{t1}を{t0}ん。その時、{t2}の深きところにて、{t3}は{t5}を{t4}、そこに住まいし{t7}{t8}を{t6}たり。彼らに{t10}{t11}を{t9}さんとして、{t12}は{t13}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:93d0bba9a52876720a6119bac00dd747c6d82dffd23a5eba693ccb2dfb66f112"
+    },
+    {
+      "id": "MeetFaction#tombInscription#if:then#arm:1",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "1",
+      "event_property": "tombInscription",
+      "sample_source": "Let us {0} the {1}, when, while wandering around {2}, {3} {4} {5} and {6} the {7} {8} who lived there. To {9} {10} {11} to them, {12} {13}.",
+      "extracted_pattern": "^Let\\ us\\ (.+?)\\ the\\ (.+?),\\ when,\\ while\\ wandering\\ around\\ (.+?),\\ (.+?)\\ (.+?)\\ (.+?)\\ and\\ (.+?)\\ the\\ (.+?)\\ (.+?)\\ who\\ lived\\ there\\.\\ To\\ (.+?)\\ (.+?)\\ (.+?)\\ to\\ them,\\ (.+?)\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.remember.!random>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GenerateSultanateYearName()",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.conquered.!random>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.tamed.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.wild.!random>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.demonstrate.!random>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "historykit-token",
+          "raw": "<entity.possessivePronoun>",
+          "default": "{t10}"
+        },
+        {
+          "index": 11,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.wisdom.!random>",
+          "default": "{t11}"
+        },
+        {
+          "index": 12,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t12}"
+        },
+        {
+          "index": 13,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t13}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "われら{t1}を{t0}ん。その時、{t2}をさまよううち、{t3}は{t5}を{t4}、そこに住まいし{t7}{t8}を{t6}たり。彼らに{t10}{t11}を{t9}さんとして、{t12}は{t13}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:047d85f9c3ebc1931f5e43cac2017279a7eda5a0f46c62c7073696549a965635"
+    },
+    {
+      "id": "MeetFaction#tombInscription#if:then#arm:_",
+      "source_file": "MeetFaction.cs",
+      "annal_class": "MeetFaction",
+      "switch_case": "_",
+      "event_property": "tombInscription",
+      "sample_source": "Let us {0} the {1}, when, deep in the wilds of {2}, {3} {4} {5} and {6} the {7} {8} who lived there. To {9} {10} {11} to them, {12} {13}.",
+      "extracted_pattern": "^Let\\ us\\ (.+?)\\ the\\ (.+?),\\ when,\\ deep\\ in\\ the\\ wilds\\ of\\ (.+?),\\ (.+?)\\ (.+?)\\ (.+?)\\ and\\ (.+?)\\ the\\ (.+?)\\ (.+?)\\ who\\ lived\\ there\\.\\ To\\ (.+?)\\ (.+?)\\ (.+?)\\ to\\ them,\\ (.+?)\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.remember.!random>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GenerateSultanateYearName()",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "unresolved-local",
+          "raw": "regionToReveal",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.conquered.!random>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"name\")",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.tamed.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.wild.!random>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.demonstrate.!random>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "historykit-token",
+          "raw": "<entity.possessivePronoun>",
+          "default": "{t10}"
+        },
+        {
+          "index": 11,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.wisdom.!random>",
+          "default": "{t11}"
+        },
+        {
+          "index": 12,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun>",
+          "default": "{t12}"
+        },
+        {
+          "index": 13,
+          "type": "historykit-token",
+          "raw": "<spice.professions.entity$profession.actions.!random>",
+          "default": "{t13}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "われら{t1}を{t0}ん。その時、{t2}の荒野深くにて、{t3}は{t5}を{t4}、そこに住まいし{t7}{t8}を{t6}たり。彼らに{t10}{t11}を{t9}さんとして、{t12}は{t13}。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:b9d096a20807081c32e651c19317a774e6d641e511f8fa0d76f1fe2b5e8f9fff"
+    },
+    {
+      "id": "RampageRegion#gospel",
+      "source_file": "RampageRegion.cs",
+      "annal_class": "RampageRegion",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "{0} {1} AR, {2} {3} all of {4}, {5} of {6} and {7}. {8} became known as {9}.",
+      "extracted_pattern": "^(?:In|Throughout(?:\\ the\\ entirety\\ of)?)\\ (\\d+)\\ (?:BR|AR),\\ (.+?)\\ (.+?)\\ all\\ of\\ (.+?),\\ (.+?)\\ of\\ (.+?)\\ and\\ (.+?)\\.\\ (.+?)\\ became\\ known\\ as\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.ravaged.!random>",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "unresolved-local",
+          "raw": "text",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<spice.elements.entity$elements[random].ravaging.!random>",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction2)",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "format-arg",
+          "raw": "text2.Replace(\"the the\", \"the\")",
+          "default": "{t8}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、{t1}は{t3}全土を{t2}、{t5}と{t6}に{t4}をもたらした。{t7}は{t8}として知られるようになった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:026ea868e0beee7b53b72e1875f15b33e1c4770405f10dc017166eb6037991be"
+    },
+    {
+      "id": "RampageRegion#tombInscription#if:else",
+      "source_file": "RampageRegion.cs",
+      "annal_class": "RampageRegion",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "{0}, {1}! In the {2}, a {3} of {4} and {5} {6} {7} and {8}. {9} the {10} put upon them by {11}, {12}!",
+      "extracted_pattern": "^(.+?),\\ (.+?)!\\ In\\ the\\ (.+?),\\ a\\ (.+?)\\ of\\ (.+?)\\ and\\ (.+?)\\ (.+?)\\ (.+?)\\ and\\ (.+?)\\.\\ (.+?)\\ the\\ (.+?)\\ put\\ upon\\ them\\ by\\ (.+?),\\ (.+?)!$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.remember.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.yeGodless.!random>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GenerateSultanateYearName()",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.coalition.!random>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction2)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.brokeFaithWith.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "historykit-token",
+          "raw": "<spice.history.gospels.CommittedWrongAgainstSultan.{QudHistoryHelpers.GetSultanateEra(snapshotAtYear)}.!random>",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.remember.!random.capitalize>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.chastisement.!random>",
+          "default": "{t10}"
+        },
+        {
+          "index": 11,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t11}"
+        },
+        {
+          "index": 12,
+          "type": "unresolved-local",
+          "raw": "text2",
+          "default": "{t12}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、{t1}よ！ {t2}の御世に、{t4}と{t5}の{t3}は{t7}への信を{t6}、{t8}。{t11}により彼らへ下されし{t10}を{t9}、{t12}よ！",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:716129d547bc007f448d6b8c3bacba8d7a326a056de378b8c8a1e27cfa58c7f2"
+    },
+    {
+      "id": "RampageRegion#tombInscription#if:then",
+      "source_file": "RampageRegion.cs",
+      "annal_class": "RampageRegion",
+      "switch_case": "default",
+      "event_property": "tombInscription",
+      "sample_source": "{0}, {1}! In the {2}, a {3} of {4} and {5} {6} {7} and {8}. {9} the {10} put upon them by {11}, {12}!",
+      "extracted_pattern": "^(.+?),\\ (.+?)!\\ In\\ the\\ (.+?),\\ a\\ (.+?)\\ of\\ (.+?)\\ and\\ (.+?)\\ (.+?)\\ (.+?)\\ and\\ (.+?)\\.\\ (.+?)\\ the\\ (.+?)\\ put\\ upon\\ them\\ by\\ (.+?),\\ (.+?)!$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.remember.!random.capitalize>",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.yeGodless.!random>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GenerateSultanateYearName()",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.coalition.!random>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(newFaction2)",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.instancesOf.brokeFaithWith.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t7}"
+        },
+        {
+          "index": 8,
+          "type": "historykit-token",
+          "raw": "<spice.history.gospels.CommittedWrongAgainstSultan.{QudHistoryHelpers.GetSultanateEra(snapshotAtYear)}.!random>",
+          "default": "{t8}"
+        },
+        {
+          "index": 9,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.remember.!random.capitalize>",
+          "default": "{t9}"
+        },
+        {
+          "index": 10,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.chastisement.!random>",
+          "default": "{t10}"
+        },
+        {
+          "index": 11,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t11}"
+        },
+        {
+          "index": 12,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetRandomCognomen(snapshotAtYear)",
+          "default": "{t12}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}、{t1}よ！ {t2}の御世に、{t4}と{t5}の{t3}は{t7}への信を{t6}、{t8}。{t11}により彼らへ下されし{t10}を{t9}、{t12}よ！",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:78bae4fd033b442729d7fcdb373825b8f477e6b95b846540709f96dffdd69ae9"
+    },
+    {
+      "id": "ReshephAbsolvesRebekah#gospel",
+      "source_file": "ReshephAbsolvesRebekah.cs",
+      "annal_class": "ReshephAbsolvesRebekah",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, Rebekah died of glotrot, and on her deathbed Resheph forgave her and absolved her of sin. He allowed her to be buried in the village of Ezra, outside the gate to the Tomb of the Eaters and beneath the shadow of the Spindle.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ Rebekah\\ died\\ of\\ glotrot,\\ and\\ on\\ her\\ deathbed\\ Resheph\\ forgave\\ her\\ and\\ absolved\\ her\\ of\\ sin\\.\\ He\\ allowed\\ her\\ to\\ be\\ buried\\ in\\ the\\ village\\ of\\ Ezra,\\ outside\\ the\\ gate\\ to\\ the\\ Tomb\\ of\\ the\\ Eaters\\ and\\ beneath\\ the\\ shadow\\ of\\ the\\ Spindle\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、レベカはグロットロットにより死し、その臨終の床にてレシェフは彼女を赦し、その罪を解き放った。彼は彼女がエズラの村、喰らう者の墓所の門の外、スピンドルの影の下に葬られることを許した。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:1ef47fa63f98a6010570579aba0833c3e48fd4051040e9547d7373098a0c3f87"
+    },
+    {
+      "id": "ReshephAppointsRebekah#gospel",
+      "source_file": "ReshephAppointsRebekah.cs",
+      "annal_class": "ReshephAppointsRebekah",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, Resheph appointed Rebekah administrator of {1}. She tendered alms for the sick in his name.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ Resheph\\ appointed\\ Rebekah\\ administrator\\ of\\ (.+?)\\.\\ She\\ tendered\\ alms\\ for\\ the\\ sick\\ in\\ his\\ name\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewRegion(history, snapshotAtYear.GetProperty(\"region\"))",
+          "default": "{t1}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、レシェフはレベカを{t1}の施政官に任じた。彼女は彼の名において病める者へ施しを捧げた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:8f0094f6eca0026b94bd2af98df29a1ea5e5f278cd2b36b436b9907be0c420b6"
+    },
+    {
+      "id": "ReshephBecomesSultan#gospel",
+      "source_file": "ReshephBecomesSultan.cs",
+      "annal_class": "ReshephBecomesSultan",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "Acting against a prohibition on the practice of worshipping the stars, Resheph led an army to the gates of Omonporch. There he defeated his brothers in battle and liberated its citizens, and they crowned him the sultan of Qud.",
+      "extracted_pattern": "^Acting\\ against\\ a\\ prohibition\\ on\\ the\\ practice\\ of\\ worshipping\\ the\\ stars,\\ Resheph\\ led\\ an\\ army\\ to\\ the\\ gates\\ of\\ Omonporch\\.\\ There\\ he\\ defeated\\ his\\ brothers\\ in\\ battle\\ and\\ liberated\\ its\\ citizens,\\ and\\ they\\ crowned\\ him\\ the\\ sultan\\ of\\ Qud\\.$",
+      "slots": [],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "星々を崇める営みへの禁令に背き、レシェフは軍勢を率いてオモンポーチの門へ至った。そこで彼は兄弟たちを戦に破り、その市民を解き放った。かくして彼らは彼にクッドのスルタンの冠を授けた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:c6f1d10c637dd6d3feff03cf628def6c6c056182f7afc81bbf4590949cb497b6"
+    },
+    {
+      "id": "ReshephBetrayed#gospel",
+      "source_file": "ReshephBetrayed.cs",
+      "annal_class": "ReshephBetrayed",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, Rebekah betrayed Resheph by stealing the Mark of Death from the gate to the Tomb of the Eaters. In punishment, Resheph excommunicated her from the sultanate.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ Rebekah\\ betrayed\\ Resheph\\ by\\ stealing\\ the\\ Mark\\ of\\ Death\\ from\\ the\\ gate\\ to\\ the\\ Tomb\\ of\\ the\\ Eaters\\.\\ In\\ punishment,\\ Resheph\\ excommunicated\\ her\\ from\\ the\\ sultanate\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、レベカは喰らう者の墓所の門より死の印を盗み、レシェフを裏切った。その罰として、レシェフは彼女をスルタン国より破門した。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:5ed7a91d50160d8b465bc741822b21657a769a413904498fc656e346e68ec523"
+    },
+    {
+      "id": "ReshephCleansesGyre#gospel",
+      "source_file": "ReshephCleansesGyre.cs",
+      "annal_class": "ReshephCleansesGyre",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, Resheph cleansed the marshlands of the plagues of the Gyre and taught Abram to sow watervine along its fertile tracks.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ Resheph\\ cleansed\\ the\\ marshlands\\ of\\ the\\ plagues\\ of\\ the\\ Gyre\\ and\\ taught\\ Abram\\ to\\ sow\\ watervine\\ along\\ its\\ fertile\\ tracks\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、レシェフは湿地帯よりジャイアの災厄を祓い、その肥沃なる道筋に沿ってワターヴァインを蒔く術をアブラムに授けた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:e8fe7b688a8ca5950280fe132d4627554b47f4e241c3413a47a3bedc7f14a74f"
+    },
+    {
+      "id": "ReshephClosesTomb#gospel",
+      "source_file": "ReshephClosesTomb.cs",
+      "annal_class": "ReshephClosesTomb",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, Resheph closed the gates to the Tomb of the Eaters, abdicated the throne, and dissolved the sultanate in order to lift the curse of the Gyre.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ Resheph\\ closed\\ the\\ gates\\ to\\ the\\ Tomb\\ of\\ the\\ Eaters,\\ abdicated\\ the\\ throne,\\ and\\ dissolved\\ the\\ sultanate\\ in\\ order\\ to\\ lift\\ the\\ curse\\ of\\ the\\ Gyre\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、レシェフはジャイアの呪いを解くため、喰らう者の墓所の門を閉ざし、王座を退き、スルタン国を解いた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:fb933c0eb256a1ac93f9dc8bd4a79e3cf132e7f2ce0b2281c4b9810904b404f1"
+    },
+    {
+      "id": "ReshephDies#gospel",
+      "source_file": "ReshephDies.cs",
+      "annal_class": "ReshephDies",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, Resheph, the Above, Ghost-in-Cerulean, the Coiled Lamb of Baetyls, died of natural causes. He was 216 years old.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ Resheph,\\ the\\ Above,\\ Ghost-in-Cerulean,\\ the\\ Coiled\\ Lamb\\ of\\ Baetyls,\\ died\\ of\\ natural\\ causes\\.\\ He\\ was\\ 216\\ years\\ old\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、レシェフ、天上なる者、瑠璃の幽鬼、ベテルのとぐろ巻く仔羊は、自然の理により身罷った。享年216歳であった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:319820f4a9a321adf88e1e2a5d851e34fa0adc64790c96c88135d4ecdc664757"
+    },
+    {
+      "id": "ReshephFoundsHarborage#gospel",
+      "source_file": "ReshephFoundsHarborage.cs",
+      "annal_class": "ReshephFoundsHarborage",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "After conferring with mysterious strangers, Resheph convinced them to help him found a harborage for the purpose of receiving visitors from across the clustered cosmos. They named it Starfarer's Quay.",
+      "extracted_pattern": "^After\\ conferring\\ with\\ mysterious\\ strangers,\\ Resheph\\ convinced\\ them\\ to\\ help\\ him\\ found\\ a\\ harborage\\ for\\ the\\ purpose\\ of\\ receiving\\ visitors\\ from\\ across\\ the\\ clustered\\ cosmos\\.\\ They\\ named\\ it\\ Starfarer's\\ Quay\\.$",
+      "slots": [],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "謎めいた異邦人らと協議したのち、レシェフは群集せる宇宙の彼方より訪う者を迎えるための泊地を築く助力を彼らに約させた。彼らはそれを星渡りの埠頭と名づけた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:a6b65cf4da2b506094a1452c0ef7f4f538688caab55d4f12830c60d4d1290f73"
+    },
+    {
+      "id": "ReshephHasStarExperience#gospel",
+      "source_file": "ReshephHasStarExperience.cs",
+      "annal_class": "ReshephHasStarExperience",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "While traveling alone through the Rust Wells, Resheph came across a trove of gleaming stars in a bottle. From that day forth, he always kept some stardust on his person.",
+      "extracted_pattern": "^While\\ traveling\\ alone\\ through\\ the\\ Rust\\ Wells,\\ Resheph\\ came\\ across\\ a\\ trove\\ of\\ gleaming\\ stars\\ in\\ a\\ bottle\\.\\ From\\ that\\ day\\ forth,\\ he\\ always\\ kept\\ some\\ stardust\\ on\\ his\\ person\\.$",
+      "slots": [],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "錆の井戸を独り旅せし折、レシェフは瓶に収められた輝ける星々の宝庫を見いだした。その日より後、彼は常に星屑を身に携えた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:356601eda4f1de85b547d4305a2c0fc7b7fd8d086ee5acf6151ebd7a9430d989"
+    },
+    {
+      "id": "ReshephHealsGyre1#gospel",
+      "source_file": "ReshephHealsGyre1.cs",
+      "annal_class": "ReshephHealsGyre1",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, the Gyre widened, and the first triad of plagues afflicted the land. The water was poisoned with salt, girshlings ravaged the fruit and wheat, and tongues rotted away in the mouths of kith and kin. Resheph walked below the chrome arches and healed the sick.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ the\\ Gyre\\ widened,\\ and\\ the\\ first\\ triad\\ of\\ plagues\\ afflicted\\ the\\ land\\.\\ The\\ water\\ was\\ poisoned\\ with\\ salt,\\ girshlings\\ ravaged\\ the\\ fruit\\ and\\ wheat,\\ and\\ tongues\\ rotted\\ away\\ in\\ the\\ mouths\\ of\\ kith\\ and\\ kin\\.\\ Resheph\\ walked\\ below\\ the\\ chrome\\ arches\\ and\\ healed\\ the\\ sick\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、ジャイアは広がり、第一の三つの災厄が地を苦しめた。水は塩に毒され、ギルシュリングどもは果実と小麦を荒らし、親しき者らの口の中で舌が腐り落ちた。レシェフはクロームのアーチの下を歩み、病める者を癒やした。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:2001c0e187cd131fe48ab62654795e0948d3c8faf5aeef5c25722e711a052bab"
+    },
+    {
+      "id": "ReshephHealsGyre2#gospel",
+      "source_file": "ReshephHealsGyre2.cs",
+      "annal_class": "ReshephHealsGyre2",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, the Gyre widened, and the second triad of plagues afflicted the land. The legs of kith and kin annealed to iron, darkness bloomed from the earth, and the svardym blackened the sky. Resheph walked below the chrome arches and healed the sick.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ the\\ Gyre\\ widened,\\ and\\ the\\ second\\ triad\\ of\\ plagues\\ afflicted\\ the\\ land\\.\\ The\\ legs\\ of\\ kith\\ and\\ kin\\ annealed\\ to\\ iron,\\ darkness\\ bloomed\\ from\\ the\\ earth,\\ and\\ the\\ svardym\\ blackened\\ the\\ sky\\.\\ Resheph\\ walked\\ below\\ the\\ chrome\\ arches\\ and\\ healed\\ the\\ sick\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、ジャイアは広がり、第二の三つの災厄が地を苦しめた。親しき者らの脚は鉄へと焼き固まり、闇は大地より咲き、スヴァルディムは空を黒く染めた。レシェフはクロームのアーチの下を歩み、病める者を癒やした。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:2ca0bfedea701cdb7085c9ff0142d5318d2d7f1e3894e1c5b45ef2c4641429aa"
+    },
+    {
+      "id": "ReshephIsBorn#gospel",
+      "source_file": "ReshephIsBorn.cs",
+      "annal_class": "ReshephIsBorn",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "One starry evening, a babe was found swaddled with its mouth full of circuits by a group of baetyls in Red Rock. They took him into their fold and fostered him, and he became known as Resheph, the Coiled Lamb of Baetyls.",
+      "extracted_pattern": "^One\\ starry\\ evening,\\ a\\ babe\\ was\\ found\\ swaddled\\ with\\ its\\ mouth\\ full\\ of\\ circuits\\ by\\ a\\ group\\ of\\ baetyls\\ in\\ Red\\ Rock\\.\\ They\\ took\\ him\\ into\\ their\\ fold\\ and\\ fostered\\ him,\\ and\\ he\\ became\\ known\\ as\\ Resheph,\\ the\\ Coiled\\ Lamb\\ of\\ Baetyls\\.$",
+      "slots": [],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "星降るある宵、赤岩にて、回路で口を満たした嬰児が産着に包まれ、ベテルの一団に見いだされた。彼らはその子を己らの群れに迎えて育み、やがて彼はレシェフ、ベテルのとぐろ巻く仔羊として知られるようになった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:1fd2ef4b3a29c4d0f7d56016f1b64f82ff71ec682d85244b62081d595343b46d"
+    },
+    {
+      "id": "ReshephLearnsCurse#gospel",
+      "source_file": "ReshephLearnsCurse.cs",
+      "annal_class": "ReshephLearnsCurse",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "At Starfarer's Quay, Resheph consulted with mysterious strangers and learned the secret of the Gyre. By cause of the misdeeds of the elder saads and sultans, star beings had levied a curse on Qud. Resheph vowed to make right from this wrong and redeem our doomed world.",
+      "extracted_pattern": "^At\\ Starfarer's\\ Quay,\\ Resheph\\ consulted\\ with\\ mysterious\\ strangers\\ and\\ learned\\ the\\ secret\\ of\\ the\\ Gyre\\.\\ By\\ cause\\ of\\ the\\ misdeeds\\ of\\ the\\ elder\\ saads\\ and\\ sultans,\\ star\\ beings\\ had\\ levied\\ a\\ curse\\ on\\ Qud\\.\\ Resheph\\ vowed\\ to\\ make\\ right\\ from\\ this\\ wrong\\ and\\ redeem\\ our\\ doomed\\ world\\.$",
+      "slots": [],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "星渡りの埠頭にて、レシェフは謎めいた異邦人らに諮り、ジャイアの秘密を知った。古きサードとスルタンらの悪行により、星の者たちはクッドに呪いを課していた。レシェフはこの過ちを正し、滅び定められし我らの世界を贖わんと誓った。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:1c9b7d2f6a538d274cfe933126f73c6d5ac2cc281275606bccf64cbf4ad4d309"
+    },
+    {
+      "id": "ReshephMeetsRebekah#gospel",
+      "source_file": "ReshephMeetsRebekah.cs",
+      "annal_class": "ReshephMeetsRebekah",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "While traveling near Bethesda Susa, Resheph lost control of his chariot and drove it off a cliff. Luckily, a local physician named Rebekah came to his rescue. Moved by her kindness, Resheph enrolled at a nearby hospice as her apprentice.",
+      "extracted_pattern": "^While\\ traveling\\ near\\ Bethesda\\ Susa,\\ Resheph\\ lost\\ control\\ of\\ his\\ chariot\\ and\\ drove\\ it\\ off\\ a\\ cliff\\.\\ Luckily,\\ a\\ local\\ physician\\ named\\ Rebekah\\ came\\ to\\ his\\ rescue\\.\\ Moved\\ by\\ her\\ kindness,\\ Resheph\\ enrolled\\ at\\ a\\ nearby\\ hospice\\ as\\ her\\ apprentice\\.$",
+      "slots": [],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "ベセスダ・スーサ近くを旅せし折、レシェフは戦車の制御を失い、崖より走り落ちた。幸いにも、レベカという地元の医師が彼を救いに来た。その慈しみに心動かされ、レシェフは近くの施療院に入り、彼女の徒弟となった。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:dfdbc76cd9558a63dbf0a4cc94604eca45280e6987223a97ea7c37fc946030ff"
+    },
+    {
+      "id": "ReshephRebuffsCurse#gospel",
+      "source_file": "ReshephRebuffsCurse.cs",
+      "annal_class": "ReshephRebuffsCurse",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "In {0} AR, the Gyre widened, and the final plague afflicted the land. The Girsh Nephilim rose from their cradles on the Moon Stair and slouched toward Qud to eat its young. Resheph rose to meet them in battle and cast them back.",
+      "extracted_pattern": "^In\\ (.+?)\\ (?:BR|AR),\\ the\\ Gyre\\ widened,\\ and\\ the\\ final\\ plague\\ afflicted\\ the\\ land\\.\\ The\\ Girsh\\ Nephilim\\ rose\\ from\\ their\\ cradles\\ on\\ the\\ Moon\\ Stair\\ and\\ slouched\\ toward\\ Qud\\ to\\ eat\\ its\\ young\\.\\ Resheph\\ rose\\ to\\ meet\\ them\\ in\\ battle\\ and\\ cast\\ them\\ back\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "hse-expansion",
+          "raw": "year",
+          "default": "{t0}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{0}年、ジャイアは広がり、最後の災厄が地を苦しめた。ギルシュ・ネフィリムは月の階にある揺り籠より起き上がり、クッドの幼き者を喰らわんと身を屈めて進み来た。レシェフは立ち上がって戦いに迎え撃ち、彼らを退けた。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:13e551e08253bc74cbc0835d976327a95884a84273f31d33e064ffe2ac939153"
+    },
+    {
+      "id": "ReshephWeirdSky#gospel",
+      "source_file": "ReshephWeirdSky.cs",
+      "annal_class": "ReshephWeirdSky",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "At twilight in the shadow of the Spindle, the people of Omonporch saw an image on the horizon that looked like a ghost bathed in cerulean. It was Resheph, and after he came and left Omonporch, the people built a monument to him, and thenceforth called him Ghost-in-Cerulean.",
+      "extracted_pattern": "^At\\ twilight\\ in\\ the\\ shadow\\ of\\ the\\ Spindle,\\ the\\ people\\ of\\ Omonporch\\ saw\\ an\\ image\\ on\\ the\\ horizon\\ that\\ looked\\ like\\ a\\ ghost\\ bathed\\ in\\ cerulean\\.\\ It\\ was\\ Resheph,\\ and\\ after\\ he\\ came\\ and\\ left\\ Omonporch,\\ the\\ people\\ built\\ a\\ monument\\ to\\ him,\\ and\\ thenceforth\\ called\\ him\\ Ghost-in-Cerulean\\.$",
+      "slots": [],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "薄暮、スピンドルの影にて、オモンポーチの民は、地平に蒼き色に浸された幽霊のごとき像を見た。それはレシェフであり、彼がオモンポーチに来たりて去った後、民は彼の記念碑を建て、それより後、彼を蒼衣の幽霊と呼んだ。",
+      "review_notes": "",
+      "route": "annals",
+      "en_template_hash": "sha256:820403c30807d715ba20a904713a0e2861f8db9c5032d6ddbf5e041d1fb190e0"
+    },
+    {
+      "id": "BattleItem#gospel#if:then#verb:liberate",
+      "source_file": "BattleItem.cs",
+      "annal_class": "BattleItem",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "At the Battle of {0}, {1} fought to liberate {2}. {3} wielded {4} {5} with such {6} that it became forever known as {7}.",
+      "extracted_pattern": "^At\\ the\\ Battle\\ of\\ (.+?),\\ (.+?)\\ fought\\ to\\ liberate\\ (.+?)\\.\\ (.+?)\\ wielded\\ (.+?)\\ (.+?)\\ with\\ such\\ (.+?)\\ that\\ it\\ became\\ forever\\ known\\ as\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property2, property)",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "helper-call",
+          "raw": "Faction.GetFormattedName(text4)",
+          "default": "{t2}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t3}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Grammar.A(text2)",
+          "default": "{t4}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.items.weapons.!random>",
+          "default": "{t5}"
+        },
+        {
+          "index": 6,
+          "type": "historykit-token",
+          "raw": "<spice.commonPhrases.finesse.!random>",
+          "default": "{t6}"
+        },
+        {
+          "index": 7,
+          "type": "unresolved-local",
+          "raw": "Name",
+          "default": "{t7}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の戦いにおいて、{t1}は{t2}を解放せんと戦った。{t3}は{t4}{t5}を{t6}なる妙技をもって振るい、それは永く{t7}として知られることとなった。",
+      "review_notes": "override: outer-branch (text3=liberate) variant deferred from extractor; PR2b CR R1",
+      "route": "annals",
+      "en_template_hash": "sha256:38a2146c3572b09869dd7818ba32c5bb7711a6c27a08e33ebe4736aa792a3827"
+    },
+    {
+      "id": "BattleItem#gospel#if:else#verb:liberate",
+      "source_file": "BattleItem.cs",
+      "annal_class": "BattleItem",
+      "switch_case": "default",
+      "event_property": "gospel",
+      "sample_source": "At the Battle of {0}, {1} fought as a mercenary {2}to liberate {3}. {4} wielded {5} {6} with such {7} that it became forever known as {8}.",
+      "extracted_pattern": "^At\\ the\\ Battle\\ of\\ (.+?),\\ (.+?)\\ fought\\ as\\ a\\ mercenary\\ (?:sultan\\ )?to\\ liberate\\ (.+?)\\.\\ (.+?)\\ wielded\\ (.+?)\\ (.+?)\\ with\\ such\\ (.+?)\\ that\\ it\\ became\\ forever\\ known\\ as\\ (.+?)\\.$",
+      "slots": [],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}の戦いにおいて、{t1}は傭兵として{t2}を解放せんと戦った。{t3}は{t4}{t5}を{t6}なる妙技をもって振るい、それは永く{t7}として知られることとなった。",
+      "review_notes": "override: outer-branch (text3=liberate) variant deferred from extractor; PR2b CR R1",
+      "route": "annals",
+      "en_template_hash": "sha256:cf1af22a84338f073a72ed3b2dd6c055d579d356de9f389ad28fbf8a3f85e678"
+    },
+    {
+      "id": "CapturedByBandits#gospel#case:0#prefix:while_traveling",
+      "source_file": "CapturedByBandits.cs",
+      "annal_class": "CapturedByBandits",
+      "switch_case": "0",
+      "event_property": "gospel",
+      "sample_source": "",
+      "extracted_pattern": "^While\\ traveling\\ near\\ (.+?)\\ in\\ (.+?),\\ (.+?)\\ was\\ captured\\ by\\ bandits\\.\\ (.+?)\\ murdered\\ their\\ leader\\ (.+?),\\ and\\ was\\ thenceforth\\ known\\ as\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "entity-property",
+          "raw": "property",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "entity-property",
+          "raw": "property2",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"location\")",
+          "default": "{t0}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t2}"
+        },
+        {
+          "index": 5,
+          "type": "historykit-token",
+          "raw": "<spice.elements.entity$elements[random].murdermethods.!random>",
+          "default": "{t3}"
+        },
+        {
+          "index": 6,
+          "type": "helper-call",
+          "raw": "Grammar.MakeCompoundWord(Grammar.GetRandomMeaningfulWord(ExpandString(\"<spice.elements.\" + text3 + \".nouns.!random.capitalize>\")), ExpandString(\"<spice.actornouns.!random>\"))",
+          "default": "{t4}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t1}の{t0}付近を旅する途上、{t2}は盗賊に捕らえられた。{t3}はその頭目を{t4}殺害し、以後{t5}として知られるようになった。",
+      "review_notes": "override: outer prefix branch (text from outer switch) deferred from extractor; PR2b CR R7",
+      "route": "annals",
+      "en_template_hash": "sha256:433e77ad404d5ca442e4bcb3b80e73aa4b9676b1cd5426a32e48274952e39091"
+    },
+    {
+      "id": "CapturedByBandits#gospel#case:0#prefix:on_expedition",
+      "source_file": "CapturedByBandits.cs",
+      "annal_class": "CapturedByBandits",
+      "switch_case": "0",
+      "event_property": "gospel",
+      "sample_source": "",
+      "extracted_pattern": "^On\\ an\\ expedition\\ around\\ (.+?),\\ (.+?)\\ was\\ captured\\ by\\ bandits\\.\\ (.+?)\\ murdered\\ their\\ leader\\ (.+?),\\ and\\ was\\ thenceforth\\ known\\ as\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "entity-property",
+          "raw": "property2",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"location\")",
+          "default": "{t0}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t2}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<spice.elements.entity$elements[random].murdermethods.!random>",
+          "default": "{t3}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Grammar.MakeCompoundWord(Grammar.GetRandomMeaningfulWord(ExpandString(\"<spice.elements.\" + text3 + \".nouns.!random.capitalize>\")), ExpandString(\"<spice.actornouns.!random>\"))",
+          "default": "{t4}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}を巡る遠征の途上、{t1}は盗賊に捕らえられた。{t2}はその頭目を{t3}殺害し、以後{t4}として知られるようになった。",
+      "review_notes": "override: outer prefix branch (text from outer switch) deferred from extractor; PR2b CR R7",
+      "route": "annals",
+      "en_template_hash": "sha256:606f0db51f28d394b66bf0b417a0d802c1e243d6c3f45ee7af5737b4dfeaa53f"
+    },
+    {
+      "id": "CapturedByBandits#gospel#case:1#prefix:while_traveling",
+      "source_file": "CapturedByBandits.cs",
+      "annal_class": "CapturedByBandits",
+      "switch_case": "1",
+      "event_property": "gospel",
+      "sample_source": "",
+      "extracted_pattern": "^While\\ traveling\\ near\\ (.+?)\\ in\\ (.+?),\\ (.+?)\\ was\\ captured\\ by\\ bandits\\.\\ (.+?)\\ languished\\ in\\ captivity\\ for\\ (.+?)\\ years,\\ eventually\\ escaping\\ to\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "entity-property",
+          "raw": "property",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "entity-property",
+          "raw": "property2",
+          "default": "{t1}"
+        },
+        {
+          "index": 2,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"location\")",
+          "default": "{t0}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 4,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t2}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "Grammar.Cardinal((int)duration)",
+          "default": "{t3}"
+        },
+        {
+          "index": 6,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property2, property)",
+          "default": "{t4}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t1}の{t0}付近を旅する途上、{t2}は盗賊に捕らえられた。{t3}は捕囚のうちに{t4}年を苦しみ、ついには{t5}へ逃れ出た。",
+      "review_notes": "override: outer prefix branch (text from outer switch) deferred from extractor; PR2b CR R7",
+      "route": "annals",
+      "en_template_hash": "sha256:9fcda9a4afcf1f5f99e65ba35545db29a66d75740a9ed88989c83b7dc5b09a17"
+    },
+    {
+      "id": "CapturedByBandits#gospel#case:1#prefix:on_expedition",
+      "source_file": "CapturedByBandits.cs",
+      "annal_class": "CapturedByBandits",
+      "switch_case": "1",
+      "event_property": "gospel",
+      "sample_source": "",
+      "extracted_pattern": "^On\\ an\\ expedition\\ around\\ (.+?),\\ (.+?)\\ was\\ captured\\ by\\ bandits\\.\\ (.+?)\\ languished\\ in\\ captivity\\ for\\ (.+?)\\ years,\\ eventually\\ escaping\\ to\\ (.+?)\\.$",
+      "slots": [
+        {
+          "index": 0,
+          "type": "entity-property",
+          "raw": "property2",
+          "default": "{t0}"
+        },
+        {
+          "index": 1,
+          "type": "entity-property",
+          "raw": "entity.GetProperty(\"location\")",
+          "default": "{t0}"
+        },
+        {
+          "index": 2,
+          "type": "historykit-token",
+          "raw": "<entity.name>",
+          "default": "{t1}"
+        },
+        {
+          "index": 3,
+          "type": "historykit-token",
+          "raw": "<entity.subjectPronoun.capitalize>",
+          "default": "{t2}"
+        },
+        {
+          "index": 4,
+          "type": "helper-call",
+          "raw": "Grammar.Cardinal((int)duration)",
+          "default": "{t3}"
+        },
+        {
+          "index": 5,
+          "type": "helper-call",
+          "raw": "QudHistoryHelpers.GetNewLocationInRegion(history, property2, property)",
+          "default": "{t4}"
+        }
+      ],
+      "status": "accepted",
+      "reason": "",
+      "ja_template": "{t0}を巡る遠征の途上、{t1}は盗賊に捕らえられた。{t2}は捕囚のうちに{t3}年を苦しみ、ついには{t4}へ逃れ出た。",
+      "review_notes": "override: outer prefix branch (text from outer switch) deferred from extractor; PR2b CR R7",
+      "route": "annals",
+      "en_template_hash": "sha256:1e7042be4a20e83e3c43bc78e8b9065f9cb065dd479c238ea9849572f6964017"
+    }
+  ]
+}

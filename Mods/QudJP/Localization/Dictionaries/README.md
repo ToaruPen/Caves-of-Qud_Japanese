@@ -67,6 +67,12 @@ Schema: `{"entries": [], "patterns": [{"pattern", "template", "route":"annals"}]
 The `entries` array MUST be present (even if empty) because `Translator`
 loads every `Dictionaries/*.ja.json` file and expects that field.
 
-Do NOT hand-edit; re-run the pipeline. Hand-edits will be overwritten
-the next time `merge_annals_patterns.py` runs against an updated
-candidates JSON.
+Do NOT hand-edit `annals-patterns.ja.json` directly; edit
+`scripts/_artifacts/annals/candidates_pending.json` (the committed
+input snapshot) and re-run `merge_annals_patterns.py` instead.
+Direct dict edits will be overwritten the next time merge runs.
+
+Manual refinements that the extractor cannot yet produce (regex shape
+fixes, branch-fanout gaps) live as override candidates in
+`candidates_pending.json` with `review_notes` describing the override
+origin; tracked extractor extensions backfill them over time.
