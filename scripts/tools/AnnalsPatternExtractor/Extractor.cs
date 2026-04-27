@@ -403,19 +403,32 @@ internal sealed class Extractor
                     }
                 }
 
-                // Iterate descendants in reverse source order too, so multiple assignments to
-                // the same local *within a single sibling stmt* (e.g. `if (cond) { x="a"; x="b"; }`)
-                // also yield first-seen-wins = source-last-wins.
-                foreach (var assign in stmt.DescendantNodesAndSelf()
-                    .OfType<AssignmentExpressionSyntax>()
-                    .OrderByDescending(a => a.SpanStart))
+                // Iterate descendants in reverse source order so multiple assignments to the
+                // same local *within a single sibling stmt* (e.g. `if (cond) { x="a"; x="b"; }`)
+                // yield first-seen-wins = source-last-wins. CR R8: also consider
+                // VariableDeclaratorSyntax with non-null Initializer — a `string value = "base"`
+                // sibling holds the local's declared value as `Initializer.Value`, NOT as a
+                // SimpleAssignmentExpression, so without this an excluded-from-method-locals
+                // local (one reassigned later) would resolve to `unresolved-local` even when
+                // the declared initializer is the only pre-setter source. Both kinds are
+                // unified by SpanStart so source-latest still wins via `alreadyOverridden`.
+                var contributors = new List<(string Name, ExpressionSyntax Right, int SpanStart)>();
+                foreach (var assign in stmt.DescendantNodesAndSelf().OfType<AssignmentExpressionSyntax>())
                 {
                     if (!assign.IsKind(SyntaxKind.SimpleAssignmentExpression)) continue;
                     if (assign.Left is not IdentifierNameSyntax lhs) continue;
-                    var name = lhs.Identifier.ValueText;
+                    contributors.Add((lhs.Identifier.ValueText, assign.Right, assign.SpanStart));
+                }
+                foreach (var declarator in stmt.DescendantNodesAndSelf().OfType<VariableDeclaratorSyntax>())
+                {
+                    if (declarator.Initializer?.Value is not { } init) continue;
+                    contributors.Add((declarator.Identifier.ValueText, init, declarator.SpanStart));
+                }
+                foreach (var (name, right, _) in contributors.OrderByDescending(c => c.SpanStart))
+                {
                     if (alreadyOverridden.Contains(name)) continue;
                     if (methodLocals.ContainsKey(name)) continue;
-                    overrides[name] = assign.Right;
+                    overrides[name] = right;
                     alreadyOverridden.Add(name);
                 }
             }
@@ -606,6 +619,12 @@ internal sealed class Extractor
         // `DescendantNodes` yields nodes in document order, so the resulting per-local list is
         // already in source order — needed by `ExpandOptionalAppends` to interleave optional and
         // required appends correctly when synthesising the per-variant value chain.
+        // CR R8: optional vs required is currently approximated by IfStatement-ancestor
+        // presence. A reachability-based classification (does every path from method
+        // entry to setter pass through this `+=`?) would be more precise but requires
+        // control-flow analysis. None of the current PR1/PR2a targets exhibit the
+        // approximation's failure mode (`+=` in same branch as setter producing
+        // spurious `#opt:base`), so the precise fix is deferred to a follow-up.
         foreach (var assignment in method.DescendantNodes().OfType<AssignmentExpressionSyntax>())
         {
             if (!assignment.IsKind(SyntaxKind.AddAssignmentExpression)) continue;
