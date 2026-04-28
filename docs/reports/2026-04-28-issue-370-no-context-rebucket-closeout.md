@@ -23,7 +23,7 @@ The evidence supporting closure is:
 python3 -c "import json; d=json.load(open('docs/candidate-inventory.json')); ks=('source_route','sink','ownership_class','destination_dictionary','rejection_reason','status'); cnt=lambda x: (1 if x=='<no-context>' else 0) if isinstance(x,str) else sum(cnt(v) for v in x.values()) if isinstance(x,dict) else sum(cnt(v) for v in x) if isinstance(x,list) else 0; print(d['scan_date'], len(d['sites']), cnt(d), *(sum(cnt(s.get(k)) for s in d['sites']) for k in ks))"
 python3 -c "import json; p='.sisyphus/evidence/task-12-triage.json'; d=json.load(open(p)); n=sum(len(v) for v in d.get('by_route', {}).get('<no-context>', {}).values()); print(p, d['summary']['total'], n, d['phase_f']['summary']['total'])"
 python3 -c "import json; p='.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json'; d=json.load(open(p)); n=sum(len(v) for v in d.get('by_route', {}).get('<no-context>', {}).values()); print(p, d['summary']['total'], n, d['phase_f']['summary']['total'])"
-python3 -c "import json; p='.sisyphus/evidence/task-11-runtime-triage.json'; d=json.load(open(p)); print(p, sum(len(v) for v in d['by_route']['<no-context>'].values()), '<no-context>' in d['by_route'])"
+python3 -c "import json; p='.sisyphus/evidence/task-11-runtime-triage.json'; d=json.load(open(p)); n=sum(len(v) for v in d.get('by_route', {}).get('<no-context>', {}).values()); print(p, n, '<no-context>' in d.get('by_route', {}))"
 ```
 
 Observed output:
@@ -48,7 +48,7 @@ Verified local artifacts on 2026-04-28:
 - `.sisyphus/evidence/task-12-triage.json`: `summary.total=0`, `by_route["<no-context>"]` rows = `0`, `phase_f.summary.total=0`.
 - `.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json`: `summary.total=0`, `by_route["<no-context>"]` rows = `0`, `phase_f.summary.total=0`.
 
-The older `.sisyphus/evidence/task-11-runtime-triage.json` artifact still contains 48 `<no-context>` rows (`static_leaf=1`, `logic_required=3`, `unresolved=44`), but that evidence is stale and superseded by the current zero-count inventory and triage artifacts above.
+The older `.sisyphus/evidence/task-11-runtime-triage.json` artifact still contains 48 `<no-context>` rows (`static_leaf=1`, `route_patch=0`, `logic_required=3`, `unresolved=44`), but that evidence is stale and superseded by the current zero-count inventory and triage artifacts above.
 
 Closeout report: `docs/reports/2026-04-28-issue-370-no-context-rebucket-closeout.md`
 ```
