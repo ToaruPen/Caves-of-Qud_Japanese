@@ -19,7 +19,10 @@ public sealed record WeaponMissPatternCase(string Source, string ExpectedTransla
 
 public sealed record SpecificBleedingStopPatternCase(string Source, string ExpectedTranslated);
 
-public sealed record BlockedByArticlePatternCase(string Source, string ExpectedTranslated);
+public sealed record BlockedByArticlePatternCase(
+    string Source,
+    string ExpectedTranslated,
+    string ExpectedGenericFallbackTranslated);
 
 public sealed record PassByArticlePatternCase(string Source, string ExpectedTranslated);
 
@@ -143,7 +146,8 @@ public static class MessagePatternTranslatorArbitraries
                 from obstacle in SafeObjectText()
                 let source = $"The way is blocked by {article} {obstacle}."
                 let expected = $"{obstacle}が道を塞いでいる。"
-                select new BlockedByArticlePatternCase(source, expected))
+                let expectedGenericFallback = $"{obstacle}に道を塞がれている。"
+                select new BlockedByArticlePatternCase(source, expected, expectedGenericFallback))
             .ToArbitrary();
     }
 

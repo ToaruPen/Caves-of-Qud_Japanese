@@ -76,6 +76,8 @@ public sealed class MessagePatternTranslatorPropertyTests
     [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
     public FsCheckProperty Translate_PrefersBlockedByArticleBeforeGenericBlockedBy(BlockedByArticlePatternCase sample)
     {
+        Assert.That(sample.ExpectedGenericFallbackTranslated, Is.Not.EqualTo(sample.ExpectedTranslated));
+
         return AssertTranslated(sample.Source, sample.ExpectedTranslated);
     }
 
