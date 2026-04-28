@@ -8,8 +8,8 @@ namespace QudJP.Tests.L1;
 [NonParallelizable]
 public sealed class ColorTagStaticAnalysisTests
 {
-    private const string LocalizedKillerKey = "bloody Tam, dromad merchant [sitting]";
-    private const string LocalizedKillerText = "{{r|血まみれの}}タム、ドロマド商団 [座っている]";
+    private const string ColorTaggedDisplayNameKey = "bloody Tam, dromad merchant [sitting]";
+    private const string ColorTaggedDisplayNameText = "{{r|血まみれの}}タム、ドロマド商団 [座っている]";
 
     private static readonly UTF8Encoding Utf8WithoutBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
 
@@ -135,17 +135,17 @@ public sealed class ColorTagStaticAnalysisTests
     [Test]
     public void MessagePattern_CaptureRestoration_DoesNotDoubleWrapMarkupCarryingCapture()
     {
-        WritePatternDictionary(("^You were killed by (.+?)[.!]?$", "{t0}に殺された。"));
-        WriteDeathDictionaryWithLocalizedKiller();
+        WritePatternDictionary(("^You see (.+?)[.!]?$", "{t0}が見える。"));
+        WriteExactDictionary((ColorTaggedDisplayNameKey, ColorTaggedDisplayNameText));
 
         var translated = MessagePatternTranslator.Translate(
-            "You were killed by {{r|bloody}} Tam, dromad merchant [sitting].");
+            "You see {{r|bloody}} Tam, dromad merchant [sitting].");
 
         Assert.Multiple(() =>
         {
             Assert.That(
                 translated,
-                Is.EqualTo("{{r|血まみれの}}タム、ドロマド商団 [座っている]に殺された。"));
+                Is.EqualTo("{{r|血まみれの}}タム、ドロマド商団 [座っている]が見える。"));
             Assert.That(translated, Does.Not.Contain("{{r|{{r|"));
             Assert.That(translated, Does.Not.Match("\\[座ってい}}る\\]"));
         });
@@ -176,7 +176,7 @@ public sealed class ColorTagStaticAnalysisTests
 
     private void WriteDeathDictionaryWithLocalizedKiller()
     {
-        WriteExactDictionary(CommonDeathEntries().Append((LocalizedKillerKey, LocalizedKillerText)));
+        WriteExactDictionary(CommonDeathEntries().Append((ColorTaggedDisplayNameKey, ColorTaggedDisplayNameText)));
     }
 
     private void WritePatternDictionary(params (string pattern, string template)[] patterns)
