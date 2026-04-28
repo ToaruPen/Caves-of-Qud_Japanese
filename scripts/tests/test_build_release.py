@@ -84,7 +84,8 @@ class TestProjectManifest:
         """Release setup does not require a preview image asset yet."""
         manifest = PROJECT_ROOT / "Mods" / "QudJP" / "manifest.json"
         data = json.loads(manifest.read_text(encoding="utf-8"))
-        assert data.get("PreviewImage", "") == ""
+        assert "PreviewImage" in data
+        assert data["PreviewImage"] == ""
 
 
 class TestCollectLocalizationFiles:
@@ -402,6 +403,7 @@ class TestBuildReleaseImport:
         ):
             build_release()
 
+        create_zip_mock.assert_called_once()
         assert create_zip_mock.call_args.args[0] == tmp_path / "dist" / "QudJP-v1.2.3.zip"
 
     def test_build_dll_raises_on_missing_dll(self, tmp_path: Path) -> None:
