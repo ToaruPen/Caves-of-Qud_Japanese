@@ -54,6 +54,11 @@
       "route": "emit-message"
     },
     {
+      "pattern": "^You hit (?:the |a |an )?(.+?) with (?:the |a |an )?(.+?) \\(x(\\d+)\\) for (\\d+) damage!$",
+      "template": "{1}で{0}に{3}ダメージを与えた！ (x{2})",
+      "route": "needs-harmony-patch"
+    },
+    {
       "pattern": "^You hit (?:the |a |an )?(.+?) with (?:a |an |the )?(.+?) for (\\d+) damage[.!]?$",
       "template": "{1}で{0}に{2}ダメージを与えた",
       "route": "emit-message"
@@ -434,6 +439,11 @@
       "route": "message-frame"
     },
     {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) hits you with (?:the |a |an )?(.+?) \\(x(\\d+)\\) for (\\d+) damage!$",
+      "template": "{0}の{1}で{3}ダメージを受けた！ (x{2})",
+      "route": "needs-harmony-patch"
+    },
+    {
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:hits|hit) you with (?:a |an |the )?(.+?) for (\\d+) damage[.!]?$",
       "template": "{0}の{1}で{2}ダメージを受けた",
       "route": "message-frame"
@@ -487,6 +497,11 @@
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:hits|hit) (?:the |a |an )?(?!you)(.+?) \\(x(\\d+)\\) with (?:a |an |the )?(.+?) for (\\d+) damage!$",
       "template": "{0}は{3}で{1}に{4}ダメージを与えた！ (x{2})",
       "route": "message-frame"
+    },
+    {
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) hits (?:the |a |an )?(.+?) with (?:the |a |an )?(.+?) \\(x(\\d+)\\) for (\\d+) damage!$",
+      "template": "{0}が{2}で{1}に{4}ダメージを与えた！ (x{3})",
+      "route": "needs-harmony-patch"
     },
     {
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) critically (?:hits|hit) (?:the |a |an )?(?!you)(.+?) with (?:a |an |the )?(.+?), but (?:his|her|its|their) mental attack has no effect[.!]?$",
@@ -1816,21 +1831,6 @@
     {
       "pattern": "^(?:The |the |[Aa]n? )?(.+?) cures you of (.+?)\\.$",
       "template": "{0}があなたの{1}を治した。",
-      "route": "needs-harmony-patch"
-    },
-    {
-      "pattern": "^You hit (?:the |a |an )?(.+?) with (?:the |a |an )?(.+?) \\(x(\\d+)\\) for (\\d+) damage!$",
-      "template": "{1}で{0}に{3}ダメージを与えた！ (x{2})",
-      "route": "needs-harmony-patch"
-    },
-    {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) hits you with (?:the |a |an )?(.+?) \\(x(\\d+)\\) for (\\d+) damage!$",
-      "template": "{0}の{1}で{3}ダメージを受けた！ (x{2})",
-      "route": "needs-harmony-patch"
-    },
-    {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) hits (?:the |a |an )?(.+?) with (?:the |a |an )?(.+?) \\(x(\\d+)\\) for (\\d+) damage!$",
-      "template": "{0}が{2}で{1}に{4}ダメージを与えた！ (x{3})",
       "route": "needs-harmony-patch"
     },
     {

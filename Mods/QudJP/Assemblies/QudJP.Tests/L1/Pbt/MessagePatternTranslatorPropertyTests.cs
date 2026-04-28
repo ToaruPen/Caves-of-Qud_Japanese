@@ -26,19 +26,70 @@ public sealed class MessagePatternTranslatorPropertyTests
     [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
     public FsCheckProperty Translate_PreservesHitWithRollWrappers(HitWithRollPatternCase sample)
     {
-        var translated = MessagePatternTranslator.Translate(sample.Source);
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
 
-        Assert.That(translated, Is.EqualTo(sample.ExpectedTranslated));
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_PrefersHitWithWeaponDamageBeforeGenericHitDamage(HitTargetWithWeaponDamagePatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
 
-        return true.ToProperty();
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_PrefersWeaponMultiplierDamageBeforeGenericHitWithWeaponDamage(HitWeaponMultiplierDamagePatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_PrefersHitMultiplierWithWeaponBeforeGenericHitWithWeapon(HitMultiplierWithWeaponPatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_PrefersIncomingWeaponMultiplierDamageBeforeGenericIncomingWeaponDamage(
+        IncomingHitWeaponMultiplierDamagePatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_PrefersThirdPartyWeaponMultiplierDamageBeforeGenericThirdPartyWeaponDamage(
+        ThirdPartyHitWeaponMultiplierDamagePatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
     }
 
     [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
     public FsCheckProperty Translate_PreservesWeaponMissWrappers(WeaponMissPatternCase sample)
     {
-        var translated = MessagePatternTranslator.Translate(sample.Source);
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
 
-        Assert.That(translated, Is.EqualTo(sample.ExpectedTranslated));
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_PrefersOneOfWoundsStopBleedingBeforeGenericStopBleeding(SpecificBleedingStopPatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_PrefersBlockedByArticleBeforeGenericBlockedBy(BlockedByArticlePatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_PrefersPassByArticleBeforeGenericPassBy(PassByArticlePatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
+
+    private static FsCheckProperty AssertTranslated(string source, string expectedTranslated)
+    {
+        var translated = MessagePatternTranslator.Translate(source);
+
+        Assert.That(translated, Is.EqualTo(expectedTranslated));
 
         return true.ToProperty();
     }
