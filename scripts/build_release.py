@@ -24,6 +24,8 @@ import sys
 import zipfile
 from pathlib import Path
 
+RELEASE_VERSION = "0.2.0"
+
 
 def _find_project_root() -> Path:
     """Locate the project root by traversing up to find pyproject.toml.

@@ -10,7 +10,7 @@ No GitHub issue change was made in this local closeout pass. `gh` authentication
 
 | Artifact | Command/data checked | Result |
 | --- | --- | --- |
-| `docs/candidate-inventory.json` | `scan_date`, `len(sites)`, all serialized fields, and `<no-context>` count across actual route/status fields (`source_route`, `sink`, `ownership_class`, `destination_dictionary`, `rejection_reason`, `status`) | `scan_date=2026-04-14`, `sites=4634`, `<no-context>` rows across all serialized fields `0`; per route/status field: `source_route=0`, `sink=0`, `ownership_class=0`, `destination_dictionary=0`, `rejection_reason=0`, `status=0` |
+| `docs/candidate-inventory.json` | `scan_date`, `len(sites)`, recursive serialized `<no-context>` count, and `<no-context>` count across actual route/status fields (`source_route`, `sink`, `ownership_class`, `destination_dictionary`, `rejection_reason`, `status`) | `scan_date=2026-04-14`, `sites=4634`, recursive serialized `<no-context>` rows `0`; per route/status field: `source_route=0`, `sink=0`, `ownership_class=0`, `destination_dictionary=0`, `rejection_reason=0`, `status=0` |
 | `.sisyphus/evidence/task-12-triage.json` | `summary.total`, serialized `<no-context>` presence, `phase_f.summary.total` | `summary.total=0`, `<no-context>` absent, `phase_f.summary.total=0` |
 | `.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json` | `summary.total`, serialized `<no-context>` presence, `phase_f.summary.total` | `summary.total=0`, `<no-context>` absent, `phase_f.summary.total=0` |
 | `.sisyphus/evidence/task-11-runtime-triage.json` | `sum(len(v) for v in by_route["<no-context>"].values())` | stale `<no-context>` rows `48` (`static_leaf=1`, `route_patch=0`, `logic_required=3`, `unresolved=44`) |
@@ -20,7 +20,7 @@ No GitHub issue change was made in this local closeout pass. `gh` authentication
 The evidence supporting closure is:
 
 ```bash
-python3 -c "import json; d=json.load(open('docs/candidate-inventory.json')); ks=('source_route','sink','ownership_class','destination_dictionary','rejection_reason','status'); print(d['scan_date'], len(d['sites']), sum(any(v=='<no-context>' for v in s.values()) for s in d['sites']), *(sum(s.get(k)=='<no-context>' for s in d['sites']) for k in ks))"
+python3 -c "import json; d=json.load(open('docs/candidate-inventory.json')); ks=('source_route','sink','ownership_class','destination_dictionary','rejection_reason','status'); f=lambda x: x=='<no-context>' if isinstance(x,str) else any(f(v) for v in x.values()) if isinstance(x,dict) else any(f(v) for v in x) if isinstance(x,list) else False; print(d['scan_date'], len(d['sites']), sum(f(s) for s in d['sites']), *(sum(s.get(k)=='<no-context>' for s in d['sites']) for k in ks))"
 python3 -c "import json; p='.sisyphus/evidence/task-12-triage.json'; d=json.load(open(p)); print(p, d['summary']['total'], '<no-context>' in json.dumps(d), d['phase_f']['summary']['total'])"
 python3 -c "import json; p='.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json'; d=json.load(open(p)); print(p, d['summary']['total'], '<no-context>' in json.dumps(d), d['phase_f']['summary']['total'])"
 python3 -c "import json; p='.sisyphus/evidence/task-11-runtime-triage.json'; d=json.load(open(p)); print(p, sum(len(v) for v in d['by_route']['<no-context>'].values()), '<no-context>' in d['by_route'])"
@@ -44,7 +44,7 @@ Closing as satisfied by current evidence.
 
 Verified local artifacts on 2026-04-28:
 
-- `docs/candidate-inventory.json`: `scan_date=2026-04-14`, `sites=4634`, `<no-context>` rows across all serialized fields = `0`; `<no-context>` rows across actual route/status fields (`source_route`, `sink`, `ownership_class`, `destination_dictionary`, `rejection_reason`, `status`) = `0`.
+- `docs/candidate-inventory.json`: `scan_date=2026-04-14`, `sites=4634`, recursive serialized `<no-context>` rows = `0`; `<no-context>` rows across actual route/status fields (`source_route`, `sink`, `ownership_class`, `destination_dictionary`, `rejection_reason`, `status`) = `0`.
 - `.sisyphus/evidence/task-12-triage.json`: `summary.total=0`, no serialized `<no-context>`, `phase_f.summary.total=0`.
 - `.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json`: `summary.total=0`, no serialized `<no-context>`, `phase_f.summary.total=0`.
 

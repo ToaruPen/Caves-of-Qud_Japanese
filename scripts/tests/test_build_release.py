@@ -8,6 +8,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from scripts.build_release import (
+    RELEASE_VERSION,
     build_dll,
     build_release,
     collect_localization_files,
@@ -68,7 +69,7 @@ class TestProjectManifest:
     def test_manifest_version_is_release_semver(self) -> None:
         """Checked-in manifest uses the current release setup version."""
         manifest = PROJECT_ROOT / "Mods" / "QudJP" / "manifest.json"
-        assert read_version(manifest) == "0.2.0"
+        assert read_version(manifest) == RELEASE_VERSION
 
     def test_preview_image_can_remain_pending(self) -> None:
         """Release setup does not require a preview image asset yet."""
