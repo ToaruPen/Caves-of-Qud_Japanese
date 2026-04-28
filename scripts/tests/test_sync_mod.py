@@ -15,6 +15,8 @@ from scripts.sync_mod import (
     run_sync,
 )
 
+LOCALIZATION_DOC_NAMES = ("AGENTS.md", "CLAUDE.md", "README.md")
+
 
 class TestBuildRsyncCommand:
     """Tests for build_rsync_command."""
@@ -93,8 +95,10 @@ class TestBuildRsyncCommand:
         assert "--include=Localization/**/" in cmd
         assert "--include=Localization/*.xml" in cmd
         assert "--include=Localization/*.json" in cmd
+        assert "--include=Localization/*.txt" in cmd
         assert "--include=Localization/**/*.xml" in cmd
         assert "--include=Localization/**/*.json" in cmd
+        assert "--include=Localization/**/*.txt" in cmd
         assert "--include=Localization/**" not in cmd
 
     def test_exclude_fonts_before_wildcard_exclude(self) -> None:
@@ -185,18 +189,18 @@ class TestRunSync:
             "{}",
             encoding="utf-8",
         )
-        (source / "Localization" / "AGENTS.md").write_text(
-            "# agent notes",
+        (source / "Localization" / "Text.jp.txt").write_text(
+            "main text",
             encoding="utf-8",
         )
-        (source / "Localization" / "CLAUDE.md").write_text(
-            "# claude notes",
+        corpus = source / "Localization" / "Corpus"
+        corpus.mkdir()
+        (corpus / "Library-excerpt.jp.txt").write_text(
+            "corpus text",
             encoding="utf-8",
         )
-        (source / "Localization" / "README.md").write_text(
-            "# docs",
-            encoding="utf-8",
-        )
+        for doc_name in LOCALIZATION_DOC_NAMES:
+            (source / "Localization" / doc_name).write_text("# docs", encoding="utf-8")
         (source / "Fonts" / "Font.otf").write_bytes(b"font")
         (source / "src.cs").write_text("// do not copy", encoding="utf-8")
         destination.mkdir()
@@ -212,9 +216,12 @@ class TestRunSync:
         assert (destination / "Assemblies" / "QudJP.dll").exists()
         assert (destination / "Localization" / "Creatures.jp.xml").exists()
         assert (destination / "Localization" / "ui.ja.json").exists()
-        assert not (destination / "Localization" / "AGENTS.md").exists()
-        assert not (destination / "Localization" / "CLAUDE.md").exists()
-        assert not (destination / "Localization" / "README.md").exists()
+        assert (destination / "Localization" / "Text.jp.txt").exists()
+        assert (
+            destination / "Localization" / "Corpus" / "Library-excerpt.jp.txt"
+        ).exists()
+        for doc_name in LOCALIZATION_DOC_NAMES:
+            assert not (destination / "Localization" / doc_name).exists()
         assert (destination / "Fonts" / "Font.otf").exists()
         assert not (destination / "src.cs").exists()
         assert not (destination / "stale.txt").exists()

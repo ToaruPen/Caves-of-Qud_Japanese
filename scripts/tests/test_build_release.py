@@ -19,6 +19,7 @@ from scripts.build_release import (
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+LOCALIZATION_DOC_NAMES = ("AGENTS.md", "CLAUDE.md", "README.md")
 
 
 class TestReadVersion:
@@ -149,16 +150,34 @@ class TestCollectLocalizationFiles:
         names = {f.name for f in files}
         assert "ui.json" in names
 
-    def test_excludes_non_xml_json(self, tmp_path: Path) -> None:
-        """Non-XML/JSON files are not collected."""
+    def test_collects_txt_files(self, tmp_path: Path) -> None:
+        """TXT localization assets are collected recursively."""
+        loc = tmp_path / "Localization"
+        corpus = loc / "Corpus"
+        corpus.mkdir(parents=True)
+        (loc / "Text.jp.txt").write_text("main text", encoding="utf-8")
+        (corpus / "Thought-Forms-excerpt.jp.txt").write_text(
+            "corpus text",
+            encoding="utf-8",
+        )
+
+        files = collect_localization_files(loc)
+        names = {f.name for f in files}
+        assert "Text.jp.txt" in names
+        assert "Thought-Forms-excerpt.jp.txt" in names
+
+    def test_excludes_docs_and_unrecognized_files(self, tmp_path: Path) -> None:
+        """LLM-facing docs and unrecognized files are not collected."""
         loc = tmp_path / "Localization"
         loc.mkdir()
-        (loc / "readme.txt").write_text("ignore me", encoding="utf-8")
+        for doc_name in LOCALIZATION_DOC_NAMES:
+            (loc / doc_name).write_text("# docs", encoding="utf-8")
         (loc / "data.csv").write_text("a,b", encoding="utf-8")
 
         files = collect_localization_files(loc)
         names = {f.name for f in files}
-        assert "readme.txt" not in names
+        for doc_name in LOCALIZATION_DOC_NAMES:
+            assert doc_name not in names
         assert "data.csv" not in names
 
     def test_missing_directory_raises(self, tmp_path: Path) -> None:
@@ -273,6 +292,34 @@ class TestCreateZip:
             names = zf.namelist()
         assert "QudJP/Localization/Creatures.jp.xml" in names
         assert "QudJP/Localization/ui.json" in names
+
+    def test_zip_contains_collected_txt_localization_files_without_docs(
+        self,
+        tmp_path: Path,
+    ) -> None:
+        """ZIP uses collected TXT localization assets without LLM-facing docs."""
+        output, manifest, dll, loc_dir, _loc_files, legal_files = self._make_inputs(
+            tmp_path,
+        )
+        (loc_dir / "Text.jp.txt").write_text("main text", encoding="utf-8")
+        for doc_name in LOCALIZATION_DOC_NAMES:
+            (loc_dir / doc_name).write_text("# docs", encoding="utf-8")
+        loc_files = collect_localization_files(loc_dir)
+
+        create_zip(
+            output,
+            manifest,
+            dll,
+            loc_dir,
+            loc_files,
+            legal_files=legal_files,
+        )
+        with zipfile.ZipFile(output) as zf:
+            names = zf.namelist()
+
+        assert "QudJP/Localization/Text.jp.txt" in names
+        for doc_name in LOCALIZATION_DOC_NAMES:
+            assert f"QudJP/Localization/{doc_name}" not in names
 
     def test_zip_root_is_qudjp(self, tmp_path: Path) -> None:
         """All ZIP entries start with QudJP/ prefix."""

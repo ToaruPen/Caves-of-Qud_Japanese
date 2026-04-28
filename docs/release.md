@@ -16,7 +16,7 @@ Required files:
 | `NOTICE.md` | Third-party and project notices in the release ZIP |
 | `Bootstrap.cs` | Game-compiled loader shim |
 | `Assemblies/QudJP.dll` | Built Harmony patch DLL |
-| `Localization/` | XML localization overlays and JSON dictionaries |
+| `Localization/` | XML overlays, JSON dictionaries, and text corpus assets |
 | `Fonts/` | CJK font assets and font license |
 
 ## Preflight

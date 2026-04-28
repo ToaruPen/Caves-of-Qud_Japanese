@@ -25,13 +25,16 @@ _RSYNC_INCLUDES: tuple[str, ...] = (
     "Localization/**/",
     "Localization/*.xml",
     "Localization/*.json",
+    "Localization/*.txt",
     "Localization/**/*.xml",
     "Localization/**/*.json",
+    "Localization/**/*.txt",
     "Fonts/",
     "Fonts/**",
 )
 
 _RSYNC_EXCLUDES: tuple[str, ...] = ("*",)
+_LOCALIZATION_ASSET_SUFFIXES = {".json", ".txt", ".xml"}
 _WINDOWS_DRIVE_PREFIX_LENGTH = 2
 
 _MACOS_MODS_SUFFIX = (
@@ -196,7 +199,7 @@ def _iter_sync_files(source: Path, *, exclude_fonts: bool) -> list[Path]:
         file_paths.extend(
             file_path
             for file_path in sorted(localization_dir.rglob("*"))
-            if file_path.is_file() and file_path.suffix in {".xml", ".json"}
+            if file_path.is_file() and file_path.suffix in _LOCALIZATION_ASSET_SUFFIXES
         )
 
     if not exclude_fonts:

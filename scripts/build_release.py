@@ -12,6 +12,7 @@ needs:
 - ``QudJP/Assemblies/QudJP.dll``
 - ``QudJP/Localization/**/*.xml``
 - ``QudJP/Localization/**/*.json``
+- ``QudJP/Localization/**/*.txt``
 - ``QudJP/Fonts/*`` (CJK font and license)
 
 The ZIP root is ``QudJP/`` so users can extract it directly into their Mods
@@ -26,6 +27,7 @@ import zipfile
 from pathlib import Path
 
 RELEASE_VERSION = "0.2.0"
+_LOCALIZATION_ASSET_SUFFIXES = {".json", ".txt", ".xml"}
 
 
 def _find_project_root() -> Path:
@@ -136,13 +138,13 @@ def build_dll(project_root: Path) -> Path:
 
 
 def collect_localization_files(localization_dir: Path) -> list[Path]:
-    """Collect all XML and JSON files under the Localization directory.
+    """Collect all game-loaded localization assets under the Localization directory.
 
     Args:
         localization_dir: Path to ``Mods/QudJP/Localization/``.
 
     Returns:
-        Sorted list of absolute paths to ``.xml`` and ``.json`` files.
+        Sorted list of absolute paths to ``.xml``, ``.json``, and ``.txt`` files.
 
     Raises:
         FileNotFoundError: If the localization directory does not exist.
@@ -151,10 +153,13 @@ def collect_localization_files(localization_dir: Path) -> list[Path]:
         msg = f"Localization directory not found: {localization_dir}"
         raise FileNotFoundError(msg)
 
-    files: list[Path] = []
-    for pattern in ("**/*.xml", "**/*.json"):
-        files.extend(localization_dir.rglob(pattern[3:]))  # strip "**/"
-    return sorted(set(files))
+    return sorted(
+        {
+            file_path
+            for file_path in localization_dir.rglob("*")
+            if file_path.suffix in _LOCALIZATION_ASSET_SUFFIXES
+        },
+    )
 
 
 def create_zip(

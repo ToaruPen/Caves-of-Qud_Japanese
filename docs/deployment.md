@@ -61,8 +61,20 @@ cp Mods/QudJP/manifest.json "$GAME_MODS/QudJP/"
 cp Mods/QudJP/preview.png "$GAME_MODS/QudJP/"
 cp Mods/QudJP/Bootstrap.cs "$GAME_MODS/QudJP/"
 cp Mods/QudJP/Assemblies/QudJP.dll "$GAME_MODS/QudJP/Assemblies/"
-cp -r Mods/QudJP/Localization "$GAME_MODS/QudJP/"
+mkdir -p "$GAME_MODS/QudJP/Localization"
+rsync -a --prune-empty-dirs \
+  --include='*/' \
+  --include='*.xml' \
+  --include='*.json' \
+  --include='*.txt' \
+  --exclude='*' \
+  Mods/QudJP/Localization/ "$GAME_MODS/QudJP/Localization/"
 ```
+
+The filtered `rsync` step copies only shipped localization assets and skips
+development-only markdown such as `AGENTS.md` and `README.md`. If `rsync` is not
+available, use `python3.12 scripts/sync_mod.py` instead; it applies the same
+deployment filtering.
 
 ---
 
@@ -76,7 +88,7 @@ The game requires these deployed files:
 | `preview.png` | Workshop/mod-manager preview image referenced by `manifest.json` |
 | `Bootstrap.cs` | Game-compiled loader shim — discovers and initializes QudJP.dll |
 | `Assemblies/QudJP.dll` | Pre-compiled Harmony patch DLL |
-| `Localization/` | XML translation files + JSON dictionaries |
+| `Localization/` | XML translation files, JSON dictionaries, and text corpus assets |
 | `Fonts/` | CJK font for TextMeshPro rendering + SIL OFL license |
 
 ### Files That Must NOT Be Deployed
