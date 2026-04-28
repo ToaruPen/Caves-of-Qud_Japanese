@@ -48,10 +48,10 @@ class TestReadVersion:
             read_version(tmp_path / "nonexistent.json")
 
     def test_missing_version_key_raises(self, tmp_path: Path) -> None:
-        """KeyError is raised when the Version key is absent."""
+        """ValueError is raised when the Version key is absent."""
         manifest = tmp_path / "manifest.json"
         manifest.write_text(json.dumps({"Id": "QudJP"}), encoding="utf-8")
-        with pytest.raises(KeyError):
+        with pytest.raises(ValueError, match="Version field is missing"):
             read_version(manifest)
 
     def test_empty_version_raises(self, tmp_path: Path) -> None:

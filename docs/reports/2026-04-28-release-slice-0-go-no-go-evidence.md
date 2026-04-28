@@ -20,6 +20,7 @@ Steam Workshop readiness を Yes と判定するための fresh QudJP runtime ev
 - `sync-mod-real.txt`: `uv run python scripts/sync_mod.py`
   - result: command succeeded
 - `translation-checker-combat-smoke.txt`: exact command:
+
   ```bash
   uv run python scripts/translation_checker.py \
     --skip-sync \
@@ -35,9 +36,11 @@ Steam Workshop readiness を Yes と判定するための fresh QudJP runtime ev
     > .sisyphus/evidence/release-slice-0/translation-checker-combat-smoke.txt \
     2>&1
   ```
+
   - result: `Error: macOS console session is locked. Unlock the Mac before running translation_checker.py.`
 - `launch-rosetta-direct.stdout.txt`, `launch-rosetta-direct.exit.txt`, `Player-after-rosetta.log`
   - command:
+
     ```bash
     ./scripts/launch_rosetta.sh \
       > .sisyphus/evidence/release-slice-0/launch-rosetta-direct.stdout.txt \
@@ -51,6 +54,7 @@ Steam Workshop readiness を Yes と判定するための fresh QudJP runtime ev
     wait "$pid"
     printf '%s\n' "$?" > .sisyphus/evidence/release-slice-0/launch-rosetta-direct.exit.txt
     ```
+
   - result: launcher printed `Launching Caves of Qud via Rosetta (x86_64)...`; exit code `143`
 - `player-log-markers-after.txt`
   - result: `INFO - Enabled mods:` は空。`QudJP`, build marker, `DynamicTextProbe`, `SinkObserve` はなし
