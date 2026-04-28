@@ -58,6 +58,7 @@ rm -rf "$GAME_MODS/QudJP"
 # Copy only required files
 mkdir -p "$GAME_MODS/QudJP/Assemblies"
 cp Mods/QudJP/manifest.json "$GAME_MODS/QudJP/"
+cp Mods/QudJP/preview.png "$GAME_MODS/QudJP/"
 cp Mods/QudJP/Bootstrap.cs "$GAME_MODS/QudJP/"
 cp Mods/QudJP/Assemblies/QudJP.dll "$GAME_MODS/QudJP/Assemblies/"
 cp -r Mods/QudJP/Localization "$GAME_MODS/QudJP/"
@@ -67,7 +68,7 @@ cp -r Mods/QudJP/Localization "$GAME_MODS/QudJP/"
 
 ## Deployed Files
 
-The game requires exactly five types of files:
+The game requires these deployed files:
 
 | File | Purpose |
 |------|---------|
