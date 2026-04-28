@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from pathlib import Path
 
 import pytest
@@ -15,6 +16,10 @@ def _write_entries(path: Path, entries: list[dict[str, str]]) -> None:
 def _write_payload(path: Path, payload: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+
+def _missing_translation_tokens(key: str, text: str) -> Counter[str]:
+    return check_translation_tokens._missing_translation_tokens(key, text)  # noqa: SLF001
 
 
 def _same_file_duplicate_state(*, texts: list[str], entry_count: int = 2) -> dict[str, object]:
@@ -178,6 +183,25 @@ def test_game_text_variable_token_regex_captures_real_shapes() -> None:
     [
         ("=subject.T= =verb:slip= on the slime!", "=subject.T=はスライムで滑った。"),
         ("=object.Does:are= too old.", "=object.name=は古すぎる。"),
+        ("=subject.The==subject.name= =verb:start= up.", "=subject.name=が起動した。"),
+        (
+            "You touch =subject.t= and recall =pronouns.possessive= passcode. "
+            "=pronouns.Subjective= =verb:beep:afterpronoun= warmly.",
+            "あなたは=subject.name=に触れ、=subject.name=のパスコードを思い出した。"
+            "=subject.name=が温かくビープ音を鳴らした。",
+        ),
+        (
+            "{{g|You touch =subject.the==subject.name= and recall =pronouns.possessive= passcode.}}",
+            "{{g|あなたは=subject.name=に触れ、=subject.name=のパスコードを思い出した。}}",
+        ),
+        ("=subject.T= =verb:consume= =object.an=.", "=subject.name=が=object.name=を消費した。"),
+        (
+            "=object.T= =object.verb:react= with =subject.t= and =object.verb:convert= =pronouns.objective=.",
+            "=object.name=が=subject.name=と反応し、=subject.name=を変換した。",
+        ),
+        ("=subject.T= =verb:swallow= =object.t=!", "=subject.name=が=object.name=を飲み込んだ!"),
+        ("=subject.T= =verb:bat= =subject.possessive= wings.", "=subject.name=が翼をはためかせた。"),
+        ("=object.verb:burst= =objpronouns.reflexive=.", "自壊した。"),
         ("=subject.Name's= shell cracked.", "=subject.name=の殻が割れた。"),
         ("=subject.T's= shell cracked.", "=subject.name=の殻が割れた。"),
     ],
@@ -197,6 +221,86 @@ def test_cli_allows_explicit_game_text_variable_equivalents(
     captured = capsys.readouterr()
     assert exit_code == 0
     assert "0 issue(s)" in captured.out
+
+
+def test_game_text_variable_equivalents_consume_translation_occurrences() -> None:
+    """One Japanese-side equivalent can satisfy only one consuming source token."""
+    missing_tokens = _missing_translation_tokens(
+        "=subject.t= =pronouns.Subjective=",
+        "=subject.name=",
+    )
+
+    assert missing_tokens == Counter({"=pronouns.Subjective=": 1})
+
+
+def test_game_text_variable_equivalents_do_not_reuse_exact_subject_name_occurrences() -> None:
+    """Exact source-token preservation reserves the matching translation occurrence."""
+    missing_tokens = _missing_translation_tokens(
+        "=subject.name= =pronouns.Subjective=",
+        "=subject.name=",
+    )
+
+    assert missing_tokens == Counter({"=pronouns.Subjective=": 1})
+
+
+def test_game_text_object_article_equivalent_does_not_reuse_exact_object_name_occurrences() -> None:
+    """Object article variables consume a separate object-name equivalent."""
+    missing_tokens = _missing_translation_tokens(
+        "=object.name= =object.an=",
+        "=object.name=",
+    )
+
+    assert missing_tokens == Counter({"=object.an=": 1})
+
+
+def test_game_text_exact_name_reservation_selects_non_overlapping_occurrence() -> None:
+    """Exact name preservation should leave a genitive occurrence available when possible."""
+    missing_tokens = _missing_translation_tokens(
+        "=subject.name= =subject.Name's=",
+        "=subject.name=の =subject.name=",
+    )
+
+    assert missing_tokens == Counter()
+
+
+def test_game_text_variable_equivalents_do_not_reuse_subject_name_for_possessive_chain() -> None:
+    """A single name equivalent cannot cover multiple consuming source references."""
+    missing_tokens = _missing_translation_tokens(
+        "=subject.t= =pronouns.possessive= =pronouns.Subjective=",
+        "=subject.name=",
+    )
+
+    assert missing_tokens == Counter({"=pronouns.possessive=": 1, "=pronouns.Subjective=": 1})
+
+
+def test_game_text_variable_equivalents_do_not_reuse_overlapping_text_ranges() -> None:
+    """A genitive name occurrence cannot also cover a separate bare-name reference."""
+    missing_tokens = _missing_translation_tokens(
+        "=subject.t= =subject.Name's=",
+        "=subject.name=の",
+    )
+
+    assert missing_tokens == Counter({"=subject.Name's=": 1})
+
+
+def test_game_text_variable_equivalents_match_overlapping_candidates_when_assignment_is_valid() -> None:
+    """A bare-name token should not greedily steal the prefix of a genitive occurrence."""
+    missing_tokens = _missing_translation_tokens(
+        "=subject.Name's= =subject.t=",
+        "=subject.name=の =subject.name=",
+    )
+
+    assert missing_tokens == Counter()
+
+
+def test_game_text_article_only_tokens_do_not_consume_subject_name_equivalents() -> None:
+    """Article-only variables are explicitly non-consuming for Japanese text."""
+    missing_tokens = _missing_translation_tokens(
+        "=subject.the= =pronouns.Subjective=",
+        "=subject.name=",
+    )
+
+    assert missing_tokens == Counter()
 
 
 def test_cli_scans_pure_formatter_source_key_token_loss(

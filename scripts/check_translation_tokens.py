@@ -8,7 +8,13 @@ import re
 import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass
+from functools import cache
 from pathlib import Path
+
+type TextRange = tuple[int, int]
+type TextRangeCandidates = tuple[TextRange, ...]
+type ExactRangeCandidateSequence = tuple[TextRangeCandidates, ...]
+type VariableTokenCandidateSequence = tuple[tuple[str, TextRangeCandidates], ...]
 
 _DEFAULT_DUPLICATE_BASELINE = Path(__file__).with_name("translation_token_duplicate_baseline.json")
 _DUPLICATE_BASELINE_VERSION = 3
@@ -29,10 +35,26 @@ _PLACEHOLDER = re.compile(r"\{([0-9]+)(?::[^{}]*)?\}")
 _VARIABLE_TOKEN = re.compile(r"=[A-Za-z_][A-Za-z0-9_.:']*=")
 _LOCALIZABLE_VERB_TOKEN = re.compile(r"=(?:[A-Za-z_][A-Za-z0-9_]*\.)?verb:[A-Za-z0-9_:']+=")
 _VARIABLE_TOKEN_EQUIVALENTS = {
+    "=object.T=": ("=object.name=",),
     "=object.Does:are=": ("=object.name=", "=object.t=", "=object.T="),
+    "=object.an=": ("=object.name=",),
+    "=object.t=": ("=object.name=",),
     "=subject.Name's=": ("=subject.name=の", "=subject.Name=の"),
+    "=subject.T=": ("=subject.name=",),
     "=subject.T's=": ("=subject.name=の", "=subject.T=の"),
+    "=subject.t=": ("=subject.name=",),
     "=subject.t's=": ("=subject.name=の", "=subject.t=の"),
+    "=pronouns.Subjective=": ("=subject.name=",),
+    "=pronouns.objective=": ("=subject.name=",),
+    "=pronouns.possessive=": ("=subject.name=",),
+}
+_OMITTABLE_VARIABLE_TOKENS = {
+    "=objpronouns.reflexive=",
+    "=subject.possessive=",
+}
+_ARTICLE_ONLY_VARIABLE_TOKENS = {
+    "=subject.The=",
+    "=subject.the=",
 }
 
 
@@ -80,7 +102,7 @@ class DuplicateConflictState:
     occurrences: tuple[DuplicateOccurrence, ...]
 
 
-def _path_candidates(path: Path) -> tuple[Path, Path]:
+def _path_candidates(path: Path) -> tuple[Path, ...]:
     resolved = path.resolve()
     return (path, resolved) if path != resolved else (path,)
 
@@ -240,26 +262,200 @@ def _missing_translation_tokens(source: str, translation: str) -> Counter[str]:
         covered_count = min(count, max(available_openers, 0))
         if covered_count == 0:
             continue
-        missing_tokens[token] -= covered_count
-        if missing_tokens[token] <= 0:
-            del missing_tokens[token]
-    for token, count in list(missing_tokens.items()):
-        covered_count = _allowed_missing_variable_token_count(token, translation)
-        if covered_count == 0:
-            continue
-        missing_tokens[token] -= min(count, covered_count)
-        if missing_tokens[token] <= 0:
-            del missing_tokens[token]
+        _consume_missing_token_count(missing_tokens, token, covered_count)
+    _consume_allowed_missing_variable_tokens(missing_tokens, source_tokens, translation)
     return missing_tokens
 
 
-def _allowed_missing_variable_token_count(token: str, translation: str) -> int:
+def _consume_allowed_missing_variable_tokens(
+    missing_tokens: Counter[str],
+    source_tokens: Counter[str],
+    translation: str,
+) -> None:
+    available_equivalents = _available_variable_equivalent_token_ranges(translation)
+    for token in list(missing_tokens):
+        non_consuming_count = _allowed_missing_non_consuming_variable_token_count(token)
+        if non_consuming_count:
+            _consume_missing_token_count(missing_tokens, token, non_consuming_count)
+
+    exact_token_candidates = _preserved_exact_variable_token_candidate_ranges(source_tokens, translation)
+    for token, count in _matched_variable_equivalent_token_counts(
+        missing_tokens,
+        available_equivalents,
+        exact_token_candidates,
+    ).items():
+        _consume_missing_token_count(missing_tokens, token, count)
+
+
+def _consume_missing_token_count(missing_tokens: Counter[str], token: str, count: int) -> None:
+    consumed_count = min(missing_tokens[token], count)
+    if consumed_count <= 0:
+        return
+
+    missing_tokens[token] -= consumed_count
+    if missing_tokens[token] <= 0:
+        del missing_tokens[token]
+
+
+def _allowed_missing_non_consuming_variable_token_count(token: str) -> int:
     if not _VARIABLE_TOKEN.fullmatch(token):
         return 0
     if _LOCALIZABLE_VERB_TOKEN.fullmatch(token):
         return sys.maxsize
-    equivalents = _VARIABLE_TOKEN_EQUIVALENTS.get(token, ())
-    return sum(translation.count(equivalent) for equivalent in equivalents)
+    if token in _OMITTABLE_VARIABLE_TOKENS or token in _ARTICLE_ONLY_VARIABLE_TOKENS:
+        return sys.maxsize
+    return 0
+
+
+def _available_variable_equivalent_token_ranges(translation: str) -> dict[str, list[TextRange]]:
+    equivalents = {
+        equivalent
+        for token_equivalents in _VARIABLE_TOKEN_EQUIVALENTS.values()
+        for equivalent in token_equivalents
+    }
+    return {
+        equivalent: [(match.start(), match.end()) for match in re.finditer(re.escape(equivalent), translation)]
+        for equivalent in equivalents
+    }
+
+
+def _preserved_exact_variable_token_candidate_ranges(
+    source_tokens: Counter[str],
+    translation: str,
+) -> list[TextRangeCandidates]:
+    translation_ranges = _variable_token_ranges_by_token(translation)
+    exact_token_candidates: list[TextRangeCandidates] = []
+    for token, source_count in source_tokens.items():
+        if not _VARIABLE_TOKEN.fullmatch(token):
+            continue
+        ranges = translation_ranges.get(token, ())
+        preserved_count = min(source_count, len(ranges))
+        exact_token_candidates.extend(ranges for _ in range(preserved_count))
+    exact_token_candidates.sort(key=lambda candidates: (len(candidates), candidates))
+    return exact_token_candidates
+
+
+def _variable_token_ranges_by_token(translation: str) -> dict[str, TextRangeCandidates]:
+    ranges_by_token: dict[str, list[TextRange]] = defaultdict(list)
+    for match in _VARIABLE_TOKEN.finditer(translation):
+        ranges_by_token[match.group(0)].append((match.start(), match.end()))
+    return {token: tuple(ranges) for token, ranges in ranges_by_token.items()}
+
+
+def _matched_variable_equivalent_token_counts(
+    missing_tokens: Counter[str],
+    available_equivalents: dict[str, list[TextRange]],
+    exact_token_candidates: list[TextRangeCandidates],
+) -> Counter[str]:
+    token_candidates = [
+        (token, _variable_equivalent_candidate_ranges(token, available_equivalents))
+        for token, count in missing_tokens.items()
+        for _ in range(count)
+        if _VARIABLE_TOKEN.fullmatch(token) and token in _VARIABLE_TOKEN_EQUIVALENTS
+    ]
+    token_candidates = [(token, candidates) for token, candidates in token_candidates if candidates]
+    token_candidates.sort(key=lambda item: (len(item[1]), item[0]))
+
+    consumed_tokens = _best_variable_equivalent_assignment(exact_token_candidates, token_candidates)
+    return Counter(consumed_tokens)
+
+
+def _variable_equivalent_candidate_ranges(
+    token: str,
+    available_equivalents: dict[str, list[TextRange]],
+) -> TextRangeCandidates:
+    candidates = []
+    for equivalent in _VARIABLE_TOKEN_EQUIVALENTS[token]:
+        candidates.extend(available_equivalents[equivalent])
+    return tuple(sorted(set(candidates), key=lambda item: (item[0], item[1])))
+
+
+def _best_variable_equivalent_assignment(
+    exact_token_candidates: list[TextRangeCandidates],
+    token_candidates: list[tuple[str, TextRangeCandidates]],
+) -> tuple[str, ...]:
+    exact_candidate_sequence = tuple(exact_token_candidates)
+    token_candidate_sequence = tuple(token_candidates)
+    try:
+        return _best_variable_equivalent_assignment_after_exact(
+            exact_candidate_sequence,
+            token_candidate_sequence,
+            0,
+            (),
+        )
+    finally:
+        _best_variable_equivalent_assignment_after_exact.cache_clear()
+        _best_optional_variable_equivalent_assignment.cache_clear()
+
+
+@cache
+def _best_optional_variable_equivalent_assignment(
+    token_candidate_sequence: VariableTokenCandidateSequence,
+    candidate_index: int,
+    used_ranges: TextRangeCandidates,
+) -> tuple[str, ...]:
+    if candidate_index >= len(token_candidate_sequence):
+        return ()
+
+    best_consumed_tokens = _best_optional_variable_equivalent_assignment(
+        token_candidate_sequence,
+        candidate_index + 1,
+        used_ranges,
+    )
+    token, candidates = token_candidate_sequence[candidate_index]
+    remaining_token_count = len(token_candidate_sequence) - candidate_index
+    for candidate_range in candidates:
+        if any(_ranges_overlap(candidate_range, used_range) for used_range in used_ranges):
+            continue
+        next_used_ranges = tuple(sorted((*used_ranges, candidate_range)))
+        consumed_tokens = (
+            token,
+            *_best_optional_variable_equivalent_assignment(
+                token_candidate_sequence,
+                candidate_index + 1,
+                next_used_ranges,
+            ),
+        )
+        if len(consumed_tokens) > len(best_consumed_tokens):
+            best_consumed_tokens = consumed_tokens
+            if len(best_consumed_tokens) == remaining_token_count:
+                break
+
+    return best_consumed_tokens
+
+
+@cache
+def _best_variable_equivalent_assignment_after_exact(
+    exact_candidate_sequence: ExactRangeCandidateSequence,
+    token_candidate_sequence: VariableTokenCandidateSequence,
+    candidate_index: int,
+    used_ranges: TextRangeCandidates,
+) -> tuple[str, ...]:
+    if candidate_index >= len(exact_candidate_sequence):
+        return _best_optional_variable_equivalent_assignment(token_candidate_sequence, 0, used_ranges)
+
+    best_consumed_tokens: tuple[str, ...] = ()
+    candidates = exact_candidate_sequence[candidate_index]
+    for candidate_range in candidates:
+        if any(_ranges_overlap(candidate_range, used_range) for used_range in used_ranges):
+            continue
+        next_used_ranges = tuple(sorted((*used_ranges, candidate_range)))
+        consumed_tokens = _best_variable_equivalent_assignment_after_exact(
+            exact_candidate_sequence,
+            token_candidate_sequence,
+            candidate_index + 1,
+            next_used_ranges,
+        )
+        if len(consumed_tokens) > len(best_consumed_tokens):
+            best_consumed_tokens = consumed_tokens
+            if len(best_consumed_tokens) == len(token_candidate_sequence):
+                break
+
+    return best_consumed_tokens
+
+
+def _ranges_overlap(left: TextRange, right: TextRange) -> bool:
+    return left[0] < right[1] and right[0] < left[1]
 
 
 def _find_token_issues(entry: TranslationEntry) -> list[TranslationIssue]:
