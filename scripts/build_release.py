@@ -71,7 +71,10 @@ def read_version(manifest_path: Path) -> str:
         msg = f"Version field is empty in manifest.json: {manifest_path}"
         raise ValueError(msg)
     if re.fullmatch(r"\d+\.\d+\.\d+", version) is None:
-        msg = "Version field must be simple semver X.Y.Z in manifest.json"
+        msg = (
+            "Version field must be simple semver X.Y.Z in manifest.json: "
+            f"{manifest_path} (got {version!r})"
+        )
         raise ValueError(msg)
     return version
 

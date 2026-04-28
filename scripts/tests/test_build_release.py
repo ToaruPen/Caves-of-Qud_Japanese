@@ -33,8 +33,10 @@ class TestReadVersion:
         """Version strings must be simple semver accepted by the game."""
         manifest = tmp_path / "manifest.json"
         manifest.write_text(json.dumps({"Version": "0.1.0-dev"}), encoding="utf-8")
-        with pytest.raises(ValueError, match="simple semver"):
+        with pytest.raises(ValueError, match="simple semver") as exc_info:
             read_version(manifest)
+        assert str(manifest) in str(exc_info.value)
+        assert "0.1.0-dev" in str(exc_info.value)
 
     def test_rejects_non_semver_version(self, tmp_path: Path) -> None:
         """Non-semver version strings are rejected before release packaging."""
