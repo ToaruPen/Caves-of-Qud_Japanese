@@ -2,12 +2,10 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import TYPE_CHECKING
+
+import pytest
 
 from scripts import check_translation_tokens
-
-if TYPE_CHECKING:
-    import pytest
 
 
 def _write_entries(path: Path, entries: list[dict[str, str]]) -> None:
@@ -19,19 +17,40 @@ def _write_payload(path: Path, payload: object) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
 
 
-def _write_duplicate_baseline(path: Path, *, texts: list[str], entry_count: int = 2) -> None:
+def _same_file_duplicate_state(*, texts: list[str], entry_count: int = 2) -> dict[str, object]:
+    return {
+        "scope": "same_file",
+        "path": "Dictionaries/demo.ja.json",
+        "key": "Same source",
+        "entry_count": entry_count,
+        "texts": sorted(texts),
+        "occurrences": [
+            {"path": "Dictionaries/demo.ja.json", "entry_index": index, "text": text}
+            for index, text in enumerate(texts, start=1)
+        ],
+    }
+
+
+def _cross_file_duplicate_state(*, texts: list[str]) -> dict[str, object]:
+    paths = ["Dictionaries/a.ja.json", "Dictionaries/b.ja.json"]
+    return {
+        "scope": "cross_file",
+        "path": "Dictionaries",
+        "key": "Shared source",
+        "entry_count": len(texts),
+        "texts": sorted(texts),
+        "occurrences": [
+            {"path": path, "entry_index": 1, "text": text} for path, text in zip(paths, texts, strict=True)
+        ],
+    }
+
+
+def _write_duplicate_baseline(path: Path, *states: dict[str, object]) -> None:
     path.write_text(
         json.dumps(
             {
-                "version": 2,
-                "duplicate_conflicts": [
-                    {
-                        "path": "Dictionaries/demo.ja.json",
-                        "key": "Same source",
-                        "entry_count": entry_count,
-                        "texts": sorted(texts),
-                    },
-                ],
+                "version": 3,
+                "duplicate_conflicts": list(states),
             },
             ensure_ascii=False,
         ),
@@ -94,6 +113,90 @@ def test_cli_reports_missing_bare_qud_span_token(
     captured = capsys.readouterr()
     assert exit_code == 1
     assert "missing translation tokens: '{{R}}': 1" in captured.out
+
+
+def test_cli_accepts_bare_qud_span_as_tagged_translation(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Bare Qud spans may translate to the equivalent tagged span form."""
+    localization = tmp_path / "Localization"
+    _write_entries(
+        localization / "Dictionaries" / "demo.ja.json",
+        [
+            {
+                "key": "{{phase-conjugate}}",
+                "text": "{{phase-conjugate|位相共役}}",
+            },
+        ],
+    )
+
+    exit_code = check_translation_tokens.main([str(localization)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "0 issue(s)" in captured.out
+
+
+def test_cli_reports_missing_game_text_variable_token(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """GameText variable tokens such as `=variable.name=` must be preserved."""
+    localization = tmp_path / "Localization"
+    _write_entries(
+        localization / "Dictionaries" / "demo.ja.json",
+        [
+            {
+                "key": "Talk to =creature.displayName=.",
+                "text": "話しかける。",
+            },
+        ],
+    )
+
+    exit_code = check_translation_tokens.main([str(localization)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "missing translation tokens: '=creature.displayName=': 1" in captured.out
+
+
+def test_game_text_variable_token_regex_captures_real_shapes() -> None:
+    """Real GameText variables may contain colons and apostrophes."""
+    value = "=object.Does:are= =subject.Name's= =subject.T's= =verb:beep:afterpronoun="
+
+    assert check_translation_tokens._translation_token_multiset(value) == {  # noqa: SLF001
+        "=object.Does:are=": 1,
+        "=subject.Name's=": 1,
+        "=subject.T's=": 1,
+        "=verb:beep:afterpronoun=": 1,
+    }
+
+
+@pytest.mark.parametrize(
+    ("key", "text"),
+    [
+        ("=subject.T= =verb:slip= on the slime!", "=subject.T=はスライムで滑った。"),
+        ("=object.Does:are= too old.", "=object.name=は古すぎる。"),
+        ("=subject.Name's= shell cracked.", "=subject.name=の殻が割れた。"),
+        ("=subject.T's= shell cracked.", "=subject.name=の殻が割れた。"),
+    ],
+)
+def test_cli_allows_explicit_game_text_variable_equivalents(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+    key: str,
+    text: str,
+) -> None:
+    """Japanese GameText can encode selected English grammar tokens explicitly."""
+    localization = tmp_path / "Localization"
+    _write_entries(localization / "Dictionaries" / "demo.ja.json", [{"key": key, "text": text}])
+
+    exit_code = check_translation_tokens.main([str(localization)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "0 issue(s)" in captured.out
 
 
 def test_cli_scans_pure_formatter_source_key_token_loss(
@@ -190,6 +293,19 @@ def test_cli_rejects_non_list_entries_payload(
     assert "Dictionaries/demo.ja.json" in captured.err
 
 
+def test_load_json_wraps_parse_errors_with_path_context(tmp_path: Path) -> None:
+    """JSON parse failures keep the original exception and identify the file."""
+    target = tmp_path / "Localization" / "Dictionaries" / "broken.ja.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text('{"entries": [', encoding="utf-8")
+
+    with pytest.raises(ValueError, match="Failed to load JSON") as exc_info:
+        check_translation_tokens._load_json(target)  # noqa: SLF001
+
+    assert str(target) in str(exc_info.value)
+    assert isinstance(exc_info.value.__cause__, json.JSONDecodeError)
+
+
 def test_cli_rejects_malformed_translation_entry_with_index(
     tmp_path: Path,
     capsys: pytest.CaptureFixture[str],
@@ -243,9 +359,70 @@ def test_duplicate_source_key_conflict_fails_unless_baselined(
     assert "duplicate source key conflict" in captured.out
 
     baseline = tmp_path / "baseline.json"
-    _write_duplicate_baseline(baseline, texts=["訳語A", "訳語B"])
+    _write_duplicate_baseline(baseline, _same_file_duplicate_state(texts=["訳語A", "訳語B"]))
 
     assert check_translation_tokens.main([str(localization), "--duplicate-conflict-baseline", str(baseline)]) == 0
+
+
+def test_duplicate_source_key_with_identical_text_fails_unless_baselined(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Same-file duplicate source keys fail even when their translations match."""
+    localization = tmp_path / "Localization"
+    _write_entries(
+        localization / "Dictionaries" / "demo.ja.json",
+        [
+            {"key": "Same source", "text": "同じ訳語"},
+            {"key": "Same source", "text": "同じ訳語"},
+        ],
+    )
+
+    assert check_translation_tokens.main([str(localization)]) == 1
+    captured = capsys.readouterr()
+    assert "duplicate source key conflict" in captured.out
+    assert "entry_count=2" in captured.out
+
+    baseline = tmp_path / "baseline.json"
+    _write_duplicate_baseline(baseline, _same_file_duplicate_state(texts=["同じ訳語", "同じ訳語"]))
+
+    assert check_translation_tokens.main([str(localization), "--duplicate-conflict-baseline", str(baseline)]) == 0
+
+
+def test_dictionary_cross_file_duplicate_key_with_divergent_text_fails_unless_baselined(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Dictionary keys reused across files fail when Japanese text diverges."""
+    localization = tmp_path / "Localization"
+    _write_entries(localization / "Dictionaries" / "a.ja.json", [{"key": "Shared source", "text": "訳語A"}])
+    _write_entries(localization / "Dictionaries" / "b.ja.json", [{"key": "Shared source", "text": "訳語B"}])
+
+    assert check_translation_tokens.main([str(localization)]) == 1
+    captured = capsys.readouterr()
+    assert "duplicate source key conflict" in captured.out
+    assert "scope=cross_file" in captured.out
+    assert "Dictionaries/a.ja.json" in captured.out
+    assert "Dictionaries/b.ja.json" in captured.out
+
+    baseline = tmp_path / "baseline.json"
+    _write_duplicate_baseline(baseline, _cross_file_duplicate_state(texts=["訳語A", "訳語B"]))
+
+    assert check_translation_tokens.main([str(localization), "--duplicate-conflict-baseline", str(baseline)]) == 0
+
+
+def test_dictionary_cross_file_duplicate_key_with_identical_text_passes(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Cross-file dictionary reuse is allowed when the Japanese text is identical."""
+    localization = tmp_path / "Localization"
+    _write_entries(localization / "Dictionaries" / "a.ja.json", [{"key": "Shared source", "text": "同じ訳語"}])
+    _write_entries(localization / "Dictionaries" / "b.ja.json", [{"key": "Shared source", "text": "同じ訳語"}])
+
+    assert check_translation_tokens.main([str(localization)]) == 0
+    captured = capsys.readouterr()
+    assert "0 issue(s)" in captured.out
 
 
 def test_duplicate_source_key_baseline_fails_when_text_state_changes(
@@ -256,7 +433,7 @@ def test_duplicate_source_key_baseline_fails_when_text_state_changes(
     localization = tmp_path / "Localization"
     target = localization / "Dictionaries" / "demo.ja.json"
     baseline = tmp_path / "baseline.json"
-    _write_duplicate_baseline(baseline, texts=["訳語A", "訳語B"])
+    _write_duplicate_baseline(baseline, _same_file_duplicate_state(texts=["訳語A", "訳語B"]))
     _write_entries(
         target,
         [
@@ -296,7 +473,7 @@ def test_duplicate_baseline_path_is_stable_for_localization_relative_cli_shapes(
         ],
     )
     baseline = tmp_path / "baseline.json"
-    _write_duplicate_baseline(baseline, texts=["訳語A", "訳語B"])
+    _write_duplicate_baseline(baseline, _same_file_duplicate_state(texts=["訳語A", "訳語B"]))
 
     monkeypatch.chdir(localization)
     assert check_translation_tokens.main([".", "--duplicate-conflict-baseline", str(baseline)]) == 0
@@ -330,7 +507,7 @@ def test_duplicate_baseline_rejects_missing_version(
     assert _run_with_duplicate_baseline(tmp_path, {"duplicate_conflicts": []}) == 1
 
     captured = capsys.readouterr()
-    assert "must contain version 2" in captured.err
+    assert "must contain version 3" in captured.err
 
 
 def test_duplicate_baseline_rejects_version_mismatch(
@@ -341,7 +518,7 @@ def test_duplicate_baseline_rejects_version_mismatch(
     assert _run_with_duplicate_baseline(tmp_path, {"version": 1, "duplicate_conflicts": []}) == 1
 
     captured = capsys.readouterr()
-    assert "expected version 2" in captured.err
+    assert "expected version 3" in captured.err
 
 
 def test_duplicate_baseline_rejects_non_object_payload(

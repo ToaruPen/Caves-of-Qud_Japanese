@@ -2,7 +2,7 @@
   "entries": [
     {
       "key": "=subject.The==subject.name= =verb:start= up with a hum.",
-      "text": "=subject.name=がうなり声を上げて起動した。"
+      "text": "=subject.The==subject.name=がうなり声を上げて起動した。"
     },
     {
       "key": "Nothing happens.",
@@ -10,15 +10,15 @@
     },
     {
       "key": "=subject.The==subject.name= =verb:shut= down with a whir.",
-      "text": "=subject.name=がうなり声を上げて停止した。"
+      "text": "=subject.The==subject.name=がうなり声を上げて停止した。"
     },
     {
       "key": "=subject.The==subject.name= =verb:recognize= your =object.name=.",
-      "text": "=subject.name=があなたの=object.name=を認識した。"
+      "text": "=subject.The==subject.name=があなたの=object.name=を認識した。"
     },
     {
       "key": "{{g|You touch =subject.the==subject.name= and recall =pronouns.possessive= passcode. =pronouns.Subjective= =verb:beep:afterpronoun= warmly.}}",
-      "text": "{{g|あなたは=subject.name=に触れ、=subject.name=のパスコードを思い出した。=subject.name=が温かくビープ音を鳴らした。}}"
+      "text": "{{g|あなたは=subject.the==subject.name=に触れ、=pronouns.possessive=パスコードを思い出した。=pronouns.Subjective=が温かくビープ音を鳴らした。}}"
     },
     {
       "key": "{{r|A loud buzz is emitted. The unauthorized glyph flashes on the display.}}",
@@ -26,7 +26,7 @@
     },
     {
       "key": "You touch =subject.t= and recall =pronouns.possessive= passcode. =pronouns.Subjective= =verb:beep:afterpronoun= warmly.",
-      "text": "あなたは=subject.name=に触れ、=subject.name=のパスコードを思い出した。=subject.name=が温かくビープ音を鳴らした。"
+      "text": "あなたは=subject.t=に触れ、=pronouns.possessive=パスコードを思い出した。=pronouns.Subjective=が温かくビープ音を鳴らした。"
     },
     {
       "key": "A loud buzz is emitted. The unauthorized glyph flashes on the display.",
@@ -34,39 +34,39 @@
     },
     {
       "key": "{{R|=subject.T= =verb:consume= =object.an==object.directionIfAny=!}}",
-      "text": "{{R|=subject.name=が=object.name==object.directionIfAny=を消費した！}}"
+      "text": "{{R|=subject.T=が=object.an==object.directionIfAny=を消費した！}}"
     },
     {
       "key": "=subject.T= =verb:fizzle= for several seconds.",
-      "text": "=subject.name=が数秒間シュウシュウと泡立った。"
+      "text": "=subject.T=が数秒間シュウシュウと泡立った。"
     },
     {
       "key": "=subject.T= =verb:fizzle= for several seconds, then =verb:evaporate=.",
-      "text": "=subject.name=が数秒間シュウシュウと泡立ち、蒸発した。"
+      "text": "=subject.T=が数秒間シュウシュウと泡立ち、蒸発した。"
     },
     {
       "key": "=object.T= =object.verb:react= strangely with =subject.t= and =object.verb:convert= =pronouns.objective= to =newLiquid=.",
-      "text": "=object.name=が=subject.name=と奇妙な反応を起こし、=subject.name=を=newLiquid=に変換した。"
+      "text": "=object.T=が=subject.t=と奇妙な反応を起こし、=pronouns.objective=を=newLiquid=に変換した。"
     },
     {
       "key": "=subject.T= =verb:float= off.",
-      "text": "=subject.name=が浮かび上がって去っていった。"
+      "text": "=subject.T=が浮かび上がって去っていった。"
     },
     {
       "key": "=subject.T==subject.directionIfAny= =verb:flex= and =verb:splinter= apart, revealing =object.an=.",
-      "text": "=subject.name==subject.directionIfAny=がたわみ、砕け散り、=object.name=が現れた。"
+      "text": "=subject.T==subject.directionIfAny=がたわみ、砕け散り、=object.an=が現れた。"
     },
     {
       "key": "=subject.T==subject.directionIfAny= =verb:flex= and =verb:splinter= apart.",
-      "text": "=subject.name==subject.directionIfAny=がたわみ、砕け散った。"
+      "text": "=subject.T==subject.directionIfAny=がたわみ、砕け散った。"
     },
     {
       "key": "=subject.T= =verb:stare= at =object.t= blankly.",
-      "text": "=subject.name=が=object.name=をぼんやりと見つめた。"
+      "text": "=subject.T=が=object.t=をぼんやりと見つめた。"
     },
     {
       "key": "=subject.T= =verb:yell= {{W|'",
-      "text": "=subject.name=が叫んだ、{{W|「"
+      "text": "=subject.T=が叫んだ、{{W|「"
     },
     {
       "key": "'}}",
@@ -78,11 +78,11 @@
     },
     {
       "key": "=subject.T= =verb:bat= =subject.possessive= banded wings and blows the =gas= away!",
-      "text": "=subject.name=が縞模様の翼をはためかせ、=gas=を吹き飛ばした！"
+      "text": "=subject.T=が=subject.possessive=縞模様の翼をはためかせ、=gas=を吹き飛ばした！"
     },
     {
       "key": "=subject.T= =verb:swallow= =object.t=!",
-      "text": "=subject.name=が=object.name=を飲み込んだ！"
+      "text": "=subject.T=が=object.t=を飲み込んだ！"
     },
     {
       "key": "=object.Does:are= much too old and rusted to enter.",
@@ -90,11 +90,11 @@
     },
     {
       "key": "=subject.Name's= =object.name= =object.verb:burst= outward, destroying =objpronouns.reflexive= to prevent potentially lethal damage.",
-      "text": "=subject.name=の=object.name=が外側に破裂し、致命的なダメージを防ぐために自壊した。"
+      "text": "=subject.name=の=object.name=が外側に破裂し、致命的なダメージを防ぐために=objpronouns.reflexive=を破壊した。"
     },
     {
       "key": "=subject.Name's= =object.name= =object.verb:burst= outward, destroying =objpronouns.reflexive= to prevent catastrophic damage.",
-      "text": "=subject.name=の=object.name=が外側に破裂し、壊滅的なダメージを防ぐために自壊した。"
+      "text": "=subject.name=の=object.name=が外側に破裂し、壊滅的なダメージを防ぐために=objpronouns.reflexive=を破壊した。"
     },
     {
       "key": "=subject.T's= crystalline rind splits in fractals!",
@@ -102,23 +102,23 @@
     },
     {
       "key": "=subject.T= =verb:extrude= through the mirror of =pronouns.possessive= crystalline rind!",
-      "text": "=subject.name=が=subject.name=の結晶の外殻の鏡面を通り抜けた！"
+      "text": "=subject.T=が=pronouns.possessive=結晶の外殻の鏡面を通り抜けた！"
     },
     {
       "key": "=subject.T= =verb:stumble= into =object.t=!",
-      "text": "=subject.name=が=object.name=によろめき入った！"
+      "text": "=subject.T=が=object.t=によろめき入った！"
     },
     {
       "key": "The crystalline eggs of =subject.t= swell and pop!",
-      "text": "=subject.name=の結晶の卵が膨らみ、弾けた！"
+      "text": "=subject.t=の結晶の卵が膨らみ、弾けた！"
     },
     {
       "key": "=subject.T= =verb:split= in two!",
-      "text": "=subject.name=が二つに分裂した！"
+      "text": "=subject.T=が二つに分裂した！"
     },
     {
       "key": "=subject.T= =verb:enter= a spacetime cocoon!",
-      "text": "=subject.name=が時空の繭に入った！"
+      "text": "=subject.T=が時空の繭に入った！"
     }
   ]
 }

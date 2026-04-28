@@ -11,8 +11,10 @@ from dataclasses import dataclass
 from pathlib import Path
 
 _DEFAULT_DUPLICATE_BASELINE = Path(__file__).with_name("translation_token_duplicate_baseline.json")
-_DUPLICATE_BASELINE_VERSION = 2
+_DUPLICATE_BASELINE_VERSION = 3
 _MIN_CONFLICTING_TRANSLATIONS = 2
+_SAME_FILE_DUPLICATE_SCOPE = "same_file"
+_CROSS_FILE_DUPLICATE_SCOPE = "cross_file"
 
 _BARE_QUD_SPAN = re.compile(r"\{\{[^|{}]+\}\}")
 _QUD_OPENER = re.compile(r"\{\{[^|}]+\|")
@@ -24,6 +26,14 @@ _LEGACY_CARET_COLOR = re.compile(r"(?<!\^)\^(?!\^)[A-Za-z0-9]")
 _HTML_COLOR_OPEN = re.compile(r"<color=[^>]+>")
 _HTML_COLOR_CLOSE = re.compile(r"</color>")
 _PLACEHOLDER = re.compile(r"\{([0-9]+)(?::[^{}]*)?\}")
+_VARIABLE_TOKEN = re.compile(r"=[A-Za-z_][A-Za-z0-9_.:']*=")
+_LOCALIZABLE_VERB_TOKEN = re.compile(r"=(?:[A-Za-z_][A-Za-z0-9_]*\.)?verb:[A-Za-z0-9_:']+=")
+_VARIABLE_TOKEN_EQUIVALENTS = {
+    "=object.Does:are=": ("=object.name=", "=object.t=", "=object.T="),
+    "=subject.Name's=": ("=subject.name=の", "=subject.Name=の"),
+    "=subject.T's=": ("=subject.name=の", "=subject.T=の"),
+    "=subject.t's=": ("=subject.name=の", "=subject.t=の"),
+}
 
 
 @dataclass(frozen=True)
@@ -50,13 +60,24 @@ class TranslationIssue:
 
 
 @dataclass(frozen=True)
-class DuplicateConflictState:
-    """Expected or observed same-file duplicate source-key conflict state."""
+class DuplicateOccurrence:
+    """One source-key occurrence in a duplicate conflict state."""
 
+    path: str
+    entry_index: int
+    text: str
+
+
+@dataclass(frozen=True)
+class DuplicateConflictState:
+    """Expected or observed duplicate source-key conflict state."""
+
+    scope: str
     path: str
     key: str
     entry_count: int
     texts: tuple[str, ...]
+    occurrences: tuple[DuplicateOccurrence, ...]
 
 
 def _path_candidates(path: Path) -> tuple[Path, Path]:
@@ -120,7 +141,11 @@ def collect_translation_json_files(paths: list[Path]) -> list[Path]:
 
 
 def _load_json(path: Path) -> object:
-    payload: object = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        payload: object = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError, OSError) as exc:
+        msg = f"Failed to load JSON from {path}: {exc}"
+        raise ValueError(msg) from exc
     return payload
 
 
@@ -182,6 +207,7 @@ def _translation_token_multiset(value: str) -> Counter[str]:
         _LEGACY_CARET_COLOR,
         _HTML_COLOR_OPEN,
         _HTML_COLOR_CLOSE,
+        _VARIABLE_TOKEN,
     ):
         tokens.update(match.group(0) for match in pattern.finditer(value))
     tokens.update(match.group(0) for match in _QUD_CLOSER.finditer(bare_span_stripped))
@@ -196,9 +222,49 @@ def _format_counter(counter: Counter[str]) -> str:
     return ", ".join(f"{token!r}: {count}" for token, count in sorted(counter.items()))
 
 
+def _bare_span_opener_equivalent(token: str) -> str | None:
+    if not _BARE_QUD_SPAN.fullmatch(token):
+        return None
+    return f"{token[:-2]}|"
+
+
+def _missing_translation_tokens(source: str, translation: str) -> Counter[str]:
+    source_tokens = _translation_token_multiset(source)
+    translation_tokens = _translation_token_multiset(translation)
+    missing_tokens = source_tokens - translation_tokens
+    for token, count in list(missing_tokens.items()):
+        opener = _bare_span_opener_equivalent(token)
+        if opener is None:
+            continue
+        available_openers = translation_tokens[opener] - source_tokens[opener]
+        covered_count = min(count, max(available_openers, 0))
+        if covered_count == 0:
+            continue
+        missing_tokens[token] -= covered_count
+        if missing_tokens[token] <= 0:
+            del missing_tokens[token]
+    for token, count in list(missing_tokens.items()):
+        covered_count = _allowed_missing_variable_token_count(token, translation)
+        if covered_count == 0:
+            continue
+        missing_tokens[token] -= min(count, covered_count)
+        if missing_tokens[token] <= 0:
+            del missing_tokens[token]
+    return missing_tokens
+
+
+def _allowed_missing_variable_token_count(token: str, translation: str) -> int:
+    if not _VARIABLE_TOKEN.fullmatch(token):
+        return 0
+    if _LOCALIZABLE_VERB_TOKEN.fullmatch(token):
+        return sys.maxsize
+    equivalents = _VARIABLE_TOKEN_EQUIVALENTS.get(token, ())
+    return sum(translation.count(equivalent) for equivalent in equivalents)
+
+
 def _find_token_issues(entry: TranslationEntry) -> list[TranslationIssue]:
     issues: list[TranslationIssue] = []
-    missing_tokens = _translation_token_multiset(entry.key) - _translation_token_multiset(entry.text)
+    missing_tokens = _missing_translation_tokens(entry.key, entry.text)
     if missing_tokens:
         issues.append(
             TranslationIssue(
@@ -231,7 +297,7 @@ def _find_token_issues(entry: TranslationEntry) -> list[TranslationIssue]:
     return issues
 
 
-def _load_duplicate_baseline(path: Path | None) -> dict[tuple[str, str], DuplicateConflictState]:
+def _load_duplicate_baseline(path: Path | None) -> dict[tuple[str, str, str], DuplicateConflictState]:
     if path is None or not path.exists():
         return {}
     payload = _load_json(path)
@@ -244,8 +310,7 @@ def _load_duplicate_baseline(path: Path | None) -> dict[tuple[str, str], Duplica
         raise TypeError(msg)
     if version != _DUPLICATE_BASELINE_VERSION:
         msg = (
-            "Duplicate conflict baseline expected "
-            f"version {_DUPLICATE_BASELINE_VERSION} but found {version!r}: {path}"
+            f"Duplicate conflict baseline expected version {_DUPLICATE_BASELINE_VERSION} but found {version!r}: {path}"
         )
         raise TypeError(msg)
     conflicts = payload.get("duplicate_conflicts")
@@ -253,10 +318,10 @@ def _load_duplicate_baseline(path: Path | None) -> dict[tuple[str, str], Duplica
         msg = f"Duplicate conflict baseline must contain a 'duplicate_conflicts' list: {path}"
         raise TypeError(msg)
 
-    baseline: dict[tuple[str, str], DuplicateConflictState] = {}
+    baseline: dict[tuple[str, str, str], DuplicateConflictState] = {}
     for item in conflicts:
         state = _duplicate_baseline_state(item, path)
-        identity = (state.path, state.key)
+        identity = _duplicate_identity(state)
         if identity in baseline:
             msg = f"Duplicate conflict baseline contains duplicate entry for {identity!r}: {path}"
             raise TypeError(msg)
@@ -271,45 +336,130 @@ def _duplicate_baseline_state(item: object, baseline_path: Path) -> DuplicateCon
 
     relative_path = item.get("path")
     key = item.get("key")
+    scope = item.get("scope")
+    if scope not in {_SAME_FILE_DUPLICATE_SCOPE, _CROSS_FILE_DUPLICATE_SCOPE}:
+        msg = f"Invalid duplicate conflict baseline entry in {baseline_path}: {item!r}"
+        raise TypeError(msg)
     if not isinstance(relative_path, str) or not isinstance(key, str):
         msg = f"Invalid duplicate conflict baseline entry in {baseline_path}: {item!r}"
         raise TypeError(msg)
 
     texts = item.get("texts")
     entry_count = item.get("entry_count")
-    if not isinstance(entry_count, int) or not isinstance(texts, list) or not all(
-        isinstance(text, str) for text in texts
+    occurrences = item.get("occurrences")
+    if (
+        not isinstance(entry_count, int)
+        or not isinstance(texts, list)
+        or not all(isinstance(text, str) for text in texts)
     ):
         msg = f"Invalid duplicate conflict baseline state in {baseline_path}: {item!r}"
         raise TypeError(msg)
     if entry_count != len(texts):
         msg = f"Duplicate conflict baseline entry_count does not match texts length in {baseline_path}: {item!r}"
         raise TypeError(msg)
+    if not isinstance(occurrences, list):
+        msg = f"Duplicate conflict baseline must contain occurrence details in {baseline_path}: {item!r}"
+        raise TypeError(msg)
+    parsed_occurrences = tuple(_duplicate_occurrence_state(occurrence, baseline_path) for occurrence in occurrences)
+    if entry_count != len(parsed_occurrences):
+        msg = f"Duplicate conflict baseline entry_count does not match occurrences length in {baseline_path}: {item!r}"
+        raise TypeError(msg)
+    occurrence_texts = sorted(occurrence.text for occurrence in parsed_occurrences)
+    if sorted(texts) != occurrence_texts:
+        msg = f"Duplicate conflict baseline texts do not match occurrences in {baseline_path}: {item!r}"
+        raise TypeError(msg)
 
     return DuplicateConflictState(
+        scope=scope,
         path=relative_path,
         key=key,
         entry_count=entry_count,
         texts=tuple(sorted(texts)),
+        occurrences=tuple(sorted(parsed_occurrences, key=lambda occurrence: (occurrence.path, occurrence.entry_index))),
     )
 
 
-def _duplicate_conflict_states(entries: list[TranslationEntry]) -> dict[tuple[str, str], DuplicateConflictState]:
+def _duplicate_occurrence_state(item: object, baseline_path: Path) -> DuplicateOccurrence:
+    if not isinstance(item, dict):
+        msg = f"Invalid duplicate conflict baseline occurrence in {baseline_path}: {item!r}"
+        raise TypeError(msg)
+
+    relative_path = item.get("path")
+    entry_index = item.get("entry_index")
+    text = item.get("text")
+    if not isinstance(relative_path, str) or not isinstance(entry_index, int) or not isinstance(text, str):
+        msg = f"Invalid duplicate conflict baseline occurrence in {baseline_path}: {item!r}"
+        raise TypeError(msg)
+    return DuplicateOccurrence(path=relative_path, entry_index=entry_index, text=text)
+
+
+def _duplicate_identity(state: DuplicateConflictState) -> tuple[str, str, str]:
+    return (state.scope, state.path, state.key)
+
+
+def _duplicate_occurrences(entries: list[TranslationEntry]) -> tuple[DuplicateOccurrence, ...]:
+    return tuple(
+        sorted(
+            (
+                DuplicateOccurrence(path=entry.relative_path, entry_index=entry.index, text=entry.text)
+                for entry in entries
+            ),
+            key=lambda occurrence: (occurrence.path, occurrence.entry_index, occurrence.text),
+        )
+    )
+
+
+def _duplicate_state(
+    *,
+    scope: str,
+    path: str,
+    key: str,
+    entries: list[TranslationEntry],
+) -> DuplicateConflictState:
+    occurrences = _duplicate_occurrences(entries)
+    return DuplicateConflictState(
+        scope=scope,
+        path=path,
+        key=key,
+        entry_count=len(occurrences),
+        texts=tuple(sorted(occurrence.text for occurrence in occurrences)),
+        occurrences=occurrences,
+    )
+
+
+def _duplicate_conflict_states(entries: list[TranslationEntry]) -> dict[tuple[str, str, str], DuplicateConflictState]:
     by_path_and_key: dict[tuple[str, str], list[TranslationEntry]] = defaultdict(list)
+    dictionary_entries_by_key: dict[str, list[TranslationEntry]] = defaultdict(list)
     for entry in entries:
         by_path_and_key[(entry.relative_path, entry.key)].append(entry)
+        if entry.relative_path.startswith("Dictionaries/"):
+            dictionary_entries_by_key[entry.key].append(entry)
 
-    states: dict[tuple[str, str], DuplicateConflictState] = {}
+    states: dict[tuple[str, str, str], DuplicateConflictState] = {}
     for (relative_path, key), matches in sorted(by_path_and_key.items()):
-        texts = tuple(sorted(entry.text for entry in matches))
-        if len(set(texts)) < _MIN_CONFLICTING_TRANSLATIONS:
+        if len(matches) < _MIN_CONFLICTING_TRANSLATIONS:
             continue
-        states[(relative_path, key)] = DuplicateConflictState(
+        state = _duplicate_state(
+            scope=_SAME_FILE_DUPLICATE_SCOPE,
             path=relative_path,
             key=key,
-            entry_count=len(matches),
-            texts=texts,
+            entries=matches,
         )
+
+        states[_duplicate_identity(state)] = state
+
+    for key, matches in sorted(dictionary_entries_by_key.items()):
+        paths = {entry.relative_path for entry in matches}
+        texts = {entry.text for entry in matches}
+        if len(paths) < _MIN_CONFLICTING_TRANSLATIONS or len(texts) < _MIN_CONFLICTING_TRANSLATIONS:
+            continue
+        state = _duplicate_state(
+            scope=_CROSS_FILE_DUPLICATE_SCOPE,
+            path="Dictionaries",
+            key=key,
+            entries=matches,
+        )
+        states[_duplicate_identity(state)] = state
     return states
 
 
@@ -317,49 +467,60 @@ def _format_duplicate_state(state: DuplicateConflictState | None) -> str:
     if state is None:
         return "missing current conflict"
     texts = json.dumps(list(state.texts), ensure_ascii=False)
-    return f"entry_count={state.entry_count}, texts={texts}"
+    occurrences = json.dumps(
+        [
+            {"path": occurrence.path, "entry_index": occurrence.entry_index, "text": occurrence.text}
+            for occurrence in state.occurrences
+        ],
+        ensure_ascii=False,
+    )
+    return f"scope={state.scope}, entry_count={state.entry_count}, texts={texts}, occurrences={occurrences}"
+
+
+def _baseline_state_applies(state: DuplicateConflictState, scanned_paths: set[str]) -> bool:
+    if state.scope == _SAME_FILE_DUPLICATE_SCOPE:
+        return state.path in scanned_paths
+    return {occurrence.path for occurrence in state.occurrences}.issubset(scanned_paths)
 
 
 def _find_duplicate_conflicts(
     entries: list[TranslationEntry],
     *,
-    baseline: dict[tuple[str, str], DuplicateConflictState],
+    baseline: dict[tuple[str, str, str], DuplicateConflictState],
     scanned_paths: set[str],
 ) -> list[TranslationIssue]:
     current_states = _duplicate_conflict_states(entries)
     issues: list[TranslationIssue] = []
 
     for identity, expected in sorted(baseline.items()):
-        relative_path, key = identity
-        if relative_path not in scanned_paths:
+        if not _baseline_state_applies(expected, scanned_paths):
             continue
         current = current_states.get(identity)
         if current == expected:
             continue
         issues.append(
             TranslationIssue(
-                relative_path=relative_path,
+                relative_path=expected.path,
                 entry_index=None,
                 kind="BASELINE",
                 detail=(
                     "duplicate conflict baseline changed: "
                     f"expected {_format_duplicate_state(expected)}; current {_format_duplicate_state(current)}"
                 ),
-                key=key,
+                key=expected.key,
             ),
         )
 
     for identity, state in sorted(current_states.items()):
         if identity in baseline:
             continue
-        relative_path, key = identity
         issues.append(
             TranslationIssue(
-                relative_path=relative_path,
+                relative_path=state.path,
                 entry_index=None,
                 kind="DUPLICATE",
                 detail=f"duplicate source key conflict: {_format_duplicate_state(state)}",
-                key=key,
+                key=state.key,
             ),
         )
     return issues
