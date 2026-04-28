@@ -18,6 +18,7 @@ directory.
 """
 
 import json
+import re
 import subprocess
 import sys
 import zipfile
@@ -54,7 +55,7 @@ def read_version(manifest_path: Path) -> str:
     Raises:
         FileNotFoundError: If manifest.json does not exist.
         KeyError: If the ``Version`` key is missing.
-        ValueError: If the version string is empty.
+        ValueError: If the version string is empty or not simple semver.
     """
     if not manifest_path.exists():
         msg = f"manifest.json not found: {manifest_path}"
@@ -64,6 +65,9 @@ def read_version(manifest_path: Path) -> str:
     version = str(data["Version"])
     if not version:
         msg = "Version field is empty in manifest.json"
+        raise ValueError(msg)
+    if re.fullmatch(r"\d+\.\d+\.\d+", version) is None:
+        msg = "Version field must be simple semver X.Y.Z in manifest.json"
         raise ValueError(msg)
     return version
 

@@ -1,0 +1,54 @@
+# 2026-04-28 Issue #370 No-Context Rebucket Closeout
+
+## Conclusion
+
+Issue #370 acceptance criteria are satisfied by the current evidence. The current static inventory and runtime triage artifacts contain no `<no-context>` rows. The older 48-row `<no-context>` evidence in `.sisyphus/evidence/task-11-runtime-triage.json` is stale and superseded by the newer zero-count artifacts.
+
+No GitHub issue change was made in this local closeout pass. `gh` authentication was invalid in the earlier check, and no further `gh` commands were attempted.
+
+## Verified Counts
+
+| Artifact | Command/data checked | Result |
+| --- | --- | --- |
+| `docs/candidate-inventory.json` | `scan_date`, `len(sites)`, and `<no-context>` count across `route`, `context`, `owner_route`, `family` | `scan_date=2026-04-14`, `sites=4634`, `<no-context>` rows `0`; per field: `route=0`, `context=0`, `owner_route=0`, `family=0` |
+| `.sisyphus/evidence/task-12-triage.json` | `summary.total`, serialized `<no-context>` presence, `phase_f.summary.total` | `summary.total=0`, `<no-context>` absent, `phase_f.summary.total=0` |
+| `.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json` | `summary.total`, serialized `<no-context>` presence, `phase_f.summary.total` | `summary.total=0`, `<no-context>` absent, `phase_f.summary.total=0` |
+| `.sisyphus/evidence/task-11-runtime-triage.json` | `sum(len(v) for v in by_route["<no-context>"].values())` | stale `<no-context>` rows `48` (`static_leaf=1`, `route_patch=0`, `logic_required=3`, `unresolved=44`) |
+
+## Closure Support
+
+The evidence supporting closure is:
+
+```bash
+python3 -c "import json; d=json.load(open('docs/candidate-inventory.json')); ks=('route','context','owner_route','family'); print(d['scan_date'], len(d['sites']), sum(any(s.get(k)=='<no-context>' for k in ks) for s in d['sites']), *(sum(s.get(k)=='<no-context>' for s in d['sites']) for k in ks))"
+python3 -c "import json; p='.sisyphus/evidence/task-12-triage.json'; d=json.load(open(p)); print(p, d['summary']['total'], '<no-context>' in json.dumps(d), d['phase_f']['summary']['total'])"
+python3 -c "import json; p='.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json'; d=json.load(open(p)); print(p, d['summary']['total'], '<no-context>' in json.dumps(d), d['phase_f']['summary']['total'])"
+python3 -c "import json; p='.sisyphus/evidence/task-11-runtime-triage.json'; d=json.load(open(p)); print(p, sum(len(v) for v in d['by_route']['<no-context>'].values()), '<no-context>' in d['by_route'])"
+```
+
+Observed output:
+
+```text
+2026-04-14 4634 0 0 0 0 0
+.sisyphus/evidence/task-12-triage.json 0 False 0
+.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json 0 False 0
+.sisyphus/evidence/task-11-runtime-triage.json 48 True
+```
+
+Interpretation: current evidence has no `<no-context>` inventory or runtime triage rows. The old task-11 artifact still records 48 stale rows, but it is superseded by `docs/candidate-inventory.json`, `.sisyphus/evidence/task-12-triage.json`, and `.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json`.
+
+## Ready-to-Paste GitHub Close Comment
+
+```markdown
+Closing as satisfied by current evidence.
+
+Verified local artifacts on 2026-04-28:
+
+- `docs/candidate-inventory.json`: `scan_date=2026-04-14`, `sites=4634`, `<no-context>` rows across `route`, `context`, `owner_route`, and `family` = `0`.
+- `.sisyphus/evidence/task-12-triage.json`: `summary.total=0`, no serialized `<no-context>`, `phase_f.summary.total=0`.
+- `.sisyphus/evidence/release-slice-0/runtime-triage-fresh.json`: `summary.total=0`, no serialized `<no-context>`, `phase_f.summary.total=0`.
+
+The older `.sisyphus/evidence/task-11-runtime-triage.json` artifact still contains 48 `<no-context>` rows (`static_leaf=1`, `logic_required=3`, `unresolved=44`), but that evidence is stale and superseded by the current zero-count inventory and triage artifacts above.
+
+Closeout report: `docs/reports/2026-04-28-issue-370-no-context-rebucket-closeout.md`
+```
