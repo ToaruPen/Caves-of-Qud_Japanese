@@ -82,6 +82,40 @@ public sealed class MessagePatternTranslatorPropertyTests
     }
 
     [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_BlockedByArticleGenericFallback_UsesGenericBlockedByTranslation(
+        BlockedByArticlePatternCase sample)
+    {
+        Assert.That(sample.ExpectedGenericFallbackTranslated, Is.Not.EqualTo(sample.ExpectedTranslated));
+
+        var fallbackSource = sample.Source
+            .Replace(" by some ", " by an ", StringComparison.Ordinal)
+            .Replace(" by a ", " by an ", StringComparison.Ordinal);
+
+        return AssertTranslated(fallbackSource, sample.ExpectedGenericFallbackTranslated);
+    }
+
+    [Test]
+    public void Translate_BlockedByArticleEdgeCases_PreservesEmptyInput()
+    {
+        _ = AssertTranslated(string.Empty, string.Empty);
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_BlockedByArticleEdgeCases_PreservesDirectMarker(
+        BlockedByArticlePatternCase sample)
+    {
+        var markedSource = "\u0001" + sample.Source;
+        return AssertTranslated(markedSource, markedSource);
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
+    public FsCheckProperty Translate_BlockedByArticleColorTags_PreserveCaptureMarkup(
+        BlockedByArticleColorTagPatternCase sample)
+    {
+        return AssertTranslated(sample.Source, sample.ExpectedTranslated);
+    }
+
+    [FsCheck.NUnit.Property(Arbitrary = new[] { typeof(MessagePatternTranslatorArbitraries) }, MaxTest = 100, Replay = ReplaySeed)]
     public FsCheckProperty Translate_PrefersPassByArticleBeforeGenericPassBy(PassByArticlePatternCase sample)
     {
         return AssertTranslated(sample.Source, sample.ExpectedTranslated);

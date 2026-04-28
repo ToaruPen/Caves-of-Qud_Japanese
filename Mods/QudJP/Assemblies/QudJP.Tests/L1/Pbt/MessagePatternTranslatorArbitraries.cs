@@ -24,6 +24,8 @@ public sealed record BlockedByArticlePatternCase(
     string ExpectedTranslated,
     string ExpectedGenericFallbackTranslated);
 
+public sealed record BlockedByArticleColorTagPatternCase(string Source, string ExpectedTranslated);
+
 public sealed record PassByArticlePatternCase(string Source, string ExpectedTranslated);
 
 public static class MessagePatternTranslatorArbitraries
@@ -148,6 +150,18 @@ public static class MessagePatternTranslatorArbitraries
                 let expected = $"{obstacle}が道を塞いでいる。"
                 let expectedGenericFallback = $"{obstacle}に道を塞がれている。"
                 select new BlockedByArticlePatternCase(source, expected, expectedGenericFallback))
+            .ToArbitrary();
+    }
+
+    public static Arbitrary<BlockedByArticleColorTagPatternCase> BlockedByArticleColorTagPatternCases()
+    {
+        return (from article in Gen.Elements("some", "a")
+                from obstacle in SafeObjectText()
+                from color in Gen.Elements("#ff0", "#44ff88", "yellow")
+                let coloredObstacle = $"<color={color}>{obstacle}</color>"
+                let source = $"The way is blocked by {article} {coloredObstacle}."
+                let expected = $"{coloredObstacle}が道を塞いでいる。"
+                select new BlockedByArticleColorTagPatternCase(source, expected))
             .ToArbitrary();
     }
 
