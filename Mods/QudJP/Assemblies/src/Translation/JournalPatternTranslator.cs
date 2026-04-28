@@ -628,7 +628,7 @@ internal static class JournalPatternTranslator
             }
 
             var value = part.TranslateCapture ? TranslateTemplateCapture(group.Value) : group.Value;
-            builder.Append(ColorAwareTranslationComposer.RestoreSlice(value, spans, group.Index, group.Length));
+            builder.Append(ColorAwareTranslationComposer.MarkupAwareRestoreCapture(value, spans, group));
             nextSourceStart = group.Index + group.Length;
         }
 
