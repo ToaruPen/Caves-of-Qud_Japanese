@@ -10,6 +10,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
+from typing import Final
 
 type TextRange = tuple[int, int]
 type TextRangeCandidates = tuple[TextRange, ...]
@@ -48,6 +49,9 @@ _VARIABLE_TOKEN_EQUIVALENTS = {
     "=pronouns.objective=": ("=subject.name=",),
     "=pronouns.possessive=": ("=subject.name=",),
 }
+_VARIABLE_EQUIVALENT_TOKENS = frozenset(
+    equivalent for token_equivalents in _VARIABLE_TOKEN_EQUIVALENTS.values() for equivalent in token_equivalents
+)
 _OMITTABLE_VARIABLE_TOKENS = {
     "=objpronouns.reflexive=",
     "=subject.possessive=",
@@ -56,6 +60,8 @@ _ARTICLE_ONLY_VARIABLE_TOKENS = {
     "=subject.The=",
     "=subject.the=",
 }
+# This marks tokens that can be dropped any number of times by design.
+UNLIMITED_ALLOWED_MISSING_TOKENS: Final[int] = sys.maxsize
 
 
 @dataclass(frozen=True)
@@ -301,21 +307,16 @@ def _allowed_missing_non_consuming_variable_token_count(token: str) -> int:
     if not _VARIABLE_TOKEN.fullmatch(token):
         return 0
     if _LOCALIZABLE_VERB_TOKEN.fullmatch(token):
-        return sys.maxsize
+        return UNLIMITED_ALLOWED_MISSING_TOKENS
     if token in _OMITTABLE_VARIABLE_TOKENS or token in _ARTICLE_ONLY_VARIABLE_TOKENS:
-        return sys.maxsize
+        return UNLIMITED_ALLOWED_MISSING_TOKENS
     return 0
 
 
 def _available_variable_equivalent_token_ranges(translation: str) -> dict[str, list[TextRange]]:
-    equivalents = {
-        equivalent
-        for token_equivalents in _VARIABLE_TOKEN_EQUIVALENTS.values()
-        for equivalent in token_equivalents
-    }
     return {
         equivalent: [(match.start(), match.end()) for match in re.finditer(re.escape(equivalent), translation)]
-        for equivalent in equivalents
+        for equivalent in _VARIABLE_EQUIVALENT_TOKENS
     }
 
 
