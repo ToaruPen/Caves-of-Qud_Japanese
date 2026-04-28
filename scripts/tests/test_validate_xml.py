@@ -641,7 +641,7 @@ def test_source_root_parse_os_error_reports_deterministic_warning(
 
     original_parse = ET.parse
 
-    def fail_source_parse(path: Path) -> "ET.ElementTree[ET.Element[str]]":
+    def fail_source_parse(path: Path) -> "ET.ElementTree[ET.Element]":
         if Path(path) == source_xml:
             message = "permission denied"
             raise OSError(message)

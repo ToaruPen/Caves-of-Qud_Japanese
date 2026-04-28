@@ -635,8 +635,6 @@ def _find_markup_token_drift(
 
         missing_tokens = source_tokens - localized_tokens
         extra_tokens = localized_tokens - source_tokens
-        if not missing_tokens and not extra_tokens:
-            continue
 
         details: list[str] = []
         if missing_tokens:
