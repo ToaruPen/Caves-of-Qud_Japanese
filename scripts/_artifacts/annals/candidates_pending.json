@@ -486,7 +486,7 @@
       ],
       "status": "accepted",
       "reason": "",
-      "ja_template": "{t0}、{t1}の{t2}にて、スルタンに健やかなる子が生まれた。{t3}誕生の瞬間、{t4}、祝賀として民は{t5}。その嬰児は{t6}と名づけられたが、民は{t7}を{t8}と呼んだ。",
+      "ja_template": "{t0}、{t1}の{t2}にて、スルタンに健やかなる子が生まれた。{t3}の誕生の瞬間、{t4}、祝賀として民は{t5}。その嬰児は{t6}と名づけられたが、民は{t7}を{t8}と呼んだ。",
       "review_notes": "",
       "route": "annals",
       "en_template_hash": "sha256:b629addf0e49ec9a1f65d76bbac0b9c8b815f81e3ea3289841adb95a3a4a4562"
@@ -557,7 +557,7 @@
       ],
       "status": "accepted",
       "reason": "",
-      "ja_template": "{t0}よ！ {t2}の生涯を{t1}、すなわち{t3}と呼ばれし者の生涯を！ 化石化せしサアドの裔にして、{t5}を授けられし{t4}なり。{t6}の双つの奇跡を見よ。{t7}が生まれ、そして{t8}。",
+      "ja_template": "{t0}よ！ {t1}、{t2}の生涯を。すなわち{t3}と呼ばれし者、化石化せしサアドの裔にして、{t5}を授けられし者なり。{t6}の双つの奇跡を見よ。{t7}が生まれ、そして{t8}。",
       "review_notes": "",
       "route": "annals",
       "en_template_hash": "sha256:7f067f9f7f2cf3cc71235083167ff3372be511c37b65f4d7e7bea997dfb7434e"
@@ -1243,7 +1243,7 @@
       ],
       "status": "accepted",
       "reason": "",
-      "ja_template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}友誼を固めた。",
+      "ja_template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}の友誼を固めた。",
       "review_notes": "",
       "route": "annals",
       "en_template_hash": "sha256:ce29afe90ea02a33072c19a58b557c71dd15a9413973c79856cccd47ab006d37"
@@ -1314,7 +1314,7 @@
       ],
       "status": "accepted",
       "reason": "",
-      "ja_template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}友誼を固めた。{t5}、{t6}は{t7}に、彼らが{t8}と呼ぶ婚礼の贈り物を授けた。",
+      "ja_template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}の友誼を固めた。{t5}、{t6}は{t7}に、彼らが{t8}と呼ぶ婚礼の贈り物を授けた。",
       "review_notes": "",
       "route": "annals",
       "en_template_hash": "sha256:beb11a404551ddefab0ccec7a96775047d89865691612f445d8c2524ff48bc91"
@@ -1361,7 +1361,7 @@
       ],
       "status": "accepted",
       "reason": "",
-      "ja_template": "{t0}、{t1}と{t2}、その{t3}婚姻の同盟は{t4}。",
+      "ja_template": "{t0}、{t1}と{t2}、その{t3}な婚姻同盟は{t4}。",
       "review_notes": "",
       "route": "annals",
       "en_template_hash": "sha256:b40c0d7b8c072dd75501dcf5f2613ab440441e5d5e90e873dab328282e7f5e3f"
