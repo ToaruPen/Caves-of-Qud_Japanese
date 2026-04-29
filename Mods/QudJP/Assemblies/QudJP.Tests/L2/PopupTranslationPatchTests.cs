@@ -1494,6 +1494,92 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
+    public void TranslatePopupTextForProducerRoute_PrefersExactSourceMarkupOverStrippedExact()
+    {
+        WriteDictionary(
+            ("[n] No", "[n] いいえ"),
+            ("{{W|[n]}} {{y|No}}", "{{W|[n]}} {{y|いいえ}}"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "{{W|[n]}} {{y|No}}",
+            nameof(PopupTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("{{W|[n]}} {{y|いいえ}}"));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_ExactStrippedLookup_RestoresWholeSourceWrapper()
+    {
+        WriteDictionary(("No", "いいえ"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "{{y|No}}",
+            nameof(PopupTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("{{y|いいえ}}"));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_ExactStrippedLookup_RestoresOnlyOuterNestedSourceWrapper()
+    {
+        WriteDictionary(("No", "いいえ"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "{{R|{{y|No}}}}",
+            nameof(PopupTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("{{R|いいえ}}"));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_ExactStrippedLookup_PreservesNestedTranslatedOwnedMarkup()
+    {
+        WriteDictionary(("No", "{{y|いいえ}}"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "{{R|{{y|No}}}}",
+            nameof(PopupTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("{{R|{{y|いいえ}}}}"));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_ExactStrippedLookup_RestoresAdjacentSourceWrappers()
+    {
+        WriteDictionary(("[n] No", "[n] いいえ"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "{{W|[n]}} {{y|No}}",
+            nameof(PopupTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("{{W|[n]}} {{y|いいえ}}"));
+    }
+
+    [Test]
+    public void TranslatePopupMenuItemTextForProducerRoute_ExactStrippedLookup_RestoresAdjacentSourceWrappers()
+    {
+        WriteDictionary(("[n] No", "[n] いいえ"));
+
+        var translated = PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute(
+            "{{W|[n]}} {{y|No}}",
+            nameof(PopupTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("{{W|[n]}} {{y|いいえ}}"));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_ExactStrippedLookup_PreservesNestedMixedFamilyCloseOrder()
+    {
+        WriteDictionary(("No", "いいえ"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "{{W|<color=#44ff88>No</color>}}",
+            nameof(PopupTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("{{W|<color=#44ff88>いいえ</color>}}"));
+    }
+
+    [Test]
     public void TranslatePopupTextForProducerRoute_ExactStrippedLookup_DoesNotProjectInlineSourceColors()
     {
         WriteDictionary((

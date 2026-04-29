@@ -212,6 +212,280 @@ public sealed class ColorCodePreserverTests
     }
 
     [Test]
+    public void TranslatePreservingColors_ExpandsWholeWrapperToTranslatedLabel()
+    {
+        var translated = ColorAwareTranslationComposer.TranslatePreservingColors(
+            "{{y|No}}",
+            _ => "いいえ");
+
+        Assert.That(translated, Is.EqualTo("{{y|いいえ}}"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_RestoresWholeSourceWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{y|No}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "いいえ",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("{{y|いいえ}}"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_RestoresOnlyOuterNestedSourceWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{R|{{y|No}}}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "いいえ",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("{{R|いいえ}}"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_PreservesNestedTranslatedOwnedMarkup()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{R|{{y|No}}}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "{{y|いいえ}}",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("{{R|{{y|いいえ}}}}"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_PreservesNestedQudAndTmpColorWrappers()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|<color=#44ff88>No</color>}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "いいえ",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("{{W|<color=#44ff88>いいえ</color>}}"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_PreservesNestedTmpColorAndQudWrappers()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("<color=#44ff88>{{y|No}}</color>");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "いいえ",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("<color=#44ff88>{{y|いいえ}}</color>"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_PreservesWholeForegroundWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("&GNo&y");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "いいえ",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("&Gいいえ&y"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_PreservesWholeBackgroundWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("^rNo^k");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "いいえ",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("^rいいえ^k"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_DoesNotProjectInlineSourceWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("Take {{y|No}} now");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "今はいいえを選ぶ",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("今はいいえを選ぶ"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_DoesNotPairAdjacentWrappers()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|[n]}} {{y|No}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "[n] いいえ",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("[n] いいえ"));
+    }
+
+    [Test]
+    public void RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership_RestoresAdjacentWrappers()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|[n]}} {{y|No}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(
+            "[n] いいえ",
+            spans,
+            stripped);
+
+        Assert.That(restored, Is.EqualTo("{{W|[n]}} {{y|いいえ}}"));
+    }
+
+    [Test]
+    public void RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership_PreservesTranslatedOwnedMarkup()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{R|No}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(
+            "{{y|いいえ}}",
+            spans,
+            stripped);
+
+        Assert.That(restored, Is.EqualTo("{{R|{{y|いいえ}}}}"));
+    }
+
+    [Test]
+    public void RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership_PreservesNestedMixedFamilyCloseOrder()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|<color=#44ff88>No</color>}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(
+            "いいえ",
+            spans,
+            stripped);
+
+        Assert.That(restored, Is.EqualTo("{{W|<color=#44ff88>いいえ</color>}}"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_PreservesTranslatedOwnedMarkup()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{y|No}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "{{W|いいえ}}",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("{{y|{{W|いいえ}}}}"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_DoesNotDuplicateTranslatedOwnedWholeWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{y|No}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "{{y|いいえ}}",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("{{y|いいえ}}"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_DoesNotDuplicateLeadingSameFamilyTranslatedMarkup()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{B|wet グロウフィッシュ [swimming]}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "{{B|濡れた}}グロウフィッシュ [swimming]",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("{{B|濡れた}}グロウフィッシュ [swimming]"));
+    }
+
+    [Test]
+    public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_PreservesSourceNestingWhenTranslatedWrapperDuplicatesOuterWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|<color=#44ff88>No</color>}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+            "{{W|いいえ}}",
+            spans,
+            stripped.Length);
+
+        Assert.That(restored, Is.EqualTo("{{W|<color=#44ff88>いいえ</color>}}"));
+    }
+
+    [Test]
+    public void RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership_DoesNotProjectNestedSameFamilySourceWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{R|{{y|No}}}}");
+        var match = Regex.Match(stripped, "^(No)$");
+
+        var restored = ColorAwareTranslationComposer.RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership(
+            "{{y|いいえ}}",
+            spans,
+            match.Groups[1]);
+
+        Assert.That(restored, Is.EqualTo("{{R|{{y|いいえ}}}}"));
+    }
+
+    [Test]
+    public void RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership_DoesNotDuplicateTranslatedOwnedWholeWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{y|No}}");
+        var match = Regex.Match(stripped, "^(No)$");
+
+        var restored = ColorAwareTranslationComposer.RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership(
+            "{{y|いいえ}}",
+            spans,
+            match.Groups[1]);
+
+        Assert.That(restored, Is.EqualTo("{{y|いいえ}}"));
+    }
+
+    [Test]
+    public void RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership_PreservesSourceNestingWhenTranslatedWrapperDuplicatesOuterWrapper()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|<color=#44ff88>No</color>}}");
+        var match = Regex.Match(stripped, "^(No)$");
+
+        var restored = ColorAwareTranslationComposer.RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership(
+            "{{W|いいえ}}",
+            spans,
+            match.Groups[1]);
+
+        Assert.That(restored, Is.EqualTo("{{W|<color=#44ff88>いいえ</color>}}"));
+    }
+
+    [Test]
+    public void RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership_DoesNotPairAdjacentWrappers()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|[n]}} {{y|No}}");
+        var match = Regex.Match(stripped, @"^(\[n\]) (No)$");
+
+        var restored = ColorAwareTranslationComposer.RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership(
+            "{{y|いいえ}}",
+            spans,
+            match.Groups[2]);
+
+        Assert.That(restored, Is.EqualTo("{{y|いいえ}}"));
+    }
+
+    [Test]
     public void Strip_ReturnsEmptyValue_ForNullOrEmptyInput()
     {
         var nullResult = ColorCodePreserver.Strip(null);
