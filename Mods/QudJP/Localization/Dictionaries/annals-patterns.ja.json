@@ -53,7 +53,7 @@
     },
     {
       "pattern": "^(.+?)\\ in\\ (.+?),\\ a\\ healthy\\ child\\ was\\ born\\ to\\ the\\ sultan\\ at\\ (.+?)\\.\\ At\\ the\\ moment\\ of\\ (.+?)\\ birth,\\ (.+?),\\ and\\ in\\ celebration\\ the\\ people\\ (.+?)\\.\\ The\\ babe\\ was\\ named\\ (.+?),\\ but\\ the\\ people\\ called\\ (.+?)\\ (.+?)\\.$",
-      "template": "{t0}、{t1}の{t2}にて、スルタンに健やかなる子が生まれた。{t3}誕生の瞬間、{t4}、祝賀として民は{t5}。その嬰児は{t6}と名づけられたが、民は{t7}を{t8}と呼んだ。",
+      "template": "{t0}、{t1}の{t2}にて、スルタンに健やかなる子が生まれた。{t3}の誕生の瞬間、{t4}、祝賀として民は{t5}。その嬰児は{t6}と名づけられたが、民は{t7}を{t8}と呼んだ。",
       "route": "annals"
     },
     {
@@ -68,7 +68,7 @@
     },
     {
       "pattern": "^(.+?)!\\ (.+?)\\ the\\ life\\ of\\ (.+?)\\ --\\ called\\ (.+?)!\\ --\\ scion\\ of\\ the\\ Fossilized\\ Saads\\ and\\ (.+?)\\ who\\ was\\ dowered\\ the\\ (.+?)\\.\\ Observe\\ the\\ twin\\ miracles\\ of\\ the\\ (.+?):\\ the\\ (.+?)\\ was\\ born,\\ and\\ (.+?)\\.$",
-      "template": "{t0}よ！ {t2}の生涯を{t1}、すなわち{t3}と呼ばれし者の生涯を！ 化石化せしサアドの裔にして、{t5}を授けられし{t4}なり。{t6}の双つの奇跡を見よ。{t7}が生まれ、そして{t8}。",
+      "template": "{t0}よ！ {t1}、{t2}の生涯を。すなわち{t3}と呼ばれし者、化石化せしサアドの裔にして、{t5}を授けられし者なり。{t6}の双つの奇跡を見よ。{t7}が生まれ、そして{t8}。",
       "route": "annals"
     },
     {
@@ -158,7 +158,7 @@
     },
     {
       "pattern": "^(.+?),\\ (.+?)\\ cemented\\ (.+?)\\ friendship\\ with\\ (.+?)\\ by\\ marrying\\ (.+?)\\.\\ (.+?),\\ the\\ (.+?)\\ bestowed\\ upon\\ (.+?)\\ a\\ wedding\\ gift\\ they\\ called\\ (.+?)\\.$",
-      "template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}友誼を固めた。{t5}、{t6}は{t7}に、彼らが{t8}と呼ぶ婚礼の贈り物を授けた。",
+      "template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}の友誼を固めた。{t5}、{t6}は{t7}に、彼らが{t8}と呼ぶ婚礼の贈り物を授けた。",
       "route": "annals"
     },
     {
@@ -268,12 +268,12 @@
     },
     {
       "pattern": "^(.+?),\\ (.+?)\\ cemented\\ (.+?)\\ friendship\\ with\\ (.+?)\\ by\\ marrying\\ (.+?)\\.$",
-      "template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}友誼を固めた。",
+      "template": "{t0}、{t1}は{t4}と婚姻を結ぶことにより、{t3}との{t2}の友誼を固めた。",
       "route": "annals"
     },
     {
       "pattern": "^(.+?),\\ (.+?)\\ and\\ (.+?),\\ whose\\ (.+?)\\ alliance\\ by\\ marriage\\ (.+?)\\.$",
-      "template": "{t0}、{t1}と{t2}、その{t3}婚姻の同盟は{t4}。",
+      "template": "{t0}、{t1}と{t2}、その{t3}な婚姻同盟は{t4}。",
       "route": "annals"
     },
     {
