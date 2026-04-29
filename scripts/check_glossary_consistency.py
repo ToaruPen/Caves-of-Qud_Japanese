@@ -227,6 +227,15 @@ def _collect_xml_files(paths: list[Path]) -> list[Path]:
     return sorted(files, key=lambda item: item.as_posix())
 
 
+def _json_entry_location(entry_index: int) -> str:
+    """Build a JSON text location from the translation-token iterator's 1-based index.
+
+    `check_translation_tokens.iter_translation_entries` supplies `entry.index`
+    as 1-based, so this value is intentionally used without adding 1.
+    """
+    return f"entry[{entry_index}].text"
+
+
 def _iter_json_values(paths: list[Path]) -> tuple[set[str], list[LocalizedValue]]:
     files = check_translation_tokens.collect_translation_json_files(paths)
     values: list[LocalizedValue] = []
@@ -234,7 +243,7 @@ def _iter_json_values(paths: list[Path]) -> tuple[set[str], list[LocalizedValue]
         values.extend(
             LocalizedValue(
                 relative_path=entry.relative_path,
-                location=f"entry[{entry.index}].text",
+                location=_json_entry_location(entry.index),
                 text=entry.text,
             )
             for entry in check_translation_tokens.iter_translation_entries(path)
