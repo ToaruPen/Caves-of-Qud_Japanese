@@ -321,20 +321,23 @@ def _find_raw_english_issues(values: list[LocalizedValue], terms: list[GlossaryT
 
 
 def _load_baseline(path: Path | None) -> dict[tuple[str, str, str, str], _BaselineOccurrence]:
-    if path is None or not path.exists():
+    if path is None:
         return {}
+    if not path.exists():
+        msg = f"Glossary baseline file not found: {path}"
+        raise FileNotFoundError(msg)
     payload = _load_json(path)
     if not isinstance(payload, dict):
         msg = f"Glossary baseline must be a JSON object: {path}"
-        raise TypeError(msg)
+        raise ValueError(msg)  # noqa: TRY004 -- Baseline schema validation reports ValueError.
     payload_fields = cast("dict[object, object]", payload)
     if payload_fields.get("version") != _BASELINE_VERSION:
         msg = f"Glossary baseline expected version {_BASELINE_VERSION}: {path}"
-        raise TypeError(msg)
+        raise ValueError(msg)
     occurrences = payload_fields.get("allowed_occurrences")
     if not isinstance(occurrences, list):
         msg = f"Glossary baseline must contain an 'allowed_occurrences' list: {path}"
-        raise TypeError(msg)
+        raise ValueError(msg)  # noqa: TRY004 -- Baseline schema validation reports ValueError.
     occurrence_items = cast("list[object]", occurrences)
 
     baseline: dict[tuple[str, str, str, str], _BaselineOccurrence] = {}
@@ -343,7 +346,7 @@ def _load_baseline(path: Path | None) -> dict[tuple[str, str, str, str], _Baseli
         identity = _baseline_identity(occurrence)
         if identity in baseline:
             msg = f"Glossary baseline contains duplicate occurrence for {identity!r}: {path}"
-            raise TypeError(msg)
+            raise ValueError(msg)
         baseline[identity] = occurrence
     return baseline
 
@@ -351,7 +354,7 @@ def _load_baseline(path: Path | None) -> dict[tuple[str, str, str, str], _Baseli
 def _baseline_occurrence(item: object, baseline_path: Path) -> _BaselineOccurrence:
     if not isinstance(item, dict):
         msg = f"Invalid glossary baseline occurrence in {baseline_path}: {item!r}"
-        raise TypeError(msg)
+        raise ValueError(msg)  # noqa: TRY004 -- Baseline schema validation reports ValueError.
     fields = cast("dict[object, object]", item)
     item_context = repr(fields)
     return _BaselineOccurrence(
@@ -371,8 +374,11 @@ def _baseline_string_field(
 ) -> str:
     value = fields.get(field_name)
     if not isinstance(value, str):
-        msg = f"Invalid glossary baseline occurrence in {baseline_path}: {item_context}"
-        raise TypeError(msg)
+        msg = (
+            f"Invalid glossary baseline occurrence in {baseline_path}: "
+            f"field {field_name!r} must be a string in {item_context}"
+        )
+        raise ValueError(msg)  # noqa: TRY004 -- Baseline schema validation reports ValueError.
     return value
 
 

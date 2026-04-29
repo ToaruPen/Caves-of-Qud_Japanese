@@ -3,10 +3,10 @@ from __future__ import annotations
 import json
 from typing import TYPE_CHECKING
 
+import pytest
+
 if TYPE_CHECKING:
     from pathlib import Path
-
-    import pytest
 
 from scripts import check_glossary_consistency
 
@@ -45,6 +45,18 @@ def _write_baseline(path: Path, *occurrences: dict[str, str]) -> None:
             ensure_ascii=False,
         ),
         encoding="utf-8",
+    )
+
+
+def _check_with_baseline(tmp_path: Path, baseline_path: Path) -> None:
+    glossary_path = tmp_path / "glossary.csv"
+    localization = tmp_path / "Localization"
+    _write_glossary(glossary_path)
+    _write_entries(localization / "Dictionaries" / "demo.ja.json", [{"key": "Source", "text": "ゴルゴタ"}])
+    _ = check_glossary_consistency.check_paths(
+        [localization],
+        glossary_path=glossary_path,
+        baseline_path=baseline_path,
     )
 
 
@@ -225,6 +237,68 @@ def test_full_localization_scan_reports_deleted_file_baseline_entries(tmp_path: 
         ("BASELINE", "Dictionaries/deleted.ja.json", "entry[1].text"),
     ]
     assert partial_result.issues == []
+
+
+def test_missing_baseline_path_raises_explicit_error(tmp_path: Path) -> None:
+    """Passing a baseline path must fail explicitly if the file is absent."""
+    baseline_path = tmp_path / "missing-baseline.json"
+
+    with pytest.raises(FileNotFoundError, match=r"missing-baseline\.json"):
+        _check_with_baseline(tmp_path, baseline_path)
+
+
+def test_baseline_rejects_wrong_version(tmp_path: Path) -> None:
+    """Baseline schema errors use ValueError for caller-visible validation failures."""
+    baseline_path = tmp_path / "baseline.json"
+    _ = baseline_path.write_text(
+        json.dumps({"version": 2, "allowed_occurrences": []}),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="expected version 1"):
+        _check_with_baseline(tmp_path, baseline_path)
+
+
+def test_baseline_rejects_duplicate_occurrences(tmp_path: Path) -> None:
+    """Duplicate baseline rows are rejected instead of silently collapsing."""
+    baseline_path = tmp_path / "baseline.json"
+    occurrence = {
+        "term": "Golgotha",
+        "path": "Dictionaries/demo.ja.json",
+        "location": "entry[1].text",
+        "text": "Golgotha remains for now.",
+    }
+    _write_baseline(baseline_path, occurrence, occurrence)
+
+    with pytest.raises(ValueError, match="duplicate occurrence"):
+        _check_with_baseline(tmp_path, baseline_path)
+
+
+@pytest.mark.parametrize(
+    ("occurrence", "message"),
+    [
+        (["not", "an", "object"], "Invalid glossary baseline occurrence"),
+        ({"term": "Golgotha", "path": "Dictionaries/demo.ja.json", "location": "entry[1].text"}, "field 'text'"),
+        (
+            {"term": "Golgotha", "path": "Dictionaries/demo.ja.json", "location": "entry[1].text", "text": 123},
+            "field 'text'",
+        ),
+    ],
+)
+def test_baseline_rejects_malformed_or_missing_required_fields(
+    tmp_path: Path,
+    occurrence: object,
+    message: str,
+) -> None:
+    """Each occurrence must be an object with the required string fields."""
+    baseline_path = tmp_path / "baseline.json"
+    _ = baseline_path.write_text(
+        json.dumps({"version": 1, "allowed_occurrences": [occurrence]}),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match=message):
+        _check_with_baseline(tmp_path, baseline_path)
 
 
 def test_cli_reports_raw_english_residue(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
