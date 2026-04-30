@@ -391,6 +391,32 @@ public sealed class ColorCodePreserverTests
     }
 
     [Test]
+    public void RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership_UsesAnchorsForRepeatedVisibleSegment()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("A [n] B {{y|[n]}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(
+            "A [n] B [n]",
+            spans,
+            stripped);
+
+        Assert.That(restored, Is.EqualTo("A [n] B {{y|[n]}}"));
+    }
+
+    [Test]
+    public void RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership_ClosesTranslatedMarkupBeforeLaterSourceOpening()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("A {{y|No}}");
+
+        var restored = ColorAwareTranslationComposer.RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(
+            "{{g|A }}いいえ",
+            spans,
+            stripped);
+
+        Assert.That(restored, Is.EqualTo("{{g|A }}{{y|いいえ}}"));
+    }
+
+    [Test]
     public void RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership_PreservesNestedMixedFamilyCloseOrder()
     {
         var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|<color=#44ff88>No</color>}}");

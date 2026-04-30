@@ -223,7 +223,7 @@ internal static class ColorAwareTranslationComposer
         mergedSpans.AddRange(sourceOpenings);
         mergedSpans.AddRange(translatedOwnedSpans);
         mergedSpans.AddRange(sourceClosings);
-        return Restore(visible, mergedSpans);
+        return Restore(visible, NormalizeSpansForRestoreOrder(mergedSpans));
     }
 
     private static List<WholeBoundaryPair> ExtractTrueBoundaryPairs(
@@ -295,8 +295,7 @@ internal static class ColorAwareTranslationComposer
         }
 
         var sourceSegment = sourceVisible.Substring(sourceStart, sourceEnd - sourceStart);
-        var exactIndex = translatedVisible.IndexOf(sourceSegment, StringComparison.Ordinal);
-        if (exactIndex >= 0)
+        if (TryFindUniqueOccurrence(translatedVisible, sourceSegment, out var exactIndex))
         {
             translatedStart = exactIndex;
             translatedEnd = exactIndex + sourceSegment.Length;
@@ -336,6 +335,36 @@ internal static class ColorAwareTranslationComposer
         return false;
     }
 
+    private static bool TryFindUniqueOccurrence(string value, string segment, out int occurrenceIndex)
+    {
+        occurrenceIndex = -1;
+        if (segment.Length == 0)
+        {
+            return false;
+        }
+
+        var searchStart = 0;
+        while (searchStart <= value.Length - segment.Length)
+        {
+            var index = value.IndexOf(segment, searchStart, StringComparison.Ordinal);
+            if (index < 0)
+            {
+                break;
+            }
+
+            if (occurrenceIndex >= 0)
+            {
+                occurrenceIndex = -1;
+                return false;
+            }
+
+            occurrenceIndex = index;
+            searchStart = index + 1;
+        }
+
+        return occurrenceIndex >= 0;
+    }
+
     private static bool HasSameTranslatedBoundaryPair(
         IReadOnlyList<WholeBoundaryPair> translatedBoundaryPairs,
         int translatedStart,
@@ -356,6 +385,58 @@ internal static class ColorAwareTranslationComposer
         }
 
         return false;
+    }
+
+    private static List<ColorSpan> NormalizeSpansForRestoreOrder(IReadOnlyList<ColorSpan> spans)
+    {
+        var orderedSpans = new List<OrderedColorSpan>(spans.Count);
+        for (var index = 0; index < spans.Count; index++)
+        {
+            orderedSpans.Add(new OrderedColorSpan(spans[index], index));
+        }
+
+        orderedSpans.Sort(static (left, right) =>
+        {
+            var indexComparison = left.Span.Index.CompareTo(right.Span.Index);
+            if (indexComparison != 0)
+            {
+                return indexComparison;
+            }
+
+            var rankComparison = GetRestoreBoundaryRank(left.Span.Token).CompareTo(
+                GetRestoreBoundaryRank(right.Span.Token));
+            if (rankComparison != 0)
+            {
+                return rankComparison;
+            }
+
+            return left.Order.CompareTo(right.Order);
+        });
+
+        var normalized = new List<ColorSpan>(orderedSpans.Count);
+        for (var index = 0; index < orderedSpans.Count; index++)
+        {
+            normalized.Add(orderedSpans[index].Span);
+        }
+
+        return normalized;
+    }
+
+    private static int GetRestoreBoundaryRank(string token)
+    {
+        var isOpening = ColorCodePreserver.IsOpeningBoundaryToken(token);
+        var isClosing = ColorCodePreserver.IsClosingBoundaryToken(token);
+        if (isClosing && !isOpening)
+        {
+            return 0;
+        }
+
+        if (isOpening && !isClosing)
+        {
+            return 1;
+        }
+
+        return 2;
     }
 
     private static List<WholeBoundaryPair> ExtractTrueWholeBoundaryPairs(
@@ -1151,5 +1232,18 @@ internal static class ColorAwareTranslationComposer
         internal string ClosingToken { get; }
 
         internal int ClosingOrder { get; }
+    }
+
+    private readonly struct OrderedColorSpan
+    {
+        internal OrderedColorSpan(ColorSpan span, int order)
+        {
+            Span = span;
+            Order = order;
+        }
+
+        internal ColorSpan Span { get; }
+
+        internal int Order { get; }
     }
 }
