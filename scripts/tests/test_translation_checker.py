@@ -28,6 +28,7 @@ from scripts.translation_checker import (
     _load_ready_failure_matches,
     _load_ready_matches,
     _main,
+    _markup_issue_candidates,
     _modifier_mask,
     _parse_args,
     _parse_hammerspoon_focus_output,
@@ -39,6 +40,7 @@ from scripts.translation_checker import (
     _StageCapture,
     _title_navigation_delay,
 )
+from scripts.triage.models import LogEntry, LogEntryKind
 
 
 class TestInputMappings:
@@ -289,6 +291,46 @@ class TestReadLogDelta:
         log_path = tmp_path / "Player.log"
         log_path.write_text("new\n", encoding="utf-8")
         assert _read_log_delta(log_path, 999) == "new\n"
+
+
+class TestMarkupIssueCandidates:
+    def test_final_output_semantic_drift_is_reported_when_markup_tokens_match(self) -> None:
+        entry = LogEntry(
+            kind=LogEntryKind.FINAL_OUTPUT_PROBE,
+            route="Inventory",
+            text="水袋 {{y|[{{K|空]}}}}",
+            hits=1,
+            line_number=12,
+            source_text_sample="水袋 {{y|[{{K|空]}}}}",
+            final_text_sample="水袋 {{y|[{{K|空]}}}}",
+            markup_status="matched",
+            markup_span_status="matched",
+            markup_semantic_status="drift",
+            markup_semantic_flags="bracket_close_inside_nested_qud_scope",
+        )
+
+        candidates = _markup_issue_candidates([entry])
+
+        assert len(candidates) == 1
+        assert candidates[0]["markup_semantic_status"] == "drift"
+        assert candidates[0]["markup_semantic_flags"] == "bracket_close_inside_nested_qud_scope"
+
+    def test_final_output_semantic_clean_is_not_reported_when_markup_tokens_match(self) -> None:
+        entry = LogEntry(
+            kind=LogEntryKind.FINAL_OUTPUT_PROBE,
+            route="Popup",
+            text="{{W|[n]}} {{y|いいえ}}",
+            hits=1,
+            line_number=12,
+            source_text_sample="{{W|[n]}} {{y|いいえ}}",
+            final_text_sample="{{W|[n]}} {{y|いいえ}}",
+            markup_status="matched",
+            markup_span_status="matched",
+            markup_semantic_status="clean",
+            markup_semantic_flags="",
+        )
+
+        assert _markup_issue_candidates([entry]) == []
 
 
 class TestVerificationReport:

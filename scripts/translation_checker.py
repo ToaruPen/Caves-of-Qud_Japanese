@@ -74,6 +74,8 @@ _FINAL_OUTPUT_OBSERVATION_FIELDS = (
     "source_markup_spans",
     "final_markup_spans",
     "markup_span_status",
+    "markup_semantic_status",
+    "markup_semantic_flags",
     "source_visible_sha256",
     "final_visible_sha256",
     "payload_mode",
@@ -1612,7 +1614,8 @@ def _markup_issue_candidates(entries: list[LogEntry]) -> list[dict[str, object]]
             final_markup = _markup_signature(final_text)
             token_signatures_match = source_markup == final_markup
             span_status_is_issue = entry.markup_span_status not in _NON_ISSUE_MARKUP_SPAN_STATUSES
-            if token_signatures_match and not span_status_is_issue:
+            semantic_status_is_issue = entry.markup_semantic_status == "drift"
+            if token_signatures_match and not span_status_is_issue and not semantic_status_is_issue:
                 continue
             candidates.append(
                 {
@@ -1624,6 +1627,8 @@ def _markup_issue_candidates(entries: list[LogEntry]) -> list[dict[str, object]]
                     "translation_status": entry.translation_status,
                     "markup_status": entry.markup_status,
                     "markup_span_status": entry.markup_span_status,
+                    "markup_semantic_status": entry.markup_semantic_status,
+                    "markup_semantic_flags": entry.markup_semantic_flags,
                     "direct_marker_status": entry.direct_marker_status,
                     "source_markup": source_markup,
                     "final_markup": final_markup,

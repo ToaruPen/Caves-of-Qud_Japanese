@@ -198,6 +198,49 @@ public sealed class FinalOutputObservabilityTests
             Is.EqualTo("token_mismatch"));
     }
 
+    [TestCase("{{B}}|濡れた", "literal_qud_shader_fragment,unmatched_qud_close")]
+    [TestCase("{{B|{{B|{{B}}|濡れた}}", "literal_qud_shader_fragment,repeated_same_qud_scope_start")]
+    [TestCase("水袋 {{y|[{{K|空]}}}}", "bracket_close_inside_nested_qud_scope")]
+    [TestCase("{{B|}}", "empty_qud_wrapper")]
+    public void Record_ExposesSemanticDriftDiagnostics_WhenMarkupTokensMatch(string finalText, string expectedFlags)
+    {
+        var output = TestTraceHelper.CaptureTrace(() =>
+            FinalOutputObservability.Record(
+                CreateObservation(
+                    sourceText: finalText,
+                    strippedText: finalText,
+                    markupStatus: FinalOutputObservability.MarkupStatusMatched,
+                    finalText: finalText)));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(output, Does.Contain("markup_status='matched'"));
+            Assert.That(output, Does.Contain("; markup_span_status=matched;"));
+            Assert.That(output, Does.Contain("; markup_semantic_status=drift;"));
+            Assert.That(output, Does.Contain("; markup_semantic_flags=" + expectedFlags));
+        });
+    }
+
+    [Test]
+    public void Record_KeepsBalancedValidMarkupSemanticallyClean()
+    {
+        var output = TestTraceHelper.CaptureTrace(() =>
+            FinalOutputObservability.Record(
+                CreateObservation(
+                    sourceText: "{{W|[n]}} {{y|いいえ}}",
+                    strippedText: "[n] いいえ",
+                    markupStatus: FinalOutputObservability.MarkupStatusMatched,
+                    finalText: "{{W|[n]}} {{y|いいえ}}")));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(output, Does.Contain("markup_status='matched'"));
+            Assert.That(output, Does.Contain("; markup_span_status=matched;"));
+            Assert.That(output, Does.Contain("; markup_semantic_status=clean;"));
+            Assert.That(output, Does.Contain("; markup_semantic_flags=;"));
+        });
+    }
+
     [Test]
     public void BuildMarkupSpanSignatureForTests_RecordsTmpColorRangesAndInlineTokenPositions()
     {
@@ -232,6 +275,7 @@ public sealed class FinalOutputObservabilityTests
         string sourceText = "Unknown text",
         string strippedText = "Unknown text",
         string translatedText = "",
+        string markupStatus = "not_evaluated",
         string finalText = "Unknown text")
     {
         return new FinalOutputObservation(
@@ -240,7 +284,7 @@ public sealed class FinalOutputObservabilityTests
             "ObservationOnly",
             "before_sink",
             "sink_unclaimed",
-            "not_evaluated",
+            markupStatus,
             "not_evaluated",
             sourceText,
             strippedText,

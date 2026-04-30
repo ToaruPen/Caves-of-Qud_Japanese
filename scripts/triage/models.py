@@ -63,6 +63,8 @@ class LogEntry:
     source_markup_spans: str | None = None
     final_markup_spans: str | None = None
     markup_span_status: str | None = None
+    markup_semantic_status: str | None = None
+    markup_semantic_flags: str | None = None
     source_visible_sha256: str | None = None
     final_visible_sha256: str | None = None
     structured_fields: frozenset[str] = field(default_factory=frozenset)

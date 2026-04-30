@@ -63,6 +63,8 @@ def _final_output_probe_line(**overrides: str | int) -> str:
         "source_markup_spans": "",
         "final_markup_spans": "",
         "markup_span_status": "no_markup",
+        "markup_semantic_status": "clean",
+        "markup_semantic_flags": "",
         "source_visible_sha256": "source-hash",
         "final_visible_sha256": "final-hash",
     }
@@ -93,6 +95,8 @@ def _final_output_probe_line(**overrides: str | int) -> str:
         f" source_markup_spans={structured['source_markup_spans']};"
         f" final_markup_spans={structured['final_markup_spans']};"
         f" markup_span_status={structured['markup_span_status']};"
+        f" markup_semantic_status={structured['markup_semantic_status']};"
+        f" markup_semantic_flags={structured['markup_semantic_flags']};"
         f" source_visible_sha256={structured['source_visible_sha256']};"
         f" final_visible_sha256={structured['final_visible_sha256']}"
     )
@@ -561,6 +565,8 @@ def test_parse_final_output_probe(tmp_path: Path) -> None:
     assert entry.source_markup_spans == ""
     assert entry.final_markup_spans == ""
     assert entry.markup_span_status == "no_markup"
+    assert entry.markup_semantic_status == "clean"
+    assert entry.markup_semantic_flags == ""
     assert entry.source_visible_sha256 == "source-hash"
     assert entry.final_visible_sha256 == "final-hash"
 
