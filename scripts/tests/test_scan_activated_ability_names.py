@@ -111,6 +111,7 @@ namespace Demo
         public void Run()
         {
             string ignored = @$"AddActivatedAbility(""Ignored"", ""CommandIgnored"")";
+            string ignored2 = $@"AddActivatedAbility(""Ignored2"", ""CommandIgnored2"")";
             AddActivatedAbility("Real", "CommandReal");
         }
     }
@@ -123,3 +124,31 @@ namespace Demo
 
     assert len(items) == 1
     assert items[0].name == "Real"
+
+
+def test_scanner_classifies_parenthesized_string_literals_as_static(tmp_path: Path) -> None:
+    """Outer parentheses do not make a string literal dynamic."""
+    source_path = tmp_path / "Demo.cs"
+    source_path.write_text(
+        """
+namespace Demo
+{
+    public sealed class Case
+    {
+        public void Run(object abilityId)
+        {
+            AddActivatedAbility(("Static"), "CommandStatic");
+            SetActivatedAbilityDisplayName(abilityId, (@"Blink"));
+        }
+    }
+}
+""",
+        encoding="utf-8",
+    )
+
+    items = scan_source_root(tmp_path)
+
+    assert [(item.method, item.classification, item.name) for item in items] == [
+        ("AddActivatedAbility", "static_leaf", "Static"),
+        ("SetActivatedAbilityDisplayName", "static_leaf", "Blink"),
+    ]

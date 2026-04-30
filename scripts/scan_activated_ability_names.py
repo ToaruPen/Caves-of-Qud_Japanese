@@ -179,7 +179,8 @@ def _extract_call_arguments_at_identifier(
 
 def _classify_callsite(file_path: str, callsite: _Callsite) -> ActivatedAbilityNameItem:
     expression = callsite.display_name_argument.strip()
-    literal = _parse_csharp_string_literal(expression)
+    normalized_expression = _strip_balanced_outer_parentheses(expression)
+    literal = _parse_csharp_string_literal(normalized_expression)
     if literal is not None:
         return ActivatedAbilityNameItem(
             file=file_path,
