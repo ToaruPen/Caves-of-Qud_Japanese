@@ -190,6 +190,8 @@ internal static class ObservabilityHelpers
         string sourceMarkupSpans,
         string finalMarkupSpans,
         string markupSpanStatus,
+        string markupSemanticStatus,
+        string markupSemanticFlags,
         string sourceVisibleSha256,
         string finalVisibleSha256)
     {
@@ -207,6 +209,8 @@ internal static class ObservabilityHelpers
             + "; source_markup_spans=" + EscapeStructuredValue(sourceMarkupSpans)
             + "; final_markup_spans=" + EscapeStructuredValue(finalMarkupSpans)
             + "; markup_span_status=" + EscapeStructuredValue(markupSpanStatus)
+            + "; markup_semantic_status=" + EscapeStructuredValue(markupSemanticStatus)
+            + "; markup_semantic_flags=" + EscapeStructuredValue(markupSemanticFlags)
             + "; source_visible_sha256=" + EscapeStructuredValue(sourceVisibleSha256)
             + "; final_visible_sha256=" + EscapeStructuredValue(finalVisibleSha256);
     }

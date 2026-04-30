@@ -28,6 +28,8 @@ public sealed class ColorTagAllowlistCoverageTests
         "ColorAwareTranslationComposer.MarkupAwareRestoreCapture(",
         "ColorAwareTranslationComposer.RestoreSlice(",
         "ColorAwareTranslationComposer.RestoreMatchBoundaries(",
+        "ColorAwareTranslationComposer.RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(",
+        "ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(",
         "ColorAwareTranslationComposer.TranslatePreservingColors(",
         "GetDisplayNameRouteTranslator.TranslatePreservingColors(",
         "UITextSkinTranslationPatch.TranslatePreservingColors(",
@@ -96,7 +98,7 @@ public sealed class ColorTagAllowlistCoverageTests
     private static readonly SortedDictionary<string, string> StripWithoutLocalRestoreAllowlist =
         new(StringComparer.Ordinal)
         {
-            ["Mods/QudJP/Assemblies/src/Observability/FinalOutputObservability.cs:108:RecordDirectMarker"] = "Observation-only final sink marker check.",
+            ["Mods/QudJP/Assemblies/src/Observability/FinalOutputObservability.cs:116:RecordDirectMarker"] = "Observation-only final sink marker check.",
             ["Mods/QudJP/Assemblies/src/Patches/AbilityBarAfterRenderTranslationPatch.cs:238:HasColorMarkup"] = "Predicate only; it compares stripped and original text.",
             ["Mods/QudJP/Assemblies/src/Patches/ActiveEffectTextTranslator.cs:69:TryTranslateTemplate"] = "Delegates restoration to the template helper selected by the matched rule.",
             ["Mods/QudJP/Assemblies/src/Patches/BedChairFragmentTranslator.cs:120:TryTranslate"] = "Delegates capture restoration to rule builders through RestoreVisible.",
@@ -108,7 +110,7 @@ public sealed class ColorTagAllowlistCoverageTests
             ["Mods/QudJP/Assemblies/src/Patches/EnclosingFragmentTranslator.cs:22:TryTranslatePopupMessage"] = "Delegates capture restoration to RestoreVisible.",
             ["Mods/QudJP/Assemblies/src/Patches/FactionsLineTranslationPatch.cs:84:TranslateTextField"] = "Strips only to detect whether the already-localized field contains visible text.",
             ["Mods/QudJP/Assemblies/src/Patches/FactionsStatusScreenTranslationPatch.cs:895:AddLocalizedSearchFragment"] = "Strips only to add searchable plain text beside the colored display text.",
-            ["Mods/QudJP/Assemblies/src/Patches/GetDisplayNameRouteTranslator.cs:877:TranslateDisplayNameModifier"] = "Strips only to classify display-name modifier text before composing a translated modifier.",
+            ["Mods/QudJP/Assemblies/src/Patches/GetDisplayNameRouteTranslator.cs:880:TranslateDisplayNameModifier"] = "Strips only to classify display-name modifier text before composing a translated modifier.",
             ["Mods/QudJP/Assemblies/src/Patches/LiquidVolumeFragmentTranslator.cs:118:TryTranslate"] = "Delegates capture restoration to helper calls in the matched branch.",
             ["Mods/QudJP/Assemblies/src/Patches/MainMenuLocalizationPatch.cs:174:TranslateProducerText"] = "Strips only for already-localized/direct-route checks before TranslatePreservingColors owns restoration.",
             ["Mods/QudJP/Assemblies/src/Patches/MessageLogPatch.cs:44:Prefix"] = "Observation-only direct marker check before MessagePatternTranslator owns restoration.",
@@ -116,7 +118,7 @@ public sealed class ColorTagAllowlistCoverageTests
             ["Mods/QudJP/Assemblies/src/Patches/OptionsLocalizationPatch.cs:106:TranslateProducerText"] = "Strips only for already-localized/direct-route checks before TranslatePreservingColors owns restoration.",
             ["Mods/QudJP/Assemblies/src/Patches/PickGameObjectScreenTranslationPatch.cs:115:TranslateProducerText"] = "Strips only for already-localized/direct-route checks before TranslatePreservingColors owns restoration.",
             ["Mods/QudJP/Assemblies/src/Patches/PlayerStatusBarProducerTranslationHelpers.cs:84:TryTranslateFoodWaterPart"] = "Strips only to choose an exact visible-text translation before TranslatePreservingColors owns restoration.",
-            ["Mods/QudJP/Assemblies/src/Patches/PopupTranslationPatch.cs:1081:IsAlreadyLocalizedPopupText"] = "Predicate only; it compares stripped and original text.",
+            ["Mods/QudJP/Assemblies/src/Patches/PopupTranslationPatch.cs:1041:IsAlreadyLocalizedPopupText"] = "Predicate only; it compares stripped and original text.",
             ["Mods/QudJP/Assemblies/src/Patches/PopupTranslationPatch.cs:245:TranslatePopupTextForRoute"] = "Strips only for direct-marker and already-localized detection before producer routes own restoration.",
             ["Mods/QudJP/Assemblies/src/Patches/PopupTranslationPatch.cs:291:TranslatePopupMenuItemTextForRoute"] = "Strips only for direct-marker and already-localized detection before producer routes own restoration.",
             ["Mods/QudJP/Assemblies/src/Patches/SkillsAndPowersLineTranslationPatch.cs:229:TranslateSkillRightText"] = "Strips only for skill right-text detection before a non-colored exact replacement.",

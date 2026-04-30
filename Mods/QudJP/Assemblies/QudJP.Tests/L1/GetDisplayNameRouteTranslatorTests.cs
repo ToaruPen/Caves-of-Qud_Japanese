@@ -207,6 +207,43 @@ public sealed class GetDisplayNameRouteTranslatorTests
     }
 
     [Test]
+    public void TranslatePreservingColors_DoesNotReapplySourceModifierMarkup_WhenTranslatedModifierOwnsMarkup()
+    {
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
+            ("wet", "{{B|濡れた}}"));
+
+        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(
+            "{{B|wet グロウフィッシュ}} [swimming]",
+            nameof(GetDisplayNamePatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("{{B|濡れた}}グロウフィッシュ [swimming]"));
+            Assert.That(translated, Does.Not.Contain("{{B|{{B|"));
+            Assert.That(translated, Does.Not.Contain("{{B}}|"));
+        });
+    }
+
+    [Test]
+    public void TranslatePreservingColors_DoesNotReapplySourceStateMarkup_WhenTranslatedStateOwnsMarkup()
+    {
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
+            ("[empty]", "[{{K|空}}]"));
+
+        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(
+            "水袋 {{y|[empty]}}",
+            nameof(GetDisplayNamePatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("水袋 [{{K|空}}]"));
+            Assert.That(translated, Does.Not.Contain("[{{K|空]}}"));
+        });
+    }
+
+    [Test]
     public void TranslatePreservingColors_TranslatesLocalizedPrefixWithAsciiTailStructurally()
     {
         WriteDictionaryFile(

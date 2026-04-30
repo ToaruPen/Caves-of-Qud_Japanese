@@ -104,7 +104,10 @@ internal static class GetDisplayNameRouteTranslator
 
         if (TryTranslateDisplayNameRouteText(stripped, route, out var translated))
         {
-            return ColorAwareTranslationComposer.Restore(translated, spans);
+            return ColorAwareTranslationComposer.RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership(
+                translated,
+                spans,
+                stripped.Length);
         }
 
         return source!;

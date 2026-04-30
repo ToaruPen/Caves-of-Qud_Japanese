@@ -114,7 +114,7 @@ public sealed class PopupAskStringTranslationPatchTests
 
         DummyPopupGenericTarget.AskString("{{R|Name your pet.}}");
 
-        Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("{{R|ペットに名前を付けてください}}。"));
+        Assert.That(DummyPopupGenericTarget.LastAskStringMessage, Is.EqualTo("{{R|ペットに名前を付けてください。}}"));
     }
 
     [Test]
