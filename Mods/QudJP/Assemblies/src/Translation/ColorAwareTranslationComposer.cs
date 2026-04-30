@@ -305,21 +305,30 @@ internal static class ColorAwareTranslationComposer
 
         var sourcePrefix = sourceVisible.Substring(0, sourceStart);
         var sourceSuffix = sourceVisible.Substring(sourceEnd);
-        if (sourcePrefix.Length > 0
-            && translatedVisible.StartsWith(sourcePrefix, StringComparison.Ordinal))
+        var prefixMatches = sourcePrefix.Length == 0
+            || translatedVisible.StartsWith(sourcePrefix, StringComparison.Ordinal);
+        var suffixMatches = sourceSuffix.Length == 0
+            || translatedVisible.EndsWith(sourceSuffix, StringComparison.Ordinal);
+
+        if (sourceStart == 0 && sourceSuffix.Length > 0 && suffixMatches)
         {
-            translatedStart = sourcePrefix.Length;
-            translatedEnd = sourceSuffix.Length > 0
-                && translatedVisible.EndsWith(sourceSuffix, StringComparison.Ordinal)
-                    ? translatedVisible.Length - sourceSuffix.Length
-                    : translatedVisible.Length;
+            translatedEnd = translatedVisible.Length - sourceSuffix.Length;
             return translatedStart <= translatedEnd;
         }
 
-        if (sourceSuffix.Length > 0
-            && translatedVisible.EndsWith(sourceSuffix, StringComparison.Ordinal))
+        if (sourceEnd == sourceVisible.Length && sourcePrefix.Length > 0 && prefixMatches)
         {
-            translatedStart = 0;
+            translatedStart = sourcePrefix.Length;
+            translatedEnd = translatedVisible.Length;
+            return translatedStart <= translatedEnd;
+        }
+
+        if (sourcePrefix.Length > 0
+            && sourceSuffix.Length > 0
+            && prefixMatches
+            && suffixMatches)
+        {
+            translatedStart = sourcePrefix.Length;
             translatedEnd = translatedVisible.Length - sourceSuffix.Length;
             return translatedStart <= translatedEnd;
         }

@@ -378,6 +378,19 @@ public sealed class ColorCodePreserverTests
     }
 
     [Test]
+    public void RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership_DoesNotOverProjectMiddleSegmentWithOneAnchor()
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip("A {{y|No}} B");
+
+        var restored = ColorAwareTranslationComposer.RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(
+            "A いいえ 後続文",
+            spans,
+            stripped);
+
+        Assert.That(restored, Is.EqualTo("A いいえ 後続文"));
+    }
+
+    [Test]
     public void RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership_PreservesNestedMixedFamilyCloseOrder()
     {
         var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{W|<color=#44ff88>No</color>}}");
