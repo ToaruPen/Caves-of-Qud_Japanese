@@ -58,6 +58,30 @@ public sealed class CookingEffectTranslationPatchTests
         Assert.That(translated, Is.EqualTo("@they が次の3回ダメージを受けたとき、そのダメージを100%反射する。"));
     }
 
+    [Test]
+    public void Postfix_TranslatesHpIncreaseDescription_WhenPatched()
+    {
+        var target = new DummyCookingEffectTextTarget
+        {
+            ReturnValue = "@they get +31% max HP for 1 hour.",
+        };
+
+        var translated = InvokePatched(target, nameof(DummyCookingEffectTextTarget.GetDescription));
+        Assert.That(translated, Is.EqualTo("@they は1時間のあいだ最大HP+31%を得る。"));
+    }
+
+    [Test]
+    public void Postfix_TranslatesHpIncreaseDetails_WhenPatched()
+    {
+        var target = new DummyCookingEffectTextTarget
+        {
+            ReturnValue = "+31% max HP",
+        };
+
+        var translated = InvokePatched(target, nameof(DummyCookingEffectTextTarget.GetDetails));
+        Assert.That(translated, Is.EqualTo("最大HP+31%"));
+    }
+
     private static string InvokePatched(DummyCookingEffectTextTarget target, string methodName)
     {
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";

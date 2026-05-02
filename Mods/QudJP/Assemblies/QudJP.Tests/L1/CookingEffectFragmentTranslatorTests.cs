@@ -15,6 +15,9 @@ public sealed class CookingEffectFragmentTranslatorTests
     [TestCase("whenever @thisCreature suffer@s 2X or greater physical penetration,", "@thisCreature が2倍以上の物理貫通を受けるたび、")]
     [TestCase("Reflect 100% damage the next time @they take damage.", "@they が次にダメージを受けたとき、そのダメージを100%反射する。")]
     [TestCase("Reflect 100% damage the next 3 times @they take damage.", "@they が次の3回ダメージを受けたとき、そのダメージを100%反射する。")]
+    [TestCase("@they get +31% max HP for 1 hour.", "@they は1時間のあいだ最大HP+31%を得る。")]
+    [TestCase("@they get +30-40% max HP for 1 hour.", "@they は1時間のあいだ最大HP+30-40%を得る。")]
+    [TestCase("+31% max HP", "最大HP+31%")]
     public void TryTranslate_TranslatesConfiguredFragments(string input, string expected)
     {
         AssertTranslated(input, expected);

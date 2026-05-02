@@ -11,6 +11,19 @@ public sealed class MessageLogPatchTests
     public void SetUp()
     {
         Translator.ResetForTests();
+        MessageFrameTranslator.ResetForTests();
+        MessagePatternTranslator.ResetForTests();
+        JournalPatternTranslator.ResetForTests();
+        SinkObservation.ResetForTests();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        MessageFrameTranslator.ResetForTests();
+        MessagePatternTranslator.ResetForTests();
+        JournalPatternTranslator.ResetForTests();
+        Translator.ResetForTests();
         SinkObservation.ResetForTests();
     }
 
@@ -40,5 +53,85 @@ public sealed class MessageLogPatchTests
         var result = MessageLogPatch.Prefix(ref message);
         Assert.That(message, Is.EqualTo("すでに翻訳済みテキスト"));
         Assert.That(result, Is.True);
+    }
+
+    [Test]
+    public void Prefix_DoesVerbMarker_TranslatesAndStripsHeader()
+    {
+        UseRepositoryDictionary();
+        var fragment = "The 巨大トンボ begins";
+        var subjectLength = "The 巨大トンボ".Length;
+        var message = DoesVerbRouteTranslator.MarkDoesFragment(fragment, "begin", subjectLength, null) + " flying.";
+
+        var result = MessageLogPatch.Prefix(ref message);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(message, Is.EqualTo("巨大トンボが飛翔し始めた。"));
+            Assert.That(result, Is.True);
+        });
+    }
+
+    [Test]
+    public void Prefix_JournalNotification_TranslatesAndStripsSourceColors()
+    {
+        UseRepositoryJournalPatterns();
+        var message = "&yYou note this piece of information in the &WSultan Histories > クホマスプ II&y section of your journal.";
+
+        var result = MessageLogPatch.Prefix(ref message);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(message, Is.EqualTo("この情報をジャーナルの「スルタン史 > クホマスプ II」欄に記録した。"));
+            Assert.That(result, Is.True);
+        });
+    }
+
+    private static void UseRepositoryDictionary()
+    {
+        var repositoryDictionaryPath = Path.GetFullPath(
+            Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "..",
+                "..",
+                "..",
+                "..",
+                "..",
+                "Localization",
+                "MessageFrames",
+                "verbs.ja.json"));
+
+        MessageFrameTranslator.SetDictionaryPathForTests(repositoryDictionaryPath);
+
+        var repositoryPatternPath = Path.GetFullPath(
+            Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "..",
+                "..",
+                "..",
+                "..",
+                "..",
+                "Localization",
+                "Dictionaries",
+                "messages.ja.json"));
+
+        MessagePatternTranslator.SetPatternFileForTests(repositoryPatternPath);
+    }
+
+    private static void UseRepositoryJournalPatterns()
+    {
+        var repositoryPatternPath = Path.GetFullPath(
+            Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "..",
+                "..",
+                "..",
+                "..",
+                "..",
+                "Localization",
+                "Dictionaries",
+                "journal-patterns.ja.json"));
+
+        JournalPatternTranslator.SetPatternFileForTests(repositoryPatternPath);
     }
 }

@@ -62,6 +62,23 @@ public sealed class PlayerStatusBarProducerTranslationHelpersTests
     }
 
     [Test]
+    public void TranslateStringDataValue_TranslatesCompositeZoneDisplayName()
+    {
+        WriteDictionary(
+            ("Salt Marsh", "塩の湿地"),
+            ("Joppa", "ジョッパ"),
+            ("{0} strata deep", "地下{0}層"));
+
+        var translated = InvokeHelperStringMethod(
+            "TranslateStringDataValue",
+            "Zone",
+            "Salt Marsh, Joppa, 42 strata deep",
+            "PlayerStatusBarProducerTranslationPatch.Zone");
+
+        Assert.That(translated, Is.EqualTo("塩の湿地, ジョッパ, 地下42層"));
+    }
+
+    [Test]
     public void TranslateStringDataValue_TranslatesCalendarStatus()
     {
         WriteDictionary(

@@ -58,9 +58,10 @@ internal static class DescriptionTextTranslator
         var newline = source.Contains("\r\n") ? "\r\n" : "\n";
         var lines = source.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
         var changed = false;
+        string? activeBoundaryToken = null;
         for (var index = 0; index < lines.Length; index++)
         {
-            if (!TryTranslateSegmentPreservingColors(lines[index], route, out var translatedLine))
+            if (!TryTranslatePossiblySplitColorLine(lines[index], route, ref activeBoundaryToken, out var translatedLine))
             {
                 continue;
             }
@@ -70,6 +71,110 @@ internal static class DescriptionTextTranslator
         }
 
         return changed ? string.Join(newline, lines) : source;
+    }
+
+    private static bool TryTranslatePossiblySplitColorLine(
+        string source,
+        string route,
+        ref string? activeBoundaryToken,
+        out string translated)
+    {
+        var syntheticPrefix = string.Empty;
+        var syntheticSuffix = string.Empty;
+        var lineClosesActiveBoundary = false;
+
+        if (!string.IsNullOrEmpty(activeBoundaryToken)
+            && !HasColorBoundaryOpening(source))
+        {
+            syntheticPrefix = activeBoundaryToken!;
+            if (HasColorBoundaryClosing(source))
+            {
+                lineClosesActiveBoundary = true;
+            }
+        }
+
+        if (TryFindDanglingBoundaryOpening(source, out var danglingOpenToken))
+        {
+            syntheticSuffix = "}}";
+        }
+
+        var sourceForTranslation = syntheticPrefix + source + syntheticSuffix;
+        if (!TryTranslateSegmentPreservingColors(sourceForTranslation, route, out var translatedWithSyntheticBoundaries))
+        {
+            if (lineClosesActiveBoundary)
+            {
+                activeBoundaryToken = null;
+            }
+            else if (!string.IsNullOrEmpty(danglingOpenToken))
+            {
+                activeBoundaryToken = danglingOpenToken;
+            }
+
+            translated = source;
+            return false;
+        }
+
+        if (syntheticPrefix.Length > 0
+            && translatedWithSyntheticBoundaries.StartsWith(syntheticPrefix, StringComparison.Ordinal))
+        {
+            translatedWithSyntheticBoundaries = translatedWithSyntheticBoundaries.Substring(syntheticPrefix.Length);
+        }
+
+        if (syntheticSuffix.Length > 0
+            && translatedWithSyntheticBoundaries.EndsWith(syntheticSuffix, StringComparison.Ordinal))
+        {
+            translatedWithSyntheticBoundaries = translatedWithSyntheticBoundaries.Substring(
+                0,
+                translatedWithSyntheticBoundaries.Length - syntheticSuffix.Length);
+        }
+
+        if (lineClosesActiveBoundary)
+        {
+            activeBoundaryToken = null;
+        }
+        else if (!string.IsNullOrEmpty(danglingOpenToken))
+        {
+            activeBoundaryToken = danglingOpenToken;
+        }
+
+        translated = translatedWithSyntheticBoundaries;
+        return !string.Equals(source, translated, StringComparison.Ordinal);
+    }
+
+    private static bool TryFindDanglingBoundaryOpening(string source, out string token)
+    {
+        token = string.Empty;
+        var openingIndex = source.LastIndexOf("{{", StringComparison.Ordinal);
+        if (openingIndex < 0)
+        {
+            return false;
+        }
+
+        var pipeIndex = source.IndexOf('|', openingIndex);
+        if (pipeIndex < 0)
+        {
+            return false;
+        }
+
+        var closingIndex = source.IndexOf("}}", pipeIndex + 1, StringComparison.Ordinal);
+        if (closingIndex >= 0)
+        {
+            return false;
+        }
+
+        token = source.Substring(openingIndex, (pipeIndex - openingIndex) + 1);
+        return true;
+    }
+
+    private static bool HasColorBoundaryOpening(string source)
+    {
+        return TryFindDanglingBoundaryOpening(source, out _)
+            || StringHelpers.ContainsOrdinal(source, "{{");
+    }
+
+    private static bool HasColorBoundaryClosing(string source)
+    {
+        return StringHelpers.ContainsOrdinal(source, "}}");
     }
 
     private static bool TryTranslateSegmentPreservingColors(string source, string route, out string translated)
