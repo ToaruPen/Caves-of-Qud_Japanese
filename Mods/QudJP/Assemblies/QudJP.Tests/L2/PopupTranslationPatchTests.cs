@@ -1684,7 +1684,7 @@ public sealed class PopupTranslationPatchTests
             "You note this piece of information in the {{W|Sultan Histories > クホマスプ II}} section of your journal.",
             nameof(PopupShowTranslationPatch));
 
-        Assert.That(translated, Is.EqualTo("この情報をジャーナルの「スルタン史 > クホマスプ II」欄に記録した。"));
+        Assert.That(translated, Is.EqualTo("この情報をジャーナルの「スル{{W|タン史 > クホマスプ II}}」欄に記録した。"));
     }
 
     private static string CreateHarmonyId()

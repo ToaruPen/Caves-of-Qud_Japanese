@@ -633,19 +633,41 @@ public sealed class LocalizationCoverageTests
     private static bool IsConcreteOutOfRange(string key)
     {
         const string prefix = "That is out of range! (";
-        const string suffix = " squares)";
-        return key.StartsWith(prefix, StringComparison.Ordinal)
-               && key.EndsWith(suffix, StringComparison.Ordinal)
-               && IsAsciiDigits(key.Substring(prefix.Length, key.Length - prefix.Length - suffix.Length));
+        return TryGetOutOfRangeDistance(key, prefix, out _);
     }
 
     private static bool IsConcreteTargetOutOfRange(string key)
     {
         const string prefix = "That target is out of range! (";
-        const string suffix = " squares)";
-        return key.StartsWith(prefix, StringComparison.Ordinal)
-               && key.EndsWith(suffix, StringComparison.Ordinal)
-               && IsAsciiDigits(key.Substring(prefix.Length, key.Length - prefix.Length - suffix.Length));
+        return TryGetOutOfRangeDistance(key, prefix, out _);
+    }
+
+    private static bool TryGetOutOfRangeDistance(string key, string prefix, out string distance)
+    {
+        distance = string.Empty;
+        const string singularSuffix = " square)";
+        const string pluralSuffix = " squares)";
+        if (!key.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var suffix = string.Empty;
+        if (key.EndsWith(pluralSuffix, StringComparison.Ordinal))
+        {
+            suffix = pluralSuffix;
+        }
+        else if (key.EndsWith(singularSuffix, StringComparison.Ordinal))
+        {
+            suffix = singularSuffix;
+        }
+        if (suffix.Length == 0)
+        {
+            return false;
+        }
+
+        distance = key.Substring(prefix.Length, key.Length - prefix.Length - suffix.Length);
+        return IsAsciiDigits(distance);
     }
 
     private static bool IsConcreteHpIncreaseDescription(string key)

@@ -19,8 +19,8 @@ internal static class JournalNotificationTranslator
             return false;
         }
 
-        var journalTranslated = JournalPatternTranslator.Translate(stripped, route);
-        if (string.Equals(journalTranslated, stripped, StringComparison.Ordinal))
+        var journalTranslated = JournalPatternTranslator.Translate(source, route);
+        if (string.Equals(journalTranslated, source, StringComparison.Ordinal))
         {
             translated = source;
             return false;

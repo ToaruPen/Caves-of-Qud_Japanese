@@ -96,6 +96,30 @@ public sealed class PopupShowTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesDiscoverLocationTemplateWithColorWrappedTarget()
+    {
+        WriteDictionary(("You discover {0}!", "{0}を発見した！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.Show)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.Show("You discover {{Y|Rust Wells}}!");
+
+            Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo("{{Y|Rust Wells}}を発見した！"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_TranslatesExaminerHiddenDiscoveryTemplate()
     {
         WriteDictionary(("You discover something about {0} that was hidden!", "{0}について隠されていたことを発見した！"));

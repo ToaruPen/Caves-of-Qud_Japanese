@@ -82,20 +82,25 @@ internal static class DescriptionTextTranslator
         var syntheticPrefix = string.Empty;
         var syntheticSuffix = string.Empty;
         var lineClosesActiveBoundary = false;
+        var danglingOpenToken = string.Empty;
 
-        if (!string.IsNullOrEmpty(activeBoundaryToken)
-            && !HasColorBoundaryOpening(source))
+        if (!string.IsNullOrEmpty(activeBoundaryToken))
         {
             syntheticPrefix = activeBoundaryToken!;
-            if (HasColorBoundaryClosing(source))
+            if (HasColorBoundaryClosing(source, activeBoundaryToken!))
             {
                 lineClosesActiveBoundary = true;
             }
         }
 
-        if (TryFindDanglingBoundaryOpening(source, out var danglingOpenToken))
+        if (HasColorBoundaryOpening(source) && TryFindDanglingBoundaryOpening(source, out danglingOpenToken))
         {
-            syntheticSuffix = "}}";
+            syntheticSuffix = GetSyntheticClosingToken(danglingOpenToken);
+        }
+
+        if (!string.IsNullOrEmpty(activeBoundaryToken) && !lineClosesActiveBoundary)
+        {
+            syntheticSuffix += GetSyntheticClosingToken(activeBoundaryToken!);
         }
 
         var sourceForTranslation = syntheticPrefix + source + syntheticSuffix;
@@ -144,6 +149,38 @@ internal static class DescriptionTextTranslator
     private static bool TryFindDanglingBoundaryOpening(string source, out string token)
     {
         token = string.Empty;
+        var (_, spans) = ColorAwareTranslationComposer.Strip(source);
+        var stack = new Stack<string>();
+        for (var index = 0; index < spans.Count; index++)
+        {
+            var span = spans[index];
+            if (IsSelfContainedBoundaryToken(span.Token))
+            {
+                continue;
+            }
+
+            if (ColorCodePreserver.IsClosingBoundaryToken(span.Token))
+            {
+                if (stack.Count > 0)
+                {
+                    stack.Pop();
+                }
+
+                continue;
+            }
+
+            if (ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
+            {
+                stack.Push(span.Token);
+            }
+        }
+
+        if (stack.Count > 0)
+        {
+            token = stack.Peek();
+            return true;
+        }
+
         var openingIndex = source.LastIndexOf("{{", StringComparison.Ordinal);
         if (openingIndex < 0)
         {
@@ -168,13 +205,88 @@ internal static class DescriptionTextTranslator
 
     private static bool HasColorBoundaryOpening(string source)
     {
-        return TryFindDanglingBoundaryOpening(source, out _)
-            || StringHelpers.ContainsOrdinal(source, "{{");
+        var (_, spans) = ColorAwareTranslationComposer.Strip(source);
+        return spans.Any(static span => ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
+            || TryFindDanglingBoundaryOpening(source, out _);
     }
 
-    private static bool HasColorBoundaryClosing(string source)
+    private static bool HasColorBoundaryClosing(string source, string openingToken)
     {
-        return StringHelpers.ContainsOrdinal(source, "}}");
+        if (openingToken.StartsWith("{{", StringComparison.Ordinal))
+        {
+            var depth = 1;
+            for (var index = 0; index + 1 < source.Length; index++)
+            {
+                if (source[index] == '{' && source[index + 1] == '{')
+                {
+                    depth++;
+                    index++;
+                    continue;
+                }
+
+                if (source[index] == '}' && source[index + 1] == '}')
+                {
+                    depth--;
+                    if (depth == 0)
+                    {
+                        return true;
+                    }
+
+                    index++;
+                }
+            }
+
+            return false;
+        }
+
+        var closingToken = GetSyntheticClosingToken(openingToken);
+        var (_, spans) = ColorAwareTranslationComposer.Strip(source);
+        var spanDepth = 1;
+        for (var index = 0; index < spans.Count; index++)
+        {
+            var span = spans[index];
+            if (IsSelfContainedBoundaryToken(span.Token))
+            {
+                continue;
+            }
+
+            if (ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
+            {
+                spanDepth++;
+                continue;
+            }
+
+            if (string.Equals(span.Token, closingToken, StringComparison.OrdinalIgnoreCase))
+            {
+                spanDepth--;
+                if (spanDepth == 0)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static string GetSyntheticClosingToken(string openingToken)
+    {
+        if (openingToken.StartsWith("{{", StringComparison.Ordinal))
+        {
+            return "}}";
+        }
+
+        if (openingToken.StartsWith("<color=", StringComparison.OrdinalIgnoreCase))
+        {
+            return "</color>";
+        }
+
+        return openingToken;
+    }
+
+    private static bool IsSelfContainedBoundaryToken(string token)
+    {
+        return token.Length == 2 && (token[0] == '&' || token[0] == '^');
     }
 
     private static bool TryTranslateSegmentPreservingColors(string source, string route, out string translated)

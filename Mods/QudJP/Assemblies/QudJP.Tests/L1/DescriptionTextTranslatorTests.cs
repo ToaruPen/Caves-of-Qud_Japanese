@@ -161,6 +161,59 @@ public sealed class DescriptionTextTranslatorTests
                 "{{cyan|彩色: この品には古代のスルタン クホマスプ IIの生涯の一場面が描かれている:\n\nIn 4834 BR}}"));
     }
 
+    [Test]
+    public void TranslateLongDescription_TranslatesContinuationLineWithNestedColorWrapper()
+    {
+        WriteDictionary(
+            "ui-default.ja.json",
+            ("Strength", "筋力"),
+            ("Bonus Cap:", "ボーナス上限:"),
+            ("Weapon Class:", "武器カテゴリ:"));
+        WriteDictionary(
+            "world-mods.ja.json",
+            ("Weapon Class: Axe (cleaves armor on critical hit)", "武器カテゴリ: 斧（クリティカル時に装甲破砕）"));
+
+        var source =
+            "{{rules|Strength Bonus Cap: 1\n" +
+            "{{Y|Weapon Class: Axe (cleaves armor on critical hit)}}}}";
+
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            source,
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(
+            translated,
+            Is.EqualTo(
+                "{{rules|筋力ボーナス上限: 1\n" +
+                "{{Y|武器カテゴリ: 斧（クリティカル時に装甲破砕）}}}}"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_TranslatesLinesInsideSplitTmpColorWrapper()
+    {
+        WriteDictionary(
+            "ui-default.ja.json",
+            ("Strength", "筋力"),
+            ("Bonus Cap:", "ボーナス上限:"));
+        WriteDictionary(
+            "world-mods.ja.json",
+            ("Weapon Class: Axe (cleaves armor on critical hit)", "武器カテゴリ: 斧（クリティカル時に装甲破砕）"));
+
+        var source =
+            "<color=yellow>Strength Bonus Cap: 1\n" +
+            "Weapon Class: Axe (cleaves armor on critical hit)</color>";
+
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            source,
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(
+            translated,
+            Is.EqualTo(
+                "<color=yellow>筋力ボーナス上限: 1\n" +
+                "武器カテゴリ: 斧（クリティカル時に装甲破砕）</color>"));
+    }
+
     private void WritePatternDictionary(params (string pattern, string template)[] patterns)
     {
         var builder = new StringBuilder();

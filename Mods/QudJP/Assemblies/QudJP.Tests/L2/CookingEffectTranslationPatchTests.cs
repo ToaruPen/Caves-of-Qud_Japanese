@@ -82,6 +82,22 @@ public sealed class CookingEffectTranslationPatchTests
         Assert.That(translated, Is.EqualTo("最大HP+31%"));
     }
 
+    [TestCase("@they get +31% max HP for 1 hour.", "@they は1時間のあいだ最大HP+31%を得る。")]
+    [TestCase("@they get +<color=yellow>31</color>% max HP for 1 hour.", "@they は1時間のあいだ最大HP+<color=yellow>31</color>%を得る。")]
+    [TestCase("", "")]
+    [TestCase("@they get +31% max DV for 1 hour.", "@they get +31% max DV for 1 hour.")]
+    [TestCase("\u0001@they get +31% max HP for 1 hour.", "\u0001@they get +31% max HP for 1 hour.")]
+    public void Postfix_HandlesHpIncreaseTemplatedDescriptionCases_WhenPatched(string source, string expected)
+    {
+        var target = new DummyCookingEffectTextTarget
+        {
+            ReturnValue = source,
+        };
+
+        var translated = InvokePatched(target, nameof(DummyCookingEffectTextTarget.GetTemplatedDescription));
+        Assert.That(translated, Is.EqualTo(expected));
+    }
+
     private static string InvokePatched(DummyCookingEffectTextTarget target, string methodName)
     {
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";

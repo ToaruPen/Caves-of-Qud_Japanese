@@ -73,7 +73,7 @@ public sealed class MessageLogPatchTests
     }
 
     [Test]
-    public void Prefix_JournalNotification_TranslatesAndStripsSourceColors()
+    public void Prefix_JournalNotification_TranslatesAndPreservesSourceColors()
     {
         UseRepositoryJournalPatterns();
         var message = "&yYou note this piece of information in the &WSultan Histories > クホマスプ II&y section of your journal.";
@@ -82,7 +82,23 @@ public sealed class MessageLogPatchTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(message, Is.EqualTo("この情報をジャーナルの「スルタン史 > クホマスプ II」欄に記録した。"));
+            Assert.That(message, Is.EqualTo("&yこの情報をジャーナルの「スル&Wタン史 > クホマスプ II&y」欄に記録した。"));
+            Assert.That(result, Is.True);
+        });
+    }
+
+    [Test]
+    public void Prefix_JournalNotification_FallsBackToEnglish_WhenPatternMissing()
+    {
+        UseRepositoryJournalPatterns();
+        var message = "&yYou note this piece of information in the &WUnregistered Lore > Missing&y section of your journal.";
+        var original = message;
+
+        var result = MessageLogPatch.Prefix(ref message);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(message, Is.EqualTo(original));
             Assert.That(result, Is.True);
         });
     }

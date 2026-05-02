@@ -17,6 +17,8 @@ public sealed class CookingEffectFragmentTranslatorTests
     [TestCase("Reflect 100% damage the next 3 times @they take damage.", "@they が次の3回ダメージを受けたとき、そのダメージを100%反射する。")]
     [TestCase("@they get +31% max HP for 1 hour.", "@they は1時間のあいだ最大HP+31%を得る。")]
     [TestCase("@they get +30-40% max HP for 1 hour.", "@they は1時間のあいだ最大HP+30-40%を得る。")]
+    [TestCase("@they get +<color=yellow>31</color>% max HP for 1 hour.", "@they は1時間のあいだ最大HP+<color=yellow>31</color>%を得る。")]
+    [TestCase("+<color=yellow>31</color>% max HP", "最大HP+<color=yellow>31</color>%")]
     [TestCase("+31% max HP", "最大HP+31%")]
     public void TryTranslate_TranslatesConfiguredFragments(string input, string expected)
     {
@@ -24,6 +26,8 @@ public sealed class CookingEffectFragmentTranslatorTests
     }
 
     [TestCase("")]
+    [TestCase("@they get +31% max DV for 1 hour.")]
+    [TestCase("\u0001@they get +31% max HP for 1 hour.")]
     [TestCase("whenever @thisCreature take@s fire damage, there's a 50% chance")]
     [TestCase("\u0001Reflect 100% damage the next time @they take damage.")]
     public void TryTranslate_ReturnsFalse_ForPassthroughFragments(string input)
