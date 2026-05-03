@@ -1026,6 +1026,33 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_JournalNotification_FallsBackToEnglish_WhenPatternMissing()
+    {
+        WriteJournalPatternDictionary((
+            "^You note the location of (.+?) in the Locations > (.+?) section of your journal\\.[.!]?$",
+            "ジャーナルの「場所 > {t1}」欄に{0}の場所を記録した。"));
+        var source = "You note this piece of information in the Unregistered Lore > Missing section of your journal.";
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock(source, "Warning");
+
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo(source));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_TranslatesDeathMenuOptions_WhenPatched()
     {
         WriteDictionary(

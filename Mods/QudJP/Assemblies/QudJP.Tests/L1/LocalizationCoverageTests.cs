@@ -334,7 +334,7 @@ public sealed class LocalizationCoverageTests
             .Where(static entry =>
                 IsConcreteOutOfRange(entry.Key)
                 || IsConcreteTargetOutOfRange(entry.Key)
-                || entry.Key == "You note this piece of information in the Sultan Histories > Resheph section of your journal.")
+                || IsConcreteSultanHistoryJournalNotification(entry.Key))
             .Select(static entry => entry.Key)
             .ToArray();
         var cookingConcreteKeys = LoadEntries(Path.Combine(dictionariesRoot, "world-effects-cooking.ja.json"))
@@ -640,6 +640,20 @@ public sealed class LocalizationCoverageTests
     {
         const string prefix = "That target is out of range! (";
         return TryGetOutOfRangeDistance(key, prefix, out _);
+    }
+
+    private static bool IsConcreteSultanHistoryJournalNotification(string key)
+    {
+        const string prefix = "You note this piece of information in the Sultan Histories > ";
+        const string suffix = " section of your journal.";
+        if (!key.StartsWith(prefix, StringComparison.Ordinal)
+            || !key.EndsWith(suffix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var section = key.Substring(prefix.Length, key.Length - prefix.Length - suffix.Length);
+        return section.Length > 0 && !section.Contains('{', StringComparison.Ordinal);
     }
 
     private static bool TryGetOutOfRangeDistance(string key, string prefix, out string distance)
