@@ -7,7 +7,7 @@ This guide covers publishing QudJP to Steam Workshop with `steamcmd`.
 When asked to update the Steam Workshop item, do this first:
 
 1. Read this file, `steam/workshop_metadata.json`, and
-   `steam/changenote_template.md`.
+   `steam/changenote_template.txt`.
 2. Confirm the target Workshop item is `3718988020`.
 3. Inspect the release range:
 
@@ -31,7 +31,8 @@ because the local PATH differs.
 
 For each Workshop update, copy
 `docs/reports/templates/workshop-release.md` to a dated file under
-`docs/reports/` and fill it as release evidence.
+`docs/reports/` and fill it as release evidence, including preflight, upload,
+and post-publish smoke results.
 
 ## Release Scope
 
@@ -47,7 +48,7 @@ Public Workshop metadata:
 | Workshop item ID | `3718988020` |
 | Metadata source | `steam/workshop_metadata.json` |
 | Description source | `steam/workshop_description.ja.txt` |
-| Changenote template | `steam/changenote_template.md` |
+| Changenote template | `steam/changenote_template.txt` |
 | Generated content folder | `dist/workshop/QudJP/` |
 | Generated VDF | `dist/workshop/workshop_item.vdf` |
 
@@ -99,11 +100,18 @@ required = {
     "QudJP/Bootstrap.cs",
     "QudJP/Assemblies/QudJP.dll",
 }
+required_prefixes = {
+    "QudJP/Localization/",
+    "QudJP/Fonts/",
+}
 with zipfile.ZipFile(zip_path) as zf:
     names = set(zf.namelist())
 missing = sorted(required - names)
-if missing:
-    raise SystemExit(f"{zip_path}: missing {missing}")
+missing_prefixes = sorted(
+    prefix for prefix in required_prefixes if not any(name.startswith(prefix) for name in names)
+)
+if missing or missing_prefixes:
+    raise SystemExit(f"{zip_path}: missing files={missing}, missing dirs={missing_prefixes}")
 print(f"{zip_path}: required release files present")
 PY
 ```
@@ -117,8 +125,8 @@ the version, and summarize the accumulated commits as user-visible changes:
 git describe --tags --abbrev=0
 git log --oneline <previous-tag>..HEAD
 git rev-parse --short=12 HEAD
-cp steam/changenote_template.md /tmp/qudjp-workshop-changenote.md
-$EDITOR /tmp/qudjp-workshop-changenote.md
+cp steam/changenote_template.txt /tmp/qudjp-workshop-changenote.txt
+$EDITOR /tmp/qudjp-workshop-changenote.txt
 ```
 
 Build the generated content folder and steamcmd VDF from the latest
@@ -126,7 +134,7 @@ Build the generated content folder and steamcmd VDF from the latest
 
 ```bash
 python3.12 scripts/build_workshop_upload.py \
-  --changenote-file /tmp/qudjp-workshop-changenote.md
+  --changenote-file /tmp/qudjp-workshop-changenote.txt
 ```
 
 For a specific release archive:
@@ -134,7 +142,7 @@ For a specific release archive:
 ```bash
 python3.12 scripts/build_workshop_upload.py \
   --release-zip dist/QudJP-v0.2.0.zip \
-  --changenote-file /tmp/qudjp-workshop-changenote.md
+  --changenote-file /tmp/qudjp-workshop-changenote.txt
 ```
 
 The script regenerates `dist/workshop/QudJP/` and writes
@@ -171,9 +179,8 @@ After Steam finishes processing the item:
    and CJK glyphs correctly.
 6. Check fresh logs under `~/Library/Logs/Freehold Games/CavesOfQud/` for QudJP
    build markers, missing glyph warnings, compile errors, or `MODWARN`.
-7. Record the smoke result in `docs/reports/` using
-   `docs/reports/templates/workshop-release.md` when the release decision
-   depends on runtime evidence.
+7. Record the smoke result in the dated release evidence file copied from
+   `docs/reports/templates/workshop-release.md`.
 
 ## Rollback
 

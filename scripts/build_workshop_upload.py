@@ -86,7 +86,7 @@ def load_metadata(metadata_path: Path) -> WorkshopMetadata:
     data = json.loads(resolved_metadata_path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         msg = f"Workshop metadata must be a JSON object: {resolved_metadata_path}"
-        raise TypeError(msg)
+        raise ValueError(msg)  # noqa: TRY004 -- CLI reports metadata validation failures uniformly.
 
     appid = _require_string(data, "appid", source=resolved_metadata_path)
     publishedfileid = _require_string(data, "publishedfileid", source=resolved_metadata_path)
@@ -152,7 +152,10 @@ def render_vdf(
 
 def find_latest_release_zip(dist_dir: Path) -> Path:
     """Find the newest ``QudJP-v*.zip`` release archive under ``dist_dir``."""
-    release_archives = sorted(dist_dir.glob("QudJP-v*.zip"), key=lambda path: path.stat().st_mtime)
+    release_archives = sorted(
+        dist_dir.glob("QudJP-v*.zip"),
+        key=lambda path: (path.stat().st_mtime, path.name),
+    )
     if not release_archives:
         msg = f"No QudJP-v*.zip release archive found under {dist_dir}"
         raise FileNotFoundError(msg)

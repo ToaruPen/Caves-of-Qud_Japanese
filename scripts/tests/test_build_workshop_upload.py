@@ -1,6 +1,7 @@
 """Tests for Steam Workshop upload staging and VDF generation."""
 
 import json
+import os
 import zipfile
 from pathlib import Path
 
@@ -77,6 +78,15 @@ def test_load_metadata_rejects_missing_published_file_id(tmp_path: Path) -> None
     )
 
     with pytest.raises(ValueError, match="publishedfileid"):
+        load_metadata(metadata_path)
+
+
+def test_load_metadata_rejects_non_object_json(tmp_path: Path) -> None:
+    """Metadata JSON must be an object so the CLI can report validation errors."""
+    metadata_path = tmp_path / "workshop_metadata.json"
+    metadata_path.write_text("[]", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="JSON object"):
         load_metadata(metadata_path)
 
 
@@ -161,8 +171,22 @@ def test_find_latest_release_zip_uses_newest_mtime(tmp_path: Path) -> None:
     newer = tmp_path / "QudJP-v0.2.0.zip"
     _write_release_zip(older, version="0.1.0")
     _write_release_zip(newer, version="0.2.0")
+    os.utime(older, (1_700_000_000, 1_700_000_000))
+    os.utime(newer, (1_700_000_001, 1_700_000_001))
 
     assert find_latest_release_zip(tmp_path) == newer
+
+
+def test_find_latest_release_zip_uses_name_tiebreaker_for_equal_mtime(tmp_path: Path) -> None:
+    """Equal mtimes are resolved deterministically by file name."""
+    first = tmp_path / "QudJP-v0.2.0.zip"
+    second = tmp_path / "QudJP-v0.3.0.zip"
+    _write_release_zip(first, version="0.2.0")
+    _write_release_zip(second, version="0.3.0")
+    os.utime(first, (1_700_000_000, 1_700_000_000))
+    os.utime(second, (1_700_000_000, 1_700_000_000))
+
+    assert find_latest_release_zip(tmp_path) == second
 
 
 def test_main_writes_vdf_and_staging(tmp_path: Path) -> None:

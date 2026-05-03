@@ -46,7 +46,7 @@ vX.Y.Z / <short-git-hash>
 - [ ] `python3.12 scripts/validate_xml.py Mods/QudJP/Localization --strict --warning-baseline scripts/validate_xml_warning_baseline.json`
 - [ ] `python3.12 scripts/build_release.py`
 - [ ] Release ZIP spot-check
-- [ ] `python3.12 scripts/build_workshop_upload.py --release-zip dist/QudJP-vX.Y.Z.zip --changenote-file /tmp/qudjp-workshop-changenote.md`
+- [ ] `python3.12 scripts/build_workshop_upload.py --release-zip dist/QudJP-vX.Y.Z.zip --changenote-file /tmp/qudjp-workshop-changenote.txt`
 
 ## Upload
 
