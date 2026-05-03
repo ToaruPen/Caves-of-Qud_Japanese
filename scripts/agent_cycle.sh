@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-DOTFILES_ROOT=${DOTFILES_ROOT:-/Users/toarupen/Dev/dotfiles}
+DOTFILES_ROOT=${DOTFILES_ROOT:-}
 ARTIFACT_DIR=${AGENT_LOOP_ARTIFACT_DIR:-"$ROOT_DIR/scripts/_artifacts/agent-loop"}
 PYTHON_BIN=${PYTHON_BIN:-python3.12}
 
@@ -27,6 +27,18 @@ require_file() {
   fi
 }
 
+require_dotfiles_root() {
+  if [[ -z "$DOTFILES_ROOT" ]]; then
+    echo "missing env: DOTFILES_ROOT (path to dotfiles repo)" >&2
+    return 1
+  fi
+
+  if [[ ! -d "$DOTFILES_ROOT" ]]; then
+    echo "missing directory: DOTFILES_ROOT=$DOTFILES_ROOT" >&2
+    return 1
+  fi
+}
+
 tool_check() {
   local missing=0
   for tool in just ast-grep "$PYTHON_BIN"; do
@@ -38,8 +50,12 @@ tool_check() {
     "$tool" --version | head -n 1
   done
 
-  require_file "$DOTFILES_ROOT/scripts/render-skill-eval-prompts.py" || missing=1
-  require_file "$DOTFILES_ROOT/scripts/summarize-skill-eval-results.py" || missing=1
+  if require_dotfiles_root; then
+    require_file "$DOTFILES_ROOT/scripts/render-skill-eval-prompts.py" || missing=1
+    require_file "$DOTFILES_ROOT/scripts/summarize-skill-eval-results.py" || missing=1
+  else
+    missing=1
+  fi
   require_file "$ROOT_DIR/skill-evals.json" || missing=1
   require_file "$ROOT_DIR/skill-eval-results.jsonl" || missing=1
   require_file "$ROOT_DIR/skill-eval-result.schema.json" || missing=1
@@ -98,6 +114,7 @@ structural_search() {
 render_skill_evals() {
   local skill=${1:-}
   local scenario=${2:-}
+  require_dotfiles_root
   mkdir -p "$ARTIFACT_DIR"
 
   local -a args=(
@@ -118,6 +135,7 @@ render_skill_evals() {
 
 summarize_skill_evals() {
   local results=${1:-skill-eval-results.jsonl}
+  require_dotfiles_root
   if [[ "$results" != /* ]]; then
     results="$ROOT_DIR/$results"
   fi

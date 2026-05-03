@@ -13,7 +13,11 @@ or missing guardrail.
 - Codify as: `validator | script | ast-grep | skill | AGENTS | docs | test`
 - Target path:
 - Follow-up gate:
-- Status: `open | codified | intentionally-deferred`
+- Status: <replace with exactly one backquoted value: `open`, `codified`, or `intentionally-deferred`>
+
+For final entries, write exactly one status value on the `Status` line. Do not
+leave a combined placeholder; `retrospective-open` detects entries by the exact
+status value.
 
 ## Example
 
