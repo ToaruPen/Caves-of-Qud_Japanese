@@ -75,14 +75,14 @@ public sealed class MessageLogPatchTests
     [Test]
     public void Prefix_JournalNotification_TranslatesAndPreservesSourceColors()
     {
-        UseRepositoryJournalPatterns();
+        UseSultanHistoryJournalPattern();
         var message = "&yYou note this piece of information in the &WSultan Histories > クホマスプ II&y section of your journal.";
 
         var result = MessageLogPatch.Prefix(ref message);
 
         Assert.Multiple(() =>
         {
-            Assert.That(message, Is.EqualTo("&yこの情報をジャーナルの「スル&Wタン史 > クホマスプ II&y」欄に記録した。"));
+            Assert.That(message, Is.EqualTo("&yこの情報をジャーナルの「&Wスルタン史 > クホマスプ II&y」欄に記録した。"));
             Assert.That(result, Is.True);
         });
     }
@@ -149,5 +149,23 @@ public sealed class MessageLogPatchTests
                 "journal-patterns.ja.json"));
 
         JournalPatternTranslator.SetPatternFileForTests(repositoryPatternPath);
+    }
+
+    private static void UseSultanHistoryJournalPattern()
+    {
+        var patternPath = Path.Combine(Path.GetTempPath(), $"qudjp-journal-patterns-{Guid.NewGuid():N}.ja.json");
+        File.WriteAllText(
+            patternPath,
+            """
+            {
+              "patterns": [
+                {
+                  "pattern": "^You note this piece of information in the Sultan Histories > (.+?) section of your journal\\.[.!]?$",
+                  "template": "この情報をジャーナルの「スルタン史 > {0}」欄に記録した。"
+                }
+              ]
+            }
+            """);
+        JournalPatternTranslator.SetPatternFileForTests(patternPath);
     }
 }

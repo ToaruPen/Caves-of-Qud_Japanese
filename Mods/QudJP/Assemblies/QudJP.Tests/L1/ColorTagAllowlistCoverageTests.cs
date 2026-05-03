@@ -114,7 +114,7 @@ public sealed class ColorTagAllowlistCoverageTests
             ["Mods/QudJP/Assemblies/src/Patches/FactionsLineTranslationPatch.cs:84:TranslateTextField"] = "Strips only to detect whether the already-localized field contains visible text.",
             ["Mods/QudJP/Assemblies/src/Patches/FactionsStatusScreenTranslationPatch.cs:895:AddLocalizedSearchFragment"] = "Strips only to add searchable plain text beside the colored display text.",
             ["Mods/QudJP/Assemblies/src/Patches/GetDisplayNameRouteTranslator.cs:880:TranslateDisplayNameModifier"] = "Strips only to classify display-name modifier text before composing a translated modifier.",
-            ["Mods/QudJP/Assemblies/src/Patches/JournalNotificationTranslator.cs:15:TryTranslate"] = "Strips source colors so journal notification patterns can replace the full system sentence.",
+            ["Mods/QudJP/Assemblies/src/Patches/JournalNotificationTranslator.cs:19:TryTranslate"] = "Strips source colors so journal notification patterns can replace the full system sentence.",
             ["Mods/QudJP/Assemblies/src/Patches/LiquidVolumeFragmentTranslator.cs:118:TryTranslate"] = "Delegates capture restoration to helper calls in the matched branch.",
             ["Mods/QudJP/Assemblies/src/Patches/MainMenuLocalizationPatch.cs:174:TranslateProducerText"] = "Strips only for already-localized/direct-route checks before TranslatePreservingColors owns restoration.",
             ["Mods/QudJP/Assemblies/src/Patches/MessageLogPatch.cs:77:Prefix"] = "Observation-only direct marker check before MessagePatternTranslator owns restoration.",

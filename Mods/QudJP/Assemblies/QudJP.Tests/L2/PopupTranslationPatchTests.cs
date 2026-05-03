@@ -1053,6 +1053,56 @@ public sealed class PopupTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_JournalNotification_EmptyInput_ReturnsEmpty()
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock(string.Empty, "Warning");
+
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo(string.Empty));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_JournalNotification_DirectMarker_StripsMarkerAndSkipsTranslation()
+    {
+        WriteJournalPatternDictionary((
+            "^You note this piece of information in the Sultan Histories > (.+?) section of your journal\\.[.!]?$",
+            "この情報をジャーナルの「スルタン史 > {0}」欄に記録した。"));
+
+        const string source =
+            "You note this piece of information in the Sultan Histories > Resheph section of your journal.";
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupTarget), nameof(DummyPopupTarget.ShowBlock)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupTranslationPatch), nameof(PopupTranslationPatch.Prefix))));
+
+            DummyPopupTarget.ShowBlock("\u0001" + source, "Warning");
+
+            Assert.That(DummyPopupTarget.LastShowBlockMessage, Is.EqualTo(source));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_TranslatesDeathMenuOptions_WhenPatched()
     {
         WriteDictionary(
@@ -1711,7 +1761,21 @@ public sealed class PopupTranslationPatchTests
             "You note this piece of information in the {{W|Sultan Histories > クホマスプ II}} section of your journal.",
             nameof(PopupShowTranslationPatch));
 
-        Assert.That(translated, Is.EqualTo("この情報をジャーナルの「スル{{W|タン史 > クホマスプ II}}」欄に記録した。"));
+        Assert.That(translated, Is.EqualTo("この情報をジャーナルの「{{W|スルタン史 > クホマスプ II}}」欄に記録した。"));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_JournalNotification_PreservesLegacyColorsAroundDynamicSultanHistorySection()
+    {
+        WriteJournalPatternDictionary((
+            "^You note this piece of information in the Sultan Histories > (.+?) section of your journal\\.[.!]?$",
+            "この情報をジャーナルの「スルタン史 > {0}」欄に記録した。"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "&yYou note this piece of information in the &WSultan Histories > クホマスプ II&y section of your journal.",
+            nameof(PopupShowTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("&yこの情報をジャーナルの「&Wスルタン史 > クホマスプ II&y」欄に記録した。"));
     }
 
     private static string CreateHarmonyId()
