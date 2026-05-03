@@ -10,6 +10,7 @@ namespace QudJP.Patches;
 public static class InventoryLineTranslationPatch
 {
     private const string Context = nameof(InventoryLineTranslationPatch);
+    private const string WeightUnit = "lbs.";
 
     [HarmonyTargetMethod]
     private static MethodBase? TargetMethod()
@@ -193,26 +194,28 @@ public static class InventoryLineTranslationPatch
     private static string TranslateCategoryWeightText(string source, int amount, int weight, bool showItemCount, string route)
     {
         var translatedItems = Translator.Translate("items");
-        var translatedWeightUnit = Translator.Translate("lbs.");
         var translated = showItemCount
-            ? $"|{amount.ToString(CultureInfo.InvariantCulture)} {translatedItems}|{weight.ToString(CultureInfo.InvariantCulture)} {translatedWeightUnit}|"
-            : $"|{weight.ToString(CultureInfo.InvariantCulture)} {translatedWeightUnit}|";
-        if (!string.Equals(translated, source, StringComparison.Ordinal))
-        {
-            DynamicTextObservability.RecordTransform(route, "InventoryLine.WeightSummary", source, translated);
-        }
+            ? $"|{amount.ToString(CultureInfo.InvariantCulture)} {translatedItems}|{weight.ToString(CultureInfo.InvariantCulture)} {WeightUnit}|"
+            : $"|{weight.ToString(CultureInfo.InvariantCulture)} {WeightUnit}|";
+        DynamicTextObservability.RecordTransform(
+            route,
+            "InventoryLine.WeightSummary",
+            source,
+            translated,
+            logWhenUnchanged: true);
 
         return translated;
     }
 
     private static string TranslateItemWeightText(string source, int weight, string route)
     {
-        var translatedWeightUnit = Translator.Translate("lbs.");
-        var translated = $"[{weight.ToString(CultureInfo.InvariantCulture)} {translatedWeightUnit}]";
-        if (!string.Equals(translated, source, StringComparison.Ordinal))
-        {
-            DynamicTextObservability.RecordTransform(route, "InventoryLine.WeightLabel", source, translated);
-        }
+        var translated = $"[{weight.ToString(CultureInfo.InvariantCulture)} {WeightUnit}]";
+        DynamicTextObservability.RecordTransform(
+            route,
+            "InventoryLine.WeightLabel",
+            source,
+            translated,
+            logWhenUnchanged: true);
 
         return translated;
     }
