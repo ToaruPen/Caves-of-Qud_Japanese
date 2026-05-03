@@ -47,7 +47,7 @@ tool_check() {
       missing=1
       continue
     fi
-    "$tool" --version | head -n 1
+    "$tool" --version
   done
 
   if require_dotfiles_root; then
