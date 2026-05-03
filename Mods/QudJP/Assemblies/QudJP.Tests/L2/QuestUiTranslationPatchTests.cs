@@ -97,9 +97,11 @@ public sealed class QuestUiTranslationPatchTests
     }
 
     [Test]
-    public void QuestsStatusScreenPostfix_TranslatesQuestMapPinPrefix_WhenPatched()
+    public void QuestsStatusScreenPostfix_TranslatesQuestMapPinTitleAndPrefix_WhenPatched()
     {
-        WriteDictionary(("quest:", "クエスト:"));
+        WriteDictionary(
+            ("Joppa", "ジョッパ"),
+            ("quest:", "クエスト:"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -115,8 +117,14 @@ public sealed class QuestUiTranslationPatchTests
             Assert.Multiple(() =>
             {
                 Assert.That(
+                    target.mapController.pins[0].pinItem.titleText.Text,
+                    Is.EqualTo("{{W|ジョッパ}}"));
+                Assert.That(
                     target.mapController.pins[0].pinItem.detailsText.Text,
                     Is.EqualTo("{{B|クエスト:}} Find Mehmet\n{{B|クエスト:}} Return to Argyve"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(QuestsStatusScreenTranslationPatch), "ZoneDisplayName"),
+                    Is.EqualTo(1));
                 Assert.That(
                     DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(QuestsStatusScreenTranslationPatch), "QuestsStatusScreen.MapPinDetails"),
                     Is.EqualTo(1));

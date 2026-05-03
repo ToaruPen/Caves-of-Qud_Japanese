@@ -100,7 +100,7 @@ public sealed class SinkPrereqTranslationPatchTests
     }
 
     [Test]
-    public void SetDataPatch_TranslatesSummaryBlockTextAndTitle()
+    public void SummaryBlockControlOwnerPatch_TranslatesSummaryBlockTextAndTitle()
     {
         WriteDictionary(
             ("Attributes", "能力値"),
@@ -110,7 +110,7 @@ public sealed class SinkPrereqTranslationPatchTests
         harmony.Patch(
             original: RequireMethod(typeof(DummySummaryBlockControl), "setData"),
             postfix: new HarmonyMethod(RequireMethod(
-                typeof(SinkPrereqSetDataTranslationPatch), "Postfix")));
+                typeof(SummaryBlockControlTranslationPatch), "Postfix")));
 
         var instance = new DummySummaryBlockControl();
         instance.setData(new DummyFrameworkDataElement
@@ -125,7 +125,7 @@ public sealed class SinkPrereqTranslationPatchTests
             Assert.That(instance.title.text, Is.EqualTo("{{W|能力値}}"));
             Assert.That(
                 DynamicTextObservability.GetRouteFamilyHitCountForTests(
-                    nameof(SinkPrereqSetDataTranslationPatch),
+                    nameof(SummaryBlockControlTranslationPatch),
                     "Chargen.SummaryBlock"),
                 Is.GreaterThan(0));
         });
@@ -349,35 +349,6 @@ public sealed class SinkPrereqTranslationPatchTests
     }
 
     [Test]
-    public void UiMethodPatch_ObservationOnly_LeavesMapScrollerPinItemFieldsUnchanged()
-    {
-        WriteDictionary(("Joppa", "ジョッパ"), ("A small village.", "小さな村。"));
-        Translator.SetDictionaryDirectoryForTests(tempDir);
-
-        harmony.Patch(
-            original: RequireMethod(typeof(DummyMapScrollerPinItem), "SetData"),
-            postfix: new HarmonyMethod(RequireMethod(
-                typeof(SinkPrereqUiMethodTranslationPatch), "Postfix")));
-
-        var instance = new DummyMapScrollerPinItem();
-        instance.SetData(new DummyFrameworkDataElement { Title = "Joppa", Description = "A small village." });
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(instance.titleText.text, Is.EqualTo("Joppa"));
-            Assert.That(instance.detailsText.text, Is.EqualTo("A small village."));
-            Assert.That(
-                SinkObservation.GetHitCountForTests(
-                    nameof(UITextSkinTranslationPatch),
-                    nameof(SinkPrereqUiMethodTranslationPatch),
-                    SinkObservation.ObservationOnlyDetail,
-                    "Joppa",
-                    "Joppa"),
-                Is.GreaterThan(0));
-        });
-    }
-
-    [Test]
     public void UiMethodPatch_ObservationOnly_LeavesPlayerStatusBarZoneUnchanged()
     {
         WriteDictionary(("World Map", "ワールドマップ"));
@@ -434,41 +405,6 @@ public sealed class SinkPrereqTranslationPatchTests
                     SinkObservation.ObservationOnlyDetail,
                     "a copper nugget",
                     "a copper nugget"),
-                Is.GreaterThan(0));
-        });
-    }
-
-    [Test]
-    public void SetDataPatch_ObservationOnly_LeavesTradeLineFieldsUnchanged()
-    {
-        WriteDictionary(("Weapons", "武器"), ("iron sword", "鉄の剣"));
-        Translator.SetDictionaryDirectoryForTests(tempDir);
-
-        harmony.Patch(
-            original: RequireMethod(typeof(DummyTradeLine), "setData"),
-            postfix: new HarmonyMethod(RequireMethod(
-                typeof(SinkPrereqSetDataTranslationPatch), "Postfix")));
-
-        var instance = new DummyTradeLine();
-        instance.setData(new DummyFrameworkDataElement
-        {
-            Title = "Weapons",
-            Description = "iron sword"
-        });
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(instance.categoryText.text, Is.EqualTo("[+] Weapons"));
-            Assert.That(instance.text.text, Is.EqualTo("iron sword"));
-            Assert.That(instance.check.text, Is.EqualTo("{{W|1}}"));
-            Assert.That(instance.rightFloatText.text, Is.EqualTo("[$1.00]"));
-            Assert.That(
-                SinkObservation.GetHitCountForTests(
-                    nameof(UITextSkinTranslationPatch),
-                    nameof(SinkPrereqSetDataTranslationPatch),
-                    SinkObservation.ObservationOnlyDetail,
-                    "iron sword",
-                    "iron sword"),
                 Is.GreaterThan(0));
         });
     }

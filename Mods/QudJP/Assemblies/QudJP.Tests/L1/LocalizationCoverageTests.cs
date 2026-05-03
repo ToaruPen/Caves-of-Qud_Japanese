@@ -518,7 +518,7 @@ public sealed class LocalizationCoverageTests
             .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-phase3c-labels.ja.json")))
             .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-auto-generated.ja.json")))
             .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-chargen.ja.json")))
-            .Where(static entry => entry.Key is "Randomize Selection" or "Reset Selection" or "Sated" or "Quenched")
+            .Where(static entry => entry.Key is "Randomize Selection" or "Reset Selection" or "Sated" or "Quenched" or "Hostile")
             .GroupBy(static entry => entry.Key, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
 
@@ -543,6 +543,11 @@ public sealed class LocalizationCoverageTests
             Assert.That(quenchedEntries!.Select(static entry => entry.Text).Distinct(StringComparer.Ordinal),
                 Is.EquivalentTo(new[] { "潤っている", "潤沢" }));
             Assert.That(quenchedEntries, Has.Length.EqualTo(3));
+
+            Assert.That(duplicateEntries.TryGetValue("Hostile", out var hostileEntries), Is.True);
+            Assert.That(hostileEntries!.Select(static entry => entry.Text).Distinct(StringComparer.Ordinal),
+                Is.EquivalentTo(new[] { "敵対", "敵対的" }));
+            Assert.That(hostileEntries, Has.Length.EqualTo(2));
         });
     }
 

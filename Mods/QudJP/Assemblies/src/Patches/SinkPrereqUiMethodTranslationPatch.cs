@@ -7,8 +7,8 @@ using HarmonyLib;
 namespace QudJP.Patches;
 
 /// <summary>
-/// Observes UI text fields set by non-setData methods (Update, BeforeShow, HandleHighlight, etc.)
-/// across 9 classes using sink-side marker stripping and unclaimed logging.
+/// Observes UI text fields set by non-setData methods that still lack a stable owner route,
+/// using sink-side marker stripping and unclaimed logging.
 /// </summary>
 [HarmonyPatch]
 public static class SinkPrereqUiMethodTranslationPatch
@@ -22,11 +22,6 @@ public static class SinkPrereqUiMethodTranslationPatch
         ("XRL.UI.Framework.HorizontalScroller", "BeforeShow"),
         ("XRL.UI.TitledIconButton", "Update"),
         ("Qud.UI.CyberneticsTerminalRow", "Update"),
-        ("Qud.UI.AbilityManagerScreen", "HandleHighlightLeft"),
-        ("Qud.UI.TradeScreen", "HandleHighlightObject"),
-        ("MapScrollerPinItem", "SetData"),
-        ("Qud.UI.PlayerStatusBar", "Update"),
-        ("Qud.UI.TradeScreen", "UpdateTitleBars"),
     };
 
     [HarmonyTargetMethods]
