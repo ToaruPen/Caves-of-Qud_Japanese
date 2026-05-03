@@ -74,10 +74,10 @@ ast_grep_check() {
 expand_search_path() {
   local path=$1
   case "$path" in
-    "~")
+    \~)
       printf '%s\n' "$HOME"
       ;;
-    "~/"*)
+    \~/*)
       printf '%s/%s\n' "$HOME" "${path#"~/"}"
       ;;
     *)
@@ -102,6 +102,10 @@ structural_search() {
   if [[ -z "$path" ]]; then
     if [[ "$lang" == "csharp" ]]; then
       path="$HOME/dev/coq-decompiled_stable"
+      if [[ ! -d "$path" ]]; then
+        echo "missing default csharp path: $path (pass [path] explicitly)" >&2
+        return 2
+      fi
     else
       path="$ROOT_DIR"
     fi
@@ -149,7 +153,7 @@ retrospective_open() {
   local log_path="$ROOT_DIR/retrospectives/retrospective-log.md"
   require_file "$log_path"
 
-  if grep -n -- '- Status: `open`' "$log_path"; then
+  if grep -nE -- "^- Status: \`open\`$" "$log_path"; then
     echo "open retrospective entries found in $log_path"
   else
     echo "no open retrospective entries"
