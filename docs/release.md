@@ -88,10 +88,13 @@ python3.12 - <<'PY'
 import zipfile
 from pathlib import Path
 
-release_archives = list(Path("dist").glob("QudJP-v*.zip"))
+release_archives = sorted(
+    Path("dist").glob("QudJP-v*.zip"),
+    key=lambda path: (path.stat().st_mtime, path.name),
+)
 if not release_archives:
     raise SystemExit("dist/: no QudJP-v*.zip release archive found")
-zip_path = max(release_archives, key=lambda path: path.stat().st_mtime)
+zip_path = release_archives[-1]
 required = {
     "QudJP/manifest.json",
     "QudJP/preview.png",

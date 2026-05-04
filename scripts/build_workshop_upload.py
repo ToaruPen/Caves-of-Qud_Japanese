@@ -169,14 +169,24 @@ def _validate_release_zip_members(zip_path: Path, members: list[str]) -> None:
         raise ValueError(msg)
 
     required = {
+        "QudJP/LICENSE",
+        "QudJP/NOTICE.md",
         "QudJP/manifest.json",
         "QudJP/preview.png",
         "QudJP/Bootstrap.cs",
         "QudJP/Assemblies/QudJP.dll",
     }
+    required_prefixes = {
+        "QudJP/Localization/",
+        "QudJP/Fonts/",
+    }
     missing = sorted(required - set(members))
-    if missing:
-        msg = f"Workshop release ZIP is missing required files: {', '.join(missing)}"
+    missing_prefixes = sorted(
+        prefix for prefix in required_prefixes if not any(member.startswith(prefix) for member in members)
+    )
+    if missing or missing_prefixes:
+        missing_entries = [*missing, *missing_prefixes]
+        msg = f"Workshop release ZIP is missing required files: {', '.join(missing_entries)}"
         raise ValueError(msg)
 
 

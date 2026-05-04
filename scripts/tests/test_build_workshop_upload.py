@@ -29,9 +29,12 @@ def _write_release_zip(path: Path, *, version: str = "0.2.0") -> None:
             json.dumps({"Version": version, "PreviewImage": "preview.png"}),
         )
         zf.writestr("QudJP/preview.png", b"png")
+        zf.writestr("QudJP/LICENSE", "MIT License")
+        zf.writestr("QudJP/NOTICE.md", "# NOTICE")
         zf.writestr("QudJP/Bootstrap.cs", "public static class Bootstrap {}")
         zf.writestr("QudJP/Assemblies/QudJP.dll", b"dll")
         zf.writestr("QudJP/Localization/ui.json", "{}")
+        zf.writestr("QudJP/Fonts/OFL.txt", "SIL Open Font License")
 
 
 def test_default_workshop_ids_are_caves_of_qud_item() -> None:
@@ -162,6 +165,38 @@ def test_create_workshop_staging_rejects_zip_without_qudjp_root(tmp_path: Path) 
         zf.writestr("manifest.json", "{}")
 
     with pytest.raises(ValueError, match="QudJP/"):
+        create_workshop_staging(release_zip, tmp_path / "workshop")
+
+
+def test_create_workshop_staging_rejects_zip_without_compliance_files(tmp_path: Path) -> None:
+    """Workshop ZIPs must include release compliance files."""
+    release_zip = tmp_path / "dist" / "QudJP-v0.2.0.zip"
+    release_zip.parent.mkdir()
+    with zipfile.ZipFile(release_zip, "w") as zf:
+        zf.writestr("QudJP/manifest.json", "{}")
+        zf.writestr("QudJP/preview.png", b"png")
+        zf.writestr("QudJP/Bootstrap.cs", "public static class Bootstrap {}")
+        zf.writestr("QudJP/Assemblies/QudJP.dll", b"dll")
+        zf.writestr("QudJP/Localization/ui.json", "{}")
+        zf.writestr("QudJP/Fonts/OFL.txt", "SIL Open Font License")
+
+    with pytest.raises(ValueError, match="QudJP/LICENSE"):
+        create_workshop_staging(release_zip, tmp_path / "workshop")
+
+
+def test_create_workshop_staging_rejects_zip_without_localization_or_fonts(tmp_path: Path) -> None:
+    """Workshop ZIPs must include Localization and Fonts assets."""
+    release_zip = tmp_path / "dist" / "QudJP-v0.2.0.zip"
+    release_zip.parent.mkdir()
+    with zipfile.ZipFile(release_zip, "w") as zf:
+        zf.writestr("QudJP/manifest.json", "{}")
+        zf.writestr("QudJP/preview.png", b"png")
+        zf.writestr("QudJP/LICENSE", "MIT License")
+        zf.writestr("QudJP/NOTICE.md", "# NOTICE")
+        zf.writestr("QudJP/Bootstrap.cs", "public static class Bootstrap {}")
+        zf.writestr("QudJP/Assemblies/QudJP.dll", b"dll")
+
+    with pytest.raises(ValueError, match="QudJP/Fonts/"):
         create_workshop_staging(release_zip, tmp_path / "workshop")
 
 
