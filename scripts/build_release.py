@@ -26,7 +26,7 @@ import sys
 import zipfile
 from pathlib import Path
 
-RELEASE_VERSION = "0.2.0"
+RELEASE_VERSION = "0.2.1"
 _LOCALIZATION_ASSET_SUFFIXES = {".json", ".txt", ".xml"}
 
 
