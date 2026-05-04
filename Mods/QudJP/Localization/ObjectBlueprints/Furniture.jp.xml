@@ -3725,7 +3725,7 @@
 
 
   <object Name="Bedroll" Inherits="Furniture" Replace="true">
-    <part Name="Render" DisplayName="寝巻き" ColorString="&amp;w" RenderString="169" Occluding="false" RenderIfDark="true" Tile="Items/sw_bedroll.bmp" DetailColor="y" />
+    <part Name="Render" DisplayName="寝袋" ColorString="&amp;w" RenderString="169" Occluding="false" RenderIfDark="true" Tile="Items/sw_bedroll.bmp" DetailColor="y" />
     <part Name="Physics" Weight="4" Takeable="true" Solid="false" />
     <part Name="Description" Short="帆布の紐で留めたヤギ毛のベッド。" />
     <part Name="Bed" />

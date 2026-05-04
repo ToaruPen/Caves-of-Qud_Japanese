@@ -211,6 +211,41 @@ public sealed class LocalizationCoverageTests
     }
 
     [Test]
+    public void ChargenStructuredTextTranslator_CoversRuntimeObservedSkillLeaves()
+    {
+        var expectedTranslations = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Axe"] = "斧",
+            ["Butchery"] = "解体術",
+            ["Cleave"] = "裂断",
+            ["Deploy Turret"] = "タレット展開",
+            ["Harvestry"] = "収穫術",
+            ["Nostrums"] = "秘薬",
+            ["Shield Slam"] = "シールドスラム",
+            ["Snake Oiler"] = "蛇油売り",
+            ["Tactics"] = "戦術",
+            ["Tank"] = "戦車乗り",
+            ["Tinker I"] = "工匠 I",
+            ["Tinker II"] = "工匠 II",
+            ["Weak Spotter"] = "急所狙い",
+            ["Wilderness Lore: Canyons"] = "荒地巡り：峡谷",
+            ["Wilderness Lore: Hills and Mountains"] = "荒地巡り：丘陵と山",
+            ["Wilderness Lore: Jungles"] = "荒地巡り：ジャングル",
+        };
+
+        Assert.Multiple(() =>
+        {
+            foreach (var expected in expectedTranslations)
+            {
+                Assert.That(
+                    ChargenStructuredTextTranslator.Translate(expected.Key),
+                    Is.EqualTo(expected.Value),
+                    expected.Key);
+            }
+        });
+    }
+
+    [Test]
     public void MutationDescriptionsDictionary_UsesCanonicalEsperKeyOnly()
     {
         const string legacyEsperKey = "You only manifest mental mutations, and all of your mutation choices when manifesting a new mutation are mental.";
@@ -272,6 +307,50 @@ public sealed class LocalizationCoverageTests
                 Assert.That(electricalText, Does.Not.Contain("チャージ1点ごとに4d1000"));
                 Assert.That(electricalText, Does.Not.Contain("最大1チャージあたり1000体"));
             }
+        });
+    }
+
+    [Test]
+    public void SkulkTonicRulesDescription_DoesNotRegressToEnglishRulesText()
+    {
+        var itemsDocument = XDocument.Load(Path.Combine(localizationRoot, "ObjectBlueprints", "Items.jp.xml"));
+        var rulesDescription = itemsDocument.Root!
+            .Elements("object")
+            .Single(element => string.Equals(element.Attribute("Name")?.Value, "SkulkTonic", StringComparison.Ordinal))
+            .Elements("part")
+            .Single(element => string.Equals(element.Attribute("Name")?.Value, "RulesDescription", StringComparison.Ordinal));
+
+        var text = rulesDescription.Attribute("Text")?.Value ?? string.Empty;
+        var genotypeAlt = rulesDescription.Attribute("GenotypeAlt")?.Value ?? string.Empty;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(text, Does.Contain("持続：1001-1200ラウンド"));
+            Assert.That(genotypeAlt, Does.Contain("持続：1001-1200ラウンド"));
+            Assert.That(text, Does.Not.Contain("Duration:"));
+            Assert.That(genotypeAlt, Does.Not.Contain("Duration:"));
+            Assert.That(text, Does.Not.Contain("Your movement speed"));
+            Assert.That(genotypeAlt, Does.Not.Contain("Your movement speed"));
+        });
+    }
+
+    [Test]
+    public void CtesiphusPetResponse_DoesNotRegressToEnglishMeow()
+    {
+        var creaturesDocument = XDocument.Load(Path.Combine(localizationRoot, "ObjectBlueprints", "Creatures.jp.xml"));
+        var pettable = creaturesDocument.Root!
+            .Elements("object")
+            .Single(element => string.Equals(element.Attribute("Name")?.Value, "Ctesiphus", StringComparison.Ordinal))
+            .Elements("part")
+            .Single(element => string.Equals(element.Attribute("Name")?.Value, "Pettable", StringComparison.Ordinal));
+
+        var petResponse = pettable.Attribute("PetResponse")?.Value ?? string.Empty;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(petResponse, Is.EqualTo("=subject.T=がにゃあと鳴く。"));
+            Assert.That(petResponse, Does.Not.Contain("meow"));
+            Assert.That(petResponse, Does.Not.Contain("meows"));
         });
     }
 
@@ -494,7 +573,7 @@ public sealed class LocalizationCoverageTests
             .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-phase3c-labels.ja.json")))
             .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-auto-generated.ja.json")))
             .Concat(LoadEntries(Path.Combine(dictionariesRoot, "ui-chargen.ja.json")))
-            .Where(static entry => entry.Key is "Randomize Selection" or "Reset Selection" or "Sated" or "Quenched")
+            .Where(static entry => entry.Key is "Randomize Selection" or "Reset Selection" or "Sated" or "Quenched" or "Hostile")
             .GroupBy(static entry => entry.Key, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
 
@@ -519,6 +598,11 @@ public sealed class LocalizationCoverageTests
             Assert.That(quenchedEntries!.Select(static entry => entry.Text).Distinct(StringComparer.Ordinal),
                 Is.EquivalentTo(new[] { "潤っている", "潤沢" }));
             Assert.That(quenchedEntries, Has.Length.EqualTo(3));
+
+            Assert.That(duplicateEntries.TryGetValue("Hostile", out var hostileEntries), Is.True);
+            Assert.That(hostileEntries!.Select(static entry => entry.Text).Distinct(StringComparer.Ordinal),
+                Is.EquivalentTo(new[] { "敵対", "敵対的" }));
+            Assert.That(hostileEntries, Has.Length.EqualTo(2));
         });
     }
 

@@ -60,6 +60,18 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
             new[]
             {
                 "XRL.CharacterBuilds.Qud.QudSubtypeModule|GetSelections|",
+                "XRL.CharacterBuilds.Qud.QudSubtypeModule|GetSelectionCategories|",
+            });
+    }
+
+    [Test]
+    public void PregenSelectionPatch_TargetMethods_ResolveExpectedOverrides()
+    {
+        AssertTargetMethods(
+            "QudJP.Patches.CharGenPregenSelectionTranslationPatch",
+            new[]
+            {
+                "XRL.CharacterBuilds.Qud.UI.QudPregenModuleWindow|GetSelections|",
             });
     }
 
@@ -215,6 +227,37 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
                         elementType!,
                         "Description",
                         $"{patchTypeName} enumerable element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                    if (string.Equals(methodInfo.Name, "GetSelectionCategories", StringComparison.Ordinal))
+                    {
+                        AssertStringMemberExists(
+                            elementType!,
+                            "Title",
+                            $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                        AssertEnumerableMemberExists(
+                            elementType!,
+                            "Choices",
+                            $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                    }
+                }
+
+                return;
+
+            case "QudJP.Patches.CharGenPregenSelectionTranslationPatch":
+                foreach (var methodInfo in resolvedMethods)
+                {
+                    var elementType = ResolveEnumerableElementType(methodInfo.ReturnType);
+                    Assert.That(
+                        elementType,
+                        Is.Not.Null,
+                        $"{patchTypeName} return type should expose an enumerable element type: {methodInfo.ReturnType.FullName}");
+                    AssertStringMemberExists(
+                        elementType!,
+                        "Title",
+                        $"{patchTypeName} enumerable element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                    AssertStringMemberExists(
+                        elementType!,
+                        "Description",
+                        $"{patchTypeName} enumerable element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
                 }
 
                 return;
@@ -271,6 +314,28 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
         }
 
         Assert.Fail($"{context} is missing readable string member '{memberName}' on runtime type '{runtimeType.FullName}'.");
+    }
+
+    private static void AssertEnumerableMemberExists(Type runtimeType, string memberName, string context)
+    {
+        var field = runtimeType.GetField(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (field is not null
+            && typeof(System.Collections.IEnumerable).IsAssignableFrom(field.FieldType)
+            && field.FieldType != typeof(string))
+        {
+            return;
+        }
+
+        var property = runtimeType.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (property is not null
+            && property.CanRead
+            && typeof(System.Collections.IEnumerable).IsAssignableFrom(property.PropertyType)
+            && property.PropertyType != typeof(string))
+        {
+            return;
+        }
+
+        Assert.Fail($"{context} is missing readable enumerable member '{memberName}' on runtime type '{runtimeType.FullName}'.");
     }
 
     private static Type? ResolveEnumerableElementType(Type sequenceType)

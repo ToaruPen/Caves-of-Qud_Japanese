@@ -49,6 +49,12 @@ def test_classify_unknown_no_pattern_route_is_unresolved() -> None:
     assert result.classification == TriageClassification.UNRESOLVED
 
 
+def test_classify_no_pattern_with_japanese_text_stays_route_patch() -> None:
+    """No-pattern evidence is actionable even when the observed text includes Japanese."""
+    result = classify(_mk("ジョッパで Game saved!", kind=LogEntryKind.NO_PATTERN, route="MessageLogPatch"))
+    assert result.classification == TriageClassification.ROUTE_PATCH
+
+
 def test_classify_embedded_number() -> None:
     """Embedded numbers indicate a dynamic counter."""
     result = classify(_mk("Points Remaining: 12"))
@@ -98,6 +104,20 @@ def test_classify_numeric_stat_line() -> None:
     assert result.classification == TriageClassification.LOGIC_REQUIRED
 
 
+def test_classify_player_status_bar_readouts_as_runtime_noise() -> None:
+    """Route-owned status bar readouts are preserved runtime values."""
+    temp = classify(_mk("T:25ø", route="PlayerStatusBarProducerTranslationPatch.Temp"))
+    weight = classify(_mk("62/270# {{blue|32$}}", route="PlayerStatusBarProducerTranslationPatch.Weight"))
+    assert temp.classification == TriageClassification.RUNTIME_NOISE
+    assert weight.classification == TriageClassification.RUNTIME_NOISE
+
+
+def test_classify_pure_whitespace_as_runtime_noise() -> None:
+    """Whitespace-only observations are formatting noise."""
+    result = classify(_mk("  ", route="<no-context>"))
+    assert result.classification == TriageClassification.RUNTIME_NOISE
+
+
 def test_classify_dram_quantity() -> None:
     """Dynamic quantities in item descriptions are logic_required."""
     result = classify(_mk("[31 drams of fresh water]"))
@@ -143,10 +163,17 @@ def test_classify_version_string_is_unresolved() -> None:
 
 
 def test_classify_already_japanese() -> None:
-    """Strings already containing Japanese stay unresolved."""
+    """Strings already containing Japanese are runtime noise, not untranslated work."""
     result = classify(_mk("塩まみれのNigashrowar"))
-    assert result.classification == TriageClassification.UNRESOLVED
+    assert result.classification == TriageClassification.RUNTIME_NOISE
     assert "japanese" in result.reason.lower() or "日本語" in result.reason.lower()
+
+
+def test_classify_no_context_translator_reentry_token_as_runtime_noise() -> None:
+    """Known flat Translator re-entry tokens without context are not dictionary candidates."""
+    assert classify(_mk("on", route="<no-context>")).classification == TriageClassification.RUNTIME_NOISE
+    assert classify(_mk("off", route="<no-context>")).classification == TriageClassification.RUNTIME_NOISE
+    assert classify(_mk("items", route="<no-context>")).classification == TriageClassification.RUNTIME_NOISE
 
 
 def test_classify_dynamic_probe_is_logic_required() -> None:

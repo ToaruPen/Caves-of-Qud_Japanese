@@ -1107,6 +1107,11 @@
     {
       "key": "Snail-Encrusted: This item is crawling with tiny snails and grants the wearer {0} reputation with mollusks.",
       "text": "巻貝まみれ: 小さなカタツムリが這っており、装着者に軟体動物との評判{0}を与える。"
+    },
+    {
+      "context": "XRL.World.Parts.MissileWeapon.GetShortDescription",
+      "key": "Projectiles fired with this weapon receive bonus penetration based on the wielder's Strength.",
+      "text": "この武器から発射された投射物は、使用者の筋力に基づいて追加の貫通力を得る。"
     }
   ]
 }

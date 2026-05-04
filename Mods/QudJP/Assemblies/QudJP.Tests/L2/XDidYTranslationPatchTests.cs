@@ -228,6 +228,55 @@ public sealed class XDidYTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesXDidYToZObjectDisplayNameBeforePrepositionSuffix()
+    {
+        File.WriteAllText(
+            Path.Combine(tempDirectory, "ui-test.ja.json"),
+            "{\"entries\":[{\"key\":\"Bedroll\",\"text\":\"寝袋\"}]}\n",
+            Utf8WithoutBom);
+        Translator.ResetForTests();
+        Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        WriteDictionary(tier1: new[] { ("lie", "横になった"), ("rise", "起き上がった") });
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidYToZ)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYToZForTests))));
+
+            DummyXDidYTarget.XDidYToZ(
+                Actor: null,
+                Verb: "lie",
+                Preposition: "down on",
+                Object: "Bedroll",
+                SubjectOverride: "あなた",
+                AlwaysVisible: true);
+
+            Assert.That(lastMessage, Is.EqualTo("\u0001あなたは寝袋の上に横になった。"));
+
+            DummyXDidYTarget.Reset();
+            lastMessage = null;
+
+            DummyXDidYTarget.XDidYToZ(
+                Actor: null,
+                Verb: "rise",
+                Preposition: "from",
+                Object: "Bedroll",
+                SubjectOverride: "あなた",
+                AlwaysVisible: true);
+
+            Assert.That(lastMessage, Is.EqualTo("\u0001あなたは寝袋から起き上がった。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_TranslatesWDidXToYWithZWithTemplate()
     {
         WriteDictionary(tier3: new[] { ("strike", "{0} with {1} for {2} damage", "{1}で{0}に{2}ダメージを与えた") });

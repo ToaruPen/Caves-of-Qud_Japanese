@@ -46,9 +46,11 @@ internal sealed class DummyCharGenFrameworkScrollerTarget
 {
     public string? LastTitle { get; private set; }
 
+    public IEnumerable<DummyFrameworkDataElement>? LastSelections { get; private set; }
+
     public void BeforeShow(DummyEmbarkBuilderModuleWindowDescriptor? descriptor, IEnumerable<DummyFrameworkDataElement>? selections = null)
     {
-        _ = selections;
+        LastSelections = selections;
         LastTitle = descriptor?.title;
     }
 }
@@ -77,6 +79,23 @@ internal sealed class DummyChoiceWithColorIcon
     public string? Description { get; set; }
 }
 
+internal sealed class DummySubtypeCategoryIcons
+{
+    public string? Title { get; set; }
+
+    public List<DummyChoiceWithColorIcon> Choices { get; set; } = new List<DummyChoiceWithColorIcon>();
+}
+
+internal sealed class DummyCategoryMenuData : DummyFrameworkDataElement
+{
+    public List<DummyPrefixMenuOption> menuOptions { get; set; } = new List<DummyPrefixMenuOption>();
+}
+
+internal sealed class DummyPrefixMenuOption : DummyFrameworkDataElement
+{
+    public string? Prefix { get; set; }
+}
+
 internal sealed class DummyCharGenSubtypeModuleTarget
 {
     public string Description { get; set; } = """
@@ -94,6 +113,40 @@ internal sealed class DummyCharGenSubtypeModuleTarget
         yield return new DummyChoiceWithColorIcon
         {
             Title = "Arconaut",
+            Description = Description,
+        };
+    }
+
+    public string CategoryTitle { get; set; } = "{{G|The Toxic Arboreta of Ekuemekiyye, the Holy City}}";
+
+    public IEnumerable<DummySubtypeCategoryIcons> GetSelectionCategories()
+    {
+        yield return new DummySubtypeCategoryIcons
+        {
+            Title = CategoryTitle,
+            Choices = new List<DummyChoiceWithColorIcon>
+            {
+                new DummyChoiceWithColorIcon
+                {
+                    Title = "Horticulturist",
+                    Description = Description,
+                },
+            },
+        };
+    }
+}
+
+internal sealed class DummyCharGenPregenModuleWindowTarget
+{
+    public string Title { get; set; } = "Praetorian Prime";
+
+    public string Description { get; set; } = "Choose a pregenerated character.";
+
+    public IEnumerable<DummyChoiceWithColorIcon> GetSelections()
+    {
+        yield return new DummyChoiceWithColorIcon
+        {
+            Title = Title,
             Description = Description,
         };
     }

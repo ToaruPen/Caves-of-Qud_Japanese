@@ -23,14 +23,18 @@ public static class CharGenSubtypeSelectionTranslationPatch
             yield break;
         }
 
-        var method = AccessTools.Method(type, "GetSelections", Type.EmptyTypes);
-        if (method is null)
+        var selectionMethods = new[] { "GetSelections", "GetSelectionCategories" };
+        for (var index = 0; index < selectionMethods.Length; index++)
         {
-            Trace.TraceWarning("QudJP: {0} method 'GetSelections()' not found on '{1}'.", Context, type.FullName);
-            yield break;
-        }
+            var method = AccessTools.Method(type, selectionMethods[index], Type.EmptyTypes);
+            if (method is null)
+            {
+                Trace.TraceWarning("QudJP: {0} method '{1}()' not found on '{2}'.", Context, selectionMethods[index], type.FullName);
+                continue;
+            }
 
-        yield return method;
+            yield return method;
+        }
     }
 
     public static IEnumerable? Postfix(IEnumerable? values)
@@ -39,11 +43,7 @@ public static class CharGenSubtypeSelectionTranslationPatch
         {
             return values is null
                 ? values
-                : CharGenProducerTranslationHelpers.MaterializeTranslatedEnumerable(
-                    values,
-                    "Description",
-                    Context,
-                    CharGenProducerTranslationHelpers.TranslateStructuredText);
+                : CharGenProducerTranslationHelpers.MaterializeTranslatedFrameworkDataEnumerable(values, Context);
         }
         catch (Exception ex)
         {

@@ -7,8 +7,8 @@ using HarmonyLib;
 namespace QudJP.Patches;
 
 /// <summary>
-/// Observes UI text fields set by setData(FrameworkDataElement) across 9 framework classes.
-/// Uses shared sink-side observation and marker stripping for these sites.
+/// Observes UI text fields set by setData(FrameworkDataElement) for framework classes
+/// that still lack stable owner routes.
 /// </summary>
 [HarmonyPatch]
 public static class SinkPrereqSetDataTranslationPatch
@@ -21,12 +21,7 @@ public static class SinkPrereqSetDataTranslationPatch
         "XRL.UI.Framework.CategoryIconScroller",
         "XRL.UI.Framework.CategoryMenuController",
         "XRL.UI.Framework.FrameworkHeader",
-        "XRL.UI.Framework.SummaryBlockControl",
         "XRL.UI.ObjectFinderLine",
-        "Qud.UI.CharacterEffectLine",
-        "Qud.UI.CharacterAttributeLine",
-        "Qud.UI.TinkeringDetailsLine",
-        "Qud.UI.TradeLine",
     };
 
     [HarmonyTargetMethods]
@@ -81,12 +76,6 @@ public static class SinkPrereqSetDataTranslationPatch
     {
         try
         {
-            if (IsSummaryBlockControl(__instance))
-            {
-                TranslateSummaryBlock(__instance);
-                return;
-            }
-
             for (var index = 0; index < TextSkinFieldNames.Length; index++)
             {
                 SinkPrereqTextFieldTranslator.TranslateField(
@@ -99,41 +88,6 @@ public static class SinkPrereqSetDataTranslationPatch
         catch (Exception ex)
         {
             Trace.TraceError("QudJP: {0}.Postfix failed: {1}", Context, ex);
-        }
-    }
-
-    private static bool IsSummaryBlockControl(object instance)
-    {
-        return instance.GetType().Name.EndsWith("SummaryBlockControl", StringComparison.Ordinal);
-    }
-
-    private static void TranslateSummaryBlock(object instance)
-    {
-        TranslateSummaryBlockField(instance, "text");
-        TranslateSummaryBlockField(instance, "title");
-    }
-
-    private static void TranslateSummaryBlockField(object instance, string fieldName)
-    {
-        var field = AccessTools.Field(instance.GetType(), fieldName);
-        var textSkin = field?.GetValue(instance);
-        var current = UITextSkinReflectionAccessor.GetCurrentText(textSkin, Context);
-        if (string.IsNullOrEmpty(current))
-        {
-            return;
-        }
-
-        var translated = ColorAwareTranslationComposer.TranslatePreservingColors(
-            current!,
-            static visible => ChargenStructuredTextTranslator.Translate(visible));
-        if (string.Equals(current, translated, StringComparison.Ordinal))
-        {
-            return;
-        }
-
-        if (UITextSkinReflectionAccessor.SetCurrentText(textSkin, translated, Context))
-        {
-            DynamicTextObservability.RecordTransform(Context, "Chargen.SummaryBlock", current!, translated);
         }
     }
 }

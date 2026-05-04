@@ -84,6 +84,14 @@
     { "key": "Choose variant", "context": "Chargen.Variant.Popup", "text": "変種を選択" },
     { "key": "<none>", "context": "Chargen.Cybernetics.None", "text": "<なし>" },
 
+    { "key": "Praetorian Prime", "context": "Chargen.Pregen.Name", "text": "プレトリアン・プライム" },
+    { "key": "First Gardener", "context": "Chargen.Pregen.Name", "text": "第一庭師" },
+    { "key": "First Child of the Hearth", "context": "Chargen.Pregen.Name", "text": "炉の第一子" },
+
+    { "key": "The Toxic Arboreta of Ekuemekiyye, the Holy City", "context": "Chargen.Caste.Category", "text": "聖都エクエメキイェの有毒樹木園" },
+    { "key": "The Ice-Sheathed Arcology of Ibul", "context": "Chargen.Caste.Category", "text": "氷に覆われたアーコロジー、イブール" },
+    { "key": "The Crustal Mortars of Yawningmoon", "context": "Chargen.Caste.Category", "text": "ヨーニングムーンの地殻臼砲" },
+
     { "key": "Stinger (Confusing Venom)", "context": "Chargen.Mutation.Option", "text": "毒針（混乱毒）" },
     { "key": "Stinger (Paralyzing Venom)", "context": "Chargen.Mutation.Option", "text": "毒針（麻痺毒）" },
     { "key": "Stinger (Poisoning Venom)", "context": "Chargen.Mutation.Option", "text": "毒針（猛毒）" },

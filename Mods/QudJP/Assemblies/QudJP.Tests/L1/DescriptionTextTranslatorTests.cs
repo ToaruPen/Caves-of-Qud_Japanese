@@ -103,6 +103,40 @@ public sealed class DescriptionTextTranslatorTests
     }
 
     [Test]
+    public void TranslateLongDescription_TranslatesVillageDispositionReasonLeaf()
+    {
+        WriteExactDictionary(
+            ("The villagers of {0}", "{0}の村人たち"),
+            ("defending their village", "彼らの村を守っているため"));
+
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "Admired by {{C|the villagers of テルヴァマス}} for defending their village.",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("{{C|テルヴァマスの村人たち}}に敬愛されている。理由: 彼らの村を守っているため。"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_TranslatesBrainDispositionLinesPreservingValueColor()
+    {
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "Base demeanor: {{g|docile}}\nEngagement style: {{r|aggressive}}",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("基本態度: {{g|温和}}\n交戦スタイル: {{r|攻撃的}}"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_BrainDispositionFallbackKeepsEnglishValue()
+    {
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            "Base demeanor: {{g|unknown}}",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("基本態度: {{g|unknown}}"));
+    }
+
+    [Test]
     public void TranslateLongDescription_DoesNotReportNoPattern_ForAlreadyLocalizedDispositionReason()
     {
         const string reason = "巡礼者に施しをしたため";
@@ -229,6 +263,39 @@ public sealed class DescriptionTextTranslatorTests
             Is.EqualTo(
                 "<color=yellow>筋力ボーナス上限: 1\n" +
                 "武器カテゴリ: 斧（クリティカル時に装甲破砕）</color>"));
+    }
+
+    [Test]
+    public void TranslateLongDescription_TranslatesInspectFixedLeavesFromOwnerDictionaries()
+    {
+        WriteDictionary(
+            "ui-default.ja.json",
+            ("defensive stance", "防御姿勢"));
+        WriteDictionary(
+            "world-mods.ja.json",
+            ("Weapon Class: Bows && Rifles", "武器カテゴリ: 弓 && ライフル"),
+            ("Accuracy: Medium", "命中率: 普通"),
+            (
+                "Projectiles fired with this weapon receive bonus penetration based on the wielder's Strength.",
+                "この武器から発射された投射物は、使用者の筋力に基づいて追加の貫通力を得る。"));
+
+        var source =
+            "Weapon Class: Bows && Rifles\n" +
+            "Accuracy: Medium\n" +
+            "Projectiles fired with this weapon receive bonus penetration based on the wielder's Strength.\n" +
+            "defensive stance";
+
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            source,
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(
+            translated,
+            Is.EqualTo(
+                "武器カテゴリ: 弓 && ライフル\n" +
+                "命中率: 普通\n" +
+                "この武器から発射された投射物は、使用者の筋力に基づいて追加の貫通力を得る。\n" +
+                "防御姿勢"));
     }
 
     [Test]

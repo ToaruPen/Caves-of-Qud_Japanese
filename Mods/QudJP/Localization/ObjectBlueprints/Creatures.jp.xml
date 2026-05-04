@@ -2981,7 +2981,7 @@
     <skill Name="Cudgel" />
     <tag Name="Role" Value="Brute" />
     <tag Name="Class" Value="equine" />
-    <tag Name="SimpleConversation" Value="&amp;w*soft nickering*&amp;y" />
+    <tag Name="SimpleConversation" Value="&amp;w*静かにいなないている*&amp;y" />
     <tag Name="DynamicObjectsTable:DesertCanyon_Creatures" />
     <tag Name="DynamicObjectsTable:Flowerfields_Creatures" />
   </object>
@@ -8043,7 +8043,7 @@
     <tag Name="Class" Value="equine" />
     <tag Name="Role" Value="Brute" />
     <tag Name="Species" Value="horse" />
-    <tag Name="SimpleConversation" Value="&amp;w*soft nickering*&amp;y" />
+    <tag Name="SimpleConversation" Value="&amp;w*静かにいなないている*&amp;y" />
     <tag Name="DynamicObjectsTable:MoonStair_Creatures" />
   </object>
 
@@ -11583,7 +11583,7 @@
     <part Name="Brain" Wanders="True" Calm="True" Factions="Joppa-100" />
     <part Name="Description" Short="星の帯がかかったある夜、レイキャットが湿った沃土を横切ってジョッパへ迷い込んだ。小さな少女の歓声に起こされたウォーターヴァイン農家たちは集まり、吉兆を寿ぎ、ビートルムーンの寛大さを称えた。それ以来、クテシフスは塩茎の小屋の陰で体を丸め、土の道をのんびりと歩いて過ごしている。慎重に近づきさえすれば、友にも見知らぬ者にも撫でさせてくれる。  &amp;mphosphorescent&amp;y" />
     <part Name="Raycat" />
-    <part Name="Pettable" PettableIfPositiveFeeling="True" UseFactionForFeelingFloor="Joppa" />
+    <part Name="Pettable" PettableIfPositiveFeeling="True" UseFactionForFeelingFloor="Joppa" PetResponse="=subject.T=がにゃあと鳴く。" />
     <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
     <part Name="AISelfPreservation" Threshold="40" />
     <part Name="Interesting" />
@@ -14097,4 +14097,3 @@
   </object>
 
 </objects>
-

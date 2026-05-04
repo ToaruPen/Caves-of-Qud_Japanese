@@ -82,6 +82,31 @@ public static class QuestsStatusScreenTranslationPatch
             return;
         }
 
+        TranslatePinTitle(pinItem, index);
+        TranslatePinDetails(pinItem, index);
+    }
+
+    private static void TranslatePinTitle(object pinItem, int index)
+    {
+        var titleText = UiBindingTranslationHelpers.GetMemberValue(pinItem, "titleText");
+        var current = UITextSkinReflectionAccessor.GetCurrentText(titleText, Context);
+        if (string.IsNullOrEmpty(current))
+        {
+            return;
+        }
+
+        var route = ObservabilityHelpers.ComposeContext(Context, "field=titleText[" + index + "]");
+        if (!MessageLogProducerTranslationHelpers.TryTranslateZoneDisplayName(current!, route, out var translated)
+            || string.Equals(translated, current, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        OwnerTextSetter.SetTranslatedText(titleText, current!, translated, Context, typeof(QuestsStatusScreenTranslationPatch));
+    }
+
+    private static void TranslatePinDetails(object pinItem, int index)
+    {
         var detailsText = UiBindingTranslationHelpers.GetMemberValue(pinItem, "detailsText");
         var current = UITextSkinReflectionAccessor.GetCurrentText(detailsText, Context);
         if (string.IsNullOrEmpty(current))

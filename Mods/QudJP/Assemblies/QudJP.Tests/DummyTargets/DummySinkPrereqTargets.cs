@@ -10,7 +10,7 @@ internal sealed class DummyUITextSkinField
     }
 }
 
-internal sealed class DummyFrameworkDataElement
+internal class DummyFrameworkDataElement
 {
     public string? Description { get; set; }
     public string? Title { get; set; }

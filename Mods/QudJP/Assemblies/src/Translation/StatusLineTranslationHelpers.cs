@@ -30,19 +30,19 @@ internal static class StatusLineTranslationHelpers
         var bonusCapMatch = BonusCapPattern.Match(source);
         if (bonusCapMatch.Success)
         {
-            var translatedSuffix = StringHelpers.TranslateExactOrLowerAscii("Bonus Cap:");
+            var translatedSuffix = StringHelpers.TranslateExactOrLowerAscii("Bonus Cap:", route);
             if (translatedSuffix is not null)
             {
                 var translatedValue = bonusCapMatch.Groups["value"].Value;
-                if (StringHelpers.TryGetTranslationExactOrLowerAscii(bonusCapMatch.Groups["value"].Value, out var valueTranslation))
+                if (TryTranslateCompareStatusValue(translatedValue, route, out var valueTranslation))
                 {
                     translatedValue = valueTranslation;
                 }
 
                 var rawStat = bonusCapMatch.Groups["stat"].Value;
-                var statTranslated = StringHelpers.TryGetTranslationExactOrLowerAscii(rawStat, out var translatedStat);
-                var statName = statTranslated ? translatedStat : rawStat;
-                var separator = statTranslated ? "" : " ";
+                var translatedStat = StringHelpers.TranslateExactOrLowerAscii(rawStat, route);
+                var statName = translatedStat ?? rawStat;
+                var separator = translatedStat is not null ? "" : " ";
 
                 translated = statName + separator + translatedSuffix + " " + translatedValue;
                 DynamicTextObservability.RecordTransform(route, family, source, translated);
@@ -52,7 +52,7 @@ internal static class StatusLineTranslationHelpers
 
         var weaponClassMatch = WeaponClassPattern.Match(source);
         if (weaponClassMatch.Success
-            && TryTranslateLabeledValueLine(weaponClassMatch, "Weapon Class:", out translated))
+            && TryTranslateLabeledValueLine(weaponClassMatch, "Weapon Class:", route, out translated))
         {
             DynamicTextObservability.RecordTransform(route, family, source, translated);
             return true;
@@ -60,7 +60,7 @@ internal static class StatusLineTranslationHelpers
 
         var requiresMatch = RequiresPattern.Match(source);
         if (requiresMatch.Success
-            && TryTranslateLabeledValueLine(requiresMatch, "Requires:", out translated))
+            && TryTranslateLabeledValueLine(requiresMatch, "Requires:", route, out translated))
         {
             DynamicTextObservability.RecordTransform(route, family, source, translated);
             return true;
@@ -68,7 +68,7 @@ internal static class StatusLineTranslationHelpers
 
         var weightMatch = WeightPattern.Match(source);
         if (weightMatch.Success
-            && TryTranslateLabeledValueLine(weightMatch, "Weight:", out translated, translateValue: false))
+            && TryTranslateLabeledValueLine(weightMatch, "Weight:", route, out translated, translateValue: false))
         {
             DynamicTextObservability.RecordTransform(route, family, source, translated);
             return true;
@@ -78,9 +78,14 @@ internal static class StatusLineTranslationHelpers
         return false;
     }
 
-    private static bool TryTranslateLabeledValueLine(Match match, string label, out string translated, bool translateValue = true)
+    private static bool TryTranslateLabeledValueLine(
+        Match match,
+        string label,
+        string route,
+        out string translated,
+        bool translateValue = true)
     {
-        var translatedLabel = StringHelpers.TranslateExactOrLowerAscii(label);
+        var translatedLabel = StringHelpers.TranslateExactOrLowerAscii(label, route);
         if (translatedLabel is null)
         {
             translated = match.Value;
@@ -89,7 +94,7 @@ internal static class StatusLineTranslationHelpers
 
         var value = match.Groups["value"].Value;
         var translatedValue = value;
-        if (translateValue && TryTranslateCompareStatusValue(value, out var valueTranslation))
+        if (translateValue && TryTranslateCompareStatusValue(value, route, out var valueTranslation))
         {
             translatedValue = valueTranslation;
         }
@@ -98,17 +103,19 @@ internal static class StatusLineTranslationHelpers
         return true;
     }
 
-    private static bool TryTranslateCompareStatusValue(string value, out string translated)
+    private static bool TryTranslateCompareStatusValue(string value, string route, out string translated)
     {
+        var contextual = StringHelpers.TranslateExactOrLowerAscii(value, route);
+        if (contextual is not null)
+        {
+            translated = contextual;
+            return true;
+        }
+
         var scoped = ScopedDictionaryLookup.TranslateExactOrLowerAscii(value, "world-mods.ja.json");
         if (!string.IsNullOrEmpty(scoped) && !string.Equals(scoped, value, StringComparison.Ordinal))
         {
             translated = scoped!;
-            return true;
-        }
-
-        if (StringHelpers.TryGetTranslationExactOrLowerAscii(value, out translated))
-        {
             return true;
         }
 
@@ -141,7 +148,7 @@ internal static class StatusLineTranslationHelpers
         var translatedParts = new string[parts.Length];
         for (var index = 0; index < parts.Length; index++)
         {
-            var translatedPart = StringHelpers.TranslateExactOrLowerAscii(parts[index]);
+            var translatedPart = StringHelpers.TranslateExactOrLowerAscii(parts[index], route);
             if (translatedPart is null)
             {
                 return false;
@@ -166,7 +173,11 @@ internal static class StatusLineTranslationHelpers
             return false;
         }
 
-        var status = Translator.Translate(activeEffectsPrefix);
+        string status;
+        using (Translator.PushLogContext(route))
+        {
+            status = Translator.Translate(activeEffectsPrefix);
+        }
         if (string.Equals(status, activeEffectsPrefix, StringComparison.Ordinal))
         {
             // Translation unchanged; continue translating known effect fragments.
@@ -189,7 +200,7 @@ internal static class StatusLineTranslationHelpers
         var translatedParts = new string[parts.Length];
         for (var index = 0; index < parts.Length; index++)
         {
-            var translatedPart = StringHelpers.TranslateExactOrLowerAscii(parts[index]);
+            var translatedPart = StringHelpers.TranslateExactOrLowerAscii(parts[index], route);
             translatedParts[index] = translatedPart ?? parts[index];
         }
 
@@ -212,7 +223,11 @@ internal static class StatusLineTranslationHelpers
             return false;
         }
 
-        var levelLabel = Translator.Translate("LVL");
+        string levelLabel;
+        using (Translator.PushLogContext(route))
+        {
+            levelLabel = Translator.Translate("LVL");
+        }
         if (string.Equals(levelLabel, "LVL", StringComparison.Ordinal))
         {
             translated = source;
@@ -258,7 +273,7 @@ internal static class StatusLineTranslationHelpers
             return false;
         }
 
-        var translatedStatus = StringHelpers.TranslateExactOrLowerAscii(match.Groups["status"].Value);
+        var translatedStatus = StringHelpers.TranslateExactOrLowerAscii(match.Groups["status"].Value, route);
         if (translatedStatus is null)
         {
             translated = source;

@@ -164,6 +164,8 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(FactionsLineDataTranslationPatch), "set", "Qud.UI.FactionsLineData", "Qud.UI.FactionsLineData", new[] { "System.String", "System.String", "ConsoleLib.Console.IRenderable", "System.Boolean" })]
     [TestCase(typeof(FactionsLineTranslationPatch), "setData", "Qud.UI.FactionsLine", "System.Void", new[] { "XRL.UI.Framework.FrameworkDataElement" })]
     [TestCase(typeof(QudMutationsModuleWindowTranslationPatch), "UpdateControls", "XRL.CharacterBuilds.Qud.UI.QudMutationsModuleWindow", "System.Void", new string[0])]
+    [TestCase(typeof(SummaryBlockControlTranslationPatch), "setData", "XRL.UI.Framework.SummaryBlockControl", "System.Void", new[] { "XRL.UI.Framework.FrameworkDataElement" })]
+    [TestCase(typeof(TradeLineTranslationPatch), "setData", "Qud.UI.TradeLine", "System.Void", new[] { "XRL.UI.Framework.FrameworkDataElement" })]
     [TestCase(typeof(SkillsAndPowersStatusScreenTranslationPatch), "UpdateViewFromData", "Qud.UI.SkillsAndPowersStatusScreen", "System.Void", new string[0])]
     [TestCase(typeof(MessageLogPatch), "AddPlayerMessage", "XRL.Messages.MessageQueue", "System.Void", new[] { "System.String", "System.String", "System.Boolean" })]
     [TestCase(typeof(MessageLogStatusScreenTranslationPatch), "GetTabString", "Qud.UI.MessageLogStatusScreen", "System.String", new string[0])]
@@ -366,6 +368,8 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(BedTranslationPatch), "AttemptSleep", "XRL.World.Parts.Bed", "System.Void", new[] { "XRL.World.GameObject", "System.Boolean&", "System.Boolean&", "System.Boolean&" })]
     [TestCase(typeof(ChairTranslationPatch), "SitDown", "XRL.World.Parts.Chair", "System.Boolean", new[] { "XRL.World.GameObject", "XRL.World.IEvent" })]
     [TestCase(typeof(EnclosingTranslationPatch), "ExitEnclosure", "XRL.World.Parts.Enclosing", "System.Boolean", new[] { "XRL.World.GameObject", "XRL.World.IEvent", "XRL.World.Effects.Enclosed" })]
+    [TestCase(typeof(GameSummaryScreenMenuBarsTranslationPatch), "UpdateMenuBars", "Qud.UI.GameSummaryScreen", "System.Void", new string[0])]
+    [TestCase(typeof(GameSummaryScreenShowTranslationPatch), "_ShowGameSummary", "Qud.UI.GameSummaryScreen", "System.Threading.Tasks.Task`1[[System.Boolean]]", new[] { "System.String", "System.String", "System.String", "System.Boolean" })]
     [TestCase(typeof(GivesRepShortDescriptionTranslationPatch), "HandleEvent", "XRL.World.Parts.GivesRep", "System.Boolean", new[] { "XRL.World.GetShortDescriptionEvent" })]
     [TestCase(typeof(MutationsApiTranslationPatch), "BuyRandomMutation", "Qud.API.MutationsAPI", "System.Boolean", new[] { "XRL.World.GameObject", "System.Int32", "System.Boolean", "System.String" })]
     [TestCase(typeof(ConversationPronounExchangeTranslationPatch), "PronounExchangeDescription", "XRL.World.Parts.ConversationScript", "System.String", new[]
@@ -401,7 +405,7 @@ public sealed class TargetMethodResolutionTests
 
             var methodInfo = targetMethod as MethodInfo;
             Assert.That(methodInfo, Is.Not.Null, $"Expected MethodInfo for {patchType.FullName}");
-            Assert.That(methodInfo!.ReturnType.FullName, Is.EqualTo(expectedReturnType));
+            Assert.That(NormalizeTypeName(methodInfo!.ReturnType.FullName), Is.EqualTo(expectedReturnType));
 
             var parameterTypes = Array.ConvertAll(methodInfo.GetParameters(), static parameter => NormalizeTypeName(parameter.ParameterType.FullName));
             Assert.That(parameterTypes, Is.EqualTo(expectedParameterTypes));
@@ -416,22 +420,12 @@ public sealed class TargetMethodResolutionTests
         "XRL.UI.Framework.FrameworkDataElement",
         "XRL.UI.Framework.FrameworkDataElement",
         "XRL.UI.Framework.FrameworkDataElement",
-        "XRL.UI.Framework.FrameworkDataElement",
-        "XRL.UI.Framework.FrameworkDataElement",
-        "XRL.UI.Framework.FrameworkDataElement",
-        "XRL.UI.Framework.FrameworkDataElement",
-        "XRL.UI.Framework.FrameworkDataElement",
     })]
     [TestCase(typeof(SinkPrereqUiMethodTranslationPatch), new[]
     {
         "XRL.UI.Framework.FrameworkDataElement",
         "XRL.CharacterBuilds.EmbarkBuilderModuleWindowDescriptor|System.Collections.Generic.IEnumerable`1[[XRL.UI.Framework.FrameworkDataElement]]",
         "XRL.CharacterBuilds.EmbarkBuilderModuleWindowDescriptor|System.Collections.Generic.IEnumerable`1[[XRL.UI.Framework.FrameworkDataElement]]",
-        "",
-        "",
-        "XRL.UI.Framework.FrameworkDataElement",
-        "XRL.UI.Framework.FrameworkDataElement",
-        "MapScrollerController+MapPinData",
         "",
         "",
     })]
@@ -479,6 +473,20 @@ public sealed class TargetMethodResolutionTests
     {
         "System.Boolean",
         "System.Boolean",
+    })]
+    [TestCase(typeof(ConversationSimpleTemplateTranslationPatch), new[]
+    {
+        "XRL.World.GameObject|System.String|System.String|System.String|System.String|System.String|System.Boolean|System.Boolean",
+    })]
+    [TestCase(typeof(ConversationQuestionTemplateTranslationPatch), new[]
+    {
+        "XRL.World.GameObject|System.String|System.String|System.String|System.String|System.String|System.String|System.String|System.Boolean|System.Boolean",
+    })]
+    [TestCase(typeof(DescriptionInspectStatusPatch), new[]
+    {
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
+        "XRL.World.GameObject",
     })]
     [TestCase(typeof(TradeScreenUiTranslationPatch), new[]
     {
@@ -544,6 +552,11 @@ public sealed class TargetMethodResolutionTests
         "",
         "",
     })]
+    [TestCase(typeof(AsleepMessageTranslationPatch), new[]
+    {
+        "XRL.World.GameObject",
+        "XRL.World.BeginTakeActionEvent",
+    })]
     public void TargetMethods_ResolveExpectedOverloads(Type patchType, string[] expectedSignatures)
     {
         var targetMethodsMethod = patchType.GetMethod("TargetMethods", BindingFlags.NonPublic | BindingFlags.Static);
@@ -566,6 +579,30 @@ public sealed class TargetMethodResolutionTests
 
         Assert.That(actualSignatures, Is.EquivalentTo(expectedSignatures));
     }
+
+#if HAS_GAME_DLL
+    [Test]
+    public void SinkPrereqPatches_DoNotRetargetDedicatedOwnerSurfaces()
+    {
+        var uiMethodTargets = ResolveTargetMethodNames(typeof(SinkPrereqUiMethodTranslationPatch));
+        var setDataTargets = ResolveTargetMethodNames(typeof(SinkPrereqSetDataTranslationPatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(uiMethodTargets, Does.Not.Contain("Qud.UI.AbilityManagerScreen|HandleHighlightLeft"));
+            Assert.That(uiMethodTargets, Does.Not.Contain("Qud.UI.TradeScreen|HandleHighlightObject"));
+            Assert.That(uiMethodTargets, Does.Not.Contain("Qud.UI.TradeScreen|UpdateTitleBars"));
+            Assert.That(uiMethodTargets, Does.Not.Contain("Qud.UI.PlayerStatusBar|Update"));
+            Assert.That(uiMethodTargets, Does.Not.Contain("MapScrollerPinItem|SetData"));
+
+            Assert.That(setDataTargets, Does.Not.Contain("Qud.UI.CharacterAttributeLine|setData"));
+            Assert.That(setDataTargets, Does.Not.Contain("Qud.UI.CharacterEffectLine|setData"));
+            Assert.That(setDataTargets, Does.Not.Contain("Qud.UI.TinkeringDetailsLine|setData"));
+            Assert.That(setDataTargets, Does.Not.Contain("XRL.UI.Framework.SummaryBlockControl|setData"));
+            Assert.That(setDataTargets, Does.Not.Contain("Qud.UI.TradeLine|setData"));
+        });
+    }
+#endif
 
     [TestCase(typeof(PopupTranslationPatch), new[]
     {
@@ -952,6 +989,26 @@ public sealed class TargetMethodResolutionTests
     {
         var targetMethod = patchType.GetMethod("TargetMethod", BindingFlags.NonPublic | BindingFlags.Static);
         return targetMethod?.Invoke(null, null) as MethodBase;
+    }
+
+    private static HashSet<string> ResolveTargetMethodNames(Type patchType)
+    {
+        var targetMethodsMethod = patchType.GetMethod("TargetMethods", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(targetMethodsMethod, Is.Not.Null, $"TargetMethods not found for {patchType.FullName}");
+
+        var result = targetMethodsMethod!.Invoke(null, null) as System.Collections.IEnumerable;
+        Assert.That(result, Is.Not.Null, $"TargetMethods returned null for {patchType.FullName}");
+
+        var signatures = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var item in result!)
+        {
+            if (item is MethodInfo methodInfo)
+            {
+                signatures.Add((methodInfo.DeclaringType?.FullName ?? string.Empty) + "|" + methodInfo.Name);
+            }
+        }
+
+        return signatures;
     }
 
     private static MethodBase? FindMethodByNameAndParameterCount(
