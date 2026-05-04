@@ -157,29 +157,81 @@ public sealed class ConversationTemplateTranslationPatchTests
             ("Hello, =player.formalAddressTerm=.", "こんにちは。 =player.formalAddressTerm="),
             ("Live and drink.", "生きて飲め。"));
 
-        var simpleText = "Unknown conversation template.";
-        var simpleGoodbye = string.Empty;
-        ConversationSimpleTemplateTranslationPatch.Prefix(ref simpleText, ref simpleGoodbye);
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
 
-        var questionText = "{{y|Hello, =player.formalAddressTerm=.}}";
-        var questionGoodbye = "\u0001Live and drink.";
-        var question = "Unknown question?";
-        var answer = string.Empty;
-        ConversationQuestionTemplateTranslationPatch.Prefix(
-            ref questionText,
-            ref questionGoodbye,
-            ref question,
-            ref answer);
-
-        Assert.Multiple(() =>
+        try
         {
-            Assert.That(simpleText, Is.EqualTo("Unknown conversation template."));
-            Assert.That(simpleGoodbye, Is.EqualTo(string.Empty));
-            Assert.That(questionText, Is.EqualTo("{{y|こんにちは。}}"));
-            Assert.That(questionGoodbye, Is.EqualTo("\u0001Live and drink."));
-            Assert.That(question, Is.EqualTo("Unknown question?"));
-            Assert.That(answer, Is.EqualTo(string.Empty));
-        });
+            harmony.Patch(
+                original: RequireMethod(
+                    typeof(DummyConversationApiTarget),
+                    nameof(DummyConversationApiTarget.AddSimpleConversationToObject),
+                    typeof(object),
+                    typeof(string),
+                    typeof(string),
+                    typeof(string),
+                    typeof(string),
+                    typeof(string),
+                    typeof(bool),
+                    typeof(bool)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(ConversationSimpleTemplateTranslationPatch), nameof(ConversationSimpleTemplateTranslationPatch.Prefix))));
+            harmony.Patch(
+                original: RequireMethod(
+                    typeof(DummyConversationApiTarget),
+                    nameof(DummyConversationApiTarget.AddSimpleConversationToObject),
+                    typeof(object),
+                    typeof(string),
+                    typeof(string),
+                    typeof(string),
+                    typeof(string),
+                    typeof(string),
+                    typeof(string),
+                    typeof(string),
+                    typeof(bool),
+                    typeof(bool)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(ConversationQuestionTemplateTranslationPatch), nameof(ConversationQuestionTemplateTranslationPatch.Prefix))));
+
+            DummyConversationApiTarget.AddSimpleConversationToObject(
+                new object(),
+                "Unknown conversation template.",
+                string.Empty,
+                Filter: null,
+                FilterExtras: null,
+                Append: null,
+                ClearLost: false,
+                ClearOriginal: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyConversationApiTarget.LastText, Is.EqualTo("Unknown conversation template."));
+                Assert.That(DummyConversationApiTarget.LastGoodbye, Is.EqualTo(string.Empty));
+            });
+
+            DummyConversationApiTarget.Reset();
+            DummyConversationApiTarget.AddSimpleConversationToObject(
+                new object(),
+                "{{y|Hello, =player.formalAddressTerm=.}}",
+                "\u0001Live and drink.",
+                Question: "Unknown question?",
+                Answer: string.Empty,
+                Filter: null,
+                FilterExtras: null,
+                Append: null,
+                ClearLost: false,
+                ClearOriginal: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyConversationApiTarget.LastText, Is.EqualTo("{{y|こんにちは。}}"));
+                Assert.That(DummyConversationApiTarget.LastGoodbye, Is.EqualTo("\u0001Live and drink."));
+                Assert.That(DummyConversationApiTarget.LastQuestion, Is.EqualTo("Unknown question?"));
+                Assert.That(DummyConversationApiTarget.LastAnswer, Is.EqualTo(string.Empty));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     private static string CreateHarmonyId()
