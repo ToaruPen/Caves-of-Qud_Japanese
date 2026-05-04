@@ -68,7 +68,7 @@
     },
     {
       "pattern": "^On the (.+?) of (.+?), you were killed by a (.+?)\\.$",
-      "template": "{t1}の{t0}日、{2}に殺された。",
+      "template": "{t1}の{t0}日、{t2}に殺された。",
       "route": "journal"
     },
     {

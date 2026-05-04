@@ -35,7 +35,7 @@ The initial scan found 207 candidate methods:
 Additional structural search used for the unit numeric slice:
 
 ```bash
-just sg-cs 'return $BONUS.Signed() + $SUFFIX;' /Users/toarupen/dev/coq-decompiled_stable/XRL.World.Effects
+just sg-cs 'return $BONUS.Signed() + $SUFFIX;' <coq-decompiled>/XRL.World.Effects
 ```
 
 ## Current Owner Coverage
