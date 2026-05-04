@@ -233,7 +233,7 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
                             elementType!,
                             "Title",
                             $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
-                        AssertMemberExists(
+                        AssertEnumerableMemberExists(
                             elementType!,
                             "Choices",
                             $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
@@ -316,21 +316,23 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
         Assert.Fail($"{context} is missing readable string member '{memberName}' on runtime type '{runtimeType.FullName}'.");
     }
 
-    private static void AssertMemberExists(Type runtimeType, string memberName, string context)
+    private static void AssertEnumerableMemberExists(Type runtimeType, string memberName, string context)
     {
         var field = runtimeType.GetField(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        if (field is not null)
+        if (field is not null && typeof(System.Collections.IEnumerable).IsAssignableFrom(field.FieldType))
         {
             return;
         }
 
         var property = runtimeType.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        if (property is not null && property.CanRead)
+        if (property is not null
+            && property.CanRead
+            && typeof(System.Collections.IEnumerable).IsAssignableFrom(property.PropertyType))
         {
             return;
         }
 
-        Assert.Fail($"{context} is missing readable member '{memberName}' on runtime type '{runtimeType.FullName}'.");
+        Assert.Fail($"{context} is missing readable enumerable member '{memberName}' on runtime type '{runtimeType.FullName}'.");
     }
 
     private static Type? ResolveEnumerableElementType(Type sequenceType)
