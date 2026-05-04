@@ -211,17 +211,6 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
                         elementType!,
                         "Description",
                         $"{patchTypeName} enumerable element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
-                    if (string.Equals(methodInfo.Name, "GetSelectionCategories", StringComparison.Ordinal))
-                    {
-                        AssertStringMemberExists(
-                            elementType!,
-                            "Title",
-                            $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
-                        AssertMemberExists(
-                            elementType!,
-                            "Choices",
-                            $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
-                    }
                 }
 
                 return;
@@ -238,6 +227,17 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
                         elementType!,
                         "Description",
                         $"{patchTypeName} enumerable element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                    if (string.Equals(methodInfo.Name, "GetSelectionCategories", StringComparison.Ordinal))
+                    {
+                        AssertStringMemberExists(
+                            elementType!,
+                            "Title",
+                            $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                        AssertMemberExists(
+                            elementType!,
+                            "Choices",
+                            $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                    }
                 }
 
                 return;

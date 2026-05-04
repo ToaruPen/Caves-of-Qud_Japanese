@@ -793,7 +793,7 @@ internal static class JournalPatternTranslator
         if (string.Equals(template, templateKey, StringComparison.Ordinal))
         {
             translated = source;
-            return false;
+            return true;
         }
 
         translated = template.Replace("{0}", name);

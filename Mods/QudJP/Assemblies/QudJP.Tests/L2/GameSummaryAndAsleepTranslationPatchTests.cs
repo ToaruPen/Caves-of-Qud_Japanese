@@ -75,6 +75,33 @@ public sealed class GameSummaryAndAsleepTranslationPatchTests
     }
 
     [Test]
+    public void GameSummaryShowPrefix_PreservesFallbackEmptyColorAndMarkerInputs()
+    {
+        WriteDictionary(("You abandoned all hope.", "あなたはすべての希望を捨てた。"));
+
+        var cause = "Unknown ending.";
+        var details = string.Join(
+            "\n",
+            string.Empty,
+            "{{y|Unknown detail.}}",
+            "\u0001You abandoned all hope.");
+
+        GameSummaryScreenShowTranslationPatch.Prefix(ref cause, ref details);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(cause, Is.EqualTo("Unknown ending."));
+            Assert.That(
+                details,
+                Is.EqualTo(string.Join(
+                    "\n",
+                    string.Empty,
+                    "{{y|Unknown detail.}}",
+                    "\u0001You abandoned all hope.")));
+        });
+    }
+
+    [Test]
     public void GameSummaryUpdateMenuBarsPostfix_TranslatesHotkeyDescriptions_WhenPatched()
     {
         WriteDictionary(
@@ -102,6 +129,29 @@ public sealed class GameSummaryAndAsleepTranslationPatchTests
         {
             harmony.UnpatchAll(harmonyId);
         }
+    }
+
+    [Test]
+    public void GameSummaryUpdateMenuBarsLiteral_PreservesFallbackEmptyColorAndMarkerInputs()
+    {
+        WriteDictionary(("Save Tombstone File", "墓碑ファイルを保存"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                GameSummaryScreenMenuBarsTranslationPatch.TranslateLiteral("Save Tombstone File"),
+                Is.EqualTo("墓碑ファイルを保存"));
+            Assert.That(
+                GameSummaryScreenMenuBarsTranslationPatch.TranslateLiteral("Unknown option"),
+                Is.EqualTo("Unknown option"));
+            Assert.That(GameSummaryScreenMenuBarsTranslationPatch.TranslateLiteral(string.Empty), Is.EqualTo(string.Empty));
+            Assert.That(
+                GameSummaryScreenMenuBarsTranslationPatch.TranslateLiteral("{{y|Save Tombstone File}}"),
+                Is.EqualTo("{{y|Save Tombstone File}}"));
+            Assert.That(
+                GameSummaryScreenMenuBarsTranslationPatch.TranslateLiteral("\u0001Save Tombstone File"),
+                Is.EqualTo("\u0001Save Tombstone File"));
+        });
     }
 
     [Test]
@@ -134,6 +184,25 @@ public sealed class GameSummaryAndAsleepTranslationPatchTests
         {
             harmony.UnpatchAll(harmonyId);
         }
+    }
+
+    [Test]
+    public void AsleepLiteral_PreservesFallbackEmptyColorAndMarkerInputs()
+    {
+        WriteDictionary(("You are asleep.", "眠っている。"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(AsleepMessageTranslationPatch.TranslateLiteral("You are asleep."), Is.EqualTo("眠っている。"));
+            Assert.That(AsleepMessageTranslationPatch.TranslateLiteral("Unknown sleep line."), Is.EqualTo("Unknown sleep line."));
+            Assert.That(AsleepMessageTranslationPatch.TranslateLiteral(string.Empty), Is.EqualTo(string.Empty));
+            Assert.That(
+                AsleepMessageTranslationPatch.TranslateLiteral("{{y|You are asleep.}}"),
+                Is.EqualTo("{{y|You are asleep.}}"));
+            Assert.That(
+                AsleepMessageTranslationPatch.TranslateLiteral("\u0001You are asleep."),
+                Is.EqualTo("\u0001You are asleep."));
+        });
     }
 
     private static string CreateHarmonyId()

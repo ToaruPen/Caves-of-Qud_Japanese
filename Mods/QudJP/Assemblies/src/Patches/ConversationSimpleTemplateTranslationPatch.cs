@@ -39,8 +39,11 @@ public static class ConversationSimpleTemplateTranslationPatch
     {
         try
         {
-            Text = ConversationTemplateTranslator.TranslateTemplate(Text);
-            Goodbye = ConversationTemplateTranslator.TranslateTemplate(Goodbye);
+            var translatedText = ConversationTemplateTranslator.TranslateTemplate(Text);
+            var translatedGoodbye = ConversationTemplateTranslator.TranslateTemplate(Goodbye);
+
+            Text = translatedText;
+            Goodbye = translatedGoodbye;
         }
         catch (Exception ex)
         {

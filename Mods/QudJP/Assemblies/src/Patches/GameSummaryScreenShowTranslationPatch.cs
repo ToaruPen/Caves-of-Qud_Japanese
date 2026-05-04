@@ -34,8 +34,11 @@ public static class GameSummaryScreenShowTranslationPatch
     {
         try
         {
-            cause = GameSummaryTextTranslator.TranslateCause(cause);
-            details = GameSummaryTextTranslator.TranslateDetails(details);
+            var translatedCause = GameSummaryTextTranslator.TranslateCause(cause);
+            var translatedDetails = GameSummaryTextTranslator.TranslateDetails(details);
+
+            cause = translatedCause;
+            details = translatedDetails;
         }
         catch (Exception ex)
         {

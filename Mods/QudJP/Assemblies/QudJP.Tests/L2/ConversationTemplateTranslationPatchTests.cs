@@ -150,6 +150,38 @@ public sealed class ConversationTemplateTranslationPatchTests
         }
     }
 
+    [Test]
+    public void Prefix_PreservesFallbackEmptyColorAndMarkerInputs()
+    {
+        WriteDictionary(
+            ("Hello, =player.formalAddressTerm=.", "こんにちは。 =player.formalAddressTerm="),
+            ("Live and drink.", "生きて飲め。"));
+
+        var simpleText = "Unknown conversation template.";
+        var simpleGoodbye = string.Empty;
+        ConversationSimpleTemplateTranslationPatch.Prefix(ref simpleText, ref simpleGoodbye);
+
+        var questionText = "{{y|Hello, =player.formalAddressTerm=.}}";
+        var questionGoodbye = "\u0001Live and drink.";
+        var question = "Unknown question?";
+        var answer = string.Empty;
+        ConversationQuestionTemplateTranslationPatch.Prefix(
+            ref questionText,
+            ref questionGoodbye,
+            ref question,
+            ref answer);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(simpleText, Is.EqualTo("Unknown conversation template."));
+            Assert.That(simpleGoodbye, Is.EqualTo(string.Empty));
+            Assert.That(questionText, Is.EqualTo("{{y|こんにちは。}}"));
+            Assert.That(questionGoodbye, Is.EqualTo("\u0001Live and drink."));
+            Assert.That(question, Is.EqualTo("Unknown question?"));
+            Assert.That(answer, Is.EqualTo(string.Empty));
+        });
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";

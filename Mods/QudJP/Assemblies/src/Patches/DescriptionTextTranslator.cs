@@ -422,6 +422,7 @@ internal static class DescriptionTextTranslator
             return false;
         }
 
+        label = RestoreBalancedCapture(label, spans, match.Groups["label"]);
         value = RestoreBalancedCapture(value, spans, match.Groups["value"]);
         translated = label + " " + value;
         translated = RestoreWholeLineBoundaryWrappers(translated, spans, stripped.Length);

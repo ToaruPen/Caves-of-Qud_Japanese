@@ -213,31 +213,36 @@ public sealed class LocalizationCoverageTests
     [Test]
     public void ChargenStructuredTextTranslator_CoversRuntimeObservedSkillLeaves()
     {
-        var observedSkillLeaves = new[]
+        var expectedTranslations = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            "Axe",
-            "Butchery",
-            "Cleave",
-            "Deploy Turret",
-            "Harvestry",
-            "Nostrums",
-            "Shield Slam",
-            "Snake Oiler",
-            "Tactics",
-            "Tank",
-            "Tinker I",
-            "Tinker II",
-            "Weak Spotter",
-            "Wilderness Lore: Canyons",
-            "Wilderness Lore: Hills and Mountains",
-            "Wilderness Lore: Jungles",
+            ["Axe"] = "斧",
+            ["Butchery"] = "解体術",
+            ["Cleave"] = "裂断",
+            ["Deploy Turret"] = "タレット展開",
+            ["Harvestry"] = "収穫術",
+            ["Nostrums"] = "秘薬",
+            ["Shield Slam"] = "シールドスラム",
+            ["Snake Oiler"] = "蛇油売り",
+            ["Tactics"] = "戦術",
+            ["Tank"] = "戦車乗り",
+            ["Tinker I"] = "工匠 I",
+            ["Tinker II"] = "工匠 II",
+            ["Weak Spotter"] = "急所狙い",
+            ["Wilderness Lore: Canyons"] = "荒地巡り：峡谷",
+            ["Wilderness Lore: Hills and Mountains"] = "荒地巡り：丘陵と山",
+            ["Wilderness Lore: Jungles"] = "荒地巡り：ジャングル",
         };
 
-        var untranslated = observedSkillLeaves
-            .Where(leaf => string.Equals(ChargenStructuredTextTranslator.Translate(leaf), leaf, StringComparison.Ordinal))
-            .ToArray();
-
-        Assert.That(untranslated, Is.Empty, "Runtime-observed chargen skill leaves should stay in the scoped chargen dictionary.");
+        Assert.Multiple(() =>
+        {
+            foreach (var expected in expectedTranslations)
+            {
+                Assert.That(
+                    ChargenStructuredTextTranslator.Translate(expected.Key),
+                    Is.EqualTo(expected.Value),
+                    expected.Key);
+            }
+        });
     }
 
     [Test]

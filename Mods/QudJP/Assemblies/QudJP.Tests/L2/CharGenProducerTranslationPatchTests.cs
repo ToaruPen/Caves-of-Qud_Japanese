@@ -287,7 +287,44 @@ public sealed class CharGenProducerTranslationPatchTests
                 Assert.That(
                     TranslatePregenSelectionTitle("{{y|Praetorian Prime}}"),
                     Is.EqualTo("{{y|プレトリアン・プライム}}"));
+                Assert.That(
+                    TranslatePregenSelectionDescription("Unknown description."),
+                    Is.EqualTo("Unknown description."));
+                Assert.That(
+                    TranslatePregenSelectionDescription(string.Empty),
+                    Is.EqualTo(string.Empty));
+                Assert.That(
+                    TranslatePregenSelectionDescription("\u0001Choose a pregenerated character."),
+                    Is.EqualTo("\u0001Choose a pregenerated character."));
+                Assert.That(
+                    TranslatePregenSelectionDescription("{{y|Choose a pregenerated character.}}"),
+                    Is.EqualTo("{{y|Choose a pregenerated character.}}"));
             });
+        });
+    }
+
+    [Test]
+    public void MaterializeTranslatedEnumerable_DoesNotMutateEarlierItems_WhenTranslationThrows()
+    {
+        var items = new List<DummyCharGenMenuOption>
+        {
+            new DummyCharGenMenuOption { Description = "First" },
+            new DummyCharGenMenuOption { Description = "Second" },
+        };
+
+        Assert.Throws<InvalidOperationException>(() =>
+            CharGenProducerTranslationHelpers.MaterializeTranslatedEnumerable(
+                items,
+                "Description",
+                "test",
+                source => string.Equals(source, "Second", StringComparison.Ordinal)
+                    ? throw new InvalidOperationException("boom")
+                    : "最初"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(items[0].Description, Is.EqualTo("First"));
+            Assert.That(items[1].Description, Is.EqualTo("Second"));
         });
     }
 
@@ -689,6 +726,14 @@ public sealed class CharGenProducerTranslationPatchTests
             .GetSelections()
             .ToList();
         return translatedSelections.Single().Title;
+    }
+
+    private static string? TranslatePregenSelectionDescription(string source)
+    {
+        var translatedSelections = new DummyCharGenPregenModuleWindowTarget { Description = source }
+            .GetSelections()
+            .ToList();
+        return translatedSelections.Single().Description;
     }
 
     private static MethodInfo RequireMethod(Type type, string methodName)

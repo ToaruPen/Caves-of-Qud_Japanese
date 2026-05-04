@@ -56,13 +56,21 @@ public static class GameSummaryScreenMenuBarsTranslationPatch
 
     internal static string TranslateLiteral(string source)
     {
-        var translated = Translator.Translate(source);
-        if (!string.Equals(translated, source, StringComparison.Ordinal))
+        try
         {
-            DynamicTextObservability.RecordTransform(Context, "GameSummaryScreen.MenuOption", source, translated);
-        }
+            var translated = Translator.Translate(source);
+            if (!string.Equals(translated, source, StringComparison.Ordinal))
+            {
+                DynamicTextObservability.RecordTransform(Context, "GameSummaryScreen.MenuOption", source, translated);
+            }
 
-        return translated;
+            return translated;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: {0}.TranslateLiteral failed: {1}", Context, ex);
+            return source;
+        }
     }
 
     private static bool IsTargetLiteral(string literal)

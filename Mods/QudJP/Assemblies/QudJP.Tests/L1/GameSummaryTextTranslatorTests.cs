@@ -104,6 +104,25 @@ public sealed class GameSummaryTextTranslatorTests
         });
     }
 
+    [Test]
+    public void TranslateCauseAndDetails_PreserveEmptyAndMarkerPrefixedInputs()
+    {
+        WriteDictionary(("You abandoned all hope.", "あなたはすべての希望を捨てた。"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(GameSummaryTextTranslator.TranslateCause(null), Is.EqualTo(string.Empty));
+            Assert.That(GameSummaryTextTranslator.TranslateCause(string.Empty), Is.EqualTo(string.Empty));
+            Assert.That(
+                GameSummaryTextTranslator.TranslateCause("\u0001You abandoned all hope."),
+                Is.EqualTo("\u0001You abandoned all hope."));
+            Assert.That(GameSummaryTextTranslator.TranslateDetails(string.Empty), Is.EqualTo(string.Empty));
+            Assert.That(
+                GameSummaryTextTranslator.TranslateDetails("\u0001You scored {{C|10539}} points."),
+                Is.EqualTo("\u0001You scored {{C|10539}} points."));
+        });
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();

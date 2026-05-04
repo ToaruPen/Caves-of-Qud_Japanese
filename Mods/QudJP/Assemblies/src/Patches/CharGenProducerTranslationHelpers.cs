@@ -11,6 +11,22 @@ internal static class CharGenProducerTranslationHelpers
 {
     internal static readonly Func<string, string> TranslateStructuredText = ChargenStructuredTextTranslator.Translate;
 
+    private readonly struct StringMemberUpdate
+    {
+        internal StringMemberUpdate(object target, string memberName, string value)
+        {
+            Target = target;
+            MemberName = memberName;
+            Value = value;
+        }
+
+        internal object Target { get; }
+
+        internal string MemberName { get; }
+
+        internal string Value { get; }
+    }
+
     internal static string TranslateText(string source)
     {
         if (string.IsNullOrEmpty(source))
@@ -80,23 +96,25 @@ internal static class CharGenProducerTranslationHelpers
             return values;
         }
 
+        var updates = new System.Collections.Generic.List<StringMemberUpdate>();
         foreach (var item in values)
         {
             if (item is not null)
             {
-                TranslateStringMember(item, memberName, context, translateText);
+                CollectStringMemberTranslation(item, memberName, translateText, updates);
             }
 
             addMethod.Invoke(list, new[] { item });
         }
 
+        ApplyStringMemberUpdates(updates, context);
         return (IEnumerable)list;
     }
 
-    internal static IEnumerable MaterializeTranslatedEnumerable(
+    private static IEnumerable MaterializeTranslatedEnumerable(
         IEnumerable values,
         string context,
-        Action<object, string> translateItem)
+        Action<object, string, System.Collections.Generic.List<StringMemberUpdate>> collectItemUpdates)
     {
         var elementType = ResolveElementType(values.GetType());
         if (elementType is null)
@@ -123,35 +141,56 @@ internal static class CharGenProducerTranslationHelpers
             return values;
         }
 
+        var updates = new System.Collections.Generic.List<StringMemberUpdate>();
         foreach (var item in values)
         {
             if (item is not null)
             {
-                translateItem(item, context);
+                collectItemUpdates(item, context, updates);
             }
 
             addMethod.Invoke(list, new[] { item });
         }
 
+        ApplyStringMemberUpdates(updates, context);
         return (IEnumerable)list;
     }
 
     internal static IEnumerable MaterializeTranslatedFrameworkDataEnumerable(IEnumerable values, string context)
     {
-        return MaterializeTranslatedEnumerable(values, context, TranslateFrameworkDataElementTree);
+        return MaterializeTranslatedEnumerable(values, context, CollectFrameworkDataElementTreeTranslations);
     }
 
-    internal static void TranslateFrameworkDataElementTree(object item, string context)
+    internal static IEnumerable MaterializeTranslatedPregenSelectionEnumerable(IEnumerable values, string context)
     {
-        TranslateStringMember(item, "Title", context);
-        TranslateStringMember(item, "Description", context, TranslateStructuredText);
-        TranslateStringMember(item, "LongDescription", context, TranslateStructuredText);
-
-        TranslateChildCollection(item, "Choices", context);
-        TranslateChildCollection(item, "menuOptions", context);
+        return MaterializeTranslatedEnumerable(
+            values,
+            context,
+            static (item, _, updates) =>
+            {
+                CollectStringMemberTranslation(item, "Title", TranslateText, updates);
+                CollectStringMemberTranslation(item, "Description", TranslateStructuredText, updates);
+            });
     }
 
-    private static void TranslateChildCollection(object item, string memberName, string context)
+    private static void CollectFrameworkDataElementTreeTranslations(
+        object item,
+        string context,
+        System.Collections.Generic.List<StringMemberUpdate> updates)
+    {
+        CollectStringMemberTranslation(item, "Title", TranslateText, updates);
+        CollectStringMemberTranslation(item, "Description", TranslateStructuredText, updates);
+        CollectStringMemberTranslation(item, "LongDescription", TranslateStructuredText, updates);
+
+        CollectChildCollectionTranslations(item, "Choices", context, updates);
+        CollectChildCollectionTranslations(item, "menuOptions", context, updates);
+    }
+
+    private static void CollectChildCollectionTranslations(
+        object item,
+        string memberName,
+        string context,
+        System.Collections.Generic.List<StringMemberUpdate> updates)
     {
         if (!TryGetMemberValue(item, memberName, out var raw)
             || raw is not IEnumerable children)
@@ -161,7 +200,35 @@ internal static class CharGenProducerTranslationHelpers
 
         foreach (var child in children.Cast<object>().Where(static child => child is not null))
         {
-            TranslateFrameworkDataElementTree(child, context);
+            CollectFrameworkDataElementTreeTranslations(child, context, updates);
+        }
+    }
+
+    private static void CollectStringMemberTranslation(
+        object target,
+        string memberName,
+        Func<string, string> translateText,
+        System.Collections.Generic.List<StringMemberUpdate> updates)
+    {
+        if (!TryGetStringMemberValue(target, memberName, out var current)
+            || string.IsNullOrEmpty(current))
+        {
+            return;
+        }
+
+        var translated = translateText(current!);
+        if (!string.Equals(translated, current, StringComparison.Ordinal))
+        {
+            updates.Add(new StringMemberUpdate(target, memberName, translated));
+        }
+    }
+
+    private static void ApplyStringMemberUpdates(System.Collections.Generic.List<StringMemberUpdate> updates, string context)
+    {
+        for (var index = 0; index < updates.Count; index++)
+        {
+            var update = updates[index];
+            SetStringMemberValue(update.Target, update.MemberName, update.Value, context);
         }
     }
 

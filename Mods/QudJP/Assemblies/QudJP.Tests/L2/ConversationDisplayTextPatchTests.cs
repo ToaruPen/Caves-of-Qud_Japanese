@@ -84,16 +84,31 @@ public sealed class ConversationDisplayTextPatchTests
             var body = new DummyConversationElement(
                 "Need a gadget repaired or identified, friend? Or if you're a tinker yourself, perhaps you'd like to peruse my schematics?")
                 .GetDisplayText(withColor: false);
-            var choice = new DummyConversationElement("Live and drink, tinker. [End]")
-                .GetDisplayText(withColor: false);
 
             Assert.Multiple(() =>
             {
                 Assert.That(
                     body,
                     Is.EqualTo("Need a gadget repaired or identified, friend? Or if you're a tinker yourself, perhaps you'd like to peruse my schematics?"));
-                Assert.That(choice, Is.EqualTo("生きて飲め、工匠。"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(ConversationDisplayTextPatch),
+                        "ConversationDisplay.ExactLeaf"),
+                    Is.EqualTo(0));
+                Assert.That(
+                    SinkObservation.GetHitCountForTests(
+                        nameof(UITextSkinTranslationPatch),
+                        nameof(ConversationDisplayTextPatch),
+                        SinkObservation.ObservationOnlyDetail,
+                        body,
+                        body),
+                    Is.EqualTo(0));
             });
+
+            var choice = new DummyConversationElement("Live and drink, tinker. [End]")
+                .GetDisplayText(withColor: false);
+
+            Assert.That(choice, Is.EqualTo("生きて飲め、工匠。"));
         }
         finally
         {

@@ -42,15 +42,7 @@ public static class CharGenPregenSelectionTranslationPatch
                 return values;
             }
 
-            var translatedTitles = CharGenProducerTranslationHelpers.MaterializeTranslatedEnumerable(
-                values,
-                "Title",
-                Context);
-            return CharGenProducerTranslationHelpers.MaterializeTranslatedEnumerable(
-                translatedTitles,
-                "Description",
-                Context,
-                CharGenProducerTranslationHelpers.TranslateStructuredText);
+            return CharGenProducerTranslationHelpers.MaterializeTranslatedPregenSelectionEnumerable(values, Context);
         }
         catch (Exception ex)
         {

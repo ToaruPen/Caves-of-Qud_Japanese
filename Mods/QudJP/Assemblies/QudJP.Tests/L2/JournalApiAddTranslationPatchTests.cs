@@ -333,6 +333,35 @@ public sealed class JournalApiAddTranslationPatchTests
         }
     }
 
+    [Test]
+    public void AddObservation_PreservesVillagersOfCapture_WhenVillageTemplateDictionaryEntryIsMissing()
+    {
+        WritePatternDictionary(("^(.+?) cooked (.+?) a rancid meal\\.$", "{t0}は{t1}に腐った食事を振る舞った。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyJournalApi), nameof(DummyJournalApi.AddObservation)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(JournalObservationAddTranslationPatch), nameof(JournalObservationAddTranslationPatch.Prefix))));
+
+            DummyJournalApi.AddObservation(
+                "The villagers of スモル cooked a スナップジョーの軍主 a rancid meal.",
+                "gossip-villagers-fallback",
+                "general");
+
+            var entry = DummyJournalApi.Observations.Single();
+            Assert.That(
+                entry.Text,
+                Is.EqualTo("\u0001The villagers of スモルはスナップジョーの軍主に腐った食事を振る舞った。"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";

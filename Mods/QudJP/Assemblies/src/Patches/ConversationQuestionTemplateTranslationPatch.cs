@@ -41,10 +41,15 @@ public static class ConversationQuestionTemplateTranslationPatch
     {
         try
         {
-            Text = ConversationTemplateTranslator.TranslateTemplate(Text);
-            Goodbye = ConversationTemplateTranslator.TranslateTemplate(Goodbye);
-            Question = ConversationTemplateTranslator.TranslateTemplate(Question);
-            Answer = ConversationTemplateTranslator.TranslateTemplate(Answer);
+            var translatedText = ConversationTemplateTranslator.TranslateTemplate(Text);
+            var translatedGoodbye = ConversationTemplateTranslator.TranslateTemplate(Goodbye);
+            var translatedQuestion = ConversationTemplateTranslator.TranslateTemplate(Question);
+            var translatedAnswer = ConversationTemplateTranslator.TranslateTemplate(Answer);
+
+            Text = translatedText;
+            Goodbye = translatedGoodbye;
+            Question = translatedQuestion;
+            Answer = translatedAnswer;
         }
         catch (Exception ex)
         {

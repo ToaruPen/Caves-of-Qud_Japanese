@@ -51,7 +51,12 @@ internal static class GameSummaryTextTranslator
     {
         if (string.IsNullOrEmpty(source))
         {
-            return source ?? string.Empty;
+            if (source is null)
+            {
+                return string.Empty;
+            }
+
+            return source;
         }
 
         return TranslateLine(source!, "GameSummary.Cause");
@@ -61,7 +66,12 @@ internal static class GameSummaryTextTranslator
     {
         if (string.IsNullOrEmpty(source))
         {
-            return source ?? string.Empty;
+            if (source is null)
+            {
+                return string.Empty;
+            }
+
+            return source;
         }
 
         var lines = source!.Replace("\r\n", "\n").Split('\n');
