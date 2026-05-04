@@ -140,17 +140,7 @@ def render_workshop_changenote(
     git_hash: str,
     fragments: ReleaseNoteFragments,
 ) -> str:
-    """
-    Render a Steam Workshop changenote from the collected release-note fragments.
-    
-    Parameters:
-        version (str): Release version string used in the changenote header.
-        git_hash (str): Git commit hash (accepted but not used in the rendered output).
-        fragments (ReleaseNoteFragments): Collected fragments grouped by section.
-    
-    Returns:
-        str: The changenote text with a header line `v{version} 更新`, a `更新内容:` label, then bullet lines for each fragment entry, joined with newline characters.
-    """
+    """Render a Steam Workshop changenote from collected fragments."""
     _ = git_hash
     lines = [f"v{version} 更新", "", "更新内容:"]
     for section in SECTION_ORDER:
