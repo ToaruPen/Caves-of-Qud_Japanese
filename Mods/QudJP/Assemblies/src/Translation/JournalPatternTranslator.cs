@@ -29,6 +29,12 @@ internal static class JournalPatternTranslator
     private static List<JournalPatternDefinition>? loadedPatterns;
     private static string[]? patternFileOverrides;
     private static string patternLoadSummary = "JournalPatternTranslator: pattern load summary unavailable.";
+    private static readonly Regex VillageTemplateCapturePattern =
+        new Regex("^(?:the|The) villagers of (?<name>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex LeadingArticlePattern =
+        new Regex("^(?:a|an|the|A|An|The)\\s+(?<rest>.+)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex JapaneseCharacterPattern =
+        new Regex("[\\p{IsHiragana}\\p{IsKatakana}\\p{IsCJKUnifiedIdeographs}]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     internal static readonly string[] DefaultPatternAssetPaths =
     {
@@ -759,7 +765,59 @@ internal static class JournalPatternTranslator
             }
         }
 
+        if (TryTranslateVillageTemplateCapture(source, out var villageCapture))
+        {
+            return villageCapture;
+        }
+
+        if (TryTranslateArticlelessTemplateCapture(source, out var articlelessCapture))
+        {
+            return articlelessCapture;
+        }
+
         return source;
+    }
+
+    private static bool TryTranslateVillageTemplateCapture(string source, out string translated)
+    {
+        var match = VillageTemplateCapturePattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var name = TranslateTemplateCapture(match.Groups["name"].Value);
+        const string templateKey = "The villagers of {0}";
+        var template = Translator.Translate(templateKey);
+        if (string.Equals(template, templateKey, StringComparison.Ordinal))
+        {
+            translated = source;
+            return false;
+        }
+
+        translated = template.Replace("{0}", name);
+        return true;
+    }
+
+    private static bool TryTranslateArticlelessTemplateCapture(string source, out string translated)
+    {
+        var match = LeadingArticlePattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var rest = match.Groups["rest"].Value;
+        if (JapaneseCharacterPattern.IsMatch(rest))
+        {
+            translated = rest;
+            return true;
+        }
+
+        translated = source;
+        return false;
     }
 
     private static string LowerAscii(string source)

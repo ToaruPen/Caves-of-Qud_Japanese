@@ -134,7 +134,7 @@ public sealed class ColorTagAllowlistCoverageTests
             ["Mods/QudJP/Assemblies/src/Patches/WorldModsTextTranslator.cs:575:TryTranslateElementalDamageTemplate"] = "Delegates restoration to the template helper.",
             ["Mods/QudJP/Assemblies/src/Patches/WorldModsTextTranslator.cs:608:TryTranslateTemplate"] = "Delegates restoration to the template helper.",
             ["Mods/QudJP/Assemblies/src/Translation/ColorAwareTranslationComposer.cs:30:Strip"] = "Wrapper method exposes the Strip API; callers are checked where they consume the returned spans.",
-            ["Mods/QudJP/Assemblies/src/Translation/JournalPatternTranslator.cs:70:Translate"] = "Passes stripped text and spans to TranslateStripped, where template application restores colors.",
+            ["Mods/QudJP/Assemblies/src/Translation/JournalPatternTranslator.cs:76:Translate"] = "Passes stripped text and spans to TranslateStripped, where template application restores colors.",
             ["Mods/QudJP/Assemblies/src/Translation/MessagePatternTranslator.cs:79:Translate"] = "Passes stripped text and spans to TranslateStripped, where template application restores colors.",
             ["Mods/QudJP/Assemblies/src/UI/FontManager.cs:174:TryWarmPrimaryFontCharactersForUi"] = "UI glyph warmup intentionally strips markup only to add visible characters to the font atlas.",
         };
@@ -142,7 +142,7 @@ public sealed class ColorTagAllowlistCoverageTests
     private static readonly SortedDictionary<string, string> NameLikeRestoreCaptureWithoutGuardAllowlist =
         new(StringComparer.Ordinal)
         {
-            ["Mods/QudJP/Assemblies/src/Patches/ChargenStructuredTextTranslator.cs:339:TryTranslateCyberneticsSlot:name"] =
+            ["Mods/QudJP/Assemblies/src/Patches/ChargenStructuredTextTranslator.cs:344:TryTranslateCyberneticsSlot:name"] =
                 "Cybernetics slot names are exact static labels, not display-name owner captures.",
         };
 

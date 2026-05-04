@@ -343,6 +343,15 @@ public sealed class ChargenStructuredTextTranslatorTests
         Assert.That(translated, Is.EqualTo(expected));
     }
 
+    [TestCase("光学バイオスキャナ (Face)", "光学バイオスキャナ（顔）")]
+    [TestCase("皮膚用断熱材 (Body)", "皮膚用断熱材（胴）")]
+    public void Translate_TranslatesCyberneticsSlotPatternWithAlreadyLocalizedNames(string source, string expected)
+    {
+        var translated = ChargenStructuredTextTranslator.Translate(source);
+
+        Assert.That(translated, Is.EqualTo(expected));
+    }
+
     [TestCase("Back")]
     [TestCase("Arm")]
     [TestCase("Face")]
@@ -370,6 +379,7 @@ public sealed class ChargenStructuredTextTranslatorTests
     }
 
     [TestCase("{{y|optical bioscanner (Face)}}", "{{y|光学バイオスキャナ（顔）}}")]
+    [TestCase("{{y|光学バイオスキャナ (Face)}}", "{{y|光学バイオスキャナ（顔）}}")]
     [TestCase("optical bioscanner {{y|(Face)}}", "光学バイオスキャナ{{y|（顔）}}")]
     public void Translate_PreservesCyberneticsSlotColorTags(string source, string expected)
     {

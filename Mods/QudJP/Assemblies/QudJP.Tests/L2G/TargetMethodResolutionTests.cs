@@ -368,6 +368,8 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(BedTranslationPatch), "AttemptSleep", "XRL.World.Parts.Bed", "System.Void", new[] { "XRL.World.GameObject", "System.Boolean&", "System.Boolean&", "System.Boolean&" })]
     [TestCase(typeof(ChairTranslationPatch), "SitDown", "XRL.World.Parts.Chair", "System.Boolean", new[] { "XRL.World.GameObject", "XRL.World.IEvent" })]
     [TestCase(typeof(EnclosingTranslationPatch), "ExitEnclosure", "XRL.World.Parts.Enclosing", "System.Boolean", new[] { "XRL.World.GameObject", "XRL.World.IEvent", "XRL.World.Effects.Enclosed" })]
+    [TestCase(typeof(GameSummaryScreenMenuBarsTranslationPatch), "UpdateMenuBars", "Qud.UI.GameSummaryScreen", "System.Void", new string[0])]
+    [TestCase(typeof(GameSummaryScreenShowTranslationPatch), "_ShowGameSummary", "Qud.UI.GameSummaryScreen", "System.Threading.Tasks.Task`1[[System.Boolean]]", new[] { "System.String", "System.String", "System.String", "System.Boolean" })]
     [TestCase(typeof(GivesRepShortDescriptionTranslationPatch), "HandleEvent", "XRL.World.Parts.GivesRep", "System.Boolean", new[] { "XRL.World.GetShortDescriptionEvent" })]
     [TestCase(typeof(MutationsApiTranslationPatch), "BuyRandomMutation", "Qud.API.MutationsAPI", "System.Boolean", new[] { "XRL.World.GameObject", "System.Int32", "System.Boolean", "System.String" })]
     [TestCase(typeof(ConversationPronounExchangeTranslationPatch), "PronounExchangeDescription", "XRL.World.Parts.ConversationScript", "System.String", new[]
@@ -403,7 +405,7 @@ public sealed class TargetMethodResolutionTests
 
             var methodInfo = targetMethod as MethodInfo;
             Assert.That(methodInfo, Is.Not.Null, $"Expected MethodInfo for {patchType.FullName}");
-            Assert.That(methodInfo!.ReturnType.FullName, Is.EqualTo(expectedReturnType));
+            Assert.That(NormalizeTypeName(methodInfo!.ReturnType.FullName), Is.EqualTo(expectedReturnType));
 
             var parameterTypes = Array.ConvertAll(methodInfo.GetParameters(), static parameter => NormalizeTypeName(parameter.ParameterType.FullName));
             Assert.That(parameterTypes, Is.EqualTo(expectedParameterTypes));
@@ -471,6 +473,14 @@ public sealed class TargetMethodResolutionTests
     {
         "System.Boolean",
         "System.Boolean",
+    })]
+    [TestCase(typeof(ConversationSimpleTemplateTranslationPatch), new[]
+    {
+        "XRL.World.GameObject|System.String|System.String|System.String|System.String|System.String|System.Boolean|System.Boolean",
+    })]
+    [TestCase(typeof(ConversationQuestionTemplateTranslationPatch), new[]
+    {
+        "XRL.World.GameObject|System.String|System.String|System.String|System.String|System.String|System.String|System.String|System.Boolean|System.Boolean",
     })]
     [TestCase(typeof(DescriptionInspectStatusPatch), new[]
     {
@@ -541,6 +551,11 @@ public sealed class TargetMethodResolutionTests
         "",
         "",
         "",
+    })]
+    [TestCase(typeof(AsleepMessageTranslationPatch), new[]
+    {
+        "XRL.World.GameObject",
+        "XRL.World.BeginTakeActionEvent",
     })]
     public void TargetMethods_ResolveExpectedOverloads(Type patchType, string[] expectedSignatures)
     {

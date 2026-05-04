@@ -60,6 +60,18 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
             new[]
             {
                 "XRL.CharacterBuilds.Qud.QudSubtypeModule|GetSelections|",
+                "XRL.CharacterBuilds.Qud.QudSubtypeModule|GetSelectionCategories|",
+            });
+    }
+
+    [Test]
+    public void PregenSelectionPatch_TargetMethods_ResolveExpectedOverrides()
+    {
+        AssertTargetMethods(
+            "QudJP.Patches.CharGenPregenSelectionTranslationPatch",
+            new[]
+            {
+                "XRL.CharacterBuilds.Qud.UI.QudPregenModuleWindow|GetSelections|",
             });
     }
 
@@ -199,6 +211,17 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
                         elementType!,
                         "Description",
                         $"{patchTypeName} enumerable element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                    if (string.Equals(methodInfo.Name, "GetSelectionCategories", StringComparison.Ordinal))
+                    {
+                        AssertStringMemberExists(
+                            elementType!,
+                            "Title",
+                            $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                        AssertMemberExists(
+                            elementType!,
+                            "Choices",
+                            $"{patchTypeName} category element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                    }
                 }
 
                 return;
@@ -271,6 +294,23 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
         }
 
         Assert.Fail($"{context} is missing readable string member '{memberName}' on runtime type '{runtimeType.FullName}'.");
+    }
+
+    private static void AssertMemberExists(Type runtimeType, string memberName, string context)
+    {
+        var field = runtimeType.GetField(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (field is not null)
+        {
+            return;
+        }
+
+        var property = runtimeType.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (property is not null && property.CanRead)
+        {
+            return;
+        }
+
+        Assert.Fail($"{context} is missing readable member '{memberName}' on runtime type '{runtimeType.FullName}'.");
     }
 
     private static Type? ResolveEnumerableElementType(Type sequenceType)

@@ -268,6 +268,71 @@ public sealed class JournalApiAddTranslationPatchTests
         }
     }
 
+    [Test]
+    public void AddObservation_StripsEnglishArticlesFromAlreadyLocalizedHistoricGossipCaptures_WhenPatched()
+    {
+        WritePatternDictionary(("^(.+?) repeatedly beat (.+?) at dice\\.$", "{t0}は{t1}を何度も賽子で打ち負かした。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyJournalApi), nameof(DummyJournalApi.AddObservation)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(JournalObservationAddTranslationPatch), nameof(JournalObservationAddTranslationPatch.Prefix))));
+
+            DummyJournalApi.AddObservation(
+                "A スナップジョーの狩人 repeatedly beat the イッサカリ族 at dice.",
+                "gossip-articles-1",
+                "general",
+                additionalRevealText: "A スナップジョーの狩人 repeatedly beat the イッサカリ族 at dice.");
+
+            var entry = DummyJournalApi.Observations.Single();
+            Assert.Multiple(() =>
+            {
+                Assert.That(entry.Text, Is.EqualTo("\u0001スナップジョーの狩人はイッサカリ族を何度も賽子で打ち負かした。"));
+                Assert.That(entry.RevealText, Is.EqualTo("\u0001スナップジョーの狩人はイッサカリ族を何度も賽子で打ち負かした。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void AddObservation_TranslatesVillagersOfCaptureAndStripsObjectArticle_WhenPatched()
+    {
+        WriteExactDictionary(("The villagers of {0}", "{0}の村人たち"));
+        WritePatternDictionary(("^(.+?) cooked (.+?) a rancid meal\\.$", "{t0}は{t1}に腐った食事を振る舞った。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyJournalApi), nameof(DummyJournalApi.AddObservation)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(JournalObservationAddTranslationPatch), nameof(JournalObservationAddTranslationPatch.Prefix))));
+
+            DummyJournalApi.AddObservation(
+                "The villagers of スモル cooked a スナップジョーの軍主 a rancid meal.",
+                "gossip-villagers-1",
+                "general",
+                additionalRevealText: "The villagers of スモル cooked a スナップジョーの軍主 a rancid meal.");
+
+            var entry = DummyJournalApi.Observations.Single();
+            Assert.Multiple(() =>
+            {
+                Assert.That(entry.Text, Is.EqualTo("\u0001スモルの村人たちはスナップジョーの軍主に腐った食事を振る舞った。"));
+                Assert.That(entry.RevealText, Is.EqualTo("\u0001スモルの村人たちはスナップジョーの軍主に腐った食事を振る舞った。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";

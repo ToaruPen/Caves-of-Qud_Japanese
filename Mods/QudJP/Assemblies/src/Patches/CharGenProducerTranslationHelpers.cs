@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 
@@ -92,6 +93,78 @@ internal static class CharGenProducerTranslationHelpers
         return (IEnumerable)list;
     }
 
+    internal static IEnumerable MaterializeTranslatedEnumerable(
+        IEnumerable values,
+        string context,
+        Action<object, string> translateItem)
+    {
+        var elementType = ResolveElementType(values.GetType());
+        if (elementType is null)
+        {
+            Trace.TraceWarning(
+                "QudJP: {0} could not resolve enumerable element type for '{1}', falling back to object.",
+                context,
+                values.GetType().FullName);
+            elementType = typeof(object);
+        }
+
+        var listType = typeof(System.Collections.Generic.List<>).MakeGenericType(elementType);
+        var list = Activator.CreateInstance(listType);
+        if (list is null)
+        {
+            Trace.TraceError("QudJP: {0} failed to create translated list for '{1}'.", context, listType.FullName);
+            return values;
+        }
+
+        var addMethod = listType.GetMethod("Add", new[] { elementType });
+        if (addMethod is null)
+        {
+            Trace.TraceError("QudJP: {0} failed to resolve Add({1}) on '{2}'.", context, elementType.FullName, listType.FullName);
+            return values;
+        }
+
+        foreach (var item in values)
+        {
+            if (item is not null)
+            {
+                translateItem(item, context);
+            }
+
+            addMethod.Invoke(list, new[] { item });
+        }
+
+        return (IEnumerable)list;
+    }
+
+    internal static IEnumerable MaterializeTranslatedFrameworkDataEnumerable(IEnumerable values, string context)
+    {
+        return MaterializeTranslatedEnumerable(values, context, TranslateFrameworkDataElementTree);
+    }
+
+    internal static void TranslateFrameworkDataElementTree(object item, string context)
+    {
+        TranslateStringMember(item, "Title", context);
+        TranslateStringMember(item, "Description", context, TranslateStructuredText);
+        TranslateStringMember(item, "LongDescription", context, TranslateStructuredText);
+
+        TranslateChildCollection(item, "Choices", context);
+        TranslateChildCollection(item, "menuOptions", context);
+    }
+
+    private static void TranslateChildCollection(object item, string memberName, string context)
+    {
+        if (!TryGetMemberValue(item, memberName, out var raw)
+            || raw is not IEnumerable children)
+        {
+            return;
+        }
+
+        foreach (var child in children.Cast<object>().Where(static child => child is not null))
+        {
+            TranslateFrameworkDataElementTree(child, context);
+        }
+    }
+
     private static Type? ResolveElementType(Type sequenceType)
     {
         if (sequenceType.IsArray)
@@ -122,22 +195,35 @@ internal static class CharGenProducerTranslationHelpers
     private static bool TryGetStringMemberValue(object target, string memberName, out string? value)
     {
         value = null;
+
+        if (!TryGetMemberValue(target, memberName, out var raw))
+        {
+            return false;
+        }
+
+        value = raw as string;
+        return true;
+    }
+
+    private static bool TryGetMemberValue(object target, string memberName, out object? value)
+    {
         var type = target.GetType();
 
         var field = AccessTools.Field(type, memberName);
-        if (field is not null && field.FieldType == typeof(string))
+        if (field is not null)
         {
-            value = field.GetValue(target) as string;
+            value = field.GetValue(target);
             return true;
         }
 
         var property = AccessTools.Property(type, memberName);
-        if (property is not null && property.CanRead && property.PropertyType == typeof(string))
+        if (property is not null && property.CanRead)
         {
-            value = property.GetValue(target) as string;
+            value = property.GetValue(target);
             return true;
         }
 
+        value = null;
         return false;
     }
 

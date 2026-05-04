@@ -241,6 +241,28 @@ public sealed class MessageFrameTranslatorTests
     }
 
     [Test]
+    public void TryTranslateXDidYToZ_RepositoryDictionary_UsesPetEntry()
+    {
+        UseRepositoryDictionary();
+
+        var translated = MessageFrameTranslator.TryTranslateXDidYToZ(
+            "ウォーターヴァイン農家のメカニマス教徒改宗者",
+            "pet",
+            preposition: null,
+            objectText: "クテシフス",
+            extra: null,
+            endMark: ".",
+            out var sentence);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.True);
+            Assert.That(sentence, Is.EqualTo("ウォーターヴァイン農家のメカニマス教徒改宗者はクテシフスを撫でた。"));
+        });
+    }
+
+
+    [Test]
     public void TryTranslateXDidYToZ_RepositoryDictionary_TryTouchEvadesYou()
     {
         UseRepositoryDictionary();

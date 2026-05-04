@@ -27,6 +27,7 @@
     { "key": "無垢のクリスティール短剣", "text": "無垢のクリスティール短剣" },
     { "key": "ホワイト・エッシュ", "text": "ホワイト・エッシュ" },
     { "key": "マッドポール", "text": "マッドポール" },
-    { "key": "夢の煙", "text": "夢の煙" }
+    { "key": "夢の煙", "text": "夢の煙" },
+    { "key": "Bedroll", "context": "XRL.World.Effects.Prone.LyingOn", "text": "寝袋" }
   ]
 }

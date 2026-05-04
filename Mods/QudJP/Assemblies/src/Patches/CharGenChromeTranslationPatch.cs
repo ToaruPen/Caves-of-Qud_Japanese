@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
@@ -88,6 +89,11 @@ public static class CharGenChromeTranslationPatch
             if (string.Equals(__originalMethod.Name, "BeforeShow", StringComparison.Ordinal))
             {
                 CharGenProducerTranslationHelpers.TranslateStringMember(__args[0], "title", Context);
+                if (__args.Length > 1 && __args[1] is IEnumerable selections)
+                {
+                    __args[1] = CharGenProducerTranslationHelpers.MaterializeTranslatedFrameworkDataEnumerable(selections, Context);
+                }
+
                 return;
             }
 

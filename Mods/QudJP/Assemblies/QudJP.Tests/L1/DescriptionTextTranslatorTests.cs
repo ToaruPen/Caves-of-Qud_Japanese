@@ -266,6 +266,39 @@ public sealed class DescriptionTextTranslatorTests
     }
 
     [Test]
+    public void TranslateLongDescription_TranslatesInspectFixedLeavesFromOwnerDictionaries()
+    {
+        WriteDictionary(
+            "ui-default.ja.json",
+            ("defensive stance", "防御姿勢"));
+        WriteDictionary(
+            "world-mods.ja.json",
+            ("Weapon Class: Bows && Rifles", "武器カテゴリ: 弓 && ライフル"),
+            ("Accuracy: Medium", "命中率: 普通"),
+            (
+                "Projectiles fired with this weapon receive bonus penetration based on the wielder's Strength.",
+                "この武器から発射された投射物は、使用者の筋力に基づいて追加の貫通力を得る。"));
+
+        var source =
+            "Weapon Class: Bows && Rifles\n" +
+            "Accuracy: Medium\n" +
+            "Projectiles fired with this weapon receive bonus penetration based on the wielder's Strength.\n" +
+            "defensive stance";
+
+        var translated = DescriptionTextTranslator.TranslateLongDescription(
+            source,
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(
+            translated,
+            Is.EqualTo(
+                "武器カテゴリ: 弓 && ライフル\n" +
+                "命中率: 普通\n" +
+                "この武器から発射された投射物は、使用者の筋力に基づいて追加の貫通力を得る。\n" +
+                "防御姿勢"));
+    }
+
+    [Test]
     public void TranslateLongDescription_DoesNotReportNoPattern_ForAlreadyLocalizedDescriptionFragments()
     {
         const string localizedLine =

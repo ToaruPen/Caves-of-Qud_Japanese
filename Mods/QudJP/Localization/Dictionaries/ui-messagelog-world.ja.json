@@ -1390,6 +1390,11 @@
             "text": "{target}{prep}{verb}、{trail}"
         },
         {
+            "key": "You fall {{C|asleep}}!",
+            "context": "XRL.World.Effects.Asleep.Apply",
+            "text": "{{C|眠り}}に落ちた！"
+        },
+        {
             "key": "{target} are sucked into {vortex}.",
             "context": "XRL.World.Capabilities.Messaging",
             "text": "{target}は{vortex}に吸い込まれた。"

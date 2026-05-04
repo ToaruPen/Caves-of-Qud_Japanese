@@ -33,6 +33,10 @@ internal static class ChargenStructuredTextTranslator
         new Regex(@"^\[(?<value>-?\d+)pts\]$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex SelectionTokenPattern =
         new Regex(@"^\[(?: |■)\](?:\[(?<value>-?\d+)\])?$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex JapaneseCharacterPattern =
+        new Regex("[\\p{IsHiragana}\\p{IsKatakana}\\p{IsCJKUnifiedIdeographs}]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex AsciiLetterPattern =
+        new Regex("[A-Za-z]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static readonly IReadOnlyDictionary<string, string> StatNames = new Dictionary<string, string>(StringComparer.Ordinal)
     {
@@ -322,7 +326,8 @@ internal static class ChargenStructuredTextTranslator
         }
 
         var sourceName = match.Groups["name"].Value;
-        if (!StringHelpers.TryGetTranslationExactOrLowerAscii(sourceName, out var translatedName))
+        if (!StringHelpers.TryGetTranslationExactOrLowerAscii(sourceName, out var translatedName)
+            && !TryUseAlreadyLocalizedCyberneticsName(sourceName, out translatedName))
         {
             return false;
         }
@@ -342,6 +347,18 @@ internal static class ChargenStructuredTextTranslator
             : ColorAwareTranslationComposer.RestoreCapture(translatedSlotSegment, spans, match.Groups["slotSegment"]);
         translated = string.Concat(restoredName, restoredSlotSegment);
         return true;
+    }
+
+    private static bool TryUseAlreadyLocalizedCyberneticsName(string sourceName, out string translatedName)
+    {
+        if (JapaneseCharacterPattern.IsMatch(sourceName) && !AsciiLetterPattern.IsMatch(sourceName))
+        {
+            translatedName = sourceName;
+            return true;
+        }
+
+        translatedName = sourceName;
+        return false;
     }
 
     private static bool TryTranslatePointsRemaining(string source, out string translated)

@@ -211,6 +211,36 @@ public sealed class LocalizationCoverageTests
     }
 
     [Test]
+    public void ChargenStructuredTextTranslator_CoversRuntimeObservedSkillLeaves()
+    {
+        var observedSkillLeaves = new[]
+        {
+            "Axe",
+            "Butchery",
+            "Cleave",
+            "Deploy Turret",
+            "Harvestry",
+            "Nostrums",
+            "Shield Slam",
+            "Snake Oiler",
+            "Tactics",
+            "Tank",
+            "Tinker I",
+            "Tinker II",
+            "Weak Spotter",
+            "Wilderness Lore: Canyons",
+            "Wilderness Lore: Hills and Mountains",
+            "Wilderness Lore: Jungles",
+        };
+
+        var untranslated = observedSkillLeaves
+            .Where(leaf => string.Equals(ChargenStructuredTextTranslator.Translate(leaf), leaf, StringComparison.Ordinal))
+            .ToArray();
+
+        Assert.That(untranslated, Is.Empty, "Runtime-observed chargen skill leaves should stay in the scoped chargen dictionary.");
+    }
+
+    [Test]
     public void MutationDescriptionsDictionary_UsesCanonicalEsperKeyOnly()
     {
         const string legacyEsperKey = "You only manifest mental mutations, and all of your mutation choices when manifesting a new mutation are mental.";
@@ -296,6 +326,26 @@ public sealed class LocalizationCoverageTests
             Assert.That(genotypeAlt, Does.Not.Contain("Duration:"));
             Assert.That(text, Does.Not.Contain("Your movement speed"));
             Assert.That(genotypeAlt, Does.Not.Contain("Your movement speed"));
+        });
+    }
+
+    [Test]
+    public void CtesiphusPetResponse_DoesNotRegressToEnglishMeow()
+    {
+        var creaturesDocument = XDocument.Load(Path.Combine(localizationRoot, "ObjectBlueprints", "Creatures.jp.xml"));
+        var pettable = creaturesDocument.Root!
+            .Elements("object")
+            .Single(element => string.Equals(element.Attribute("Name")?.Value, "Ctesiphus", StringComparison.Ordinal))
+            .Elements("part")
+            .Single(element => string.Equals(element.Attribute("Name")?.Value, "Pettable", StringComparison.Ordinal));
+
+        var petResponse = pettable.Attribute("PetResponse")?.Value ?? string.Empty;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(petResponse, Is.EqualTo("=subject.T=がにゃあと鳴く。"));
+            Assert.That(petResponse, Does.Not.Contain("meow"));
+            Assert.That(petResponse, Does.Not.Contain("meows"));
         });
     }
 

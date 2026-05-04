@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "id": "ui-game-summary",
+    "lang": "ja",
+    "version": "0.0.1"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    {
+      "key": "Game summary for {0}",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "{0}のゲームサマリー"
+    },
+    {
+      "key": "Chronology for {0}",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "{0}の年代記"
+    },
+    {
+      "key": "Final messages for {0}",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "{0}の最終メッセージ"
+    },
+    {
+      "key": "This game ended on {0} at {1}.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "このゲームは{0} {1}に終了した。"
+    },
+    {
+      "key": "You were level {0}.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "レベルは{0}だった。"
+    },
+    {
+      "key": "You scored {0} points.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "{0}点を獲得した。"
+    },
+    {
+      "key": "You survived for {0} turns.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "{0}ターン生存した。"
+    },
+    {
+      "key": "You found {0} lairs.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "{0}個の巣を発見した。"
+    },
+    {
+      "key": "You named {0} items.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "{0}個のアイテムに名前を付けた。"
+    },
+    {
+      "key": "You generated {0} storied items.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "{0}個の名高いアイテムを生成した。"
+    },
+    {
+      "key": "The most advanced artifact in your possession was {0}.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "所持品の中でもっとも高度なアーティファクトは{0}だった。"
+    },
+    {
+      "key": "This game was played in {0} mode.",
+      "context": "XRL.Core.XRLCore.GameSummary",
+      "text": "このゲームは{0}モードでプレイされた。"
+    }
+  ]
+}

@@ -178,6 +178,44 @@ public sealed class CharGenProducerTranslationPatchTests
     }
 
     [Test]
+    public void SubtypeSelectionPostfix_TranslatesCategorizedCasteTitlesAndDescriptions()
+    {
+        WriteDictionary(
+            ("The Toxic Arboreta of Ekuemekiyye, the Holy City", "聖都エクエメキイェの有毒樹木園"),
+            ("Axe", "斧"),
+            ("Bow and Rifle", "弓とライフル"),
+            ("Wilderness Lore: Jungles", "サバイバル術：ジャングル"));
+
+        RunWithSubtypeSelectionCategoriesPostfix(() =>
+        {
+            var result = new DummyCharGenSubtypeModuleTarget
+            {
+                Description = """
+                    {{c|ù}} +3 Intelligence
+                    {{c|ù}} +4 to saves vs. bleeding
+                    {{c|ù}} Axe
+                    {{c|ù}} Bow and Rifle
+                    {{c|ù}} Wilderness Lore: Jungles
+                    """,
+            }.GetSelectionCategories().ToList();
+
+            var expected = """
+                {{c|ù}} 知力 +3
+                {{c|ù}} 出血セーブ +4
+                {{c|ù}} 斧
+                {{c|ù}} 弓とライフル
+                {{c|ù}} サバイバル術：ジャングル
+                """;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Title, Is.EqualTo("{{G|聖都エクエメキイェの有毒樹木園}}"));
+                Assert.That(result[0].Choices[0].Description, Is.EqualTo(expected));
+            });
+        });
+    }
+
+    [Test]
     public void SubtypeSelectionPostfix_PreservesFallbackAndEdgeCases()
     {
         WriteDictionary(("Short Blade", "短剣"));
@@ -207,6 +245,53 @@ public sealed class CharGenProducerTranslationPatchTests
     }
 
     [Test]
+    public void PregenSelectionPostfix_TranslatesPregenTitlesAndDescriptions()
+    {
+        WriteDictionary(
+            ("Praetorian Prime", "プレトリアン・プライム"),
+            ("Choose a pregenerated character.", "作成済みキャラクターを選択する。"));
+
+        RunWithPregenSelectionPostfix(() =>
+        {
+            var result = new DummyCharGenPregenModuleWindowTarget().GetSelections().ToList();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Title, Is.EqualTo("プレトリアン・プライム"));
+                Assert.That(result[0].Description, Is.EqualTo("作成済みキャラクターを選択する。"));
+            });
+        });
+    }
+
+    [Test]
+    public void PregenSelectionPostfix_PreservesFallbackAndEdgeCases()
+    {
+        WriteDictionary(("Praetorian Prime", "プレトリアン・プライム"));
+
+        RunWithPregenSelectionPostfix(() =>
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    TranslatePregenSelectionTitle("Praetorian Prime"),
+                    Is.EqualTo("プレトリアン・プライム"));
+                Assert.That(
+                    TranslatePregenSelectionTitle("Unknown Pregen"),
+                    Is.EqualTo("Unknown Pregen"));
+                Assert.That(
+                    TranslatePregenSelectionTitle(string.Empty),
+                    Is.EqualTo(string.Empty));
+                Assert.That(
+                    TranslatePregenSelectionTitle("\u0001Praetorian Prime"),
+                    Is.EqualTo("\u0001Praetorian Prime"));
+                Assert.That(
+                    TranslatePregenSelectionTitle("{{y|Praetorian Prime}}"),
+                    Is.EqualTo("{{y|プレトリアン・プライム}}"));
+            });
+        });
+    }
+
+    [Test]
     public void ChromePrefix_TranslatesDescriptorAndCategoryTitles()
     {
         WriteDictionary(
@@ -216,6 +301,40 @@ public sealed class CharGenProducerTranslationPatchTests
         RunWithChromePrefix(() =>
         {
             AssertChromeTitles("Choose Game Mode", "Choose calling", "：プレイ方式を選択：", "職能を選択");
+        });
+    }
+
+    [Test]
+    public void ChromePrefix_TranslatesNestedCategoryMenuDataBeforeDisplay()
+    {
+        WriteDictionary(("Cybernetics", "サイバネ移植"));
+
+        RunWithChromePrefix(() =>
+        {
+            var descriptor = new DummyEmbarkBuilderModuleWindowDescriptor { title = "Choose Game Mode" };
+            var category = new DummyCategoryMenuData
+            {
+                Title = "Cybernetics",
+                menuOptions = new List<DummyPrefixMenuOption>
+                {
+                    new DummyPrefixMenuOption
+                    {
+                        Description = "{{Y|光学バイオスキャナ}} (Face)",
+                        LongDescription = "Cybernetics",
+                    },
+                },
+            };
+            var selections = new List<DummyFrameworkDataElement> { category };
+            var scroller = new DummyCharGenFrameworkScrollerTarget();
+
+            scroller.BeforeShow(descriptor, selections);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(category.Title, Is.EqualTo("サイバネ移植"));
+                Assert.That(category.menuOptions[0].Description, Is.EqualTo("{{Y|光学バイオスキャナ}}（顔）"));
+                Assert.That(category.menuOptions[0].LongDescription, Is.EqualTo("サイバネ移植"));
+            });
         });
     }
 
@@ -423,6 +542,48 @@ public sealed class CharGenProducerTranslationPatchTests
         }
     }
 
+    private static void RunWithSubtypeSelectionCategoriesPostfix(Action assertion)
+    {
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyCharGenSubtypeModuleTarget), nameof(DummyCharGenSubtypeModuleTarget.GetSelectionCategories)),
+                postfix: new HarmonyMethod(RequirePatchMethod(
+                    "QudJP.Patches.CharGenSubtypeSelectionTranslationPatch",
+                    "Postfix",
+                    typeof(IEnumerable))));
+            assertion();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    private static void RunWithPregenSelectionPostfix(Action assertion)
+    {
+        var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyCharGenPregenModuleWindowTarget), nameof(DummyCharGenPregenModuleWindowTarget.GetSelections)),
+                postfix: new HarmonyMethod(RequirePatchMethod(
+                    "QudJP.Patches.CharGenPregenSelectionTranslationPatch",
+                    "Postfix",
+                    typeof(IEnumerable))));
+            assertion();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static void RunWithCustomizeTranspiler(Action assertion)
     {
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
@@ -520,6 +681,14 @@ public sealed class CharGenProducerTranslationPatchTests
             .GetSelections()
             .ToList();
         return translatedSelections.Single().Description;
+    }
+
+    private static string? TranslatePregenSelectionTitle(string source)
+    {
+        var translatedSelections = new DummyCharGenPregenModuleWindowTarget { Title = source }
+            .GetSelections()
+            .ToList();
+        return translatedSelections.Single().Title;
     }
 
     private static MethodInfo RequireMethod(Type type, string methodName)

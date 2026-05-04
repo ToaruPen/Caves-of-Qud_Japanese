@@ -64,6 +64,44 @@ public sealed class ConversationDisplayTextPatchTests
     }
 
     [Test]
+    public void Postfix_DoesNotOwnGeneratedVillageTinkerConversationTemplateAfterPlayerVariableReplacement()
+    {
+        WriteDictionary(
+            (
+                "Need a gadget repaired or identified, =player.formalAddressTerm=? Or if you're a tinker =player.reflexive=, perhaps you'd like to peruse my schematics?",
+                "修理や鑑定が必要なガジェットはあるかい？ それとも君自身が工匠なら、設計図を見ていくかい？"),
+            ("Live and drink, tinker.", "生きて飲め、工匠。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyConversationElement), nameof(DummyConversationElement.GetDisplayText)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(ConversationDisplayTextPatch), nameof(ConversationDisplayTextPatch.Postfix))));
+
+            var body = new DummyConversationElement(
+                "Need a gadget repaired or identified, friend? Or if you're a tinker yourself, perhaps you'd like to peruse my schematics?")
+                .GetDisplayText(withColor: false);
+            var choice = new DummyConversationElement("Live and drink, tinker. [End]")
+                .GetDisplayText(withColor: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    body,
+                    Is.EqualTo("Need a gadget repaired or identified, friend? Or if you're a tinker yourself, perhaps you'd like to peruse my schematics?"));
+                Assert.That(choice, Is.EqualTo("生きて飲め、工匠。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Postfix_RecordsOwnerRouteTransforms_WithoutUITextSkinSinkObservation_WhenPatched()
     {
         WriteDictionary(("Hello, traveler.", "旅人さん、こんにちは。"));

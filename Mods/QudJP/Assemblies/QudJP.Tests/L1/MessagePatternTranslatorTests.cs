@@ -1263,6 +1263,16 @@ public sealed class MessagePatternTranslatorTests
             .Replace("\"", "\\\"", StringComparison.Ordinal);
     }
 
+    [Test]
+    public void Translate_RepositoryDictionary_TranslatesAttackConfirmationWithLocalizedTarget()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("Do you really want to attack the レシェフの神殿?");
+
+        Assert.That(translated, Is.EqualTo("レシェフの神殿を本当に攻撃しますか？"));
+    }
+
     private static void UseRepositoryPatternDictionary()
     {
         var localizationRoot = Path.Combine(TestProjectPaths.GetRepositoryRoot(), "Mods", "QudJP", "Localization");
