@@ -53,7 +53,7 @@ public sealed class GameSummaryTextTranslatorTests
             ("You scored {0} points.", "{0}点を獲得した。"),
             ("You survived for {0} turns.", "{0}ターン生存した。"),
             ("You found {0} lairs.", "{0}個の巣を発見した。"),
-            ("You named {0} items.", "{0}個のアイテムに名付けた。"),
+            ("You named {0} items.", "{0}個のアイテムに名前を付けた。"),
             ("You generated {0} storied items.", "{0}個の伝説的アイテムを生成した。"),
             ("The most advanced artifact in your possession was {0}.", "所持品の中でもっとも高度なアーティファクトは{0}だった。"),
             ("This game was played in {0} mode.", "このゲームは{0}モードでプレイされた。"),
@@ -89,7 +89,7 @@ public sealed class GameSummaryTextTranslatorTests
             Assert.That(translated, Does.Contain("{{C|10539}}点を獲得した。"));
             Assert.That(translated, Does.Contain("{{C|477}}ターン生存した。"));
             Assert.That(translated, Does.Contain("{{C|2}}個の巣を発見した。"));
-            Assert.That(translated, Does.Contain("{{C|3}}個のアイテムに名付けた。"));
+            Assert.That(translated, Does.Contain("{{C|3}}個のアイテムに名前を付けた。"));
             Assert.That(translated, Does.Contain("{{C|4}}個の伝説的アイテムを生成した。"));
             Assert.That(translated, Does.Contain("所持品の中でもっとも高度なアーティファクトは{{Y|位相砲}}だった。"));
             Assert.That(translated, Does.Contain("このゲームはクラシックモードでプレイされた。"));
