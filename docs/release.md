@@ -81,6 +81,38 @@ python3.12 scripts/validate_xml.py Mods/QudJP/Localization --strict --warning-ba
 python3.12 scripts/build_release.py
 ```
 
+## Release Notes
+
+Localization PRs that change `Mods/QudJP/Localization/` must include at least
+one release-note fragment under `docs/release-notes/unreleased/*.md`. CI checks
+this on pull requests.
+
+Fragments use Keep a Changelog section headings and user-facing bullets:
+
+```markdown
+### Changed
+
+- Improve Japanese text in the trade and conversation UI.
+```
+
+Before release, render the fragments into drafts for `CHANGELOG.md` and the
+Steam Workshop changenote:
+
+```bash
+git rev-parse --short=12 HEAD
+python3.12 scripts/release_notes.py render \
+  --version 0.1.0 \
+  --git-hash <short-git-hash> \
+  --date YYYY-MM-DD \
+  --changelog-output /tmp/qudjp-changelog-entry.md \
+  --workshop-output /tmp/qudjp-workshop-changenote.txt
+```
+
+Review `/tmp/qudjp-changelog-entry.md`, copy it into `CHANGELOG.md`, and use
+`/tmp/qudjp-workshop-changenote.txt` as the `build_workshop_upload.py`
+`--changenote-file`. Do not publish to Steam until the upload gate below is
+explicitly confirmed.
+
 Spot-check the release ZIP:
 
 ```bash
