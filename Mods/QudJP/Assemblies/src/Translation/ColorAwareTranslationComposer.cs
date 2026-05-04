@@ -77,6 +77,11 @@ internal static class ColorAwareTranslationComposer
         }
 
         var translated = translateVisible(stripped);
+        if (HasColorMarkup(translated))
+        {
+            return RestoreTranslatedMarkupPreservingSourceOwnership(translated, spans, stripped);
+        }
+
         return ShouldRestoreWholeRelatively(spans, stripped.Length)
             ? RestoreRelative(translated, spans, stripped.Length)
             : Restore(translated, spans);
@@ -110,6 +115,22 @@ internal static class ColorAwareTranslationComposer
     {
         var (stripped, _) = Strip(source);
         return !string.Equals(stripped, source, StringComparison.Ordinal);
+    }
+
+    private static string RestoreTranslatedMarkupPreservingSourceOwnership(
+        string translatedValue,
+        IReadOnlyList<ColorSpan>? spans,
+        string sourceVisible)
+    {
+        if (spans is null || spans.Count == 0 || sourceVisible.Length == 0)
+        {
+            return translatedValue;
+        }
+
+        var wholeSourcePairs = ExtractTrueWholeBoundaryPairs(spans, sourceStart: 0, sourceVisible.Length);
+        return wholeSourcePairs.Count > 0
+            ? RestoreWholeBoundaryPairsPreservingTranslatedOwnership(translatedValue, wholeSourcePairs)
+            : RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(translatedValue, spans, sourceVisible);
     }
 
     internal static string RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership(
