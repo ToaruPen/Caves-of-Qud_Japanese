@@ -370,10 +370,11 @@ public sealed class DescriptionTextTranslatorTests
                     "オフハンド命中率: 15%\n\n" +
                     "重量： 2 lbs."));
             Assert.That(MessagePatternTranslator.GetMissingPatternHitCountForTests(source), Is.EqualTo(0));
-            Assert.That(Translator.GetMissingKeyHitCountForTests("筋力ボーナス上限:"), Is.EqualTo(0));
-            Assert.That(Translator.GetMissingKeyHitCountForTests("武器カテゴリ:"), Is.EqualTo(0));
-            Assert.That(Translator.GetMissingKeyHitCountForTests("オフハンド命中率:"), Is.EqualTo(0));
-            Assert.That(Translator.GetMissingKeyHitCountForTests("重量："), Is.EqualTo(0));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("Strength"), Is.EqualTo(0));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("Bonus Cap:"), Is.EqualTo(0));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("Weapon Class:"), Is.EqualTo(0));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("Offhand Attack Chance: {0}%"), Is.EqualTo(0));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("Weight:"), Is.EqualTo(0));
         });
     }
 

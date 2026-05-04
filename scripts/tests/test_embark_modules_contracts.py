@@ -62,7 +62,8 @@ def test_embark_module_window_runtime_keys_have_display_translations() -> None:
             key
             for _, entry in iter_dictionary_entries(dictionary_path)
             if isinstance((key := entry.get("key")), str)
-            if entry.get("text") and key in expected_keys
+            if isinstance((text := entry.get("text")), str)
+            if text and key in expected_keys
         )
 
     assert expected_keys <= translated_keys
