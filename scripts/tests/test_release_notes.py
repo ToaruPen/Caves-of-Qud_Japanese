@@ -110,6 +110,14 @@ def test_check_fragment_requirement_requires_fragment_for_localization_change() 
         check_fragment_requirement(changed_files)
 
 
+def test_check_fragment_requirement_reports_configured_fragment_dir() -> None:
+    """Missing-fragment errors point at the configured fragment directory."""
+    changed_files = ["Mods/QudJP/Localization/Dictionaries/ui-popup.ja.json"]
+
+    with pytest.raises(ReleaseNoteError, match=r"custom-release-notes/\*.md"):
+        check_fragment_requirement(changed_files, fragments_dir=Path("custom-release-notes"))
+
+
 def test_check_fragment_requirement_passes_when_fragment_changes(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

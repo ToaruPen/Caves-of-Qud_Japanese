@@ -56,8 +56,7 @@ def check_fragment_requirement(changed_files: list[str], *, fragments_dir: Path 
         return
     if not changed_fragment_paths:
         msg = (
-            "Localization changes require a release-note fragment under "
-            "docs/release-notes/unreleased/*.md."
+            f"Localization changes require a release-note fragment under {fragments_dir}/*.md."
         )
         raise ReleaseNoteError(msg)
     _validate_changed_fragments(changed_fragment_paths)
