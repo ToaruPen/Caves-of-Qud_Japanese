@@ -217,6 +217,13 @@ The script regenerates `dist/workshop/QudJP/` and writes
 `dist/workshop/workshop_item.vdf`. `dist/` is ignored by git; do not commit
 generated upload files.
 
+Steam renders Workshop description and changenote text from literal newline
+characters in the generated VDF. Do not escape newlines as the two-character
+sequence `\n`; Steam will show that text verbatim in Change Notes. After
+publishing, verify the rendered Workshop page and changelog in the target
+locale, for example `?l=japanese`, because Steam stores localized Change Notes
+separately.
+
 ## Upload Or Update
 
 Run steamcmd with the generated VDF:

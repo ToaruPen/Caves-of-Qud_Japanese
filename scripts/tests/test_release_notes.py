@@ -77,7 +77,7 @@ def test_render_changelog_entry_uses_version_date_and_sections(tmp_path: Path) -
 
 
 def test_render_workshop_changenote_is_user_facing(tmp_path: Path) -> None:
-    """Workshop changenotes include version, git hash, and user-visible bullets."""
+    """Workshop changenotes include version and user-visible bullets."""
     fragments_dir = tmp_path / "docs" / "release-notes" / "unreleased"
     fragments_dir.mkdir(parents=True)
     (fragments_dir / "runtime.md").write_text(
@@ -93,7 +93,7 @@ def test_render_workshop_changenote_is_user_facing(tmp_path: Path) -> None:
 
     assert (
         changenote
-        == "v0.1.0 / abc1234def56\n\n"
+        == "v0.1.0 更新\n\n"
         "更新内容:\n"
         "- Fix untranslated sleep and game-summary messages.\n"
     )

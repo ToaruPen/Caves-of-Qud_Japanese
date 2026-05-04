@@ -141,7 +141,8 @@ def render_workshop_changenote(
     fragments: ReleaseNoteFragments,
 ) -> str:
     """Render a Steam Workshop changenote from collected fragments."""
-    lines = [f"v{version} / {git_hash}", "", "更新内容:"]
+    _ = git_hash
+    lines = [f"v{version} 更新", "", "更新内容:"]
     for section in SECTION_ORDER:
         lines.extend(f"- {bullet}" for bullet in fragments.sections.get(section, []))
     lines.append("")
