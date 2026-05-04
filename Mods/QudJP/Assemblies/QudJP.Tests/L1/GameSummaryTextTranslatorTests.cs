@@ -52,6 +52,9 @@ public sealed class GameSummaryTextTranslatorTests
             ("You were level {0}.", "レベルは{0}だった。"),
             ("You scored {0} points.", "{0}点を獲得した。"),
             ("You survived for {0} turns.", "{0}ターン生存した。"),
+            ("You found {0} lairs.", "{0}個の巣を発見した。"),
+            ("You named {0} items.", "{0}個のアイテムに名付けた。"),
+            ("You generated {0} storied items.", "{0}個の伝説的アイテムを生成した。"),
             ("The most advanced artifact in your possession was {0}.", "所持品の中でもっとも高度なアーティファクトは{0}だった。"),
             ("This game was played in {0} mode.", "このゲームは{0}モードでプレイされた。"),
             ("Chronology for {0}", "{0}の年代記"),
@@ -66,6 +69,9 @@ public sealed class GameSummaryTextTranslatorTests
             "You were level {{C|1}}.",
             "You scored {{C|10539}} points.",
             "You survived for {{C|477}} turns.",
+            "You found {{C|2}} lairs.",
+            "You named {{C|3}} items.",
+            "You generated {{C|4}} storied items.",
             "The most advanced artifact in your possession was {{Y|phase cannon}}.",
             "This game was played in Classic mode.",
             "",
@@ -82,6 +88,9 @@ public sealed class GameSummaryTextTranslatorTests
             Assert.That(translated, Does.Contain("レベルは{{C|1}}だった。"));
             Assert.That(translated, Does.Contain("{{C|10539}}点を獲得した。"));
             Assert.That(translated, Does.Contain("{{C|477}}ターン生存した。"));
+            Assert.That(translated, Does.Contain("{{C|2}}個の巣を発見した。"));
+            Assert.That(translated, Does.Contain("{{C|3}}個のアイテムに名付けた。"));
+            Assert.That(translated, Does.Contain("{{C|4}}個の伝説的アイテムを生成した。"));
             Assert.That(translated, Does.Contain("所持品の中でもっとも高度なアーティファクトは{{Y|位相砲}}だった。"));
             Assert.That(translated, Does.Contain("このゲームはクラシックモードでプレイされた。"));
             Assert.That(translated, Does.Contain("{{W|Qudman}}の年代記"));
@@ -113,6 +122,7 @@ public sealed class GameSummaryTextTranslatorTests
         {
             Assert.That(GameSummaryTextTranslator.TranslateCause(null), Is.EqualTo(string.Empty));
             Assert.That(GameSummaryTextTranslator.TranslateCause(string.Empty), Is.EqualTo(string.Empty));
+            Assert.That(GameSummaryTextTranslator.TranslateDetails(null), Is.EqualTo(string.Empty));
             Assert.That(
                 GameSummaryTextTranslator.TranslateCause("\u0001You abandoned all hope."),
                 Is.EqualTo("\u0001You abandoned all hope."));

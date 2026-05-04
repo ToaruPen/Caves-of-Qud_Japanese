@@ -242,6 +242,26 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
 
                 return;
 
+            case "QudJP.Patches.CharGenPregenSelectionTranslationPatch":
+                foreach (var methodInfo in resolvedMethods)
+                {
+                    var elementType = ResolveEnumerableElementType(methodInfo.ReturnType);
+                    Assert.That(
+                        elementType,
+                        Is.Not.Null,
+                        $"{patchTypeName} return type should expose an enumerable element type: {methodInfo.ReturnType.FullName}");
+                    AssertStringMemberExists(
+                        elementType!,
+                        "Title",
+                        $"{patchTypeName} enumerable element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                    AssertStringMemberExists(
+                        elementType!,
+                        "Description",
+                        $"{patchTypeName} enumerable element type for {methodInfo.DeclaringType!.FullName}.{methodInfo.Name}");
+                }
+
+                return;
+
             case "QudJP.Patches.CharGenChromeTranslationPatch":
                 foreach (var methodInfo in resolvedMethods)
                 {
