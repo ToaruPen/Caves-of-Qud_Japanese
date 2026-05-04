@@ -266,17 +266,18 @@ public sealed class MessagePatternTranslatorTests
         WritePatternDictionary(
             (
                 "^On the (.+?) of (.+?), you arrive at the village of (.+?)\\.\\n\\nOn the horizon, Qud's jungles strangle chrome steeples and rusted archways to the earth\\. Further and beyond, the fabled Spindle rises above the fray and pierces the cloud-ribboned sky\\.$",
-                "{t1}の{t0}日、あなたは{2}の村に到着した。\n\n地平線では、Qudのジャングルがクロームの尖塔と錆びたアーチを大地に絡みつかせている。さらにその彼方では、伝説のスピンドルが乱景の上にそびえ、雲の帯を貫いて空へ伸びている。"));
+                "{t1}の{t0}日、あなたは{t2}の村に到着した。\n\n地平線では、Qudのジャングルがクロームの尖塔と錆びたアーチを大地に絡みつかせている。さらにその彼方では、伝説のスピンドルが乱景の上にそびえ、雲の帯を貫いて空へ伸びている。"));
         WriteExactDictionary(
             ("5th", "第5"),
-            ("Ut yara Ux", "ウト・ヤラ・ウクス"));
+            ("Ut yara Ux", "ウト・ヤラ・ウクス"),
+            ("Damur and fungus patch", "ダムールと菌類地帯"));
 
         var source = "On the 5th of Ut yara Ux, you arrive at the village of Damur and fungus patch.\n\n" +
             "On the horizon, Qud's jungles strangle chrome steeples and rusted archways to the earth. Further and beyond, the fabled Spindle rises above the fray and pierces the cloud-ribboned sky.";
 
         var translated = MessagePatternTranslator.Translate(source);
 
-        var expected = "ウト・ヤラ・ウクスの第5日、あなたはDamur and fungus patchの村に到着した。\n\n" +
+        var expected = "ウト・ヤラ・ウクスの第5日、あなたはダムールと菌類地帯の村に到着した。\n\n" +
             "地平線では、Qudのジャングルがクロームの尖塔と錆びたアーチを大地に絡みつかせている。さらにその彼方では、伝説のスピンドルが乱景の上にそびえ、雲の帯を貫いて空へ伸びている。";
 
         Assert.That(translated, Is.EqualTo(expected));
@@ -907,6 +908,27 @@ public sealed class MessagePatternTranslatorTests
         var translated = MessagePatternTranslator.Translate("ウォーターヴァイン農家 harvests a ヴァインウェハー.");
 
         Assert.That(translated, Is.EqualTo("ウォーターヴァイン農家はヴァインウェハーを収穫した。"));
+    }
+
+    [Test]
+    public void Translate_AppliesHarvestPatternWithArticle()
+    {
+        WritePatternDictionary(("^(?:The |the )?(.+?) harvests a (.+?)[.!]?$", "{0}は{1}を収穫した。"));
+
+        var translated = MessagePatternTranslator.Translate("The ウォーターヴァイン農家 harvests a ヴァインウェハー.");
+
+        Assert.That(translated, Is.EqualTo("ウォーターヴァイン農家はヴァインウェハーを収穫した。"));
+    }
+
+    [Test]
+    public void Translate_DoesNotTreatNonDishPhraseWithDishWordAsHistoricSpiceGeneratedName()
+    {
+        WriteExactDictionary(("ancient", "古代"), ("bread", "パン"), ("farm", "農場"));
+        WritePatternDictionary(("^You inspect (.+?)[.!]?$", "{t0}を調べた。"));
+
+        var translated = MessagePatternTranslator.Translate("You inspect Ancient Bread Farm.");
+
+        Assert.That(translated, Is.EqualTo("Ancient Bread Farmを調べた。"));
     }
 
     [Test]

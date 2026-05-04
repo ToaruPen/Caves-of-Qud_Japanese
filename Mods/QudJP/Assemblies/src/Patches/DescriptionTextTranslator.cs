@@ -430,6 +430,13 @@ internal static class DescriptionTextTranslator
 
         var effect = match.Groups["effect"].Value;
         var translatedEffect = StringHelpers.TranslateExactOrLowerAsciiFallback(effect);
+        if (string.Equals(translatedEffect, effect, StringComparison.Ordinal)
+            && !ContainsJapaneseCharacters(effect))
+        {
+            translated = source;
+            return false;
+        }
+
         translated = translatedEffect + "の効果を調理した食事に加える。";
         DynamicTextObservability.RecordTransform(route, "Description.CookingEffects", source, translated);
         return true;

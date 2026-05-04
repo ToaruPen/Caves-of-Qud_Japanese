@@ -754,7 +754,11 @@ public sealed class MessageFrameTranslatorTests
 
         var cases = new[]
         {
+            ("カニ", "tighten", "your carapace", ".", "カニは甲殻を締めつけた。"),
+            ("カニ", "tighten", "his carapace", ".", "カニは甲殻を締めつけた。"),
+            ("カニ", "tighten", "her carapace", ".", "カニは甲殻を締めつけた。"),
             ("カニ", "tighten", "its carapace", ".", "カニは甲殻を締めつけた。"),
+            ("カニ", "tighten", "their carapace", ".", "カニは甲殻を締めつけた。"),
             ("ロボット", "activate", "its reflective shield", ".", "ロボットは反射シールドを起動した。"),
             ("変異体", "spin", "up its molecular cannon", "!", "変異体は分子砲を回転させた！"),
             ("ヤマアラシ", "fling", "its quills everywhere", "!", "ヤマアラシは棘をあたりに飛ばした！"),
@@ -769,7 +773,11 @@ public sealed class MessageFrameTranslatorTests
             {
                 Assert.That(ok, Is.True, $"{verb} {extra}");
                 Assert.That(sentence, Is.EqualTo(expected));
+                Assert.That(sentence, Does.Not.Contain("your"));
+                Assert.That(sentence, Does.Not.Contain("his"));
+                Assert.That(sentence, Does.Not.Contain("her"));
                 Assert.That(sentence, Does.Not.Contain("its"));
+                Assert.That(sentence, Does.Not.Contain("their"));
             });
         }
     }

@@ -453,11 +453,27 @@ public sealed class DescriptionTextTranslatorTests
     [Test]
     public void TranslateShortDescription_TranslatesPreparedCookingIngredientEffectTemplate()
     {
+        WriteDictionary(
+            "world-effects-cooking.ja.json",
+            ("simple plant-based", "シンプルな植物由来"));
+
         var translated = DescriptionTextTranslator.TranslateShortDescription(
-            "Adds シンプルな植物由来 effects to cooked meals.",
+            "Adds simple plant-based effects to cooked meals.",
             "DescriptionTextTranslatorTests");
 
         Assert.That(translated, Is.EqualTo("シンプルな植物由来の効果を調理した食事に加える。"));
+    }
+
+    [Test]
+    public void TranslateShortDescription_LeavesPreparedCookingIngredientEffectTemplateUnchanged_WhenEffectIsUnknownEnglish()
+    {
+        const string source = "Adds mysterious effects to cooked meals.";
+
+        var translated = DescriptionTextTranslator.TranslateShortDescription(
+            source,
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo(source));
     }
 
     private void WritePatternDictionary(params (string pattern, string template)[] patterns)

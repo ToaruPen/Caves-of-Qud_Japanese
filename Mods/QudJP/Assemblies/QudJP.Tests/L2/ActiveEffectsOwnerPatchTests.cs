@@ -182,37 +182,87 @@ public sealed class ActiveEffectsOwnerPatchTests
     [Test]
     public void EffectOwnerTargetResolver_IncludesBaseAndNonCookingOverrideDescriptionMethods()
     {
+        WriteDictionary(
+            ("base effect", "基本効果"),
+            ("{{B|wet}}", "{{B|濡れている}}"));
+
         var targets = ActiveEffectOwnerTargetResolver.ResolveTargetMethods(
                 typeof(DummyEffectBaseTarget),
                 nameof(DummyEffectBaseTarget.GetDescription))
-            .Select(static method => method.DeclaringType?.Name + "." + method.Name)
             .ToArray();
 
         Assert.That(
-            targets,
+            targets.Select(static method => method.DeclaringType?.Name + "." + method.Name),
             Is.EquivalentTo(new[]
             {
                 "DummyEffectBaseTarget.GetDescription",
                 "DummyLiquidCoveredEffectTarget.GetDescription",
             }));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            for (var index = 0; index < targets.Length; index++)
+            {
+                harmony.Patch(
+                    original: targets[index],
+                    postfix: new HarmonyMethod(RequireMethod(typeof(EffectDescriptionPatch), nameof(EffectDescriptionPatch.Postfix))));
+            }
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(new DummyEffectBaseTarget().GetDescription(), Is.EqualTo("基本効果"));
+                Assert.That(new DummyLiquidCoveredEffectTarget().GetDescription(), Is.EqualTo("{{B|濡れている}}"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     [Test]
     public void EffectOwnerTargetResolver_IncludesBaseAndNonCookingOverrideDetailsMethods()
     {
+        WriteDictionary(
+            ("base details", "基本詳細"),
+            ("salty water", "塩水"));
+
         var targets = ActiveEffectOwnerTargetResolver.ResolveTargetMethods(
                 typeof(DummyEffectBaseTarget),
                 nameof(DummyEffectBaseTarget.GetDetails))
-            .Select(static method => method.DeclaringType?.Name + "." + method.Name)
             .ToArray();
 
         Assert.That(
-            targets,
+            targets.Select(static method => method.DeclaringType?.Name + "." + method.Name),
             Is.EquivalentTo(new[]
             {
                 "DummyEffectBaseTarget.GetDetails",
                 "DummyLiquidCoveredEffectTarget.GetDetails",
             }));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            for (var index = 0; index < targets.Length; index++)
+            {
+                harmony.Patch(
+                    original: targets[index],
+                    postfix: new HarmonyMethod(RequireMethod(typeof(EffectDetailsPatch), nameof(EffectDetailsPatch.Postfix))));
+            }
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(new DummyEffectBaseTarget().GetDetails(), Is.EqualTo("基本詳細"));
+                Assert.That(new DummyLiquidCoveredEffectTarget().GetDetails(), Is.EqualTo("塩水を30ドラム浴びている。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     [Test]

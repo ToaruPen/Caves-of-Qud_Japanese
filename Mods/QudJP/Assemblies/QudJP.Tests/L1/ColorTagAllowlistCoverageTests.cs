@@ -129,6 +129,7 @@ public sealed class ColorTagAllowlistCoverageTests
             ["Mods/QudJP/Assemblies/src/Patches/PopupTranslationPatch.cs:354:TryTranslatePopupProducerText"] = "Delegates capture restoration to template/exact branch helpers.",
             ["Mods/QudJP/Assemblies/src/Patches/SkillsAndPowersLineTranslationPatch.cs:229:TranslateSkillRightText"] = "Strips only for skill right-text detection before a non-colored exact replacement.",
             ["Mods/QudJP/Assemblies/src/Patches/TradeUiPopupTranslationPatch.cs:278:TryTranslateTradeUiPopupText"] = "Delegates capture restoration to branch-specific RestoreCapture helpers.",
+            ["Mods/QudJP/Assemblies/src/Patches/TradeUiPopupTranslationPatch.cs:987:ShouldSkipMessagePatternTranslation"] = "Predicate only; it strips markup to classify already-localized visible popup text.",
             ["Mods/QudJP/Assemblies/src/Patches/UITextSkinTranslationPatch.cs:100:TranslatePreservingColors"] = "Sink fallback uses stripped text only for already-localized/direct-route checks.",
             ["Mods/QudJP/Assemblies/src/Patches/WorldModsTextTranslator.cs:505:TryTranslateCoProcessorTemplate"] = "Delegates restoration to the template helper.",
             ["Mods/QudJP/Assemblies/src/Patches/WorldModsTextTranslator.cs:541:TryTranslateCounterweightedTemplate"] = "Delegates restoration to the template helper.",

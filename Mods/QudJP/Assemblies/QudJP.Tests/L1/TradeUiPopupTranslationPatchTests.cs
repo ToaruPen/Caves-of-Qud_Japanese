@@ -271,6 +271,20 @@ public sealed class TradeUiPopupTranslationPatchTests
     }
 
     [Test]
+    public void TranslatePopupText_DoesNotReportNoPattern_ForMarkupWrappedAlreadyLocalizedPopup()
+    {
+        const string source = "{{W|Qudのジョッパに到着した。}}";
+
+        var translated = TradeUiPopupTranslationPatch.TranslatePopupText(source);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo(source));
+            Assert.That(MessagePatternTranslator.GetMissingPatternHitCountForTests(source), Is.EqualTo(0));
+        });
+    }
+
+    [Test]
     public void TranslatePopupText_LeavesUnknownTextUnchanged()
     {
         const string source = "This popup does not belong to trade UI.";

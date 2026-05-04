@@ -984,12 +984,13 @@ public static class TradeUiPopupTranslationPatch
 
     private static bool ShouldSkipMessagePatternTranslation(string source)
     {
-        if (!JapaneseCharacterPattern.IsMatch(source))
+        var (visibleText, _) = ColorAwareTranslationComposer.Strip(source);
+        if (!JapaneseCharacterPattern.IsMatch(visibleText))
         {
             return false;
         }
 
-        var normalized = AllowedLocalizedEnglishTokenPattern.Replace(source, string.Empty);
+        var normalized = AllowedLocalizedEnglishTokenPattern.Replace(visibleText, string.Empty);
         return !AsciiLetterPattern.IsMatch(normalized);
     }
 

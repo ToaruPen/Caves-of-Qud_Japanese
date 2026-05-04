@@ -149,7 +149,9 @@ internal static class HistoricSpiceGeneratedNameTranslator
         }
 
         var dishWordIndex = FindDishWordIndex(words);
-        if (dishWordIndex < 0 || !TryTranslateWords(words, out var translatedWords))
+        if (dishWordIndex < 0
+            || !IsLikelyGeneratedDishName(words, dishWordIndex)
+            || !TryTranslateWords(words, out var translatedWords))
         {
             translated = source;
             return false;
@@ -212,6 +214,65 @@ internal static class HistoricSpiceGeneratedNameTranslator
         }
 
         return -1;
+    }
+
+    private static bool IsLikelyGeneratedDishName(string[] words, int dishWordIndex)
+    {
+        if (words.Length < 2 || words.Length > 5)
+        {
+            return false;
+        }
+
+        if (dishWordIndex != 0 && dishWordIndex != words.Length - 1)
+        {
+            return false;
+        }
+
+        for (var index = 0; index < words.Length; index++)
+        {
+            if (!IsTitleWord(words[index]))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool IsTitleWord(string source)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return false;
+        }
+
+        var sawAsciiLetter = false;
+        for (var index = 0; index < source.Length; index++)
+        {
+            var character = source[index];
+            if ((character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z'))
+            {
+                if (!sawAsciiLetter)
+                {
+                    if (character < 'A' || character > 'Z')
+                    {
+                        return false;
+                    }
+
+                    sawAsciiLetter = true;
+                    continue;
+                }
+
+                continue;
+            }
+
+            if (character != '\'' && character != '-')
+            {
+                return false;
+            }
+        }
+
+        return sawAsciiLetter;
     }
 
     private static bool IsFestivalWord(string source) => FestivalWords.Contains(source);

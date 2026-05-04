@@ -99,7 +99,7 @@ internal static class MessageLogProducerTranslationHelpers
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static readonly Regex AllowedAlreadyLocalizedEnglishTokenPattern = new Regex(
-        @"\b(?:AV|DV|HP|MA|PV|Qud|Quickness|SP|XP)\b|\.lbs",
+        @"\b(?:AV|DV|HP|MA|PV|Qud|Quickness|SP|XP)\b|\.lbs|\blbs\.",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     internal static bool TryTranslateZoneDisplayName(string source, string route, out string translated)

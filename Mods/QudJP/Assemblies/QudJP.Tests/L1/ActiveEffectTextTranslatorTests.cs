@@ -92,6 +92,50 @@ public sealed class ActiveEffectTextTranslatorTests
         });
     }
 
+    [TestCase("dominated (3 turns remaining)", "支配された（残り3ターン）")]
+    [TestCase("time-dilated ({{C|-40}} Quickness)", "時間遅延 ({{C|-40}} Quickness)")]
+    [TestCase("{{C|lying on a chair}}", "{{C|椅子に横たわっている}}")]
+    [TestCase("{{B|engulfed by a starapple tree}}", "{{B|スターアップルの木に呑み込まれている}}")]
+    [TestCase("{{G|enclosed in a glass bottle}}", "{{G|ガラス瓶に閉じ込められている}}")]
+    [TestCase("{{y|sitting on a stool}}", "{{y|腰掛けに座っている}}")]
+    [TestCase("{{C|piloting a hovercraft}}", "{{C|ホバークラフトを操縦中}}")]
+    [TestCase("{{R|marked by a snapjaw hunter}}", "{{R|スナップジョーの狩人にマークされている}}")]
+    [TestCase("{{r|cleaved ({{C|-3 AV}})}}", "{{r|裂かれた（{{C|-3 AV}}）}}")]
+    [TestCase("{{psionic|psionically cleaved (-2 MA)}}", "{{psionic|精神的に裂かれた（-2 MA）}}")]
+    public void TryTranslateText_TranslatesGeneratedDescriptionFamilies(string source, string expected)
+    {
+        WriteDictionary(
+            ("dominated ({0} turns remaining)", "支配された（残り{0}ターン）"),
+            ("time-dilated ({{C|-{0}}} Quickness)", "時間遅延 ({{C|-{0}}} Quickness)"),
+            ("lying on {0}", "{0}に横たわっている"),
+            ("engulfed by {0}", "{0}に呑み込まれている"),
+            ("enclosed in {0}", "{0}に閉じ込められている"),
+            ("sitting on {0}", "{0}に座っている"),
+            ("piloting {0}", "{0}を操縦中"),
+            ("marked by {0}", "{0}にマークされている"),
+            ("cleaved ({{C|-{0} AV}})", "裂かれた（{{C|-{0} AV}}）"),
+            ("psionically cleaved (-{0} MA)", "精神的に裂かれた（-{0} MA）"),
+            ("a chair", "椅子"),
+            ("a starapple tree", "スターアップルの木"),
+            ("a glass bottle", "ガラス瓶"),
+            ("a stool", "腰掛け"),
+            ("a hovercraft", "ホバークラフト"),
+            ("a snapjaw hunter", "スナップジョーの狩人"));
+
+        var changed = ActiveEffectTextTranslator.TryTranslateText(
+            source,
+            "ActiveEffectTextTranslatorTests",
+            "ActiveEffects.Description.Generated",
+            out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(translated, Is.EqualTo(expected));
+            Assert.That(Translator.GetMissingKeyHitCountForTests(source), Is.EqualTo(0));
+        });
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();

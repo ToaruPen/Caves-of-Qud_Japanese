@@ -252,6 +252,16 @@ public sealed class ColorCodePreserverTests
     }
 
     [Test]
+    public void TranslatePreservingColors_RestoresPartialSourceWrapperAfterWholeSourceWrapper_WhenTranslatedOwnsMarkup()
+    {
+        var translated = ColorAwareTranslationComposer.TranslatePreservingColors(
+            "{{B|left {{R|target}} right}}",
+            _ => "{{Y|left target right}}");
+
+        Assert.That(translated, Is.EqualTo("{{B|{{Y|left {{R|target}} right}}}}"));
+    }
+
+    [Test]
     public void RestoreWholeSourceBoundaryWrappersPreservingTranslatedOwnership_RestoresWholeSourceWrapper()
     {
         var (stripped, spans) = ColorAwareTranslationComposer.Strip("{{y|No}}");

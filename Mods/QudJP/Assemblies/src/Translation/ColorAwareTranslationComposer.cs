@@ -128,9 +128,15 @@ internal static class ColorAwareTranslationComposer
         }
 
         var wholeSourcePairs = ExtractTrueWholeBoundaryPairs(spans, sourceStart: 0, sourceVisible.Length);
-        return wholeSourcePairs.Count > 0
+        var restored = wholeSourcePairs.Count > 0
             ? RestoreWholeBoundaryPairsPreservingTranslatedOwnership(translatedValue, wholeSourcePairs)
-            : RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(translatedValue, spans, sourceVisible);
+            : translatedValue;
+
+        return RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(
+            restored,
+            spans,
+            sourceVisible,
+            suppressNestedSameFamilyWrappers: wholeSourcePairs.Count == 0);
     }
 
     internal static string RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership(
@@ -164,7 +170,8 @@ internal static class ColorAwareTranslationComposer
     internal static string RestoreSourceBoundaryWrappersByVisibleTextPreservingTranslatedOwnership(
         string translatedValue,
         IReadOnlyList<ColorSpan>? spans,
-        string sourceVisible)
+        string sourceVisible,
+        bool suppressNestedSameFamilyWrappers = true)
     {
         if (spans is null || spans.Count == 0 || sourceVisible.Length == 0)
         {
@@ -172,7 +179,8 @@ internal static class ColorAwareTranslationComposer
         }
 
         var sourceOwnedBoundaryPairs = SelectSourceOwnedBoundaryPairs(
-            ExtractTrueBoundaryPairs(spans, sourceStart: 0, sourceVisible.Length));
+            ExtractTrueBoundaryPairs(spans, sourceStart: 0, sourceVisible.Length),
+            suppressNestedSameFamilyWrappers);
         if (sourceOwnedBoundaryPairs.Count == 0)
         {
             return translatedValue;
@@ -712,7 +720,9 @@ internal static class ColorAwareTranslationComposer
         return null;
     }
 
-    private static List<WholeBoundaryPair> SelectSourceOwnedBoundaryPairs(IReadOnlyList<WholeBoundaryPair> pairs)
+    private static List<WholeBoundaryPair> SelectSourceOwnedBoundaryPairs(
+        IReadOnlyList<WholeBoundaryPair> pairs,
+        bool suppressNestedSameFamilyWrappers = true)
     {
         var result = new List<WholeBoundaryPair>();
         for (var candidateIndex = 0; candidateIndex < pairs.Count; candidateIndex++)
@@ -729,7 +739,10 @@ internal static class ColorAwareTranslationComposer
                 var other = pairs[otherIndex];
                 if (other.OpeningOrder < candidate.OpeningOrder
                     && other.ClosingOrder > candidate.ClosingOrder
-                    && IsSameWrapperFamily(candidate.Opening.Token, other.Opening.Token))
+                    && IsConflictingNestedWrapper(
+                        candidate.Opening.Token,
+                        other.Opening.Token,
+                        suppressNestedSameFamilyWrappers))
                 {
                     isNestedInsideSameFamilyPair = true;
                     break;
@@ -752,6 +765,16 @@ internal static class ColorAwareTranslationComposer
             GetWrapperFamily(leftOpeningToken),
             GetWrapperFamily(rightOpeningToken),
             StringComparison.Ordinal);
+    }
+
+    private static bool IsConflictingNestedWrapper(
+        string leftOpeningToken,
+        string rightOpeningToken,
+        bool suppressNestedSameFamilyWrappers)
+    {
+        return suppressNestedSameFamilyWrappers
+            ? IsSameWrapperFamily(leftOpeningToken, rightOpeningToken)
+            : string.Equals(leftOpeningToken, rightOpeningToken, StringComparison.Ordinal);
     }
 
     private static string GetWrapperFamily(string openingToken)

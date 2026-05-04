@@ -116,15 +116,15 @@ The following broad/prefix-like exact rows were removed from
 
 - `@they get +`
 - `@they expel quills per the Quills mutation at level`
-- `@they expel quills per the Quills mutation at level `
+- `@they expel quills per the Quills mutation at level␠`
 - `Reflect`
-- `Reflect `
+- `Reflect␠`
 - `whenever @thisCreature take@s damage, there's a`
-- `whenever @thisCreature take@s damage, there's a `
+- `whenever @thisCreature take@s damage, there's a␠`
 - `Whenever @thisCreature take@s avoidable damage, there's a`
-- `Whenever @thisCreature take@s avoidable damage, there's a `
+- `Whenever @thisCreature take@s avoidable damage, there's a␠`
 - `Can use`
-- `Can use `
+- `Can use␠`
 - concrete `Can use X at level N-M. If @they already have X...` mutation rows
 - generic `{MutationDisplayName}` mutation-use template rows
 - `Can use Intimidate.` and Intimidate bonus template/concrete rows
