@@ -319,7 +319,9 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
     private static void AssertEnumerableMemberExists(Type runtimeType, string memberName, string context)
     {
         var field = runtimeType.GetField(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        if (field is not null && typeof(System.Collections.IEnumerable).IsAssignableFrom(field.FieldType))
+        if (field is not null
+            && typeof(System.Collections.IEnumerable).IsAssignableFrom(field.FieldType)
+            && field.FieldType != typeof(string))
         {
             return;
         }
@@ -327,7 +329,8 @@ public sealed class CharGenProducerTranslationPatchResolutionTests
         var property = runtimeType.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         if (property is not null
             && property.CanRead
-            && typeof(System.Collections.IEnumerable).IsAssignableFrom(property.PropertyType))
+            && typeof(System.Collections.IEnumerable).IsAssignableFrom(property.PropertyType)
+            && property.PropertyType != typeof(string))
         {
             return;
         }
