@@ -67,9 +67,9 @@ jobs:
         if: hashFiles('Mods/QudJP/Localization/**/*') != ''
         run: python scripts/check_glossary_consistency.py Mods/QudJP/Localization
 
-      - name: Install pytest
+      - name: Install Python test dependencies
         if: hashFiles('scripts/tests/**/*.py') != ''
-        run: pip install pytest
+        run: pip install hypothesis pytest
 
       - name: Test Python
         if: hashFiles('scripts/tests/**/*.py') != ''
