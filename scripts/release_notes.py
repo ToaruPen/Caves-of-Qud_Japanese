@@ -49,15 +49,18 @@ def check_fragment_requirement(changed_files: list[str], *, fragments_dir: Path 
     """Require an unreleased fragment when localization assets change."""
     has_localization_change = any(_is_localization_path(path) for path in changed_files)
     fragment_prefix = _fragment_prefix(fragments_dir)
-    has_fragment_change = any(_is_fragment_path(path, fragment_prefix=fragment_prefix) for path in changed_files)
+    changed_fragment_paths = [
+        Path(path) for path in changed_files if _is_fragment_path(path, fragment_prefix=fragment_prefix)
+    ]
     if not has_localization_change:
         return
-    if not has_fragment_change:
+    if not changed_fragment_paths:
         msg = (
             "Localization changes require a release-note fragment under "
             "docs/release-notes/unreleased/*.md."
         )
         raise ReleaseNoteError(msg)
+    _validate_changed_fragments(changed_fragment_paths)
     fragments = collect_fragments(fragments_dir)
     if not fragments.has_entries():
         msg = f"No release-note fragments found under {fragments_dir}"
@@ -78,7 +81,8 @@ def collect_fragments(fragments_dir: Path = FRAGMENTS_DIR) -> ReleaseNoteFragmen
     return ReleaseNoteFragments(sections={section: entries for section, entries in sections.items() if entries})
 
 
-def _collect_fragment(path: Path, sections: dict[str, list[str]]) -> None:
+def _collect_fragment(path: Path, sections: dict[str, list[str]]) -> int:
+    entry_count = 0
     current_section: str | None = None
     for line_number, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
         line = raw_line.strip()
@@ -100,9 +104,23 @@ def _collect_fragment(path: Path, sections: dict[str, list[str]]) -> None:
                 msg = f"{path}:{line_number}: empty release-note bullet"
                 raise ReleaseNoteError(msg)
             sections[current_section].append(bullet)
+            entry_count += 1
             continue
         msg = f"{path}:{line_number}: expected a '### Section' heading or '- ' bullet"
         raise ReleaseNoteError(msg)
+    return entry_count
+
+
+def _validate_changed_fragments(paths: list[Path]) -> None:
+    """Validate the fragment files that were part of the change set."""
+    for path in paths:
+        if not path.is_file():
+            msg = f"Changed release-note fragment not found: {path}"
+            raise ReleaseNoteError(msg)
+        sections: dict[str, list[str]] = {section: [] for section in SECTION_ORDER}
+        if _collect_fragment(path, sections) == 0:
+            msg = f"Changed release-note fragment has no entries: {path}"
+            raise ReleaseNoteError(msg)
 
 
 def render_changelog_entry(

@@ -145,6 +145,43 @@ def test_check_fragment_requirement_rejects_malformed_fragment(
         check_fragment_requirement(changed_files, fragments_dir=fragments_dir)
 
 
+def test_check_fragment_requirement_rejects_missing_changed_fragment(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The changed fragment path itself must still exist."""
+    monkeypatch.chdir(tmp_path)
+    fragments_dir = Path("custom-release-notes")
+    fragments_dir.mkdir(parents=True)
+    (fragments_dir / "other.md").write_text("### Fixed\n\n- Fix another translation.\n", encoding="utf-8")
+    changed_files = [
+        "Mods/QudJP/Localization/Dictionaries/ui-popup.ja.json",
+        "custom-release-notes/ui-popup.md",
+    ]
+
+    with pytest.raises(ReleaseNoteError, match="Changed release-note fragment not found"):
+        check_fragment_requirement(changed_files, fragments_dir=fragments_dir)
+
+
+def test_check_fragment_requirement_rejects_empty_changed_fragment(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The changed fragment path must contain at least one release-note bullet."""
+    monkeypatch.chdir(tmp_path)
+    fragments_dir = Path("custom-release-notes")
+    fragments_dir.mkdir(parents=True)
+    (fragments_dir / "ui-popup.md").write_text("", encoding="utf-8")
+    (fragments_dir / "other.md").write_text("### Fixed\n\n- Fix another translation.\n", encoding="utf-8")
+    changed_files = [
+        "Mods/QudJP/Localization/Dictionaries/ui-popup.ja.json",
+        "custom-release-notes/ui-popup.md",
+    ]
+
+    with pytest.raises(ReleaseNoteError, match="Changed release-note fragment has no entries"):
+        check_fragment_requirement(changed_files, fragments_dir=fragments_dir)
+
+
 def test_check_fragment_requirement_ignores_non_localization_changes() -> None:
     """Non-localization PRs do not need release-note fragments."""
     check_fragment_requirement(["scripts/release_notes.py"])
@@ -163,6 +200,7 @@ def test_git_changed_files_wraps_git_diff_errors(monkeypatch: pytest.MonkeyPatch
             stderr="fatal: bad revision 'bad...HEAD'",
         )
 
+    monkeypatch.setattr(release_notes.shutil, "which", lambda _name: "git")
     monkeypatch.setattr(release_notes.subprocess, "run", fake_run)
 
     with pytest.raises(ReleaseNoteError, match="git diff failed for bad\\.\\.\\.HEAD"):
@@ -176,3 +214,4 @@ def test_main_reports_parse_errors_without_traceback(capsys: pytest.CaptureFixtu
     captured = capsys.readouterr()
     assert captured.out == ""
     assert "error: the following arguments are required" in captured.err
+    assert "Traceback" not in captured.err
