@@ -158,6 +158,6 @@ jobs:
             "dist/QudJP-v${version}.zip.sha256" \
             --draft \
             --verify-tag \
-            --latest=false \
+            --latest \
             --title "QudJP v${version}" \
             --notes-file dist/github-release-notes.md

@@ -41,6 +41,7 @@ def test_release_workflow_creates_draft_github_release_without_steam_upload() ->
     assert "gh release create" in workflow
     assert "GH_REPO: ${{ github.repository }}" in workflow
     assert "--draft" in workflow
-    assert "--latest=false" in workflow
+    assert "--latest" in workflow
+    assert "--latest=false" not in workflow
     assert "contents: write" in workflow
     assert "workshop_build_item" not in workflow
