@@ -90,7 +90,7 @@ public sealed class ColorRouteCatalogTests
         var pattern = Regex.Escape(symbol)
             .Replace("\\.", "\\s*\\.\\s*", StringComparison.Ordinal)
             .Replace("\\(", "\\s*\\(", StringComparison.Ordinal);
-        return Regex.Matches(source, pattern, RegexOptions.CultureInvariant | RegexOptions.Singleline).Count;
+        return Regex.Count(source, pattern, RegexOptions.CultureInvariant | RegexOptions.Singleline);
     }
 
     [Test]
