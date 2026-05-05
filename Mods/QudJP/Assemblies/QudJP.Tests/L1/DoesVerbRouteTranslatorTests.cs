@@ -81,6 +81,21 @@ public sealed class DoesVerbRouteTranslatorTests
         });
     }
 
+    [TestCase("The 技師 deploys a タレット.", "技師はタレットを展開した")]
+    [TestCase("{{g|The 技師 deploys a タレット.}}", "{{g|技師はタレットを展開した}}")]
+    public void TryTranslatePlainSentence_RepositoryDictionary_TranslatesDeployFamily(string source, string expected)
+    {
+        UseRepositoryDictionary();
+
+        var ok = DoesVerbRouteTranslator.TryTranslatePlainSentence(source, out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ok, Is.True);
+            Assert.That(translated, Is.EqualTo(expected));
+        });
+    }
+
     [TestCase("The 熊 is", "are", " stunned!", "熊は気絶した！")]
     [TestCase("The 扉 is", "are", " open.", "扉は開いている")]
     [TestCase("The 水筒 is", "are", " already full.", "水筒はすでに満タンだ")]

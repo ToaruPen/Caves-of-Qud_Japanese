@@ -304,10 +304,12 @@ public sealed class MessageLogPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_DoesNotTranslateDeathMessage()
+    public void Prefix_TranslatesDeathMessageViaSharedDeathWrapper()
     {
         WritePatternDictionary(("^You hear (.+?)[.!]?$", "{0}を聞いた。"));
-        WriteExactDictionary(("QudJP.DeathWrapper.KilledBy.Wrapped", "あなたは死んだ。\n\n{killer}に殺された。"));
+        WriteExactDictionary(
+            ("QudJP.DeathWrapper.Generic.Wrapped", "あなたは死んだ。\n\n{body}"),
+            ("QudJP.DeathWrapper.KilledBy.Bare", "{killer}に殺された。"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -320,7 +322,7 @@ public sealed class MessageLogPatchTests
 
             DummyMessageQueue.AddPlayerMessage("You died.\n\nYou were killed by メフメット.", "&R", Capitalize: false);
 
-            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You died.\n\nYou were killed by メフメット."));
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("あなたは死んだ。\n\nメフメットに殺された。"));
         }
         finally
         {
@@ -329,10 +331,12 @@ public sealed class MessageLogPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_DoesNotTranslateBittenToDeathMessage()
+    public void Prefix_TranslatesBittenToDeathMessageViaSharedDeathWrapper()
     {
         WritePatternDictionary(("^You hear (.+?)[.!]?$", "{0}を聞いた。"));
-        WriteExactDictionary(("QudJP.DeathWrapper.BittenToDeathBy.Wrapped", "あなたは死んだ。\n\n{killer}に噛み殺された。"));
+        WriteExactDictionary(
+            ("QudJP.DeathWrapper.Generic.Wrapped", "あなたは死んだ。\n\n{body}"),
+            ("QudJP.DeathWrapper.BittenToDeathBy.Bare", "{killer}に噛み殺された。"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -345,7 +349,7 @@ public sealed class MessageLogPatchTests
 
             DummyMessageQueue.AddPlayerMessage("You died.\n\nYou were bitten to death by the ウォーターヴァイン農家.", "&R", Capitalize: false);
 
-            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You died.\n\nYou were bitten to death by the ウォーターヴァイン農家."));
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("あなたは死んだ。\n\nウォーターヴァイン農家に噛み殺された。"));
         }
         finally
         {
@@ -383,7 +387,7 @@ public sealed class MessageLogPatchTests
     }
 
     [Test]
-    public void Prefix_ObservationOnly_DoesNotTranslateAccidentalDeathMessage()
+    public void Prefix_TranslatesAccidentalDeathMessageViaSharedDeathWrapper()
     {
         WritePatternDictionary(("^You hear (.+?)[.!]?$", "{0}を聞いた。"));
         WriteExactDictionary(("QudJP.DeathWrapper.AccidentallyKilledBy.Bare", "{killer}にうっかり殺された。"));
@@ -399,7 +403,7 @@ public sealed class MessageLogPatchTests
 
             DummyMessageQueue.AddPlayerMessage("You were accidentally killed by a ウォーターヴァイン農家.", "&R", Capitalize: false);
 
-            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You were accidentally killed by a ウォーターヴァイン農家."));
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("ウォーターヴァイン農家にうっかり殺された。"));
         }
         finally
         {

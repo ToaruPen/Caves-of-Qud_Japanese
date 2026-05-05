@@ -74,6 +74,41 @@ public sealed class JournalPatternTranslatorTests
     }
 
     [Test]
+    public void Translate_AppliesArticlelessDeathEntryPattern()
+    {
+        WriteDictionaryFile("date-l1.ja.json", new[] { ("5th", "第5"), ("Tishru ii Ux", "ティシュル II・ウクス") });
+        WritePatternDictionary(("^On the (.+?) of (.+?), you were killed by (.+?)\\.$", "{t1}の{t0}日、{t2}に殺された。"));
+
+        var translated = JournalPatternTranslator.Translate("On the 5th of Tishru ii Ux, you were killed by イジル, 村の修理工.");
+
+        Assert.That(translated, Is.EqualTo("ティシュル II・ウクスの第5日、イジル, 村の修理工に殺された。"));
+    }
+
+    [Test]
+    public void Translate_TranslatesArticlelessLocationCapture()
+    {
+        WriteDictionaryFile(
+            "location-l1.ja.json",
+            new[] { ("snapjaw fort", "スナップジョーの砦"), ("Settlements", "集落") });
+        WritePatternDictionary(("^You note the location of (.+?) in the Locations > (.+?) section of your journal\\.[.!]?$", "ジャーナルの「場所 > {t1}」欄に{t0}の場所を記録した。"));
+
+        var translated = JournalPatternTranslator.Translate(
+            "You note the location of a snapjaw fort in the Locations > Settlements section of your journal.");
+
+        Assert.That(translated, Is.EqualTo("ジャーナルの「場所 > 集落」欄にスナップジョーの砦の場所を記録した。"));
+    }
+
+    [Test]
+    public void Translate_AppliesLateSultanateMarkOfDeathRecoveryPattern()
+    {
+        WritePatternDictionary(("^You recover the Mark of Death of the late sultanate\\.$", "亡きスルタンの死の刻印を回収した。"));
+
+        var translated = JournalPatternTranslator.Translate("You recover the Mark of Death of the late sultanate.");
+
+        Assert.That(translated, Is.EqualTo("亡きスルタンの死の刻印を回収した。"));
+    }
+
+    [Test]
     public void Translate_AppliesVillageHistoriesNotificationPattern()
     {
         WritePatternDictionary(("^You note this piece of information in the Village Histories > (.+?) section of your journal\\.[.!]?$", "この情報をジャーナルの「村の歴史 > {0}」欄に記録した。"));

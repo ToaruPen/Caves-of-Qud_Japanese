@@ -54,6 +54,26 @@ public static class GameSummaryScreenMenuBarsTranslationPatch
         }
     }
 
+    public static void Postfix(object __instance)
+    {
+#if HAS_TMP
+        try
+        {
+            var repaired = TmpTextRepairer.TryRepairInvisibleTexts(__instance);
+            if (repaired > 0)
+            {
+                QudJPMod.LogToUnity(TmpTextRepairer.BuildRepairLog("GameSummaryTextRepair/v1", repaired));
+            }
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: {0}.Postfix failed: {1}", Context, ex);
+        }
+#else
+        _ = __instance;
+#endif
+    }
+
     internal static string TranslateLiteral(string source)
     {
         try
