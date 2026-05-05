@@ -65,7 +65,7 @@ jobs:
           python=false
           localization=false
 
-          if matches '^\.github/workflows/ci\.yml$'; then
+          if matches '^\.github/workflows/.*\.ya?ml$'; then
             run_all=true
           fi
           if [[ "$run_all" == true ]] || matches '^Mods/QudJP/Assemblies/'; then

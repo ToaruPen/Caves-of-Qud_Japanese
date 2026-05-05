@@ -1,6 +1,8 @@
-# Steam Workshop Release Guide
+# Release Guide
 
-This guide covers publishing QudJP to Steam Workshop with `steamcmd`.
+This guide covers publishing QudJP through GitHub Releases and Steam Workshop.
+The GitHub Release ZIP is the source artifact for the manual Steam Workshop
+upload.
 
 ## Agent Quick Path
 
@@ -9,9 +11,14 @@ When asked to update the Steam Workshop item, do this first:
 1. Read this file, `steam/workshop_metadata.json`, and
    `steam/changenote_template.txt`.
 2. Confirm the target Workshop item is `3718988020`.
-3. Inspect tags, release range, and head identity:
+3. Prepare and merge a release PR that updates `Mods/QudJP/manifest.json`,
+   `CHANGELOG.md`, and release-note fragments.
+4. After the release PR is merged, update local `main` and inspect tags,
+   release range, and head identity:
 
    ```bash
+   git switch main
+   git pull --ff-only origin main
    git status --short --branch
    git tag --sort=-creatordate | head -20
    git describe --tags --abbrev=0 --match 'v[0-9]*'
@@ -19,17 +26,24 @@ When asked to update the Steam Workshop item, do this first:
    git rev-parse --short=12 HEAD
    ```
 
-4. Confirm or create the release tag according to the Tag and Release Policy
-   below. The tag, manifest version, release ZIP, and staged Workshop content
-   must all identify the same release.
-5. Draft a user-facing changenote from the accumulated commits. Keep internal
+5. Create and push the release tag from `main` according to the Tag and Release
+   Policy below. The tag, manifest version, GitHub Release ZIP, staged Workshop
+   content, and changenote must all identify the same release.
+6. Wait for the tag-triggered `Release` GitHub Actions workflow to create a
+   draft GitHub Release with `QudJP-vX.Y.Z.zip` and
+   `QudJP-vX.Y.Z.zip.sha256`.
+7. Draft a user-facing changenote from the accumulated commits. Keep internal
    implementation names secondary; lead with visible translation, UI, runtime,
    and packaging changes.
-6. Run the Preflight recipe below.
-7. Generate `dist/workshop/QudJP/` and `dist/workshop/workshop_item.vdf` with
-   the Workshop staging recipe.
-8. Stop before running `steamcmd` unless the user explicitly confirms upload
+8. Download and verify the GitHub Release ZIP with the local release ZIP
+   download recipe.
+9. Generate `dist/workshop/QudJP/` and `dist/workshop/workshop_item.vdf` with
+   the Workshop staging recipe, passing the downloaded GitHub Release ZIP
+   explicitly.
+10. Stop before running `steamcmd` unless the user explicitly confirms upload
    credentials and permission to publish.
+11. After Steam upload and smoke checks, publish the draft GitHub Release and
+    commit the Workshop release evidence report outside the release tag.
 
 Use `just` recipes for release commands so local runs match the repo task
 runner. The recipes execute Python through `uv run python`; do not rewrite the
@@ -37,17 +51,17 @@ documented workflow just because a local shell lacks `python3.12`.
 
 For each Workshop update, copy
 `docs/reports/templates/workshop-release.md` to a dated file under
-`docs/reports/` and fill it as release evidence, including preflight, upload,
-and post-publish smoke results. The release evidence report records observed
-publication results and normally stays outside the release tag. Commit it after
-upload with the actual Steam manifest ID, public metadata check, and download
-validation results.
+`docs/reports/` and fill it as release evidence, including GitHub Release,
+preflight, upload, and post-publish smoke results. The release evidence report
+records observed publication results and normally stays outside the release
+tag. Commit it after upload with the actual Steam manifest ID, public metadata
+check, and download validation results.
 
 ## Release Scope
 
-The Workshop upload source is a generated staging directory that contains only
-the shipped mod files. Do not upload source trees, test projects, build
-directories, decompiled game files, or game binaries.
+The GitHub Release ZIP and Workshop upload source contain only the shipped mod
+files. Do not upload source trees, test projects, build directories, decompiled
+game files, or game binaries.
 
 Public Workshop metadata:
 
@@ -58,6 +72,8 @@ Public Workshop metadata:
 | Metadata source | `steam/workshop_metadata.json` |
 | Description source | `steam/workshop_description.ja.txt` |
 | Changenote template | `steam/changenote_template.txt` |
+| GitHub Release ZIP | `QudJP-vX.Y.Z.zip` |
+| GitHub Release checksum | `QudJP-vX.Y.Z.zip.sha256` |
 | Generated content folder | `dist/workshop/QudJP/` |
 | Generated VDF | `dist/workshop/workshop_item.vdf` |
 
@@ -80,14 +96,16 @@ Steam Workshop updates, Git tags, and GitHub Releases are separate publication
 surfaces:
 
 - Git tag: immutable source identity for a release commit.
-- GitHub Release: optional GitHub distribution page attached to a tag.
+- GitHub Release: draft distribution page attached to a tag. The ZIP asset is
+  the source artifact for Steam Workshop staging.
 - Steam Workshop update: the `steamcmd` upload to published file ID
   `3718988020`.
 
-Normal Workshop shipping uses an annotated Git tag named `vX.Y.Z` before upload.
-The tag must point at the exact commit used to build the release ZIP and
-Workshop VDF. The `Mods/QudJP/manifest.json` `Version`, release ZIP name, release
-report, changenote first line, and Git tag must all use the same version.
+Normal shipping uses an annotated Git tag named `vX.Y.Z` after the release PR is
+merged to `main`. The tag must point at a commit reachable from `origin/main`;
+do not tag a PR branch. The `Mods/QudJP/manifest.json` `Version`, GitHub
+Release ZIP name, release report, changenote first line, and Git tag must all
+use the same version.
 
 Do not create or move tags as a hidden side effect. Creating a tag, pushing a
 tag, deleting a tag, or retagging requires explicit current user confirmation.
@@ -109,20 +127,29 @@ the new release tag. After `vX.Y.Z` exists, `git describe --tags --abbrev=0`
 returns the current release tag from `HEAD`, so it is no longer a valid way to
 discover the previous release.
 
-After release notes, changelog, manifest, and other release files are final and
-committed, create the release tag:
+After release notes, changelog, manifest, and other release files are final,
+merged, and pulled locally on `main`, create the release tag:
 
 ```bash
+git switch main
+git pull --ff-only origin main
 git tag -a vX.Y.Z -m "QudJP vX.Y.Z"
 git rev-list -n1 vX.Y.Z
 git rev-parse HEAD
 ```
 
-Push the tag only after explicit confirmation:
+Confirm that the tag target is on `origin/main`, then push the tag only after
+explicit confirmation:
 
 ```bash
+git merge-base --is-ancestor "$(git rev-list -n1 vX.Y.Z)" origin/main
 git push origin vX.Y.Z
 ```
+
+Pushing `vX.Y.Z` triggers `.github/workflows/release.yml`. That workflow fails
+before draft release creation if the tag is not reachable from `origin/main`, if
+the tag and manifest versions differ, or if `CHANGELOG.md` has no matching
+entry.
 
 If no prior local tag exists, do not invent the previous release range. Use one
 of these sources and record which one was used in the release evidence report:
@@ -136,9 +163,30 @@ of these sources and record which one was used in the release evidence report:
 If the prior release identity still cannot be established, stop before building
 Workshop staging.
 
-## Preflight
+## GitHub Release Artifact
 
-Run this from the repository root before generating the Workshop upload VDF:
+The tag-triggered GitHub Actions `Release` workflow builds and verifies
+`QudJP-vX.Y.Z.zip`, renders GitHub Release notes from `CHANGELOG.md`, writes a
+SHA256 checksum file, and creates a draft GitHub Release.
+
+The workflow is intentionally tag-only:
+
+```yaml
+on:
+  push:
+    tags:
+      - "v*.*.*"
+```
+
+PRs, `main` pushes, documentation edits, and workflow maintenance do not create
+GitHub Releases. The workflow does not run `steamcmd` and must not contain Steam
+credentials.
+
+## Local Preflight
+
+The GitHub Release workflow is the source of the release ZIP, but a local
+operator can still run the same preflight before tagging or when diagnosing a
+release:
 
 ```bash
 just workshop-preflight X.Y.Z
@@ -146,7 +194,7 @@ just workshop-preflight X.Y.Z
 
 The preflight recipe requires a clean worktree, verifies `vX.Y.Z` points at
 `HEAD`, then runs build, Python lint/tests, localization checks,
-translation-token checks, and `scripts/build_release.py`. Do not build release
+translation-token checks, and `scripts/build_release.py`. Do not upload release
 artifacts from a dirty worktree; uncommitted files can make the ZIP differ from
 the tagged source.
 
@@ -186,7 +234,7 @@ just release-zip-check
 For a specific release archive:
 
 ```bash
-just release-zip-check dist/QudJP-vX.Y.Z.zip
+just release-zip-check dist/release-assets/vX.Y.Z/QudJP-vX.Y.Z.zip
 ```
 
 ## Generate Workshop Upload Files
@@ -203,22 +251,25 @@ Use the previous release ref recorded before tag creation or documented in the
 release evidence report. Do not recompute it with `git describe` after the new
 release tag exists.
 
-Build the generated content folder and steamcmd VDF from the latest
-`dist/QudJP-v*.zip`:
+Download and verify the draft GitHub Release ZIP:
 
 ```bash
-just build-workshop-upload
+just download-release-zip X.Y.Z
 ```
 
-For a specific release archive:
+This writes the verified ZIP under `dist/release-assets/vX.Y.Z/`. Build the
+generated content folder and steamcmd VDF from that explicit archive:
 
 ```bash
-just build-workshop-upload dist/QudJP-vX.Y.Z.zip /tmp/qudjp-workshop-changenote.txt
+just build-workshop-upload \
+  dist/release-assets/vX.Y.Z/QudJP-vX.Y.Z.zip \
+  /tmp/qudjp-workshop-changenote.txt
 ```
 
 The script regenerates `dist/workshop/QudJP/` and writes
 `dist/workshop/workshop_item.vdf`. `dist/` is ignored by git; do not commit
-generated upload files.
+generated upload files. Do not rely on the default latest-zip lookup for
+shipping; pass the GitHub Release ZIP path explicitly.
 
 Steam renders Workshop description and changenote text from literal newline
 characters in the generated VDF. Do not escape newlines as the two-character
@@ -281,6 +332,8 @@ After Steam finishes processing the item:
    build markers, missing glyph warnings, compile errors, or `MODWARN`.
 7. Record the smoke result in the dated release evidence file copied from
    `docs/reports/templates/workshop-release.md`.
+8. Publish the draft GitHub Release only after the Steam Workshop upload and
+   minimum post-publish checks are acceptable.
 
 ## Rollback
 
