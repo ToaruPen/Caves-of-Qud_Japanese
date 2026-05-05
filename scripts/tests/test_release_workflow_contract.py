@@ -16,6 +16,9 @@ def test_release_workflow_runs_only_for_release_tags() -> None:
     workflow = _workflow_text()
 
     assert "pull_request:" not in workflow
+    assert "workflow_dispatch:" not in workflow
+    assert "schedule:" not in workflow
+    assert "repository_dispatch:" not in workflow
     assert "branches:" not in workflow
     assert "tags:" in workflow
     assert '"v*.*.*"' in workflow

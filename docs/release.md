@@ -234,7 +234,7 @@ just release-zip-check
 For a specific release archive:
 
 ```bash
-just release-zip-check dist/QudJP-vX.Y.Z.zip
+just release-zip-check dist/release-assets/vX.Y.Z/QudJP-vX.Y.Z.zip
 ```
 
 ## Generate Workshop Upload Files

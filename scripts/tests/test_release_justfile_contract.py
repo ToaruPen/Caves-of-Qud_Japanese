@@ -9,10 +9,20 @@ from pathlib import Path
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
+def _justfile_text() -> str:
+    return (_REPO_ROOT / "justfile").read_text(encoding="utf-8")
+
+
 def test_download_release_zip_quotes_version_argument() -> None:
     """The release download recipe must not splice raw version text into shell syntax."""
     just = shutil.which("just")
-    assert just is not None
+    if just is None:
+        justfile = _justfile_text()
+
+        assert "version={{quote(version)}}" in justfile
+        assert 'tag="v{{version}}"' not in justfile
+        assert "QudJP-v{{version}}" not in justfile
+        return
 
     probe = '1.2.3"; touch /tmp/qudjp-just-injection #'
     result = subprocess.run(  # noqa: S603 - intentionally probes shell quoting via just dry-run.
