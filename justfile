@@ -141,6 +141,44 @@ sync-mod:
 # Run the broad local verification gate.
 check: build test-l1 test-l2 test-l2g python-check python-test localization-check translation-token-check
 
+# Build all repo-local Roslyn tool projects.
+roslyn-build:
+  dotnet build scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj --configuration Release --no-incremental
+  dotnet build scripts/tools/StaticProducerInventoryScanner/StaticProducerInventoryScanner.csproj --configuration Release --no-incremental
+  dotnet build scripts/tools/TextConstructionInventory/TextConstructionInventory.csproj --configuration Release --no-incremental
+
+# Run focused tests for repo-local Roslyn tools and Python wrappers.
+roslyn-test:
+  uv run pytest scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_text_construction_inventory.py -q
+
+# Run Python static checks for the currently type-clean Roslyn wrapper surface.
+roslyn-python-check:
+  ruff check scripts/scan_static_producer_inventory.py scripts/extract_annals_patterns.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_text_construction_inventory.py
+  uvx basedpyright scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
+
+# Run the non-regenerating local Roslyn verification gate.
+roslyn-check: roslyn-build roslyn-test roslyn-python-check
+
+# Preview static producer inventory against decompiled source without touching tracked docs.
+static-producer-preview source_root="$HOME/dev/coq-decompiled_stable" output="/tmp/qudjp-static-producer-inventory.json":
+  {{python}} scripts/scan_static_producer_inventory.py --source-root "{{source_root}}" --output "{{output}}"
+
+# Intentionally regenerate the tracked static producer inventory artifact.
+static-producer-regenerate-tracked source_root="$HOME/dev/coq-decompiled_stable":
+  {{python}} scripts/scan_static_producer_inventory.py --source-root "{{source_root}}" --output docs/static-producer-inventory.json
+
+# Preview Annals Roslyn candidates without touching the tracked pending artifact.
+annals-pattern-preview source_root="$HOME/dev/coq-decompiled_stable/XRL.Annals" include="Resheph*.cs" output="/tmp/qudjp-annals-candidates.json":
+  {{python}} scripts/extract_annals_patterns.py --source-root "{{source_root}}" --include "{{include}}" --output "{{output}}" --force
+
+# Intentionally regenerate the tracked Annals pending candidates artifact.
+annals-pattern-extract-tracked source_root="$HOME/dev/coq-decompiled_stable/XRL.Annals" include="Resheph*.cs":
+  {{python}} scripts/extract_annals_patterns.py --source-root "{{source_root}}" --include "{{include}}" --output scripts/_artifacts/annals/candidates_pending.json --force
+
+# Preview Roslyn text construction inventory without touching tracked docs.
+text-construction-inventory source_root="$HOME/dev/coq-decompiled_stable" output="/tmp/qudjp-text-construction-inventory.json" summary="/tmp/qudjp-text-construction-inventory-summary.md":
+  dotnet run --project scripts/tools/TextConstructionInventory/TextConstructionInventory.csproj -- --source-root "{{source_root}}" --output "{{output}}" --summary-output "{{summary}}"
+
 # Verify agent-loop tools and dotfiles script availability.
 tool-check:
   bash scripts/agent_cycle.sh tool-check
