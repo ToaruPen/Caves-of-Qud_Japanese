@@ -89,7 +89,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          key: ${{ runner.os }}-nuget-${{ hashFiles('Mods/QudJP/Assemblies/**/*.csproj', 'scripts/tools/**/*.csproj') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
 
@@ -115,6 +115,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: pyproject.toml
 
       - name: Check release-note fragment
         if: github.event_name == 'pull_request' && steps.changes.outputs.localization == 'true'
