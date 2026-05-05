@@ -42,6 +42,7 @@ convention = "google"
 quote-style = "double"
 
 [tool.pytest.ini_options]
+addopts = ["--durations=10"]
 testpaths = ["scripts/tests"]
 
 [dependency-groups]

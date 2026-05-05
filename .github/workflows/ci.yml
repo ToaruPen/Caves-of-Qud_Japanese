@@ -55,6 +55,10 @@ jobs:
             awk '/^scripts\// && !/^scripts\/tools\// { found = 1 } END { exit found ? 0 : 1 }' changed-files.txt
           }
 
+          matches_annals_extractor_tests() {
+            grep -Eq '^scripts/tests/(test_extract_annals_patterns\.py|fixtures/annals/)' changed-files.txt
+          }
+
           run_all=false
           qudjp_dotnet=false
           roslyn_tools=false
@@ -67,7 +71,7 @@ jobs:
           if [[ "$run_all" == true ]] || matches '^Mods/QudJP/Assemblies/'; then
             qudjp_dotnet=true
           fi
-          if [[ "$run_all" == true ]] || matches '^scripts/tools/'; then
+          if [[ "$run_all" == true ]] || matches '^scripts/tools/' || matches_annals_extractor_tests; then
             roslyn_tools=true
           fi
           if [[ "$run_all" == true ]] || matches '^(pyproject\.toml|uv\.lock)$' || matches_python_scripts; then
