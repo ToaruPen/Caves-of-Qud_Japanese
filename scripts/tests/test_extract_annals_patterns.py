@@ -7,27 +7,87 @@ import json
 import shutil
 import subprocess
 from pathlib import Path
+from typing import Protocol, cast
 
 import pytest
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_PATH = _REPO_ROOT / "scripts" / "tools" / "AnnalsPatternExtractor" / "AnnalsPatternExtractor.csproj"
+BUILD_CONFIGURATION = "Release"
+TOOL_DLL = PROJECT_PATH.parent / "bin" / BUILD_CONFIGURATION / "net10.0" / "AnnalsPatternExtractor.dll"
 FIXTURES = Path(__file__).resolve().parent / "fixtures" / "annals"
 
 
-def _run_extractor(include: str, output: Path) -> subprocess.CompletedProcess[str]:
-    """Invoke the AnnalsPatternExtractor dotnet tool against a single fixture file."""
+class AnnalsTranslator(Protocol):
+    """Subset of translate_annals_patterns used by these tests."""
+
+    def compute_en_template_hash(self, candidate: dict[str, object]) -> str:
+        """Compute the stable template hash for an annals candidate."""
+        ...
+
+
+def _tool_sources_are_newer_than(dll_path: Path) -> bool:
+    """Return whether the checked-in tool sources are newer than the built DLL."""
+    if not dll_path.exists():
+        return True
+
+    dll_mtime = dll_path.stat().st_mtime
+    sources = [
+        PROJECT_PATH,
+        *(path for path in PROJECT_PATH.parent.rglob("*.cs") if "bin" not in path.parts and "obj" not in path.parts),
+    ]
+    return any(path.stat().st_mtime > dll_mtime for path in sources)
+
+
+def _has_dotnet_10_sdk() -> bool:
+    """Return whether the .NET 10 SDK needed to build the extractor is available."""
+    if not shutil.which("dotnet"):
+        return False
+
+    result = subprocess.run(["dotnet", "--list-sdks"], capture_output=True, text=True, check=False)
+    if result.returncode != 0:
+        return False
+    return any(line.startswith("10.") for line in result.stdout.splitlines())
+
+
+def _ensure_extractor_dll() -> Path:
+    """Use the CI-built extractor when available, otherwise build it once for local tests."""
+    if not _tool_sources_are_newer_than(TOOL_DLL):
+        return TOOL_DLL
+
+    if not _has_dotnet_10_sdk():
+        pytest.skip("dotnet 10.0 SDK not available")
+
+    result = subprocess.run(
+        [
+            "dotnet",
+            "build",
+            str(PROJECT_PATH),
+            "--configuration",
+            BUILD_CONFIGURATION,
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, (
+        f"extractor build failed (exit {result.returncode}). stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+    )
+    assert TOOL_DLL.exists(), f"extractor build succeeded but did not produce {TOOL_DLL}"
+    return TOOL_DLL
+
+
+def _run_extractor_batch(output: Path) -> subprocess.CompletedProcess[str]:
+    """Invoke the built AnnalsPatternExtractor against all fixture files in one process."""
+    tool_dll = _ensure_extractor_dll()
     return subprocess.run(
         [
             "dotnet",
-            "run",
-            "--project",
-            str(PROJECT_PATH),
-            "--",
+            str(tool_dll),
             "--source-root",
             str(FIXTURES),
             "--include",
-            include,
+            "*.cs",
             "--output",
             str(output),
         ],
@@ -74,43 +134,73 @@ def _discover_fixtures() -> list[str]:
 _FIXTURES = _discover_fixtures()
 
 
-@pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
-@pytest.mark.parametrize("fixture", _FIXTURES)
-def test_extractor_matches_golden(fixture: str, tmp_path: Path) -> None:
-    """Extractor output for each fixture must match the committed golden JSON exactly."""
-    output = tmp_path / f"{fixture}.json"
-    result = _run_extractor(f"{fixture}.cs", output)
+def _load_expected_document() -> dict[str, object]:
+    """Combine per-fixture golden files into the same document shape as a batch extraction."""
+    candidates: list[dict[str, object]] = []
+    for fixture in _FIXTURES:
+        doc = json.loads((FIXTURES / f"expected_{fixture}.json").read_text(encoding="utf-8"))
+        assert doc["schema_version"] == "1", f"unexpected schema for expected_{fixture}.json"
+        candidates.extend(doc["candidates"])
+
+    return {
+        "schema_version": "1",
+        "candidates": sorted(candidates, key=lambda candidate: candidate["id"]),
+    }
+
+
+def _load_expected_fixture(fixture: str) -> dict[str, object]:
+    return json.loads((FIXTURES / f"expected_{fixture}.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="session")
+def annals_extraction(tmp_path_factory: pytest.TempPathFactory) -> dict[str, object]:
+    """Run the C# extractor once for the entire golden suite."""
+    if not shutil.which("dotnet"):
+        pytest.skip("dotnet SDK not available")
+
+    output = tmp_path_factory.mktemp("annals-extraction") / "all.json"
+    result = _run_extractor_batch(output)
     assert result.returncode == 0, (
         f"extractor failed (exit {result.returncode}). stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
     )
+    return json.loads(output.read_text(encoding="utf-8"))
 
-    actual = json.loads(output.read_text(encoding="utf-8"))
-    expected = json.loads((FIXTURES / f"expected_{fixture}.json").read_text(encoding="utf-8"))
+
+@pytest.fixture(scope="session")
+def annals_translator() -> AnnalsTranslator:
+    """Load the Python translator module once for hash parity checks."""
+    import importlib.util  # noqa: PLC0415
+
+    script = _REPO_ROOT / "scripts" / "translate_annals_patterns.py"
+    spec = importlib.util.spec_from_file_location("translate_annals_patterns", script)
+    assert spec is not None
+    assert spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)  # type: ignore[attr-defined]
+    return cast("AnnalsTranslator", module)
+
+
+@pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
+def test_extractor_matches_golden(annals_extraction: dict[str, object]) -> None:
+    """Batch extractor output must match the committed golden JSON exactly."""
+    expected = _load_expected_document()
 
     # Schema sanity (will catch if golden was regenerated against a broken extractor)
-    assert actual["schema_version"] == "1"
-    assert "candidates" in actual
+    assert annals_extraction["schema_version"] == "1"
+    assert "candidates" in annals_extraction
 
     # Direct equality. If the extractor changes output shape, the golden must be regenerated.
-    assert actual == expected, f"extractor output diverged from golden for {fixture}"
+    assert annals_extraction == expected, "batch extractor output diverged from golden fixtures"
 
 
 @pytest.mark.parametrize("fixture", _FIXTURES)
-def test_csharp_and_python_hashes_match(fixture: str) -> None:
+def test_csharp_and_python_hashes_match(fixture: str, annals_translator: AnnalsTranslator) -> None:
     """The C# extractor and Python translator must compute the same en_template_hash."""
-    import importlib.util  # noqa: PLC0415
-
-    _script = _REPO_ROOT / "scripts" / "translate_annals_patterns.py"
-    _spec = importlib.util.spec_from_file_location("translate_annals_patterns", _script)
-    assert _spec is not None
-    assert _spec.loader is not None
-    tap = importlib.util.module_from_spec(_spec)
-    _spec.loader.exec_module(tap)  # type: ignore[attr-defined]
-
-    doc = json.loads((FIXTURES / f"expected_{fixture}.json").read_text(encoding="utf-8"))
-    for candidate in doc["candidates"]:
+    doc = _load_expected_fixture(fixture)
+    candidates = cast("list[dict[str, object]]", doc["candidates"])
+    for candidate in candidates:
         csharp_hash = candidate["en_template_hash"]
-        python_hash = tap.compute_en_template_hash(candidate)
+        python_hash = annals_translator.compute_en_template_hash(candidate)
         assert csharp_hash == python_hash, (
             f"Hash divergence for {fixture} {candidate['id']}: C#={csharp_hash}, py={python_hash}"
         )
