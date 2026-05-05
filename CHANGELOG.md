@@ -10,6 +10,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.3] - 2026-05-06
+
+### Changed
+
+- Added the tag-triggered GitHub Release ZIP workflow as the source artifact
+  for Steam Workshop staging.
+- Marked newly created GitHub Releases as `Latest` so the repository release
+  page follows the newest shipped version.
+- Documented and verified the release artifact download path used before
+  Workshop upload.
+
+### Notes
+
+- This is a release-pipeline validation release. Game localization content is
+  unchanged from v0.2.2 except for the manifest version.
+
+---
+
 ## [0.2.2] - 2026-05-05
 
 ### Fixed
@@ -141,6 +159,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+[0.2.3]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.3
 [0.2.2]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.2
 [0.2.1]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.1
 [0.2.0]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.0
