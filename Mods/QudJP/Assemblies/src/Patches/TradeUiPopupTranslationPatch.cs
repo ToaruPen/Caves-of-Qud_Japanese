@@ -281,9 +281,15 @@ public static class TradeUiPopupTranslationPatch
 
     internal static bool TryTranslatePerformOfferTradeWaterMessage(string source, out string translated)
     {
-        if (string.IsNullOrEmpty(source))
+        if (source is null)
         {
-            translated = source ?? string.Empty;
+            translated = string.Empty;
+            return false;
+        }
+
+        if (source.Length == 0)
+        {
+            translated = source;
             return false;
         }
 
@@ -293,9 +299,15 @@ public static class TradeUiPopupTranslationPatch
 
     internal static bool TryTranslateHasNothingToTradeMessage(string source, out string translated)
     {
-        if (string.IsNullOrEmpty(source))
+        if (source is null)
         {
-            translated = source ?? string.Empty;
+            translated = string.Empty;
+            return false;
+        }
+
+        if (source.Length == 0)
+        {
+            translated = source;
             return false;
         }
 
@@ -305,9 +317,15 @@ public static class TradeUiPopupTranslationPatch
 
     internal static bool TryTranslateTradeUiPopupText(string source, out string translated)
     {
-        if (string.IsNullOrEmpty(source))
+        if (source is null)
         {
-            translated = source ?? string.Empty;
+            translated = string.Empty;
+            return false;
+        }
+
+        if (source.Length == 0)
+        {
+            translated = source;
             return false;
         }
 
@@ -321,7 +339,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.CannotCarry",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                 },
                 out translated))
         {
@@ -342,7 +360,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.EngagedInMelee",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                 },
                 out translated))
         {
@@ -358,7 +376,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.OnFire",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                 },
                 out translated))
         {
@@ -374,7 +392,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.WaterDebt",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                     TranslatePronoun(match.Groups["them1"].Value),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount"), emphasizeFreshWater: true),
                     TranslatePronoun(match.Groups["them2"].Value),
@@ -393,7 +411,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.WaterDebtGiveYourDrams",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                     TranslatePronoun(match.Groups["them1"].Value),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount"), emphasizeFreshWater: true),
                     TranslatePronoun(match.Groups["them2"].Value),
@@ -414,7 +432,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.WaterDebtGiveIt",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                     TranslatePronoun(match.Groups["them1"].Value),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount"), emphasizeFreshWater: true),
                     TranslatePronoun(match.Groups["them2"].Value),
@@ -450,7 +468,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.IdentifyTooComplex",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                 },
                 out translated))
         {
@@ -498,7 +516,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.IdentifyResult",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                     RestoreCapture(match, spans, "item"),
                     RestoreCapture(match, spans, "identified"),
                 },
@@ -517,7 +535,7 @@ public static class TradeUiPopupTranslationPatch
                 match => new object[]
                 {
                     TranslateTradeReference(match.Groups["target"].Value),
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                 },
                 out translated))
         {
@@ -982,7 +1000,7 @@ public static class TradeUiPopupTranslationPatch
                 match => new object[]
                 {
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "paid")),
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                     FormatDramCount(RestoreCapture(match, spans, "owed")),
                 },
                 out translated))
@@ -999,7 +1017,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.PlayerOweFreshWater",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "owed")),
                 },
                 out translated))
@@ -1016,7 +1034,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.TraderPonyUpQuestion",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
                 },
                 out translated))
@@ -1033,7 +1051,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.TraderPonyUp",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
                 },
                 out translated))
@@ -1050,7 +1068,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.TraderMissingDrams",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
                 },
                 out translated))
@@ -1067,7 +1085,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.TraderMissingDramsQuestion",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
                 },
                 out translated))
@@ -1126,7 +1144,7 @@ public static class TradeUiPopupTranslationPatch
             "TradeUiPopup.HasNothingToTrade",
             match => new object[]
             {
-                NormalizeSubject(match.Groups["subject"].Value),
+                NormalizeSubject(RestoreCapture(match, spans, "subject")),
             },
             out translated);
     }

@@ -96,20 +96,28 @@ public static class PetEitherOrExplodeTranslationPatch
 
     internal static bool TryTranslateQueuedMessage(ref string message, string? color)
     {
-        _ = color;
-
-        if (activeDepth <= 0 || string.IsNullOrEmpty(message))
+        try
         {
+            _ = color;
+
+            if (activeDepth <= 0 || string.IsNullOrEmpty(message))
+            {
+                return false;
+            }
+
+            if (!TryTranslate(message, out var translated))
+            {
+                return false;
+            }
+
+            message = translated;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("QudJP: PetEitherOrExplodeTranslationPatch.TryTranslateQueuedMessage failed: {0}", ex);
             return false;
         }
-
-        if (!TryTranslate(message, out var translated))
-        {
-            return false;
-        }
-
-        message = translated;
-        return true;
     }
 
     private static bool TryTranslate(string source, out string translated)

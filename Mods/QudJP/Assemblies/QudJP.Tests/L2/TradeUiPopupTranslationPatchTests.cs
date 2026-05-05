@@ -118,6 +118,31 @@ public sealed class TradeUiPopupTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_PreservesInlineSubjectColors_ForTradeOwnerTemplates()
+    {
+        WriteDictionary(
+            ("{0} will not trade with you until you pay {1} the {2} you owe {3}.", "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。"));
+
+        using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
+
+        DummyTradeUiPopupTarget.Show("The {{G|商人}} ponies up 12 drams of fresh water to even up the trade.");
+        var traderPays = DummyTradeUiPopupTarget.LastShowMessage;
+
+        DummyTradeUiPopupTarget.Show("\u0002have\u001F16\u001F20\u001F\u0003The {{G|ウォーターヴァイン農家}} has nothing to trade.");
+        var hasNothing = DummyTradeUiPopupTarget.LastShowMessage;
+
+        DummyTradeUiPopupTarget.Show("The {{G|商人}} will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼.");
+        var waterDebt = DummyTradeUiPopupTarget.LastShowMessage;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(traderPays, Is.EqualTo("{{G|商人}}は取引を釣り合わせるために12ドラムの真水を支払った。"));
+            Assert.That(hasNothing, Is.EqualTo("{{G|ウォーターヴァイン農家}}には取引するものがない"));
+            Assert.That(waterDebt, Is.EqualTo("{{G|商人}}は、あなたが彼に借りている5ドラムの{{B|真水}}を支払うまで取引してくれない。"));
+        });
+    }
+
+    [Test]
     public void Prefix_TranslatesShowBlock_ForDropFailure()
     {
         WriteDictionary(

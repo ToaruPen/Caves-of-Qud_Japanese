@@ -82,18 +82,38 @@ public sealed class ColorRouteCatalogTests
                 for (var symbolIndex = 0; symbolIndex < routeSymbols.Count; symbolIndex++)
                 {
                     var symbol = routeSymbols[symbolIndex];
-                    if (!line.Contains(symbol, StringComparison.Ordinal))
+                    var occurrenceCount = CountOccurrences(line, symbol);
+                    if (occurrenceCount == 0)
                     {
                         continue;
                     }
 
                     var key = relativePath + "|" + symbol;
-                    counts[key] = counts.TryGetValue(key, out var count) ? count + 1 : 1;
+                    counts[key] = counts.TryGetValue(key, out var count) ? count + occurrenceCount : occurrenceCount;
                 }
             }
         }
 
         return counts;
+    }
+
+    private static int CountOccurrences(string source, string symbol)
+    {
+        var count = 0;
+        var searchIndex = 0;
+        while (searchIndex < source.Length)
+        {
+            var foundIndex = source.IndexOf(symbol, searchIndex, StringComparison.Ordinal);
+            if (foundIndex < 0)
+            {
+                break;
+            }
+
+            count++;
+            searchIndex = foundIndex + symbol.Length;
+        }
+
+        return count;
     }
 }
 
