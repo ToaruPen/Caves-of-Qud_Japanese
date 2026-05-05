@@ -22,6 +22,14 @@ ruff check scripts/
 ruff format scripts/
 uv run pytest scripts/tests/
 uv run pytest scripts/tests/ -k <pattern>
+just roslyn-check
+just static-producer-preview
+just annals-pattern-preview
+just text-construction-inventory
+just ast-grep-smoke
+just ast-grep-check
+DOTFILES_ROOT=~/Dev/dotfiles just render-skill-evals <skill> <scenario>
+DOTFILES_ROOT=~/Dev/dotfiles just summarize-skill-evals /tmp/skill-eval-results.jsonl
 python3.12 scripts/check_encoding.py Mods/QudJP/Localization scripts
 python3.12 scripts/check_glossary_consistency.py Mods/QudJP/Localization
 python3.12 scripts/check_translation_tokens.py Mods/QudJP/Localization
@@ -36,6 +44,12 @@ python3.12 scripts/sync_mod.py
 - Prefer extending an existing script over creating a parallel tool for the same job.
 - Keep error paths explicit and actionable; these scripts support validation and deployment.
 - Python baseline is `3.12+`, with typed and documented public interfaces.
+- Roslyn tracked artifact recipes are intentionally named `*-tracked`;
+  prefer preview recipes for review and validation unless the task explicitly
+  owns the generated artifact.
+- Skill eval execution is orchestrator-owned: render prompts with `just render-skill-evals`,
+  run them in fresh Codex subagents from the parent session, append results that match
+  `skill-eval-result.schema.json`, then summarize with `just summarize-skill-evals`.
 - If a task touches Phase F observability or triage docs, treat `docs/RULES.md` as the source of truth and keep this guide aligned to it.
 
 ## Annals pattern extraction pipeline (issue #420)
