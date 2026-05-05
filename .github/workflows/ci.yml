@@ -37,13 +37,22 @@ jobs:
             head="${{ github.sha }}"
           fi
 
-          git diff --name-only "$base" "$head" > changed-files.txt
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            merge_base="$(git merge-base "$base" "$head")"
+            git diff --name-only "$merge_base" "$head" > changed-files.txt
+          else
+            git diff --name-only "$base" "$head" > changed-files.txt
+          fi
           if [[ ! -s changed-files.txt ]]; then
             git ls-files > changed-files.txt
           fi
 
           matches() {
             grep -Eq "$1" changed-files.txt
+          }
+
+          matches_python_scripts() {
+            awk '/^scripts\// && !/^scripts\/tools\// { found = 1 } END { exit found ? 0 : 1 }' changed-files.txt
           }
 
           run_all=false
@@ -55,13 +64,13 @@ jobs:
           if matches '^\.github/workflows/ci\.yml$'; then
             run_all=true
           fi
-          if [[ "$run_all" == true ]] || matches '^(Mods/QudJP/Assemblies/|Mods/QudJP/Assemblies/.*\.csproj$)'; then
+          if [[ "$run_all" == true ]] || matches '^Mods/QudJP/Assemblies/'; then
             qudjp_dotnet=true
           fi
           if [[ "$run_all" == true ]] || matches '^scripts/tools/'; then
             roslyn_tools=true
           fi
-          if [[ "$run_all" == true ]] || matches '^scripts/'; then
+          if [[ "$run_all" == true ]] || matches '^(pyproject\.toml|uv\.lock)$' || matches_python_scripts; then
             python=true
           fi
           if [[ "$run_all" == true ]] || matches '^(Mods/QudJP/Localization/|scripts/(check_translation_tokens|check_glossary_consistency)\.py|scripts/(translation_token_duplicate_baseline|glossary_consistency_baseline)\.json)'; then
@@ -71,7 +80,7 @@ jobs:
           {
             echo "qudjp_dotnet=$qudjp_dotnet"
             echo "roslyn_tools=$roslyn_tools"
-            echo "dotnet=$([[ "$qudjp_dotnet" == true || "$roslyn_tools" == true || "$python" == true ]] && echo true || echo false)"
+            echo "dotnet=$([[ "$qudjp_dotnet" == true || "$roslyn_tools" == true ]] && echo true || echo false)"
             echo "python=$python"
             echo "localization=$localization"
           } >> "$GITHUB_OUTPUT"
@@ -89,7 +98,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          key: ${{ runner.os }}-nuget-${{ hashFiles('Mods/QudJP/Assemblies/**/*.csproj', 'scripts/tools/**/*.csproj') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
 
@@ -119,6 +128,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: pyproject.toml
 
       - name: Check release-note fragment
         if: github.event_name == 'pull_request' && steps.changes.outputs.localization == 'true'
