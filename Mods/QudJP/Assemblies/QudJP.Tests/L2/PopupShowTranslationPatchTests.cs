@@ -168,6 +168,80 @@ public sealed class PopupShowTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesPerformOfferTradeWaterMessage_WithoutDictionaryEntry()
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.Show)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.Show("You don't have 50 drams of fresh water to even up the trade!");
+
+            Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo("取引を釣り合わせるための50ドラムの真水が足りない！"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_UsesPerformOfferTradeWaterTemplate_IgnoresDictionaryEntriesAndPreservesColorTags()
+    {
+        WriteDictionary(
+            ("You don't have 50 drams of fresh water to even up the trade!", "dictionary exact fallback should not be used"),
+            ("You don't have {0} to even up the trade!", "dictionary template should not be used: {0}"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.Show)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.Show("{{y|You don't have {{C|50}} drams of fresh water to even up the trade!}}");
+
+            Assert.That(
+                DummyPopupShow.LastShowMessage,
+                Is.EqualTo("{{y|取引を釣り合わせるための{{C|50}}ドラムの真水が足りない！}}"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_UsesTradeUiOwnerTemplateForHasNothingToTrade_BeforeGenericMessagePattern()
+    {
+        WriteMessagePatternDictionary(("^(?:The |the |[Aa]n? )?(.+?) (?:has|have) nothing to trade[.!]?$", "{0}には取引するものがない"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.Show)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.Show("\u0002have\u001F15\u001F19\u001F\u0003The ウォーターヴァイン農家 has nothing to trade.");
+
+            Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo("ウォーターヴァイン農家には取引するものがない"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_LeavesUnknownPopupShowMessageUnchanged()
     {
         var harmonyId = CreateHarmonyId();

@@ -54,11 +54,6 @@
       "text": "{0}は燃えていて、あなたと取引している暇がない。"
     },
     {
-      "key": "{0} has nothing to trade.",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "{0}には取引するものがない"
-    },
-    {
       "key": "{0} will not trade with you until you pay {1} the {2} you owe {3}.",
       "context": "TradeUiPopupTranslationPatch",
       "text": "{0}は、あなたが{3}に借りている{2}を{1}に支払うまで取引してくれない。"
@@ -112,46 +107,6 @@
       "key": "You may repair {0} for {1}.",
       "context": "TradeUiPopupTranslationPatch",
       "text": "{0}を{1}で修理できる。"
-    },
-    {
-      "key": "You'll have to pony up {0} to even up the trade. Agreed?",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "取引を釣り合わせるには{0}を支払う必要がある。承諾する？"
-    },
-    {
-      "key": "You don't have {0} to even up the trade!",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "取引を釣り合わせるための{0}が足りない！"
-    },
-    {
-      "key": "You pony up {0}, and now owe {1} {2}.",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "あなたは{0}を支払い、今や{1}に{2}借りている。"
-    },
-    {
-      "key": "You now owe {0} {1}.",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "今や{0}に{1}借りている。"
-    },
-    {
-      "key": "{0} will have to pony up {1} to even up the trade. Agreed?",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "{0}は取引を釣り合わせるために{1}を支払う必要がある。承諾する？"
-    },
-    {
-      "key": "{0} don't have {1} to even up the trade! Do you want to complete the trade anyway?",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "{0}には取引を釣り合わせるための{1}がない！ それでも取引を成立させる？"
-    },
-    {
-      "key": "You don't have enough water containers to carry that many drams! You can store {0}.",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できるのは{0}までだ。"
-    },
-    {
-      "key": "You don't have enough water containers to carry that many drams! Do you want to complete the trade for the {0} you can store?",
-      "context": "TradeUiPopupTranslationPatch",
-      "text": "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できる{0}分だけで取引を成立させる？"
     },
     {
       "key": "You need {0} to charge {1}.",

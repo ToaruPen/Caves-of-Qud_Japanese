@@ -69,17 +69,17 @@ public sealed class TradeUiPopupTranslationPatchTests
         "商人 will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼.",
         "{0} will not trade with you until you pay {1} the {2} you owe {3}.",
         "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。",
-        "商人は、あなたが彼に借りている5ドラムの{{B|清水}}を支払うまで取引してくれない。")]
+        "商人は、あなたが彼に借りている5ドラムの{{B|真水}}を支払うまで取引してくれない。")]
     [TestCase(
         "商人 will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼. Do you want to give 彼 your 3 drams now?",
         "{0} will not trade with you until you pay {1} the {2} you owe {3}. Do you want to give {4} your {5} now?",
         "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。今すぐあなたの{5}を{4}に渡しますか？",
-        "商人は、あなたが彼に借りている5ドラムの{{B|清水}}を支払うまで取引してくれない。今すぐあなたの3ドラムを彼に渡しますか？")]
+        "商人は、あなたが彼に借りている5ドラムの{{B|真水}}を支払うまで取引してくれない。今すぐあなたの3ドラムを彼に渡しますか？")]
     [TestCase(
         "商人 will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼. Do you want to give it to 彼 now?",
         "{0} will not trade with you until you pay {1} the {2} you owe {3}. Do you want to give it to {4} now?",
         "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。今すぐそれを{4}に渡しますか？",
-        "商人は、あなたが彼に借りている5ドラムの{{B|清水}}を支払うまで取引してくれない。今すぐそれを彼に渡しますか？")]
+        "商人は、あなたが彼に借りている5ドラムの{{B|真水}}を支払うまで取引してくれない。今すぐそれを彼に渡しますか？")]
     [TestCase(
         "You can't understand 商人の explanation.",
         "You can't understand {0} explanation.",
@@ -99,7 +99,7 @@ public sealed class TradeUiPopupTranslationPatchTests
         "You may identify this for 7 drams of fresh water.",
         "You may identify this for {0}.",
         "これを{0}で鑑定できる。",
-        "これを7ドラムの清水で鑑定できる。")]
+        "これを7ドラムの真水で鑑定できる。")]
     [TestCase(
         "merchant identifies laser pistol as a laser pistol.",
         "{0} identifies {1} as {2}.",
@@ -114,62 +114,22 @@ public sealed class TradeUiPopupTranslationPatchTests
         "You need 8 drams of fresh water to repair those.",
         "You need {0} to repair {1}.",
         "{1}を修理するには{0}が必要だ。",
-        "それらを修理するには8ドラムの清水が必要だ。")]
+        "それらを修理するには8ドラムの真水が必要だ。")]
     [TestCase(
         "You may repair this for 8 drams of fresh water.",
         "You may repair {0} for {1}.",
         "{0}を{1}で修理できる。",
-        "これを8ドラムの清水で修理できる。")]
-    [TestCase(
-        "You'll have to pony up 10 drams of fresh water to even up the trade. Agreed?",
-        "You'll have to pony up {0} to even up the trade. Agreed?",
-        "取引を釣り合わせるには{0}を支払う必要がある。承諾する？",
-        "取引を釣り合わせるには10ドラムの清水を支払う必要がある。承諾する？")]
-    [TestCase(
-        "You don't have 10 drams of fresh water to even up the trade!",
-        "You don't have {0} to even up the trade!",
-        "取引を釣り合わせるための{0}が足りない！",
-        "取引を釣り合わせるための10ドラムの清水が足りない！")]
-    [TestCase(
-        "You pony up 3 drams of fresh water, and now owe 商人 7 drams.",
-        "You pony up {0}, and now owe {1} {2}.",
-        "あなたは{0}を支払い、今や{1}に{2}借りている。",
-        "あなたは3ドラムの清水を支払い、今や商人に7ドラム借りている。")]
-    [TestCase(
-        "You now owe 商人 7 drams of fresh water.",
-        "You now owe {0} {1}.",
-        "今や{0}に{1}借りている。",
-        "今や商人に7ドラムの清水借りている。")]
-    [TestCase(
-        "商人 will have to pony up 12 drams of fresh water to even up the trade. Agreed?",
-        "{0} will have to pony up {1} to even up the trade. Agreed?",
-        "{0}は取引を釣り合わせるために{1}を支払う必要がある。承諾する？",
-        "商人は取引を釣り合わせるために12ドラムの清水を支払う必要がある。承諾する？")]
-    [TestCase(
-        "商人 don't have 12 drams of fresh water to even up the trade! Do you want to complete the trade anyway?",
-        "{0} don't have {1} to even up the trade! Do you want to complete the trade anyway?",
-        "{0}には取引を釣り合わせるための{1}がない！ それでも取引を成立させる？",
-        "商人には取引を釣り合わせるための12ドラムの清水がない！ それでも取引を成立させる？")]
-    [TestCase(
-        "You don't have enough water containers to carry that many drams! You can store 6 drams.",
-        "You don't have enough water containers to carry that many drams! You can store {0}.",
-        "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できるのは{0}までだ。",
-        "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できるのは6ドラムまでだ。")]
-    [TestCase(
-        "You don't have enough water containers to carry that many drams! Do you want to complete the trade for the 6 drams you can store?",
-        "You don't have enough water containers to carry that many drams! Do you want to complete the trade for the {0} you can store?",
-        "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できる{0}分だけで取引を成立させる？",
-        "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できる6ドラム分だけで取引を成立させる？")]
+        "これを8ドラムの真水で修理できる。")]
     [TestCase(
         "You need 4 drams of fresh water to charge one of those.",
         "You need {0} to charge {1}.",
         "{1}を充電するには{0}が必要だ。",
-        "そのうちの1つを充電するには4ドラムの清水が必要だ。")]
+        "そのうちの1つを充電するには4ドラムの真水が必要だ。")]
     [TestCase(
         "You may recharge 変圧器 for 4 drams of fresh water.",
         "You may recharge {0} for {1}.",
         "{0}を{1}で充電できる。",
-        "変圧器を4ドラムの清水で充電できる。")]
+        "変圧器を4ドラムの真水で充電できる。")]
     [TestCase(
         "Trade could not be completed, you couldn't drop object: laser rifle",
         "Trade could not be completed, {0} couldn't drop object: {1}",
@@ -204,6 +164,61 @@ public sealed class TradeUiPopupTranslationPatchTests
         Assert.That(translated, Is.EqualTo(expected));
     }
 
+    [TestCase(
+        "You'll have to pony up 10 drams of fresh water to even up the trade. Agreed?",
+        "取引を釣り合わせるには10ドラムの真水を支払う必要がある。承諾する？")]
+    [TestCase(
+        "You pony up 1 dram of fresh water to even up the trade.",
+        "あなたは取引を釣り合わせるために1ドラムの真水を支払った。")]
+    [TestCase(
+        "You don't have 10 drams of fresh water to even up the trade!",
+        "取引を釣り合わせるための10ドラムの真水が足りない！")]
+    [TestCase(
+        "You pony up 3 drams of fresh water, and now owe 商人 7 drams.",
+        "あなたは3ドラムの真水を支払い、今や商人に7ドラム借りている。")]
+    [TestCase(
+        "You now owe 商人 7 drams of fresh water.",
+        "今や商人に7ドラムの真水借りている。")]
+    [TestCase(
+        "商人 will have to pony up 12 drams of fresh water to even up the trade. Agreed?",
+        "商人は取引を釣り合わせるために12ドラムの真水を支払う必要がある。承諾する？")]
+    [TestCase(
+        "The 商人 ponies up 12 drams of fresh water to even up the trade.",
+        "商人は取引を釣り合わせるために12ドラムの真水を支払った。")]
+    [TestCase(
+        "The 商人 doesn't have 1 dram of fresh water to even up the trade!",
+        "商人には取引を釣り合わせるための1ドラムの真水がない！")]
+    [TestCase(
+        "商人 don't have 12 drams of fresh water to even up the trade! Do you want to complete the trade anyway?",
+        "商人には取引を釣り合わせるための12ドラムの真水がない！ それでも取引を成立させる？")]
+    [TestCase(
+        "You don't have enough water containers to carry that many drams! You can store 6 drams.",
+        "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できるのは6ドラムまでだ。")]
+    [TestCase(
+        "You don't have enough water containers to carry that many drams! Do you want to complete the trade for the 6 drams you can store?",
+        "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できる6ドラム分だけで取引を成立させる？")]
+    public void TranslatePopupText_TranslatesPerformOfferTradeWaterMessages_WithoutDictionaryEntry(string source, string expected)
+    {
+        var translated = TradeUiPopupTranslationPatch.TranslatePopupText(source);
+
+        Assert.That(translated, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void TranslatePopupText_UsesOwnerTemplateForPerformOfferTradeWaterMessage_IgnoresDictionaryEntriesAndPreservesColorTags()
+    {
+        WriteDictionary(
+            ("You'll have to pony up 10 drams of fresh water to even up the trade. Agreed?", "dictionary exact fallback should not be used"),
+            ("You'll have to pony up {0} to even up the trade. Agreed?", "dictionary template should not be used: {0}"));
+
+        var translated = TradeUiPopupTranslationPatch.TranslatePopupText(
+            "{{R|You'll have to pony up {{C|10}} drams of fresh water to even up the trade. Agreed?}}");
+
+        Assert.That(
+            translated,
+            Is.EqualTo("{{R|取引を釣り合わせるには{{C|10}}ドラムの真水を支払う必要がある。承諾する？}}"));
+    }
+
     [Test]
     public void TranslatePopupText_PreservesColorTagsInsideAndOutsideTemplate()
     {
@@ -213,7 +228,7 @@ public sealed class TradeUiPopupTranslationPatchTests
         var translated = TradeUiPopupTranslationPatch.TranslatePopupText(
             "{{R|You need {{C|8}} drams of fresh water to repair those.}}");
 
-        Assert.That(translated, Is.EqualTo("{{R|それらを修理するには{{C|8}}ドラムの清水が必要だ。}}"));
+        Assert.That(translated, Is.EqualTo("{{R|それらを修理するには{{C|8}}ドラムの真水が必要だ。}}"));
     }
 
     [Test]

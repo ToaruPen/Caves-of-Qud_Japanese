@@ -31,6 +31,31 @@ public sealed class ColorRouteCatalogTests
         }
     }
 
+    [Test]
+    public void Catalog_DocumentsGenericPopupProducerRouteCallSites()
+    {
+        var root = TestProjectPaths.GetRepositoryRoot();
+        var sourceRoot = Path.Combine(root, "Mods", "QudJP", "Assemblies", "src");
+        var actual = ScanSymbolOccurrences(sourceRoot, ColorRouteCatalog.GenericPopupProducerRouteSymbols);
+        var expected = new SortedDictionary<string, int>(StringComparer.Ordinal);
+
+        foreach (var allowance in ColorRouteCatalog.GenericPopupProducerRouteAllowlist)
+        {
+            expected[allowance.Key] = allowance.Value.ExpectedCount;
+            Assert.That(
+                allowance.Value.Reason,
+                Is.Not.Empty,
+                "Generic popup producer route call sites must document why a narrower owner route is not used: "
+                + allowance.Key);
+        }
+
+        Assert.That(
+            actual,
+            Is.EquivalentTo(expected),
+            "Generic popup producer routes are intentionally narrow. Add or change an allowance only after proving "
+            + "the call handles fixed popup text, menu items, or a shared popup helper after owner-specific routes run first.");
+    }
+
     private static SortedDictionary<string, int> ScanSymbolOccurrences(
         string sourceRoot,
         IReadOnlyList<string> routeSymbols)
@@ -87,6 +112,57 @@ internal static class ColorRouteCatalog
         "PopupTranslationPatch.TranslatePopupTextForProducerRoute(",
         "PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute(",
     };
+
+    internal static readonly string[] GenericPopupProducerRouteSymbols =
+    {
+        "PopupTranslationPatch.TranslatePopupTextForProducerRoute(",
+        "PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute(",
+    };
+
+    internal static readonly SortedDictionary<string, GenericPopupProducerRouteAllowance> GenericPopupProducerRouteAllowlist =
+        new SortedDictionary<string, GenericPopupProducerRouteAllowance>(StringComparer.Ordinal)
+        {
+            ["Mods/QudJP/Assemblies/src/Patches/PopupAskNumberTranslationPatch.cs|PopupTranslationPatch.TranslatePopupTextForProducerRoute("] =
+                new(
+                    1,
+                    "AskNumber first checks the trade-screen owner template; this fallback is for fixed generic popup prompts."),
+            ["Mods/QudJP/Assemblies/src/Patches/PopupAskStringTranslationPatch.cs|PopupTranslationPatch.TranslatePopupTextForProducerRoute("] =
+                new(
+                    1,
+                    "AskString prompts are generic popup fixed text; route-specific dynamic prompts must add owner helpers before this fallback."),
+            ["Mods/QudJP/Assemblies/src/Patches/PopupGetPopupOptionTranslationPatch.cs|PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute("] =
+                new(
+                    1,
+                    "Popup option text is a menu-item surface for fixed labels and shared popup menu translations."),
+            ["Mods/QudJP/Assemblies/src/Patches/PopupMessageTranslationPatch.cs|PopupTranslationPatch.TranslatePopupTextForProducerRoute("] =
+                new(
+                    1,
+                    "PopupMessage is a handoff surface for already-owner-translated text, fixed titles, and fixed button text."),
+            ["Mods/QudJP/Assemblies/src/Patches/PopupPickOptionTranslationPatch.cs|PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute("] =
+                new(
+                    1,
+                    "PickOption menu-item objects expose fixed option labels through the shared popup menu route."),
+            ["Mods/QudJP/Assemblies/src/Patches/PopupPickOptionTranslationPatch.cs|PopupTranslationPatch.TranslatePopupTextForProducerRoute("] =
+                new(
+                    2,
+                    "PickOption prompt/title/options are generic popup fixed text; dynamic option producers need owner helpers first."),
+            ["Mods/QudJP/Assemblies/src/Patches/PopupShowSpaceTranslationPatch.cs|PopupTranslationPatch.TranslatePopupTextForProducerRoute("] =
+                new(
+                    2,
+                    "ShowSpace exposes generic popup body/title text without a narrower known producer owner."),
+            ["Mods/QudJP/Assemblies/src/Patches/PopupShowTranslationPatch.cs|PopupTranslationPatch.TranslatePopupTextForProducerRoute("] =
+                new(
+                    1,
+                    "Show first checks known owner handoffs; this fallback handles fixed popup text and the controlled PopupShow message-pattern route."),
+            ["Mods/QudJP/Assemblies/src/Patches/QudMenuBottomContextTranslationPatch.cs|PopupTranslationPatch.TranslatePopupMenuItemTextForProducerRoute("] =
+                new(
+                    1,
+                    "Bottom context buttons are fixed menu labels routed through the shared popup menu-item translator."),
+            ["Mods/QudJP/Assemblies/src/Patches/TradeUiPopupTranslationPatch.cs|PopupTranslationPatch.TranslatePopupTextForProducerRoute("] =
+                new(
+                    1,
+                    "Trade UI owner templates run first; this fallback is only for fixed/shared popup families after trade-specific ownership."),
+        };
 
     internal static readonly SortedDictionary<string, int> ExpectedSymbolOccurrences =
         new SortedDictionary<string, int>(StringComparer.Ordinal)
@@ -161,6 +237,8 @@ internal static class ColorRouteCatalog
             ["Mods/QudJP/Assemblies/src/Patches/WorldGenerationScreenTranslationPatch.cs|ColorAwareTranslationComposer.TranslatePreservingColors("] = 1,
             ["Mods/QudJP/Assemblies/src/Patches/XDidYTranslationPatch.cs|GetDisplayNameRouteTranslator.TranslatePreservingColors("] = 1,
         };
+
+    internal sealed record GenericPopupProducerRouteAllowance(int ExpectedCount, string Reason);
 }
 
 internal static class TestProjectPaths

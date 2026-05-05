@@ -7875,7 +7875,7 @@
     <part Name="Armor" AV="0" DV="0" WornOn="Feet" />
     <part Name="Render" DisplayName="川の妻たちのサンダル" RenderString="]" ColorString="&amp;g" Tile="Items/sw_sandals.bmp" />
     <part Name="Commerce" Value="15" />
-    <part Name="Description" Short="峡谷の真珠がストラップを留め、急流のニュムペーを描いた混成図像で刺繍されている。氷河流がそうであったように、カリプソ崇拝も洞窟の蜜房を下り、オリーブ山の下の頁岩の割れ目へ mystai を連れて行き、そこで無数の妻たちの秘儀へと砕け、淡水の記憶は出自よりも多面体となった。" />
+    <part Name="Description" Short="峡谷の真珠がストラップを留め、急流のニュムペーを描いた混成図像で刺繍されている。氷河流がそうであったように、カリプソ崇拝も洞窟の蜜房を下り、オリーブ山の下の頁岩の割れ目へ mystai を連れて行き、そこで無数の妻たちの秘儀へと砕け、真水の記憶は出自よりも多面体となった。" />
     <part Name="Physics" Weight="2" Organic="true" Category="Clothes" />
     <part Name="Springy" Factor="0.8" />
     <part Name="MoveCostMultiplier" Amount="-5" />
