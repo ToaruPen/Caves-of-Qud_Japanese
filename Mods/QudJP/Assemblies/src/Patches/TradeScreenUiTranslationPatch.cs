@@ -277,7 +277,7 @@ public static class TradeScreenUiTranslationPatch
         }
     }
 
-    private static bool TryTranslateTradeSomePrompt(string source, out string translated)
+    internal static bool TryTranslateTradeSomePrompt(string source, out string translated)
     {
         var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
         var match = TradeSomePromptPattern.Match(stripped);

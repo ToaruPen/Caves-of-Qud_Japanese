@@ -37,7 +37,7 @@
         {
             "key": "tricking them into sharing their freshwater",
             "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
-            "text": "淡水をだまし取って分けさせた"
+            "text": "真水をだまし取って分けさせた"
         },
         {
             "key": "some reason no one remembers",
@@ -87,7 +87,7 @@
         {
             "key": "poisoning their freshwater",
             "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
-            "text": "淡水に毒を盛った"
+            "text": "真水に毒を盛った"
         },
         {
             "key": "impersonating one of their leaders",
@@ -172,7 +172,7 @@
         {
             "key": "sharing freshwater with them",
             "context": "XRL.World.Parts.XRL.World.Parts.GenerateFriendOrFoe",
-            "text": "淡水を分け与えた"
+            "text": "真水を分け与えた"
         },
         {
             "key": "making them feel welcomed at a supper feast",
