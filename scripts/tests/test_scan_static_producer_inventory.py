@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol, cast
 
+import pytest
+
+import scripts.scan_static_producer_inventory as scanner
 from scripts.scan_static_producer_inventory import (
     CallsitePayload,
     FamilyPayload,
@@ -11,6 +15,7 @@ from scripts.scan_static_producer_inventory import (
     TextArgumentPayload,
     main,
     scan_source_root,
+    write_inventory,
 )
 
 if TYPE_CHECKING:
@@ -68,6 +73,61 @@ def _exact_callsite(payload: InventoryPayload, file: str, expression: str) -> Ca
 
 def _text_args(callsite: CallsitePayload) -> list[TextArgumentPayload]:
     return callsite["text_arguments"]
+
+
+def test_scanner_cache_fingerprint_reports_missing_scanner_inputs(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Missing Roslyn tool files fail with a path-specific fingerprint error."""
+    missing_project = tmp_path / "MissingScanner.csproj"
+    monkeypatch.setattr(scanner, "PROJECT_PATH", missing_project)
+
+    with pytest.raises(FileNotFoundError) as exc_info:
+        _ = scan_source_root(FIXTURE_ROOT)
+
+    message = str(exc_info.value)
+    assert "Roslyn static producer scanner fingerprint inputs are missing" in message
+    assert missing_project.as_posix() in message
+    assert missing_project.with_name("Program.cs").as_posix() in message
+
+
+def test_write_inventory_reports_roslyn_scanner_timeout(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A hung dotnet scanner fails with command and captured output context."""
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    project_path = tmp_path / "StaticProducerInventoryScanner.csproj"
+    _ = project_path.write_text("<Project />\n", encoding="utf-8")
+    monkeypatch.setattr(scanner, "PROJECT_PATH", project_path)
+
+    def fake_which(command: str) -> str:
+        assert command == "dotnet"
+        return "/usr/bin/dotnet"
+
+    def fake_run(command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        timeout = kwargs.get("timeout")
+        assert timeout == scanner.ROSLYN_SCANNER_TIMEOUT_SECONDS
+        raise subprocess.TimeoutExpired(
+            cmd=command,
+            timeout=cast("float", timeout),
+            output="partial stdout",
+            stderr="partial stderr",
+        )
+
+    monkeypatch.setattr("scripts.scan_static_producer_inventory.shutil.which", fake_which)
+    monkeypatch.setattr("scripts.scan_static_producer_inventory.subprocess.run", fake_run)
+
+    with pytest.raises(RuntimeError) as exc_info:
+        write_inventory(source_root, tmp_path / "inventory.json")
+
+    message = str(exc_info.value)
+    assert f"timed out after {scanner.ROSLYN_SCANNER_TIMEOUT_SECONDS}s" in message
+    assert "dotnet run --project" in message
+    assert "partial stdout" in message
+    assert "partial stderr" in message
 
 
 def test_cli_writes_deterministic_inventory_without_absolute_source_root(tmp_path: Path) -> None:
@@ -187,6 +247,15 @@ def test_popup_roles_include_fail_keybind_option_list_and_ignored_show_title() -
     ]
     assert option_list["closure_status"] == "runtime_required"
 
+    color_picker = _callsite(payload, "Demo/StaticProducerCases.cs", "Popup.ShowColorPicker(")
+    assert [(arg["role"], arg["formal_index"], arg["expression"]) for arg in _text_args(color_picker)] == [
+        ("title", 0, '"Color title"'),
+        ("intro", 2, "null"),
+        ("spacing_text", 7, '"Semantic spacing"'),
+        ("preview_content", 11, '"Semantic preview"'),
+    ]
+    assert color_picker.get("roslyn_symbol_status") == "resolved"
+
     unknown = _callsite(payload, "Demo/StaticProducerCases.cs", "Popup.ShowExperimental()")
     assert unknown["text_arguments"] == []
     assert unknown["closure_status"] == "runtime_required"
@@ -200,9 +269,14 @@ def test_popup_cs_forwarding_is_sink_but_internal_literal_is_candidate() -> None
     forwarded = _exact_callsite(payload, "XRL.UI/Popup.cs", "Show(Message)")
     assert forwarded["closure_status"] == "sink_observed_only"
     assert _text_args(forwarded)[0]["expression_kind"] == "forwarded_parameter"
+    assert forwarded.get("roslyn_symbol_status") == "resolved"
+    assert forwarded.get("method_symbol") == "void XRL.UI.Popup.Show(string Message)"
+    assert forwarded.get("containing_type_symbol") == "XRL.UI.Popup"
 
     internal = _callsite(payload, "XRL.UI/Popup.cs", 'Popup.Show("Popup internal literal")')
     assert internal["closure_status"] == "messages_candidate"
+    assert internal.get("roslyn_symbol_status") == "resolved"
+    assert internal.get("receiver_type_symbol") == "XRL.UI.Popup"
 
 
 def test_closure_overrides_cover_wrappers_debug_and_marker_gated_paths() -> None:

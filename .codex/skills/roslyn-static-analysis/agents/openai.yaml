@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roslyn Static Analysis"
+  short_description: "QudJP semantic C# scanner workflow"
+  default_prompt: "Use $roslyn-static-analysis to design or review a QudJP Roslyn static analysis scanner."
