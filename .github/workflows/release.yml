@@ -42,6 +42,9 @@ jobs:
       - name: Install Python tools
         run: pip install hypothesis pytest ruff
 
+      - name: Install ast-grep
+        run: npm install -g @ast-grep/cli
+
       - name: Validate release identity
         id: identity
         shell: bash
