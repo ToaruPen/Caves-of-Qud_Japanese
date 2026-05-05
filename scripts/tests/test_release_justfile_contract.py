@@ -16,7 +16,9 @@ def _justfile_text() -> str:
 
 def _download_release_zip_recipe() -> str:
     justfile = _justfile_text()
-    remainder = justfile.split("\ndownload-release-zip version:\n", maxsplit=1)[1]
+    marker = "\ndownload-release-zip version:\n"
+    _prefix, separator, remainder = justfile.partition(marker)
+    assert separator, "download-release-zip version: recipe not found in justfile"
     next_recipe = re.search(r"^[A-Za-z0-9_-]+(?:\s+[^:\n]+)*:\n", remainder, flags=re.MULTILINE)
     return remainder[: next_recipe.start()] if next_recipe is not None else remainder
 
