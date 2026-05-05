@@ -37,7 +37,12 @@ jobs:
             head="${{ github.sha }}"
           fi
 
-          git diff --name-only "$base" "$head" > changed-files.txt
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            merge_base="$(git merge-base "$base" "$head")"
+            git diff --name-only "$merge_base" "$head" > changed-files.txt
+          else
+            git diff --name-only "$base" "$head" > changed-files.txt
+          fi
           if [[ ! -s changed-files.txt ]]; then
             git ls-files > changed-files.txt
           fi
