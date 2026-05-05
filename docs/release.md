@@ -167,7 +167,10 @@ Workshop staging.
 
 The tag-triggered GitHub Actions `Release` workflow builds and verifies
 `QudJP-vX.Y.Z.zip`, renders GitHub Release notes from `CHANGELOG.md`, writes a
-SHA256 checksum file, and creates a draft GitHub Release.
+SHA256 checksum file, and creates a draft GitHub Release. The created release is
+explicitly marked as GitHub's `Latest` release for the tag version so the
+repository release page follows the newest shipped release when the draft is
+published.
 
 The workflow is intentionally tag-only:
 
