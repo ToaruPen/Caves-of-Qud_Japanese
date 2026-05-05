@@ -149,17 +149,21 @@ tool-check:
 ast-grep-check:
   bash scripts/agent_cycle.sh ast-grep-check
 
+# Run the ast-grep structural-search smoke fixture.
+ast-grep-smoke:
+  bash scripts/agent_cycle.sh ast-grep-smoke
+
 # Run an ast-grep structural search.
 sg lang pattern path=".":
-  AST_GREP_PATTERN='{{pattern}}' AST_GREP_PATH='{{path}}' bash scripts/agent_cycle.sh sg "{{lang}}"
+  AST_GREP_PATTERN={{quote(pattern)}} AST_GREP_PATH={{quote(path)}} bash scripts/agent_cycle.sh sg {{quote(lang)}}
 
 # Search C# structure. Defaults to the decompiled game source.
 sg-cs pattern path="":
-  AST_GREP_PATTERN='{{pattern}}' AST_GREP_PATH='{{path}}' bash scripts/agent_cycle.sh sg csharp
+  AST_GREP_PATTERN={{quote(pattern)}} AST_GREP_PATH={{quote(path)}} bash scripts/agent_cycle.sh sg csharp
 
 # Search Python structure.
 sg-py pattern path="scripts":
-  AST_GREP_PATTERN='{{pattern}}' AST_GREP_PATH='{{path}}' bash scripts/agent_cycle.sh sg python
+  AST_GREP_PATTERN={{quote(pattern)}} AST_GREP_PATH={{quote(path)}} bash scripts/agent_cycle.sh sg python
 
 # Render skill-eval prompts from this repo's manifest.
 render-skill-evals skill="" scenario="":
