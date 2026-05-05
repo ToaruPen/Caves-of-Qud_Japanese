@@ -167,9 +167,18 @@ def _scan_source_root_cached(source_root: str, fingerprint: tuple[tuple[str, int
 
 
 def _scanner_cache_fingerprint(source_root: Path) -> tuple[tuple[str, int, int], ...]:
-    tracked_paths = [
+    scanner_paths = [
         PROJECT_PATH,
         PROJECT_PATH.with_name("Program.cs"),
+    ]
+    missing_scanner_paths = [path for path in scanner_paths if not path.is_file()]
+    if missing_scanner_paths:
+        missing = ", ".join(path.as_posix() for path in missing_scanner_paths)
+        msg = f"Roslyn static producer scanner fingerprint inputs are missing: {missing}"
+        raise FileNotFoundError(msg)
+
+    tracked_paths = [
+        *scanner_paths,
         *sorted(path for path in source_root.rglob("*.cs") if path.is_file()),
     ]
     fingerprint: list[tuple[str, int, int]] = []

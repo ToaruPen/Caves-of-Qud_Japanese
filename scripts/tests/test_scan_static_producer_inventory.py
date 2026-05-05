@@ -4,6 +4,9 @@ import json
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol, cast
 
+import pytest
+
+import scripts.scan_static_producer_inventory as scanner
 from scripts.scan_static_producer_inventory import (
     CallsitePayload,
     FamilyPayload,
@@ -68,6 +71,23 @@ def _exact_callsite(payload: InventoryPayload, file: str, expression: str) -> Ca
 
 def _text_args(callsite: CallsitePayload) -> list[TextArgumentPayload]:
     return callsite["text_arguments"]
+
+
+def test_scanner_cache_fingerprint_reports_missing_scanner_inputs(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Missing Roslyn tool files fail with a path-specific fingerprint error."""
+    missing_project = tmp_path / "MissingScanner.csproj"
+    monkeypatch.setattr(scanner, "PROJECT_PATH", missing_project)
+
+    with pytest.raises(FileNotFoundError) as exc_info:
+        _ = scan_source_root(FIXTURE_ROOT)
+
+    message = str(exc_info.value)
+    assert "Roslyn static producer scanner fingerprint inputs are missing" in message
+    assert missing_project.as_posix() in message
+    assert missing_project.with_name("Program.cs").as_posix() in message
 
 
 def test_cli_writes_deterministic_inventory_without_absolute_source_root(tmp_path: Path) -> None:
