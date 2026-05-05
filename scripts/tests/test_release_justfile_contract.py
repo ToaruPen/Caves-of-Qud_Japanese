@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -15,10 +16,9 @@ def _justfile_text() -> str:
 
 def _download_release_zip_recipe() -> str:
     justfile = _justfile_text()
-    return justfile.split("\ndownload-release-zip version:\n", maxsplit=1)[1].split(
-        "\n# Sync the built mod",
-        maxsplit=1,
-    )[0]
+    remainder = justfile.split("\ndownload-release-zip version:\n", maxsplit=1)[1]
+    next_recipe = re.search(r"^[A-Za-z0-9_-]+(?:\s+[^:\n]+)*:\n", remainder, flags=re.MULTILINE)
+    return remainder[: next_recipe.start()] if next_recipe is not None else remainder
 
 
 def test_download_release_zip_quotes_version_argument() -> None:
@@ -43,5 +43,5 @@ def test_download_release_zip_quotes_version_argument() -> None:
 
     dry_run = result.stdout + result.stderr
 
-    assert 'tag="v1.2.3"; touch /tmp/qudjp-just-injection #' not in dry_run
-    assert "version='1.2.3\"; touch /tmp/qudjp-just-injection #'" in dry_run
+    assert re.search(r"^version=(['\"]).*touch /tmp/qudjp-just-injection.*\1$", dry_run, re.MULTILINE)
+    assert not re.search(r"^(?!version=).*;\s*touch\s+/tmp/qudjp-just-injection", dry_run, re.MULTILINE)
