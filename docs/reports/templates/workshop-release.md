@@ -7,7 +7,7 @@
 - Git tag:
 - Previous release tag/range:
 - Version source:
-- GitHub Release URL, if created:
+- GitHub Release URL:
 - Workshop item: https://steamcommunity.com/sharedfiles/filedetails/?id=3718988020
 - Steam app ID: `333640`
 - Published file ID: `3718988020`
@@ -35,6 +35,8 @@ vX.Y.Z / <short-git-hash>
 
 - Release ZIP:
 - Release ZIP SHA256:
+- GitHub Release asset:
+- GitHub Release asset SHA256:
 - Workshop content folder: `dist/workshop/QudJP/`
 - Workshop VDF: `dist/workshop/workshop_item.vdf`
 
@@ -44,15 +46,19 @@ vX.Y.Z / <short-git-hash>
 - [ ] Release range established from previous tag, release report, changelog/GitHub release, or explicit user range
 - [ ] `Mods/QudJP/manifest.json` version, `vX.Y.Z` tag, release ZIP name, changenote first line, and report version match
 - [ ] `git rev-list -n1 vX.Y.Z` matches `git rev-parse HEAD`
+- [ ] `git merge-base --is-ancestor "$(git rev-list -n1 vX.Y.Z)" origin/main`
+- [ ] Draft GitHub Release created by tag workflow
+- [ ] `just download-release-zip X.Y.Z`
 - [ ] `just workshop-preflight X.Y.Z`
-- [ ] `just release-zip-check dist/QudJP-vX.Y.Z.zip`
-- [ ] `just build-workshop-upload dist/QudJP-vX.Y.Z.zip /tmp/qudjp-workshop-changenote.txt`
+- [ ] `just release-zip-check dist/release-assets/vX.Y.Z/QudJP-vX.Y.Z.zip`
+- [ ] `just build-workshop-upload dist/release-assets/vX.Y.Z/QudJP-vX.Y.Z.zip /tmp/qudjp-workshop-changenote.txt`
 
 ## Upload
 
 - steamcmd command:
 - Upload completed at:
 - Steam output summary:
+- GitHub Release published at:
 
 ## Post-Publish Smoke
 

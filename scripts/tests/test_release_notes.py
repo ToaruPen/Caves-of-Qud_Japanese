@@ -13,6 +13,7 @@ from scripts.release_notes import (
     ReleaseNoteError,
     check_fragment_requirement,
     collect_fragments,
+    extract_changelog_entry,
     git_changed_files,
     main,
     render_changelog_entry,
@@ -96,6 +97,68 @@ def test_render_workshop_changenote_is_user_facing(tmp_path: Path) -> None:
         "更新内容:\n"
         "- Fix untranslated sleep and game-summary messages.\n"
     )
+
+
+def test_extract_changelog_entry_returns_requested_release_section(tmp_path: Path) -> None:
+    """GitHub Release notes come from the committed CHANGELOG entry."""
+    changelog = tmp_path / "CHANGELOG.md"
+    changelog.write_text(
+        "# Changelog\n\n"
+        "## [Unreleased]\n\n"
+        "---\n\n"
+        "## [1.2.3] - 2026-05-05\n\n"
+        "### Fixed\n\n"
+        "- Fix release workflow.\n\n"
+        "---\n\n"
+        "## [1.2.2] - 2026-05-04\n\n"
+        "### Fixed\n\n"
+        "- Older fix.\n",
+        encoding="utf-8",
+    )
+
+    assert extract_changelog_entry(changelog, "1.2.3") == (
+        "## [1.2.3] - 2026-05-05\n\n"
+        "### Fixed\n\n"
+        "- Fix release workflow."
+    )
+
+
+def test_extract_changelog_entry_rejects_missing_version(tmp_path: Path) -> None:
+    """Missing CHANGELOG entries fail before a GitHub Release is created."""
+    changelog = tmp_path / "CHANGELOG.md"
+    changelog.write_text("# Changelog\n\n## [Unreleased]\n", encoding="utf-8")
+
+    with pytest.raises(ReleaseNoteError, match="CHANGELOG entry"):
+        extract_changelog_entry(changelog, "1.2.3")
+
+
+def test_main_extracts_changelog_entry(tmp_path: Path) -> None:
+    """The CLI writes release notes from a committed CHANGELOG entry."""
+    changelog = tmp_path / "CHANGELOG.md"
+    output = tmp_path / "github-release-notes.md"
+    changelog.write_text(
+        "# Changelog\n\n"
+        "## [1.2.3] - 2026-05-05\n\n"
+        "### Fixed\n\n"
+        "- Fix release workflow.\n",
+        encoding="utf-8",
+    )
+
+    assert (
+        main(
+            [
+                "extract-changelog",
+                "--version",
+                "1.2.3",
+                "--changelog",
+                str(changelog),
+                "--output",
+                str(output),
+            ],
+        )
+        == 0
+    )
+    assert "Fix release workflow" in output.read_text(encoding="utf-8")
 
 
 def test_main_renders_workshop_changenote_without_git_hash(tmp_path: Path) -> None:

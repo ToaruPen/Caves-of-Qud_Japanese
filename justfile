@@ -134,6 +134,28 @@ build-workshop-upload release_zip="" changenote_file="/tmp/qudjp-workshop-change
     {{python}} scripts/build_workshop_upload.py --changenote-file "{{changenote_file}}"; \
   fi
 
+# Download and verify the GitHub Release ZIP used for Workshop staging.
+download-release-zip version:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  version={{quote(version)}}
+  if [[ ! "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    printf 'error: version must be X.Y.Z: %q\n' "${version}" >&2
+    exit 1
+  fi
+  tag="v${version}"
+  zip_name="QudJP-${tag}.zip"
+  checksum_name="${zip_name}.sha256"
+  asset_dir="dist/release-assets/${tag}"
+  mkdir -p "${asset_dir}"
+  gh release download "${tag}" \
+    --pattern "${zip_name}" \
+    --pattern "${checksum_name}" \
+    --dir "${asset_dir}" \
+    --clobber
+  (cd "${asset_dir}" && shasum -a 256 -c "${checksum_name}")
+  printf '%s\n' "${asset_dir}/${zip_name}"
+
 # Sync the built mod into the local game install.
 sync-mod:
   {{python}} scripts/sync_mod.py

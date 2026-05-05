@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Self
+from typing import NoReturn, Self
 
 FRAGMENTS_DIR = Path("docs/release-notes/unreleased")
 LOCALIZATION_PREFIX = "Mods/QudJP/Localization/"
@@ -147,6 +148,29 @@ def render_workshop_changenote(
     return "\n".join(lines)
 
 
+def extract_changelog_entry(changelog_path: Path, version: str) -> str:
+    """Extract one committed CHANGELOG.md release entry by version."""
+    if not changelog_path.is_file():
+        msg = f"CHANGELOG file not found: {changelog_path}"
+        raise ReleaseNoteError(msg)
+
+    text = changelog_path.read_text(encoding="utf-8")
+    heading_pattern = re.compile(rf"^## \[{re.escape(version)}\](?:\s+-\s+.+)?$", re.MULTILINE)
+    match = heading_pattern.search(text)
+    if match is None:
+        msg = f"CHANGELOG entry not found for version {version}"
+        raise ReleaseNoteError(msg)
+
+    remaining_text = text[match.end() :]
+    next_heading = re.search(r"^## \[", remaining_text, flags=re.MULTILINE)
+    end = match.end() + next_heading.start() if next_heading is not None else len(text)
+    entry = text[match.start() : end].strip()
+    if not any(line.startswith("- ") for line in entry.splitlines()):
+        msg = f"CHANGELOG entry for version {version} has no bullets"
+        raise ReleaseNoteError(msg)
+    return re.sub(r"\n---\s*$", "", entry).rstrip()
+
+
 def _render_section_lines(fragments: ReleaseNoteFragments) -> list[str]:
     lines: list[str] = []
     for section in SECTION_ORDER:
@@ -195,7 +219,7 @@ def _require_fragments(fragments_dir: Path) -> ReleaseNoteFragments:
 
 
 class _Parser(argparse.ArgumentParser):
-    def error(self: Self, message: str) -> None:
+    def error(self: Self, message: str) -> NoReturn:
         """Print argparse errors without a traceback."""
         raise ReleaseNoteError(message)
 
@@ -233,6 +257,14 @@ def build_parser() -> argparse.ArgumentParser:
     render_parser.add_argument("--changelog-output", type=Path)
     render_parser.add_argument("--workshop-output", type=Path)
 
+    extract_parser = subparsers.add_parser(
+        "extract-changelog",
+        help="Extract a committed CHANGELOG.md entry for GitHub Release notes.",
+    )
+    extract_parser.add_argument("--version", required=True)
+    extract_parser.add_argument("--changelog", type=Path, default=Path("CHANGELOG.md"))
+    extract_parser.add_argument("--output", type=Path)
+
     return parser
 
 
@@ -258,6 +290,13 @@ def main(argv: list[str] | None = None) -> int:
                 _write_output(args.changelog_output, changelog)
             if args.workshop_output is not None:
                 _write_output(args.workshop_output, workshop)
+            return 0
+        if args.command == "extract-changelog":
+            entry = extract_changelog_entry(args.changelog, args.version)
+            if args.output is None:
+                print(entry)  # noqa: T201
+                return 0
+            _write_output(args.output, entry)
             return 0
     except ReleaseNoteError as exc:
         print(f"error: {exc}", file=sys.stderr)  # noqa: T201
