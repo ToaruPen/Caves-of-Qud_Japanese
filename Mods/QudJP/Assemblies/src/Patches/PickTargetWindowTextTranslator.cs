@@ -146,6 +146,17 @@ internal static class PickTargetWindowTextTranslator
             }
         }
 
+        var markupWrappedHotkeyMatch = Regex.Match(source, "^(?<hotkey>\\{\\{[^|}]+\\|[^}]+\\}\\})-(?<label>.+)$", RegexOptions.CultureInvariant);
+        if (markupWrappedHotkeyMatch.Success)
+        {
+            var translatedLabel = UITextSkinTranslationPatch.TranslateAsciiTokenWithCaseFallback(markupWrappedHotkeyMatch.Groups["label"].Value);
+            if (translatedLabel is not null)
+            {
+                translated = $"{markupWrappedHotkeyMatch.Groups["hotkey"].Value}-{translatedLabel}";
+                return true;
+            }
+        }
+
         var hotkeySuffixMatch = Regex.Match(source, "^(?<label>.+?)\\s+\\((?<hotkey>[^)]+)\\)(?<suffix>\\)?)$", RegexOptions.CultureInvariant);
         if (hotkeySuffixMatch.Success)
         {

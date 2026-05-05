@@ -78,6 +78,7 @@ public static class QuestLogTranslationPatch
                 && !string.Equals(translatedLabel, optionalMatch.Groups["label"].Value, StringComparison.Ordinal))
             {
                 var translated = optionalMatch.Groups["prefix"].Value + translatedLabel + optionalMatch.Groups["suffix"].Value;
+                translated = GeneratedQuestTitleTranslator.TranslateEmbeddedPreservingColors(translated, route);
                 DynamicTextObservability.RecordTransform(route, "QuestLog.OptionalPrefix", source, translated);
                 return translated;
             }
@@ -97,6 +98,6 @@ public static class QuestLogTranslationPatch
             }
         }
 
-        return source;
+        return GeneratedQuestTitleTranslator.TranslateEmbeddedPreservingColors(source, route);
     }
 }

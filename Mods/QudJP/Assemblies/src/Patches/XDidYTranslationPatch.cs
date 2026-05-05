@@ -849,6 +849,9 @@ public static class XDidYTranslationPatch
             return string.Empty;
         }
 
+        Trace.TraceWarning(
+            "QudJP: XDidYTranslationPatch fell back to ToString() for display name from '{0}'.",
+            value.GetType().FullName);
         return TranslateDisplayFragment(fallbackText);
     }
 
@@ -871,28 +874,10 @@ public static class XDidYTranslationPatch
                 continue;
             }
 
-            var parameters = method.GetParameters();
-            if (parameters.Length != 13)
+            if (!TryBuildDisplayNameMethodArgs(method, useFullNames, indefiniteArticle, out var args))
             {
                 continue;
             }
-
-            var args = new object?[]
-            {
-                int.MaxValue,
-                null,
-                null,
-                false,
-                false,
-                false,
-                false,
-                false,
-                !useFullNames,
-                !useFullNames,
-                false,
-                indefiniteArticle,
-                null,
-            };
 
             displayName = method.Invoke(target, args) as string ?? string.Empty;
             return !string.IsNullOrWhiteSpace(displayName);
@@ -900,6 +885,66 @@ public static class XDidYTranslationPatch
 
         displayName = string.Empty;
         return false;
+    }
+
+    private static bool TryBuildDisplayNameMethodArgs(
+        MethodInfo method,
+        bool useFullNames,
+        bool indefiniteArticle,
+        out object?[] args)
+    {
+        var parameters = method.GetParameters();
+        args = new object?[parameters.Length];
+        if (parameters.Length < 13)
+        {
+            return false;
+        }
+
+        for (var index = 0; index < parameters.Length; index++)
+        {
+            var parameter = parameters[index];
+            args[index] = parameter switch
+            {
+                { Name: "Cutoff" } => int.MaxValue,
+                { Name: "Base" } => null,
+                { Name: "Context" } => null,
+                { Name: "AsIfKnown" } => false,
+                { Name: "Single" } => false,
+                { Name: "NoConfusion" } => false,
+                { Name: "NoColor" } => false,
+                { Name: "Stripped" } => false,
+                { Name: "WithoutTitles" } => !useFullNames,
+                { Name: "Short" } => !useFullNames,
+                { Name: "BaseOnly" } => false,
+                { Name: "WithIndefiniteArticle" } => indefiniteArticle,
+                { Name: "WithDefiniteArticle" } => !indefiniteArticle,
+                { Name: "DefaultDefiniteArticle" } => null,
+                { Name: "IndicateHidden" } => true,
+                { Name: "Capitalize" } => method.Name == "One",
+                { Name: "SecondPerson" } => true,
+                { Name: "Reflexive" } => false,
+                { Name: "IncludeAdjunctNoun" } => null,
+                { Name: "AsPossessed" } => false,
+                { Name: "AsPossessedBy" } => null,
+                { Name: "Reference" } => false,
+                { Name: "IncludeImplantPrefix" } => true,
+                _ => GetDefaultParameterValue(parameter),
+            };
+        }
+
+        return true;
+    }
+
+    private static object? GetDefaultParameterValue(ParameterInfo parameter)
+    {
+        if (parameter.HasDefaultValue)
+        {
+            return parameter.DefaultValue is DBNull ? null : parameter.DefaultValue;
+        }
+
+        return parameter.ParameterType.IsValueType
+            ? Activator.CreateInstance(parameter.ParameterType)
+            : null;
     }
 
     private static string TranslateDisplayFragment(string text)

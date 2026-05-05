@@ -1815,6 +1815,18 @@ public sealed class PopupTranslationPatchTests
         Assert.That(translated, Is.EqualTo("&yこの情報をジャーナルの「&Wスルタン史 > クホマスプ II&y」欄に記録した。"));
     }
 
+    [Test]
+    public void TranslatePopupTextForProducerRoute_QuestReceived_TranslatesGeneratedFindItemTitle()
+    {
+        WriteDictionary(("You have received a new quest, {0}!", "新しいクエスト「{0}」を受けた！"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "You have received a new quest, {{W|Aiding {{&Y|ドリンクス}} to Find the ポリセフian 祖父角の角笛}}!",
+            nameof(PopupShowTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("新しいクエスト「{{W|{{&Y|ドリンクス}}がポリセフian 祖父角の角笛を探すのを助ける}}」を受けた！"));
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";

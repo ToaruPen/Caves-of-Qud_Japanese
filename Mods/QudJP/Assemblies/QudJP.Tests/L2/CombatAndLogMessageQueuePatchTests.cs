@@ -1264,6 +1264,7 @@ public sealed class CombatAndLogMessageQueuePatchTests
     [TestCase("You hit glowfish for 3 damage.", "glowfishに3ダメージを与えた")]
     [TestCase("You miss with your レンチ! [10 vs 10]", "レンチでの攻撃は外れた。[10 vs 10]")]
     [TestCase("The タム fails to penetrate your armor [17]!", "タムはあなたの装甲を貫けなかった！ [17]")]
+    [TestCase("Your 鉛スラッグ fails to penetrate the フォームクリートの armor!", "あなたの鉛スラッグはフォームクリートの装甲を貫けなかった！")]
     [TestCase("The ワニ cannot reach the スナップジョー.", "ワニはスナップジョーに届かない")]
     [TestCase("Your attack passes through the ワニ!", "あなたの攻撃はワニをすり抜けた！")]
     [TestCase("One of タムの wounds stops bleeding.", "タムの傷のひとつの出血が止まった。")]

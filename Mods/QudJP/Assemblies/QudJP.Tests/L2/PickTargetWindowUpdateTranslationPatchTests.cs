@@ -1,0 +1,113 @@
+using System.Text;
+using QudJP.Patches;
+
+namespace QudJP.Tests.L2;
+
+[TestFixture]
+[Category("L2")]
+[NonParallelizable]
+public sealed class PickTargetWindowUpdateTranslationPatchTests
+{
+    private static readonly UTF8Encoding Utf8WithoutBom = new(encoderShouldEmitUTF8Identifier: false);
+
+    private string tempDirectory = null!;
+
+    [SetUp]
+    public void SetUp()
+    {
+        tempDirectory = Path.Combine(Path.GetTempPath(), "qudjp-pick-target-l2", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(tempDirectory);
+
+        Translator.ResetForTests();
+        Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        DynamicTextObservability.ResetForTests();
+        DummyPickTargetWindow.currentText = string.Empty;
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        Translator.ResetForTests();
+        DynamicTextObservability.ResetForTests();
+
+        if (Directory.Exists(tempDirectory))
+        {
+            Directory.Delete(tempDirectory, recursive: true);
+        }
+    }
+
+    [Test]
+    public void TranslateCurrentText_TranslatesGeneratedPickTargetCommandBar()
+    {
+        WriteDictionary(
+            ("Dig to where?", "どこまで掘る？"),
+            ("select", "決定"),
+            ("unlock", "固定解除"));
+        DummyPickTargetWindow.currentText = "Dig to where? | {{W|space}}-select | unlock ({{hotkey|F1}}))";
+
+        var changed = PickTargetWindowUpdateTranslationPatch.TranslateCurrentTextForTests(typeof(DummyPickTargetWindow));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(DummyPickTargetWindow.currentText, Is.EqualTo("どこまで掘る？ | {{W|space}}-決定 | 固定解除 ({{hotkey|F1}}))"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PickTargetWindowUpdateTranslationPatch),
+                    "PickTarget.CommandBar"),
+                Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
+    public void TranslateCurrentText_TranslatesExactPickTargetLabel()
+    {
+        WriteDictionary(("Dig to where?", "どこまで掘る？"));
+        DummyPickTargetWindow.currentText = "Dig to where?";
+
+        var changed = PickTargetWindowUpdateTranslationPatch.TranslateCurrentTextForTests(typeof(DummyPickTargetWindow));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(DummyPickTargetWindow.currentText, Is.EqualTo("どこまで掘る？"));
+        });
+    }
+
+    private void WriteDictionary(params (string key, string text)[] entries)
+    {
+        var builder = new StringBuilder();
+        builder.Append("{\"entries\":[");
+        for (var index = 0; index < entries.Length; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(',');
+            }
+
+            builder.Append("{\"key\":\"")
+                .Append(EscapeJson(entries[index].key))
+                .Append("\",\"text\":\"")
+                .Append(EscapeJson(entries[index].text))
+                .Append("\"}");
+        }
+
+        builder.AppendLine("]}");
+        File.WriteAllText(Path.Combine(tempDirectory, "ui-pick-target.ja.json"), builder.ToString(), Utf8WithoutBom);
+    }
+
+    private static string EscapeJson(string value)
+    {
+        return value
+            .Replace("\\", "\\\\", StringComparison.Ordinal)
+            .Replace("\"", "\\\"", StringComparison.Ordinal)
+            .Replace("\n", "\\n", StringComparison.Ordinal)
+            .Replace("\r", "\\r", StringComparison.Ordinal)
+            .Replace("\t", "\\t");
+    }
+
+    private static class DummyPickTargetWindow
+    {
+        public static string currentText = string.Empty;
+    }
+}

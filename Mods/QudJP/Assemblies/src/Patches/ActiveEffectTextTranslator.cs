@@ -35,6 +35,14 @@ internal static class ActiveEffectTextTranslator
         @"^time-dilated \(-(?<penalty>\d+) Quickness\)$",
         RegexOptions.CultureInvariant);
 
+    private static readonly Regex ConfusionDetailsPattern = new(
+        @"^Acts semi-randomly\.\n\s*-(?<level>\d+) DV\n\s*-\k<level> MA$",
+        RegexOptions.CultureInvariant);
+
+    private static readonly Regex ConfusionDetailsWithMentalPenaltyPattern = new(
+        @"^Acts semi-randomly\.\n\s*-(?<level>\d+) DV\n\s*-\k<level> MA\n\s*-(?<mental>\d+) to all mental attributes$",
+        RegexOptions.CultureInvariant);
+
     private static readonly Regex LyingOnPattern = new(
         @"^lying on (?<target>.+)$",
         RegexOptions.CultureInvariant);
@@ -203,6 +211,34 @@ internal static class ActiveEffectTextTranslator
                 TimeDilatedPattern,
                 "time-dilated ({{C|-{0}}} Quickness)",
                 match => new object[] { match.Groups["penalty"].Value },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateSimpleGeneratedTemplate(
+                source,
+                stripped,
+                spans,
+                route,
+                family,
+                ConfusionDetailsWithMentalPenaltyPattern,
+                "Acts semi-randomly.\n-{0} DV\n-{0} MA\n-{1} to all mental attributes",
+                match => new object[] { match.Groups["level"].Value, match.Groups["mental"].Value },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateSimpleGeneratedTemplate(
+                source,
+                stripped,
+                spans,
+                route,
+                family,
+                ConfusionDetailsPattern,
+                "Acts semi-randomly.\n-{0} DV\n-{0} MA",
+                match => new object[] { match.Groups["level"].Value },
                 out translated))
         {
             return true;

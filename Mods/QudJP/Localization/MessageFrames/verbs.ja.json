@@ -2504,6 +2504,11 @@
       "text": "{0}の銃の握りを緩めた"
     },
     {
+      "verb": "voice",
+      "extra": "a short prayer beneath {0}",
+      "text": "{0}の下で短い祈りを唱えた"
+    },
+    {
       "verb": "need",
       "extra": "(\\d+) more rounds? before (?:it|he|she|they) can be fired again",
       "text": "{subject}は再発射まであと{0}ラウンド必要だ{endmark}"

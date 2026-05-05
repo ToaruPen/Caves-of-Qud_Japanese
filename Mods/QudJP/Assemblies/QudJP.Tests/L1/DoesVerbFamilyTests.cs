@@ -641,6 +641,8 @@ public sealed class DoesVerbFamilyTests
     [TestCase("The 熊's 矢 fails to penetrate your armor [3]!", "熊の矢はあなたの装甲を貫けなかった！ [3]")]
     [TestCase("The 熊's 矢 fails to penetrate your armor!", "熊の矢はあなたの装甲を貫けなかった！")]
     [TestCase("The 熊 fails to penetrate your armor!", "熊はあなたの装甲を貫けなかった！")]
+    [TestCase("Your 鉛スラッグ fails to penetrate the フォームクリートの armor!", "あなたの鉛スラッグはフォームクリートの装甲を貫けなかった！")]
+    [TestCase("Your 鉛スラッグ fails to penetrate the フォームクリートの armor [5]!", "あなたの鉛スラッグはフォームクリートの装甲を貫けなかった！ [5]")]
     // Color-wrapped
     [TestCase("{{g|The 熊's 矢 fails to penetrate your armor [3]!}}", "{{g|熊の矢はあなたの装甲を貫けなかった！ [3]}}")]
     public void Translate_MissileFailPenetrateFamily(string input, string expected)

@@ -58,6 +58,14 @@ If a translation or color-tag bug is caused by a route that QudJP does not yet o
 
 Do not create sink-wide ownership just because a string is visible there. Sink text often mixes multiple unrelated routes, and sink-side "fixes" easily break other strings.
 
+## Visible fallback policy
+
+Do not treat player-visible fallback output as localization coverage. This applies to every visible route, not only display names.
+
+Fallbacks such as sink translation, reflection member reads, exact dictionary hits on dynamic text, blueprint ids, debug strings, or `ToString()` are acceptable only as last-resort safety or observability. If fallback output reaches the player, classify it as an owner/source-route gap unless the route is explicitly documented as intentional pass-through.
+
+When a fallback is retained for safety, keep it observable with a route-specific warning, probe, or test assertion so future runtime triage can find and remove masking cases.
+
 ## Generic popup route policy
 
 `PopupTranslationPatch.TranslatePopupTextForProducerRoute` and
@@ -122,6 +130,12 @@ Every accepted candidate must record:
 
 Use a global flat dictionary when the candidate is a proven fixed-leaf, exact, shared, and not route-specific. Use a scoped dictionary when the candidate belongs to one screen, family, or producer route and would be clearer with a narrower home. If a candidate can fit both, prefer the narrower-scoped home. `Popup` exact leaves may use that narrower scoped home when they are separately proven safe. `AddPlayerMessage` remains sink-observed and is not itself a fixed-leaf owner or destination shortcut. If a candidate is dynamic, procedural, `message-frame`, builder/display-name, unresolved, sink-observed, or `needs_runtime`, do not route it to a dictionary unless it is separately proven safe.
 
+## Terminology and abbreviation policy
+
+Keep short game-stat abbreviations such as `AV`, `DV`, `MA`, and `XP` unchanged by default. They are compact UI tokens and combat-log vocabulary, not ordinary English prose.
+
+Translate an abbreviation only when the source itself expands it into a readable label or when a route-specific UI contract proves the expanded Japanese form is expected and fits the visible control. Do not add dictionary leaves whose only effect is to replace these abbreviations inside numeric formulas or combat comparisons.
+
 ## Fixed-leaf batch guardrails
 
 - Exclude pseudo-leaf placeholder and widget/channel rows before promotion review, including empty strings, whitespace-only keys, `BodyText`, and `SelectedModLabel`.
@@ -177,6 +191,12 @@ When investigating untranslated or malformed text:
 6. Only then implement the fix.
 
 The desired end state is not "the visible bug is hidden." It is "the route now has an explicit, test-backed owner."
+
+For PRs that change `Mods/QudJP/Localization/`, run the release-note gate before publishing:
+
+```bash
+just release-note-check origin/main HEAD
+```
 
 ## Test expectations
 

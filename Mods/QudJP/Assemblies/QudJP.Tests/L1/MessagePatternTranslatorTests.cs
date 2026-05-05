@@ -984,6 +984,17 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void Translate_TranslatesHistoricSpiceFakedDeathCognomenCapture()
+    {
+        WriteExactDictionary(("desiccated", "乾ききった"), ("spectre", "亡霊"));
+        WritePatternDictionary(("^You remember (.+?)[.!]?$", "{t0}を思い出した。"));
+
+        var translated = MessagePatternTranslator.Translate("You remember the Desiccated Spectre.");
+
+        Assert.That(translated, Is.EqualTo("乾ききった亡霊を思い出した。"));
+    }
+
+    [Test]
     public void Translate_AppliesBeginFlyingPatternWithoutArticle()
     {
         WritePatternDictionary(("^(?:The |the )?(.+?) begins flying[.!]?$", "{0}が飛翔し始めた。"));
@@ -1530,6 +1541,18 @@ public sealed class MessagePatternTranslatorTests
             "You voice a short prayer beneath the marble statue of オボロコル.");
 
         Assert.That(translated, Is.EqualTo("あなたはオボロコルの大理石の像の下で短い祈りを唱えた。"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_TranslatesGeneratedRandomStatueDescriptionLine()
+    {
+        UseRepositoryPatternDictionary();
+        WriteExactDictionary(("stone", "石"));
+
+        var translated = MessagePatternTranslator.Translate(
+            "This statue worked from stone intricately depicts a 山羊人の種播き:");
+
+        Assert.That(translated, Is.EqualTo("石から作られたこの像には山羊人の種播きが精巧に描かれている:"));
     }
 
     [Test]
