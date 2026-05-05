@@ -2,8 +2,8 @@
 
 ## Scope
 
-This report records the first non-legacy static producer inventory for issue
-#493. The inventory is generated from the current decompiled C# source under
+This report records the first non-legacy static producer inventory for issue `#493`.
+The inventory is generated from the current decompiled C# source under
 `~/dev/coq-decompiled_stable` and does not use `Player.log` for discovery.
 
 The committed machine-readable artifact is:
