@@ -4,7 +4,9 @@
 
 **Goal:** Build a prompt-injection-aware workflow that imports Steam Workshop comments into a low-visibility GitHub inbox issue and prepares Codex/App Server triage packets for issue promotion.
 
-**Architecture:** Phase 1 is a deterministic collector: fetch public Steam Workshop comments, skip creator comments, sanitize untrusted text, dedupe by script-owned markers, and append to a single closed GitHub inbox issue. Phase 2 is manually triggered or Codex-automation-driven: read inbox comments and prepare a bounded triage packet for Codex/App Server; high-confidence promotion to normal GitHub issues is handled by Codex after repository/issue investigation, not by GitHub Actions.
+**Architecture:** Phase 1 is a deterministic collector: fetch public Steam Workshop comments, skip creator comments, sanitize untrusted text, dedupe by script-owned markers, and append to a single closed GitHub inbox issue. Phase 2 is Codex-automation-driven: read inbox comments and prepare a bounded triage packet for Codex/App Server; high-confidence promotion to normal GitHub issues is handled by Codex after repository/issue investigation, not by GitHub Actions.
+
+**Visibility boundary:** The inbox issue is low-visibility, not private. In a public repository, closed issues and Actions logs can still be viewed by people with repository access, so this workflow must only store already-public Steam Workshop comments and sanitized metadata. GitHub Actions must not print or upload the triage packet because it contains raw imported comment bodies. Private maintainer notes, security-sensitive findings, credentials, or non-public user reports must stay out of the GitHub inbox and Actions artifacts.
 
 **Tech Stack:** Python 3.12 standard library, GitHub Actions, GitHub REST API, Steam Web API / public Steam Community render endpoint, Codex Automation/App Server, local Codex skill documentation.
 
@@ -109,7 +111,7 @@
 - Fetch/parse failure does not call GitHub write functions.
 - Max response bytes failure does not call GitHub write functions.
 
-### Slice 4: Phase 2 Manual App Server Triage
+### Slice 4: Phase 2 Codex/App Server Triage Packet Check
 
 **Files:**
 - Create: `scripts/workshop_comments_triage.py`
@@ -128,14 +130,18 @@
   - `evidence_quote`: string
   - `suggested_labels`: array of fixed enum strings
   - `promotion_recommended`: boolean
-- No GitHub write authority in the Phase 2 workflow; it creates a triage packet artifact only.
+- No GitHub write authority in the Phase 2 workflow.
+- Do not print the triage packet to Actions logs.
+- Do not upload the triage packet as an Actions artifact.
+- The workflow may validate packet construction and print only schema/count metadata.
+- Codex Automation should run the triage script in its own local workspace when it needs the packet body.
 - No automatic normal issue creation.
 
 ### Slice 4b: Codex Automation Promotion Policy
 
 **Scope:**
 - Codex Automation, not GitHub Actions, performs the model-side inspection.
-- Read the closed Steam Workshop inbox issue or generated triage packet.
+- Read the closed Steam Workshop inbox issue or a locally generated triage packet.
 - Skip creator comments.
 - Investigate existing GitHub issues and the repository before promotion.
 - Create a normal GitHub issue only when:
@@ -147,6 +153,8 @@
 
 **TDD checks:**
 - Triage packet contains no OpenAI API key, OpenAI endpoint, GitHub token, or repository secrets.
+- GitHub Actions logs do not contain raw Steam comment bodies from the triage packet.
+- GitHub Actions does not upload the triage packet as an artifact.
 - Response schema validation rejects unknown labels/categories.
 - Model output cannot create arbitrary labels/title/endpoints.
 - Suggestion renderer marks source text as untrusted and separates model output from raw text.
@@ -186,5 +194,5 @@
 
 **Completion Criteria:**
 - Phase 1 can import new Steam comments into one inbox issue without LLM involvement.
-- Phase 2 can prepare inbox comments for Codex/App Server classification into fixed categories without granting model-side GitHub write tools.
+- Phase 2 can prepare inbox comments for Codex/App Server classification into fixed categories without granting model-side GitHub write tools or publishing the packet through Actions artifacts/logs.
 - The skill captures the workflow and safety boundaries for future agent use.

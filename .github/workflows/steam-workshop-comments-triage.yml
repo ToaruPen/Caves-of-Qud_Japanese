@@ -1,4 +1,4 @@
-name: Steam Workshop Comment Triage Packet
+name: Steam Workshop Comment Triage Packet Check
 
 on:
   workflow_dispatch:
@@ -26,12 +26,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Prepare Codex/App Server triage packet
+      - name: Validate Codex/App Server triage packet
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
+          packet_path="$(mktemp)"
+          trap 'rm -f "${packet_path}"' EXIT
           python scripts/workshop_comments_triage.py \
             --inbox-issue-number "${{ inputs.inbox_issue_number }}" \
             --max-items 10 \
@@ -39,10 +41,12 @@ jobs:
             --max-github-pages 10 \
             --timeout-seconds 20 \
             --skip-author ToaruPen \
-            > steam-workshop-triage-packet.json
-          sed -n '1,200p' steam-workshop-triage-packet.json
+            > "${packet_path}"
+          python - "${packet_path}" <<'PY'
+          import json
+          import sys
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: steam-workshop-triage-packet
-          path: steam-workshop-triage-packet.json
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              packet = json.load(handle)
+          print(f"triage packet schema={packet['schema']} items={len(packet['items'])}")
+          PY
