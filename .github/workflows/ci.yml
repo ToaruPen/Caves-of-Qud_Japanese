@@ -61,7 +61,7 @@ jobs:
           if [[ "$run_all" == true ]] || matches '^scripts/tools/'; then
             roslyn_tools=true
           fi
-          if [[ "$run_all" == true ]] || matches '^scripts/'; then
+          if [[ "$run_all" == true ]] || matches '^(pyproject\.toml|uv\.lock)$' || { matches '^scripts/' && ! matches '^scripts/tools/'; }; then
             python=true
           fi
           if [[ "$run_all" == true ]] || matches '^(Mods/QudJP/Localization/|scripts/(check_translation_tokens|check_glossary_consistency)\.py|scripts/(translation_token_duplicate_baseline|glossary_consistency_baseline)\.json)'; then
@@ -71,7 +71,7 @@ jobs:
           {
             echo "qudjp_dotnet=$qudjp_dotnet"
             echo "roslyn_tools=$roslyn_tools"
-            echo "dotnet=$([[ "$qudjp_dotnet" == true || "$roslyn_tools" == true || "$python" == true ]] && echo true || echo false)"
+            echo "dotnet=$([[ "$qudjp_dotnet" == true || "$roslyn_tools" == true ]] && echo true || echo false)"
             echo "python=$python"
             echo "localization=$localization"
           } >> "$GITHUB_OUTPUT"
