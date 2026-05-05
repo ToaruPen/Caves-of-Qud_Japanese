@@ -27,6 +27,10 @@ internal static class ActiveEffectTextTranslator
         @"^(?<shift>[+-]\d+) move speed\.$",
         RegexOptions.CultureInvariant);
 
+    private static readonly Regex AllMentalAttributesPattern = new(
+        @"^(?<shift>[+-]\d+) to all mental attributes$",
+        RegexOptions.CultureInvariant);
+
     private static readonly Regex DominatedRemainingPattern = new(
         @"^dominated \((?<turns>\d+) turns? remaining\)$",
         RegexOptions.CultureInvariant);
@@ -492,6 +496,12 @@ internal static class ActiveEffectTextTranslator
         if (moveSpeedMatch.Success)
         {
             return string.Format(CultureInfo.InvariantCulture, "移動速度 {0}。", moveSpeedMatch.Groups["shift"].Value);
+        }
+
+        var allMentalAttributesMatch = AllMentalAttributesPattern.Match(visible);
+        if (allMentalAttributesMatch.Success)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "全精神属性に {0}", allMentalAttributesMatch.Groups["shift"].Value);
         }
 
         if (string.Equals(visible, "Moving at full speed.", StringComparison.Ordinal))

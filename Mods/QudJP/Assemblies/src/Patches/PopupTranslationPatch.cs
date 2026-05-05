@@ -330,6 +330,18 @@ public static class PopupTranslationPatch
             return markedText;
         }
 
+        if (DoesVerbRouteTranslator.TryTranslateMarkedMessage(source, out var doesVerbTranslated))
+        {
+            DynamicTextObservability.RecordTransform(route, family + ".DoesVerb", source, doesVerbTranslated);
+            return NormalizeProducerText(doesVerbTranslated);
+        }
+
+        if (!string.Equals(doesVerbTranslated, source, StringComparison.Ordinal))
+        {
+            DynamicTextObservability.RecordTransform(route, family + ".DoesVerb", source, doesVerbTranslated);
+            return NormalizeProducerText(doesVerbTranslated);
+        }
+
         if (TryTranslatePopupProducerText(source, route, family, out var translated))
         {
             return NormalizeProducerText(translated);

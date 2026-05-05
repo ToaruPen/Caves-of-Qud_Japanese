@@ -1750,6 +1750,11 @@
       "text": "{{Y|鋸歯状の}}"
     },
     {
+      "key": "with piping",
+      "context": "GetDisplayName.ModPiping.WithClause",
+      "text": "（配管付き）"
+    },
+    {
       "key": "bronze",
       "context": "GetDisplayName.Adjective",
       "text": "青銅"

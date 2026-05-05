@@ -212,7 +212,7 @@
 
 
   <object Name="Hookah" Inherits="Furniture" Replace="true">
-    <part Name="Render" DisplayName="水タバコ" ColorString="&amp;R" DetailColor="w" RenderString="227" Tile="Items/sw_hookah.bmp" Occluding="false" RenderIfDark="false" />
+    <part Name="Render" DisplayName="シーシャ" ColorString="&amp;R" DetailColor="w" RenderString="227" Tile="Items/sw_hookah.bmp" Occluding="false" RenderIfDark="false" />
     <part Name="Physics" Weight="10" />
     <part Name="Description" Short="クリスタルの水パイプから喫煙用のステムが花のように広がっている。" />
     <part Name="LiquidVolume" MaxVolume="8" Volume="8" StartVolume="1d4" InitialLiquid="water-1000" ManualSeal="true" LiquidVisibleWhenSealed="true" />
@@ -965,7 +965,7 @@
 
   <object Name="HookahSign2" Inherits="Sign" Replace="true">
     <part Name="Render" DisplayName="看板" Tile="Items/sw_hookah_sign.bmp" Occluding="false" />
-    <part Name="Chat" Says="水タバコと休憩" ShowInShortDescription="true" />
+    <part Name="Chat" Says="シーシャと休憩" ShowInShortDescription="true" />
   </object>
 
 

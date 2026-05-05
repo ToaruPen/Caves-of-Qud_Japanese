@@ -17,6 +17,7 @@ internal static class GetDisplayNameRouteTranslator
     {
         "ui-liquid-adjectives.ja.json",
         "ui-liquids.ja.json",
+        "ui-displayname-adjectives.ja.json",
     };
     private static readonly Regex BracketedDisplayNameSuffixPattern =
         new Regex("^(?<base>.+?)\\s+\\[(?<state>.+)\\]$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
@@ -633,7 +634,14 @@ internal static class GetDisplayNameRouteTranslator
         var state = match.Groups["state"].Value;
         if (state.Length > 0)
         {
-            translated += "、" + TranslateDisplayNameState(state, route);
+            var translatedState = TranslateDisplayNameState(state, route);
+            if (string.Equals(translatedState, state, StringComparison.Ordinal))
+            {
+                translated = source;
+                return false;
+            }
+
+            translated += "、" + translatedState;
         }
 
         DynamicTextObservability.RecordTransform(route, "DisplayName.QuantifiedLiquidState", source, translated);
@@ -653,12 +661,19 @@ internal static class GetDisplayNameRouteTranslator
         var translatedLiquid = TranslateAsciiPhrase(liquidSource);
         if (translatedLiquid is null)
         {
-            translated = source;
-            return false;
+            var direct = Translator.Translate(liquidSource);
+            if (string.Equals(direct, liquidSource, StringComparison.Ordinal))
+            {
+                translated = source;
+                return false;
+            }
+
+            translatedLiquid = direct;
         }
 
-        var translatedState = TranslateDisplayNameState(match.Groups["state"].Value, route);
-        if (string.Equals(translatedState, match.Groups["state"].Value, StringComparison.Ordinal))
+        var state = match.Groups["state"].Value;
+        var translatedState = TranslateDisplayNameState(state, route);
+        if (string.Equals(translatedState, state, StringComparison.Ordinal))
         {
             translated = source;
             return false;
@@ -1128,16 +1143,16 @@ internal static class GetDisplayNameRouteTranslator
             ? source.Substring(1, source.Length - 2)
             : source;
 
-        var direct = TryTranslateDisplayNameScopedExact(core);
-        if (direct is null)
+        string? direct = null;
+        if (TryTranslateMarkupWrappedDisplayNameModifier(core, out var wrappedDirect))
         {
-            var (stripped, _) = ColorAwareTranslationComposer.Strip(core);
-            if (!string.Equals(stripped, core, StringComparison.Ordinal))
-            {
-                direct = TryTranslateDisplayNameScopedExact(stripped);
-            }
+            direct = wrappedDirect;
         }
 
+        if (direct is null)
+        {
+            direct = TryTranslateDisplayNameScopedExact(core);
+        }
         if (direct is null)
         {
             var global = Translator.Translate(source);
@@ -1152,6 +1167,39 @@ internal static class GetDisplayNameRouteTranslator
         return bracketWrapped
             ? "[" + direct + "]"
             : direct;
+    }
+
+    private static bool TryTranslateMarkupWrappedDisplayNameModifier(string source, out string translated)
+    {
+        translated = source;
+        if (!source.StartsWith("{{", StringComparison.Ordinal) || !source.EndsWith("}}", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var separator = source.IndexOf('|', 2);
+        if (separator <= 2)
+        {
+            return false;
+        }
+
+        var tag = source.Substring(2, separator - 2);
+        var visible = source.Substring(separator + 1, source.Length - separator - 3);
+        if (visible.Length == 0)
+        {
+            return false;
+        }
+
+        var direct = TryTranslateDisplayNameScopedExact(visible);
+        if (direct is null)
+        {
+            return false;
+        }
+
+        translated = ColorAwareTranslationComposer.HasColorMarkup(direct)
+            ? direct
+            : "{{" + tag + "|" + direct + "}}";
+        return true;
     }
 
     private static bool IsAlreadyLocalizedBracketedDisplayName(string source)

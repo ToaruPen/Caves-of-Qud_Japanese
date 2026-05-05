@@ -1679,7 +1679,7 @@
         {
             "key": "You do not have a hookah.",
             "context": "XRL.UI.Popup.ShowFail.Message",
-            "text": "水煙管がない。"
+            "text": "シーシャがない。"
         },
         {
             "key": "You do not have a leather whip.",
@@ -1864,7 +1864,7 @@
         {
             "key": "Your hookah is not filled with water.",
             "context": "XRL.UI.Popup.ShowFail.Message",
-            "text": "水煙管に水が入っていない。"
+            "text": "シーシャに水が入っていない。"
         },
         {
             "key": "Your psyche is too exhausted.",

@@ -38,6 +38,9 @@ QudJP is the Japanese localization mod for Caves of Qud `2.0.4`. The repo contai
   candidates in that case, not proof.
 - Prefer `just` recipes for routine validation so local runs match the repo task runner.
   Raw commands below document what the recipes execute.
+- Before opening or updating a PR that changes `Mods/QudJP/Localization/`, add
+  a release-note fragment under `docs/release-notes/unreleased/*.md` and run
+  `python3.12 scripts/release_notes.py check-fragment --base-ref origin/main --head-ref HEAD`.
 - Core commands:
 
 ```bash

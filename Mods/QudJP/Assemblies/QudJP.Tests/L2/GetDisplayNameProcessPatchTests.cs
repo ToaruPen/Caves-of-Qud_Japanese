@@ -348,11 +348,11 @@ public sealed class GetDisplayNameProcessPatchTests
         RunWithDisplayNameProcessPatch(() =>
         {
             var processor = new DummyDisplayNameProcessor();
-            var result = processor.ProcessFor("宙吊りの水煙管 [3 drams of algal convalessence, sealed]");
+            var result = processor.ProcessFor("宙吊りのシーシャ [3 drams of algal convalessence, sealed]");
 
             Assert.Multiple(() =>
             {
-                Assert.That(result, Is.EqualTo("宙吊りの水煙管 [3ドラムの{{g|藻質の}}{{C|コンバレセンス}}、密封]"));
+                Assert.That(result, Is.EqualTo("宙吊りのシーシャ [3ドラムの{{g|藻質の}}{{C|コンバレセンス}}、密封]"));
                 Assert.That(Translator.GetMissingKeyHitCountForTests("algal convalessence, sealed"), Is.EqualTo(0));
                 Assert.That(Translator.GetMissingKeyHitCountForTests("[sealed]"), Is.EqualTo(0));
             });
@@ -384,6 +384,64 @@ public sealed class GetDisplayNameProcessPatchTests
     }
 
     [Test]
+    public void Postfix_TranslatesAlgalWaterLiquidState_WhenPatched()
+    {
+        WriteDictionary(
+            ("algal", "藻入り"),
+            ("water", "水"));
+        WriteDictionaryFile("ui-displayname-adjectives.ja.json", ("[sealed]", "[密封]"));
+
+        RunWithDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("algal water, sealed");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("藻入り水、密封"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("algal water, sealed"), Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
+    public void Postfix_TranslatesLiquidStateWithGeneralDictionaryFallback_WhenPatched()
+    {
+        WriteDictionary(("fresh water", "真水"));
+        WriteDictionaryFile("ui-displayname-adjectives.ja.json", ("[sealed]", "[密封]"));
+
+        RunWithDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("fresh water, sealed");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("真水、密封"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("fresh water, sealed"), Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
+    public void Postfix_TranslatesLocalizedBaseWithPipingClause_WhenPatched()
+    {
+        WriteDictionaryFile("ui-displayname-adjectives.ja.json", ("with piping", "（配管付き）"));
+
+        RunWithDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("シーシャ with piping");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("シーシャ（配管付き）"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("シーシャ with piping"), Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
     public void Postfix_TranslatesLeadingMarkupWrappedModifier_WhenPatched()
     {
         WriteDictionary(("{{graffitied|graffitied}}", "{{graffitied|落書きされた}}"));
@@ -397,6 +455,24 @@ public sealed class GetDisplayNameProcessPatchTests
             {
                 Assert.That(result, Is.EqualTo("{{graffitied|落書きされた}} 塩漬け茎の壁"));
                 Assert.That(Translator.GetMissingKeyHitCountForTests("{{graffitied|graffitied}} 塩漬け茎の壁"), Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
+    public void Postfix_TranslatesLeadingMarkupWrappedModifierFromVisibleDictionary_WhenPatched()
+    {
+        WriteDictionaryFile("ui-displayname-adjectives.ja.json", ("bloody", "血まみれの"));
+
+        RunWithDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("{{r|bloody}} 塩漬け茎の壁");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("{{r|血まみれの}} 塩漬け茎の壁"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("{{r|bloody}} 塩漬け茎の壁"), Is.EqualTo(0));
             });
         });
     }
@@ -744,18 +820,18 @@ public sealed class GetDisplayNameProcessPatchTests
     public void Postfix_TranslatesLocalizedObjectWithPipingSuffix_WhenPatched()
     {
         WriteDictionaryFile(
-            "ui-displayname-atomic.ja.json",
+            "ui-displayname-adjectives.ja.json",
             ("with piping", "（配管付き）"));
 
         RunWithDisplayNameProcessPatch(() =>
         {
             var processor = new DummyDisplayNameProcessor();
-            var result = processor.ProcessFor("宙吊りの水煙管 with piping");
+            var result = processor.ProcessFor("宙吊りのシーシャ with piping");
 
             Assert.Multiple(() =>
             {
-                Assert.That(result, Is.EqualTo("宙吊りの水煙管（配管付き）"));
-                Assert.That(Translator.GetMissingKeyHitCountForTests("宙吊りの水煙管 with piping"), Is.EqualTo(0));
+                Assert.That(result, Is.EqualTo("宙吊りのシーシャ（配管付き）"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("宙吊りのシーシャ with piping"), Is.EqualTo(0));
             });
         });
     }

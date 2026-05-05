@@ -311,6 +311,43 @@ public sealed class CharacterStatusScreenMutationDetailsPatchTests
         });
     }
 
+    [TestCase("Confusing Venom", "Stinger Confusion", "毒針（混乱毒）", "混乱させる")]
+    [TestCase("Paralyzing Venom", "Stinger Paralysis", "毒針（麻痺毒）", "麻痺させる")]
+    [TestCase("Poisoning Venom", "Stinger Poison", "毒針（毒）", "毒を与える")]
+    public void TryTranslateMutationDetails_UsesStingerVariantRankText_ForComparisonFamily(
+        string variant,
+        string propertyName,
+        string displayName,
+        string effectText)
+    {
+        var mutationName = $"Stinger ({variant})";
+        WriteDictionary(
+            ($"mutation:{mutationName}", "臀部の毒針を持つ。"),
+            ($"mutation:{mutationName}:{propertyName}:rank:1", $"毒は{{{{rules|2d3+2}}}}ラウンド{effectText}。"),
+            ($"mutation:{mutationName}:{propertyName}:rank:2", $"毒は{{{{rules|2d3+2}}}}ラウンド{effectText}、貫通が上がる。"),
+            ("This rank", "現在ランク"),
+            ("Next rank", "次ランク"));
+
+        var changed = CharacterStatusScreenTextTranslator.TryTranslateMutationDetails(
+            new DummyCharacterMutation
+            {
+                EntryName = mutationName,
+                DisplayName = displayName,
+                Level = 1,
+            },
+            "You bear a tail with a stinger that delivers confusing venom to your enemies.\n\n{{w|This rank}}:\n20% chance on melee attack to sting your opponent ({{c|\u001a}}{{rules|7}} {{r|\u0003}}{{rules|1d6}})\n\n{{w|Next rank}}:\n20% chance on melee attack to sting your opponent ({{c|\u001a}}{{rules|8}} {{r|\u0003}}{{rules|1d6}})",
+            nameof(CharacterStatusScreenTranslationPatch),
+            out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(
+                translated,
+                Is.EqualTo($"臀部の毒針を持つ。\n\n{{{{w|現在ランク}}}}:\n毒は{{{{rules|2d3+2}}}}ラウンド{effectText}。\n\n{{{{w|次ランク}}}}:\n毒は{{{{rules|2d3+2}}}}ラウンド{effectText}、貫通が上がる。"));
+        });
+    }
+
     private static MethodInfo RequireMethod(Type type, string methodName)
     {
         return AccessTools.Method(type, methodName)

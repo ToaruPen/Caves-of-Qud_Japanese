@@ -96,6 +96,20 @@ public sealed class DescriptionTextTranslatorTests
     }
 
     [Test]
+    public void TranslateShortDescription_AppliesStoneStatueGeneratedDescriptionPattern()
+    {
+        WritePatternDictionary((
+            "^This statue worked from stone intricately depicts (?:the |a |an )?(.+?):$",
+            "石から彫り出されたこの像は{0}を精緻に描いている:"));
+
+        var translated = DescriptionTextTranslator.TranslateShortDescription(
+            "This statue worked from stone intricately depicts a 山羊人の種播き:",
+            "DescriptionTextTranslatorTests");
+
+        Assert.That(translated, Is.EqualTo("石から彫り出されたこの像は山羊人の種播きを精緻に描いている:"));
+    }
+
+    [Test]
     public void TranslateLongDescription_PreservesColoredFactionTarget_InDispositionLine()
     {
         var translated = DescriptionTextTranslator.TranslateLongDescription(

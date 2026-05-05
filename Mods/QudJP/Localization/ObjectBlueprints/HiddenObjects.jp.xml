@@ -753,7 +753,7 @@
     <tag Name="ExcludeFromDynamicEncounters" />
   </object>
   <object Name="Eater Hookah" Inherits="Hookah" Replace="true">
-    <part Name="Render" DisplayName="宙吊りの水煙管" ColorString="&amp;W" DetailColor="w" Tile="Furniture/eater-hookah.png" />
+    <part Name="Render" DisplayName="宙吊りのシーシャ" ColorString="&amp;W" DetailColor="w" Tile="Furniture/eater-hookah.png" />
     <part Name="Description" Short="星色のローズゴールドの瓶が宙に浮かび、水晶の茎束が花束のように支えている。配管芸術のすべてが日向ぼっこの白鳥を思わせる。" />
     <part Name="Physics" Takeable="false" />
     <stat Name="AV" Value="20" />

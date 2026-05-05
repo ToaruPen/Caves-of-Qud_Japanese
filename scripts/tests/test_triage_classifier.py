@@ -69,6 +69,29 @@ def test_classify_preserved_stat_abbreviation() -> None:
     assert result.slot_evidence == ["STR"]
 
 
+def test_classify_compact_effect_stat_modifier_lines_are_preserved_english() -> None:
+    """Compact stat-abbreviation modifier lines are game-rule notation, not translation work."""
+    for stat in ["AV", "DV", "MA", "PV"]:
+        for sign in ["+", "-"]:
+            for magnitude in ["1", "6"]:
+                result = classify(_mk(f"{sign}{magnitude} {stat}", route="<no-context>"))
+                assert result.classification == TriageClassification.PRESERVED_ENGLISH
+
+
+def test_classify_sentence_effect_modifier_line_is_logic_required() -> None:
+    """Sentence-like generated effect modifier lines are translation work."""
+    result = classify(_mk("-6 to all mental attributes", route="<no-context>"))
+    assert result.classification == TriageClassification.LOGIC_REQUIRED
+    assert result.slot_evidence == ["6"]
+
+
+def test_classify_full_word_stat_modifier_line_is_logic_required() -> None:
+    """Full-word stat modifier lines are translatable text, not compact stat notation."""
+    result = classify(_mk("-6 Agility", route="<no-context>"))
+    assert result.classification == TriageClassification.LOGIC_REQUIRED
+    assert result.slot_evidence == ["6"]
+
+
 def test_classify_unexpected_translation_of_preserved_stat_abbreviation() -> None:
     """Dynamic probes flag protected tokens that were translated unexpectedly."""
     entry = LogEntry(

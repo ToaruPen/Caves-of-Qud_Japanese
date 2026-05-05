@@ -31,6 +31,7 @@ public sealed class TradeUiPopupTranslationPatchTests
         LocalizationAssetResolver.SetLocalizationRootForTests(null);
         MessagePatternTranslator.ResetForTests();
         MessagePatternTranslator.SetPatternFileForTests(patternFilePath);
+        MessageFrameTranslator.ResetForTests();
         DynamicTextObservability.ResetForTests();
         File.WriteAllText(patternFilePath, "{\"patterns\":[]}\n", Utf8WithoutBom);
         DummyTradeUiPopupTarget.Reset();
@@ -42,6 +43,7 @@ public sealed class TradeUiPopupTranslationPatchTests
         Translator.ResetForTests();
         LocalizationAssetResolver.SetLocalizationRootForTests(null);
         MessagePatternTranslator.ResetForTests();
+        MessageFrameTranslator.ResetForTests();
         DynamicTextObservability.ResetForTests();
         DummyTradeUiPopupTarget.Reset();
 
@@ -284,6 +286,49 @@ public sealed class TradeUiPopupTranslationPatchTests
             Is.EqualTo("スナップジョーの軍主には取引するものがない"));
     }
 
+    [Test]
+    public void Prefix_TranslatesMarkedDoesVerbHookahWaterMessage_WhenPatched()
+    {
+        UseRepositoryVerbDictionary();
+        using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
+        var source = DoesVerbRouteTranslator.MarkDoesFragment(
+            "The 宙吊りのシーシャ（配管付き） needs",
+            "need",
+            "The 宙吊りのシーシャ（配管付き）".Length,
+            null) + " water in it.";
+
+        DummyTradeUiPopupTarget.Show(source);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyTradeUiPopupTarget.LastShowMessage, Is.EqualTo("宙吊りのシーシャ（配管付き）には水が必要だ"));
+            Assert.That(DummyTradeUiPopupTarget.LastShowMessage.IndexOf('\u0002'), Is.EqualTo(-1));
+            Assert.That(DummyTradeUiPopupTarget.LastShowMessage.IndexOf('\u001f'), Is.EqualTo(-1));
+            Assert.That(DummyTradeUiPopupTarget.LastShowMessage.IndexOf('\u0003'), Is.EqualTo(-1));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(TradeUiPopupTranslationPatch),
+                    "Popup.ProducerText.DoesVerb"),
+                Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void Prefix_TranslatesStoneStatuePrayerPattern_WhenPatched()
+    {
+        WritePatternDictionary((
+            "^You voice a short prayer beneath the (.+?) stone statue of (?:the |a |an )?(.+?)\\.$",
+            "あなたは{1}の{0}石像の下で短い祈りを唱えた。"));
+        using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
+
+        DummyTradeUiPopupTarget.Show(
+            "You voice a short prayer beneath the 冒涜された stone statue of a 山羊人の種播き.");
+
+        Assert.That(
+            DummyTradeUiPopupTarget.LastShowMessage,
+            Is.EqualTo("あなたは山羊人の種播きの冒涜された石像の下で短い祈りを唱えた。"));
+    }
+
     private static IDisposable PatchMethod(string methodName)
     {
         var harmonyId = $"qudjp.tests.{Guid.NewGuid():N}";
@@ -304,6 +349,12 @@ public sealed class TradeUiPopupTranslationPatchTests
     {
         return Path.GetFullPath(
             Path.Combine(TestContext.CurrentContext.TestDirectory, "../../../../../Localization"));
+    }
+
+    private static void UseRepositoryVerbDictionary()
+    {
+        MessageFrameTranslator.SetDictionaryPathForTests(
+            Path.Combine(GetLocalizationRoot(), "MessageFrames", "verbs.ja.json"));
     }
 
     // To-do: consolidate these JSON test helpers once the shared usage reaches 3+ files.

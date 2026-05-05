@@ -41,6 +41,7 @@ public sealed class PopupTranslationPatchTests
         Translator.SetDictionaryDirectoryForTests(dictionaryDirectory);
         MessagePatternTranslator.ResetForTests();
         MessagePatternTranslator.SetPatternFileForTests(patternFilePath);
+        MessageFrameTranslator.ResetForTests();
         File.WriteAllText(patternFilePath, "{\"patterns\":[]}\n", new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
         JournalPatternTranslator.ResetForTests();
         JournalPatternTranslator.SetPatternFileForTests(journalPatternFilePath);
@@ -55,6 +56,7 @@ public sealed class PopupTranslationPatchTests
     {
         Translator.ResetForTests();
         MessagePatternTranslator.ResetForTests();
+        MessageFrameTranslator.ResetForTests();
         JournalPatternTranslator.ResetForTests();
         DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
@@ -322,6 +324,136 @@ public sealed class PopupTranslationPatchTests
         {
             harmony.UnpatchAll(harmonyId);
         }
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_TranslatesMarkedDoesVerbHookahWaterMessage()
+    {
+        UseRepositoryVerbDictionary();
+        var source = DoesVerbRouteTranslator.MarkDoesFragment(
+            "The 宙吊りのシーシャ（配管付き） needs",
+            "need",
+            "The 宙吊りのシーシャ（配管付き）".Length,
+            null) + " water in it.";
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            source,
+            nameof(PopupShowTranslationPatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("宙吊りのシーシャ（配管付き）には水が必要だ"));
+            Assert.That(translated.IndexOf('\u0002'), Is.EqualTo(-1));
+            Assert.That(translated.IndexOf('\u001f'), Is.EqualTo(-1));
+            Assert.That(translated.IndexOf('\u0003'), Is.EqualTo(-1));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PopupShowTranslationPatch),
+                    "Popup.ProducerText.DoesVerb"),
+                Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_StripsMarkedDoesVerbControlHeader_WhenNoVerbTranslationMatches()
+    {
+        UseRepositoryVerbDictionary();
+        var source = DoesVerbRouteTranslator.MarkDoesFragment(
+            "The 宙吊りのシーシャ（配管付き） frobnicates",
+            "frobnicate",
+            "The 宙吊りのシーシャ（配管付き）".Length,
+            null) + " without a dictionary match.";
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            source,
+            nameof(PopupShowTranslationPatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("The 宙吊りのシーシャ（配管付き） frobnicates without a dictionary match."));
+            Assert.That(translated.IndexOf('\u0002'), Is.EqualTo(-1));
+            Assert.That(translated.IndexOf('\u001f'), Is.EqualTo(-1));
+            Assert.That(translated.IndexOf('\u0003'), Is.EqualTo(-1));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PopupShowTranslationPatch),
+                    "Popup.ProducerText.DoesVerb"),
+                Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_TranslatesStoneStatuePrayerPattern_ForPopupShow()
+    {
+        WritePatternDictionary((
+            "^You voice a short prayer beneath the (.+?) stone statue of (?:the |a |an )?(.+?)\\.$",
+            "あなたは{1}の{0}石像の下で短い祈りを唱えた。"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "You voice a short prayer beneath the 冒涜された stone statue of a 山羊人の種播き.",
+            nameof(PopupShowTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo("あなたは山羊人の種播きの冒涜された石像の下で短い祈りを唱えた。"));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_StoneStatuePrayerPattern_FallsBackToEnglish_WhenNoPatternMatch()
+    {
+        WritePatternDictionary((
+            "^You voice a short prayer beneath the (.+?) stone statue of (?:the |a |an )?(.+?)\\.$",
+            "あなたは{1}の{0}石像の下で短い祈りを唱えた。"));
+
+        var source = "You hum beside a different statue.";
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            source,
+            nameof(PopupShowTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo(source));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_StoneStatuePrayerPattern_HandlesEmptyInput()
+    {
+        WritePatternDictionary((
+            "^You voice a short prayer beneath the (.+?) stone statue of (?:the |a |an )?(.+?)\\.$",
+            "あなたは{1}の{0}石像の下で短い祈りを唱えた。"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            string.Empty,
+            nameof(PopupShowTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_StoneStatuePrayerPattern_HandlesColorTags()
+    {
+        WritePatternDictionary((
+            "^You voice a short prayer beneath the (.+?) stone statue of (?:the |a |an )?(.+?)\\.$",
+            "あなたは{1}の{0}石像の下で短い祈りを唱えた。"));
+
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            "You voice a short prayer beneath the <color=#44ff88>冒涜された</color> stone statue of a 山羊人の種播き.",
+            nameof(PopupShowTranslationPatch));
+
+        Assert.That(
+            translated,
+            Is.EqualTo("あなたは山羊人の種播きの<color=#44ff88>冒涜された</color>石像の下で短い祈りを唱えた。"));
+    }
+
+    [Test]
+    public void TranslatePopupTextForProducerRoute_StoneStatuePrayerPattern_HandlesControlMarker()
+    {
+        WritePatternDictionary((
+            "^You voice a short prayer beneath the (.+?) stone statue of (?:the |a |an )?(.+?)\\.$",
+            "あなたは{1}の{0}石像の下で短い祈りを唱えた。"));
+
+        const string source = "You voice a short prayer beneath the 冒涜された stone statue of a 山羊人の種播き.";
+        var translated = PopupTranslationPatch.TranslatePopupTextForProducerRoute(
+            MessageFrameTranslator.MarkDirectTranslation(source),
+            nameof(PopupShowTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo(source));
     }
 
     [Test]
@@ -1845,6 +1977,19 @@ public sealed class PopupTranslationPatchTests
                 $"Method not found: {type.FullName}.{methodName}({string.Join(", ", Array.ConvertAll(parameterTypes, static type => type.Name))})");
     }
 
+    private static void UseRepositoryVerbDictionary()
+    {
+        var repositoryDictionaryPath = Path.Combine(
+            QudJP.Tests.L1.TestProjectPaths.GetRepositoryRoot(),
+            "Mods",
+            "QudJP",
+            "Localization",
+            "MessageFrames",
+            "verbs.ja.json");
+
+        MessageFrameTranslator.SetDictionaryPathForTests(repositoryDictionaryPath);
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();
@@ -1898,6 +2043,34 @@ public sealed class PopupTranslationPatchTests
         File.WriteAllText(journalPatternFilePath, builder.ToString(), new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
         JournalPatternTranslator.ResetForTests();
         JournalPatternTranslator.SetPatternFileForTests(journalPatternFilePath);
+    }
+
+    private void WritePatternDictionary(params (string pattern, string template)[] patterns)
+    {
+        var builder = new StringBuilder();
+        builder.Append('{');
+        builder.Append("\"patterns\":[");
+
+        for (var index = 0; index < patterns.Length; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(',');
+            }
+
+            builder.Append("{\"pattern\":\"");
+            builder.Append(EscapeJson(patterns[index].pattern));
+            builder.Append("\",\"template\":\"");
+            builder.Append(EscapeJson(patterns[index].template));
+            builder.Append("\"}");
+        }
+
+        builder.Append("]}");
+        builder.AppendLine();
+
+        File.WriteAllText(patternFilePath, builder.ToString(), new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+        MessagePatternTranslator.ResetForTests();
+        MessagePatternTranslator.SetPatternFileForTests(patternFilePath);
     }
 
     private static string EscapeJson(string value)

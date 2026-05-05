@@ -1598,6 +1598,28 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void Translate_RepositoryDictionary_TranslatesStoneStatuePrayerMessage()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate(
+            "You voice a short prayer beneath the 冒涜された stone statue of a 山羊人の種播き.");
+
+        Assert.That(translated, Is.EqualTo("あなたは山羊人の種播きの冒涜された石像の下で短い祈りを唱えた。"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_TranslatesPlayerProjectileArmorFailureMessage()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate(
+            "Your 鉛スラッグ fails to penetrate the フォームクリートの armor!");
+
+        Assert.That(translated, Is.EqualTo("あなたの鉛スラッグはフォームクリートの装甲を貫けなかった！"));
+    }
+
+    [Test]
     public void Translate_RepositoryDictionary_TranslatesSlimyMessage()
     {
         UseRepositoryPatternDictionary();
