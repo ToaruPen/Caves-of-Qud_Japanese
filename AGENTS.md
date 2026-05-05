@@ -26,6 +26,11 @@ QudJP is the Japanese localization mod for Caves of Qud `2.0.4`. The repo contai
   wrappers, assignments, or attributes matter. Prefer `just sg-cs
   'Popup.Show($$$ARGS)'` for common C# searches; plain `rg` is still fine for
   literal text, symbol names, and file discovery.
+- For authoritative C# static inventories or scanner changes where type,
+  receiver, overload, alias, inheritance, or extension-method identity affects
+  correctness, use the repo-local Roslyn static analysis skill at
+  `.codex/skills/roslyn-static-analysis/SKILL.md`. Treat `ast-grep` hits as
+  candidates in that case, not proof.
 - Prefer `just` recipes for routine validation so local runs match the repo task runner.
   Raw commands below document what the recipes execute.
 - Core commands:
