@@ -46,6 +46,10 @@ jobs:
             grep -Eq "$1" changed-files.txt
           }
 
+          matches_python_scripts() {
+            awk '/^scripts\// && !/^scripts\/tools\// { found = 1 } END { exit found ? 0 : 1 }' changed-files.txt
+          }
+
           run_all=false
           qudjp_dotnet=false
           roslyn_tools=false
@@ -61,7 +65,7 @@ jobs:
           if [[ "$run_all" == true ]] || matches '^scripts/tools/'; then
             roslyn_tools=true
           fi
-          if [[ "$run_all" == true ]] || matches '^(pyproject\.toml|uv\.lock)$' || { matches '^scripts/' && ! matches '^scripts/tools/'; }; then
+          if [[ "$run_all" == true ]] || matches '^(pyproject\.toml|uv\.lock)$' || matches_python_scripts; then
             python=true
           fi
           if [[ "$run_all" == true ]] || matches '^(Mods/QudJP/Localization/|scripts/(check_translation_tokens|check_glossary_consistency)\.py|scripts/(translation_token_duplicate_baseline|glossary_consistency_baseline)\.json)'; then
