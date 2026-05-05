@@ -142,6 +142,12 @@ def validate_triage_result(data: dict[str, Any]) -> TriageResult:
     if not isinstance(summary_ja, str) or not isinstance(evidence_quote, str):
         msg = "triage summary and evidence must be strings"
         raise TypeError(msg)
+    if not summary_ja.strip():
+        msg = "triage summary must be a non-empty string"
+        raise ValueError(msg)
+    if not evidence_quote.strip():
+        msg = "triage evidence must be a non-empty string"
+        raise ValueError(msg)
     if not isinstance(promotion_recommended, bool):
         msg = "triage promotion flag must be boolean"
         raise TypeError(msg)
@@ -159,6 +165,12 @@ def validate_triage_result(data: dict[str, Any]) -> TriageResult:
 
 def render_verified_evidence_quote(*, snapshot_body: str, model_evidence_quote: str, max_chars: int) -> str:
     """Render deterministic public evidence only when the model quote exists in the snapshot."""
+    if not isinstance(model_evidence_quote, str):
+        msg = "model evidence quote must be a string"
+        raise TypeError(msg)
+    if not model_evidence_quote.strip():
+        msg = "model evidence quote must be non-empty"
+        raise ValueError(msg)
     if model_evidence_quote not in snapshot_body:
         msg = "model evidence quote was not found in snapshot body"
         raise ValueError(msg)

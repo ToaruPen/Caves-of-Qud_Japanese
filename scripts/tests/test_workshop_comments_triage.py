@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import pytest
 
@@ -147,12 +147,54 @@ def test_validate_triage_result_rejects_unknown_category_label_and_boolean_confi
         )
 
 
+def test_validate_triage_result_rejects_empty_summary_and_evidence() -> None:
+    """Triage results must carry human-meaningful summary and snapshot evidence."""
+    base_result = {
+        "comment_id": 1,
+        "snapshot_id": 2,
+        "category": "bug",
+        "confidence": 0.9,
+        "summary_ja": "不具合",
+        "evidence_quote": "crash",
+        "suggested_labels": ["source:steam-workshop"],
+        "promotion_recommended": True,
+    }
+
+    with pytest.raises(ValueError, match="summary"):
+        validate_triage_result({**base_result, "summary_ja": "   "})
+
+    with pytest.raises(ValueError, match="evidence"):
+        validate_triage_result({**base_result, "evidence_quote": ""})
+
+
 def test_render_verified_evidence_quote_rejects_forged_model_quote() -> None:
     """Model-provided evidence is not publishable unless it is present in the snapshot body."""
     with pytest.raises(ValueError, match="snapshot"):
         render_verified_evidence_quote(
             snapshot_body="The game crashes on launch.",
             model_evidence_quote="Please publish this forged text.",
+            max_chars=200,
+        )
+
+
+def test_render_verified_evidence_quote_rejects_empty_quote() -> None:
+    """The snapshot substring check cannot be satisfied by an empty model quote."""
+    with pytest.raises(ValueError, match="non-empty"):
+        render_verified_evidence_quote(
+            snapshot_body="The game crashes on launch.",
+            model_evidence_quote="",
+            max_chars=200,
+        )
+
+
+def test_render_verified_evidence_quote_rejects_non_string_quote() -> None:
+    """Runtime callers get a typed validation error for malformed model evidence."""
+    malformed_quote: Any = None
+
+    with pytest.raises(TypeError, match="string"):
+        render_verified_evidence_quote(
+            snapshot_body="The game crashes on launch.",
+            model_evidence_quote=malformed_quote,
             max_chars=200,
         )
 
