@@ -122,9 +122,12 @@ def validate_triage_result(data: dict[str, Any]) -> TriageResult:
         msg = "triage category is not allowed"
         raise ValueError(msg)
     confidence = data.get("confidence")
-    if isinstance(confidence, bool) or not isinstance(confidence, int | float) or not 0 <= confidence <= 1:
+    if isinstance(confidence, bool) or not isinstance(confidence, int | float):
         msg = "triage confidence must be a number between 0 and 1"
         raise TypeError(msg)
+    if not 0 <= confidence <= 1:
+        msg = "triage confidence must be a number between 0 and 1"
+        raise ValueError(msg)
     suggested_labels = data.get("suggested_labels")
     if not isinstance(suggested_labels, list) or not all(isinstance(label, str) for label in suggested_labels):
         msg = "triage labels must be a string list"

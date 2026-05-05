@@ -21,3 +21,6 @@ def test_gitignore_lists_local_workshop_state_directories() -> None:
     assert ".coq-japanese_workshop/backups/*" in text
     assert ".coq-japanese_workshop/exports/*" in text
     assert "!.coq-japanese_workshop/README.md" in text
+    assert "!.coq-japanese_workshop/state/.gitkeep" in text
+    assert "!.coq-japanese_workshop/backups/.gitkeep" in text
+    assert "!.coq-japanese_workshop/exports/.gitkeep" in text

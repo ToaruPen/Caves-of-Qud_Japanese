@@ -118,6 +118,34 @@ def test_validate_triage_result_rejects_unknown_category_label_and_boolean_confi
             },
         )
 
+    with pytest.raises(ValueError, match="confidence"):
+        validate_triage_result(
+            {
+                "comment_id": 1,
+                "snapshot_id": 2,
+                "category": "bug",
+                "confidence": -0.1,
+                "summary_ja": "不具合",
+                "evidence_quote": "crash",
+                "suggested_labels": ["source:steam-workshop"],
+                "promotion_recommended": True,
+            },
+        )
+
+    with pytest.raises(ValueError, match="confidence"):
+        validate_triage_result(
+            {
+                "comment_id": 1,
+                "snapshot_id": 2,
+                "category": "bug",
+                "confidence": 1.1,
+                "summary_ja": "不具合",
+                "evidence_quote": "crash",
+                "suggested_labels": ["source:steam-workshop"],
+                "promotion_recommended": True,
+            },
+        )
+
 
 def test_render_verified_evidence_quote_rejects_forged_model_quote() -> None:
     """Model-provided evidence is not publishable unless it is present in the snapshot body."""
