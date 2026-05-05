@@ -110,9 +110,23 @@ jobs:
         if: steps.changes.outputs.qudjp_dotnet == 'true' && hashFiles('Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj') != ''
         run: dotnet build Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --configuration Release
 
-      - name: Build AnnalsPatternExtractor
-        if: steps.changes.outputs.roslyn_tools == 'true' && hashFiles('scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj') != ''
-        run: dotnet build scripts/tools/AnnalsPatternExtractor/AnnalsPatternExtractor.csproj --configuration Release
+      - name: Build script tools
+        if: steps.changes.outputs.roslyn_tools == 'true' && hashFiles('scripts/tools/**/*.csproj') != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -t projects < <(find scripts/tools -name '*.csproj' -type f | sort)
+          if (( ${#projects[@]} == 0 )); then
+            echo "No script tool projects found."
+            exit 0
+          fi
+
+          for project in "${projects[@]}"; do
+            echo "::group::dotnet build ${project}"
+            dotnet build "${project}" --configuration Release
+            echo "::endgroup::"
+          done
 
       - name: Test QudJP
         if: steps.changes.outputs.qudjp_dotnet == 'true' && hashFiles('Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj') != ''
