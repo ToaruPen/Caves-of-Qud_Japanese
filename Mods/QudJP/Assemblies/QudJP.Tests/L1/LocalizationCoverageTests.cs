@@ -8,6 +8,24 @@ namespace QudJP.Tests.L1;
 [Category("L1")]
 public sealed class LocalizationCoverageTests
 {
+    private static readonly HashSet<string> CommandCategoryKeys = new(StringComparer.Ordinal)
+    {
+        "Ability Bar",
+        "Advanced Adventuring",
+        "Adventuring",
+        "Basic Move / Attack",
+        "Character Creation",
+        "Character Sheet",
+        "Debug",
+        "Menus",
+        "Mouse-specific",
+        "Shortcuts to Character Sheet",
+        "System",
+        "Targeting",
+        "Trade",
+        "UI",
+    };
+
     private string localizationRoot = null!;
 
     [SetUp]
@@ -54,6 +72,30 @@ public sealed class LocalizationCoverageTests
             Assert.That(skillNames.Except(skillNameKeys).ToArray(), Is.Empty, "Missing skill-name entries in skills dictionaries.");
             Assert.That(powerNames.Except(skillNameKeys).ToArray(), Is.Empty, "Missing power-name entries in skills dictionaries.");
         });
+    }
+
+    [Test]
+    public void CommandsXml_CommandCategoriesRemainStableGroupingKeys()
+    {
+        var commandsDocument = XDocument.Load(Path.Combine(localizationRoot, "Commands.jp.xml"));
+        var categoryValues = commandsDocument.Root!
+            .Elements("command")
+            .Select(element => element.Attribute("Category")?.Value)
+            .Where(static value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        var unsupportedCategories = categoryValues
+            .Where(category => !CommandCategoryKeys.Contains(category))
+            .ToArray();
+
+        Assert.That(
+            unsupportedCategories,
+            Is.Empty,
+            "Command Category is a stable grouping key consumed by Control Mapping. "
+            + "Translate category labels at the UI route instead of localizing Category attributes.");
     }
 
     [Test]
