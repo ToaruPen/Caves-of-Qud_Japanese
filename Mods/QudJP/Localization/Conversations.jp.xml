@@ -5132,7 +5132,7 @@
 
         生きて飲め。さあ、涼しい日陰に入り、あの枕の向こうに座るといい。ジョッパへようこそ。
 
-        我らの淡水も飲んで、渇きを癒やしなさい。
+        我らの真水も飲んで、渇きを癒やしなさい。
       </text>
       <choice Target="FinishedRedrock" IfHaveActiveQuest="What's Eating the Watervine?" IfFinishedQuestStep="What's Eating the Watervine?~Travel to Red Rock" IfHaveItemDescendsFrom="Girshling Corpse">レッドロックから戻った。蒼白い蜘蛛の死骸を持ってきた。長老、調べてくれないか？</choice>
       <choice Target="Joppa">ここジョッパはどんな場所だ？</choice>

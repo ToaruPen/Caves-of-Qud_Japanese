@@ -170,6 +170,28 @@ public sealed class PopupAskNumberTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_UsesTradeScreenOwnerTemplate_ForTradeSomePromptBeforeGenericPopupRoute()
+    {
+        WriteDictionary(
+            ("Add how many {0} to trade.", "{0}をいくつ取引に追加しますか？"),
+            ("Add how many {{R|lead slug}} to trade.", "generic popup route should not be used"));
+
+        using var patch = PatchMethod(nameof(DummyPopupGenericTarget.AskNumberAsync));
+
+        _ = DummyPopupGenericTarget.AskNumberAsync("Add how many {{R|lead slug}} to trade.", 2, 0, 5).GetAwaiter().GetResult();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyPopupGenericTarget.LastAskNumberMessage, Is.EqualTo("{{R|lead slug}}をいくつ取引に追加しますか？"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(TradeScreenUiTranslationPatch),
+                    "TradeScreenUi.AskNumber"),
+                Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
     public void Prefix_StripsDirectTranslationMarker_FromAskNumberPrompt()
     {
         WriteDictionary(("既に翻訳済み", "別訳"));

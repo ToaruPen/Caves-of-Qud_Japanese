@@ -71,6 +71,26 @@ If a translation or color-tag bug is caused by a route that QudJP does not yet o
 
 Do not create sink-wide ownership just because a string is visible there. Sink text often mixes multiple unrelated routes, and sink-side "fixes" easily break other strings.
 
+## Generic popup route policy
+
+`PopupTranslationPatch.TranslatePopupTextForProducerRoute` and
+`TranslatePopupMenuItemTextForProducerRoute` are shared popup producer
+translators, not shortcuts for dynamic owner work.
+
+They may be used only when one of these is true:
+
+- the caller is a generic popup surface with no narrower known producer owner
+- the text is a fixed popup label, fixed title, or fixed menu item
+- the caller has already run its route-specific owner helpers and is falling
+  back to shared popup families
+- the popup route is explicitly documented in
+  `ColorRouteCatalog.GenericPopupProducerRouteAllowlist`
+
+They must not be the first fix for generated, composed, conversation, combat,
+display-name, or placeholder-bearing text. If a runtime bug reaches a generic
+popup route with an owner-specific sentence shape, add or expose a narrow owner
+helper first, then hand off to that helper before the generic popup fallback.
+
 ## Choosing the fix type
 
 Use localization assets for:

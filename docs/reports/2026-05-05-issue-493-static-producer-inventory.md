@@ -125,6 +125,22 @@ starting points for later batches:
 | 11 | `XRL.Core/XRLCore.cs::XRL.Core.XRLCore.PlayerTurn` | `AddPlayerMessage`, `Popup.Show*` |
 | 11 | `XRL.UI/TradeUI.cs::XRL.UI.TradeUI.PerformOffer` | `Popup.Show*` |
 
+## Current branch implementation overlay
+
+`docs/static-producer-inventory.json` is static decompiled-source evidence and
+does not mark current-repo coverage by itself. The issue-493 implementation
+branch adds current-repo owner evidence for these producer families:
+
+| Producer family | Inventory status | Current branch route evidence |
+| --- | --- | --- |
+| `XRL.UI/TradeUI.cs::XRL.UI.TradeUI.PerformOffer` | `needs_family_review` | Dynamic water-payment popup text is removed from `ui-trade.ja.json` and handled by `TradeUiPopupTranslationPatch.TryTranslatePerformOfferTradeWaterMessage`. L1/L2 tests prove dictionary entries are ignored for this owner-template path and color markup is preserved. |
+| `XRL.World.Parts/PetEitherOr.cs::XRL.World.Parts.PetEitherOr.explode` | `owner_patch_required` | `PetEitherOrExplodeTranslationPatch` gates `AddPlayerMessage` translation to the `explode()` owner route. L2 tests prove queue-only traffic is not translated, direct markers are preserved, dynamic captures are restored, and whole-message color boundaries survive. |
+| `XRL.World/Zone.cs::XRL.World.Zone.WindChange` | `owner_patch_required` | `ZoneWindChangeTranslationPatch` gates wind-change `AddPlayerMessage` translation to the `WindChange(long)` owner route. L2 tests cover direction changes, wind speed changes with and without Trailblazer direction text, unknown component fallback, direct markers, and color markup. |
+
+These owner-route fixes intentionally do not promote generated runtime text to
+dictionary leaves. Existing dynamic-looking dictionary debt discovered during
+the branch was split into GitHub issue `#497`.
+
 ## Verification
 
 Focused scanner verification:

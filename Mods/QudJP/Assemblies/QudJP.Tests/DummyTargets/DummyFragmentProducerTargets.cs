@@ -150,6 +150,29 @@ internal sealed class DummyGivesRepProducerTarget
     }
 }
 
+internal sealed class DummyPetEitherOrProducerTarget
+{
+    public string QueuedMessageToSend { get; set; } = string.Empty;
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    public void explode()
+    {
+        DummyMessageQueue.AddPlayerMessage(QueuedMessageToSend, null, Capitalize: false);
+    }
+}
+
+internal sealed class DummyZoneWindChangeProducerTarget
+{
+    public string QueuedMessageToSend { get; set; } = string.Empty;
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    public void WindChange(long turnNumber)
+    {
+        _ = turnNumber;
+        DummyMessageQueue.AddPlayerMessage(QueuedMessageToSend, null, Capitalize: false);
+    }
+}
+
 internal static class DummyMutationsApiTarget
 {
     public static string? FailureMessageToShow;

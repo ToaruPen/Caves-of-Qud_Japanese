@@ -12,7 +12,7 @@ namespace QudJP.Patches;
 public static class TradeUiPopupTranslationPatch
 {
     private const string Context = nameof(TradeUiPopupTranslationPatch);
-    private const string FreshWaterText = "清水";
+    private const string FreshWaterText = "真水";
 
     private static readonly Regex CannotCarryPattern = new(
         "^(?<subject>.+?) cannot carry things\\.$",
@@ -78,6 +78,10 @@ public static class TradeUiPopupTranslationPatch
         "^You'll have to pony up (?<amount>\\d+) drams? of fresh water to even up the trade\\. Agreed\\?$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
+    private static readonly Regex PlayerPonyUpPattern = new(
+        "^You pony up (?<amount>\\d+) drams? of fresh water to even up the trade\\.$",
+        RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
     private static readonly Regex PlayerMissingDramsPattern = new(
         "^You don't have (?<amount>\\d+) drams? of fresh water to even up the trade!$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
@@ -92,6 +96,14 @@ public static class TradeUiPopupTranslationPatch
 
     private static readonly Regex TraderPonyUpQuestionPattern = new(
         "^(?<trader>.+?) will have to pony up (?<amount>\\d+) drams? of fresh water to even up the trade\\. Agreed\\?$",
+        RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private static readonly Regex TraderPonyUpPattern = new(
+        "^(?<trader>.+?) (?:pony|ponies) up (?<amount>\\d+) drams? of fresh water to even up the trade\\.$",
+        RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private static readonly Regex TraderMissingDramsPattern = new(
+        "^(?<trader>.+?) (?:don't|doesn't) have (?<amount>\\d+) drams? of fresh water to even up the trade!$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static readonly Regex TraderMissingDramsQuestionPattern = new(
@@ -267,11 +279,53 @@ public static class TradeUiPopupTranslationPatch
         return MessagePatternTranslator.Translate(source, Context);
     }
 
+    internal static bool TryTranslatePerformOfferTradeWaterMessage(string source, out string translated)
+    {
+        if (source is null)
+        {
+            translated = string.Empty;
+            return false;
+        }
+
+        if (source.Length == 0)
+        {
+            translated = source;
+            return false;
+        }
+
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
+        return TryTranslatePerformOfferTradeWaterMessage(source, stripped, spans, out translated);
+    }
+
+    internal static bool TryTranslateHasNothingToTradeMessage(string source, out string translated)
+    {
+        if (source is null)
+        {
+            translated = string.Empty;
+            return false;
+        }
+
+        if (source.Length == 0)
+        {
+            translated = source;
+            return false;
+        }
+
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
+        return TryTranslateHasNothingToTradeMessage(source, stripped, spans, out translated);
+    }
+
     internal static bool TryTranslateTradeUiPopupText(string source, out string translated)
     {
-        if (string.IsNullOrEmpty(source))
+        if (source is null)
         {
-            translated = source ?? string.Empty;
+            translated = string.Empty;
+            return false;
+        }
+
+        if (source.Length == 0)
+        {
+            translated = source;
             return false;
         }
 
@@ -285,25 +339,14 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.CannotCarry",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                 },
                 out translated))
         {
             return true;
         }
 
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                HasNothingToTradePattern,
-                "{0} has nothing to trade.",
-                "TradeUiPopup.HasNothingToTrade",
-                match => new object[]
-                {
-                    NormalizeSubject(match.Groups["subject"].Value),
-                },
-                out translated))
+        if (TryTranslateHasNothingToTradeMessage(source, stripped, spans, out translated))
         {
             return true;
         }
@@ -317,7 +360,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.EngagedInMelee",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                 },
                 out translated))
         {
@@ -333,7 +376,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.OnFire",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                 },
                 out translated))
         {
@@ -349,7 +392,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.WaterDebt",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                     TranslatePronoun(match.Groups["them1"].Value),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount"), emphasizeFreshWater: true),
                     TranslatePronoun(match.Groups["them2"].Value),
@@ -368,7 +411,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.WaterDebtGiveYourDrams",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                     TranslatePronoun(match.Groups["them1"].Value),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount"), emphasizeFreshWater: true),
                     TranslatePronoun(match.Groups["them2"].Value),
@@ -389,7 +432,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.WaterDebtGiveIt",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                     TranslatePronoun(match.Groups["them1"].Value),
                     FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount"), emphasizeFreshWater: true),
                     TranslatePronoun(match.Groups["them2"].Value),
@@ -425,7 +468,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.IdentifyTooComplex",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                 },
                 out translated))
         {
@@ -473,7 +516,7 @@ public static class TradeUiPopupTranslationPatch
                 "TradeUiPopup.IdentifyResult",
                 match => new object[]
                 {
-                    NormalizeSubject(match.Groups["subject"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "subject")),
                     RestoreCapture(match, spans, "item"),
                     RestoreCapture(match, spans, "identified"),
                 },
@@ -492,7 +535,7 @@ public static class TradeUiPopupTranslationPatch
                 match => new object[]
                 {
                     TranslateTradeReference(match.Groups["target"].Value),
-                    NormalizeSubject(match.Groups["trader"].Value),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
                 },
                 out translated))
         {
@@ -533,135 +576,7 @@ public static class TradeUiPopupTranslationPatch
             return true;
         }
 
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                PlayerPonyUpQuestionPattern,
-                "You'll have to pony up {0} to even up the trade. Agreed?",
-                "TradeUiPopup.PlayerPonyUpQuestion",
-                match => new object[]
-                {
-                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
-                },
-                out translated))
-        {
-            return true;
-        }
-
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                PlayerMissingDramsPattern,
-                "You don't have {0} to even up the trade!",
-                "TradeUiPopup.PlayerMissingDrams",
-                match => new object[]
-                {
-                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
-                },
-                out translated))
-        {
-            return true;
-        }
-
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                PlayerOweMorePattern,
-                "You pony up {0}, and now owe {1} {2}.",
-                "TradeUiPopup.PlayerOweMore",
-                match => new object[]
-                {
-                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "paid")),
-                    NormalizeSubject(match.Groups["trader"].Value),
-                    FormatDramCount(RestoreCapture(match, spans, "owed")),
-                },
-                out translated))
-        {
-            return true;
-        }
-
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                PlayerOweFreshWaterPattern,
-                "You now owe {0} {1}.",
-                "TradeUiPopup.PlayerOweFreshWater",
-                match => new object[]
-                {
-                    NormalizeSubject(match.Groups["trader"].Value),
-                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "owed")),
-                },
-                out translated))
-        {
-            return true;
-        }
-
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                TraderPonyUpQuestionPattern,
-                "{0} will have to pony up {1} to even up the trade. Agreed?",
-                "TradeUiPopup.TraderPonyUpQuestion",
-                match => new object[]
-                {
-                    NormalizeSubject(match.Groups["trader"].Value),
-                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
-                },
-                out translated))
-        {
-            return true;
-        }
-
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                TraderMissingDramsQuestionPattern,
-                "{0} don't have {1} to even up the trade! Do you want to complete the trade anyway?",
-                "TradeUiPopup.TraderMissingDramsQuestion",
-                match => new object[]
-                {
-                    NormalizeSubject(match.Groups["trader"].Value),
-                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
-                },
-                out translated))
-        {
-            return true;
-        }
-
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                WaterContainersStorePattern,
-                "You don't have enough water containers to carry that many drams! You can store {0}.",
-                "TradeUiPopup.WaterContainersStore",
-                match => new object[]
-                {
-                    FormatDramCount(RestoreCapture(match, spans, "amount")),
-                },
-                out translated))
-        {
-            return true;
-        }
-
-        if (TryTranslateTemplate(
-                source,
-                stripped,
-                spans,
-                WaterContainersQuestionPattern,
-                "You don't have enough water containers to carry that many drams! Do you want to complete the trade for the {0} you can store?",
-                "TradeUiPopup.WaterContainersQuestion",
-                match => new object[]
-                {
-                    FormatDramCount(RestoreCapture(match, spans, "amount")),
-                },
-                out translated))
+        if (TryTranslatePerformOfferTradeWaterMessage(source, stripped, spans, out translated))
         {
             return true;
         }
@@ -808,6 +723,33 @@ public static class TradeUiPopupTranslationPatch
 
         var template = Translator.Translate(templateKey);
         if (string.Equals(template, templateKey, StringComparison.Ordinal))
+        {
+            translated = source;
+            return false;
+        }
+
+        var visible = string.Format(CultureInfo.InvariantCulture, template, argsFactory(match));
+        var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(spans, match, stripped.Length, visible.Length);
+        translated = boundarySpans.Count == 0
+            ? visible
+            : ColorAwareTranslationComposer.Restore(visible, boundarySpans);
+
+        DynamicTextObservability.RecordTransform(Context, family, source, translated);
+        return true;
+    }
+
+    private static bool TryTranslateOwnerTemplate(
+        string source,
+        string stripped,
+        IReadOnlyList<ColorSpan> spans,
+        Regex pattern,
+        string template,
+        string family,
+        Func<Match, object[]> argsFactory,
+        out string translated)
+    {
+        var match = pattern.Match(stripped);
+        if (!match.Success)
         {
             translated = source;
             return false;
@@ -992,6 +934,219 @@ public static class TradeUiPopupTranslationPatch
 
         var normalized = AllowedLocalizedEnglishTokenPattern.Replace(visibleText, string.Empty);
         return !AsciiLetterPattern.IsMatch(normalized);
+    }
+
+    private static bool TryTranslatePerformOfferTradeWaterMessage(
+        string source,
+        string stripped,
+        IReadOnlyList<ColorSpan> spans,
+        out string translated)
+    {
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                PlayerPonyUpQuestionPattern,
+                "取引を釣り合わせるには{0}を支払う必要がある。承諾する？",
+                "TradeUiPopup.PlayerPonyUpQuestion",
+                match => new object[]
+                {
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                PlayerPonyUpPattern,
+                "あなたは取引を釣り合わせるために{0}を支払った。",
+                "TradeUiPopup.PlayerPonyUp",
+                match => new object[]
+                {
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                PlayerMissingDramsPattern,
+                "取引を釣り合わせるための{0}が足りない！",
+                "TradeUiPopup.PlayerMissingDrams",
+                match => new object[]
+                {
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                PlayerOweMorePattern,
+                "あなたは{0}を支払い、今や{1}に{2}借りている。",
+                "TradeUiPopup.PlayerOweMore",
+                match => new object[]
+                {
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "paid")),
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
+                    FormatDramCount(RestoreCapture(match, spans, "owed")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                PlayerOweFreshWaterPattern,
+                "今や{0}に{1}借りている。",
+                "TradeUiPopup.PlayerOweFreshWater",
+                match => new object[]
+                {
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "owed")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                TraderPonyUpQuestionPattern,
+                "{0}は取引を釣り合わせるために{1}を支払う必要がある。承諾する？",
+                "TradeUiPopup.TraderPonyUpQuestion",
+                match => new object[]
+                {
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                TraderPonyUpPattern,
+                "{0}は取引を釣り合わせるために{1}を支払った。",
+                "TradeUiPopup.TraderPonyUp",
+                match => new object[]
+                {
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                TraderMissingDramsPattern,
+                "{0}には取引を釣り合わせるための{1}がない！",
+                "TradeUiPopup.TraderMissingDrams",
+                match => new object[]
+                {
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                TraderMissingDramsQuestionPattern,
+                "{0}には取引を釣り合わせるための{1}がない！ それでも取引を成立させる？",
+                "TradeUiPopup.TraderMissingDramsQuestion",
+                match => new object[]
+                {
+                    NormalizeSubject(RestoreCapture(match, spans, "trader")),
+                    FormatFreshWaterDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                WaterContainersStorePattern,
+                "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できるのは{0}までだ。",
+                "TradeUiPopup.WaterContainersStore",
+                match => new object[]
+                {
+                    FormatDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        if (TryTranslateOwnerTemplate(
+                source,
+                stripped,
+                spans,
+                WaterContainersQuestionPattern,
+                "そんな量のドラムを運ぶだけの水容器が足りない！ 保管できる{0}分だけで取引を成立させる？",
+                "TradeUiPopup.WaterContainersQuestion",
+                match => new object[]
+                {
+                    FormatDramCount(RestoreCapture(match, spans, "amount")),
+                },
+                out translated))
+        {
+            return true;
+        }
+
+        translated = source;
+        return false;
+    }
+
+    private static bool TryTranslateHasNothingToTradeMessage(
+        string source,
+        string stripped,
+        IReadOnlyList<ColorSpan> spans,
+        out string translated)
+    {
+        return TryTranslateOwnerTemplate(
+            source,
+            stripped,
+            spans,
+            HasNothingToTradePattern,
+            "{0}には取引するものがない",
+            "TradeUiPopup.HasNothingToTrade",
+            match => new object[]
+            {
+                NormalizeSubject(RestoreCapture(match, spans, "subject")),
+            },
+            out translated);
     }
 
     private static void AddTarget(List<MethodBase> targets, MethodBase method, string description)

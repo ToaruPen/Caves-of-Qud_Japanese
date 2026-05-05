@@ -63,22 +63,83 @@ public sealed class TradeUiPopupTranslationPatchTests
 
         Assert.That(
             DummyTradeUiPopupTarget.LastShowMessage,
-            Is.EqualTo("商人は、あなたが彼に借りている5ドラムの{{B|清水}}を支払うまで取引してくれない。"));
+            Is.EqualTo("商人は、あなたが彼に借りている5ドラムの{{B|真水}}を支払うまで取引してくれない。"));
     }
 
     [Test]
     public void Prefix_TranslatesShowYesNo_ForTradeQuestion()
     {
-        WriteDictionary(
-            ("You'll have to pony up {0} to even up the trade. Agreed?", "取引を釣り合わせるには{0}を支払う必要がある。承諾する？"));
-
         using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.ShowYesNo));
 
         _ = DummyTradeUiPopupTarget.ShowYesNo("You'll have to pony up 10 drams of fresh water to even up the trade. Agreed?");
 
         Assert.That(
             DummyTradeUiPopupTarget.LastShowYesNoMessage,
-            Is.EqualTo("取引を釣り合わせるには10ドラムの清水を支払う必要がある。承諾する？"));
+            Is.EqualTo("取引を釣り合わせるには10ドラムの真水を支払う必要がある。承諾する？"));
+    }
+
+    [Test]
+    public void Prefix_UsesOwnerTemplateForTradeQuestion_IgnoresDictionaryEntriesAndPreservesColorTags()
+    {
+        WriteDictionary(
+            ("You'll have to pony up 10 drams of fresh water to even up the trade. Agreed?", "dictionary exact fallback should not be used"),
+            ("You'll have to pony up {0} to even up the trade. Agreed?", "dictionary template should not be used: {0}"));
+
+        using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.ShowYesNo));
+
+        _ = DummyTradeUiPopupTarget.ShowYesNo(
+            "{{R|You'll have to pony up {{C|10}} drams of fresh water to even up the trade. Agreed?}}");
+
+        Assert.That(
+            DummyTradeUiPopupTarget.LastShowYesNoMessage,
+            Is.EqualTo("{{R|取引を釣り合わせるには{{C|10}}ドラムの真水を支払う必要がある。承諾する？}}"));
+    }
+
+    [Test]
+    public void Prefix_TranslatesShowMessage_ForForceCompleteTradeWaterMessages()
+    {
+        using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
+
+        DummyTradeUiPopupTarget.Show("You pony up 1 dram of fresh water to even up the trade.");
+        var playerPays = DummyTradeUiPopupTarget.LastShowMessage;
+
+        DummyTradeUiPopupTarget.Show("The 商人 ponies up 12 drams of fresh water to even up the trade.");
+        var traderPays = DummyTradeUiPopupTarget.LastShowMessage;
+
+        DummyTradeUiPopupTarget.Show("The 商人 doesn't have 1 dram of fresh water to even up the trade!");
+        var traderCannotPay = DummyTradeUiPopupTarget.LastShowMessage;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(playerPays, Is.EqualTo("あなたは取引を釣り合わせるために1ドラムの真水を支払った。"));
+            Assert.That(traderPays, Is.EqualTo("商人は取引を釣り合わせるために12ドラムの真水を支払った。"));
+            Assert.That(traderCannotPay, Is.EqualTo("商人には取引を釣り合わせるための1ドラムの真水がない！"));
+        });
+    }
+
+    [Test]
+    public void Prefix_PreservesInlineSubjectColors_ForTradeOwnerTemplates()
+    {
+        WriteDictionary(
+            ("{0} will not trade with you until you pay {1} the {2} you owe {3}.", "{0}は、あなたが{1}に借りている{2}を支払うまで取引してくれない。"));
+
+        using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
+
+        DummyTradeUiPopupTarget.Show("The {{G|商人}} ponies up 12 drams of fresh water to even up the trade.");
+        var traderPays = DummyTradeUiPopupTarget.LastShowMessage;
+
+        DummyTradeUiPopupTarget.Show("\u0002have\u001F16\u001F20\u001F\u0003The {{G|ウォーターヴァイン農家}} has nothing to trade.");
+        var hasNothing = DummyTradeUiPopupTarget.LastShowMessage;
+
+        DummyTradeUiPopupTarget.Show("The {{G|商人}} will not trade with you until you pay 彼 the 5 drams of fresh water you owe 彼.");
+        var waterDebt = DummyTradeUiPopupTarget.LastShowMessage;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(traderPays, Is.EqualTo("{{G|商人}}は取引を釣り合わせるために12ドラムの真水を支払った。"));
+            Assert.That(hasNothing, Is.EqualTo("{{G|ウォーターヴァイン農家}}には取引するものがない"));
+            Assert.That(waterDebt, Is.EqualTo("{{G|商人}}は、あなたが彼に借りている5ドラムの{{B|真水}}を支払うまで取引してくれない。"));
+        });
     }
 
     [Test]
@@ -170,15 +231,12 @@ public sealed class TradeUiPopupTranslationPatchTests
 
         Assert.That(
             DummyTradeUiPopupTarget.LastShowMessage,
-            Is.EqualTo("{{R|それらを修理するには{{C|8}}ドラムの清水が必要だ。}}"));
+            Is.EqualTo("{{R|それらを修理するには{{C|8}}ドラムの真水が必要だ。}}"));
     }
 
     [Test]
     public void Prefix_StripsRuntimeControlHeader_ForHasNothingToTrade()
     {
-        WriteDictionary(
-            ("{0} has nothing to trade.", "{0}には取引するものがない"));
-
         using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
 
         DummyTradeUiPopupTarget.Show("\u0002have\u001F16\u001F20\u001F\u0003The 濡れた グロウフィッシュ has nothing to trade.");
@@ -191,9 +249,6 @@ public sealed class TradeUiPopupTranslationPatchTests
     [Test]
     public void Prefix_PreservesOuterColorAndStripsRuntimeControlHeader_ForHasNothingToTrade()
     {
-        WriteDictionary(
-            ("{0} has nothing to trade.", "{0}には取引するものがない"));
-
         using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
 
         DummyTradeUiPopupTarget.Show("{{y|\u0002have\u001F16\u001F20\u001F\u0003The 巨大トンボ has nothing to trade.}}");
@@ -206,9 +261,6 @@ public sealed class TradeUiPopupTranslationPatchTests
     [Test]
     public void Prefix_StripsRuntimeControlHeader_ForSnapjawWarlordHasNothingToTrade()
     {
-        WriteDictionary(
-            ("{0} has nothing to trade.", "{0}には取引するものがない"));
-
         using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
 
         DummyTradeUiPopupTarget.Show("\u0002have\u001F14\u001F18\u001F\u0003The スナップジョーの軍主 has nothing to trade.");

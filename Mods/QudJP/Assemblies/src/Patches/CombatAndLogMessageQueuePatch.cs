@@ -42,6 +42,8 @@ public static class CombatAndLogMessageQueuePatch
                 || GameObjectDieTranslationPatch.TryTranslateQueuedMessage(ref Message, Color)
                 || GameObjectRegeneraTranslationPatch.TryTranslateQueuedMessage(ref Message, Color)
                 || ClonelingVehicleTranslationPatch.TryTranslateQueuedMessage(ref Message, Color)
+                || PetEitherOrExplodeTranslationPatch.TryTranslateQueuedMessage(ref Message, Color)
+                || ZoneWindChangeTranslationPatch.TryTranslateQueuedMessage(ref Message, Color)
                 || GameObjectSpotTranslationPatch.TryTranslateQueuedMessage(ref Message, Color)
                 || XrlCoreLostSightTranslationPatch.TryTranslateQueuedMessage(ref Message, Color)
                 || DeployableInfrastructureTranslationPatch.TryTranslateQueuedMessage(ref Message, Color)

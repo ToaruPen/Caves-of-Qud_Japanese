@@ -72,6 +72,12 @@ public static class PopupAskNumberTranslationPatch
                 return;
             }
 
+            if (TradeScreenUiTranslationPatch.TryTranslateTradeSomePrompt(message, out var tradeSomeTranslated))
+            {
+                __args[0] = tradeSomeTranslated;
+                return;
+            }
+
             __args[0] = PopupTranslationPatch.TranslatePopupTextForProducerRoute(message, Context);
         }
         catch (Exception ex)
