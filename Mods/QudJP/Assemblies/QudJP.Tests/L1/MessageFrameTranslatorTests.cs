@@ -283,6 +283,27 @@ public sealed class MessageFrameTranslatorTests
         });
     }
 
+    [Test]
+    public void TryTranslateXDidYToZ_RepositoryDictionary_FlinchesOutOfWayOfProjectile()
+    {
+        UseRepositoryDictionary();
+
+        var translated = MessageFrameTranslator.TryTranslateXDidYToZ(
+            "ドリンクス",
+            "flinch",
+            preposition: "out of the way of",
+            objectText: "木の矢",
+            extra: null,
+            endMark: "!",
+            out var sentence);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.True);
+            Assert.That(sentence, Is.EqualTo("ドリンクスは木の矢をかわした！"));
+        });
+    }
+
     // --- New Tier2 tests (Task 1: #82 DidX verb entries) ---
 
     [Test]
@@ -778,6 +799,30 @@ public sealed class MessageFrameTranslatorTests
                 Assert.That(sentence, Does.Not.Contain("her"));
                 Assert.That(sentence, Does.Not.Contain("its"));
                 Assert.That(sentence, Does.Not.Contain("their"));
+            });
+        }
+    }
+
+    [Test]
+    public void TryTranslateXDidY_RepositoryDictionary_BreatherConeMessages()
+    {
+        UseRepositoryDictionary();
+
+        var cases = new[]
+        {
+            ("あなた", "fire", "あなたは火を円錐状に吐き出した！"),
+            ("熊", "poison gas", "熊は毒ガスを円錐状に吐き出した！"),
+            ("スナップジョー", "normality gas", "スナップジョーは正常空間ガスを円錐状に吐き出した！")
+        };
+
+        foreach (var (subject, breath, expected) in cases)
+        {
+            var ok = MessageFrameTranslator.TryTranslateXDidY(subject, "breath", "a cone of " + breath, "!", out var sentence);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(ok, Is.True, breath);
+                Assert.That(sentence, Is.EqualTo(expected));
             });
         }
     }

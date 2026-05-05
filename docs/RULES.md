@@ -40,6 +40,22 @@ uv run pytest scripts/tests/test_triage_integration.py -q -k sample_log_smoke
 
 Use these commands when checking Phase F docs, runtime observability, or the first-PR boundary.
 
+## PR preflight
+
+Before publishing or updating a broad PR that touches C# patches, script tools,
+or localization assets, prefer the CI-like local gate:
+
+```bash
+just pr-check
+```
+
+This gate intentionally uses the same Release build/test shape as CI for the
+QudJP assemblies. Debug `just check` can pass while Release analyzers still fail.
+
+Localization asset changes also need a changed release-note fragment under
+`docs/release-notes/unreleased/*.md`; `just pr-check` verifies that requirement
+against `origin/main..HEAD`.
+
 ## Route ownership
 
 `Ownership` means the route where QudJP can safely define the translation strategy for a string:
@@ -230,6 +246,17 @@ gh pr view <number> --json headRefName
 ```
 
 If the active checkout has unrelated dirty work, either use a separate worktree or stage only explicit paths for the PR. Do not commit review fixes from an unrelated branch just because the patch applies cleanly.
+
+For CodeRabbit or reviewer feedback on route ownership, do not stop at the exact
+literal or line named in the comment. Treat the comment as evidence of a route
+family contract issue, then check sibling owner tokens, parser branches,
+punctuation/casing variants, scoped dictionary homes, and owner-vs-sink
+boundaries that share the same behavior.
+
+When interpreting CodeRabbit state after force-pushes, report the current check
+status separately from `reviewDecision` and old review bodies. The latest review
+body can describe an older commit range even when the current CodeRabbit status
+context is passing.
 
 ## Runtime evidence
 

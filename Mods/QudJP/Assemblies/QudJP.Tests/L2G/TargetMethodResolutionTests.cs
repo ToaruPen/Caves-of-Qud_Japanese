@@ -155,6 +155,7 @@ public sealed class TargetMethodResolutionTests
     })]
     [TestCase(typeof(AbilityBarUpdateAbilitiesTextPatch), "UpdateAbilitiesText", "Qud.UI.AbilityBar", "System.Void", new string[0])]
     [TestCase(typeof(AbilityBarButtonTextTranslationPatch), "Update", "Qud.UI.AbilityBar", "System.Void", new string[0])]
+    [TestCase(typeof(MissileWeaponAreaTranslationPatch), "AfterRender", "Qud.UI.MissileWeaponArea", "System.Void", new[] { "XRL.Core.XRLCore", "ConsoleLib.Console.ScreenBuffer" })]
     [TestCase(typeof(CherubimSpawnerReplaceDescriptionPatch), "ReplaceDescription", "XRL.World.Parts.CherubimSpawner", "System.Void", new[] { "XRL.World.GameObject", "System.String", "System.String" })]
     [TestCase(typeof(CharacterStatusScreenHighlightEffectPatch), "HandleHighlightEffect", "Qud.UI.CharacterStatusScreen", "System.Void", new[] { "XRL.UI.Framework.FrameworkDataElement" })]
     [TestCase(typeof(GameObjectShowActiveEffectsPatch), "ShowActiveEffects", "XRL.World.GameObject", "System.Void", new string[0])]
@@ -260,6 +261,7 @@ public sealed class TargetMethodResolutionTests
     [TestCase(typeof(CombatGetDefenderHitDiceTranslationPatch), "HandleEvent", "XRL.World.Parts.Combat", "System.Boolean", new[] { "XRL.World.GetDefenderHitDiceEvent" })]
     [TestCase(typeof(PetEitherOrExplodeTranslationPatch), "explode", "XRL.World.Parts.PetEitherOr", "System.Void", new string[0])]
     [TestCase(typeof(ZoneWindChangeTranslationPatch), "WindChange", "XRL.World.Zone", "System.Void", new[] { "System.Int64" })]
+    [TestCase(typeof(CrippleApplyTranslationPatch), "Apply", "XRL.World.Effects.Cripple", "System.Boolean", new[] { "XRL.World.GameObject" })]
     [TestCase(typeof(DoorAttemptOpenTranslationPatch), "AttemptOpen", "XRL.World.Parts.Door", "System.Boolean", new[]
     {
         "XRL.World.GameObject",
@@ -361,6 +363,7 @@ public sealed class TargetMethodResolutionTests
     })]
     [TestCase(typeof(GameObjectRegeneraTranslationPatch), "FireEvent", "XRL.World.GameObject", "System.Boolean", new[] { "XRL.World.Event" })]
     [TestCase(typeof(GameObjectToggleActivatedAbilityTranslationPatch), "ToggleActivatedAbility", "XRL.World.GameObject", "System.Boolean", new[] { "System.Guid", "System.Boolean", "System.Nullable`1[[System.Boolean]]" })]
+    [TestCase(typeof(ExperienceAwardXpTranslationPatch), "HandleEvent", "XRL.World.Parts.Experience", "System.Boolean", new[] { "XRL.World.AwardXPEvent" })]
     [TestCase(typeof(ZoneManagerTryThawZoneTranslationPatch), "TryThawZone", "XRL.World.ZoneManager", "System.Boolean", new[] { "System.String", "XRL.World.Zone&" })]
     [TestCase(typeof(ZoneManagerTickTranslationPatch), "Tick", "XRL.World.ZoneManager", "System.Void", new[] { "System.Boolean" })]
     [TestCase(typeof(ZoneManagerSetActiveZoneMapNotesTranslationPatch), "SetActiveZone", "XRL.World.ZoneManager", "XRL.World.Zone", new[] { "XRL.World.Zone" })]

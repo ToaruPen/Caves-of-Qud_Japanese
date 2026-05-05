@@ -97,7 +97,7 @@ public static class UITextSkinTranslationPatch
             return markedText;
         }
 
-        var (stripped, _) = ColorAwareTranslationComposer.Strip(source);
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
         var effectiveContext = context;
 
         if (stripped.Length == 0)
@@ -114,6 +114,27 @@ public static class UITextSkinTranslationPatch
                 source!,
                 stripped);
             return source!;
+        }
+
+        if (TryTranslateDirectUiActionToken(stripped, effectiveContext, out var directActionTranslation))
+        {
+            var translated = ColorAwareTranslationComposer.Restore(directActionTranslation, spans);
+            DynamicTextObservability.RecordTransform(
+                nameof(UITextSkinTranslationPatch),
+                "DirectUiActionToken",
+                source!,
+                translated);
+            return translated;
+        }
+
+        if (TryTranslatePickTargetUiText(source!, stripped, effectiveContext, out var pickTargetTranslation))
+        {
+            DynamicTextObservability.RecordTransform(
+                nameof(PickTargetWindowTextTranslator),
+                "PickTarget.UiText",
+                source!,
+                pickTargetTranslation);
+            return pickTargetTranslation;
         }
 
         var alreadyLocalized = IsAlreadyLocalizedDirectRouteText(stripped, effectiveContext);
@@ -146,6 +167,51 @@ public static class UITextSkinTranslationPatch
         }
 
         return source!;
+    }
+
+    private static bool TryTranslateDirectUiActionToken(string source, string? context, out string translated)
+    {
+        translated = source;
+        if (!string.Equals(context, nameof(UITextSkinTranslationPatch), StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        switch (source)
+        {
+            case "navigate":
+            case "Navigate":
+                translated = "移動";
+                return true;
+            case "select":
+            case "Select":
+                translated = "選択";
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static bool TryTranslatePickTargetUiText(string source, string stripped, string? context, out string translated)
+    {
+        translated = source;
+        if (!string.Equals(context, nameof(PickTargetWindowTextTranslator), StringComparison.Ordinal)
+            && (!string.Equals(context, nameof(UITextSkinTranslationPatch), StringComparison.Ordinal)
+                || !LooksLikePickTargetCommandBar(stripped)))
+        {
+            return false;
+        }
+
+        return PickTargetWindowTextTranslator.TryTranslateUiText(source, nameof(PickTargetWindowTextTranslator), out translated);
+    }
+
+    private static bool LooksLikePickTargetCommandBar(string source)
+    {
+        return source.Contains(" | ")
+            && source.Contains("-select")
+            && (source.Contains("Fire Missile Weapon")
+                || source.Contains(" lock (")
+                || source.Contains(" unlock ("));
     }
 
     internal static bool ShouldSkipTranslationForTests(string source)

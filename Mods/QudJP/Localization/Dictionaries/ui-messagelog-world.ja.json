@@ -335,11 +335,6 @@
             "text": "{direction}いる{subject}が静止場を展開した{punct}"
         },
         {
-            "key": "{subject} {direction} breathes a cone of {breath}{punct}",
-            "context": "XRL.Messages.MessageQueue",
-            "text": "{direction}いる{subject}が{breath}の円錐を吐き出した{punct}"
-        },
-        {
             "key": "{subject} {direction} are sucked into {target}{punct}",
             "context": "XRL.Messages.MessageQueue",
             "text": "{direction}いる{subject}は{target}に吸い込まれた{punct}"
@@ -678,11 +673,6 @@
             "key": "&RYou must collect more junk! (minimum: ",
             "context": "XRL.World.Parts.Mutation.PackRat",
             "text": "&Rもっとガラクタを集めろ！（最低 {weight} ポンド）"
-        },
-        {
-            "key": "You are crippled for ",
-            "context": "XRL.World.Effects.Cripple",
-            "text": "{duration}のあいだ手足が不自由になった！"
         },
         {
             "key": "You are fleeing from ",

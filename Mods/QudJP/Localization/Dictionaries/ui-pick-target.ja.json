@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "id": "ui-pick-target",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "entries": [
+    { "key": "select", "text": "選択" },
+    { "key": "unlock", "text": "ロック解除" }
+  ]
+}

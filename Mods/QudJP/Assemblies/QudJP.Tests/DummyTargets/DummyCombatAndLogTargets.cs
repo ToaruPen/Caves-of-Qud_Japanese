@@ -111,6 +111,38 @@ internal sealed class DummyPhysicsObjectEnteringCellTarget
     }
 }
 
+internal sealed class DummyCrippleApplyTarget
+{
+    public string MessageToSend { get; set; } = string.Empty;
+
+    public string? ColorToSend { get; set; }
+
+    public bool Apply(DummyGameObject obj)
+    {
+        _ = obj;
+        DummyMessageQueue.AddPlayerMessage(MessageToSend, ColorToSend, Capitalize: false);
+        return true;
+    }
+}
+
+internal sealed class DummyAwardXPEvent
+{
+}
+
+internal sealed class DummyExperienceTarget
+{
+    public string MessageToSend { get; set; } = string.Empty;
+
+    public string? ColorToSend { get; set; }
+
+    public bool HandleEvent(DummyAwardXPEvent e)
+    {
+        _ = e;
+        DummyMessageQueue.AddPlayerMessage(MessageToSend, ColorToSend, Capitalize: false);
+        return true;
+    }
+}
+
 internal sealed class DummyGameObjectHealTarget
 {
     public string MessageToSend { get; set; } = string.Empty;

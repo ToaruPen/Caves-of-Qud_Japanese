@@ -408,14 +408,59 @@ public sealed class JournalPatternTranslatorTests
         WritePatternDictionary(
             (
                 "^In the month of (.+?) of (.+?), =name= was challenged by <spice\\.commonPhrases\\.pretender\\.!random\\.article> to a duel over the rights of (.+?)\\. =name= won and had the pretender's psyche kibbled and absorbed into (.+?) own\\.$",
-                "{1}年{0}、=name= は {2}の権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、偽者の精神を刻んで吸収した。"));
+                "{1}年{0}、=name=は{2}の権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name=は勝利し、偽者の精神を刻んで吸収した。"));
 
         var translated = JournalPatternTranslator.Translate(
             "In the month of Ut yara Ux of 1012, =name= was challenged by <spice.commonPhrases.pretender.!random.article> to a duel over the rights of the Mechanimists. =name= won and had the pretender's psyche kibbled and absorbed into their own.");
 
         Assert.That(
             translated,
-            Is.EqualTo("1012年Ut yara Ux、=name= は the Mechanimistsの権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、偽者の精神を刻んで吸収した。"));
+            Is.EqualTo("1012年Ut yara Ux、=name=はthe Mechanimistsの権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name=は勝利し、偽者の精神を刻んで吸収した。"));
+    }
+
+    [Test]
+    public void Translate_AppliesGivesRepMuralAndGospelPatterns()
+    {
+        WriteGivesRepPatternDictionary();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                JournalPatternTranslator.Translate("Blasphemously, the traitor a snapjaw scavenger attacked =name=, his water-sib, and =name= was forced to slay him. Deep in grief, =name= wept for one year."),
+                Is.EqualTo("冒涜的にも、裏切り者のa snapjaw scavengerは水の同胞である=name=を襲い、=name=はa snapjaw scavengerを殺さざるを得なかった。深い悲しみの中、=name=は一年間泣き続けた。"));
+            Assert.That(
+                JournalPatternTranslator.Translate("In the month of Ut yara Ux of 1012, =name= was challenged by <spice.commonPhrases.pretender.!random.article> to a duel over the rights of the Mechanimists. =name= won and murdered the pretender before tragically realizing <spice.pronouns.subject.!random> was your water-sib."),
+                Is.EqualTo("1012年Ut yara Ux、=name=はthe Mechanimistsの権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name=は勝利し、偽者を殺した後、悲劇的にも<spice.pronouns.subject.!random>が水の同胞だったと気づいた。"));
+            Assert.That(
+                JournalPatternTranslator.Translate("In the month of Ut yara Ux of 1012, brave =name= slew loathsome a snapjaw scavenger in single combat."),
+                Is.EqualTo("1012年Ut yara Ux、勇敢なる=name=は一騎打ちでloathsome a snapjaw scavengerを倒した。"));
+            Assert.That(
+                JournalPatternTranslator.Translate("In the month of Ut yara Ux of 1012, =name= was challenged by <spice.commonPhrases.pretender.!random.article> to a duel over the rights of the Mechanimists. =name= won and murdered the pretender <spice.elements.salt.murdermethods.!random>."),
+                Is.EqualTo("1012年Ut yara Ux、=name=はthe Mechanimistsの権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name=は勝利し、<spice.elements.salt.murdermethods.!random>で偽者を殺した。"));
+        });
+    }
+
+    [Test]
+    public void Translate_AppliesGivesRepMuralAndGospelPatterns_EdgeCases()
+    {
+        WriteGivesRepPatternDictionary();
+
+        const string unmatched = "In the month of Ut yara Ux of 1012, =name= planted a garden.";
+        const string source = "In the month of Ut yara Ux of 1012, brave =name= slew {{r|loathsome a snapjaw scavenger}} in single combat.";
+        const string expected = "1012年Ut yara Ux、勇敢なる=name=は一騎打ちで{{r|loathsome a snapjaw scavenger}}を倒した。";
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(JournalPatternTranslator.Translate(unmatched), Is.EqualTo(unmatched));
+            Assert.That(JournalPatternTranslator.Translate(string.Empty), Is.EqualTo(string.Empty));
+            Assert.That(JournalPatternTranslator.Translate(null), Is.EqualTo(string.Empty));
+            Assert.That(
+                JournalPatternTranslator.Translate(MessageFrameTranslator.MarkDirectTranslation(source)),
+                Is.EqualTo(MessageFrameTranslator.MarkDirectTranslation(source)));
+            Assert.That(
+                JournalPatternTranslator.Translate("{{W|" + source + "}}"),
+                Is.EqualTo("{{W|" + expected + "}}"));
+        });
     }
 
     [Test]
@@ -467,6 +512,23 @@ public sealed class JournalPatternTranslatorTests
         builder.AppendLine();
 
         File.WriteAllText(patternFilePath, builder.ToString(), Utf8WithoutBom);
+    }
+
+    private void WriteGivesRepPatternDictionary()
+    {
+        WritePatternDictionary(
+            (
+                "^Blasphemously, the traitor (.+?) attacked =name=, (?:his|her|their|its) water-sib, and =name= was forced to slay (?:him|her|them|it)\\. Deep in grief, =name= wept for one year\\.$",
+                "冒涜的にも、裏切り者の{0}は水の同胞である=name=を襲い、=name=は{0}を殺さざるを得なかった。深い悲しみの中、=name=は一年間泣き続けた。"),
+            (
+                "^In the month of (.+?) of (.+?), =name= was challenged by <spice\\.commonPhrases\\.pretender\\.!random\\.article> to a duel over the rights of (.+?)\\. =name= won and murdered the pretender before tragically realizing <spice\\.pronouns\\.subject\\.!random> was (?:your|his|her|their|its) water-sib\\.$",
+                "{1}年{0}、=name=は{2}の権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name=は勝利し、偽者を殺した後、悲劇的にも<spice.pronouns.subject.!random>が水の同胞だったと気づいた。"),
+            (
+                "^In the month of (.+?) of (.+?), brave =name= slew (.+?) in single combat\\.$",
+                "{1}年{0}、勇敢なる=name=は一騎打ちで{2}を倒した。"),
+            (
+                "^In the month of (.+?) of (.+?), =name= was challenged by <spice\\.commonPhrases\\.pretender\\.!random\\.article> to a duel over the rights of (.+?)\\. =name= won and murdered the pretender <spice\\.elements\\.(.+?)\\.murdermethods\\.!random>\\.$",
+                "{1}年{0}、=name=は{2}の権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name=は勝利し、<spice.elements.{3}.murdermethods.!random>で偽者を殺した。"));
     }
 
     private void WriteDictionaryFile(string fileName, (string key, string text)[] entries)

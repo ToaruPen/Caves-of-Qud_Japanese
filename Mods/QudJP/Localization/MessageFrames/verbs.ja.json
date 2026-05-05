@@ -782,6 +782,51 @@
       "text": "炎を拳で叩いた"
     },
     {
+      "verb": "breath",
+      "extra": "a cone of acid gas",
+      "text": "酸ガスを円錐状に吐き出した"
+    },
+    {
+      "verb": "breath",
+      "extra": "a cone of confusion gas",
+      "text": "混乱ガスを円錐状に吐き出した"
+    },
+    {
+      "verb": "breath",
+      "extra": "a cone of fire",
+      "text": "火を円錐状に吐き出した"
+    },
+    {
+      "verb": "breath",
+      "extra": "a cone of ice",
+      "text": "氷を円錐状に吐き出した"
+    },
+    {
+      "verb": "breath",
+      "extra": "a cone of normality gas",
+      "text": "正常空間ガスを円錐状に吐き出した"
+    },
+    {
+      "verb": "breath",
+      "extra": "a cone of poison gas",
+      "text": "毒ガスを円錐状に吐き出した"
+    },
+    {
+      "verb": "breath",
+      "extra": "a cone of shame gas",
+      "text": "羞恥ガスを円錐状に吐き出した"
+    },
+    {
+      "verb": "breath",
+      "extra": "a cone of sleep gas",
+      "text": "睡眠ガスを円錐状に吐き出した"
+    },
+    {
+      "verb": "breath",
+      "extra": "a cone of stun gas",
+      "text": "朦朧ガスを円錐状に吐き出した"
+    },
+    {
       "verb": "attempt",
       "extra": "to conk {0} on the head",
       "text": "{0}の頭を強打しようとした"
@@ -2272,6 +2317,11 @@
       "verb": "fire",
       "extra": "{0} molecular cannon",
       "text": "{0}の分子砲を発射した"
+    },
+    {
+      "verb": "flinch",
+      "extra": "out of the way of {0}",
+      "text": "{0}をかわした"
     },
     {
       "verb": "fling",

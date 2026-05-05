@@ -1435,6 +1435,93 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void Translate_RepositoryDictionary_TranslatesReloadMessageWithoutYourCapture()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("You reload your クローム・リボルバー with 鉛スラッグ x6.");
+
+        Assert.That(translated, Is.EqualTo("クローム・リボルバーに鉛スラッグ x6を装填した"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_TranslatesToggleAbilityCapture()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("You toggle {{c|Akimbo}} on.");
+
+        Assert.That(translated, Is.EqualTo("{{c|二挺拳銃}}をオンにした。"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_TranslatesColorizedXpGain()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("You gain {{C|75}} XP!");
+
+        Assert.That(translated, Is.EqualTo("あなたは経験値を{{C|75}}獲得した"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_XpGainFallbackToEnglish()
+    {
+        UseRepositoryPatternDictionary();
+
+        const string source = "You gain renown!";
+
+        Assert.That(MessagePatternTranslator.Translate(source), Is.EqualTo(source));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_XpGainEmptyInputEdgeCase()
+    {
+        UseRepositoryPatternDictionary();
+
+        Assert.That(MessagePatternTranslator.Translate(string.Empty), Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_XpGainDirectMarkerEdgeCase()
+    {
+        UseRepositoryPatternDictionary();
+
+        var source = MessageFrameTranslator.MarkDirectTranslation("You gain {{C|75}} XP!");
+
+        Assert.That(MessagePatternTranslator.Translate(source), Is.EqualTo(source));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_TranslatesPyrokinesisDamage()
+    {
+        UseRepositoryPatternDictionary();
+
+        var translated = MessagePatternTranslator.Translate("You take 6 damage from ドリンクスの pyrokinesis!");
+
+        Assert.That(translated, Is.EqualTo("ドリンクスの熱念動で6ダメージを受けた！"));
+    }
+
+    [Test]
+    public void Translate_RepositoryDictionary_TranslatesGenericReceiveItem()
+    {
+        UseRepositoryPatternDictionary();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                MessagePatternTranslator.Translate("You receive 奇妙な小物!"),
+                Is.EqualTo("奇妙な小物を受け取った"));
+            Assert.That(
+                MessagePatternTranslator.Translate("You receive {{W|奇妙な小物}}!"),
+                Is.EqualTo("{{W|奇妙な小物}}を受け取った"));
+            Assert.That(
+                MessagePatternTranslator.Translate("You receive " + MessageFrameTranslator.MarkDirectTranslation("奇妙な小物") + "!"),
+                Is.EqualTo(MessageFrameTranslator.MarkDirectTranslation("奇妙な小物を受け取った")));
+        });
+    }
+
+    [Test]
     public void Translate_RepositoryDictionary_TranslatesStatuePrayerMessage()
     {
         UseRepositoryPatternDictionary();
@@ -1459,6 +1546,7 @@ public sealed class MessagePatternTranslatorTests
     {
         var localizationRoot = Path.Combine(TestProjectPaths.GetRepositoryRoot(), "Mods", "QudJP", "Localization");
         LocalizationAssetResolver.SetLocalizationRootForTests(localizationRoot);
+        Translator.SetDictionaryDirectoryForTests(Path.Combine(localizationRoot, "Dictionaries"));
         MessagePatternTranslator.SetPatternFileForTests(null);
     }
 }

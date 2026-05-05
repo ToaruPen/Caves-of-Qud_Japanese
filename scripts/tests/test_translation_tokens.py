@@ -587,6 +587,95 @@ def test_duplicate_baseline_path_is_stable_for_localization_relative_cli_shapes(
     assert check_translation_tokens.main(["demo.ja.json", "--duplicate-conflict-baseline", str(baseline)]) == 0
 
 
+def test_cli_writes_duplicate_conflict_baseline_from_current_state(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """The CLI can regenerate the duplicate conflict baseline from current data."""
+    localization = tmp_path / "Localization"
+    _write_entries(
+        localization / "Dictionaries" / "demo.ja.json",
+        [
+            {"key": "Same source", "text": "訳語A"},
+            {"key": "Same source", "text": "訳語B"},
+        ],
+    )
+    _write_entries(localization / "Dictionaries" / "a.ja.json", [{"key": "Shared source", "text": "共有A"}])
+    _write_entries(localization / "Dictionaries" / "b.ja.json", [{"key": "Shared source", "text": "共有B"}])
+    baseline = tmp_path / "generated" / "baseline.json"
+
+    exit_code = check_translation_tokens.main(
+        [str(localization), "--write-duplicate-conflict-baseline", str(baseline)],
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "Wrote duplicate conflict baseline" in captured.out
+    payload = json.loads(baseline.read_text(encoding="utf-8"))
+    assert payload == {
+        "version": 3,
+        "duplicate_conflicts": [
+            _cross_file_duplicate_state(texts=["共有A", "共有B"]),
+            _same_file_duplicate_state(texts=["訳語A", "訳語B"]),
+        ],
+    }
+    assert check_translation_tokens.main([str(localization), "--duplicate-conflict-baseline", str(baseline)]) == 0
+
+
+def test_cli_write_duplicate_conflict_baseline_reports_write_errors(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Baseline regeneration reports filesystem write failures with the target path."""
+    localization = tmp_path / "Localization"
+    _write_entries(
+        localization / "Dictionaries" / "demo.ja.json",
+        [
+            {"key": "Same source", "text": "訳語A"},
+            {"key": "Same source", "text": "訳語B"},
+        ],
+    )
+    blocker = tmp_path / "blocked"
+    blocker.write_text("not a directory", encoding="utf-8")
+    baseline = blocker / "baseline.json"
+
+    exit_code = check_translation_tokens.main(
+        [str(localization), "--write-duplicate-conflict-baseline", str(baseline)],
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "Error: Failed to write baseline" in captured.err
+    assert str(baseline) in captured.err
+
+
+def test_cli_write_duplicate_conflict_baseline_does_not_mask_token_issues(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Baseline regeneration fails before writing when token parity is already broken."""
+    localization = tmp_path / "Localization"
+    _write_entries(
+        localization / "BlueprintTemplates" / "templates.ja.json",
+        [
+            {
+                "key": "{{g|The {0} glows.}}",
+                "text": "{0}が光る。",
+            },
+        ],
+    )
+    baseline = tmp_path / "baseline.json"
+
+    exit_code = check_translation_tokens.main(
+        [str(localization), "--write-duplicate-conflict-baseline", str(baseline)],
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert not baseline.exists()
+    assert "missing translation tokens" in captured.out
+
+
 def test_collect_translation_json_files_deduplicates_relative_and_absolute_inputs(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
