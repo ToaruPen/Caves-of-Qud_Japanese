@@ -11,6 +11,7 @@ usage() {
 Usage:
   scripts/agent_cycle.sh tool-check
   scripts/agent_cycle.sh ast-grep-check
+  scripts/agent_cycle.sh ast-grep-smoke
   scripts/agent_cycle.sh sg <lang> [pattern] [path]
   scripts/agent_cycle.sh render-skill-evals [skill] [scenario]
   scripts/agent_cycle.sh summarize-skill-evals [results-jsonl]
@@ -67,8 +68,33 @@ tool_check() {
 ast_grep_check() {
   cd "$ROOT_DIR"
   require_file "$ROOT_DIR/sgconfig.yml"
-  ast-grep test --skip-snapshot-tests
-  ast-grep scan .
+  local rule_count
+  local test_count
+  rule_count=$(find "$ROOT_DIR/rules" -type f \( -name '*.yml' -o -name '*.yaml' \) | wc -l | tr -d '[:space:]')
+  test_count=$(find "$ROOT_DIR/rule-tests" -type f \( -name '*.yml' -o -name '*.yaml' \) | wc -l | tr -d '[:space:]')
+  if [[ "$rule_count" == "0" && "$test_count" == "0" ]]; then
+    echo "No project ast-grep rules registered; running structural-search smoke only."
+  elif [[ "$rule_count" == "0" || "$test_count" == "0" ]]; then
+    echo "ast-grep rules and rule tests must be added together (rules=$rule_count tests=$test_count)" >&2
+    return 1
+  else
+    ast-grep test --skip-snapshot-tests
+    ast-grep scan .
+  fi
+  ast_grep_smoke
+}
+
+ast_grep_smoke() {
+  cd "$ROOT_DIR"
+  require_file "$ROOT_DIR/sgconfig.yml"
+  local fixture_path="scripts/tests/fixtures/static_producer_inventory"
+  local output
+  output=$(structural_search csharp 'Popup.Show($$$ARGS)' "$fixture_path")
+  printf '%s\n' "$output"
+  if ! grep -q 'Demo/StaticProducerCases.cs:25:' <<<"$output"; then
+    echo "ast-grep smoke did not find the expected Popup.Show fixture hit" >&2
+    return 1
+  fi
 }
 
 expand_search_path() {
@@ -182,6 +208,9 @@ main() {
       ;;
     ast-grep-check)
       ast_grep_check
+      ;;
+    ast-grep-smoke)
+      ast_grep_smoke
       ;;
     sg)
       structural_search "${1:-}" "${2:-}" "${3:-}"
