@@ -38,7 +38,10 @@ documented workflow just because a local shell lacks `python3.12`.
 For each Workshop update, copy
 `docs/reports/templates/workshop-release.md` to a dated file under
 `docs/reports/` and fill it as release evidence, including preflight, upload,
-and post-publish smoke results.
+and post-publish smoke results. The release evidence report records observed
+publication results and normally stays outside the release tag. Commit it after
+upload with the actual Steam manifest ID, public metadata check, and download
+validation results.
 
 ## Release Scope
 
@@ -231,6 +234,28 @@ Run steamcmd with the generated VDF:
 ```bash
 steamcmd +login "$STEAM_USER" +workshop_build_item dist/workshop/workshop_item.vdf +quit
 ```
+
+Before upload, confirm that the same `steamcmd` executable you will use for
+`workshop_build_item` has usable cached credentials. The desktop Steam client
+being logged in is not enough; Homebrew or other `steamcmd` installs can use a
+different credential store. Check the executable path and run a login probe with
+that exact command:
+
+```bash
+command -v steamcmd
+steamcmd +login "$STEAM_USER" +quit
+```
+
+If the upload command will use an explicit executable path, use that same path
+for the login probe too:
+
+```bash
+/opt/homebrew/bin/steamcmd +login "$STEAM_USER" +quit
+```
+
+If `steamcmd` reports `Cached credentials not found`, have the operator log in
+interactively through that same executable before upload. Do not pipe, commit,
+or record Steam passwords, Steam Guard codes, or login scripts.
 
 Do not commit Steam credentials, 2FA material, or login scripts. The
 `publishedfileid` is public and intentionally committed in
