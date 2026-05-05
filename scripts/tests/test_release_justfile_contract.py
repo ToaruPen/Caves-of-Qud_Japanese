@@ -13,15 +13,23 @@ def _justfile_text() -> str:
     return (_REPO_ROOT / "justfile").read_text(encoding="utf-8")
 
 
+def _download_release_zip_recipe() -> str:
+    justfile = _justfile_text()
+    return justfile.split("\ndownload-release-zip version:\n", maxsplit=1)[1].split(
+        "\n# Sync the built mod",
+        maxsplit=1,
+    )[0]
+
+
 def test_download_release_zip_quotes_version_argument() -> None:
     """The release download recipe must not splice raw version text into shell syntax."""
     just = shutil.which("just")
     if just is None:
-        justfile = _justfile_text()
+        recipe = _download_release_zip_recipe()
 
-        assert "version={{quote(version)}}" in justfile
-        assert 'tag="v{{version}}"' not in justfile
-        assert "QudJP-v{{version}}" not in justfile
+        assert "version={{quote(version)}}" in recipe
+        assert 'tag="v{{version}}"' not in recipe
+        assert "QudJP-v{{version}}" not in recipe
         return
 
     probe = '1.2.3"; touch /tmp/qudjp-just-injection #'
