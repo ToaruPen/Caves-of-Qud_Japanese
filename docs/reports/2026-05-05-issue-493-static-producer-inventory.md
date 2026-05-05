@@ -14,8 +14,9 @@ The generator is:
 
 - `scripts/scan_static_producer_inventory.py`
 
-Historical scanner outputs under `scripts/legacies/`, `docs/candidate-inventory.json`,
-and old emit-message audit notes are not source of truth for this artifact.
+Historical scanner outputs under `scripts/legacies/`,
+`docs/archive/candidate-inventory-2026-04-14-reconciled-bridge.json`, and old
+emit-message audit notes are not source of truth for this artifact.
 
 ## Reproduction
 
