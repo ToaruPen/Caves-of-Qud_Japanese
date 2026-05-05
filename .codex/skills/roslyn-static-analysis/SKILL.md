@@ -18,6 +18,64 @@ Start light, then promote when needed:
 
 Do not replace `ast-grep` with Roslyn for one-off exploration. Do not keep an `ast-grep` or regex scanner as the authoritative source when same-name methods on unrelated types would change the answer.
 
+## Existing Scanner Quick Reference
+
+Use these repo-local facts when the task touches the current static producer
+inventory:
+
+- Python entrypoint: `scripts/scan_static_producer_inventory.py`
+- Roslyn project: `scripts/tools/StaticProducerInventoryScanner/StaticProducerInventoryScanner.csproj`
+- Tracked generated artifact: `docs/static-producer-inventory.json`
+- Target surfaces: `EmitMessage`, `Popup.Show*`, and `AddPlayerMessage`
+- Existing fixture tests: `scripts/tests/test_scan_static_producer_inventory.py`
+- Existing Roslyn smoke tests: `scripts/tests/test_roslyn_extractor_smoke.py`
+
+Current semantic target owners:
+
+- `Popup.Show*`: `XRL.UI.Popup`
+- `EmitMessage`: `XRL.World.Capabilities.Messaging`,
+  `XRL.World.GameObject`, and `XRL.World.IComponent<...>`
+- `AddPlayerMessage`: `XRL.Messages.MessageQueue`, `XRL.IGameSystem`,
+  `XRL.World.AI.GoalHandler`, and `XRL.World.IComponent<...>`
+
+Current fixture roots include
+`scripts/tests/fixtures/static_producer_inventory/Demo/StaticProducerCases.cs`
+and `scripts/tests/fixtures/static_producer_inventory/XRL.UI/Popup.cs`.
+Update those fixtures first for same-name false positives, overloads, named
+arguments, wrappers, direct markers, collection arguments, and forwarding sinks
+unless a new fixture file is clearer.
+
+The current `docs/static-producer-inventory.json` baseline for decompiled
+`2.0.4` has 2,208 callsites, 1,012 families, 2,238 text arguments, 2,206
+`resolved` callsites, 2 `candidate` callsites, and 0 `unresolved` callsites.
+Use this as the starting comparison for this artifact. Any delta should be
+explained; do not treat these counts as a universal threshold for unrelated
+scanners.
+
+For this existing static producer inventory, default to no increase in
+`candidate` rows and keep `unresolved` at 0. A PR may override that default only
+by naming the downstream consumer that accepts the uncertainty and documenting
+the changed rows. For new scanners, set thresholds before regeneration instead
+of copying these counts.
+
+Regenerate the tracked inventory only when the task explicitly owns that
+artifact:
+
+```bash
+python3.12 scripts/scan_static_producer_inventory.py \
+  --source-root ~/dev/coq-decompiled_stable \
+  --output docs/static-producer-inventory.json
+```
+
+For current static producer inventory changes, run:
+
+```bash
+dotnet build scripts/tools/StaticProducerInventoryScanner/StaticProducerInventoryScanner.csproj --configuration Release --no-incremental
+uv run pytest scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py -q
+ruff check scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
+uvx basedpyright scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
+```
+
 ## Roslyn Scanner Contract
 
 For repo-local scanner tools:
@@ -117,4 +175,12 @@ Acceptance criteria for scanner changes should state:
 - Whether `candidate` / `unresolved` rows are allowed, and why.
 - Which fixture edge cases protect the classification policy.
 
-When extending an existing scanner, preserve its established schema names unless the task is explicitly a schema migration. Add new fields or statuses only with wrapper validation, fixture expectations, docs, and regenerated inventory updated together.
+When extending an existing scanner, preserve its established schema names unless
+the task is explicitly a schema migration. Add new fields or statuses only with
+wrapper validation, fixture expectations, generated or human-facing docs that
+describe the changed contract, and regenerated inventory updated together. For
+static producer inventory schema changes, update `scripts/scan_static_producer_inventory.py`,
+`scripts/tests/test_scan_static_producer_inventory.py`,
+`docs/reports/2026-05-05-issue-493-static-producer-inventory.md`, and
+`docs/static-producer-inventory.json` together unless the task explicitly
+narrows that scope.
