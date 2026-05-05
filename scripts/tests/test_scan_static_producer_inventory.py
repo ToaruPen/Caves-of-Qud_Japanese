@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol, cast
 
@@ -14,6 +15,7 @@ from scripts.scan_static_producer_inventory import (
     TextArgumentPayload,
     main,
     scan_source_root,
+    write_inventory,
 )
 
 if TYPE_CHECKING:
@@ -88,6 +90,44 @@ def test_scanner_cache_fingerprint_reports_missing_scanner_inputs(
     assert "Roslyn static producer scanner fingerprint inputs are missing" in message
     assert missing_project.as_posix() in message
     assert missing_project.with_name("Program.cs").as_posix() in message
+
+
+def test_write_inventory_reports_roslyn_scanner_timeout(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A hung dotnet scanner fails with command and captured output context."""
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    project_path = tmp_path / "StaticProducerInventoryScanner.csproj"
+    _ = project_path.write_text("<Project />\n", encoding="utf-8")
+    monkeypatch.setattr(scanner, "PROJECT_PATH", project_path)
+
+    def fake_which(command: str) -> str:
+        assert command == "dotnet"
+        return "/usr/bin/dotnet"
+
+    def fake_run(command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        timeout = kwargs.get("timeout")
+        assert timeout == scanner.ROSLYN_SCANNER_TIMEOUT_SECONDS
+        raise subprocess.TimeoutExpired(
+            cmd=command,
+            timeout=cast("float", timeout),
+            output="partial stdout",
+            stderr="partial stderr",
+        )
+
+    monkeypatch.setattr("scripts.scan_static_producer_inventory.shutil.which", fake_which)
+    monkeypatch.setattr("scripts.scan_static_producer_inventory.subprocess.run", fake_run)
+
+    with pytest.raises(RuntimeError) as exc_info:
+        write_inventory(source_root, tmp_path / "inventory.json")
+
+    message = str(exc_info.value)
+    assert f"timed out after {scanner.ROSLYN_SCANNER_TIMEOUT_SECONDS}s" in message
+    assert "dotnet run --project" in message
+    assert "partial stdout" in message
+    assert "partial stderr" in message
 
 
 def test_cli_writes_deterministic_inventory_without_absolute_source_root(tmp_path: Path) -> None:

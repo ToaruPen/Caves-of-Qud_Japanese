@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shlex
 import shutil
 import subprocess
 import sys
@@ -17,6 +18,7 @@ SCHEMA_VERSION: Final = "1.0"
 GAME_VERSION: Final = "2.0.4"
 DEFAULT_SOURCE_ROOT: Final = Path("~/dev/coq-decompiled_stable").expanduser()
 TARGET_SURFACES: Final = ["EmitMessage", "Popup.Show*", "AddPlayerMessage"]
+ROSLYN_SCANNER_TIMEOUT_SECONDS: Final = 600
 
 REPO_ROOT: Final = Path(__file__).resolve().parents[1]
 PROJECT_PATH: Final = (
@@ -198,22 +200,38 @@ def _run_roslyn_scanner(source_root: Path, output_path: Path) -> InventoryPayloa
         raise RuntimeError(msg)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    result = subprocess.run(
-        [
-            dotnet,
-            "run",
-            "--project",
-            str(PROJECT_PATH),
-            "--",
-            "--source-root",
-            str(source_root),
-            "--output",
-            str(output_path),
-        ],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    command = [
+        dotnet,
+        "run",
+        "--project",
+        str(PROJECT_PATH),
+        "--",
+        "--source-root",
+        str(source_root),
+        "--output",
+        str(output_path),
+    ]
+    try:
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=ROSLYN_SCANNER_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        details = "\n".join(
+            part
+            for part in (
+                _subprocess_output_text(exc.stdout),
+                _subprocess_output_text(exc.stderr),
+            )
+            if part
+        )
+        msg = f"Roslyn static producer scanner timed out after {ROSLYN_SCANNER_TIMEOUT_SECONDS}s: {shlex.join(command)}"
+        if details:
+            msg = f"{msg}\n{details}"
+        raise RuntimeError(msg) from exc
     if result.returncode != 0:
         details = "\n".join(part for part in (result.stdout.strip(), result.stderr.strip()) if part)
         msg = f"Roslyn static producer scanner failed with exit {result.returncode}"
@@ -221,6 +239,14 @@ def _run_roslyn_scanner(source_root: Path, output_path: Path) -> InventoryPayloa
             msg = f"{msg}\n{details}"
         raise RuntimeError(msg)
     return _load_inventory(output_path)
+
+
+def _subprocess_output_text(value: str | bytes | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode(errors="replace").strip()
+    return value.strip()
 
 
 def _load_inventory(path: Path) -> InventoryPayload:

@@ -128,10 +128,6 @@ jobs:
             echo "::endgroup::"
           done
 
-      - name: Build StaticProducerInventoryScanner
-        if: steps.changes.outputs.roslyn_tools == 'true' && hashFiles('scripts/tools/StaticProducerInventoryScanner/StaticProducerInventoryScanner.csproj') != ''
-        run: dotnet build scripts/tools/StaticProducerInventoryScanner/StaticProducerInventoryScanner.csproj --configuration Release
-
       - name: Test QudJP
         if: steps.changes.outputs.qudjp_dotnet == 'true' && hashFiles('Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj') != ''
         run: dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --configuration Release --no-build
