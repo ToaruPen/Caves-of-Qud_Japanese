@@ -299,7 +299,8 @@ python scripts/sync_mod.py --dry-run
 ## build_workshop_upload.py
 
 `scripts/build_workshop_upload.py` は `scripts/build_release.py` が作成した
-`dist/QudJP-v*.zip` から Steam Workshop 用の staging directory と
+`dist/QudJP-v*.zip`、または GitHub Release から取得した
+`dist/release-assets/vX.Y.Z/QudJP-vX.Y.Z.zip` から Steam Workshop 用の staging directory と
 `steamcmd` 用 VDF を生成します。Workshop item ID や title などの公開
 metadata は `steam/workshop_metadata.json`、Workshop description は
 `steam/workshop_description.ja.txt` を source of truth にします。Workshop
@@ -315,9 +316,11 @@ changenote は `scripts/release_notes.py render` で
 python3.12 scripts/build_workshop_upload.py \
   --changenote-file /tmp/qudjp-workshop-changenote.txt
 
-# 特定の release ZIP を指定
+# GitHub Release から取得・検証した release ZIP を指定
+just download-release-zip 0.2.2
+
 python3.12 scripts/build_workshop_upload.py \
-  --release-zip dist/QudJP-v0.2.0.zip \
+  --release-zip dist/release-assets/v0.2.2/QudJP-v0.2.2.zip \
   --changenote-file /tmp/qudjp-workshop-changenote.txt
 ```
 
@@ -368,12 +371,46 @@ python3.12 scripts/release_notes.py render \
   --date YYYY-MM-DD \
   --changelog-output /tmp/qudjp-changelog-entry.md \
   --workshop-output /tmp/qudjp-workshop-changenote.txt
+
+# GitHub Release notes 用に確定済み CHANGELOG entry を抽出
+python3.12 scripts/release_notes.py extract-changelog \
+  --version 0.2.2 \
+  --output /tmp/qudjp-github-release-notes.md
 ```
 
 **出力**:
 
 - `/tmp/qudjp-changelog-entry.md`: `CHANGELOG.md` にコピーする release entry
 - `/tmp/qudjp-workshop-changenote.txt`: `build_workshop_upload.py --changenote-file` に渡す changenote
+- `/tmp/qudjp-github-release-notes.md`: GitHub Release body の元になる確定済み changelog entry
+
+**終了コード**: 0 = 正常終了、1 = エラー
+
+---
+
+## release_identity.py
+
+`scripts/release_identity.py` は release tag、`manifest.json`、`CHANGELOG.md`、
+release ZIP の version identity を検証します。GitHub Release workflow は
+draft release を作成する前にこのチェックを実行します。
+
+**使い方**:
+
+```bash
+# tag / manifest / CHANGELOG / main 到達性を確認
+python3.12 scripts/release_identity.py \
+  --tag v0.2.2 \
+  --main-ref origin/main
+
+# release ZIP 内 manifest も確認
+python3.12 scripts/release_identity.py \
+  --tag v0.2.2 \
+  --release-zip dist/QudJP-v0.2.2.zip \
+  --main-ref origin/main
+```
+
+`vX.Y.Z` tag が `origin/main` から到達できない場合、PR branch 上の tag として
+扱い release は停止します。
 
 **終了コード**: 0 = 正常終了、1 = エラー
 
