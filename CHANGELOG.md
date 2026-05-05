@@ -10,6 +10,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.2] - 2026-05-05
+
+### Fixed
+
+- Fixed Control Mapping category grouping and preserved upstream directional key bindings.
+- Fixed several generated runtime localization routes, including trade-water popup text, pet mutation death messages, zone wind changes, and fresh-water terminology.
+- Improved Japanese runtime text coverage for combat log, popups, death summary, and deployable object messages.
+- Repaired invisible text in game summary and journal-style TextMeshPro screens.
+
+---
+
 ## [0.2.1] - 2026-05-05
 
 ### Fixed
@@ -130,6 +141,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+[0.2.2]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.2
 [0.2.1]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.1
 [0.2.0]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.0
 [0.1.0]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.1.0

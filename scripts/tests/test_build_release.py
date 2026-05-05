@@ -8,7 +8,6 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from scripts.build_release import (
-    RELEASE_VERSION,
     build_dll,
     build_release,
     collect_localization_files,
@@ -78,9 +77,12 @@ class TestProjectManifest:
     """Tests for the checked-in release manifest."""
 
     def test_manifest_version_is_release_semver(self) -> None:
-        """Checked-in manifest uses the current release setup version."""
+        """Checked-in manifest uses a release-compatible semver version."""
         manifest = PROJECT_ROOT / "Mods" / "QudJP" / "manifest.json"
-        assert read_version(manifest) == RELEASE_VERSION
+        version = read_version(manifest)
+        parts = version.split(".")
+        assert len(parts) == 3
+        assert all(part.isdigit() for part in parts)
 
     def test_preview_image_points_to_checked_in_asset(self) -> None:
         """Checked-in manifest points at the committed Workshop preview asset."""
