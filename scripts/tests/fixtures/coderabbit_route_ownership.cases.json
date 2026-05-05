@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_family": "UITextSkin.SetText / direct UI text",
+      "review_stance": "Observation-only unless screen-owned",
+      "flag_when": "Sink-wide translation or missing screen/field tests",
+      "surfaces": ["SetText", "DirectTextAssignment"]
+    },
+    {
+      "route_family": "Generic AddPlayerMessage",
+      "review_stance": "Observation-only unless producer handoff is proven",
+      "flag_when": "Flat message-log dictionary catchalls or bypassed producer helpers",
+      "surfaces": ["AddPlayerMessage"]
+    },
+    {
+      "route_family": "Generic popup display",
+      "review_stance": "Mixed and cautious",
+      "flag_when": "Broad popup fallback without overload/route tests",
+      "surfaces": ["Popup", "TutorialManagerPopup"]
+    },
+    {
+      "route_family": "XDidY / message frames",
+      "review_stance": "Producer or mid-pipeline owner",
+      "flag_when": "English SVO shape survives or color/placeholders are lost",
+      "surfaces": ["MessageFrame"]
+    },
+    {
+      "route_family": "Does verb routes",
+      "review_stance": "Tested route-owned translator; no broad Does() patch",
+      "flag_when": "Direct broad mutation or verb token leakage",
+      "surfaces": ["Does"]
+    },
+    {
+      "route_family": "Descriptions/effects/display names",
+      "review_stance": "Route-owned only where tested",
+      "flag_when": "Procedural text hidden as asset leaves or renderer-only labels translated broadly",
+      "surfaces": [
+        "DescriptionAssignment",
+        "DescriptionReturn",
+        "EffectDescriptionReturn",
+        "DisplayNameAssignment",
+        "DisplayNameReturn"
+      ]
+    },
+    {
+      "route_family": "Renderer/final-output probes",
+      "review_stance": "Observation-only",
+      "flag_when": "Probe evidence is treated as ownership or visible text is mutated at the renderer",
+      "surfaces": ["Other", "OtherInvocation"]
+    }
+  ]
+}

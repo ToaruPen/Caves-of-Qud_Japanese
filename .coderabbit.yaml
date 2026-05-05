@@ -1,6 +1,12 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: ja-JP
 
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "CODERABBIT.md"
+
 reviews:
   profile: assertive
   request_changes_workflow: true
@@ -13,6 +19,14 @@ reviews:
     - path: "Mods/QudJP/Assemblies/src/**/*.cs"
       instructions: |
         Review C# Harmony patches for the QudJP Japanese localization mod.
+        Apply CODERABBIT.md as review criteria for runtime ownership,
+        decompiled-derived behavioral contracts, Harmony target resolution,
+        observability, Roslyn text-construction inventory coverage, and markup
+        preservation. CODERABBIT.md is an additional root-scoped global
+        guideline; CodeRabbit may also auto-detect root AGENTS.md/CLAUDE.md.
+        The supporting docs/coderabbit/*.md files organize the same knowledge
+        for maintainers, but critical review rules must be present in
+        CODERABBIT.md because CodeRabbit scopes guideline files by directory.
 
         Core principles (enforce strictly):
         - YAGNI: No speculative abstractions, feature flags, or "future-proofing". Only code needed for the current task.
@@ -23,7 +37,7 @@ reviews:
         - Harmony Prefix/Postfix methods MUST wrap their body in try-catch with Trace.TraceError (QJ001 analyzer enforces this).
         - Translation patches must NOT crash the game loop — always fall back to English on error.
         - The \x01 marker (DirectTranslationMarker) prevents double-translation by downstream patches.
-        - Does() is NOT patched directly — translation happens at sink level (MessageLogPatch/PopupTranslationPatch).
+        - Does() is NOT patched broadly; use the tested route-owned translator or producer handoff, with sink behavior only as route-specific handoff or observation.
         - Existing Tier 2 patches are kept as outer shell — no full rewrites, only shared family extraction.
 
         Japanese language rules:
@@ -34,6 +48,8 @@ reviews:
     - path: "Mods/QudJP/Assemblies/QudJP.Tests/**/*.cs"
       instructions: |
         Tests are CRITICAL — they are the living specification of the game's text generation logic.
+        Apply CODERABBIT.md when checking L1/L2/L2G boundaries and
+        game-DLL-assisted target/signature verification.
 
         Review tests with maximum scrutiny:
         - Every test must verify JAPANESE OUTPUT, not just that code runs without error.
@@ -48,6 +64,9 @@ reviews:
     - path: "Mods/QudJP/Localization/**"
       instructions: |
         Translation asset files (JSON dictionaries, XML blueprints, conversations).
+        Apply CODERABBIT.md when checking fixed-leaf promotion, route ownership,
+        token preservation, glossary/validation gates, color tags, placeholders,
+        duplicate source keys, canonical terms, and translation variance.
 
         Rules:
         - Leaf dictionary entries (ui-default.ja.json) must NOT contain runtime variable markers (=subject.T=, =verb:*=, =bodypart:*=). Those belong in templates-variable.ja.json.
@@ -66,7 +85,8 @@ reviews:
       instructions: |
         Architecture and design documents.
         - Verify consistency with actual implementation.
-        - Flag any claims about site counts or coverage that contradict candidate-inventory.json.
+        - Flag any claims about runtime text construction counts or coverage that contradict docs/coderabbit/roslyn-text-construction-inventory-summary.md.
+        - Flag route ownership, color/token, or glossary guidance that contradicts the CodeRabbit review knowledge documents.
 
 chat:
   auto_reply: true
