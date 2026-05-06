@@ -230,6 +230,13 @@ internal static class HistoricSpiceGeneratedNameTranslator
     {
         using var _ = Translator.PushMissingKeyLoggingSuppression(true);
         var lower = LowerAscii(source);
+        var scoped = HistorySpiceComponentLookup.TranslateExactOrLowerAscii(lower);
+        if (scoped is not null)
+        {
+            translated = scoped;
+            return true;
+        }
+
         var direct = Translator.Translate(lower);
         if (!string.Equals(direct, lower, StringComparison.Ordinal))
         {

@@ -73,6 +73,16 @@ public sealed class TranslatorTests
     }
 
     [Test]
+    public void Translate_DoesNotLoadScopedSubdirectoryDictionariesGlobally()
+    {
+        WriteDictionary(Path.Combine("Scoped", "historyspice-common.ja.json"), "someone", "誰か");
+
+        var translated = Translator.Translate("someone");
+
+        Assert.That(translated, Is.EqualTo("someone"));
+    }
+
+    [Test]
     public void Translate_LogsContext_WhenKeyIsMissing()
     {
         WriteDictionary("ui-test.ja.json", "Hello", "こんにちは");
@@ -454,6 +464,7 @@ public sealed class TranslatorTests
     private void WriteDictionaryFile(string fileName, string content)
     {
         var path = Path.Combine(tempDirectory, fileName);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, content, Utf8WithoutBom);
     }
 }

@@ -280,8 +280,10 @@ public sealed class GetDisplayNameProcessPatchTests
     {
         WriteDictionary(
             ("dromad merchant", "ドロマド商人"),
-            ("sitting on {0}", "{0}に座っている"),
             ("chair", "椅子"));
+        WriteDictionaryFile(
+            "Scoped/ui-displayname-state-templates.ja.json",
+            "{\"entries\":[{\"key\":\"sitting on {0}\",\"context\":\"GetDisplayName.StateTemplate\",\"text\":\"{0}に座っている\"}]}\n");
 
         RunWithDisplayNameProcessPatch(() =>
         {
@@ -879,8 +881,15 @@ public sealed class GetDisplayNameProcessPatchTests
 
     private void WriteDictionaryFile(string fileName, string contents)
     {
+        var path = Path.Combine(tempDirectory, fileName);
+        var parent = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(parent))
+        {
+            Directory.CreateDirectory(parent);
+        }
+
         File.WriteAllText(
-            Path.Combine(tempDirectory, fileName),
+            path,
             contents,
             new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
     }

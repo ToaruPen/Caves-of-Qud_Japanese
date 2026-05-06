@@ -925,6 +925,12 @@ internal static class MessagePatternTranslator
             return activatedAbilityCapture;
         }
 
+        var historySpiceComponent = HistorySpiceComponentLookup.TranslateExactOrLowerAscii(source);
+        if (historySpiceComponent is not null)
+        {
+            return historySpiceComponent;
+        }
+
         var direct = Translator.Translate(source);
         if (!string.Equals(direct, source, StringComparison.Ordinal))
         {

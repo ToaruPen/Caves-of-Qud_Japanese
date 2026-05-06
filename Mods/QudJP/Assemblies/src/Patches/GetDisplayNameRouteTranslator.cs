@@ -8,6 +8,9 @@ namespace QudJP.Patches;
 
 internal static class GetDisplayNameRouteTranslator
 {
+    private const string DisplayNameStateTemplateContext = "GetDisplayName.StateTemplate";
+    private const string DisplayNameStateTemplateDictionaryFile = "Scoped/ui-displayname-state-templates.ja.json";
+
     private static readonly string[] DisplayNameDictionaryFiles =
     {
         "ui-displayname-adjectives.ja.json",
@@ -841,8 +844,11 @@ internal static class GetDisplayNameRouteTranslator
         }
 
         var templateKey = match.Groups["template"].Value + " {0}";
-        var translatedTemplate = Translator.Translate(templateKey);
-        if (string.Equals(translatedTemplate, templateKey, StringComparison.Ordinal))
+        var translatedTemplate = ScopedDictionaryLookup.TranslateExactOrLowerAsciiForContext(
+            templateKey,
+            DisplayNameStateTemplateContext,
+            DisplayNameStateTemplateDictionaryFile);
+        if (translatedTemplate is null)
         {
             translated = source;
             return false;

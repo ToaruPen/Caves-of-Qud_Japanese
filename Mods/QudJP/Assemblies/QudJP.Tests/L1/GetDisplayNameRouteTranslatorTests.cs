@@ -73,6 +73,27 @@ public sealed class GetDisplayNameRouteTranslatorTests
         });
     }
 
+    [Test]
+    public void TranslatePreservingColors_UsesScopedStateTemplateLookup()
+    {
+        WriteDictionary(
+            ("dromad merchant", "ドロマド商人"),
+            ("chair", "椅子"));
+        WriteDictionaryFile(
+            "Scoped/ui-displayname-state-templates.ja.json",
+            "{\"entries\":[{\"key\":\"sitting on {0}\",\"context\":\"GetDisplayName.StateTemplate\",\"text\":\"{0}に座っている\"}]}\n");
+
+        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(
+            "dromad merchant [sitting on a chair]",
+            nameof(GetDisplayNamePatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("ドロマド商人 [椅子に座っている]"));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("sitting on {0}"), Is.EqualTo(0));
+        });
+    }
+
     [TestCase("花瓶 [空]")]
     [TestCase("タム、ドロマド商人 [座っている]")]
     public void TranslatePreservingColors_PassesThroughAlreadyLocalizedBracketedDisplayName(string source)
@@ -416,9 +437,21 @@ public sealed class GetDisplayNameRouteTranslatorTests
         builder.Append("]}");
         builder.AppendLine();
 
+        WriteDictionaryFile(fileName, builder.ToString());
+    }
+
+    private void WriteDictionaryFile(string fileName, string contents)
+    {
+        var path = Path.Combine(tempDirectory, fileName);
+        var parent = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(parent))
+        {
+            Directory.CreateDirectory(parent);
+        }
+
         File.WriteAllText(
-            Path.Combine(tempDirectory, fileName),
-            builder.ToString(),
+            path,
+            contents,
             new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
     }
 

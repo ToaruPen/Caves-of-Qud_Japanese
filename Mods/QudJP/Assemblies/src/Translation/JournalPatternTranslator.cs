@@ -749,6 +749,12 @@ internal static class JournalPatternTranslator
     private static string TranslateTemplateCapture(string source)
     {
         using var _ = Translator.PushMissingKeyLoggingSuppression(true);
+        var historySpiceComponent = HistorySpiceComponentLookup.TranslateExactOrLowerAscii(source);
+        if (historySpiceComponent is not null)
+        {
+            return historySpiceComponent;
+        }
+
         var direct = Translator.Translate(source);
         if (!string.Equals(direct, source, StringComparison.Ordinal))
         {
