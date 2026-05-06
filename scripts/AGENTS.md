@@ -34,8 +34,9 @@ just annals-pattern-preview
 just text-construction-inventory
 just ast-grep-smoke
 just ast-grep-check
-DOTFILES_ROOT=~/Dev/dotfiles just render-skill-evals <skill> <scenario>
-DOTFILES_ROOT=~/Dev/dotfiles just summarize-skill-evals /tmp/skill-eval-results.jsonl
+just render-skill-evals <repo-local-skill> <scenario>
+DOTFILES_ROOT=/path/to/dotfiles just render-skill-evals <dotfiles-skill> <scenario>
+DOTFILES_ROOT=/path/to/dotfiles just summarize-skill-evals /tmp/skill-eval-results.jsonl
 just localization-check
 just translation-token-check
 just translation-token-baseline
@@ -56,9 +57,10 @@ just sync-mod
 - Roslyn tracked artifact recipes are intentionally named `*-tracked`;
   prefer preview recipes for review and validation unless the task explicitly
   owns the generated artifact.
-- Skill eval execution is orchestrator-owned: render prompts with `just render-skill-evals`,
-  run them in fresh Codex subagents from the parent session, append results that match
-  `skill-eval-result.schema.json`, then summarize with `just summarize-skill-evals`.
+- Skill eval execution is orchestrator-owned: render prompts with
+  `just render-skill-evals`, run them in fresh Codex subagents from the parent
+  session, append results that match `skill-eval-result.schema.json` and
+  manifest scenarios, then summarize with `just summarize-skill-evals`.
 - If a task touches Phase F observability or triage docs, treat `docs/RULES.md` as the source of truth and keep this guide aligned to it.
 
 ## Annals pattern extraction pipeline (issue #420)

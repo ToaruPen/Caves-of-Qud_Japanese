@@ -198,10 +198,10 @@ The only prompt-tuning change needed was to make the initial lane choice and the
 tracked artifact boundary explicit near the top of the Roslyn static-analysis
 skill.
 
-Do not persist raw eval JSONL for this repo-local skill until the
-`skill-evals.json` renderer supports `.codex/skills/` paths from this
-repository. Keep this summary as the audited evidence for the PR and add
-manifest-backed scenarios before relying on these checks as a recurring eval.
+The `roslyn-static-analysis` scenarios are registered in `skill-evals.json`, and
+the repo-local skill eval renderer supports both dotfiles-managed skills and
+repo-local `.codex/skills/` paths. Raw JSONL results are acceptable only when
+they correspond to manifest-backed scenarios.
 
 ## Acceptance Gates
 
