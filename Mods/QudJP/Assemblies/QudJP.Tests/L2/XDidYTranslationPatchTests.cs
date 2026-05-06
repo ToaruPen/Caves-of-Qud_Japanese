@@ -606,6 +606,10 @@ public sealed class XDidYTranslationPatchTests
             DisplayName = displayName;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S1144:Unused private types or members",
+            Justification = "Read by the reflected One signature used in the test.")]
         public string DisplayName { get; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(

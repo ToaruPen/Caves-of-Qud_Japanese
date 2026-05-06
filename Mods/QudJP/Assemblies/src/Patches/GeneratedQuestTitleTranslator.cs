@@ -96,10 +96,26 @@ internal static class GeneratedQuestTitleTranslator
             match.Groups["giver"].Value,
             spans,
             match.Groups["giver"]);
-        var item = StringHelpers.StripLeadingEnglishArticle(match.Groups["item"].Value);
+        var itemWithWrappers = ColorAwareTranslationComposer.RestoreCaptureWholeBoundaryWrappersPreservingTranslatedOwnership(
+            match.Groups["item"].Value,
+            spans,
+            match.Groups["item"]);
+        var item = StripLeadingEnglishArticlePreservingColors(itemWithWrappers);
         translated = giver + "が" + item + "を探すのを助ける";
         var sourceTitle = match.Groups["title"].Success ? match.Groups["title"].Value : match.Value;
         DynamicTextObservability.RecordTransform(route, "GeneratedQuestTitle.FindSpecificItem", sourceTitle, translated);
         return true;
+    }
+
+    private static string StripLeadingEnglishArticlePreservingColors(string source)
+    {
+        var visible = ColorAwareTranslationComposer.GetVisibleText(source);
+        var withoutArticle = StringHelpers.StripLeadingEnglishArticle(visible);
+        if (string.Equals(withoutArticle, visible, StringComparison.Ordinal))
+        {
+            return source;
+        }
+
+        return ColorAwareTranslationComposer.TranslatePreservingColors(source, _ => withoutArticle);
     }
 }

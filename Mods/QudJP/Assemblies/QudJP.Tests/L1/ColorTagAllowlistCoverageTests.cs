@@ -115,7 +115,7 @@ public sealed class ColorTagAllowlistCoverageTests
             ["Mods/QudJP/Assemblies/src/Patches/EnclosingFragmentTranslator.cs:22:TryTranslatePopupMessage"] = "Delegates capture restoration to RestoreVisible.",
             ["Mods/QudJP/Assemblies/src/Patches/FactionsLineTranslationPatch.cs:84:TranslateTextField"] = "Strips only to detect whether the already-localized field contains visible text.",
             ["Mods/QudJP/Assemblies/src/Patches/FactionsStatusScreenTranslationPatch.cs:895:AddLocalizedSearchFragment"] = "Strips only to add searchable plain text beside the colored display text.",
-            ["Mods/QudJP/Assemblies/src/Patches/GetDisplayNameRouteTranslator.cs:1113:TranslateDisplayNameModifier"] = "Strips only to classify display-name modifier text before composing a translated modifier.",
+            ["Mods/QudJP/Assemblies/src/Patches/GetDisplayNameRouteTranslator.cs:1134:TranslateDisplayNameModifier"] = "Strips only to classify display-name modifier text before composing a translated modifier.",
             ["Mods/QudJP/Assemblies/src/Patches/JournalNotificationTranslator.cs:20:TryTranslate"] = "Strips source colors so journal notification patterns can replace the full system sentence.",
             ["Mods/QudJP/Assemblies/src/Patches/LiquidVolumeFragmentTranslator.cs:118:TryTranslate"] = "Delegates capture restoration to helper calls in the matched branch.",
             ["Mods/QudJP/Assemblies/src/Patches/MainMenuLocalizationPatch.cs:207:TranslateProducerText"] = "Strips only for already-localized/direct-route checks before TranslatePreservingColors owns restoration.",

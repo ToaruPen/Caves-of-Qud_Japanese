@@ -55,6 +55,27 @@ public sealed class ScopedDictionaryLookupTests
         });
     }
 
+    [Test]
+    public void TranslateExactOrLowerAsciiForContext_PrefersContextualEntry()
+    {
+        WriteDictionaryContents(
+            "scoped.ja.json",
+            "{\"entries\":[" +
+            "{\"key\":\"stone\",\"context\":\"Route.A\",\"text\":\"石\"}," +
+            "{\"key\":\"stone\",\"text\":\"石ではない\"}" +
+            "]}\n");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                ScopedDictionaryLookup.TranslateExactOrLowerAsciiForContext("stone", "Route.A", "scoped.ja.json"),
+                Is.EqualTo("石"));
+            Assert.That(
+                ScopedDictionaryLookup.TranslateExactOrLowerAscii("stone", "scoped.ja.json"),
+                Is.EqualTo("石ではない"));
+        });
+    }
+
     private void WriteDictionary(string fileName, params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();
@@ -62,6 +83,11 @@ public sealed class ScopedDictionaryLookupTests
         AppendEntries(builder, entries);
         builder.AppendLine("]}");
         File.WriteAllText(Path.Combine(tempDirectory, fileName), builder.ToString(), Utf8WithoutBom);
+    }
+
+    private void WriteDictionaryContents(string fileName, string contents)
+    {
+        File.WriteAllText(Path.Combine(tempDirectory, fileName), contents, Utf8WithoutBom);
     }
 
     private static void AppendEntries(StringBuilder builder, IReadOnlyList<(string key, string text)> entries)

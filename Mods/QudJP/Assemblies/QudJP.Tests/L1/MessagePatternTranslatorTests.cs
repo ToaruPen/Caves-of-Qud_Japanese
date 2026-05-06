@@ -1547,7 +1547,6 @@ public sealed class MessagePatternTranslatorTests
     public void Translate_RepositoryDictionary_TranslatesGeneratedRandomStatueDescriptionLine()
     {
         UseRepositoryPatternDictionary();
-        WriteExactDictionary(("stone", "石"));
 
         var translated = MessagePatternTranslator.Translate(
             "This statue worked from stone intricately depicts a 山羊人の種播き:");

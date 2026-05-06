@@ -74,6 +74,56 @@ public sealed class PickTargetWindowUpdateTranslationPatchTests
         });
     }
 
+    [Test]
+    public void TranslateCurrentText_FallbackToEnglish_WhenExactLabelMissing()
+    {
+        WriteDictionary(("select", "決定"));
+        DummyPickTargetWindow.currentText = "Dig to where?";
+
+        var changed = PickTargetWindowUpdateTranslationPatch.TranslateCurrentTextForTests(typeof(DummyPickTargetWindow));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.False);
+            Assert.That(DummyPickTargetWindow.currentText, Is.EqualTo("Dig to where?"));
+        });
+    }
+
+    [Test]
+    public void TranslateCurrentText_ReturnsFalse_WhenCurrentTextIsEmpty()
+    {
+        DummyPickTargetWindow.currentText = string.Empty;
+
+        var changed = PickTargetWindowUpdateTranslationPatch.TranslateCurrentTextForTests(typeof(DummyPickTargetWindow));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.False);
+            Assert.That(DummyPickTargetWindow.currentText, Is.Empty);
+        });
+    }
+
+    [TestCase("\u0001Dig to where?", "\u0001どこまで掘る？")]
+    [TestCase("<color=red>Dig to where?</color>", "<color=red>どこまで掘る？</color>")]
+    public void TranslateCurrentText_TranslatesExactLabelPreservingMarkerAndColor(string source, string expected)
+    {
+        WriteDictionary(("Dig to where?", "どこまで掘る？"));
+        DummyPickTargetWindow.currentText = source;
+
+        var changed = PickTargetWindowUpdateTranslationPatch.TranslateCurrentTextForTests(typeof(DummyPickTargetWindow));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(DummyPickTargetWindow.currentText, Is.EqualTo(expected));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PickTargetWindowUpdateTranslationPatch),
+                    "PickTarget.ExactLookup"),
+                Is.GreaterThan(0));
+        });
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();

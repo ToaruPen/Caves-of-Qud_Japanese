@@ -10,12 +10,25 @@ internal static class PickTargetWindowTextTranslator
 
     internal static bool TryTranslateUiText(string source, string route, out string translated)
     {
+        if (MessageFrameTranslator.TryStripDirectTranslationMarker(source, out var withoutMarker))
+        {
+            if (TryTranslateUiText(withoutMarker, route, out var translatedWithoutMarker)
+                && !string.Equals(withoutMarker, translatedWithoutMarker, StringComparison.Ordinal))
+            {
+                translated = MessageFrameTranslator.MarkDirectTranslation(translatedWithoutMarker);
+                return true;
+            }
+
+            translated = source;
+            return false;
+        }
+
         if (TryTranslateCommandBar(source, route, out translated))
         {
             return true;
         }
 
-        if (StringHelpers.TryGetTranslationExactOrLowerAscii(source, out translated))
+        if (TryTranslateExactLabel(source, out translated))
         {
             DynamicTextObservability.RecordTransform(route, "PickTarget.ExactLookup", source, translated);
             return true;
@@ -46,6 +59,20 @@ internal static class PickTargetWindowTextTranslator
         translated = string.Join(" | ", translatedSegments);
         DynamicTextObservability.RecordTransform(route, "PickTarget.CommandBar", source, translated);
         return true;
+    }
+
+    private static bool TryTranslateExactLabel(string source, out string translated)
+    {
+        var visible = ColorAwareTranslationComposer.GetVisibleText(source);
+        var direct = TranslatePickTargetToken(visible, traceFallback: false);
+        if (direct is null)
+        {
+            translated = source;
+            return false;
+        }
+
+        translated = ColorAwareTranslationComposer.TranslatePreservingColors(source, _ => direct);
+        return !string.Equals(source, translated, StringComparison.Ordinal);
     }
 
     private static bool TryTranslateCommandBarSegment(string source, out string translated)

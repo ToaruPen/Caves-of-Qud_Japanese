@@ -689,10 +689,15 @@ public sealed class GetDisplayNameProcessPatchTests
     {
         WriteDictionaryFile(
             "ui-displayname-atomic.ja.json",
-            ("tortoise", "亀"),
-            ("salt kraken", "ソルト・クラーケン"),
-            ("keratin", "ケラチン質"),
-            ("tent", "天幕"));
+            "{\"entries\":[" +
+            "{\"key\":\"tortoise\",\"context\":\"GetDisplayName.GeneratedCanvasTent.Component\",\"text\":\"亀\"}," +
+            "{\"key\":\"keratin\",\"context\":\"GetDisplayName.GeneratedCanvasTent.Component\",\"text\":\"ケラチン質\"}," +
+            "{\"key\":\"tent\",\"context\":\"GetDisplayName.GeneratedCanvasTent.Component\",\"text\":\"天幕\"}," +
+            "{\"key\":\"salt kraken\",\"text\":\"ソルト・クラーケン\"}," +
+            "{\"key\":\"tortoise\",\"text\":\"亀ではない\"}," +
+            "{\"key\":\"keratin\",\"text\":\"ケラチンではない\"}," +
+            "{\"key\":\"tent\",\"text\":\"テントではない\"}" +
+            "]}\n");
 
         RunWithDisplayNameProcessPatch(() =>
         {
@@ -715,8 +720,12 @@ public sealed class GetDisplayNameProcessPatchTests
     {
         WriteDictionaryFile(
             "ui-displayname-atomic.ja.json",
-            ("stone", "石"),
-            ("statue", "像"));
+            "{\"entries\":[" +
+            "{\"key\":\"stone\",\"context\":\"GetDisplayName.GeneratedRandomStatue.Component\",\"text\":\"石\"}," +
+            "{\"key\":\"statue\",\"context\":\"GetDisplayName.GeneratedRandomStatue.Component\",\"text\":\"像\"}," +
+            "{\"key\":\"stone\",\"text\":\"石ではない\"}," +
+            "{\"key\":\"statue\",\"text\":\"像ではない\"}" +
+            "]}\n");
 
         RunWithDisplayNameProcessPatch(() =>
         {

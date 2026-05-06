@@ -242,6 +242,20 @@ public sealed class QuestUiTranslationPatchTests
             Is.EqualTo("{{&Y|ドリンクス}}がポリセフian 祖父角の角笛を探すのを助ける"));
     }
 
+    [Test]
+    public void TranslateQuestLogLine_TranslatesGeneratedFindItemQuestTitlePreservingItemWrapper()
+    {
+        WriteDictionary();
+
+        var translated = QuestLogTranslationPatch.TranslateQuestLogLine(
+            "Aiding {{&Y|ドリンクス}} to Find {{W|the ポリセフian 祖父角の角笛}}",
+            nameof(QuestLogTranslationPatch));
+
+        Assert.That(
+            translated,
+            Is.EqualTo("{{&Y|ドリンクス}}が{{W|ポリセフian 祖父角の角笛}}を探すのを助ける"));
+    }
+
     private static string CreateHarmonyId()
     {
         return $"qudjp.tests.{Guid.NewGuid():N}";

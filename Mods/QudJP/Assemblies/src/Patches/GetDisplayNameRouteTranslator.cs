@@ -11,6 +11,7 @@ internal static class GetDisplayNameRouteTranslator
     private static readonly string[] DisplayNameDictionaryFiles =
     {
         "ui-displayname-adjectives.ja.json",
+        "ui-displayname-atomic.ja.json",
     };
     private static readonly string[] LiquidPhraseDictionaryFiles =
     {
@@ -59,6 +60,8 @@ internal static class GetDisplayNameRouteTranslator
         new Regex("[\\p{IsHiragana}\\p{IsKatakana}\\p{IsCJKUnifiedIdeographs}]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex EnglishWordPattern =
         new Regex("[A-Za-z]{2,}", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private const string GeneratedCanvasTentComponentContext = "GetDisplayName.GeneratedCanvasTent.Component";
+    private const string GeneratedRandomStatueComponentContext = "GetDisplayName.GeneratedRandomStatue.Component";
 
     internal static bool IsAlreadyLocalizedDisplayNameText(string source)
     {
@@ -681,7 +684,7 @@ internal static class GetDisplayNameRouteTranslator
             return false;
         }
 
-        var translatedTent = TranslateDisplayNameExactOrLowerAscii("tent");
+        var translatedTent = TranslateDisplayNameExactOrLowerAscii("tent", GeneratedCanvasTentComponentContext);
         if (translatedTent is null)
         {
             translated = source;
@@ -702,8 +705,8 @@ internal static class GetDisplayNameRouteTranslator
         {
             var creature = body.Substring(0, splitIndex);
             var material = body.Substring(splitIndex + 1);
-            var creatureTranslation = TranslateAsciiPhrase(creature);
-            var materialTranslation = TranslateAsciiPhrase(material);
+            var creatureTranslation = TranslateDisplayNameComponentPhrase(creature, GeneratedCanvasTentComponentContext);
+            var materialTranslation = TranslateDisplayNameComponentPhrase(material, GeneratedCanvasTentComponentContext);
             if (creatureTranslation is null || materialTranslation is null)
             {
                 continue;
@@ -734,7 +737,7 @@ internal static class GetDisplayNameRouteTranslator
             return false;
         }
 
-        var translatedStatue = TranslateDisplayNameExactOrLowerAscii("statue");
+        var translatedStatue = TranslateDisplayNameExactOrLowerAscii("statue", GeneratedRandomStatueComponentContext);
         if (translatedStatue is null)
         {
             translated = source;
@@ -765,7 +768,7 @@ internal static class GetDisplayNameRouteTranslator
         }
 
         var material = parts[parts.Length - 1];
-        var materialTranslation = TranslateAsciiPhrase(material);
+        var materialTranslation = TranslateDisplayNameComponentPhrase(material, GeneratedRandomStatueComponentContext);
         if (materialTranslation is null)
         {
             return false;
@@ -778,7 +781,7 @@ internal static class GetDisplayNameRouteTranslator
         }
 
         var modifier = string.Join(" ", parts, 0, parts.Length - 1);
-        var modifierTranslation = TranslateAsciiPhrase(modifier);
+        var modifierTranslation = TranslateDisplayNameComponentPhrase(modifier, GeneratedRandomStatueComponentContext);
         if (modifierTranslation is null)
         {
             return false;
@@ -970,6 +973,12 @@ internal static class GetDisplayNameRouteTranslator
         return builder.ToString();
     }
 
+    private static string? TranslateDisplayNameComponentPhrase(string source, string context)
+    {
+        var scoped = TranslateDisplayNameExactOrLowerAscii(source, context);
+        return scoped ?? TranslateAsciiPhrase(source);
+    }
+
     private static string? TryTranslateColoredLiquidToken(string source)
     {
         if (!LooksLikeAsciiPhrase(source) || HasAsciiSpace(source))
@@ -1087,15 +1096,27 @@ internal static class GetDisplayNameRouteTranslator
 
     private static string? TranslateDisplayNameExactOrLowerAscii(string source)
     {
-        var scoped = TryTranslateDisplayNameScopedExact(source);
+        return TranslateDisplayNameExactOrLowerAscii(source, context: null);
+    }
+
+    private static string? TranslateDisplayNameExactOrLowerAscii(string source, string? context)
+    {
+        var scoped = context is null
+            ? TryTranslateDisplayNameScopedExact(source)
+            : ScopedDictionaryLookup.TranslateExactOrLowerAsciiForContext(source, context, DisplayNameDictionaryFiles);
         if (scoped is not null)
         {
             return scoped;
         }
 
-        return StringHelpers.TryGetTranslationExactOrLowerAscii(source, out var translated)
-            ? translated
-            : null;
+        if (context is null)
+        {
+            return StringHelpers.TryGetTranslationExactOrLowerAscii(source, out var translated)
+                ? translated
+                : null;
+        }
+
+        return StringHelpers.TranslateExactOrLowerAscii(source, context);
     }
 
     private static string? TranslateDisplayNameModifier(string source)
