@@ -8,6 +8,24 @@ description: Use in QudJP when designing, reviewing, or extending C# static anal
 Use this skill for QudJP static analysis work where syntax shape is not enough.
 The main goal is to turn exploratory source findings into a durable, low-false-positive inventory.
 
+## First Choose The Lane
+
+Before choosing a C# static-analysis tool, classify the request:
+
+- Localization asset quality, placeholder correctness, or Japanese prose review:
+  use the localization guides and validation commands such as
+  `just localization-check` and `just translation-token-check`. Roslyn is not a
+  translation-quality checker.
+- One-off decompiled C# owner or sink-route investigation: start with `rg` /
+  `ast-grep`, then use `just semantic-probe ...` only when symbol ownership
+  changes the answer.
+- Durable, reviewable, or tracked C# inventories: use or extend the
+  purpose-built Roslyn inventory. For current text producer callsites, the
+  tracked artifact is `docs/static-producer-inventory.json`, not generic
+  semantic-probe output.
+- Runtime route proof: use fresh runtime evidence. Static analysis can choose
+  the next hypothesis; it is not live behavior proof.
+
 ## Tool Choice
 
 Start light, then promote when needed:

@@ -173,6 +173,36 @@ unresolved rows are review evidence only.
 - Do not propagate wrapper callsites to wrapped owners in the first version.
 - Do not commit `Assembly-CSharp.dll`, Unity DLLs, or other game binaries.
 
+## Empirical Tool-Routing Evaluation
+
+After implementation, run a low-effort fresh-subagent routing check over
+`AGENTS.md`, `scripts/AGENTS.md`, and
+`.codex/skills/roslyn-static-analysis/SKILL.md`. The goal is to verify that a
+cold agent can choose the right tool family without author-side interpretation.
+
+Evaluation scenarios:
+
+- Ad hoc `Popup.Show` owner-route investigation with unrelated same-name
+  `Show` methods present.
+- Localization XML placeholder and Japanese prose QA where the task is about
+  assets, not C# owner discovery.
+- Durable inventory generation for `EmitMessage`, `Popup.Show*`, and
+  `AddPlayerMessage` as tracked project evidence.
+
+Observed result on 2026-05-06: all three scenarios passed. The agents chose
+`rg` / `ast-grep` before `just semantic-probe` for ad hoc C# owner evidence,
+kept `candidate` / `unresolved` rows visible, declined Roslyn for localization
+asset QA, and promoted tracked producer-callsite work to
+`docs/static-producer-inventory.json` through the purpose-built inventory path.
+The only prompt-tuning change needed was to make the initial lane choice and the
+tracked artifact boundary explicit near the top of the Roslyn static-analysis
+skill.
+
+Do not persist raw eval JSONL for this repo-local skill until the
+`skill-evals.json` renderer supports `.codex/skills/` paths from this
+repository. Keep this summary as the audited evidence for the PR and add
+manifest-backed scenarios before relying on these checks as a recurring eval.
+
 ## Acceptance Gates
 
 Before implementation is considered complete:
