@@ -1,4 +1,5 @@
 using System.Text;
+using HarmonyLib;
 using QudJP.Patches;
 
 namespace QudJP.Tests.L2;
@@ -22,6 +23,7 @@ public sealed class PickTargetWindowUpdateTranslationPatchTests
         Translator.SetDictionaryDirectoryForTests(tempDirectory);
         DynamicTextObservability.ResetForTests();
         DummyPickTargetWindow.currentText = string.Empty;
+        DummyPickTargetWindow.Reset();
     }
 
     [TearDown]
@@ -51,6 +53,28 @@ public sealed class PickTargetWindowUpdateTranslationPatchTests
         {
             Assert.That(changed, Is.True);
             Assert.That(DummyPickTargetWindow.currentText, Is.EqualTo("どこまで掘る？ | {{W|space}}-決定 | 固定解除 ({{hotkey|F1}}))"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PickTargetWindowUpdateTranslationPatch),
+                    "PickTarget.CommandBar"),
+                Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
+    public void Prefix_TranslatesGeneratedPickTargetCommandBar_WhenPatched()
+    {
+        WriteDictionary(
+            ("Dig to where?", "どこまで掘る？"),
+            ("select", "決定"));
+        DummyPickTargetWindow.currentText = "Dig to where? | {{W|space}}-select";
+
+        RunWithPickTargetWindowUpdatePatch(() => DummyPickTargetWindow.Update());
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyPickTargetWindow.currentText, Is.EqualTo("どこまで掘る？ | {{W|space}}-決定"));
+            Assert.That(DummyPickTargetWindow.UpdateCallCount, Is.EqualTo(1));
             Assert.That(
                 DynamicTextObservability.GetRouteFamilyHitCountForTests(
                     nameof(PickTargetWindowUpdateTranslationPatch),
@@ -175,11 +199,47 @@ public sealed class PickTargetWindowUpdateTranslationPatchTests
             .Replace("\"", "\\\"", StringComparison.Ordinal)
             .Replace("\n", "\\n", StringComparison.Ordinal)
             .Replace("\r", "\\r", StringComparison.Ordinal)
-            .Replace("\t", "\\t");
+            .Replace("\t", "\\t", StringComparison.Ordinal);
+    }
+
+    private static void RunWithPickTargetWindowUpdatePatch(Action action)
+    {
+        var harmonyId = $"qudjp.tests.picktarget.{Guid.NewGuid():N}";
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: AccessTools.Method(typeof(DummyPickTargetWindow), nameof(DummyPickTargetWindow.Update)),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(PickTargetWindowUpdateTranslationPatchTests), nameof(PrefixDummyPickTargetWindowUpdate))));
+            action();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    private static void PrefixDummyPickTargetWindowUpdate()
+    {
+        _ = PickTargetWindowUpdateTranslationPatch.TranslateCurrentTextForTests(typeof(DummyPickTargetWindow));
     }
 
     private static class DummyPickTargetWindow
     {
         public static string currentText = string.Empty;
+
+        public static int UpdateCallCount { get; private set; }
+
+        public static void Update()
+        {
+            UpdateCallCount++;
+        }
+
+        public static void Reset()
+        {
+            currentText = string.Empty;
+            UpdateCallCount = 0;
+        }
     }
 }

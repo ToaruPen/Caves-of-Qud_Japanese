@@ -24,6 +24,7 @@ public sealed class QuestUiTranslationPatchTests
         DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
         DummyQuestsLineTarget.ResetStaticMenuOptions();
+        DummyQuestLogTarget.Reset();
     }
 
     [TearDown]
@@ -33,6 +34,7 @@ public sealed class QuestUiTranslationPatchTests
         DynamicTextObservability.ResetForTests();
         SinkObservation.ResetForTests();
         DummyQuestsLineTarget.ResetStaticMenuOptions();
+        DummyQuestLogTarget.Reset();
 
         if (Directory.Exists(tempDirectory))
         {
@@ -179,17 +181,45 @@ public sealed class QuestUiTranslationPatchTests
     }
 
     [Test]
-    public void TranslateQuestMapPinDetails_TranslatesGeneratedFindItemQuestTitle()
+    public void QuestsStatusScreenPostfix_TranslatesGeneratedFindItemQuestTitle_WhenPatched()
     {
         WriteDictionary(("quest:", "クエスト:"));
 
-        var translated = QuestsStatusScreenTranslationPatch.TranslateQuestMapPinDetails(
-            "{{B|quest:}} Aiding {{&Y|ドリンクス}} to Find the ポリセフian 祖父角の角笛",
-            nameof(QuestsStatusScreenTranslationPatch));
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyQuestsStatusScreenTarget), nameof(DummyQuestsStatusScreenTarget.UpdateViewFromData)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(QuestsStatusScreenTranslationPatch), nameof(QuestsStatusScreenTranslationPatch.Postfix))));
 
-        Assert.That(
-            translated,
-            Is.EqualTo("{{B|クエスト:}} {{&Y|ドリンクス}}がポリセフian 祖父角の角笛を探すのを助ける"));
+            var target = new DummyQuestsStatusScreenTarget
+            {
+                PinDataOverride = new List<DummyMapPinData>
+                {
+                    new DummyMapPinData
+                    {
+                        title = "{{W|Joppa}}",
+                        details = "{{B|quest:}} Aiding {{&Y|ドリンクス}} to Find the ポリセフian 祖父角の角笛",
+                    },
+                },
+            };
+            target.UpdateViewFromData();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    target.mapController.pins[0].pinItem.detailsText.Text,
+                    Is.EqualTo("{{B|クエスト:}} {{&Y|ドリンクス}}がポリセフian 祖父角の角笛を探すのを助ける"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(QuestsStatusScreenTranslationPatch), "QuestsStatusScreen.MapPinDetails"),
+                    Is.EqualTo(1));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     [Test]
@@ -228,32 +258,35 @@ public sealed class QuestUiTranslationPatchTests
         }
     }
 
-    [Test]
-    public void TranslateQuestLogLine_TranslatesGeneratedFindItemQuestTitle()
+    [TestCase(
+        "Aiding {{&Y|ドリンクス}} to Find the ポリセフian 祖父角の角笛",
+        "{{&Y|ドリンクス}}がポリセフian 祖父角の角笛を探すのを助ける")]
+    [TestCase(
+        "Aiding {{&Y|ドリンクス}} to Find {{W|the ポリセフian 祖父角の角笛}}",
+        "{{&Y|ドリンクス}}が{{W|ポリセフian 祖父角の角笛}}を探すのを助ける")]
+    public void QuestLogPostfix_TranslatesGeneratedFindItemQuestTitle_WhenPatched(
+        string source,
+        string expected)
     {
         WriteDictionary();
+        DummyQuestLogTarget.LinesOverride = new List<string> { source };
 
-        var translated = QuestLogTranslationPatch.TranslateQuestLogLine(
-            "Aiding {{&Y|ドリンクス}} to Find the ポリセフian 祖父角の角笛",
-            nameof(QuestLogTranslationPatch));
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyQuestLogTarget), nameof(DummyQuestLogTarget.GetLinesForQuest)),
+                postfix: new HarmonyMethod(RequireMethod(typeof(QuestLogTranslationPatch), nameof(QuestLogTranslationPatch.Postfix))));
 
-        Assert.That(
-            translated,
-            Is.EqualTo("{{&Y|ドリンクス}}がポリセフian 祖父角の角笛を探すのを助ける"));
-    }
+            var lines = DummyQuestLogTarget.GetLinesForQuest(null);
 
-    [Test]
-    public void TranslateQuestLogLine_TranslatesGeneratedFindItemQuestTitlePreservingItemWrapper()
-    {
-        WriteDictionary();
-
-        var translated = QuestLogTranslationPatch.TranslateQuestLogLine(
-            "Aiding {{&Y|ドリンクス}} to Find {{W|the ポリセフian 祖父角の角笛}}",
-            nameof(QuestLogTranslationPatch));
-
-        Assert.That(
-            translated,
-            Is.EqualTo("{{&Y|ドリンクス}}が{{W|ポリセフian 祖父角の角笛}}を探すのを助ける"));
+            Assert.That(lines, Is.EqualTo(new[] { expected }));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     private static string CreateHarmonyId()

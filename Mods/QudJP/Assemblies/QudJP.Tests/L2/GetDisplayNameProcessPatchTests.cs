@@ -354,7 +354,7 @@ public sealed class GetDisplayNameProcessPatchTests
             {
                 Assert.That(result, Is.EqualTo("宙吊りの水煙管 [3ドラムの{{g|藻質の}}{{C|コンバレセンス}}、密封]"));
                 Assert.That(Translator.GetMissingKeyHitCountForTests("algal convalessence, sealed"), Is.EqualTo(0));
-                Assert.That(Translator.GetMissingKeyHitCountForTests("sealed]"), Is.EqualTo(0));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("[sealed]"), Is.EqualTo(0));
             });
         });
     }

@@ -995,6 +995,49 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void Translate_HistoricSpiceFakedDeathCognomenCapture_FallsBackToEnglishCaptureWhenPiecesAreMissing()
+    {
+        WriteExactDictionary(("desiccated", "乾ききった"));
+        WritePatternDictionary(("^You remember (.+?)[.!]?$", "{t0}を思い出した。"));
+
+        var translated = MessagePatternTranslator.Translate("You remember the Desiccated Spectre.");
+
+        Assert.That(translated, Is.EqualTo("the Desiccated Spectreを思い出した。"));
+    }
+
+    [Test]
+    public void Translate_HistoricSpiceFakedDeathCognomenCapture_PreservesColorMarkup()
+    {
+        WriteExactDictionary(("desiccated", "乾ききった"), ("spectre", "亡霊"));
+        WritePatternDictionary(("^You remember (.+?)[.!]?$", "{t0}を思い出した。"));
+
+        var translated = MessagePatternTranslator.Translate("{{W|You remember the Desiccated Spectre.}}");
+
+        Assert.That(translated, Is.EqualTo("{{W|乾ききった亡霊を思い出した。}}"));
+    }
+
+    [Test]
+    public void Translate_HistoricSpiceFakedDeathCognomenCapture_DoesNotReapplyWhenMarkedDirect()
+    {
+        WriteExactDictionary(("desiccated", "乾ききった"), ("spectre", "亡霊"));
+        WritePatternDictionary(("^You remember (.+?)[.!]?$", "{t0}を思い出した。"));
+        var source = MessageFrameTranslator.MarkDirectTranslation("You remember the Desiccated Spectre.");
+
+        var translated = MessagePatternTranslator.Translate(source);
+
+        Assert.That(translated, Is.EqualTo(source));
+    }
+
+    [Test]
+    public void Translate_HistoricSpiceFakedDeathCognomenCapture_ReturnsEmptyInput()
+    {
+        WriteExactDictionary(("desiccated", "乾ききった"), ("spectre", "亡霊"));
+        WritePatternDictionary(("^You remember (.+?)[.!]?$", "{t0}を思い出した。"));
+
+        Assert.That(MessagePatternTranslator.Translate(string.Empty), Is.EqualTo(string.Empty));
+    }
+
+    [Test]
     public void Translate_AppliesBeginFlyingPatternWithoutArticle()
     {
         WritePatternDictionary(("^(?:The |the )?(.+?) begins flying[.!]?$", "{0}が飛翔し始めた。"));
