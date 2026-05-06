@@ -23,6 +23,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   色・透明度・表示状態が元の行に追従するようにしました。
 - Steam Workshop へ出荷する DLL に TextMeshPro / InventoryLine 表示修正が
   含まれていない場合、release 検証で失敗するガードを追加しました。
+- インベントリ操作の `remove`、メモ、重要マーク関連ラベルの日本語訳を
+  実際のゲーム内表示キーに合わせて修正しました。
+- 「You embark for the caves of Qud.」の日本語訳を
+  `クッドの洞窟へ旅立つ。` に統一しました。
 
 ---
 
