@@ -84,6 +84,27 @@ public sealed class InventoryLineRenderProbePatchTests
     }
 
     [NUnit.Framework.Test]
+    public void InventoryLineFontFixer_AllowsWrappedTextSkinTmpFields()
+    {
+        var sourcePath = Path.Combine(
+            TestProjectPaths.GetRepositoryRoot(),
+            "Mods",
+            "QudJP",
+            "Assemblies",
+            "src",
+            "UI",
+            "InventoryLineFontFixer.cs");
+        var source = File.ReadAllText(sourcePath);
+
+        NUnit.Framework.Assert.That(
+            source,
+            NUnit.Framework.Does.Not.Contain("textSkin is not Component"));
+        NUnit.Framework.Assert.That(
+            source,
+            NUnit.Framework.Does.Contain("Access(textSkin, \"_tmp\") as TextMeshProUGUI"));
+    }
+
+    [NUnit.Framework.Test]
     public void DelayedInventoryLineRepairScheduler_RearmsOnlyWhenLineTextChanges()
     {
         var sourcePath = Path.Combine(

@@ -1,5 +1,6 @@
-#if HAS_TMP
 using System;
+
+#if HAS_TMP
 using System.Collections.Concurrent;
 using System.Globalization;
 using System.Diagnostics;
@@ -47,7 +48,8 @@ internal static class TextShellReplacementRenderer
 
     internal static bool ResolvePreservedReplacementActiveSelfForTests(bool originalActiveSelf, bool originalActiveInHierarchy)
     {
-        return originalActiveSelf && originalActiveInHierarchy;
+        _ = originalActiveInHierarchy;
+        return originalActiveSelf;
     }
 
     internal static bool ShouldRestoreOriginalAfterFailedPreservedReuseForTests(
@@ -546,11 +548,11 @@ internal static class TextShellReplacementRenderer
         var currentReplacementText = replacement.text;
         SyncReplacement(replacement, original);
         replacement.text = ResolvePreservedReplacementTextForTests(currentReplacementText, original.text);
-        var replacementActive = ResolvePreservedReplacementActiveSelfForTests(
+        var replacementActiveSelf = ResolvePreservedReplacementActiveSelfForTests(
             original.gameObject.activeSelf,
             original.gameObject.activeInHierarchy);
-        replacement.gameObject.SetActive(replacementActive);
-        replacement.enabled = replacementActive && !string.IsNullOrEmpty(replacement.text);
+        replacement.gameObject.SetActive(replacementActiveSelf);
+        replacement.enabled = replacementActiveSelf && !string.IsNullOrEmpty(replacement.text);
         replacement.havePropertiesChanged = true;
         replacement.SetAllDirty();
         if (replacement.gameObject.activeInHierarchy)

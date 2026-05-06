@@ -32,11 +32,6 @@ internal static class InventoryLineFontFixer
 
     internal static bool TryForcePrimaryFontOnTextSkin(object? textSkin, string? finalText)
     {
-        if (textSkin is not Component)
-        {
-            return false;
-        }
-
         if (!TryGetTextMeshPro(textSkin, out var tmp) || tmp is null)
         {
             LogDiagnostics(textSkin, null, finalText, applied: false);
@@ -48,7 +43,10 @@ internal static class InventoryLineFontFixer
             return false;
         }
 
-        InvokeIfPresent(textSkin, "Apply");
+        if (textSkin is not null)
+        {
+            InvokeIfPresent(textSkin, "Apply");
+        }
         _ = FontManager.TryWarmPrimaryFontCharactersForUi(finalText);
         FontManager.ForcePrimaryFont(tmp);
         if (tmp.font is not null)
@@ -324,7 +322,12 @@ internal static class InventoryLineFontFixer
     {
         try
         {
-            var canvasType = Type.GetType("UnityEngine.Canvas, UnityEngine.CoreModule", throwOnError: false);
+            var canvasType = Type.GetType("UnityEngine.Canvas, UnityEngine.UIModule", throwOnError: false);
+            if (canvasType is null)
+            {
+                canvasType = Type.GetType("UnityEngine.Canvas, UnityEngine.CoreModule", throwOnError: false);
+            }
+
             if (canvasType is null)
             {
                 canvasType = Type.GetType("UnityEngine.Canvas, UnityEngine", throwOnError: false);

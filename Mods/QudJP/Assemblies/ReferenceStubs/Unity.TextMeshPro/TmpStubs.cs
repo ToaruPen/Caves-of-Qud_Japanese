@@ -91,7 +91,7 @@ public class TMP_FontAsset : Object
 public class TMP_Text : UnityEngine.UI.Graphic
 {
     public string text { get; set; } = string.Empty;
-    public TMP_TextInfo textInfo { get; set; } = new TMP_TextInfo();
+    public TMP_TextInfo textInfo { get; } = new TMP_TextInfo();
     public TMP_FontAsset? font { get; set; }
     public Material? fontSharedMaterial { get; set; }
     public Material? fontMaterial { get; set; }
@@ -117,10 +117,10 @@ public class TMP_Text : UnityEngine.UI.Graphic
     public int maxVisibleCharacters { get; set; }
     public int maxVisibleLines { get; set; }
     public int pageToDisplay { get; set; }
-    public float preferredWidth { get; set; }
-    public float preferredHeight { get; set; }
+    public float preferredWidth { get; }
+    public float preferredHeight { get; }
     public float alpha { get; set; }
-    public CanvasRenderer canvasRenderer { get; set; } = new CanvasRenderer();
+    public CanvasRenderer canvasRenderer { get; } = new CanvasRenderer();
 
     public void ForceMeshUpdate(bool ignoreActiveState = false, bool forceTextReparsing = false)
     {
