@@ -76,7 +76,11 @@ def run_probe(args: list[str]) -> JsonObject:
     if result.stdout.strip():
         return _load_payload(result.stdout)
     if output_path is not None:
-        return _load_payload(output_path.read_text(encoding="utf-8"))
+        try:
+            return _load_payload(output_path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            msg = f"Roslyn semantic probe output file is unreadable: {output_path}: {exc}"
+            raise RuntimeError(msg) from exc
 
     msg = "Roslyn semantic probe produced no JSON on stdout"
     raise RuntimeError(msg)
