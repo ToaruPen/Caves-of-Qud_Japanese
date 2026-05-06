@@ -318,13 +318,17 @@ public sealed class JournalPatternTranslatorTests
     public void Translate_AppliesHistoricGossipPatternWithTranslatedCaptures()
     {
         WriteDictionaryFile(
-            "historyspice-common.ja.json",
+            Path.Combine("Scoped", "historyspice-common.ja.json"),
             new[] { ("some organization", "ある組織"), ("some party", "ある一団") });
         WritePatternDictionary(("^(.+?) repeatedly beat (.+?) at dice\\.$", "{t0}は{t1}を何度も賽子で打ち負かした。"));
 
         var translated = JournalPatternTranslator.Translate("some organization repeatedly beat some party at dice.");
 
-        Assert.That(translated, Is.EqualTo("ある組織はある一団を何度も賽子で打ち負かした。"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("ある組織はある一団を何度も賽子で打ち負かした。"));
+            Assert.That(Translator.Translate("some organization"), Is.EqualTo("some organization"));
+        });
     }
 
     [Test]
@@ -552,10 +556,9 @@ public sealed class JournalPatternTranslatorTests
         builder.Append("]}");
         builder.AppendLine();
 
-        File.WriteAllText(
-            Path.Combine(dictionaryDirectory, fileName),
-            builder.ToString(),
-            Utf8WithoutBom);
+        var path = Path.Combine(dictionaryDirectory, fileName);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, builder.ToString(), Utf8WithoutBom);
     }
 
     private static string EscapeJson(string value)

@@ -122,22 +122,24 @@ public sealed class ActiveEffectTextTranslatorTests
     public void TryTranslateText_TranslatesGeneratedDescriptionFamilies(string source, string expected)
     {
         WriteDictionary(
-            ("dominated ({0} turns remaining)", "支配された（残り{0}ターン）"),
-            ("time-dilated ({{C|-{0}}} Quickness)", "時間遅延 ({{C|-{0}}} Quickness)"),
-            ("lying on {0}", "{0}に横たわっている"),
-            ("engulfed by {0}", "{0}に呑み込まれている"),
-            ("enclosed in {0}", "{0}に閉じ込められている"),
-            ("sitting on {0}", "{0}に座っている"),
-            ("piloting {0}", "{0}を操縦中"),
-            ("marked by {0}", "{0}にマークされている"),
-            ("cleaved ({{C|-{0} AV}})", "裂かれた（{{C|-{0} AV}}）"),
-            ("psionically cleaved (-{0} MA)", "精神的に裂かれた（-{0} MA）"),
             ("a chair", "椅子"),
             ("a starapple tree", "スターアップルの木"),
             ("a glass bottle", "ガラス瓶"),
             ("a stool", "腰掛け"),
             ("a hovercraft", "ホバークラフト"),
             ("a snapjaw hunter", "スナップジョーの狩人"));
+        WriteScopedDictionary(
+            "Scoped/world-effects-generated-templates.ja.json",
+            ("dominated ({0} turns remaining)", "XRL.World.Effects.Dominated.GetDescription", "支配された（残り{0}ターン）"),
+            ("time-dilated ({{C|-{0}}} Quickness)", "XRL.World.Effects.ITimeDilated.GetDescription", "時間遅延 ({{C|-{0}}} Quickness)"),
+            ("lying on {0}", "XRL.World.Effects.Prone.GetDescription", "{0}に横たわっている"),
+            ("engulfed by {0}", "XRL.World.Effects.Engulfed.DisplayName", "{0}に呑み込まれている"),
+            ("enclosed in {0}", "XRL.World.Effects.Enclosed.DisplayName", "{0}に閉じ込められている"),
+            ("sitting on {0}", "XRL.World.Effects.Sitting.DisplayName", "{0}に座っている"),
+            ("piloting {0}", "XRL.World.Effects.Piloting.DisplayName", "{0}を操縦中"),
+            ("marked by {0}", "XRL.World.Effects.RifleMark.GetDescription", "{0}にマークされている"),
+            ("cleaved ({{C|-{0} AV}})", "XRL.World.Effects.ShatterArmor.GetDescription", "裂かれた（{{C|-{0} AV}}）"),
+            ("psionically cleaved (-{0} MA)", "XRL.World.Effects.ShatterMentalArmor.GetDescription", "精神的に裂かれた（-{0} MA）"));
 
         var changed = ActiveEffectTextTranslator.TryTranslateText(
             source,
@@ -164,9 +166,10 @@ public sealed class ActiveEffectTextTranslatorTests
         "半ばランダムに行動する。\n-6 DV\n-6 MA\n全精神属性に -4")]
     public void TryTranslateText_TranslatesGeneratedConfusionDetailsBeforeLineFallback(string source, string expected)
     {
-        WriteDictionary(
-            ("Acts semi-randomly.\n-{0} DV\n-{0} MA", "半ばランダムに行動する。\n-{0} DV\n-{0} MA"),
-            ("Acts semi-randomly.\n-{0} DV\n-{0} MA\n-{1} to all mental attributes", "半ばランダムに行動する。\n-{0} DV\n-{0} MA\n全精神属性に -{1}"));
+        WriteScopedDictionary(
+            "Scoped/world-effects-generated-templates.ja.json",
+            ("Acts semi-randomly.\n-{0} DV\n-{0} MA", "XRL.World.Effects.Confused.GetDetails", "半ばランダムに行動する。\n-{0} DV\n-{0} MA"),
+            ("Acts semi-randomly.\n-{0} DV\n-{0} MA\n-{1} to all mental attributes", "XRL.World.Effects.Confused.GetDetails", "半ばランダムに行動する。\n-{0} DV\n-{0} MA\n全精神属性に -{1}"));
 
         var changed = ActiveEffectTextTranslator.TryTranslateText(
             source,
@@ -204,7 +207,45 @@ public sealed class ActiveEffectTextTranslatorTests
         builder.Append("]}");
         builder.AppendLine();
 
-        File.WriteAllText(Path.Combine(tempDirectory, "active-effect-text.ja.json"), builder.ToString(), Utf8WithoutBom);
+        WriteDictionaryFile("active-effect-text.ja.json", builder.ToString());
+    }
+
+    private void WriteScopedDictionary(string fileName, params (string key, string context, string text)[] entries)
+    {
+        var builder = new StringBuilder();
+        builder.Append("{\"entries\":[");
+        for (var index = 0; index < entries.Length; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(',');
+            }
+
+            builder.Append("{\"key\":\"");
+            builder.Append(EscapeJson(entries[index].key));
+            builder.Append("\",\"context\":\"");
+            builder.Append(EscapeJson(entries[index].context));
+            builder.Append("\",\"text\":\"");
+            builder.Append(EscapeJson(entries[index].text));
+            builder.Append("\"}");
+        }
+
+        builder.Append("]}");
+        builder.AppendLine();
+
+        WriteDictionaryFile(fileName, builder.ToString());
+    }
+
+    private void WriteDictionaryFile(string fileName, string contents)
+    {
+        var path = Path.Combine(tempDirectory, fileName);
+        var parent = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(parent))
+        {
+            Directory.CreateDirectory(parent);
+        }
+
+        File.WriteAllText(path, contents, Utf8WithoutBom);
     }
 
     private static string EscapeJson(string value)

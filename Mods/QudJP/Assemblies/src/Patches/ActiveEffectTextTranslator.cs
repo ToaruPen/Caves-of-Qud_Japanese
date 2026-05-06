@@ -7,9 +7,30 @@ namespace QudJP.Patches;
 
 internal static class ActiveEffectTextTranslator
 {
+    private const string GeneratedTemplateDictionaryFile = "Scoped/world-effects-generated-templates.ja.json";
+
     private const string QuicknessMutationSingularTemplateKey = "+{0} Quickness\n+1 rank to physical mutations";
 
     private const string QuicknessMutationPluralTemplateKey = "+{0} Quickness\n+{1} ranks to physical mutations";
+
+    private static readonly IReadOnlyDictionary<string, string> GeneratedTemplateContexts =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["dominated ({0} turns remaining)"] = "XRL.World.Effects.Dominated.GetDescription",
+            ["time-dilated ({{C|-{0}}} Quickness)"] = "XRL.World.Effects.ITimeDilated.GetDescription",
+            ["Acts semi-randomly.\n-{0} DV\n-{0} MA"] = "XRL.World.Effects.Confused.GetDetails",
+            ["Acts semi-randomly.\n-{0} DV\n-{0} MA\n-{1} to all mental attributes"] = "XRL.World.Effects.Confused.GetDetails",
+            ["lying on {0}"] = "XRL.World.Effects.Prone.GetDescription",
+            ["engulfed by {0}"] = "XRL.World.Effects.Engulfed.DisplayName",
+            ["enclosed in {0}"] = "XRL.World.Effects.Enclosed.DisplayName",
+            ["sitting on {0}"] = "XRL.World.Effects.Sitting.DisplayName",
+            ["piloting {0}"] = "XRL.World.Effects.Piloting.DisplayName",
+            ["marked by {0}"] = "XRL.World.Effects.RifleMark.GetDescription",
+            ["cleaved ({{C|-{0} AV}})"] = "XRL.World.Effects.ShatterArmor.GetDescription",
+            ["psionically cleaved (-{0} MA)"] = "XRL.World.Effects.ShatterMentalArmor.GetDescription",
+            [QuicknessMutationSingularTemplateKey] = "XRL.World.Effects.AdrenalControl2Boosted.GetDetails",
+            [QuicknessMutationPluralTemplateKey] = "XRL.World.Effects.AdrenalControl2Boosted.GetDetails",
+        };
 
     private static readonly Regex QuicknessMutationSingularPattern = new(
         @"^\+(?<quickness>\d+) Quickness\n\+1 rank to physical mutations$",
@@ -335,7 +356,7 @@ internal static class ActiveEffectTextTranslator
             return false;
         }
 
-        var template = Translator.Translate(templateKey);
+        var template = TranslateGeneratedTemplate(templateKey);
         if (string.Equals(template, templateKey, StringComparison.Ordinal))
         {
             translated = source;
@@ -358,6 +379,25 @@ internal static class ActiveEffectTextTranslator
         return true;
     }
 
+    private static string TranslateGeneratedTemplate(string templateKey)
+    {
+        if (!GeneratedTemplateContexts.TryGetValue(templateKey, out var context))
+        {
+            return Translator.Translate(templateKey);
+        }
+
+        var scoped = ScopedDictionaryLookup.TranslateExactOrLowerAsciiForContext(
+            templateKey,
+            context,
+            GeneratedTemplateDictionaryFile);
+        if (scoped is not null)
+        {
+            return scoped;
+        }
+
+        return Translator.Translate(templateKey);
+    }
+
     private static bool TryTranslateKnownTemplate(
         string source,
         string stripped,
@@ -376,7 +416,7 @@ internal static class ActiveEffectTextTranslator
             return false;
         }
 
-        var template = Translator.Translate(templateKey);
+        var template = TranslateGeneratedTemplate(templateKey);
         if (string.Equals(template, templateKey, StringComparison.Ordinal))
         {
             translated = source;

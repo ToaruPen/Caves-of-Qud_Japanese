@@ -45,7 +45,7 @@ public sealed class DescriptionTextTranslatorTests
     [Test]
     public void TranslateShortDescription_AppliesVillageDescriptionPattern()
     {
-        WriteExactDictionary(
+        WriteHistorySpiceDictionary(
             ("some organization", "ある組織"),
             ("kin", "血縁"),
             ("conclave", "会合"));
@@ -63,7 +63,7 @@ public sealed class DescriptionTextTranslatorTests
     [Test]
     public void TranslateLongDescription_AppliesVillageHistoryMonumentPatterns()
     {
-        WriteExactDictionary(
+        WriteHistorySpiceDictionary(
             ("brisket", "ブリスケット"),
             ("spreading", "スプレッディング"),
             ("carnival", "カーニバル"),
@@ -515,7 +515,12 @@ public sealed class DescriptionTextTranslatorTests
 
     private void WriteExactDictionary(params (string key, string text)[] entries)
     {
-        WriteDictionary("historyspice-common.ja.json", entries);
+        WriteDictionary("ui-test.ja.json", entries);
+    }
+
+    private void WriteHistorySpiceDictionary(params (string key, string text)[] entries)
+    {
+        WriteDictionary(Path.Combine("Scoped", "historyspice-common.ja.json"), entries);
     }
 
     private void WriteDictionary(string fileName, params (string key, string text)[] entries)
@@ -538,10 +543,9 @@ public sealed class DescriptionTextTranslatorTests
 
         builder.Append("]}");
         builder.AppendLine();
-        File.WriteAllText(
-            Path.Combine(dictionaryDirectory, fileName),
-            builder.ToString(),
-            Utf8WithoutBom);
+        var path = Path.Combine(dictionaryDirectory, fileName);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, builder.ToString(), Utf8WithoutBom);
     }
 
     private static string EscapeJson(string value)

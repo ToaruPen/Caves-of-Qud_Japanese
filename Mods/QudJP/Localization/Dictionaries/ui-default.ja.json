@@ -559,26 +559,6 @@
       "text": "伏せている"
     },
     {
-      "key": "sitting on {0}",
-      "text": "{0}に座っている"
-    },
-    {
-      "key": "lying on {0}",
-      "text": "{0}に横たわっている"
-    },
-    {
-      "key": "enclosed in {0}",
-      "text": "{0}に閉じ込められている"
-    },
-    {
-      "key": "engulfed by {0}",
-      "text": "{0}に呑み込まれている"
-    },
-    {
-      "key": "auto-collecting {0}",
-      "text": "{0}を自動収集中"
-    },
-    {
       "key": "Color",
       "text": "色"
     },

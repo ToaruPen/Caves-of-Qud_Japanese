@@ -59,16 +59,6 @@
             "text": "{{R|混乱}}"
         },
         {
-            "key": "Acts semi-randomly.\n-{0} DV\n-{0} MA",
-            "context": "XRL.World.Effects.Confused.Details",
-            "text": "半ばランダムに行動する。\n-{0} DV\n-{0} MA"
-        },
-        {
-            "key": "Acts semi-randomly.\n-{0} DV\n-{0} MA\n-{1} to all mental attributes",
-            "context": "XRL.World.Effects.Confused.Details",
-            "text": "半ばランダムに行動する。\n-{0} DV\n-{0} MA\n全精神属性に -{1}"
-        },
-        {
             "key": "{{C|paralyzed}}",
             "context": "XRL.World.Effects.Paralyzed.Description",
             "text": "{{C|麻痺}}"
@@ -239,11 +229,6 @@
             "text": "相手もフェイズしていない限り、生き物や物体と物理的に相互作用できない。\n固体をすり抜けられる。"
         },
         {
-            "key": "time-dilated ({{C|-{0}}} Quickness)",
-            "context": "XRL.World.Effects.ITimeDilated.GetDescription",
-            "text": "時間遅延 ({{C|-{0}}} Quickness)"
-        },
-        {
             "key": "-{0} Quickness",
             "context": "XRL.World.Effects.ITimeDilated.Details",
             "text": "-{0} Quickness"
@@ -342,16 +327,6 @@
             "key": "{{R|adrenaline flowing}}",
             "context": "XRL.World.Effects.AdrenalControl2Boosted.Description",
             "text": "{{R|アドレナリン全開}}"
-        },
-        {
-            "key": "+{0} Quickness\n+1 rank to physical mutations",
-            "context": "XRL.World.Effects.AdrenalControl2Boosted.Details",
-            "text": "+{0} Quickness\n肉体変異 +1ランク"
-        },
-        {
-            "key": "+{0} Quickness\n+{1} ranks to physical mutations",
-            "context": "XRL.World.Effects.AdrenalControl2Boosted.Details",
-            "text": "+{0} Quickness\n肉体変異 +{1}ランク"
         },
         {
             "key": "&minhabited",
@@ -809,34 +784,9 @@
             "text": "{{w|接地}}"
         },
         {
-            "key": "dominated ({0} turns remaining)",
-            "context": "XRL.World.Effects.Dominated.Description",
-            "text": "支配された（残り{0}ターン）"
-        },
-        {
             "key": "astrally burdened",
             "context": "Qud.UI.CharacterEffectLine.DisplayName",
             "text": "星界的に重く縛られた"
-        },
-        {
-            "key": "piloting {0}",
-            "context": "XRL.World.Effects.Piloting.Description",
-            "text": "{0}を操縦中"
-        },
-        {
-            "key": "marked by {0}",
-            "context": "XRL.World.Effects.RifleMark.Description",
-            "text": "{0}にマークされている"
-        },
-        {
-            "key": "cleaved ({{C|-{0} AV}})",
-            "context": "XRL.World.Effects.ShatterArmor.Description",
-            "text": "裂かれた（{{C|-{0} AV}}）"
-        },
-        {
-            "key": "psionically cleaved (-{0} MA)",
-            "context": "XRL.World.Effects.ShatterMentalArmor.Description",
-            "text": "精神的に裂かれた（-{0} MA）"
         },
         {
             "key": "dazed",
