@@ -136,6 +136,25 @@ public sealed class UITextSkinTranslationPatchTests
         });
     }
 
+    [TestCase("{{Y|}}{{Y| . . .}}>{{K|. . . . . ■ .  . . . . . . . ■  . . . . . . . . ■  . . . . . . . . ■  . . . . . . . . {{Y|}}")]
+    [TestCase("{{W|{{W|[k]}} {{y|攻撃}}}}")]
+    [TestCase("{{y|{{y|安らぎあれ、friend。\\n\\nLive and drink.}}\\n\\n}}")]
+    [TestCase("{{y|{{y|汎用の会話文。}}\\n\\n}}")]
+    public void TranslatePreservingColors_DoesNotReportSemanticDrift_ForSemanticallyIdempotentQudMarkup(string text)
+    {
+        var output = TestTraceHelper.CaptureTrace(() =>
+            Assert.That(
+                UITextSkinTranslationPatch.TranslatePreservingColors(text, nameof(UITextSkinTranslationPatch)),
+                Is.EqualTo(text)));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(output, Does.Contain("translation_status='skipped'"));
+            Assert.That(output, Does.Contain("markup_semantic_status=clean"));
+            Assert.That(output, Does.Not.Contain("markup_semantic_status=drift"));
+        });
+    }
+
     [Test]
     public void TranslatePreservingColors_RecordsAlreadyLocalizedDirectRouteText()
     {
