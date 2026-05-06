@@ -62,6 +62,22 @@ def test_accepts_issue_references_in_normal_prose(tmp_path: Path) -> None:
     assert check_paths([report]) == []
 
 
+def test_ignores_rendering_hazards_inside_fenced_code(tmp_path: Path) -> None:
+    """Example code blocks may intentionally include otherwise unsafe Markdown."""
+    report = tmp_path / "report.md"
+    report.write_text(
+        "```\n"
+        "#459 tracks broad Restore ownership gaps.\n"
+        "| Count | Producer |\n"
+        "| ---: | --- |\n"
+        "| 1 | `}}>{{K|` |\n"
+        "```\n",
+        encoding="utf-8",
+    )
+
+    assert check_paths([report]) == []
+
+
 def test_main_reports_issues_without_traceback(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     """The CLI returns a nonzero status and prints stable issue locations."""
     report = tmp_path / "report.md"

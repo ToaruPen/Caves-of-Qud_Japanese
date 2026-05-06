@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
 _INLINE_CODE_RE = re.compile(r"(?<!`)`([^`\n]*)`(?!`)")
 _LEADING_ISSUE_REFERENCE_RE = re.compile(r"^#\d+\b")
+_FENCE_DELIMITER_RE = re.compile(r"^\s*(?:```|~~~)")
 _MIN_TABLE_PIPE_COUNT = 2
 
 
@@ -36,7 +37,14 @@ class MarkdownReportIssue:
 def check_file(path: Path) -> list[MarkdownReportIssue]:
     """Check a Markdown report file for known rendering hazards."""
     issues: list[MarkdownReportIssue] = []
+    in_fenced_code = False
     for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if _FENCE_DELIMITER_RE.match(line):
+            in_fenced_code = not in_fenced_code
+            continue
+        if in_fenced_code:
+            continue
+
         stripped = line.lstrip()
         if _LEADING_ISSUE_REFERENCE_RE.match(stripped):
             issues.append(
