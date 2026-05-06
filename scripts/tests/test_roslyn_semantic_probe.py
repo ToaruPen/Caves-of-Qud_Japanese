@@ -5,11 +5,15 @@ from __future__ import annotations
 
 import json
 import os
+import runpy
 import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import TypedDict, cast
+from typing import TYPE_CHECKING, TypedDict, cast
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 import pytest
 
@@ -72,6 +76,15 @@ class HitPayload(TypedDict):
     method_or_property_symbol: str
     containing_type_symbol: str
     receiver_type_symbol: str
+    string_arguments: list[StringArgumentPayload]
+
+
+class StringArgumentPayload(TypedDict):
+    """Subset of string argument payload asserted by tests."""
+
+    has_qud_markup: bool
+    has_tmp_markup: bool
+    has_placeholder_like_text: bool
 
 
 class ProbePayload(TypedDict):
@@ -98,6 +111,12 @@ def run_probe(*args: str, source_root: Path = FIXTURE_SOURCE) -> ProbePayload:
         stdout=subprocess.PIPE,
     )
     return cast("ProbePayload", json.loads(completed.stdout))
+
+
+def load_payload_validator() -> Callable[[str], object]:
+    """Load the wrapper payload validator without invoking the CLI."""
+    namespace = runpy.run_path(str(WRAPPER), run_name="roslyn_semantic_probe_test")
+    return cast("Callable[[str], object]", namespace["_load_payload"])
 
 
 def test_owner_filter_excludes_same_name_false_positive() -> None:
@@ -217,15 +236,18 @@ def test_string_argument_shapes_and_markup_risks_are_reported() -> None:
         "20",
     )
 
-    assert emit_doc["metrics"]["resolved_matching_owner_hits"] == 7
+    assert emit_doc["metrics"]["resolved_matching_owner_hits"] == 11
     assert emit_doc["metrics"]["first_string_argument_counts"]["interpolated_string"] == 1
-    assert emit_doc["metrics"]["first_string_argument_counts"]["string_literal"] == 3
+    assert emit_doc["metrics"]["first_string_argument_counts"]["string_literal"] == 7
     assert emit_doc["metrics"]["first_string_argument_counts"]["invocation"] == 1
     assert emit_doc["metrics"]["first_string_argument_counts"]["variable_or_member"] == 1
     assert emit_doc["metrics"]["first_string_argument_counts"]["element_access"] == 1
-    assert emit_doc["metrics"]["string_risk_counts"]["qud_markup"] >= 2
-    assert emit_doc["metrics"]["string_risk_counts"]["tmp_markup"] >= 1
-    assert emit_doc["metrics"]["string_risk_counts"]["placeholder_like_text"] >= 2
+    assert emit_doc["metrics"]["string_risk_counts"]["qud_markup"] == 4
+    assert emit_doc["metrics"]["string_risk_counts"]["tmp_markup"] == 1
+    assert emit_doc["metrics"]["string_risk_counts"]["placeholder_like_text"] == 2
+    ordinary_hit = next(hit for hit in emit_doc["hits"] if "ordinary & symbol" in hit["expression"])
+    assert ordinary_hit["string_arguments"][0]["has_qud_markup"] is False
+    assert ordinary_hit["string_arguments"][0]["has_placeholder_like_text"] is False
     assert set_text_doc["metrics"]["first_string_argument_counts"]["invocation"] == 1
     assert set_text_doc["hits"][0]["method_or_property_symbol"] == "bool XRL.UI.UITextSkin.SetText(string text)"
 
@@ -305,6 +327,63 @@ def test_wrapper_output_option_writes_file_and_stdout(tmp_path: Path) -> None:
     assert doc["metrics"]["resolved_matching_owner_hits"] == 1
     assert file_doc["metrics"]["resolved_matching_owner_hits"] == 1
     assert file_doc["metrics"]["status_counts"] == {"resolved": 2, "unresolved": 1}
+
+
+def test_wrapper_payload_validation_requires_metric_contract_keys() -> None:
+    """Wrapper contract validation rejects incomplete metrics before downstream use."""
+    load_payload = load_payload_validator()
+    status_counts: CountMap = {}
+    owner_counts: CountMap = {}
+    string_argument_counts: CountMap = {}
+    string_risk_counts: CountMap = {}
+    metrics: dict[str, object] = {
+        "resolved_matching_owner_hits": 0,
+        "candidate_matching_owner_hits": 0,
+        "unresolved_hits": 0,
+        "status_counts": status_counts,
+        "owner_counts": owner_counts,
+        "string_argument_counts": string_argument_counts,
+        "string_risk_counts": string_risk_counts,
+    }
+    hits: list[object] = []
+    payload: dict[str, object] = {
+        "schema_version": "1",
+        "query": {},
+        "hits": hits,
+        "metrics": metrics,
+    }
+
+    with pytest.raises(RuntimeError) as exc_info:
+        _ = load_payload(json.dumps(payload))
+
+    message = str(exc_info.value)
+    assert "first_string_argument_counts" in message
+    assert "total_files" in message
+
+
+def test_value_options_reject_following_flag_as_missing_value() -> None:
+    """Value-taking CLI options reject another flag where the value should be."""
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(WRAPPER),
+            "--source-root",
+            str(FIXTURE_SOURCE),
+            "--method",
+            "Show",
+            "--owner",
+            "XRL.UI.Popup",
+            "--output",
+            "--include-nonmatching-owners",
+        ],
+        cwd=REPO_ROOT,
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+
+    assert completed.returncode == 1
+    assert "missing value for --output" in completed.stderr
 
 
 @pytest.mark.semantic_probe_real

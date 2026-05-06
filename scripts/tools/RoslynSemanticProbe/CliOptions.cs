@@ -207,7 +207,7 @@ internal sealed record CliOptions(
 
     private static bool TryReadValue(IReadOnlyList<string> args, ref int index, out string value)
     {
-        if (index + 1 >= args.Count)
+        if (index + 1 >= args.Count || args[index + 1].StartsWith("-", StringComparison.Ordinal))
         {
             value = "";
             return false;

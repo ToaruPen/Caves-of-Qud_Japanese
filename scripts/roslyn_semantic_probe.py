@@ -18,12 +18,14 @@ REPO_ROOT: Final = Path(__file__).resolve().parents[1]
 PROJECT_PATH: Final = REPO_ROOT / "scripts" / "tools" / "RoslynSemanticProbe" / "RoslynSemanticProbe.csproj"
 REQUIRED_TOP_LEVEL_KEYS: Final = {"schema_version", "query", "metrics", "hits"}
 REQUIRED_METRIC_KEYS: Final = {
+    "total_files",
     "resolved_matching_owner_hits",
     "candidate_matching_owner_hits",
     "unresolved_hits",
     "status_counts",
     "owner_counts",
     "string_argument_counts",
+    "first_string_argument_counts",
     "string_risk_counts",
 }
 type JsonObject = dict[str, object]

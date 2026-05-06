@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -46,11 +47,9 @@ internal static class StringExpressionClassifier
         var literalValue = constant.HasValue && constant.Value is string value ? value : null;
         var expressionText = expression.ToString();
         var scanText = literalValue ?? expressionText;
-        var hasQudMarkup = scanText.Contains("{{", StringComparison.Ordinal)
-            || scanText.Contains('&', StringComparison.Ordinal)
-            || scanText.Contains('^', StringComparison.Ordinal);
+        var hasQudMarkup = LooksLikeQudMarkup(scanText);
         var hasTmpMarkup = scanText.Contains("<color", StringComparison.OrdinalIgnoreCase);
-        var hasPlaceholderLikeText = scanText.Contains('=') || scanText.Contains('{') || scanText.Contains('}');
+        var hasPlaceholderLikeText = LooksLikeRuntimePlaceholder(scanText);
 
         return new StringArgumentHit(
             Index: index,
@@ -62,6 +61,18 @@ internal static class StringExpressionClassifier
             HasTmpMarkup: hasTmpMarkup,
             HasPlaceholderLikeText: hasPlaceholderLikeText);
     }
+
+    private static bool LooksLikeQudMarkup(string text) =>
+        text.Contains("{{", StringComparison.Ordinal)
+        || text.Contains("&&", StringComparison.Ordinal)
+        || text.Contains("^^", StringComparison.Ordinal)
+        || Regex.IsMatch(text, @"(^|[^\p{L}\p{N}_])[&^][A-Za-z]", RegexOptions.CultureInvariant);
+
+    private static bool LooksLikeRuntimePlaceholder(string text) =>
+        Regex.IsMatch(
+            text,
+            @"(?<![\p{L}\p{N}_])=[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*=|\{\d+(?::[^}]*)?\}",
+            RegexOptions.CultureInvariant);
 
     private static bool IsStringExpression(SemanticModel semanticModel, ExpressionSyntax expression)
     {
