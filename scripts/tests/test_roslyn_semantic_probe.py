@@ -49,26 +49,47 @@ type CountMap = dict[str, int]
 
 
 class QueryPayload(TypedDict):
-    """Subset of the probe query payload asserted by tests."""
+    """Probe query payload fields asserted by tests."""
 
+    method: NotRequired[str]
+    assignment_property: NotRequired[str]
+    owners: list[str]
+    path_filter: NotRequired[str]
     external_reference_count: int
+    reference_sources: list[str]
 
 
 class MetricsPayload(TypedDict):
-    """Subset of the probe metrics payload asserted by tests."""
+    """Probe metrics payload fields asserted by tests."""
 
     total_files: int
+    parsed_files: int
+    candidate_files: int
+    returned_hits: int
     resolved_matching_owner_hits: int
     candidate_matching_owner_hits: int
     unresolved_hits: int
     status_counts: CountMap
     owner_counts: CountMap
+    string_argument_counts: CountMap
     first_string_argument_counts: CountMap
     string_risk_counts: CountMap
+    timings_ms: TimingPayload
+
+
+class TimingPayload(TypedDict):
+    """Probe timing payload fields asserted by tests."""
+
+    enumerate: int
+    prefilter: int
+    parse: int
+    compilation: int
+    scan: int
+    total: int
 
 
 class HitPayload(TypedDict):
-    """Subset of the probe hit payload asserted by tests."""
+    """Probe hit payload fields asserted by tests."""
 
     file: str
     line: int
@@ -76,14 +97,14 @@ class HitPayload(TypedDict):
     expression: str
     roslyn_symbol_status: str
     owner_matches: bool
-    method_or_property_symbol: str
-    containing_type_symbol: str
-    receiver_type_symbol: str
+    method_or_property_symbol: NotRequired[str]
+    containing_type_symbol: NotRequired[str]
+    receiver_type_symbol: NotRequired[str]
     string_arguments: list[StringArgumentPayload]
 
 
 class StringArgumentPayload(TypedDict):
-    """Subset of string argument payload asserted by tests."""
+    """String argument payload fields asserted by tests."""
 
     index: int
     name: NotRequired[str]
@@ -139,14 +160,24 @@ def test_owner_filter_excludes_same_name_false_positive() -> None:
         "20",
     )
 
+    assert doc["query"].get("method") == "Show"
+    assert "assignment_property" not in doc["query"]
+    assert doc["query"]["owners"] == ["XRL.UI.Popup"]
+    assert "path_filter" not in doc["query"]
+    assert isinstance(doc["query"]["reference_sources"], list)
     assert doc["metrics"]["resolved_matching_owner_hits"] == 1
     assert doc["metrics"]["candidate_matching_owner_hits"] == 0
     assert doc["metrics"]["status_counts"] == {"resolved": 2, "unresolved": 1}
     assert doc["metrics"]["owner_counts"]["XRL.UI.Popup"] == 1
     assert doc["metrics"]["owner_counts"]["Other.Popup"] == 1
+    assert doc["metrics"]["parsed_files"] == doc["metrics"]["total_files"]
+    assert doc["metrics"]["candidate_files"] > 0
+    assert doc["metrics"]["returned_hits"] == len(doc["hits"])
+    assert doc["metrics"]["string_argument_counts"]["string_literal"] >= 1
+    assert set(doc["metrics"]["timings_ms"]) == {"enumerate", "prefilter", "parse", "compilation", "scan", "total"}
     matching_hits = [hit for hit in doc["hits"] if hit["owner_matches"]]
     assert len(matching_hits) == 1
-    assert matching_hits[0]["containing_type_symbol"] == "XRL.UI.Popup"
+    assert matching_hits[0].get("containing_type_symbol") == "XRL.UI.Popup"
     assert matching_hits[0]["file"].endswith("Demo/Cases.cs")
     assert matching_hits[0]["line"] > 0
     assert matching_hits[0]["syntax_method"] == "Show"
@@ -230,9 +261,9 @@ def test_wrapper_calls_are_not_propagated_to_wrapped_owner() -> None:
     )
     wrapped_hit = next(hit for hit in doc["hits"] if hit["expression"] == "MessageQueue.AddPlayerMessage(message)")
     assert wrapper_hit["owner_matches"] is False
-    assert wrapper_hit["containing_type_symbol"] == "Demo.Wrapper"
+    assert wrapper_hit.get("containing_type_symbol") == "Demo.Wrapper"
     assert wrapped_hit["owner_matches"] is True
-    assert wrapped_hit["containing_type_symbol"] == "XRL.Messages.MessageQueue"
+    assert wrapped_hit.get("containing_type_symbol") == "XRL.Messages.MessageQueue"
 
 
 def test_string_argument_shapes_and_markup_risks_are_reported() -> None:
@@ -270,7 +301,7 @@ def test_string_argument_shapes_and_markup_risks_are_reported() -> None:
     assert escaped_brace_hit["string_arguments"][0]["has_qud_markup"] is False
     assert escaped_brace_hit["string_arguments"][0]["has_placeholder_like_text"] is False
     assert set_text_doc["metrics"]["first_string_argument_counts"]["invocation"] == 1
-    assert set_text_doc["hits"][0]["method_or_property_symbol"] == "bool XRL.UI.UITextSkin.SetText(string text)"
+    assert set_text_doc["hits"][0].get("method_or_property_symbol") == "bool XRL.UI.UITextSkin.SetText(string text)"
 
 
 def test_fixture_smoke_runtime_catches_gross_speed_regression() -> None:
@@ -305,11 +336,11 @@ def test_direct_text_assignments_are_grouped_by_semantic_owner() -> None:
     assert doc["metrics"]["first_string_argument_counts"]["string_literal"] == 2
     assert doc["metrics"]["first_string_argument_counts"]["concatenation"] == 1
     assert doc["metrics"]["string_risk_counts"]["tmp_markup"] >= 1
-    other_hit = next(hit for hit in doc["hits"] if hit["containing_type_symbol"] == "Demo.OtherText")
+    other_hit = next(hit for hit in doc["hits"] if hit.get("containing_type_symbol") == "Demo.OtherText")
     derived_hit = next(hit for hit in doc["hits"] if "tmpDerivedText.text" in hit["expression"])
     assert other_hit["owner_matches"] is False
-    assert derived_hit["containing_type_symbol"] == "TMPro.TMP_Text"
-    assert derived_hit["receiver_type_symbol"] == "TMPro.TextMeshProUGUI"
+    assert derived_hit.get("containing_type_symbol") == "TMPro.TMP_Text"
+    assert derived_hit.get("receiver_type_symbol") == "TMPro.TextMeshProUGUI"
 
 
 def test_external_reference_option_preserves_existing_resolution() -> None:
@@ -386,11 +417,13 @@ def test_wrapper_payload_validation_rejects_bad_json_shapes() -> None:
     """Wrapper contract validation normalizes malformed JSON shapes to RuntimeError."""
     load_payload = load_payload_validator()
 
-    with pytest.raises(RuntimeError, match="payload must be a JSON object"):
+    with pytest.raises(RuntimeError, match="payload must be a JSON object") as payload_exc:
         _ = load_payload("[]")
+    assert not isinstance(payload_exc.value, TypeError)
 
-    with pytest.raises(RuntimeError, match="metrics must be an object"):
+    with pytest.raises(RuntimeError, match="metrics must be an object") as metrics_exc:
         _ = load_payload(json.dumps({"schema_version": "1", "query": {}, "hits": [], "metrics": []}))
+    assert not isinstance(metrics_exc.value, TypeError)
 
 
 def test_value_options_reject_following_flag_as_missing_value() -> None:

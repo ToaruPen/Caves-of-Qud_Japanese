@@ -35,10 +35,6 @@ REQUIRED_METRIC_KEYS: Final = {
 type JsonObject = dict[str, object]
 
 
-class PayloadTypeError(RuntimeError, TypeError):
-    """Payload structure error normalized for wrapper callers."""
-
-
 def run_probe(args: list[str]) -> JsonObject:
     """Run the Roslyn semantic probe and return its JSON payload."""
     dotnet = shutil.which("dotnet")
@@ -114,7 +110,7 @@ def _load_payload(json_text: str) -> JsonObject:
         raise RuntimeError(msg) from exc
     if not isinstance(raw_payload, dict):
         msg = "Roslyn semantic probe payload must be a JSON object"
-        raise PayloadTypeError(msg)
+        raise RuntimeError(msg)  # noqa: TRY004 - main() normalizes RuntimeError only.
 
     payload = cast("JsonObject", raw_payload)
 
@@ -126,7 +122,7 @@ def _load_payload(json_text: str) -> JsonObject:
     raw_metrics = payload.get("metrics")
     if not isinstance(raw_metrics, dict):
         msg = "Roslyn semantic probe payload metrics must be an object"
-        raise PayloadTypeError(msg)
+        raise RuntimeError(msg)  # noqa: TRY004 - main() normalizes RuntimeError only.
     metrics = cast("JsonObject", raw_metrics)
 
     missing_metrics = sorted(REQUIRED_METRIC_KEYS - metrics.keys())
