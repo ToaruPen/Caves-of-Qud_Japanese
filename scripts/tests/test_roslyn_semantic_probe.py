@@ -1,11 +1,12 @@
 """Contract tests for the repo-local Roslyn semantic probe."""
-# ruff: noqa: S603,S607 -- invokes repo-local tools with explicit arguments
+# ruff: noqa: S603 -- invokes repo-local tools with explicit arguments
 
 from __future__ import annotations
 
 import json
 import os
 import subprocess
+import sys
 import time
 from pathlib import Path
 from typing import TypedDict, cast
@@ -85,9 +86,7 @@ def run_probe(*args: str, source_root: Path = FIXTURE_SOURCE) -> ProbePayload:
     """Run the semantic probe wrapper and return parsed JSON."""
     completed = subprocess.run(
         [
-            "uv",
-            "run",
-            "python",
+            sys.executable,
             str(WRAPPER),
             "--source-root",
             str(source_root),
