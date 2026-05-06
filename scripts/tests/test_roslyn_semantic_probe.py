@@ -10,7 +10,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import TYPE_CHECKING, TypedDict, cast
+from typing import TYPE_CHECKING, NotRequired, TypedDict, cast
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -70,6 +70,9 @@ class MetricsPayload(TypedDict):
 class HitPayload(TypedDict):
     """Subset of the probe hit payload asserted by tests."""
 
+    file: str
+    line: int
+    syntax_method: str
     expression: str
     roslyn_symbol_status: str
     owner_matches: bool
@@ -82,6 +85,11 @@ class HitPayload(TypedDict):
 class StringArgumentPayload(TypedDict):
     """Subset of string argument payload asserted by tests."""
 
+    index: int
+    name: NotRequired[str]
+    expression_kind: str
+    expression: str
+    constant_value: NotRequired[str]
     has_qud_markup: bool
     has_tmp_markup: bool
     has_placeholder_like_text: bool
@@ -139,6 +147,16 @@ def test_owner_filter_excludes_same_name_false_positive() -> None:
     matching_hits = [hit for hit in doc["hits"] if hit["owner_matches"]]
     assert len(matching_hits) == 1
     assert matching_hits[0]["containing_type_symbol"] == "XRL.UI.Popup"
+    assert matching_hits[0]["file"].endswith("Demo/Cases.cs")
+    assert matching_hits[0]["line"] > 0
+    assert matching_hits[0]["syntax_method"] == "Show"
+    first_argument = matching_hits[0]["string_arguments"][0]
+    assert first_argument["index"] == 0
+    assert "name" not in first_argument
+    assert first_argument["expression_kind"] == "string_literal"
+    assert first_argument["expression"] == '"A fixed popup leaf."'
+    assert "constant_value" in first_argument
+    assert first_argument["constant_value"] == "A fixed popup leaf."
 
 
 def test_generic_and_inherited_owner_calls_are_grouped_semantically() -> None:
