@@ -770,10 +770,14 @@ public sealed class GetDisplayNameProcessPatchTests
             "{\"entries\":[" +
             "{\"key\":\"tortoise\",\"context\":\"GetDisplayName.GeneratedCanvasTent.Component\",\"text\":\"亀\"}," +
             "{\"key\":\"keratin\",\"context\":\"GetDisplayName.GeneratedCanvasTent.Component\",\"text\":\"ケラチン質\"}," +
+            "{\"key\":\"dragonfly\",\"context\":\"GetDisplayName.GeneratedCanvasTent.Component\",\"text\":\"トンボ\"}," +
+            "{\"key\":\"chitin\",\"context\":\"GetDisplayName.GeneratedCanvasTent.Component\",\"text\":\"キチン質\"}," +
             "{\"key\":\"tent\",\"context\":\"GetDisplayName.GeneratedCanvasTent.Component\",\"text\":\"天幕\"}," +
             "{\"key\":\"salt kraken\",\"text\":\"ソルト・クラーケン\"}," +
             "{\"key\":\"tortoise\",\"text\":\"亀ではない\"}," +
             "{\"key\":\"keratin\",\"text\":\"ケラチンではない\"}," +
+            "{\"key\":\"dragonfly\",\"text\":\"トンボではない\"}," +
+            "{\"key\":\"chitin\",\"text\":\"キチンではない\"}," +
             "{\"key\":\"tent\",\"text\":\"テントではない\"}" +
             "]}\n");
 
@@ -782,13 +786,19 @@ public sealed class GetDisplayNameProcessPatchTests
             var processor = new DummyDisplayNameProcessor();
             var result = processor.ProcessFor("tortoise keratin tent");
             var multiWordCreatureResult = processor.ProcessFor("salt kraken keratin tent");
+            var observedRuntimeResult = processor.ProcessFor("dragonfly chitin tent");
+            var nonObservedCombinationResult = processor.ProcessFor("tortoise chitin tent");
 
             Assert.Multiple(() =>
             {
                 Assert.That(result, Is.EqualTo("亀のケラチン質の天幕"));
                 Assert.That(multiWordCreatureResult, Is.EqualTo("ソルト・クラーケンのケラチン質の天幕"));
+                Assert.That(observedRuntimeResult, Is.EqualTo("トンボのキチン質の天幕"));
+                Assert.That(nonObservedCombinationResult, Is.EqualTo("亀のキチン質の天幕"));
                 Assert.That(Translator.GetMissingKeyHitCountForTests("tortoise keratin tent"), Is.EqualTo(0));
                 Assert.That(Translator.GetMissingKeyHitCountForTests("salt kraken keratin tent"), Is.EqualTo(0));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("dragonfly chitin tent"), Is.EqualTo(0));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("tortoise chitin tent"), Is.EqualTo(0));
             });
         });
     }

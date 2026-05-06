@@ -26,6 +26,8 @@
     { "key": "クリスティールの大剣", "text": "クリスティールの大剣" },
     { "key": "無垢のクリスティール短剣", "text": "無垢のクリスティール短剣" },
     { "key": "CanvasWall", "context": "GetDisplayName.BlueprintFallback", "text": "帆布壁" },
+    { "key": "chitin", "context": "GetDisplayName.GeneratedCanvasTent.Component", "text": "キチン質" },
+    { "key": "dragonfly", "context": "GetDisplayName.GeneratedCanvasTent.Component", "text": "トンボ" },
     { "key": "keratin", "context": "GetDisplayName.GeneratedCanvasTent.Component", "text": "ケラチン質" },
     { "key": "tent", "context": "GetDisplayName.GeneratedCanvasTent.Component", "text": "天幕" },
     { "key": "tortoise", "context": "GetDisplayName.GeneratedCanvasTent.Component", "text": "亀" },
