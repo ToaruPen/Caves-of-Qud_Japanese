@@ -122,12 +122,7 @@ public sealed class XDidYTranslationPatchTests
     [Test]
     public void Prefix_TranslatesActorDisplayNameFromCurrentOneSignature()
     {
-        File.WriteAllText(
-            Path.Combine(tempDirectory, "ui-test.ja.json"),
-            "{\"entries\":[{\"key\":\"CanvasWall\",\"text\":\"帆布壁\"}]}\n",
-            Utf8WithoutBom);
-        Translator.ResetForTests();
-        Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        WriteUiDictionary(("CanvasWall", "帆布壁"));
         WriteDictionary(tier1: new[] { ("collapse", "崩れた") });
 
         var actor = new DummyCurrentDisplayNameTarget("CanvasWall");
@@ -155,6 +150,38 @@ public sealed class XDidYTranslationPatchTests
         {
             harmony.UnpatchAll(harmonyId);
         }
+    }
+
+    [TestCase("CanvasWall", "\u0001CanvasWallは崩れた。", false)]
+    [TestCase("", "\u0001Objectは崩れた。", false)]
+    [TestCase("{{W|CanvasWall}}", "\u0001{{W|帆布壁}}は崩れた。", true)]
+    [TestCase("\u0001CanvasWall", "\u0001CanvasWallは崩れた。", true)]
+    public void Prefix_TranslatesActorDisplayNameFromCurrentOneSignature_EdgeCases(
+        string displayName,
+        string expectedMessage,
+        bool includeDisplayDictionary)
+    {
+        if (includeDisplayDictionary)
+        {
+            WriteUiDictionary(("CanvasWall", "帆布壁"));
+        }
+
+        WriteDictionary(tier1: new[] { ("collapse", "崩れた") });
+        var actor = new DummyCurrentDisplayNameTarget(displayName);
+
+        RunWithXDidYPatch(() =>
+        {
+            DummyXDidYTarget.XDidY(
+                Actor: actor,
+                Verb: "collapse",
+                AlwaysVisible: true);
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+            Assert.That(lastMessage, Is.EqualTo(expectedMessage));
+        });
     }
 
     [Test]
@@ -385,16 +412,10 @@ public sealed class XDidYTranslationPatchTests
     [Test]
     public void Prefix_TranslatesShrinePrayerVerbAndGeneratedStatueObject()
     {
-        File.WriteAllText(
-            Path.Combine(tempDirectory, "ui-test.ja.json"),
-            "{\"entries\":[" +
-            "{\"key\":\"desecrated\",\"text\":\"冒涜された\"}," +
-            "{\"key\":\"stone\",\"text\":\"石\"}," +
-            "{\"key\":\"statue\",\"text\":\"像\"}" +
-            "]}\n",
-            Utf8WithoutBom);
-        Translator.ResetForTests();
-        Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        WriteUiDictionary(
+            ("desecrated", "冒涜された"),
+            ("stone", "石"),
+            ("statue", "像"));
         WriteDictionary(tier2: new[] { ("voice", "a short prayer beneath {0}", "{0}の下で短い祈りを唱えた") });
 
         var harmonyId = CreateHarmonyId();
@@ -424,6 +445,38 @@ public sealed class XDidYTranslationPatchTests
         {
             harmony.UnpatchAll(harmonyId);
         }
+    }
+
+    [TestCase("brass statue of a 山羊人の種播き", "\u0001あなたはbrass statue of a 山羊人の種播きの下で短い祈りを唱えた。", false)]
+    [TestCase("", null, true)]
+    [TestCase("{{W|stone statue of a 山羊人の種播き}}", "\u0001あなたは{{W|山羊人の種播きの石の像}}の下で短い祈りを唱えた。", false)]
+    [TestCase("\u0001stone statue of a 山羊人の種播き", "\u0001あなたは\u0001stone statue of a 山羊人の種播きの下で短い祈りを唱えた。", false)]
+    public void Prefix_TranslatesShrinePrayerVerbAndGeneratedStatueObject_EdgeCases(
+        string objectName,
+        string? expectedMessage,
+        bool expectedOriginalExecuted)
+    {
+        WriteUiDictionary(
+            ("stone", "石"),
+            ("statue", "像"));
+        WriteDictionary(tier2: new[] { ("voice", "a short prayer beneath {0}", "{0}の下で短い祈りを唱えた") });
+
+        RunWithXDidYToZPatch(() =>
+        {
+            DummyXDidYTarget.XDidYToZ(
+                Actor: null,
+                Verb: "voice",
+                Preposition: "a short prayer beneath",
+                Object: objectName,
+                SubjectOverride: "あなた",
+                AlwaysVisible: true);
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyXDidYTarget.OriginalExecuted, Is.EqualTo(expectedOriginalExecuted));
+            Assert.That(lastMessage, Is.EqualTo(expectedMessage));
+        });
     }
 
     [Test]
@@ -516,6 +569,66 @@ public sealed class XDidYTranslationPatchTests
         builder.AppendLine("}");
 
         File.WriteAllText(dictionaryPath, builder.ToString(), Utf8WithoutBom);
+    }
+
+    private void WriteUiDictionary(params (string key, string text)[] entries)
+    {
+        var builder = new StringBuilder();
+        builder.Append("{\"entries\":[");
+        for (var index = 0; index < entries.Length; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(',');
+            }
+
+            builder.Append("{\"key\":\"")
+                .Append(EscapeJson(entries[index].key))
+                .Append("\",\"text\":\"")
+                .Append(EscapeJson(entries[index].text))
+                .Append("\"}");
+        }
+
+        builder.AppendLine("]}");
+        File.WriteAllText(Path.Combine(tempDirectory, "ui-test.ja.json"), builder.ToString(), Utf8WithoutBom);
+        Translator.ResetForTests();
+        Translator.SetDictionaryDirectoryForTests(tempDirectory);
+    }
+
+    private static void RunWithXDidYPatch(Action action)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidY)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYForTests))));
+            action();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    private static void RunWithXDidYToZPatch(Action action)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidYToZ)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYToZForTests))));
+            action();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     private static void WriteTier1(StringBuilder builder, IEnumerable<(string verb, string text)>? entries)

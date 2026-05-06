@@ -176,10 +176,12 @@ internal static class PickTargetWindowTextTranslator
         var markupWrappedHotkeyMatch = Regex.Match(source, "^(?<hotkey>\\{\\{[^|}]+\\|[^}]+\\}\\})-(?<label>.+)$", RegexOptions.CultureInvariant);
         if (markupWrappedHotkeyMatch.Success)
         {
-            var translatedLabel = UITextSkinTranslationPatch.TranslateAsciiTokenWithCaseFallback(markupWrappedHotkeyMatch.Groups["label"].Value);
+            var label = markupWrappedHotkeyMatch.Groups["label"].Value;
+            var visibleLabel = ColorAwareTranslationComposer.GetVisibleText(label);
+            var translatedLabel = TranslatePickTargetToken(visibleLabel, traceFallback: false);
             if (translatedLabel is not null)
             {
-                translated = $"{markupWrappedHotkeyMatch.Groups["hotkey"].Value}-{translatedLabel}";
+                translated = $"{markupWrappedHotkeyMatch.Groups["hotkey"].Value}-{ColorAwareTranslationComposer.TranslatePreservingColors(label, _ => translatedLabel)}";
                 return true;
             }
         }

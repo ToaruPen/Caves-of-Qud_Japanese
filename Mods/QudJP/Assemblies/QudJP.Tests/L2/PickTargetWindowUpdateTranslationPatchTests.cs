@@ -60,6 +60,28 @@ public sealed class PickTargetWindowUpdateTranslationPatchTests
     }
 
     [Test]
+    public void TranslateCurrentText_PreservesColorMarkupInMarkupWrappedHotkeyLabel()
+    {
+        WriteDictionary(
+            ("Dig to where?", "どこまで掘る？"),
+            ("select", "決定"));
+        DummyPickTargetWindow.currentText = "Dig to where? | {{W|space}}-{{G|select}}";
+
+        var changed = PickTargetWindowUpdateTranslationPatch.TranslateCurrentTextForTests(typeof(DummyPickTargetWindow));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(DummyPickTargetWindow.currentText, Is.EqualTo("どこまで掘る？ | {{W|space}}-{{G|決定}}"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PickTargetWindowUpdateTranslationPatch),
+                    "PickTarget.CommandBar"),
+                Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
     public void TranslateCurrentText_TranslatesExactPickTargetLabel()
     {
         WriteDictionary(("Dig to where?", "どこまで掘る？"));

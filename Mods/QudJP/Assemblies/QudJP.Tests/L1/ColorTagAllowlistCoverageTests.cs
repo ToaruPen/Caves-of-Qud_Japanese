@@ -98,6 +98,7 @@ public sealed class ColorTagAllowlistCoverageTests
     private static readonly SortedDictionary<string, string> StripWithoutLocalRestoreAllowlist =
         new(StringComparer.Ordinal)
         {
+            // Keys identify the ColorAwareTranslationComposer.Strip call site, not the containing method declaration.
             ["Mods/QudJP/Assemblies/src/Observability/FinalOutputObservability.cs:109:RecordDirectMarker"] = "Observation-only final sink marker check.",
             ["Mods/QudJP/Assemblies/src/Patches/AbilityBarAfterRenderTranslationPatch.cs:239:HasColorMarkup"] = "Predicate only; it compares stripped and original text.",
             ["Mods/QudJP/Assemblies/src/Patches/ActiveEffectTextTranslator.cs:106:TryTranslateExact"] = "Delegates exact-match restoration to RestoreExactTranslation.",
