@@ -199,9 +199,9 @@ public sealed class FinalOutputObservabilityTests
     }
 
     [TestCase("{{B}}|濡れた", "literal_qud_shader_fragment,unmatched_qud_close")]
-    [TestCase("{{B|{{B|{{B}}|濡れた}}", "literal_qud_shader_fragment,repeated_same_qud_scope_start")]
+    [TestCase("{{B|{{B|{{B}}|濡れた}}", "literal_qud_shader_fragment")]
     [TestCase("水袋 {{y|[{{K|空]}}}}", "bracket_close_inside_nested_qud_scope")]
-    [TestCase("{{B|}}", "empty_qud_wrapper")]
+    [TestCase("{{R|翻訳されたテキスト", "unclosed_qud_scope")]
     public void Record_ExposesSemanticDriftDiagnostics_WhenMarkupTokensMatch(string finalText, string expectedFlags)
     {
         var output = TestTraceHelper.CaptureTrace(() =>
@@ -231,6 +231,33 @@ public sealed class FinalOutputObservabilityTests
                     strippedText: "[n] いいえ",
                     markupStatus: FinalOutputObservability.MarkupStatusMatched,
                     finalText: "{{W|[n]}} {{y|いいえ}}")));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(output, Does.Contain("markup_status='matched'"));
+            Assert.That(output, Does.Contain("; markup_span_status=matched;"));
+            Assert.That(output, Does.Contain("; markup_semantic_status=clean;"));
+            Assert.That(output, Does.Contain("; markup_semantic_flags=;"));
+        });
+    }
+
+    [TestCase("{{B|}}")]
+    [TestCase("{{B|{{B|同じ色}}}}")]
+    [TestCase("{{Y|}}{{Y| . . . . . . . . ■ .  . . . . . . . ■  . . . . . . . . ■  . . . . . . . . ■  . . . . . . . . {{Y|}}")]
+    [TestCase("{{Y|}}{{Y| . . .}}>{{K|. . . . . ■ .  . . . . . . . ■  . . . . . . . . ■  . . . . . . . . ■  . . . . . . . . {{Y|}}")]
+    [TestCase("{{W|{{W|[k]}} {{y|攻撃}}}}")]
+    [TestCase("{{W|{{W|[Space]}} {{y|続ける}}}}")]
+    [TestCase("{{y|{{y|安らぎあれ、friend。\\n\\nLive and drink.}}\\n\\n}}")]
+    [TestCase("{{y|{{y|汎用の会話文。}}\\n\\n}}")]
+    public void Record_TreatsSemanticallyIdempotentQudMarkupAsClean(string finalText)
+    {
+        var output = TestTraceHelper.CaptureTrace(() =>
+            FinalOutputObservability.Record(
+                CreateObservation(
+                    sourceText: finalText,
+                    strippedText: finalText,
+                    markupStatus: FinalOutputObservability.MarkupStatusMatched,
+                    finalText: finalText)));
 
         Assert.Multiple(() =>
         {
