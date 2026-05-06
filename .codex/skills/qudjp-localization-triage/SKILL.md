@@ -1,0 +1,94 @@
+---
+name: qudjp-localization-triage
+description: Use when working in QudJP on untranslated or incorrectly translated Caves of Qud runtime text, player.log triage, owner-route vs sink-route decisions, generated/composed names, HistorySpice text, dictionary leaf additions, or localization patches that need decompiled producer tracing and focused verification.
+---
+
+# QudJP Localization Triage
+
+## Overview
+
+Use this skill to turn runtime untranslated text into the smallest correct QudJP localization change. Route text at the producer or owner when possible, use dictionary leaves only for fixed literals, and leave sink fallback as observability rather than the primary solution.
+
+## Workflow
+
+1. Establish current evidence.
+   - Read repo instructions first, including scoped `AGENTS.md` files for C# patches, localization assets, or scripts.
+   - Use fresh `~/Library/Logs/Freehold Games/CavesOfQud/Player.log` when the user asks about live gameplay output.
+   - Treat `Player.log` as route evidence, not just an untranslated-string list. Use `scripts/triage_untranslated.py` or equivalent parsing to preserve sink, route, category, and producer context before assigning work.
+   - Classify each finding as untranslated fixed literal, generated template, generated name, composed route, already-Japanese runtime noise, or intentional pass-through.
+   - Group broad runtime surfaces by owner route or route family before deciding backlog scope. Do not collapse sink-adjacent families such as `UITextSkinTranslationPatch`, `GetDisplayName*`, `Popup*`, and generic message sinks into one undifferentiated "untranslated" bucket.
+   - When an observed English source looks like a stable label but contains a domain noun, Title Case phrase, number, object name, mutation/effect name, date, festival, dish, faction, or village term, treat it as generated until the producer proves it is a fixed literal.
+   - When the user's surface name is broad, such as chargen, inspect adjacent runtime probes that share the text family or UI route, then state which screens are primary and which are follow-up risk.
+   - If the requested text is absent from the current log, say it is absent in that log. Use adjacent logs/routes only as risk evidence, not proof that the requested text is still failing.
+   - When PR review comments are part of the request, pair this skill with `github:gh-address-comments` or `post-pr-convergence`; CodeRabbit/check pass alone is not enough if unresolved review threads may remain.
+   - Treat an actionable CodeRabbit comment as a representative symptom for the whole route family, not only the exact line or literal named in the comment. Before editing, enumerate sibling owner tokens, parser branches, punctuation/casing variants, scoped dictionary homes, and owner-vs-sink boundaries that share the same contract.
+   - When reading CodeRabbit state, compare `headRefOid`, check/status context, review decision, and the commit range named in the latest review body. `latestReviews` may retain comments from older force-pushed commits, while the current CodeRabbit status context can already be passing.
+   - Do not rely on unresolved review threads alone. Inspect the latest review bodies for actionable non-threaded notes such as duplicate-comment summaries, and treat current-head actionable body text as open review work.
+
+2. Trace the source before choosing a fix.
+   - Use `rg` for literal strings, symbol names, files, and quick dictionary searches.
+   - Use `just sg-cs '<pattern>'` for decompiled C# producers when call shape, argument structure, wrappers, assignments, overloads, or attributes matter.
+   - Use `just sg-cs '<pattern>' Mods/QudJP/Assemblies/src` to compare existing patch patterns in repo-owned C#.
+   - When a decision depends on C# producer/sink ownership, do not stop at literal `rg`. Run at least one `just sg-cs` query that matches the relevant call shape, such as `AddMyActivatedAbility($$$ARGS)`, `ExpandString($$$ARGS)`, `AddEntityListItem($$$ARGS)`, `SetText($$$ARGS)`, or `MessagePatternTranslator.Translate($$$ARGS)`. If `rg` is sufficient because the source is a plain data file or fixed asset literal, state that explicitly in the evidence summary.
+   - For generated ability names, effect names, mutation labels, and similar UI labels, trace the method or object data that composes the visible name before adding any dictionary entry.
+   - For generated or composed text, record the route shape before choosing a fix: fixed frame with generated noun, generated name only, generated sentence from reusable grammar templates, or final sink-only display with no known owner route yet.
+   - For Annals / HistorySpice / village history text, inspect both the decompiled event builder under `~/dev/coq-decompiled_stable/XRL.Annals/` and the live `Base/HistorySpice.json` source when available. Title Case dish, festival, gospel, or sacred/profane phrases are usually composed outputs, not fixed leaves.
+   - Treat `~/dev/coq-decompiled_stable/` as read-only evidence and never commit it.
+
+3. Choose the ownership surface.
+   - Prefer owner/source patches for generated UI text, status/inspect text, chargen framework data, journal/game-summary text, conversations, and other composed routes.
+   - Use scoped dictionaries for route-specific fixed leaves or domain-specific leaf text.
+   - Use broad dictionary entries only when the literal is stable and not context-sensitive.
+   - Do not promote an observed generated name to an exact leaf merely because it appears unchanged in one `Player.log`. Prefer a generator helper that derives the translation from the owning data source, such as mutation DisplayName, effect metadata, object display names, or other shipped XML.
+   - For generated HistorySpice names, prefer component leaves plus a reconstruction translator over whole observed phrases. Add whole exact leaves only after proving the phrase is authored as a stable fixed literal.
+   - Do not add or keep sink translation as the intended fix when a producer route can own the text.
+   - Treat generic popup and message sinks as observation or last-resort fallback, not as the primary fix for owner-specific generated sentences. If a popup or message reaches a shared helper with route-specific captures, add a narrow owner helper before delegating to the shared path.
+   - Treat zero unresolved rows for a sink or composed route as a closeout candidate only after the owner route has been classified. A sink count reaching zero does not prove the upstream family is owned.
+   - If a route cannot be owned safely, document why and preserve observability.
+
+4. Fix with tests first when behavior changes.
+   - Add or extend L1 translator tests for pure translation helpers and dictionary-driven templates.
+   - Add L2 Harmony/dummy-target tests for owner patches and route observability.
+   - Add L2G resolution tests when upstream game signatures or member contracts matter.
+   - New translation families must cover exact match, fallback to English, empty input, color tags, and `\x01` marker behavior.
+   - For producer or queue-gated patches that translate before a generic sink, also prove owner-absent or queue-only traffic stays unchanged, pass-through traffic is not recorded as an owner hit, and transformed owner traffic is recorded on the intended route family.
+   - When articles, generated names, quantities, or placeholder-like fragments can appear, include those emitted shapes in tests instead of replacing them with dictionary leaves.
+   - For generated/composed text, use this test matrix where applicable: fixed frame plus generated noun, generated noun alone, known observed sample, at least one non-observed variant, English fallback for unknown component, empty input, color tags, and `\x01` marker preservation.
+   - For generated-name fixes, test at least one non-observed variant or a derivation path from the upstream data source so the test does not simply bless the single runtime sample.
+   - After adding an owner/generator fix, search the fresh log for the same raw source across UI owner routes, message patterns, journal patterns, description patterns, and final-output probes. Route the shared translation helper through every surface that can expose the same source.
+   - For PR review work, scope edge-test additions to the families or files named by unresolved actionable review threads unless the user explicitly asks for a broader audit.
+   - For CodeRabbit route-ownership feedback, add tests for the named family plus any sibling token or parser branch discovered in the family audit. A fix for one token, such as `Fire`, should also check adjacent owner tokens such as `Reload` before closing the thread.
+   - Tests should assert the Japanese output, not only that output differs from English.
+
+5. Verify using `just` recipes where available.
+   - Build: `just build`
+   - C# tests: `just test-l1`, `just test-l2`, `just test-l2g`
+   - Localization checks: `just localization-check`, `just translation-token-check`
+   - Broad local gate: `just check`
+   - Sync only when the user wants local game deployment: `just sync-mod`
+   - Before committing PR review fixes, confirm the checkout branch matches the PR head branch. If unrelated dirty work is present, use a separate worktree or stage only explicit paths.
+   - For PR review convergence, confirm thread state with the GitHub review-thread workflow before calling actionable review threads handled.
+   - Report `reviewDecision` separately from thread state: if unresolved actionable threads are zero and checks pass but `reviewDecision` still says `CHANGES_REQUESTED`, say the code-side comments appear handled and GitHub approval/decision state is still lagging or blocked.
+   - If a CodeRabbit fix changes `ColorAwareTranslationComposer` or `Strip` call sites, run the color-route catalog and strip/restore allowlist tests before the broad gate; those deterministic inventories are part of the color-preservation contract, not incidental snapshots.
+
+## Output
+
+When reporting back, include:
+
+- what runtime text or route was investigated
+- source-of-truth evidence used, including player.log and decompiled producer paths when relevant
+- owner-route grouping used for broad runtime buckets, especially when closing or deferring an issue
+- whether the fix is owner/source, scoped dictionary, broad leaf, or intentional pass-through
+- for generated/composed text, the producer evidence and whether the fix uses upstream data derivation, component-leaf reconstruction, or a justified exact leaf
+- tests and checks run
+- remaining runtime risk or surfaces the user still needs to verify in-game
+
+For PR review convergence requests, report PR/thread evidence instead of runtime route evidence:
+
+- check state
+- unresolved actionable review-thread count
+- `reviewDecision` or approval state, reported separately
+- edge-test families/files named by unresolved actionable threads
+- local `just` checks run
+
+Do not report sink success as final coverage if the owner route is still missing.

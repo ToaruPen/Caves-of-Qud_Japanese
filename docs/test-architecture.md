@@ -60,13 +60,27 @@ L2 層は 2 つのカテゴリに分かれます。
 **制約**:
 - `Assembly-CSharp.dll` の型を参照してよい
 - `using UnityEngine` を含めない
-- `Assembly-CSharp.dll` の型をテスト内で直接 instantiate しない
+- 実ゲーム型の instantiate は原則禁止し、下記の限定例外だけを認める
 - 画面表示や TMP/UGUI の実描画結果は L3 に残す
+
+**実ゲーム型 instantiate の限定例外**:
+L2G で upstream の実メンバー契約や実プロパティ経路そのものが
+レビュー・Issue の対象になっており、target/signature 解決と DummyTarget
+だけでは経路を証明できない場合に限り、最小の実型呼び出しを許可します。
+その場合も、次をすべて満たす必要があります。
+
+- `GameObjectFactory`、Unity ECall、フルゲーム bootstrap、実描画に入らない
+- 必要な field/property だけを reflection や軽量インスタンスで設定する
+- static singleton や global state を触る場合は必ず復元する
+- DummyTarget では不十分な理由をテスト名またはコメントで明示する
+- assertion は「英語と違う」ではなく、期待する日本語出力を固定する
 
 **推奨例**:
 - `AccessTools.Method("XRL.UI.Look:GenerateTooltipContent")` の解決確認
 - `ConsoleLib.Console.Markup` の static API 解決確認
 - private `TargetMethod()` の反射呼び出し検証
+- `GameObject.One` / `one` のように実ゲーム型上の display-name
+  contract が対象の場合の、Unity 非依存な最小呼び出し
 
 ### L2 — DummyTarget (`[Category("L2")]`)
 
@@ -141,6 +155,8 @@ dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCa
 - L1 では `Assembly-CSharp.dll` を使わない
 - L2 では `UnityEngine` 実ランタイムに依存しない
 - L2 では `Assembly-CSharp.dll` の型を直接 instantiate しない
+- L2G でも実ゲーム型 instantiate は原則禁止し、上記の限定例外に
+  該当する contract proof だけに絞る
 - L3 だけが実レンダリングの最終保証を担う
 
 ---
