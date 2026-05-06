@@ -209,10 +209,10 @@ runtime-evidence-check: test-l1
   uv run pytest scripts/tests/test_triage_integration.py -q -k sample_log_smoke
 
 # Run the broad local verification gate.
-check: build test-l1 test-l2 test-l2g python-check python-test localization-check translation-token-check markdown-report-check
+check: build test-l1 test-l2 test-l2g python-check python-test localization-check translation-token-check markdown-report-check localization-coverage-map-check
 
 # Run the CI-like PR gate before pushing broad C#, script, or localization changes.
-pr-check base_ref="origin/main" head_ref="HEAD": ci-dotnet roslyn-build python-check python-test localization-check translation-token-check
+pr-check base_ref="origin/main" head_ref="HEAD": ci-dotnet roslyn-build python-check python-test localization-check translation-token-check localization-coverage-map-check
   {{python}} scripts/release_notes.py check-fragment --base-ref "{{base_ref}}" --head-ref "{{head_ref}}"
   {{python}} scripts/check_markdown_reports.py --base-ref "{{base_ref}}" --head-ref "{{head_ref}}"
 
@@ -243,12 +243,12 @@ roslyn-build: roslyn-build-annals roslyn-build-static-producer roslyn-build-sema
 
 # Run focused pytest coverage for repo-local Roslyn analysis tools.
 roslyn-test:
-  uv run pytest scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_text_construction_inventory.py scripts/tests/test_scan_static_producer_inventory.py -q
+  uv run pytest scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_text_construction_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_static_producer_closure.py scripts/tests/test_text_construction_surface_policy.py -q
 
 # Run Ruff for Roslyn Python files and basedpyright for the typed static-producer gate.
 roslyn-python-check:
-  ruff check scripts/extract_annals_patterns.py scripts/roslyn_semantic_probe.py scripts/scan_static_producer_inventory.py scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_text_construction_inventory.py scripts/tests/test_scan_static_producer_inventory.py
-  uvx basedpyright scripts/roslyn_semantic_probe.py scripts/scan_static_producer_inventory.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
+  ruff check scripts/extract_annals_patterns.py scripts/roslyn_semantic_probe.py scripts/scan_static_producer_inventory.py scripts/static_producer_closure.py scripts/text_construction_surface_policy.py scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_text_construction_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_static_producer_closure.py scripts/tests/test_text_construction_surface_policy.py
+  uvx basedpyright scripts/roslyn_semantic_probe.py scripts/scan_static_producer_inventory.py scripts/static_producer_closure.py scripts/text_construction_surface_policy.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_static_producer_closure.py scripts/tests/test_text_construction_surface_policy.py scripts/tests/test_roslyn_extractor_smoke.py
 
 # Run build, focused tests, and static checks for Roslyn analysis tooling.
 roslyn-check: roslyn-build roslyn-test roslyn-python-check
@@ -267,6 +267,12 @@ semantic-probe-check: roslyn-build-semantic-probe
 semantic-probe-real-smoke:
   QUDJP_RUN_SEMANTIC_PROBE_REAL=1 uv run pytest scripts/tests/test_roslyn_semantic_probe.py -q -m semantic_probe_real
 
+# Validate the executable localization coverage map.
+localization-coverage-map-check:
+  uv run pytest scripts/tests/test_localization_coverage_map.py -q
+  ruff check scripts/localization_coverage_map.py scripts/tests/test_localization_coverage_map.py
+  uvx basedpyright scripts/localization_coverage_map.py scripts/tests/test_localization_coverage_map.py
+
 # Generate static producer inventory to a disposable local output.
 static-producer-preview source_root=decompiled_root output="/tmp/qudjp-static-producer-inventory.json":
   {{python}} scripts/scan_static_producer_inventory.py --source-root {{quote(source_root)}} --output {{quote(output)}}
@@ -278,9 +284,13 @@ static-producer-regenerate-tracked source_root=decompiled_root:
 
 # Run the static producer scanner's focused validation gate.
 static-producer-check: roslyn-build-static-producer
-  uv run pytest scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py -q
-  ruff check scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
-  uvx basedpyright scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
+  uv run pytest scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_static_producer_closure.py scripts/tests/test_roslyn_extractor_smoke.py -q
+  ruff check scripts/scan_static_producer_inventory.py scripts/static_producer_closure.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_static_producer_closure.py scripts/tests/test_roslyn_extractor_smoke.py
+  uvx basedpyright scripts/scan_static_producer_inventory.py scripts/static_producer_closure.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_static_producer_closure.py scripts/tests/test_roslyn_extractor_smoke.py
+
+# Print the static producer owner work queue grouped by decompiled C# source file.
+static-producer-owner-queue limit="30":
+  {{python}} scripts/static_producer_closure.py --limit {{quote(limit)}}
 
 # Extract Annals candidate patterns to a disposable local output.
 annals-pattern-preview source_root=decompiled_annals_root include="Resheph*.cs" output="/tmp/qudjp-annals-candidates.json":
@@ -299,6 +309,11 @@ text-construction-inventory source_root=decompiled_root output="/tmp/roslyn-text
   else
     dotnet run --project scripts/tools/TextConstructionInventory/TextConstructionInventory.csproj -- --source-root {{quote(source_root)}} --output {{quote(output)}}
   fi
+
+# Generate and classify player-visible text-construction surfaces for C# owner work.
+text-construction-surface-queue source_root=decompiled_root output="/tmp/roslyn-text-construction-inventory.json" limit="50":
+  just text-construction-inventory {{quote(source_root)}} {{quote(output)}} ""
+  {{python}} scripts/text_construction_surface_policy.py --inventory {{quote(output)}} --limit {{quote(limit)}}
 
 # Verify agent-loop tools and dotfiles script availability.
 tool-check:
