@@ -63,7 +63,7 @@ internal static class StringExpressionClassifier
     }
 
     private static bool LooksLikeQudMarkup(string text) =>
-        text.Contains("{{", StringComparison.Ordinal)
+        Regex.IsMatch(text, @"\{\{\s*[A-Za-z][A-Za-z0-9_-]*\|", RegexOptions.CultureInvariant)
         || text.Contains("&&", StringComparison.Ordinal)
         || text.Contains("^^", StringComparison.Ordinal)
         || Regex.IsMatch(text, @"(^|[^\p{L}\p{N}_])[&^][A-Za-z]", RegexOptions.CultureInvariant);
@@ -71,7 +71,7 @@ internal static class StringExpressionClassifier
     private static bool LooksLikeRuntimePlaceholder(string text) =>
         Regex.IsMatch(
             text,
-            @"(?<![\p{L}\p{N}_])=[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*=|\{\d+(?::[^}]*)?\}",
+            @"(?<![\p{L}\p{N}_])=[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*=|(?<!\{)\{\d+(?::[^}]*)?\}(?!\})",
             RegexOptions.CultureInvariant);
 
     private static bool IsStringExpression(SemanticModel semanticModel, ExpressionSyntax expression)

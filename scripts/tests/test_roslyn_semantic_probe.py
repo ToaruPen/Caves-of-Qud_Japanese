@@ -236,10 +236,10 @@ def test_string_argument_shapes_and_markup_risks_are_reported() -> None:
         "20",
     )
 
-    assert emit_doc["metrics"]["resolved_matching_owner_hits"] == 11
+    assert emit_doc["metrics"]["resolved_matching_owner_hits"] == 12
     assert emit_doc["metrics"]["first_string_argument_counts"]["interpolated_string"] == 1
     assert emit_doc["metrics"]["first_string_argument_counts"]["string_literal"] == 7
-    assert emit_doc["metrics"]["first_string_argument_counts"]["invocation"] == 1
+    assert emit_doc["metrics"]["first_string_argument_counts"]["invocation"] == 2
     assert emit_doc["metrics"]["first_string_argument_counts"]["variable_or_member"] == 1
     assert emit_doc["metrics"]["first_string_argument_counts"]["element_access"] == 1
     assert emit_doc["metrics"]["string_risk_counts"]["qud_markup"] == 4
@@ -248,6 +248,9 @@ def test_string_argument_shapes_and_markup_risks_are_reported() -> None:
     ordinary_hit = next(hit for hit in emit_doc["hits"] if "ordinary & symbol" in hit["expression"])
     assert ordinary_hit["string_arguments"][0]["has_qud_markup"] is False
     assert ordinary_hit["string_arguments"][0]["has_placeholder_like_text"] is False
+    escaped_brace_hit = next(hit for hit in emit_doc["hits"] if 'string.Format("{{0}}", name)' in hit["expression"])
+    assert escaped_brace_hit["string_arguments"][0]["has_qud_markup"] is False
+    assert escaped_brace_hit["string_arguments"][0]["has_placeholder_like_text"] is False
     assert set_text_doc["metrics"]["first_string_argument_counts"]["invocation"] == 1
     assert set_text_doc["hits"][0]["method_or_property_symbol"] == "bool XRL.UI.UITextSkin.SetText(string text)"
 
@@ -359,6 +362,17 @@ def test_wrapper_payload_validation_requires_metric_contract_keys() -> None:
     message = str(exc_info.value)
     assert "first_string_argument_counts" in message
     assert "total_files" in message
+
+
+def test_wrapper_payload_validation_rejects_bad_json_shapes() -> None:
+    """Wrapper contract validation normalizes malformed JSON shapes to RuntimeError."""
+    load_payload = load_payload_validator()
+
+    with pytest.raises(RuntimeError, match="payload must be a JSON object"):
+        _ = load_payload("[]")
+
+    with pytest.raises(RuntimeError, match="metrics must be an object"):
+        _ = load_payload(json.dumps({"schema_version": "1", "query": {}, "hits": [], "metrics": []}))
 
 
 def test_value_options_reject_following_flag_as_missing_value() -> None:

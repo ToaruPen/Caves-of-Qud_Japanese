@@ -37,6 +37,7 @@ public sealed class Cases : IComponent<GameObject>
         IComponent<GameObject>.EmitMessage(go, "escaped && and ^^ markup");
         IComponent<GameObject>.EmitMessage(go, "formatted {0} and {12:format}");
         IComponent<GameObject>.EmitMessage(go, "ordinary & symbol, A^B, and {name}");
+        IComponent<GameObject>.EmitMessage(go, string.Format("{{0}}", name));
         IComponent<GameObject>.EmitMessage(go, "<color=#44ff88>tmp</color>");
         skin.SetText(string.Format("{{{{W|{0}}}}}", name));
         tmpText.text = "<color=#44ff88>direct tmp</color>";
