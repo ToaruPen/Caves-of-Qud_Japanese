@@ -34,6 +34,30 @@ If the active checkout has unrelated dirty work, either use a separate worktree
 or stage only explicit paths for the PR. Do not commit review fixes from an
 unrelated branch just because the patch applies cleanly.
 
+## Stacked PR Rebase
+
+When a PR was opened on top of another PR branch and the parent PR later lands
+on `main`, refresh remote refs before using `origin/main`:
+
+```bash
+git fetch origin --prune
+```
+
+Then rebase the child branch onto `origin/main` before resolving GitHub
+conflicts. If the rebase first tries to replay the already-merged parent commit,
+skip that parent commit after confirming it is present on `origin/main` through
+PR metadata or commit history.
+
+After the rebase, verify that the PR is scoped to the child work only:
+
+```bash
+git diff --stat origin/main...HEAD
+git log --oneline --decorate --graph --max-count=8
+```
+
+Do not keep the old parent commit in the child branch just because it applies;
+that makes GitHub conflict checks and review diffs describe the wrong work.
+
 ## Route-family feedback
 
 For CodeRabbit or reviewer feedback on route ownership, do not stop at the exact
