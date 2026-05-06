@@ -82,6 +82,35 @@ public sealed partial class Issue201OtherUiBindingPatchTests
     }
 
     [Test]
+    public void CyberneticsTerminalTextTranspiler_TranslatesBodySlotSuffixes()
+    {
+        WriteCyberneticsDictionary(("translucent skin", "透明皮膚"));
+
+        RunWithCyberneticsTerminalTextTranspiler(() =>
+        {
+            var screen = new CyberneticsScreen();
+            screen.MainText = "Please choose a target body part.";
+            screen.Options.Add("{{Y|皮膚用断熱材}} (Back)");
+            screen.Options.Add("translucent skin (Back)");
+            screen.Options.Add("made-up cyberware (Back)");
+            screen.Options.Add("Back");
+            screen.Update();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(screen.Options[0], Is.EqualTo("{{Y|皮膚用断熱材}}（背中）"));
+                Assert.That(screen.Options[1], Is.EqualTo("透明皮膚（背中）"));
+                Assert.That(screen.Options[2], Is.EqualTo("made-up cyberware (Back)"));
+                Assert.That(screen.Options[3], Is.EqualTo("Back"));
+                Assert.That(screen.RenderedText, Does.Contain("{{Y|皮膚用断熱材}}（背中）"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(nameof(CyberneticsTerminalTextTranslator), "CyberneticsTerminal.OptionText"),
+                    Is.GreaterThan(0));
+            });
+        });
+    }
+
+    [Test]
     public void CyberneticsTerminalTextTranspiler_LeavesNonCyberneticsScreenUntouched()
     {
         WriteCyberneticsDictionary(
