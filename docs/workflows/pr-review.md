@@ -37,7 +37,13 @@ unrelated branch just because the patch applies cleanly.
 ## Stacked PR Rebase
 
 When a PR was opened on top of another PR branch and the parent PR later lands
-on `main`, rebase the child branch onto `origin/main` before resolving GitHub
+on `main`, refresh remote refs before using `origin/main`:
+
+```bash
+git fetch origin --prune
+```
+
+Then rebase the child branch onto `origin/main` before resolving GitHub
 conflicts. If the rebase first tries to replay the already-merged parent commit,
 skip that parent commit after confirming it is present on `origin/main` through
 PR metadata or commit history.
