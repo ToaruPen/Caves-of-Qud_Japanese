@@ -10,6 +10,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.4] - 2026-05-06
+
+### Changed
+
+- Standardize the shipped mod display name as `Caves of Qud Japanese Mod`.
+
+### Fixed
+
+- Improve Japanese localization for generated hookah, mutation, liquid
+  container, statue, and combat messages.
+- Improve Japanese coverage for combat logs, popups, world mod text, and
+  missile targeting UI labels such as Fire and Reload.
+- Improve Japanese localization for generated runtime text, including generated
+  display names, quest titles, shrine prayer messages, targeting commands,
+  effect details, and combat log messages.
+- Improve Japanese localization for generated status and display-name text,
+  including seated, prone, engulfed, enclosed, piloting, marked, cleaved,
+  dominated, and time-dilated states.
+
+---
+
 ## [0.2.3] - 2026-05-06
 
 ### Changed
@@ -159,6 +180,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+[0.2.4]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.4
 [0.2.3]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.3
 [0.2.2]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.2
 [0.2.1]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.1
