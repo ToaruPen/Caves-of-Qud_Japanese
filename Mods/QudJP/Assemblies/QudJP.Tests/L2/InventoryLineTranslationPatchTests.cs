@@ -39,7 +39,7 @@ public sealed partial class Issue201StatusScreensBatch2Tests
     }
 
     [Test]
-    public void InventoryLinePrefix_TranslatesCategoryAndItemRows_WhenPatched()
+    public void InventoryLinePostfix_TranslatesCategoryAndItemRows_AfterOriginalSetData()
     {
         WriteDictionary(
             ("Weapons", "武器"),
@@ -53,7 +53,7 @@ public sealed partial class Issue201StatusScreensBatch2Tests
         {
             harmony.Patch(
                 original: RequireMethod(typeof(DummyInventoryLineTarget), nameof(DummyInventoryLineTarget.setData)),
-                prefix: new HarmonyMethod(RequireMethod(typeof(InventoryLineTranslationPatch), nameof(InventoryLineTranslationPatch.Prefix))));
+                postfix: new HarmonyMethod(RequireMethod(typeof(InventoryLineTranslationPatch), nameof(InventoryLineTranslationPatch.Postfix))));
 
             var categoryTarget = new DummyInventoryLineTarget();
             categoryTarget.setData(new DummyInventoryLineDataTarget
@@ -76,10 +76,12 @@ public sealed partial class Issue201StatusScreensBatch2Tests
             Assert.Multiple(() =>
             {
                 Assert.That(categoryTarget.categoryLabel.Text, Is.EqualTo("武器"));
+                Assert.That(categoryTarget.OriginalExecuted, Is.True);
                 Assert.That(categoryTarget.categoryWeightText.Text, Does.Contain("3 個"));
                 Assert.That(categoryTarget.categoryWeightText.Text, Does.Contain("17 lbs."));
                 Assert.That(categoryTarget.categoryExpandLabel.Text, Is.EqualTo("[-]"));
                 Assert.That(itemTarget.text.Text, Is.EqualTo("レーザーライフル"));
+                Assert.That(itemTarget.OriginalExecuted, Is.True);
                 Assert.That(itemTarget.itemWeightText.Text, Is.EqualTo("[7 lbs.]"));
                 Assert.That(Translator.GetMissingKeyHitCountForTests("lbs."), Is.EqualTo(0));
                 Assert.That(
@@ -111,7 +113,7 @@ public sealed partial class Issue201StatusScreensBatch2Tests
     }
 
     [Test]
-    public void InventoryLinePrefix_DoesNotUseDisplayNameRouteForItemNames_WhenPatched()
+    public void InventoryLinePostfix_DoesNotUseDisplayNameRouteForItemNames_WhenPatched()
     {
         WriteDictionary(
             ("items", "個"));
@@ -126,7 +128,7 @@ public sealed partial class Issue201StatusScreensBatch2Tests
         {
             harmony.Patch(
                 original: RequireMethod(typeof(DummyInventoryLineTarget), nameof(DummyInventoryLineTarget.setData)),
-                prefix: new HarmonyMethod(RequireMethod(typeof(InventoryLineTranslationPatch), nameof(InventoryLineTranslationPatch.Prefix))));
+                postfix: new HarmonyMethod(RequireMethod(typeof(InventoryLineTranslationPatch), nameof(InventoryLineTranslationPatch.Postfix))));
 
             var itemTarget = new DummyInventoryLineTarget();
             itemTarget.setData(new DummyInventoryLineDataTarget
@@ -138,6 +140,7 @@ public sealed partial class Issue201StatusScreensBatch2Tests
 
             Assert.Multiple(() =>
             {
+                Assert.That(itemTarget.OriginalExecuted, Is.True);
                 Assert.That(itemTarget.text.Text, Is.EqualTo("water flask [empty]"));
                 Assert.That(
                     DynamicTextObservability.GetRouteFamilyHitCountForTests(
@@ -153,7 +156,7 @@ public sealed partial class Issue201StatusScreensBatch2Tests
     }
 
     [Test]
-    public void InventoryLinePrefix_FallsBackToOriginal_OnUnsupportedInput()
+    public void InventoryLinePostfix_LeavesUnsupportedInputOnOriginalPath()
     {
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -161,12 +164,16 @@ public sealed partial class Issue201StatusScreensBatch2Tests
         {
             harmony.Patch(
                 original: RequireMethod(typeof(DummyInventoryLineTarget), nameof(DummyInventoryLineTarget.setData)),
-                prefix: new HarmonyMethod(RequireMethod(typeof(InventoryLineTranslationPatch), nameof(InventoryLineTranslationPatch.Prefix))));
+                postfix: new HarmonyMethod(RequireMethod(typeof(InventoryLineTranslationPatch), nameof(InventoryLineTranslationPatch.Postfix))));
 
             var target = new DummyInventoryLineTarget();
             target.setData(new DummyFallbackInventoryLineDataTarget());
 
-            Assert.That(target.OriginalExecuted, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(target.OriginalExecuted, Is.True);
+                Assert.That(target.text.Text, Is.EqualTo("inventory fallback"));
+            });
         }
         finally
         {
