@@ -98,6 +98,7 @@ jobs:
           version="${{ steps.identity.outputs.version }}"
           release_zip="dist/QudJP-v${version}.zip"
           python scripts/release_identity.py --tag "v${version}" --release-zip "$release_zip" --main-ref origin/main
+          python scripts/verify_release_dll.py "$release_zip"
           (cd dist && sha256sum "QudJP-v${version}.zip" > "QudJP-v${version}.zip.sha256")
 
       - name: Render GitHub Release notes

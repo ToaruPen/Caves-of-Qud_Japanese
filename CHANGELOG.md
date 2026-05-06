@@ -10,6 +10,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.43] - 2026-05-07
+
+### Fixed
+
+- インベントリ画面のアイテム名が消える問題について、ローカル検証では
+  `0.2.42` 時点で解決していた修正が、CI/CD の release artifact 生成不備により
+  Steam Workshop 版 DLL へ反映されていなかった問題を修正しました。
+- インベントリ項目の折り畳みや更新時に、非アクティブな行が表示中の
+  アイテム名 replacement を誤って無効化する経路を修正しました。
+- インベントリ項目の折り畳み時に、保持済みアイテム名 replacement の位置・
+  色・透明度・表示状態が元の行に追従するようにしました。
+- Steam Workshop へ出荷する DLL に TextMeshPro / InventoryLine 表示修正が
+  含まれていない場合、release 検証で失敗するガードを追加しました。
+
+---
+
 ## [0.2.42] - 2026-05-07
 
 ### Fixed
@@ -201,6 +217,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+[0.2.43]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.43
+[0.2.42]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.42
 [0.2.41]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.41
 [0.2.4]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.4
 [0.2.3]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.3

@@ -106,12 +106,16 @@ public static class InventoryLineTranslationPatch
         if (displayName is null) { displayName = string.Empty; }
         var itemRoute = ObservabilityHelpers.ComposeContext(Context, "field=text");
         var translatedDisplayName = TranslateVisibleText(displayName, itemRoute, "InventoryLine.ItemName");
+        var itemTextSkin = GetMemberValue(instance, "text");
         OwnerTextSetter.SetTranslatedText(
-            GetMemberValue(instance, "text"),
+            itemTextSkin,
             displayName,
             translatedDisplayName,
             Context,
             typeof(InventoryLineTranslationPatch));
+#if HAS_TMP
+        _ = InventoryLineFontFixer.TryForcePrimaryFontOnTextSkin(itemTextSkin, translatedDisplayName);
+#endif
 
         var weight = go is null ? 0 : GetIntMemberValue(go, "Weight");
         var weightSource = $"[{weight.ToString(CultureInfo.InvariantCulture)} lbs.]";

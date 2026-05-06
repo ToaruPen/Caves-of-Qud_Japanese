@@ -26,6 +26,11 @@ import sys
 import zipfile
 from pathlib import Path
 
+try:
+    from scripts.verify_release_dll import verify_release_dll
+except ModuleNotFoundError:
+    from verify_release_dll import verify_release_dll
+
 _LOCALIZATION_ASSET_SUFFIXES = {".json", ".txt", ".xml"}
 
 
@@ -275,6 +280,11 @@ def build_release() -> None:
         localization_files,
         legal_files=legal_files,
     )
+    missing_markers = verify_release_dll(output_path)
+    if missing_markers:
+        output_path.unlink(missing_ok=True)
+        msg = "release DLL missing required marker(s): " + ", ".join(missing_markers)
+        raise ValueError(msg)
 
     print(f"\nCreated: {output_path}")  # noqa: T201
     print(f"Contents ({len(members)} files):")  # noqa: T201

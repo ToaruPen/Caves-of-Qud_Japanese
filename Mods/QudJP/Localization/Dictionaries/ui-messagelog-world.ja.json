@@ -137,7 +137,7 @@
         {
             "key": "You embark for the caves of Qud.",
             "context": "XRL.Messages.MessageQueue",
-            "text": "クッドの洞窟へ向かう。"
+            "text": "クッドの洞窟へ旅立つ。"
         },
         {
             "key": " [toggled off]",
