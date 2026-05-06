@@ -1,0 +1,554 @@
+{
+  "schema_version": "1.0",
+  "game_version": "2.0.4",
+  "description": "Executable coverage map for QudJP C# localization discovery, closure gates, and runtime verification boundaries.",
+  "surfaces": [
+    {
+      "id": "static_producer_messages_popups",
+      "label": "Static C# producer sinks: EmitMessage, Popup.Show*, AddPlayerMessage",
+      "category": "csharp_static_inventory",
+      "status": "inventoried_unclosed",
+      "target_surfaces": [
+        "EmitMessage",
+        "Popup.Show*",
+        "AddPlayerMessage"
+      ],
+      "scanner": "scripts/scan_static_producer_inventory.py",
+      "inventory_artifact": "docs/static-producer-inventory.json",
+      "closure_gate": "scripts/static_producer_closure.py",
+      "tests": [
+        "scripts/tests/test_scan_static_producer_inventory.py",
+        "scripts/tests/test_static_producer_closure.py"
+      ],
+      "commands": [
+        "just static-producer-check",
+        "just static-producer-owner-queue"
+      ],
+      "known_limits": [
+        "Covers only EmitMessage, Popup.Show*, and AddPlayerMessage producer families.",
+        "Current-repo owner coverage is represented by a separate closure overlay, not by the raw inventory alone.",
+        "The owner action queue is class-file based for this scanner scope; it does not cover SetText or display-name construction."
+      ],
+      "next_actions": [
+        "Use just static-producer-owner-queue to choose the next decompiled C# source file and producer method.",
+        "Expand covered owner-family registry as owner patch tests land.",
+        "Keep owner_action_queue as the implementation queue for this scanner scope."
+      ]
+    },
+    {
+      "id": "ui_text_construction",
+      "label": "Roslyn player-visible text construction surfaces and owner candidates",
+      "category": "csharp_static_inventory",
+      "status": "classified_queue",
+      "target_surfaces": [
+        "ActivatedAbility",
+        "AddPlayerMessage",
+        "DescriptionReturn",
+        "DisplayNameAssignment",
+        "DisplayNameReturn",
+        "DisplayTextReturn",
+        "Does",
+        "EffectDescriptionReturn",
+        "EmitMessage",
+        "GetDisplayName",
+        "HistoricStringExpander",
+        "JournalAPI",
+        "MessageFrame",
+        "Popup",
+        "Qud UI SetText owner candidates",
+        "Qud/XRL UI direct text owner candidates",
+        "TutorialManagerPopup"
+      ],
+      "scanner": "scripts/tools/TextConstructionInventory/Program.cs",
+      "summary_artifact": "docs/coderabbit/roslyn-text-construction-inventory-summary.md",
+      "closure_gate": "scripts/text_construction_surface_policy.py",
+      "tests": [
+        "scripts/tests/test_roslyn_text_construction_inventory.py",
+        "scripts/tests/test_text_construction_surface_policy.py"
+      ],
+      "commands": [
+        "just text-construction-inventory",
+        "just text-construction-surface-queue",
+        "just roslyn-test"
+      ],
+      "known_limits": [
+        "The full generated inventory is intentionally not committed.",
+        "Generic Attribute, Initializer, OtherInvocation, Other, Assignment, Return, StringBuilderAppend, StringFormat, and ReplaceChain rows are not localization surfaces by themselves.",
+        "SetText and direct text assignment are valuable only after owner class or method context proves player visibility."
+      ],
+      "next_actions": [
+        "Use just text-construction-surface-queue to inspect only player-visible APIs and likely owner candidates.",
+        "Promote candidate-only rows only when a visible owner route or runtime evidence proves player exposure.",
+        "Add surface-specific closure overlays before counting these families as implemented."
+      ]
+    },
+    {
+      "id": "annals_history_patterns",
+      "label": "Annals and HistorySpice generated narrative patterns",
+      "category": "generated_text_inventory",
+      "status": "inventoried_unclosed",
+      "target_surfaces": [
+        "Annals",
+        "HistorySpice",
+        "HistoricStringExpander"
+      ],
+      "scanner": "scripts/extract_annals_patterns.py",
+      "inventory_artifact": "scripts/_artifacts/annals/candidates_pending.json",
+      "tests": [
+        "scripts/tests/test_extract_annals_patterns.py",
+        "scripts/tests/test_merge_annals_patterns.py",
+        "scripts/tests/test_translate_annals_patterns.py",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/AnnalsPatternsAssetReachabilityTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/HistoricNarrativeTranslationPatchesTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2G/HistoricNarrativeTranslationPatchesResolutionTests.cs"
+      ],
+      "commands": [
+        "just annals-pattern-preview",
+        "just annals-pattern-extract-tracked",
+        "just test-l1",
+        "just test-l2",
+        "just test-l2g"
+      ],
+      "known_limits": [
+        "Generated narrative coverage is pattern-based and still has pending candidates.",
+        "HistorySpice component composition and generated names can surface outside fixed Annals patterns."
+      ],
+      "next_actions": [
+        "Keep generated narrative candidates as component/pattern translators, not broad exact leaves.",
+        "Promote pending candidates only with tests that cover generated variants."
+      ]
+    },
+    {
+      "id": "activated_ability_names",
+      "label": "Activated ability and generated ability display names",
+      "category": "generated_text_inventory",
+      "status": "preview_inventory",
+      "target_surfaces": [
+        "AddActivatedAbility",
+        "AddMyActivatedAbility",
+        "SetActivatedAbilityDisplayName",
+        "DisplayNameAssignment"
+      ],
+      "scanner": "scripts/scan_activated_ability_names.py",
+      "tests": [
+        "scripts/tests/test_scan_activated_ability_names.py",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/GetDisplayNameRouteTranslatorTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/GameManagerUpdateSelectedAbilityPatchTests.cs"
+      ],
+      "commands": [
+        "uv run pytest scripts/tests/test_scan_activated_ability_names.py -q",
+        "just test-l1",
+        "just test-l2"
+      ],
+      "known_limits": [
+        "The scanner output is not tracked as a repo artifact.",
+        "Generated display-name-source and dynamic-composition rows require owner/generator translation, not exact leaves."
+      ],
+      "next_actions": [
+        "Add a tracked or reproducible summary for real decompiled-source runs.",
+        "Connect dynamic-composition rows to owner closure tests."
+      ]
+    },
+    {
+      "id": "procedural_cooking_effects",
+      "label": "Procedural cooking effect descriptions and details",
+      "category": "domain_inventory",
+      "status": "partial_domain_inventory",
+      "target_surfaces": [
+        "GetDescription",
+        "GetTemplatedDescription",
+        "GetDetails",
+        "GetTriggerDescription",
+        "GetTemplatedTriggerDescription"
+      ],
+      "summary_artifact": "docs/reports/2026-05-03-issue-466-cooking-procedural-inventory.md",
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/CookingEffectFragmentTranslatorTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/CookingEffectTranslationPatchTests.cs"
+      ],
+      "commands": [
+        "just test-l1",
+        "just test-l2"
+      ],
+      "known_limits": [
+        "The inventory is a domain report, not a generalized tracked scanner artifact.",
+        "Only audited cooking producer slices should be considered closed."
+      ],
+      "next_actions": [
+        "Convert the cooking report into an executable scanner or domain closure registry if more slices are needed."
+      ]
+    },
+    {
+      "id": "display_name_composition",
+      "label": "Object display names, state suffixes, generated names, and mixed display-name composition",
+      "category": "route_family_tests",
+      "status": "partial_tests_no_inventory",
+      "target_surfaces": [
+        "GetDisplayName",
+        "GetDisplayNameProcess",
+        "DisplayNameRouteTranslator"
+      ],
+      "closure_gate": "Mods/QudJP/Assemblies/QudJP.Tests/L1/GetDisplayNameRouteTranslatorTests.cs",
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/GetDisplayNameRouteTranslatorTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/GetDisplayNameProcessPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/ZoneDisplayNameTranslationPatchTests.cs"
+      ],
+      "commands": [
+        "just test-l1",
+        "just test-l2"
+      ],
+      "known_limits": [
+        "There is no exhaustive decompiled-source inventory for all display-name producers.",
+        "Runtime-generated title, liquid/container, and blueprint fallback names still require route-family work."
+      ],
+      "next_actions": [
+        "Create a symbol-backed display-name producer inventory.",
+        "Add closure rows for generated name families as they are owner-tested."
+      ]
+    },
+    {
+      "id": "description_effect_detail_routes",
+      "label": "Object, effect, status, tooltip, and long/short description producers",
+      "category": "route_family_tests",
+      "status": "partial_tests_no_inventory",
+      "target_surfaces": [
+        "GetDescription",
+        "GetDetails",
+        "GetShortDescription",
+        "GetLongDescription",
+        "Look tooltip"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/DescriptionTextTranslatorTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/ActiveEffectTextTranslatorTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/DescriptionLongDescriptionPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/DescriptionShortDescriptionPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/LookTooltipContentPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/ActiveEffectsOwnerPatchTests.cs"
+      ],
+      "commands": [
+        "just test-l1",
+        "just test-l2"
+      ],
+      "known_limits": [
+        "No complete inventory covers all description-producing methods.",
+        "Tooltip sinks are not safe owners unless a screen-specific producer contract exists."
+      ],
+      "next_actions": [
+        "Promote high-risk description domains to Roslyn inventories before adding broad leaves."
+      ]
+    },
+    {
+      "id": "conversation_routes",
+      "label": "Conversation display text, simple/question templates, and pronoun exchange",
+      "category": "route_family_tests",
+      "status": "partial_tests_no_inventory",
+      "target_surfaces": [
+        "ConversationDisplayText",
+        "ConversationSimpleTemplate",
+        "ConversationQuestionTemplate",
+        "ConversationPronounExchange"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/ConversationDisplayTextPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/ConversationTemplateTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/ConversationPronounExchangeTranslationPatchTests.cs"
+      ],
+      "commands": [
+        "just test-l2"
+      ],
+      "known_limits": [
+        "Conversation data/templates do not have a complete tracked inventory.",
+        "Conversation routes may include authored XML/data and runtime-composed text."
+      ],
+      "next_actions": [
+        "Add a conversation-data inventory or classify conversation assets separately from runtime templates."
+      ]
+    },
+    {
+      "id": "journal_quest_routes",
+      "label": "Journal, map notes, accomplishments, notifications, quest log, and generated quest titles",
+      "category": "route_family_tests",
+      "status": "partial_tests_no_inventory",
+      "target_surfaces": [
+        "JournalAPI",
+        "JournalDisplayText",
+        "JournalPatternTranslator",
+        "QuestLog",
+        "GeneratedQuestTitle"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/JournalPatternTranslatorTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/JournalTextTranslatorTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/JournalApiAddTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/JournalEntryDisplayTextPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/QuestUiTranslationPatchTests.cs"
+      ],
+      "commands": [
+        "just test-l1",
+        "just test-l2"
+      ],
+      "known_limits": [
+        "No full static inventory covers generated quest title construction.",
+        "Journal surfaces can expose generated names that also need display-name owner coverage."
+      ],
+      "next_actions": [
+        "Inventory generated quest title templates and connect them to journal/quest owner tests."
+      ]
+    },
+    {
+      "id": "chargen_ui_routes",
+      "label": "Character generation UI, subtype selection, chrome, attributes, and structured text",
+      "category": "route_family_tests",
+      "status": "partial_tests_no_inventory",
+      "target_surfaces": [
+        "CharGen",
+        "ChargenStructuredText",
+        "ChargenAttributeDescription"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/ChargenStructuredTextTranslatorTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/CharGenLocalizationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/CharGenProducerTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/ChargenAttributeDescriptionTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2G/CharGenProducerTranslationPatchResolutionTests.cs"
+      ],
+      "commands": [
+        "just test-l1",
+        "just test-l2",
+        "just test-l2g"
+      ],
+      "known_limits": [
+        "CharGen has strong route tests but no complete source inventory for all UI text-producing controls."
+      ],
+      "next_actions": [
+        "Add CharGen surface inventory if new runtime gaps appear outside existing owner patches."
+      ]
+    },
+    {
+      "id": "screen_ui_routes",
+      "label": "Screen-specific UI rows and bindings: inventory, equipment, trade, skills, factions, options, saves, books, world map",
+      "category": "route_family_tests",
+      "status": "partial_tests_no_inventory",
+      "target_surfaces": [
+        "InventoryLine",
+        "EquipmentLine",
+        "TradeLine",
+        "SkillsAndPowersLine",
+        "FactionsLine",
+        "Options",
+        "BookScreen",
+        "WorldMap"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/InventoryLineTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/EquipmentLineTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/TradeLineTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/SkillsAndPowersLineTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/FactionsLineTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/OptionsLocalizationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/BookScreenTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/WorldMapUiTranslationPatchTests.cs"
+      ],
+      "commands": [
+        "just test-l2"
+      ],
+      "known_limits": [
+        "Screen-specific route tests are broad but not generated from a complete UI surface inventory."
+      ],
+      "next_actions": [
+        "Use text-construction inventory to identify screen-specific rows that lack owner tests."
+      ]
+    },
+    {
+      "id": "hud_status_ability_bar_routes",
+      "label": "HUD, player status bar, ability bar, selected ability, target text, and active effects",
+      "category": "route_family_tests",
+      "status": "partial_tests_no_inventory",
+      "target_surfaces": [
+        "PlayerStatusBar",
+        "AbilityBar",
+        "AbilityBarButtonText",
+        "GameManagerUpdateSelectedAbility"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/PlayerStatusBarProducerTranslationHelpersTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/PlayerStatusBarProducerTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/AbilityBarAfterRenderTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/AbilityBarButtonTextTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/GameManagerUpdateSelectedAbilityPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2G/PlayerStatusBarProducerTranslationPatchResolutionTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2G/AbilityBarAfterRenderTranslationPatchResolutionTests.cs"
+      ],
+      "commands": [
+        "just test-l1",
+        "just test-l2",
+        "just test-l2g"
+      ],
+      "known_limits": [
+        "HUD/ability bar routes have focused tests but no complete direct text inventory closure."
+      ],
+      "next_actions": [
+        "Cross-check HUD direct text against TextConstructionInventory."
+      ]
+    },
+    {
+      "id": "localization_assets",
+      "label": "Localization XML, JSON dictionaries, scoped dictionaries, token parity, glossary and corpus assets",
+      "category": "asset_validation",
+      "status": "covered_by_validators",
+      "target_surfaces": [
+        "Localization XML",
+        "Dictionaries",
+        "Scoped Dictionaries",
+        "Translation Tokens"
+      ],
+      "validators": [
+        "scripts/diff_localization.py",
+        "scripts/check_translation_tokens.py",
+        "scripts/tests/test_validate_xml.py",
+        "scripts/tests/test_translation_tokens.py",
+        "scripts/tests/test_json_placeholder_parity.py",
+        "scripts/tests/test_json_markup_parity.py"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/LocalizationCoverageTests.cs",
+        "scripts/tests/test_diff_localization.py",
+        "scripts/tests/test_translation_tokens.py"
+      ],
+      "commands": [
+        "just localization-check",
+        "just translation-token-check",
+        "just python-test"
+      ],
+      "known_limits": [
+        "Asset validators do not prove dynamic producer ownership.",
+        "Dictionary coverage is not accepted for procedural or sink-observed text unless the route is proven fixed-leaf safe."
+      ],
+      "next_actions": [
+        "Keep asset validation separate from producer closure queues."
+      ]
+    },
+    {
+      "id": "runtime_observability_triage",
+      "label": "Runtime untranslated triage, final output observability, sink observation, and L3 evidence",
+      "category": "runtime_evidence",
+      "status": "runtime_evidence",
+      "target_surfaces": [
+        "Player.log",
+        "DynamicTextProbe",
+        "SinkObserve",
+        "FinalOutputObservability",
+        "TranslationChecker"
+      ],
+      "scanner": "scripts/triage_untranslated.py",
+      "validators": [
+        "scripts/translation_checker.py",
+        "scripts/triage/cli.py"
+      ],
+      "tests": [
+        "scripts/tests/test_triage_log_parser.py",
+        "scripts/tests/test_triage_classifier.py",
+        "scripts/tests/test_triage_integration.py",
+        "scripts/tests/test_translation_checker.py",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/FinalOutputObservabilityTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/SinkObservationTests.cs"
+      ],
+      "commands": [
+        "python scripts/triage_untranslated.py --log ~/Library/Logs/Freehold\\ Games/CavesOfQud/Player.log",
+        "just python-test"
+      ],
+      "known_limits": [
+        "Runtime evidence is not primary discovery for statically inventoried surfaces.",
+        "Runtime-only rows are priority and verification evidence, not automatic dictionary candidates."
+      ],
+      "next_actions": [
+        "Use runtime-only rows to identify missing inventory surfaces or route-proof gaps."
+      ]
+    },
+    {
+      "id": "renderer_and_sink_boundaries",
+      "label": "UITextSkin, renderer conversion, sink observation, color restoration, and final display boundaries",
+      "category": "runtime_evidence",
+      "status": "boundary_observed",
+      "target_surfaces": [
+        "UITextSkin.SetText",
+        "RTF.FormatToRTF",
+        "Sidebar.FormatToRTF",
+        "ColorAwareTranslationComposer"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/UITextSkinTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/ColorRouteCatalogTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/ColorTagAllowlistCoverageTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L1/ColorRestoreOwnershipTests.cs"
+      ],
+      "commands": [
+        "just test-l1",
+        "just test-l2"
+      ],
+      "known_limits": [
+        "Sink-wide translation is intentionally not an owner route.",
+        "Renderer-owned conversion after QudJP hands text off cannot be closed by producer inventory alone."
+      ],
+      "next_actions": [
+        "Keep sink observations as route-gap evidence and promote safe ownership upstream."
+      ]
+    },
+    {
+      "id": "world_generation_and_zone_names",
+      "label": "World generation status, zone names, village/history generated names, and map-note surfaces",
+      "category": "route_family_tests",
+      "status": "partial_tests_no_inventory",
+      "target_surfaces": [
+        "WorldGenerationScreen",
+        "ZoneDisplayName",
+        "ZoneManager",
+        "Village history",
+        "Map notes"
+      ],
+      "tests": [
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/WorldGenerationScreenTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/WorldCreationProgressTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/ZoneDisplayNameTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/ZoneManagerSetActiveZoneTranslationPatchTests.cs",
+        "Mods/QudJP/Assemblies/QudJP.Tests/L2/HistoricNarrativeTranslationPatchesTests.cs"
+      ],
+      "commands": [
+        "just test-l2"
+      ],
+      "known_limits": [
+        "Generated village and zone names are not represented by one complete inventory.",
+        "HistorySpice and display-name composition can overlap this surface."
+      ],
+      "next_actions": [
+        "Tie generated village/zone name families to Annals and display-name inventories."
+      ]
+    },
+    {
+      "id": "legacy_candidate_inventory",
+      "label": "Archived legacy candidate inventory and fixed-leaf workflow",
+      "category": "legacy_view",
+      "status": "legacy_view_only",
+      "target_surfaces": [
+        "legacy SetText/Popup/AddPlayerMessage/EmitMessage candidate inventory"
+      ],
+      "inventory_artifact": "docs/archive/candidate-inventory-2026-04-14-reconciled-bridge.json",
+      "scanner": "scripts/legacies/scan_text_producers.py",
+      "tests": [
+        "scripts/tests/test_scan_text_producers.py",
+        "scripts/tests/test_reconcile_inventory_status.py"
+      ],
+      "commands": [
+        "uv run pytest scripts/tests/test_scan_text_producers.py scripts/tests/test_reconcile_inventory_status.py -q"
+      ],
+      "known_limits": [
+        "This is explicitly bridge/view-only and not a source of truth for new implementation work."
+      ],
+      "next_actions": [
+        "Do not use as an implementation dependency; use only as historical comparison when needed."
+      ]
+    }
+  ]
+}
