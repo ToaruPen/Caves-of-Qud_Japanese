@@ -513,11 +513,40 @@ class TestBuildReleaseImport:
             patch("scripts.build_release.build_dll", return_value=dll),
             patch("scripts.build_release.collect_localization_files", return_value=[]),
             patch("scripts.build_release.create_zip", return_value=[]) as create_zip_mock,
+            patch("scripts.build_release.verify_release_dll", return_value=[]) as verify_release_dll_mock,
         ):
             build_release()
 
         create_zip_mock.assert_called_once()
-        assert create_zip_mock.call_args.args[0] == tmp_path / "dist" / "QudJP-v1.2.3.zip"
+        output_path = tmp_path / "dist" / "QudJP-v1.2.3.zip"
+        assert create_zip_mock.call_args.args[0] == output_path
+        verify_release_dll_mock.assert_called_once_with(output_path)
+
+    def test_build_release_rejects_release_dll_missing_required_markers(self, tmp_path: Path) -> None:
+        """Release ZIP creation fails when the packaged DLL lacks required markers."""
+        mod_dir = tmp_path / "Mods" / "QudJP"
+        loc_dir = mod_dir / "Localization"
+        mod_dir.mkdir(parents=True)
+        loc_dir.mkdir()
+        manifest = mod_dir / "manifest.json"
+        manifest.write_text(json.dumps({"Version": "1.2.3"}), encoding="utf-8")
+        dll = mod_dir / "Assemblies" / "QudJP.dll"
+        dll.parent.mkdir()
+        dll.write_bytes(b"dll")
+        license_file = tmp_path / "LICENSE"
+        license_file.write_text("license", encoding="utf-8")
+        notice_file = tmp_path / "NOTICE.md"
+        notice_file.write_text("notice", encoding="utf-8")
+
+        with (
+            patch("scripts.build_release._find_project_root", return_value=tmp_path),
+            patch("scripts.build_release.build_dll", return_value=dll),
+            patch("scripts.build_release.collect_localization_files", return_value=[]),
+            patch("scripts.build_release.create_zip", return_value=[]),
+            patch("scripts.build_release.verify_release_dll", return_value=["InventoryLineFontFixer"]),
+            pytest.raises(ValueError, match="release DLL missing required marker\\(s\\): InventoryLineFontFixer"),
+        ):
+            build_release()
 
     def test_build_dll_raises_on_missing_dll(self, tmp_path: Path) -> None:
         """build_dll raises FileNotFoundError when DLL is absent after build."""

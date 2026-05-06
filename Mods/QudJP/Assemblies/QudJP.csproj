@@ -64,6 +64,11 @@
     <DefineConstants>$(DefineConstants);HAS_TMP</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="!Exists('$(ManagedDir)/Unity.TextMeshPro.dll')">
+    <UseUnityReferenceStubs>true</UseUnityReferenceStubs>
+    <DefineConstants>$(DefineConstants);HAS_TMP;UNITY_REFERENCE_STUBS</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup Condition="Exists('$(ManagedDir)/Unity.TextMeshPro.dll')">
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(ManagedDir)/Unity.TextMeshPro.dll</HintPath>
@@ -89,5 +94,14 @@
       <HintPath>$(ManagedDir)/UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseUnityReferenceStubs)' == 'true'">
+    <ProjectReference Include="ReferenceStubs/UnityEngine.CoreModule/UnityEngine.CoreModule.csproj" Private="false" />
+    <ProjectReference Include="ReferenceStubs/UnityEngine.TextRenderingModule/UnityEngine.TextRenderingModule.csproj" Private="false" />
+    <ProjectReference Include="ReferenceStubs/UnityEngine.TextCoreFontEngineModule/UnityEngine.TextCoreFontEngineModule.csproj" Private="false" />
+    <ProjectReference Include="ReferenceStubs/UnityEngine.TextCoreTextEngineModule/UnityEngine.TextCoreTextEngineModule.csproj" Private="false" />
+    <ProjectReference Include="ReferenceStubs/UnityEngine.UI/UnityEngine.UI.csproj" Private="false" />
+    <ProjectReference Include="ReferenceStubs/Unity.TextMeshPro/Unity.TextMeshPro.csproj" Private="false" />
   </ItemGroup>
 </Project>

@@ -130,6 +130,11 @@ release-zip-check release_zip="":
       )
   print(f"{zip_path}: required release files present")
   PY
+  if [ -n "{{release_zip}}" ]; then \
+    {{python}} scripts/verify_release_dll.py "{{release_zip}}"; \
+  else \
+    {{python}} scripts/verify_release_dll.py "$(ls -t dist/QudJP-v*.zip | head -1)"; \
+  fi
 
 # Run the Workshop shipping preflight for an already-tagged release.
 workshop-preflight version:

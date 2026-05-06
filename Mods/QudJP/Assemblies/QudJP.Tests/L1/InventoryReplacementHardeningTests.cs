@@ -1,5 +1,6 @@
 #if HAS_TMP
 using TMPro;
+#endif
 
 namespace QudJP.Tests.L1;
 
@@ -10,6 +11,7 @@ public sealed class InventoryReplacementHardeningTests
     [NUnit.Framework.TestCase(true, true, 0, TextShellReplacementRenderer.ReplacementRenderAction.AttemptReplacement)]
     [NUnit.Framework.TestCase(false, true, 0, TextShellReplacementRenderer.ReplacementRenderAction.PreserveActiveReplacement)]
     [NUnit.Framework.TestCase(true, false, 0, TextShellReplacementRenderer.ReplacementRenderAction.PreserveActiveReplacement)]
+    [NUnit.Framework.TestCase(true, false, 3, TextShellReplacementRenderer.ReplacementRenderAction.PreserveActiveReplacement)]
     [NUnit.Framework.TestCase(false, false, 0, TextShellReplacementRenderer.ReplacementRenderAction.PreserveActiveReplacement)]
     [NUnit.Framework.TestCase(true, true, 3, TextShellReplacementRenderer.ReplacementRenderAction.DisableReplacement)]
     public void DecideRenderActionForTests_ReturnsExpectedAction(
@@ -26,6 +28,7 @@ public sealed class InventoryReplacementHardeningTests
             NUnit.Framework.Is.EqualTo(expectedAction));
     }
 
+#if HAS_TMP
     [NUnit.Framework.Test]
     public void GetReplacementOverflowModeForTests_UsesOverflow()
     {
@@ -46,6 +49,7 @@ public sealed class InventoryReplacementHardeningTests
     {
         return TmpTextRepairer.CanAttemptRepairForTests(enabled, activeInHierarchy, text, objectName);
     }
+#endif
 
     [NUnit.Framework.TestCase("QudJPReplacementText", ExpectedResult = true)]
     [NUnit.Framework.TestCase("Text", ExpectedResult = false)]
@@ -53,5 +57,20 @@ public sealed class InventoryReplacementHardeningTests
     {
         return TextShellReplacementRenderer.IsReplacementTextNameForTests(objectName);
     }
+
+    [NUnit.Framework.TestCase("current", "original", ExpectedResult = "original")]
+    [NUnit.Framework.TestCase("current", "", ExpectedResult = "current")]
+    public string ResolvePreservedReplacementTextForTests_KeepsCurrentTextWhenOriginalIsEmpty(
+        string currentReplacementText,
+        string originalText)
+    {
+        return TextShellReplacementRenderer.ResolvePreservedReplacementTextForTests(currentReplacementText, originalText);
+    }
+
+    [NUnit.Framework.TestCase(true, ExpectedResult = true)]
+    [NUnit.Framework.TestCase(false, ExpectedResult = false)]
+    public bool ResolvePreservedReplacementActiveSelfForTests_FollowsOriginalActiveSelf(bool originalActiveSelf)
+    {
+        return TextShellReplacementRenderer.ResolvePreservedReplacementActiveSelfForTests(originalActiveSelf);
+    }
 }
-#endif
