@@ -1,0 +1,4 @@
+interface:
+  display_name: "QudJP Localization Triage"
+  short_description: "QudJP runtime localization route triage"
+  default_prompt: "Use $qudjp-localization-triage to trace QudJP untranslated runtime text to the correct owner route and tests."

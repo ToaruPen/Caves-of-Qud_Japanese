@@ -38,6 +38,9 @@ just test-l2g
 - If structural search is intentionally skipped for C# route work, state the reason in the work note or PR summary.
 - Constraints:
   - one patch class per file in `src/Patches/`
-  - do not instantiate real game types in tests; use dummy targets with matching signatures
+  - do not instantiate real game types in L1/L2 tests; use dummy targets with matching signatures
+  - L2G may use a minimal real game type invocation only for an upstream member
+    contract that cannot be proven by target/signature resolution and
+    DummyTarget behavior tests; follow `docs/test-architecture.md`
   - runtime Harmony comes from the game; tests use HarmonyLib NuGet `2.4.2`
   - producer or queue-gated translation patches must follow the route-contract test checklist in `docs/RULES.md`
