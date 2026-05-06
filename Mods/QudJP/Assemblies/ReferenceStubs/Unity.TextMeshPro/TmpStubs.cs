@@ -92,7 +92,6 @@ public class TMP_Text : UnityEngine.UI.Graphic
 {
     public string text { get; set; } = string.Empty;
     public TMP_TextInfo textInfo { get; set; } = new TMP_TextInfo();
-    public RectTransform rectTransform { get; set; } = new RectTransform();
     public TMP_FontAsset? font { get; set; }
     public Material? fontSharedMaterial { get; set; }
     public Material? fontMaterial { get; set; }

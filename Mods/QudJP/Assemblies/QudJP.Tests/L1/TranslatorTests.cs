@@ -42,8 +42,12 @@ public sealed class TranslatorTests
         Assert.That(translated, Is.EqualTo("こんにちは"));
     }
 
-    [Test]
-    public void Translate_RepositoryDictionary_TranslatesLowercaseRemoveAction()
+    [TestCase("mark important", "重要にする")]
+    [TestCase("mark unimportant", "重要マークを外す")]
+    [TestCase("add notes", "メモを追加")]
+    [TestCase("remove notes", "メモを削除")]
+    [TestCase("remove", "外す")]
+    public void Translate_RepositoryDictionary_TranslatesLowercaseInventoryActionDisplay(string source, string expected)
     {
         Translator.SetDictionaryDirectoryForTests(Path.Combine(
             TestProjectPaths.GetRepositoryRoot(),
@@ -52,9 +56,9 @@ public sealed class TranslatorTests
             "Localization",
             "Dictionaries"));
 
-        var translated = Translator.Translate("remove");
+        var translated = Translator.Translate(source);
 
-        Assert.That(translated, Is.EqualTo("外す"));
+        Assert.That(translated, Is.EqualTo(expected));
     }
 
     [Test]

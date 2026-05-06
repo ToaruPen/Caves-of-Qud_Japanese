@@ -140,11 +140,6 @@ internal static class InventoryLineFontFixer
         return TextShellReplacementRenderer.HasActiveReplacementForCurrentItemText(inventoryLineInstance);
     }
 
-    internal static bool TryRefreshActiveItemLineDelayed(object? inventoryLineInstance)
-    {
-        return TryRefreshActiveItemLine(inventoryLineInstance);
-    }
-
     internal static int TryApplyPrimaryFontToAllTextChildren(object? inventoryLineInstance)
     {
         if (inventoryLineInstance is not Component component)

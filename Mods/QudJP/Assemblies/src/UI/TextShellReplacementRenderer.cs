@@ -114,7 +114,7 @@ internal static class TextShellReplacementRenderer
                     continue;
                 }
 
-                if (!TryRestoreOriginalAfterFailedPreservedReuse(original.transform.parent, original))
+                if (!RestoreOriginalAndCheckIfStillEmpty(original.transform.parent, original))
                 {
                     continue;
                 }
@@ -509,7 +509,7 @@ internal static class TextShellReplacementRenderer
         return true;
     }
 
-    private static bool TryRestoreOriginalAfterFailedPreservedReuse(Transform? shell, TextMeshProUGUI original)
+    private static bool RestoreOriginalAndCheckIfStillEmpty(Transform? shell, TextMeshProUGUI original)
     {
         if (!ShouldRestoreOriginalAfterFailedPreservedReuseForTests(
             original.gameObject.activeSelf,

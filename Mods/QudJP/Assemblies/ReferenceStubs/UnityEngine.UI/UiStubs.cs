@@ -4,13 +4,13 @@ namespace UnityEngine.UI;
 
 public class Graphic : Behaviour
 {
+    public RectTransform rectTransform { get; } = new RectTransform();
 }
 
 public class Text : Graphic
 {
     public string text { get; set; } = string.Empty;
     public Font? font { get; set; }
-    public RectTransform rectTransform { get; set; } = new RectTransform();
 }
 
 public static class LayoutRebuilder
