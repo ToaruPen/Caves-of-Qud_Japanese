@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.42] - 2026-05-07
+
+### Fixed
+
+- インベントリ画面でアイテム名が表示されなくなる問題を追加修正しました。
+
+---
+
 ## [0.2.41] - 2026-05-07
 
 ### Changed
