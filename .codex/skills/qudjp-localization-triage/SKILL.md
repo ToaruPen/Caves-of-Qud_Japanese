@@ -70,6 +70,7 @@ Use this skill to turn runtime untranslated text into the smallest correct QudJP
    - For PR review convergence, confirm thread state with the GitHub review-thread workflow before calling actionable review threads handled.
    - Report `reviewDecision` separately from thread state: if unresolved actionable threads are zero and checks pass but `reviewDecision` still says `CHANGES_REQUESTED`, say the code-side comments appear handled and GitHub approval/decision state is still lagging or blocked.
    - If a CodeRabbit fix changes `ColorAwareTranslationComposer` or `Strip` call sites, run the color-route catalog and strip/restore allowlist tests before the broad gate; those deterministic inventories are part of the color-preservation contract, not incidental snapshots.
+   - When a deterministic inventory or allowlist L1 test fails with `Missing` and `Extra` entries, treat the test failure output as the canonical update source. Do not infer line-number keyed allowlist entries from `rg`, `nl`, or manual file inspection when the test has already reported the current keys.
 
 ## Output
 
