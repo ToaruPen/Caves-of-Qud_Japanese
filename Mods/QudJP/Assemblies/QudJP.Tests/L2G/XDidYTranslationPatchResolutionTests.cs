@@ -19,6 +19,8 @@ public sealed class XDidYTranslationPatchResolutionTests
     private string tempDirectory = null!;
     private string dictionaryPath = null!;
     private string? lastMessage;
+    private object? originalXrlCore;
+    private bool restoreXrlCore;
     private static bool? patchedInvokeContinueOriginal;
 
     [OneTimeSetUp]
@@ -41,6 +43,7 @@ public sealed class XDidYTranslationPatchResolutionTests
         MessageFrameTranslator.SetDictionaryPathForTests(dictionaryPath);
         XDidYTranslationPatch.SetMessageDispatcherForTests((_, message, _, _) => lastMessage = message);
         lastMessage = null;
+        StubXrlCoreWhenMissing();
     }
 
     [TearDown]
@@ -53,6 +56,12 @@ public sealed class XDidYTranslationPatchResolutionTests
         if (Directory.Exists(tempDirectory))
         {
             Directory.Delete(tempDirectory, recursive: true);
+        }
+
+        if (restoreXrlCore)
+        {
+            ResolveXrlCoreField().SetValue(null, originalXrlCore);
+            restoreXrlCore = false;
         }
     }
 
@@ -104,6 +113,37 @@ public sealed class XDidYTranslationPatchResolutionTests
         {
             Assert.That(patchedInvokeContinueOriginal, Is.EqualTo(expectedContinueOriginal));
             Assert.That(lastMessage, Is.EqualTo(expectedMessage));
+        });
+    }
+
+    [Test]
+    public void PrefixXDidY_ResolvedMessagingMethod_UsesRealGameObjectOneForSubject()
+    {
+        WriteUiDictionary(("CanvasWall", "帆布壁"));
+        WriteDictionary(tier1: new[] { ("collapse", "崩れた") });
+
+        var actor = CreateGameObjectWithDisplayName("CanvasWall");
+        var messagingMethod = ResolveMessagingMethod("XDidY");
+        var oneMethod = actor.GetType().GetMethod("One", BindingFlags.Public | BindingFlags.Instance);
+        Assert.That(oneMethod, Is.Not.Null);
+        Assert.That(
+            oneMethod!.Invoke(actor, BuildDisplayNameMethodArgs(oneMethod, useFullNames: false, indefiniteArticle: false)),
+            Is.EqualTo("CanvasWall"));
+        var invokeArgs = BuildMessagingArgs(
+            messagingMethod,
+            new Dictionary<string, object?>
+            {
+                ["Actor"] = actor,
+                ["Verb"] = "collapse",
+                ["AlwaysVisible"] = true,
+            });
+
+        RunWithMessagingPrefix(messagingMethod, () => messagingMethod.Invoke(null, invokeArgs));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(patchedInvokeContinueOriginal, Is.False);
+            Assert.That(lastMessage, Is.EqualTo("\u0001帆布壁は崩れた。"));
         });
     }
 
@@ -161,6 +201,30 @@ public sealed class XDidYTranslationPatchResolutionTests
         builder.AppendLine("}");
 
         File.WriteAllText(dictionaryPath, builder.ToString(), Utf8WithoutBom);
+    }
+
+    private void WriteUiDictionary(params (string key, string text)[] entries)
+    {
+        var builder = new StringBuilder();
+        builder.Append("{\"entries\":[");
+        for (var index = 0; index < entries.Length; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(',');
+            }
+
+            builder.Append("{\"key\":\"")
+                .Append(EscapeJson(entries[index].key))
+                .Append("\",\"text\":\"")
+                .Append(EscapeJson(entries[index].text))
+                .Append("\"}");
+        }
+
+        builder.AppendLine("]}");
+        File.WriteAllText(Path.Combine(tempDirectory, "ui-test.ja.json"), builder.ToString(), Utf8WithoutBom);
+        Translator.ResetForTests();
+        Translator.SetDictionaryDirectoryForTests(tempDirectory);
     }
 
     private static void WriteTier1(StringBuilder builder, IEnumerable<(string verb, string text)>? entries)
@@ -222,6 +286,86 @@ public sealed class XDidYTranslationPatchResolutionTests
         }
 
         return args;
+    }
+
+    private void StubXrlCoreWhenMissing()
+    {
+        var coreField = ResolveXrlCoreField();
+        originalXrlCore = coreField.GetValue(null);
+        if (originalXrlCore is not null)
+        {
+            return;
+        }
+
+        var assembly = EnsureGameAssemblyLoaded();
+        var coreType = assembly.GetType("XRL.Core.XRLCore", throwOnError: true)!;
+        coreField.SetValue(null, Activator.CreateInstance(coreType));
+        restoreXrlCore = true;
+    }
+
+    private static FieldInfo ResolveXrlCoreField()
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var coreType = assembly.GetType("XRL.Core.XRLCore", throwOnError: true)!;
+        var coreField = coreType.GetField("Core", BindingFlags.Public | BindingFlags.Static);
+        Assert.That(coreField, Is.Not.Null);
+        return coreField!;
+    }
+
+    private static object CreateGameObjectWithDisplayName(string displayName)
+    {
+        var assembly = EnsureGameAssemblyLoaded();
+        var gameObjectType = assembly.GetType("XRL.World.GameObject", throwOnError: true)!;
+        var renderType = assembly.GetType("XRL.World.Parts.Render", throwOnError: true)!;
+        var actor = Activator.CreateInstance(gameObjectType)!;
+        var render = Activator.CreateInstance(renderType)!;
+
+        var displayNameField = renderType.GetField("DisplayName", BindingFlags.Public | BindingFlags.Instance);
+        Assert.That(displayNameField, Is.Not.Null);
+        displayNameField!.SetValue(render, displayName);
+
+        var renderField = gameObjectType.GetField("Render", BindingFlags.Public | BindingFlags.Instance);
+        Assert.That(renderField, Is.Not.Null);
+        renderField!.SetValue(actor, render);
+
+        var setIntPropertyMethod = gameObjectType.GetMethod(
+            "SetIntProperty",
+            BindingFlags.Public | BindingFlags.Instance,
+            binder: null,
+            new[] { typeof(string), typeof(int), typeof(bool) },
+            modifiers: null);
+        Assert.That(setIntPropertyMethod, Is.Not.Null);
+        setIntPropertyMethod!.Invoke(actor, new object?[] { "ProperNoun", 1, false });
+
+        var setStringPropertyMethod = gameObjectType.GetMethod(
+            "SetStringProperty",
+            BindingFlags.Public | BindingFlags.Instance,
+            binder: null,
+            new[] { typeof(string), typeof(string), typeof(bool) },
+            modifiers: null);
+        Assert.That(setStringPropertyMethod, Is.Not.Null);
+        setStringPropertyMethod!.Invoke(actor, new object?[] { "DefiniteArticle", string.Empty, false });
+        setStringPropertyMethod.Invoke(actor, new object?[] { "IndefiniteArticle", string.Empty, false });
+
+        return actor;
+    }
+
+    private static object?[] BuildDisplayNameMethodArgs(
+        MethodInfo displayNameMethod,
+        bool useFullNames,
+        bool indefiniteArticle)
+    {
+        var buildArgsMethod = typeof(XDidYTranslationPatch)
+            .GetMethod("TryBuildDisplayNameMethodArgs", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.That(buildArgsMethod, Is.Not.Null);
+
+        var invokeArgs = new object?[] { displayNameMethod, useFullNames, indefiniteArticle, null };
+        var accepted = (bool)buildArgsMethod!.Invoke(null, invokeArgs)!;
+        Assert.That(accepted, Is.True);
+
+        var builtArgs = invokeArgs[3] as object?[];
+        Assert.That(builtArgs, Is.Not.Null);
+        return builtArgs!;
     }
 
     private static void RunWithMessagingPrefix(MethodBase original, Action action)
