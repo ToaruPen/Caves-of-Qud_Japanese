@@ -80,6 +80,70 @@
           ]
         }
       ]
+    },
+    "roslyn-static-analysis": {
+      "skill_root": "repo",
+      "skill_path": ".codex/skills/roslyn-static-analysis",
+      "scenarios": [
+        {
+          "id": "median-popup-show-owner-route",
+          "type": "median",
+          "prompt": "A QudJP task asks you to investigate untranslated runtime text emitted through Popup.Show. There may be unrelated same-name Show methods in decompiled C# and the result will influence translation ownership routing, but the user has not asked for a tracked inventory artifact.",
+          "critical": [
+            "The response starts with rg and/or ast-grep candidate discovery and promotes to just semantic-probe for owner evidence.",
+            "The response does not treat ast-grep hits or method-name matches as proof of XRL.UI.Popup ownership.",
+            "The response keeps candidate/unresolved semantic-probe rows visible as uncertainty, not resolved proof."
+          ],
+          "expected": [
+            "The response says this does not need a purpose-built inventory unless the result becomes recurring or artifact-grade.",
+            "The response mentions the relevant command surface from the docs.",
+            "The response does not claim runtime proof from static semantic output."
+          ],
+          "forbidden": [
+            "Do not replace rg/ast-grep with Roslyn for the first exploratory pass.",
+            "Do not silently drop candidate or unresolved rows.",
+            "Do not edit files."
+          ]
+        },
+        {
+          "id": "edge-localization-asset-qa",
+          "type": "edge",
+          "prompt": "A QudJP task asks whether a Japanese localization XML entry has invalid placeholders and whether the translated prose sounds natural. The user mentions static analysis tools, but the work is about localization assets, not C# owner/sink route discovery.",
+          "critical": [
+            "The response does not route the main task to Roslyn semantic-probe or a Roslyn inventory.",
+            "The response routes to localization/token validation or scoped localization guidance rather than C# semantic owner tools."
+          ],
+          "expected": [
+            "The response explains what evidence would make rg/ast-grep or semantic-probe relevant later.",
+            "The response mentions at least one existing localization validation command from root AGENTS.md.",
+            "The response does not invent a new tool or skill."
+          ],
+          "forbidden": [
+            "Do not use Roslyn as a generic translation-quality checker.",
+            "Do not propose prompt-only review when deterministic token checks are available.",
+            "Do not edit files."
+          ]
+        },
+        {
+          "id": "edge-tracked-producer-inventory",
+          "type": "edge",
+          "prompt": "A QudJP task asks you to create a durable, reviewable inventory of all C# text producer callsites for EmitMessage, Popup.Show*, and AddPlayerMessage, including same-name false positive exclusions and regenerated totals. The output should become tracked project evidence.",
+          "critical": [
+            "The response promotes beyond generic just semantic-probe to the purpose-built Roslyn static producer inventory path.",
+            "The response names the tracked artifact and regeneration/check recipe or equivalent repo-local commands.",
+            "The response requires explicit candidate/unresolved status handling and explains any deltas."
+          ],
+          "expected": [
+            "The response preserves rg/ast-grep as useful candidate exploration, not the source of truth.",
+            "The response does not conflate the generic semantic probe with tracked inventory generation."
+          ],
+          "forbidden": [
+            "Do not propose using only semantic-probe output as the tracked artifact.",
+            "Do not use ast-grep or regex as authoritative for same-name false positive exclusion.",
+            "Do not edit files."
+          ]
+        }
+      ]
     }
   }
 }
