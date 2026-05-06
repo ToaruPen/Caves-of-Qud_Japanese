@@ -2,7 +2,11 @@ using UnityEngine;
 
 namespace UnityEngine.UI;
 
-public class Text : Behaviour
+public class Graphic : Behaviour
+{
+}
+
+public class Text : Graphic
 {
     public string text { get; set; } = string.Empty;
     public Font? font { get; set; }

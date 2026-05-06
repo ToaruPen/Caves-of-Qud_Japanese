@@ -12,5 +12,6 @@
     <ProjectReference Include="../UnityEngine.CoreModule/UnityEngine.CoreModule.csproj" Private="false" />
     <ProjectReference Include="../UnityEngine.TextRenderingModule/UnityEngine.TextRenderingModule.csproj" Private="false" />
     <ProjectReference Include="../UnityEngine.TextCoreFontEngineModule/UnityEngine.TextCoreFontEngineModule.csproj" Private="false" />
+    <ProjectReference Include="../UnityEngine.UI/UnityEngine.UI.csproj" Private="false" />
   </ItemGroup>
 </Project>

@@ -45,9 +45,16 @@ internal static class TextShellReplacementRenderer
         return string.IsNullOrEmpty(originalText) ? currentReplacementText : originalText;
     }
 
-    internal static bool ResolvePreservedReplacementActiveSelfForTests(bool originalActiveSelf)
+    internal static bool ResolvePreservedReplacementActiveSelfForTests(bool originalActiveSelf, bool originalActiveInHierarchy)
     {
-        return originalActiveSelf;
+        return originalActiveSelf && originalActiveInHierarchy;
+    }
+
+    internal static bool ShouldRestoreOriginalAfterFailedPreservedReuseForTests(
+        bool originalActiveSelf,
+        bool originalActiveInHierarchy)
+    {
+        return originalActiveSelf && originalActiveInHierarchy;
     }
 
     private static ReplacementRenderAction DecideRenderAction(
@@ -107,7 +114,10 @@ internal static class TextShellReplacementRenderer
                     continue;
                 }
 
-                continue;
+                if (!TryRestoreOriginalAfterFailedPreservedReuse(original.transform.parent, original))
+                {
+                    continue;
+                }
             }
 
             if (renderAction == ReplacementRenderAction.DisableReplacement)
@@ -224,6 +234,43 @@ internal static class TextShellReplacementRenderer
 
         logLine = builder.ToString();
         return replaced;
+    }
+
+    internal static bool HasActiveReplacementForCurrentItemText(object? componentInstance)
+    {
+        if (componentInstance is not Component component)
+        {
+            return false;
+        }
+
+        var texts = component.GetComponentsInChildren<TextMeshProUGUI>(includeInactive: true);
+        for (var index = 0; index < texts.Length; index++)
+        {
+            var original = texts[index];
+            var relativePath = BuildRelativePath(component.transform, original.transform);
+            if (!IsTextShellLeaf(relativePath) || string.IsNullOrEmpty(original.text))
+            {
+                continue;
+            }
+
+            var replacementTransform = original.transform.parent?.Find(ReplacementObjectName);
+            var replacement = replacementTransform?.GetComponent<TextMeshProUGUI>();
+            if (replacement is null
+                || !replacement.enabled
+                || !replacement.gameObject.activeInHierarchy
+                || !string.Equals(replacement.text, original.text, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            replacement.ForceMeshUpdate(ignoreActiveState: true, forceTextReparsing: false);
+            if (replacement.textInfo.characterCount > 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     internal static TextOverflowModes GetReplacementOverflowModeForTests()
@@ -462,6 +509,21 @@ internal static class TextShellReplacementRenderer
         return true;
     }
 
+    private static bool TryRestoreOriginalAfterFailedPreservedReuse(Transform? shell, TextMeshProUGUI original)
+    {
+        if (!ShouldRestoreOriginalAfterFailedPreservedReuseForTests(
+            original.gameObject.activeSelf,
+            original.gameObject.activeInHierarchy))
+        {
+            return false;
+        }
+
+        TryDisableReplacement(shell);
+        original.enabled = true;
+        original.ForceMeshUpdate(ignoreActiveState: true, forceTextReparsing: true);
+        return original.textInfo.characterCount == 0;
+    }
+
     private static void TrySyncPreservedReplacementState(Transform? shell, TextMeshProUGUI original)
     {
         if (shell is null)
@@ -484,8 +546,11 @@ internal static class TextShellReplacementRenderer
         var currentReplacementText = replacement.text;
         SyncReplacement(replacement, original);
         replacement.text = ResolvePreservedReplacementTextForTests(currentReplacementText, original.text);
-        replacement.gameObject.SetActive(ResolvePreservedReplacementActiveSelfForTests(original.gameObject.activeSelf));
-        replacement.enabled = !string.IsNullOrEmpty(replacement.text);
+        var replacementActive = ResolvePreservedReplacementActiveSelfForTests(
+            original.gameObject.activeSelf,
+            original.gameObject.activeInHierarchy);
+        replacement.gameObject.SetActive(replacementActive);
+        replacement.enabled = replacementActive && !string.IsNullOrEmpty(replacement.text);
         replacement.havePropertiesChanged = true;
         replacement.SetAllDirty();
         if (replacement.gameObject.activeInHierarchy)
@@ -1322,6 +1387,12 @@ internal static class TextShellReplacementRenderer
         return null;
     }
 #else
+    internal static bool HasActiveReplacementForCurrentItemText(object? componentInstance)
+    {
+        _ = componentInstance;
+        return false;
+    }
+
     internal static int TryRenderReplacementTexts(object? componentInstance, out string? logLine)
     {
         _ = componentInstance;

@@ -67,10 +67,29 @@ public sealed class InventoryReplacementHardeningTests
         return TextShellReplacementRenderer.ResolvePreservedReplacementTextForTests(currentReplacementText, originalText);
     }
 
-    [NUnit.Framework.TestCase(true, ExpectedResult = true)]
-    [NUnit.Framework.TestCase(false, ExpectedResult = false)]
-    public bool ResolvePreservedReplacementActiveSelfForTests_FollowsOriginalActiveSelf(bool originalActiveSelf)
+    [NUnit.Framework.TestCase(true, true, ExpectedResult = true)]
+    [NUnit.Framework.TestCase(false, true, ExpectedResult = false)]
+    [NUnit.Framework.TestCase(true, false, ExpectedResult = false)]
+    [NUnit.Framework.TestCase(false, false, ExpectedResult = false)]
+    public bool ResolvePreservedReplacementActiveSelfForTests_RequiresVisibleOriginal(
+        bool originalActiveSelf,
+        bool originalActiveInHierarchy)
     {
-        return TextShellReplacementRenderer.ResolvePreservedReplacementActiveSelfForTests(originalActiveSelf);
+        return TextShellReplacementRenderer.ResolvePreservedReplacementActiveSelfForTests(
+            originalActiveSelf,
+            originalActiveInHierarchy);
+    }
+
+    [NUnit.Framework.TestCase(true, true, ExpectedResult = true)]
+    [NUnit.Framework.TestCase(false, true, ExpectedResult = false)]
+    [NUnit.Framework.TestCase(true, false, ExpectedResult = false)]
+    [NUnit.Framework.TestCase(false, false, ExpectedResult = false)]
+    public bool ShouldRestoreOriginalAfterFailedPreservedReuseForTests_RequiresVisibleOriginal(
+        bool originalActiveSelf,
+        bool originalActiveInHierarchy)
+    {
+        return TextShellReplacementRenderer.ShouldRestoreOriginalAfterFailedPreservedReuseForTests(
+            originalActiveSelf,
+            originalActiveInHierarchy);
     }
 }

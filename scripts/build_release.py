@@ -282,6 +282,7 @@ def build_release() -> None:
     )
     missing_markers = verify_release_dll(output_path)
     if missing_markers:
+        output_path.unlink(missing_ok=True)
         msg = "release DLL missing required marker(s): " + ", ".join(missing_markers)
         raise ValueError(msg)
 

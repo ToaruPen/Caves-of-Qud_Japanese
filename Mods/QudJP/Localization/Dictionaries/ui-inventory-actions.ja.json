@@ -30,7 +30,7 @@
       "text": "メモを削除"
     },
     {
-      "key": "Remove",
+      "key": "remove",
       "context": "XRL.World.IInventoryActionsEvent",
       "text": "外す"
     },

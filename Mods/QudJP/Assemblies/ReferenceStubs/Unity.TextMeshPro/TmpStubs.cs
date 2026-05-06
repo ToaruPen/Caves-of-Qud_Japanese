@@ -33,24 +33,24 @@ public enum AtlasPopulationMode
 
 public class TMP_TextInfo
 {
-    public int characterCount { get; set; }
-    public int pageCount { get; set; }
-    public int materialCount { get; set; }
-    public TMP_MeshInfo[] meshInfo { get; set; } = [];
-    public TMP_CharacterInfo[] characterInfo { get; set; } = [];
+    public int characterCount;
+    public int pageCount;
+    public int materialCount;
+    public TMP_MeshInfo[] meshInfo = [];
+    public TMP_CharacterInfo[] characterInfo = [];
 }
 
 public struct TMP_MeshInfo
 {
-    public int vertexCount { get; set; }
+    public int vertexCount;
 }
 
 public struct TMP_CharacterInfo
 {
-    public bool isVisible { get; set; }
-    public int character { get; set; }
-    public Vector3 bottomLeft { get; set; }
-    public Vector3 topRight { get; set; }
+    public bool isVisible;
+    public char character;
+    public Vector3 bottomLeft;
+    public Vector3 topRight;
 }
 
 public class TMP_FontAsset : Object
@@ -88,7 +88,7 @@ public class TMP_FontAsset : Object
     }
 }
 
-public class TMP_Text : Behaviour
+public class TMP_Text : UnityEngine.UI.Graphic
 {
     public string text { get; set; } = string.Empty;
     public TMP_TextInfo textInfo { get; set; } = new TMP_TextInfo();
@@ -163,7 +163,7 @@ public class TMP_SubMeshUI : Behaviour
 public class TMP_InputField : Behaviour
 {
     public TMP_Text? textComponent { get; set; }
-    public TMP_Text? placeholder { get; set; }
+    public UnityEngine.UI.Graphic? placeholder { get; set; }
 }
 
 public static class TMP_Settings

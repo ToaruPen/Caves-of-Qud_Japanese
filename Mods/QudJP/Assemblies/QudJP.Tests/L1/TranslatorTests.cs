@@ -43,6 +43,21 @@ public sealed class TranslatorTests
     }
 
     [Test]
+    public void Translate_RepositoryDictionary_TranslatesLowercaseRemoveAction()
+    {
+        Translator.SetDictionaryDirectoryForTests(Path.Combine(
+            TestProjectPaths.GetRepositoryRoot(),
+            "Mods",
+            "QudJP",
+            "Localization",
+            "Dictionaries"));
+
+        var translated = Translator.Translate("remove");
+
+        Assert.That(translated, Is.EqualTo("外す"));
+    }
+
+    [Test]
     public void Translate_UsesExactDictionaryKeys_WithoutRouteAwareness()
     {
         WriteDictionary(

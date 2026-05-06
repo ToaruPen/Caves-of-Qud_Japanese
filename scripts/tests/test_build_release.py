@@ -467,6 +467,12 @@ class TestCreateZip:
             )
 
 
+def _write_marker_reject_fixture_zip(output_path: Path, *_args: object, **_kwargs: object) -> list[str]:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_bytes(b"zip")
+    return []
+
+
 class TestBuildReleaseImport:
     """Smoke test: module imports without error."""
 
@@ -542,11 +548,12 @@ class TestBuildReleaseImport:
             patch("scripts.build_release._find_project_root", return_value=tmp_path),
             patch("scripts.build_release.build_dll", return_value=dll),
             patch("scripts.build_release.collect_localization_files", return_value=[]),
-            patch("scripts.build_release.create_zip", return_value=[]),
+            patch("scripts.build_release.create_zip", side_effect=_write_marker_reject_fixture_zip),
             patch("scripts.build_release.verify_release_dll", return_value=["InventoryLineFontFixer"]),
             pytest.raises(ValueError, match="release DLL missing required marker\\(s\\): InventoryLineFontFixer"),
         ):
             build_release()
+        assert not (tmp_path / "dist" / "QudJP-v1.2.3.zip").exists()
 
     def test_build_dll_raises_on_missing_dll(self, tmp_path: Path) -> None:
         """build_dll raises FileNotFoundError when DLL is absent after build."""
