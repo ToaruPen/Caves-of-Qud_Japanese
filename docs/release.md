@@ -11,9 +11,16 @@ When asked to update the Steam Workshop item, do this first:
 1. Read this file, `steam/workshop_metadata.json`, and
    `steam/changenote_template.txt`.
 2. Confirm the target Workshop item is `3718988020`.
-3. Prepare and merge a release PR that updates `Mods/QudJP/manifest.json`,
+3. Establish what "current changes" means before choosing the release version.
+   Do not reuse the newest existing tag just because it exists. Compare the
+   previous shipped tag with `origin/main`, including `Mods/QudJP/Localization/`,
+   `Mods/QudJP/Assemblies/`, `docs/release-notes/unreleased/`, `CHANGELOG.md`,
+   and `Mods/QudJP/manifest.json`. If `origin/main` contains unreleased
+   user-visible localization or runtime changes, prepare the next version so
+   the shipped ZIP and Workshop changenote describe the same content.
+4. Prepare and merge a release PR that updates `Mods/QudJP/manifest.json`,
    `CHANGELOG.md`, and release-note fragments.
-4. After the release PR is merged, update local `main` and inspect tags,
+5. After the release PR is merged, update local `main` and inspect tags,
    release range, and head identity:
 
    ```bash
@@ -23,26 +30,30 @@ When asked to update the Steam Workshop item, do this first:
    git tag --sort=-creatordate | head -20
    git describe --tags --abbrev=0 --match 'v[0-9]*'
    git log --oneline <previous-tag>..HEAD
+   git diff --name-only <previous-tag>..HEAD -- \
+     Mods/QudJP/Localization Mods/QudJP/Assemblies docs/release-notes CHANGELOG.md Mods/QudJP/manifest.json
    git rev-parse --short=12 HEAD
    ```
 
-5. Create and push the release tag from `main` according to the Tag and Release
+6. Create and push the release tag from `main` according to the Tag and Release
    Policy below. The tag, manifest version, GitHub Release ZIP, staged Workshop
    content, and changenote must all identify the same release.
-6. Wait for the tag-triggered `Release` GitHub Actions workflow to create a
+7. Wait for the tag-triggered `Release` GitHub Actions workflow to create a
    draft GitHub Release with `QudJP-vX.Y.Z.zip` and
    `QudJP-vX.Y.Z.zip.sha256`.
-7. Draft a user-facing changenote from the accumulated commits. Keep internal
+8. Draft a user-facing changenote from the accumulated commits. Keep internal
    implementation names secondary; lead with visible translation, UI, runtime,
-   and packaging changes.
-8. Download and verify the GitHub Release ZIP with the local release ZIP
+   and packaging changes. If the release includes localization changes, the
+   first substantive section of the Steam changenote must describe those
+   translation changes in user-facing terms before pipeline or tooling notes.
+9. Download and verify the GitHub Release ZIP with the local release ZIP
    download recipe.
-9. Generate `dist/workshop/QudJP/` and `dist/workshop/workshop_item.vdf` with
+10. Generate `dist/workshop/QudJP/` and `dist/workshop/workshop_item.vdf` with
    the Workshop staging recipe, passing the downloaded GitHub Release ZIP
    explicitly.
-10. Stop before running `steamcmd` unless the user explicitly confirms upload
+11. Stop before running `steamcmd` unless the user explicitly confirms upload
    credentials and permission to publish.
-11. After Steam upload and smoke checks, publish the draft GitHub Release and
+12. After Steam upload and smoke checks, publish the draft GitHub Release and
     commit the Workshop release evidence report outside the release tag.
 
 Use `just` recipes for release commands so local runs match the repo task
