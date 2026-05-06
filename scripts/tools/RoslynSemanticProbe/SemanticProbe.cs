@@ -261,6 +261,7 @@ internal static class SemanticProbe
         methodName = invocation.Expression switch
         {
             IdentifierNameSyntax identifier => identifier.Identifier.ValueText,
+            GenericNameSyntax genericName => genericName.Identifier.ValueText,
             MemberAccessExpressionSyntax memberAccess => memberAccess.Name.Identifier.ValueText,
             MemberBindingExpressionSyntax memberBinding => memberBinding.Name.Identifier.ValueText,
             _ => "",

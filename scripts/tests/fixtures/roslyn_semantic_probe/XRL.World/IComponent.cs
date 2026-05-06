@@ -10,6 +10,10 @@ public class IComponent<T>
     {
     }
 
+    public void EmitMessage<TMessage>(string message)
+    {
+    }
+
     public static void EmitMessage(T source, string message)
     {
     }

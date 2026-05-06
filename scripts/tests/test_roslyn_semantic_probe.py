@@ -285,9 +285,9 @@ def test_string_argument_shapes_and_markup_risks_are_reported() -> None:
         "20",
     )
 
-    assert emit_doc["metrics"]["resolved_matching_owner_hits"] == 12
+    assert emit_doc["metrics"]["resolved_matching_owner_hits"] == 13
     assert emit_doc["metrics"]["first_string_argument_counts"]["interpolated_string"] == 1
-    assert emit_doc["metrics"]["first_string_argument_counts"]["string_literal"] == 7
+    assert emit_doc["metrics"]["first_string_argument_counts"]["string_literal"] == 8
     assert emit_doc["metrics"]["first_string_argument_counts"]["invocation"] == 2
     assert emit_doc["metrics"]["first_string_argument_counts"]["variable_or_member"] == 1
     assert emit_doc["metrics"]["first_string_argument_counts"]["element_access"] == 1
@@ -300,6 +300,12 @@ def test_string_argument_shapes_and_markup_risks_are_reported() -> None:
     escaped_brace_hit = next(hit for hit in emit_doc["hits"] if 'string.Format("{{0}}", name)' in hit["expression"])
     assert escaped_brace_hit["string_arguments"][0]["has_qud_markup"] is False
     assert escaped_brace_hit["string_arguments"][0]["has_placeholder_like_text"] is False
+    generic_simple_name_hit = next(hit for hit in emit_doc["hits"] if "EmitMessage<string>" in hit["expression"])
+    assert generic_simple_name_hit["syntax_method"] == "EmitMessage"
+    assert generic_simple_name_hit.get("method_or_property_symbol") == (
+        "void XRL.World.IComponent<XRL.World.GameObject>.EmitMessage<string>(string message)"
+    )
+    assert generic_simple_name_hit["string_arguments"][0].get("constant_value") == "Generic simple-name message."
     assert set_text_doc["metrics"]["first_string_argument_counts"]["invocation"] == 1
     assert set_text_doc["hits"][0].get("method_or_property_symbol") == "bool XRL.UI.UITextSkin.SetText(string text)"
 

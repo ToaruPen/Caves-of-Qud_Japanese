@@ -31,6 +31,7 @@ public sealed class Cases : IComponent<GameObject>
         EmitMessage(MakeMessage());
         EmitMessage(memberText);
         EmitMessage(options[0]);
+        EmitMessage<string>("Generic simple-name message.");
         IComponent<GameObject>.EmitMessage(go, "{{W|Marked}} =subject.T=");
         IComponent<GameObject>.EmitMessage(go, "&Ggreen");
         IComponent<GameObject>.EmitMessage(go, "^rred");
