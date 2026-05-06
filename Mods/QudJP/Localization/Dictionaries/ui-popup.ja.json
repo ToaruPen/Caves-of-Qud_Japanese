@@ -167,20 +167,8 @@
             "text": "落とす"
         },
         {
-            "key": "mark important",
-            "text": "重要にする"
-        },
-        {
             "key": "learn",
             "text": "習得"
-        },
-        {
-            "key": "add Notes",
-            "text": "メモを追加"
-        },
-        {
-            "key": "add notes",
-            "text": "メモを追加"
         },
         {
             "key": "View final messages",

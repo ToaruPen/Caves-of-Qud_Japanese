@@ -10,27 +10,27 @@
   },
   "entries": [
     {
-      "key": "Mark Important",
+      "key": "mark important",
       "context": "XRL.World.IInventoryActionsEvent",
-      "text": "重要にマーク"
+      "text": "重要にする"
     },
     {
-      "key": "Mark Unimportant",
+      "key": "mark unimportant",
       "context": "XRL.World.IInventoryActionsEvent",
       "text": "重要マークを外す"
     },
     {
-      "key": "Add Notes",
+      "key": "add notes",
       "context": "XRL.World.IInventoryActionsEvent",
       "text": "メモを追加"
     },
     {
-      "key": "Remove Notes",
+      "key": "remove notes",
       "context": "XRL.World.IInventoryActionsEvent",
       "text": "メモを削除"
     },
     {
-      "key": "Remove",
+      "key": "remove",
       "context": "XRL.World.IInventoryActionsEvent",
       "text": "外す"
     },

@@ -84,23 +84,32 @@ build-release:
 release-zip-check release_zip="":
   #!/usr/bin/env bash
   set -euo pipefail
-  export QUDJP_RELEASE_ZIP="{{release_zip}}"
+  if [ -n "{{release_zip}}" ]; then
+    chosen_zip="{{release_zip}}"
+  else
+    chosen_zip="$({{python}} - <<'PY'
+  from pathlib import Path
+
+  release_archives = sorted(
+      Path("dist").glob("QudJP-v*.zip"),
+      key=lambda path: (path.stat().st_mtime, path.name),
+  )
+  if not release_archives:
+      raise SystemExit("dist/: no QudJP-v*.zip release archive found")
+  print(release_archives[-1])
+  PY
+  )"
+  fi
+  export QUDJP_RELEASE_ZIP="$chosen_zip"
   {{python}} - <<'PY'
   import os
   import zipfile
   from pathlib import Path
 
   requested = os.environ.get("QUDJP_RELEASE_ZIP", "")
-  if requested:
-      zip_path = Path(requested)
-  else:
-      release_archives = sorted(
-          Path("dist").glob("QudJP-v*.zip"),
-          key=lambda path: (path.stat().st_mtime, path.name),
-      )
-      if not release_archives:
-          raise SystemExit("dist/: no QudJP-v*.zip release archive found")
-      zip_path = release_archives[-1]
+  if not requested:
+      raise SystemExit("QUDJP_RELEASE_ZIP is empty")
+  zip_path = Path(requested)
 
   required = {
       "QudJP/manifest.json",
@@ -136,6 +145,7 @@ release-zip-check release_zip="":
       )
   print(f"{zip_path}: required release files present")
   PY
+  {{python}} scripts/verify_release_dll.py "$chosen_zip"
 
 # Run the Workshop shipping preflight for an already-tagged release.
 workshop-preflight version:
