@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
@@ -68,6 +69,10 @@ internal static class CyberneticsTerminalTextTranslator
         "^Error: Condition inadequate for installation\\n  \\-(?<item>.+)\\n\\nPlease supply a replacement\\.$",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
+    private static readonly Regex CyberneticsSlotPattern = new Regex(
+        "^(?<label>.+?) (?<slotSegment>\\((?<slot>Face|Body|Head|Back|Feet|Arm|Hands)\\))$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
     private static readonly Regex ReminderPattern = new Regex(
         "Remember, Aristocrat, your base license tier is (?<tier>\\{\\{C\\|\\d+\\}\\})\\.",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
@@ -91,6 +96,23 @@ internal static class CyberneticsTerminalTextTranslator
     private static readonly Regex UninstallingLinePattern = new Regex(
         "Uninstalling (?<item>.+?)(?<suffix>\\.+\\n)",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
+    private static readonly Regex JapaneseCharacterPattern =
+        new Regex("[\\p{IsHiragana}\\p{IsKatakana}\\p{IsCJKUnifiedIdeographs}]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private static readonly Regex AsciiLetterPattern =
+        new Regex("[A-Za-z]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private static readonly IReadOnlyDictionary<string, string> SlotNames = new Dictionary<string, string>(StringComparer.Ordinal)
+    {
+        ["Face"] = "顔",
+        ["Body"] = "胴",
+        ["Head"] = "頭",
+        ["Back"] = "背中",
+        ["Feet"] = "足",
+        ["Arm"] = "腕",
+        ["Hands"] = "手",
+    };
 
     private static readonly MethodInfo? LeetMethod = ResolveLeetMethod();
 
@@ -170,6 +192,11 @@ internal static class CyberneticsTerminalTextTranslator
             return exact;
         }
 
+        if (TryTranslateCyberneticsSlot(source, out var slotTranslated))
+        {
+            return slotTranslated;
+        }
+
         var knownLeet = TranslateKnownLeet(source);
         if (!string.Equals(knownLeet, source, StringComparison.Ordinal))
         {
@@ -225,6 +252,57 @@ internal static class CyberneticsTerminalTextTranslator
         }
 
         return source;
+    }
+
+    private static bool TryTranslateCyberneticsSlot(string source, out string translated)
+    {
+        translated = source;
+        if (MessageFrameTranslator.TryStripDirectTranslationMarker(source, out _))
+        {
+            return false;
+        }
+
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
+        var match = CyberneticsSlotPattern.Match(stripped);
+        if (!match.Success)
+        {
+            return false;
+        }
+
+        var sourceLabel = match.Groups["label"].Value;
+        if (!StringHelpers.TryGetTranslationExactOrLowerAscii(sourceLabel, out var translatedLabel)
+            && !TryUseAlreadyLocalizedCyberneticsLabel(sourceLabel, out translatedLabel))
+        {
+            return false;
+        }
+
+        var sourceSlot = match.Groups["slot"].Value;
+        if (!SlotNames.TryGetValue(sourceSlot, out var translatedSlot))
+        {
+            return false;
+        }
+
+        var translatedSlotSegment = string.Concat("（", translatedSlot, "）");
+        var restoredLabel = spans.Count == 0
+            ? translatedLabel
+            : ColorAwareTranslationComposer.RestoreCapture(translatedLabel, spans, match.Groups["label"]);
+        var restoredSlotSegment = spans.Count == 0
+            ? translatedSlotSegment
+            : ColorAwareTranslationComposer.RestoreCapture(translatedSlotSegment, spans, match.Groups["slotSegment"]);
+        translated = string.Concat(restoredLabel, restoredSlotSegment);
+        return true;
+    }
+
+    private static bool TryUseAlreadyLocalizedCyberneticsLabel(string sourceLabel, out string translatedLabel)
+    {
+        if (JapaneseCharacterPattern.IsMatch(sourceLabel) && !AsciiLetterPattern.IsMatch(sourceLabel))
+        {
+            translatedLabel = sourceLabel;
+            return true;
+        }
+
+        translatedLabel = sourceLabel;
+        return false;
     }
 
     private static string ApplyRegexTemplates(string source)

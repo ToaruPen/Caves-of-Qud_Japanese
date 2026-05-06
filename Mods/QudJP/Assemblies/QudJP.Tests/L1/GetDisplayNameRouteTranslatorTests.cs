@@ -219,6 +219,25 @@ public sealed class GetDisplayNameRouteTranslatorTests
     }
 
     [Test]
+    public void TranslatePreservingColors_UsesShippedGeneratedCanvasTentComponents()
+    {
+        var repositoryDictionaryPath = Path.GetFullPath(
+            Path.Combine(TestContext.CurrentContext.TestDirectory, "../../../../../Localization/Dictionaries"));
+        Translator.ResetForTests();
+        Translator.SetDictionaryDirectoryForTests(repositoryDictionaryPath);
+
+        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(
+            "dragonfly chitin tent",
+            nameof(GetDisplayNamePatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("トンボのキチン質の天幕"));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("dragonfly chitin tent"), Is.EqualTo(0));
+        });
+    }
+
+    [Test]
     public void TranslatePreservingColors_PrefersTrimmedExactLookupBeforeProperNameModifierHeuristic()
     {
         WriteDictionary(("Water Containers", "水容器"));

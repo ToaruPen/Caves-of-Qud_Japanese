@@ -51,11 +51,13 @@ tool_check() {
     "$tool" --version
   done
 
-  if require_dotfiles_root; then
+  require_file "$ROOT_DIR/scripts/render_skill_eval_prompts.py" || missing=1
+  require_file "$ROOT_DIR/scripts/validate_skill_eval_results.py" || missing=1
+  if [[ -n "$DOTFILES_ROOT" ]]; then
     require_file "$DOTFILES_ROOT/scripts/render-skill-eval-prompts.py" || missing=1
     require_file "$DOTFILES_ROOT/scripts/summarize-skill-eval-results.py" || missing=1
   else
-    missing=1
+    echo "DOTFILES_ROOT not set; dotfiles-backed skill evals and summaries are unavailable."
   fi
   require_file "$ROOT_DIR/skill-evals.json" || missing=1
   require_file "$ROOT_DIR/skill-eval-results.jsonl" || missing=1
@@ -144,15 +146,14 @@ structural_search() {
 render_skill_evals() {
   local skill=${1:-}
   local scenario=${2:-}
-  require_dotfiles_root
   mkdir -p "$ARTIFACT_DIR"
 
   local -a args=(
-    "$PYTHON_BIN"
-    "$DOTFILES_ROOT/scripts/render-skill-eval-prompts.py"
-    "$DOTFILES_ROOT"
     "$ROOT_DIR/skill-evals.json"
   )
+  if [[ -n "$DOTFILES_ROOT" ]]; then
+    args+=(--dotfiles-root "$DOTFILES_ROOT")
+  fi
   if [[ -n "$skill" ]]; then
     args+=(--skill "$skill")
   fi
@@ -160,7 +161,8 @@ render_skill_evals() {
     args+=(--scenario "$scenario")
   fi
 
-  "${args[@]}" | tee "$ARTIFACT_DIR/skill-eval-prompts.md"
+  "$PYTHON_BIN" "$ROOT_DIR/scripts/render_skill_eval_prompts.py" "${args[@]}" \
+    | tee "$ARTIFACT_DIR/skill-eval-prompts.md"
 }
 
 summarize_skill_evals() {
@@ -172,6 +174,7 @@ summarize_skill_evals() {
   fi
 
   mkdir -p "$ARTIFACT_DIR"
+  "$PYTHON_BIN" "$ROOT_DIR/scripts/validate_skill_eval_results.py" "$results"
   "$PYTHON_BIN" "$DOTFILES_ROOT/scripts/summarize-skill-eval-results.py" "$results" \
     | tee "$ARTIFACT_DIR/skill-eval-summary.md"
 }

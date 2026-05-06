@@ -230,24 +230,42 @@ roslyn-build-annals:
 roslyn-build-static-producer:
   dotnet build scripts/tools/StaticProducerInventoryScanner/StaticProducerInventoryScanner.csproj --configuration Release --no-incremental
 
+# Build the semantic probe Roslyn CLI.
+roslyn-build-semantic-probe:
+  dotnet build scripts/tools/RoslynSemanticProbe/RoslynSemanticProbe.csproj --configuration Release --no-incremental
+
 # Build the text construction Roslyn inventory tool.
 roslyn-build-text-construction:
   dotnet build scripts/tools/TextConstructionInventory/TextConstructionInventory.csproj --configuration Release --no-incremental
 
 # Build all repo-local Roslyn analysis tools.
-roslyn-build: roslyn-build-annals roslyn-build-static-producer roslyn-build-text-construction
+roslyn-build: roslyn-build-annals roslyn-build-static-producer roslyn-build-semantic-probe roslyn-build-text-construction
 
 # Run focused pytest coverage for repo-local Roslyn analysis tools.
 roslyn-test:
-  uv run pytest scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_text_construction_inventory.py scripts/tests/test_scan_static_producer_inventory.py -q
+  uv run pytest scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_text_construction_inventory.py scripts/tests/test_scan_static_producer_inventory.py -q
 
 # Run Ruff for Roslyn Python files and basedpyright for the typed static-producer gate.
 roslyn-python-check:
-  ruff check scripts/extract_annals_patterns.py scripts/scan_static_producer_inventory.py scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_text_construction_inventory.py scripts/tests/test_scan_static_producer_inventory.py
-  uvx basedpyright scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
+  ruff check scripts/extract_annals_patterns.py scripts/roslyn_semantic_probe.py scripts/scan_static_producer_inventory.py scripts/tests/test_extract_annals_patterns.py scripts/tests/test_roslyn_extractor_smoke.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_text_construction_inventory.py scripts/tests/test_scan_static_producer_inventory.py
+  uvx basedpyright scripts/roslyn_semantic_probe.py scripts/scan_static_producer_inventory.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
 
 # Run build, focused tests, and static checks for Roslyn analysis tooling.
 roslyn-check: roslyn-build roslyn-test roslyn-python-check
+
+# Run the generic Roslyn semantic probe.
+semantic-probe *args:
+  {{python}} scripts/roslyn_semantic_probe.py {{args}}
+
+# Run focused validation for the generic Roslyn semantic probe.
+semantic-probe-check: roslyn-build-semantic-probe
+  uv run pytest scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_extractor_smoke.py -q
+  ruff check scripts/roslyn_semantic_probe.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_extractor_smoke.py
+  uvx basedpyright scripts/roslyn_semantic_probe.py scripts/tests/test_roslyn_semantic_probe.py scripts/tests/test_roslyn_extractor_smoke.py
+
+# Run optional real-source smoke for the generic Roslyn semantic probe.
+semantic-probe-real-smoke:
+  QUDJP_RUN_SEMANTIC_PROBE_REAL=1 uv run pytest scripts/tests/test_roslyn_semantic_probe.py -q -m semantic_probe_real
 
 # Generate static producer inventory to a disposable local output.
 static-producer-preview source_root=decompiled_root output="/tmp/qudjp-static-producer-inventory.json":
