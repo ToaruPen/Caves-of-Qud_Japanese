@@ -161,7 +161,6 @@ public sealed class ColorTagAllowlistCoverageTests
         "Mods/QudJP/Assemblies/src/Patches/GameManagerUpdateSelectedAbilityPatch.cs",
         "Mods/QudJP/Assemblies/src/Patches/GetDisplayNamePatch.cs",
         "Mods/QudJP/Assemblies/src/Patches/GetDisplayNameProcessPatch.cs",
-        "Mods/QudJP/Assemblies/src/Patches/InventoryLineTranslationPatch.cs",
         "Mods/QudJP/Assemblies/src/Patches/InventoryLocalizationPatch.cs",
         "Mods/QudJP/Assemblies/src/Patches/TradeLineTranslationPatch.cs",
         "Mods/QudJP/Assemblies/src/Patches/XDidYTranslationPatch.cs",

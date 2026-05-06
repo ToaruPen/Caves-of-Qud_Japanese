@@ -111,14 +111,14 @@ public sealed partial class Issue201StatusScreensBatch2Tests
     }
 
     [Test]
-    public void InventoryLinePrefix_UsesDisplayNameRouteForItemNames_WhenPatched()
+    public void InventoryLinePrefix_DoesNotUseDisplayNameRouteForItemNames_WhenPatched()
     {
         WriteDictionary(
-            ("items", "個"),
-            ("Laser Rifle", "グローバルのレーザーライフル"));
+            ("items", "個"));
         WriteDictionaryFile(
             "ui-displayname-atomic.ja.json",
-            ("Laser Rifle", "レーザーライフル"));
+            ("water flask", "水袋"),
+            ("empty", "空"));
 
         var harmonyId = CreateHarmonyId();
         var harmony = new Harmony(harmonyId);
@@ -132,18 +132,18 @@ public sealed partial class Issue201StatusScreensBatch2Tests
             itemTarget.setData(new DummyInventoryLineDataTarget
             {
                 category = false,
-                displayName = "Laser Rifle",
-                go = new DummyStatusGameObject { DisplayName = "Laser Rifle", Weight = 7 },
+                displayName = "water flask [empty]",
+                go = new DummyStatusGameObject { DisplayName = "water flask [empty]", Weight = 7 },
             });
 
             Assert.Multiple(() =>
             {
-                Assert.That(itemTarget.text.Text, Is.EqualTo("レーザーライフル"));
+                Assert.That(itemTarget.text.Text, Is.EqualTo("water flask [empty]"));
                 Assert.That(
                     DynamicTextObservability.GetRouteFamilyHitCountForTests(
                         nameof(InventoryLineTranslationPatch),
                         "InventoryLine.ItemName"),
-                    Is.GreaterThan(0));
+                    Is.Zero);
             });
         }
         finally
