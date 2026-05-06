@@ -118,7 +118,7 @@
         },
         {
           "path": "Dictionaries/ui-popup.ja.json",
-          "entry_index": 383,
+          "entry_index": 380,
           "text": "……"
         }
       ]
@@ -1358,34 +1358,6 @@
     {
       "scope": "cross_file",
       "path": "Dictionaries",
-      "key": "You embark for the caves of Qud.",
-      "entry_count": 3,
-      "texts": [
-        "あなたはクッドの洞窟へ旅立った。",
-        "クッドの洞窟へ向かう。",
-        "クッドの洞窟へ旅立つ。"
-      ],
-      "occurrences": [
-        {
-          "path": "Dictionaries/ui-messagelog-leaf.ja.json",
-          "entry_index": 40,
-          "text": "あなたはクッドの洞窟へ旅立った。"
-        },
-        {
-          "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 29,
-          "text": "クッドの洞窟へ向かう。"
-        },
-        {
-          "path": "Dictionaries/ui-popup.ja.json",
-          "entry_index": 90,
-          "text": "クッドの洞窟へ旅立つ。"
-        }
-      ]
-    },
-    {
-      "scope": "cross_file",
-      "path": "Dictionaries",
       "key": "You entered into a covenant with Resheph to help prepare Qud for the Coven's return.",
       "entry_count": 2,
       "texts": [
@@ -1959,7 +1931,7 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-popup.ja.json",
-          "entry_index": 79,
+          "entry_index": 76,
           "text": "液体を採取"
         },
         {
@@ -2256,7 +2228,7 @@
         },
         {
           "path": "Dictionaries/ui-popup.ja.json",
-          "entry_index": 109,
+          "entry_index": 106,
           "text": "操作する"
         }
       ]

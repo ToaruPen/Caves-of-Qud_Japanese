@@ -13,6 +13,7 @@ internal static class DelayedInventoryLineRepairScheduler
     private const int MaxAttemptsPerLine = 2;
 
     private static readonly ConcurrentDictionary<int, int> AttemptCounts = new();
+    private static readonly ConcurrentDictionary<int, string> LastScheduledTextByLine = new();
     private static readonly ConcurrentDictionary<int, byte> Scheduled = new();
 
     private static RepairHost? host;
@@ -50,6 +51,25 @@ internal static class DelayedInventoryLineRepairScheduler
 
         _ = AttemptCounts.AddOrUpdate(lineId, 1, static (_, current) => current + 1);
         runner.StartCoroutine(RunRepair(component, lineId));
+    }
+
+    internal static void ScheduleRepairForCurrentText(object? lineInstance, string? currentText)
+    {
+        var textKey = currentText ?? string.Empty;
+        if (textKey.Length == 0 || lineInstance is not Component component)
+        {
+            return;
+        }
+
+        var lineId = component.GetInstanceID();
+        if (LastScheduledTextByLine.TryGetValue(lineId, out var previousText)
+            && !string.Equals(previousText, textKey, System.StringComparison.Ordinal))
+        {
+            AttemptCounts.TryRemove(lineId, out _);
+        }
+
+        LastScheduledTextByLine[lineId] = textKey;
+        ScheduleRepair(component);
     }
 
     internal static void ScheduleVisibleInventoryRepairs()
