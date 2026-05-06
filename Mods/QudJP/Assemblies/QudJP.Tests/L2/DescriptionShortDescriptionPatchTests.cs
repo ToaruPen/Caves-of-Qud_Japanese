@@ -211,6 +211,43 @@ public sealed class DescriptionShortDescriptionPatchTests
     }
 
     [Test]
+    public void DescriptionShortDescriptionPatch_TranslatesGeneratedRandomStatueLine_WhenPatched()
+    {
+        WriteMessagePatternDictionary((
+            "^This statue worked from (.+?) intricately depicts (?:the |a |an )?(.+?):$",
+            "{t0}から作られたこの像には{1}が精巧に描かれている:"));
+        WriteDictionary(("stone", "石"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyDescriptionShortDescriptionTarget), nameof(DummyDescriptionShortDescriptionTarget.GetShortDescription)),
+                postfix: new HarmonyMethod(RequirePostfix(typeof(DescriptionShortDescriptionPatch), nameof(DescriptionShortDescriptionPatch.Postfix))));
+
+            var target = new DummyDescriptionShortDescriptionTarget(
+                "This statue worked from stone intricately depicts a 山羊人の種播き:\n\n古い銘文が刻まれている。");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    target.GetShortDescription(useShort: true, useLong: false, prefix: string.Empty),
+                    Is.EqualTo("石から作られたこの像には山羊人の種播きが精巧に描かれている:\n\n古い銘文が刻まれている。"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(DescriptionShortDescriptionPatch),
+                        "Description.Pattern"),
+                    Is.GreaterThan(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void DescriptionShortDescriptionPatch_TranslatesDynamicWorldModsTemplates_WhenPatched()
     {
         WriteScopedDictionary(

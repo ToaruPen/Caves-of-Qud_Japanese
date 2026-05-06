@@ -10,8 +10,8 @@ namespace QudJP;
 
 internal static class ScopedDictionaryLookup
 {
-    private static readonly ConcurrentDictionary<string, IReadOnlyDictionary<string, string>> Cache =
-        new ConcurrentDictionary<string, IReadOnlyDictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
+    private static readonly ConcurrentDictionary<string, DictionaryStore> Cache =
+        new ConcurrentDictionary<string, DictionaryStore>(StringComparer.OrdinalIgnoreCase);
 
     internal static string? TranslateExactOrLowerAscii(string source, params string[] dictionaryFileNames)
     {
@@ -20,7 +20,7 @@ internal static class ScopedDictionaryLookup
             return null;
         }
 
-        if (TryGetTranslation(source, dictionaryFileNames, out var translated))
+        if (TryGetTranslation(source, null, dictionaryFileNames, out var translated))
         {
             return translated;
         }
@@ -31,7 +31,30 @@ internal static class ScopedDictionaryLookup
             return null;
         }
 
-        return TryGetTranslation(lowerAscii, dictionaryFileNames, out translated)
+        return TryGetTranslation(lowerAscii, null, dictionaryFileNames, out translated)
+            ? translated
+            : null;
+    }
+
+    internal static string? TranslateExactOrLowerAsciiForContext(string source, string? context, params string[] dictionaryFileNames)
+    {
+        if (string.IsNullOrEmpty(source) || dictionaryFileNames.Length == 0)
+        {
+            return null;
+        }
+
+        if (TryGetTranslation(source, context, dictionaryFileNames, out var translated))
+        {
+            return translated;
+        }
+
+        var lowerAscii = StringHelpers.LowerAscii(source);
+        if (string.Equals(lowerAscii, source, StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        return TryGetTranslation(lowerAscii, context, dictionaryFileNames, out translated)
             ? translated
             : null;
     }
@@ -41,11 +64,11 @@ internal static class ScopedDictionaryLookup
         Cache.Clear();
     }
 
-    private static bool TryGetTranslation(string source, IReadOnlyList<string> dictionaryFileNames, out string translated)
+    private static bool TryGetTranslation(string source, string? context, IReadOnlyList<string> dictionaryFileNames, out string translated)
     {
         for (var index = 0; index < dictionaryFileNames.Count; index++)
         {
-            if (LoadDictionary(dictionaryFileNames[index]).TryGetValue(source, out var loadedTranslation))
+            if (LoadDictionary(dictionaryFileNames[index]).TryGetValue(source, context, out var loadedTranslation))
             {
                 translated = loadedTranslation;
                 return true;
@@ -56,19 +79,20 @@ internal static class ScopedDictionaryLookup
         return false;
     }
 
-    private static IReadOnlyDictionary<string, string> LoadDictionary(string dictionaryFileName)
+    private static DictionaryStore LoadDictionary(string dictionaryFileName)
     {
         var path = Path.Combine(Translator.GetDictionaryDirectoryPath(), dictionaryFileName);
         return Cache.GetOrAdd(path, static dictionaryPath => ReadDictionary(dictionaryPath));
     }
 
-    private static IReadOnlyDictionary<string, string> ReadDictionary(string path)
+    private static DictionaryStore ReadDictionary(string path)
     {
-        var entries = new Dictionary<string, string>(StringComparer.Ordinal);
+        var unscopedEntries = new Dictionary<string, string>(StringComparer.Ordinal);
+        var contextualEntries = new Dictionary<string, string>(StringComparer.Ordinal);
         var duplicateKeyCounts = new Dictionary<string, int>(StringComparer.Ordinal);
         if (!File.Exists(path))
         {
-            return entries;
+            return new DictionaryStore(unscopedEntries, contextualEntries);
         }
 
         using var stream = File.OpenRead(path);
@@ -89,22 +113,26 @@ internal static class ScopedDictionaryLookup
 
             var key = entry.Key!;
             var text = entry.Text!;
-            if (entries.ContainsKey(key))
+            var context = string.IsNullOrWhiteSpace(entry.Context) ? null : entry.Context!.Trim();
+            var effectiveKey = context is null ? key : BuildContextKey(context, key);
+            var duplicateLabel = context is null ? key : context + "|" + key;
+            var entries = context is null ? unscopedEntries : contextualEntries;
+            if (entries.ContainsKey(effectiveKey))
             {
-                var duplicateCount = duplicateKeyCounts.TryGetValue(key, out var currentDuplicateCount)
+                var duplicateCount = duplicateKeyCounts.TryGetValue(duplicateLabel, out var currentDuplicateCount)
                     ? currentDuplicateCount + 1
                     : 1;
-                duplicateKeyCounts[key] = duplicateCount;
+                duplicateKeyCounts[duplicateLabel] = duplicateCount;
                 if (duplicateCount == 1)
                 {
                     Trace.TraceWarning(
                         "QudJP: ScopedDictionaryLookup duplicate key '{0}' in '{1}'.",
-                        key,
+                        duplicateLabel,
                         path);
                 }
             }
 
-            entries[key] = text;
+            entries[effectiveKey] = text;
         }
 
         if (duplicateKeyCounts.Count > 0)
@@ -115,7 +143,12 @@ internal static class ScopedDictionaryLookup
                 ObservabilityHelpers.BuildRankedCounterBody(duplicateKeyCounts, 10));
         }
 
-        return entries;
+        return new DictionaryStore(unscopedEntries, contextualEntries);
+    }
+
+    private static string BuildContextKey(string context, string key)
+    {
+        return context + "\u001f" + key;
     }
 
     [DataContract]
@@ -131,7 +164,43 @@ internal static class ScopedDictionaryLookup
         [DataMember(Name = "key")]
         public string? Key { get; set; }
 
+        [DataMember(Name = "context")]
+        public string? Context { get; set; }
+
         [DataMember(Name = "text")]
         public string? Text { get; set; }
+    }
+
+    private sealed class DictionaryStore
+    {
+        private readonly IReadOnlyDictionary<string, string> unscopedEntries;
+        private readonly IReadOnlyDictionary<string, string> contextualEntries;
+
+        internal DictionaryStore(
+            IReadOnlyDictionary<string, string> unscopedEntries,
+            IReadOnlyDictionary<string, string> contextualEntries)
+        {
+            this.unscopedEntries = unscopedEntries;
+            this.contextualEntries = contextualEntries;
+        }
+
+        internal bool TryGetValue(string source, string? context, out string translated)
+        {
+            if (!string.IsNullOrWhiteSpace(context)
+                && contextualEntries.TryGetValue(BuildContextKey(context!.Trim(), source), out var contextualTranslation))
+            {
+                translated = contextualTranslation;
+                return true;
+            }
+
+            if (unscopedEntries.TryGetValue(source, out var unscopedTranslation))
+            {
+                translated = unscopedTranslation;
+                return true;
+            }
+
+            translated = source;
+            return false;
+        }
     }
 }

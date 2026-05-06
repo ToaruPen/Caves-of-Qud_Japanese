@@ -171,6 +171,13 @@ public static class QuestsStatusScreenTranslationPatch
                 return "{{B|" + translatedLabel + "}} ";
             });
 
+        var titleTranslated = GeneratedQuestTitleTranslator.TranslateEmbeddedPreservingColors(translated, route);
+        if (!string.Equals(titleTranslated, translated, StringComparison.Ordinal))
+        {
+            translated = titleTranslated;
+            changed = true;
+        }
+
         if (changed)
         {
             DynamicTextObservability.RecordTransform(route, "QuestsStatusScreen.MapPinDetails", source, translated);

@@ -6438,6 +6438,16 @@
       "context": "XRL.World.Parts.XRL.World.ZoneBuilders.FindASiteDynamicQuestManager",
       "key": " honor <spice.history.gospels.Celebration.LateSultanate.!random>.",
       "text": " <spice.history.gospels.Celebration.LateSultanate.!random>をもって称えた。"
+    },
+    {
+      "context": "HistoryKit.HistoricStringExpander.ExpandQuery.Token",
+      "key": "desiccated",
+      "text": "乾ききった"
+    },
+    {
+      "context": "HistoryKit.HistoricStringExpander.ExpandQuery.Token",
+      "key": "spectre",
+      "text": "亡霊"
     }
   ]
 }

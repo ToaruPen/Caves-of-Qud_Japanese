@@ -11,6 +11,7 @@ internal static class GetDisplayNameRouteTranslator
     private static readonly string[] DisplayNameDictionaryFiles =
     {
         "ui-displayname-adjectives.ja.json",
+        "ui-displayname-atomic.ja.json",
     };
     private static readonly string[] LiquidPhraseDictionaryFiles =
     {
@@ -41,12 +42,26 @@ internal static class GetDisplayNameRouteTranslator
             RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex QuantifiedLiquidStatePattern =
         new Regex(
-            "^(?<amount>\\d+)\\s+drams? of (?<liquid>.+)$",
+            "^(?<amount>\\d+)\\s+drams? of (?<liquid>.+?)(?:,\\s+(?<state>[A-Za-z][A-Za-z\\s-]*))?$",
+            RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex LiquidStatePattern =
+        new Regex(
+            "^(?<liquid>.+?),\\s+(?<state>[A-Za-z][A-Za-z\\s-]*)$",
+            RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex GeneratedCanvasTentPattern =
+        new Regex(
+            "^(?<body>[A-Za-z][A-Za-z\\s-]*?) tent$",
+            RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex GeneratedRandomStatuePattern =
+        new Regex(
+            "^(?<material>[A-Za-z][A-Za-z\\s-]*?) statue of (?<subject>.+)$",
             RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex JapaneseCharacterPattern =
         new Regex("[\\p{IsHiragana}\\p{IsKatakana}\\p{IsCJKUnifiedIdeographs}]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex EnglishWordPattern =
         new Regex("[A-Za-z]{2,}", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private const string GeneratedCanvasTentComponentContext = "GetDisplayName.GeneratedCanvasTent.Component";
+    private const string GeneratedRandomStatueComponentContext = "GetDisplayName.GeneratedRandomStatue.Component";
 
     internal static bool IsAlreadyLocalizedDisplayNameText(string source)
     {
@@ -156,10 +171,22 @@ internal static class GetDisplayNameRouteTranslator
             return true;
         }
 
+        if (HistoricSpiceGeneratedNameTranslator.TryTranslateCapture(source, out translated))
+        {
+            DynamicTextObservability.RecordTransform(route, "DisplayName.HistoricSpiceGeneratedName", source, translated);
+            return true;
+        }
+
         if (TryTranslateGeneratedTitleSuffix(transformed, route, out var titleTranslated))
         {
             transformed = titleTranslated;
             changed = true;
+        }
+
+        if (TryTranslateGeneratedRandomStatueName(transformed, route, out var randomStatueTranslated))
+        {
+            translated = randomStatueTranslated;
+            return true;
         }
 
         if (TryTranslateMixedDisplayName(transformed, route, out var modifierTranslated))
@@ -177,6 +204,18 @@ internal static class GetDisplayNameRouteTranslator
         if (TryTranslateLocalizedPrefixAsciiTailDisplayName(transformed, route, out var localizedPrefixTailTranslated))
         {
             translated = localizedPrefixTailTranslated;
+            return true;
+        }
+
+        if (TryTranslateLiquidState(transformed, route, out var liquidStateTranslated))
+        {
+            translated = liquidStateTranslated;
+            return true;
+        }
+
+        if (TryTranslateGeneratedCanvasTentName(transformed, route, out var canvasTentTranslated))
+        {
+            translated = canvasTentTranslated;
             return true;
         }
 
@@ -591,7 +630,165 @@ internal static class GetDisplayNameRouteTranslator
         }
 
         translated = match.Groups["amount"].Value + "ドラムの" + translatedLiquid;
+        var state = match.Groups["state"].Value;
+        if (state.Length > 0)
+        {
+            translated += "、" + TranslateDisplayNameState(state, route);
+        }
+
         DynamicTextObservability.RecordTransform(route, "DisplayName.QuantifiedLiquidState", source, translated);
+        return true;
+    }
+
+    private static bool TryTranslateLiquidState(string source, string route, out string translated)
+    {
+        var match = LiquidStatePattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var liquidSource = match.Groups["liquid"].Value;
+        var translatedLiquid = TranslateAsciiPhrase(liquidSource);
+        if (translatedLiquid is null)
+        {
+            translated = source;
+            return false;
+        }
+
+        var translatedState = TranslateDisplayNameState(match.Groups["state"].Value, route);
+        if (string.Equals(translatedState, match.Groups["state"].Value, StringComparison.Ordinal))
+        {
+            translated = source;
+            return false;
+        }
+
+        translated = translatedLiquid + "、" + translatedState;
+        DynamicTextObservability.RecordTransform(route, "DisplayName.LiquidState", source, translated);
+        return true;
+    }
+
+    private static bool TryTranslateGeneratedCanvasTentName(string source, string route, out string translated)
+    {
+        var match = GeneratedCanvasTentPattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        if (!TryTranslateGeneratedCanvasTentComponents(match.Groups["body"].Value, out var translatedCreature, out var translatedMaterial))
+        {
+            translated = source;
+            return false;
+        }
+
+        var translatedTent = TranslateDisplayNameExactOrLowerAscii("tent", GeneratedCanvasTentComponentContext);
+        if (translatedTent is null)
+        {
+            translated = source;
+            return false;
+        }
+
+        translated = translatedCreature + "の" + translatedMaterial + "の" + translatedTent;
+        DynamicTextObservability.RecordTransform(route, "DisplayName.GeneratedCanvasTent", source, translated);
+        return true;
+    }
+
+    private static bool TryTranslateGeneratedCanvasTentComponents(
+        string body,
+        out string translatedCreature,
+        out string translatedMaterial)
+    {
+        for (var splitIndex = body.LastIndexOf(' '); splitIndex > 0; splitIndex = body.LastIndexOf(' ', splitIndex - 1))
+        {
+            var creature = body.Substring(0, splitIndex);
+            var material = body.Substring(splitIndex + 1);
+            var creatureTranslation = TranslateDisplayNameComponentPhrase(creature, GeneratedCanvasTentComponentContext);
+            var materialTranslation = TranslateDisplayNameComponentPhrase(material, GeneratedCanvasTentComponentContext);
+            if (creatureTranslation is null || materialTranslation is null)
+            {
+                continue;
+            }
+
+            translatedCreature = creatureTranslation;
+            translatedMaterial = materialTranslation;
+            return true;
+        }
+
+        translatedCreature = string.Empty;
+        translatedMaterial = string.Empty;
+        return false;
+    }
+
+    private static bool TryTranslateGeneratedRandomStatueName(string source, string route, out string translated)
+    {
+        var match = GeneratedRandomStatuePattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        if (!TryTranslateRandomStatueMaterialPhrase(match.Groups["material"].Value, out var modifierPrefix, out var translatedMaterial))
+        {
+            translated = source;
+            return false;
+        }
+
+        var translatedStatue = TranslateDisplayNameExactOrLowerAscii("statue", GeneratedRandomStatueComponentContext);
+        if (translatedStatue is null)
+        {
+            translated = source;
+            return false;
+        }
+
+        var subject = StringHelpers.StripLeadingEnglishArticle(
+            match.Groups["subject"].Value,
+            includeCapitalizedDefiniteArticle: true);
+        var translatedSubject = TranslateDisplayNameFragment(subject, route);
+        translated = modifierPrefix + translatedSubject + "の" + translatedMaterial + "の" + translatedStatue;
+        DynamicTextObservability.RecordTransform(route, "DisplayName.GeneratedRandomStatue", source, translated);
+        return true;
+    }
+
+    private static bool TryTranslateRandomStatueMaterialPhrase(
+        string source,
+        out string modifierPrefix,
+        out string translatedMaterial)
+    {
+        modifierPrefix = string.Empty;
+        translatedMaterial = string.Empty;
+
+        var parts = source.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length == 0)
+        {
+            return false;
+        }
+
+        var material = parts[parts.Length - 1];
+        var materialTranslation = TranslateDisplayNameComponentPhrase(material, GeneratedRandomStatueComponentContext);
+        if (materialTranslation is null)
+        {
+            return false;
+        }
+
+        if (parts.Length == 1)
+        {
+            translatedMaterial = materialTranslation;
+            return true;
+        }
+
+        var modifier = string.Join(" ", parts, 0, parts.Length - 1);
+        var modifierTranslation = TranslateDisplayNameComponentPhrase(modifier, GeneratedRandomStatueComponentContext);
+        if (modifierTranslation is null)
+        {
+            return false;
+        }
+
+        modifierPrefix = modifierTranslation;
+        translatedMaterial = materialTranslation;
         return true;
     }
 
@@ -732,6 +929,12 @@ internal static class GetDisplayNameRouteTranslator
             return scoped;
         }
 
+        scoped = TryTranslateColoredLiquidToken(source);
+        if (scoped is not null)
+        {
+            return scoped;
+        }
+
         using var __ = Translator.PushMissingKeyLoggingSuppression(true);
         var direct = Translator.Translate(source);
         if (!string.Equals(direct, source, StringComparison.Ordinal))
@@ -751,6 +954,11 @@ internal static class GetDisplayNameRouteTranslator
             var translatedPart = ScopedDictionaryLookup.TranslateExactOrLowerAscii(parts[index], LiquidPhraseDictionaryFiles);
             if (translatedPart is null)
             {
+                translatedPart = TryTranslateColoredLiquidToken(parts[index]);
+            }
+
+            if (translatedPart is null)
+            {
                 translatedPart = Translator.Translate(parts[index]);
             }
 
@@ -763,6 +971,35 @@ internal static class GetDisplayNameRouteTranslator
         }
 
         return builder.ToString();
+    }
+
+    private static string? TranslateDisplayNameComponentPhrase(string source, string context)
+    {
+        var scoped = TranslateDisplayNameExactOrLowerAscii(source, context);
+        return scoped ?? TranslateAsciiPhrase(source);
+    }
+
+    private static string? TryTranslateColoredLiquidToken(string source)
+    {
+        if (!LooksLikeAsciiPhrase(source) || HasAsciiSpace(source))
+        {
+            return null;
+        }
+
+        return ScopedDictionaryLookup.TranslateExactOrLowerAscii("{{C|" + source + "}}", LiquidPhraseDictionaryFiles);
+    }
+
+    private static bool HasAsciiSpace(string source)
+    {
+        for (var index = 0; index < source.Length; index++)
+        {
+            if (source[index] == ' ')
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static bool LooksLikeGeneratedProperName(string source)
@@ -859,15 +1096,27 @@ internal static class GetDisplayNameRouteTranslator
 
     private static string? TranslateDisplayNameExactOrLowerAscii(string source)
     {
-        var scoped = TryTranslateDisplayNameScopedExact(source);
+        return TranslateDisplayNameExactOrLowerAscii(source, context: null);
+    }
+
+    private static string? TranslateDisplayNameExactOrLowerAscii(string source, string? context)
+    {
+        var scoped = context is null
+            ? TryTranslateDisplayNameScopedExact(source)
+            : ScopedDictionaryLookup.TranslateExactOrLowerAsciiForContext(source, context, DisplayNameDictionaryFiles);
         if (scoped is not null)
         {
             return scoped;
         }
 
-        return StringHelpers.TryGetTranslationExactOrLowerAscii(source, out var translated)
-            ? translated
-            : null;
+        if (context is null)
+        {
+            return StringHelpers.TryGetTranslationExactOrLowerAscii(source, out var translated)
+                ? translated
+                : null;
+        }
+
+        return StringHelpers.TranslateExactOrLowerAscii(source, context);
     }
 
     private static string? TranslateDisplayNameModifier(string source)

@@ -16,6 +16,11 @@ internal static class HistoricSpiceGeneratedNameTranslator
             "^(?<subject>.+) (?<festival>[A-Z][A-Za-z]+)$",
             RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
+    private static readonly Regex FakedDeathCognomenPattern =
+        new Regex(
+            "^(?:the )?(?<adjective>[A-Z][A-Za-z'-]+) (?<ghost>[A-Z][A-Za-z'-]+)(?: of (?<place>.+))?$",
+            RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
     private static readonly HashSet<string> FestivalWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
     {
         "festival",
@@ -101,9 +106,20 @@ internal static class HistoricSpiceGeneratedNameTranslator
         "corpse",
     };
 
+    private static readonly HashSet<string> GhostWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "ghost",
+        "phantom",
+        "shade",
+        "spectre",
+        "spirit",
+        "wraith",
+    };
+
     internal static bool TryTranslateCapture(string source, out string translated)
     {
-        if (TryTranslateFestivalName(source, out translated)
+        if (TryTranslateFakedDeathCognomen(source, out translated)
+            || TryTranslateFestivalName(source, out translated)
             || TryTranslateDishName(source, out translated))
         {
             return true;
@@ -111,6 +127,28 @@ internal static class HistoricSpiceGeneratedNameTranslator
 
         translated = source;
         return false;
+    }
+
+    private static bool TryTranslateFakedDeathCognomen(string source, out string translated)
+    {
+        var match = FakedDeathCognomenPattern.Match(source);
+        if (!match.Success
+            || !GhostWords.Contains(match.Groups["ghost"].Value)
+            || !TryTranslateWord(match.Groups["adjective"].Value, out var adjective)
+            || !TryTranslateWord(match.Groups["ghost"].Value, out var ghost))
+        {
+            translated = source;
+            return false;
+        }
+
+        translated = adjective + ghost;
+        var place = match.Groups["place"].Value;
+        if (place.Length > 0)
+        {
+            translated += "・" + place;
+        }
+
+        return true;
     }
 
     private static bool TryTranslateFestivalName(string source, out string translated)

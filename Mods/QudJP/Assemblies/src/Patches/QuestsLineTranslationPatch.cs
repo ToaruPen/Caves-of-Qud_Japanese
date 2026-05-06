@@ -104,6 +104,11 @@ public static class QuestsLineTranslationPatch
         var translated = TranslateExactLeaf(current!, route, family);
         if (string.Equals(translated, current, StringComparison.Ordinal))
         {
+            translated = GeneratedQuestTitleTranslator.TranslateEmbeddedPreservingColors(current!, route);
+        }
+
+        if (string.Equals(translated, current, StringComparison.Ordinal))
+        {
             return;
         }
 

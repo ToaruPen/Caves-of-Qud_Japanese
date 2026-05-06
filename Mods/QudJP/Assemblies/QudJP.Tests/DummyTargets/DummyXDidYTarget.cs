@@ -189,6 +189,10 @@ internal sealed class DummyVisibilityTarget
         return Player;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Major Code Smell",
+        "S1144:Unused private types or members",
+        Justification = "Invoked by XDidYTranslationPatch through reflection.")]
     public bool IsVisible()
     {
         return Visible;

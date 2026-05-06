@@ -220,6 +220,27 @@ public sealed class MessageFrameTranslatorTests
     }
 
     [Test]
+    public void TryTranslateXDidYToZ_RepositoryDictionary_UsesShrinePrayerEntry()
+    {
+        UseRepositoryDictionary();
+
+        var translated = MessageFrameTranslator.TryTranslateXDidYToZ(
+            "あなた",
+            "voice",
+            "a short prayer beneath",
+            "山羊人の種播きの石の像",
+            extra: null,
+            endMark: ".",
+            out var sentence);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.True);
+            Assert.That(sentence, Is.EqualTo("あなたは山羊人の種播きの石の像の下で短い祈りを唱えた。"));
+        });
+    }
+
+    [Test]
     public void TryTranslateXDidYToZ_RepositoryDictionary_UsesRepairEntry()
     {
         UseRepositoryDictionary();

@@ -120,6 +120,71 @@ public sealed class XDidYTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesActorDisplayNameFromCurrentOneSignature()
+    {
+        WriteUiDictionary(("CanvasWall", "帆布壁"));
+        WriteDictionary(tier1: new[] { ("collapse", "崩れた") });
+
+        var actor = new DummyCurrentDisplayNameTarget("CanvasWall");
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidY)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYForTests))));
+
+            DummyXDidYTarget.XDidY(
+                Actor: actor,
+                Verb: "collapse",
+                AlwaysVisible: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+                Assert.That(lastMessage, Is.EqualTo("\u0001帆布壁は崩れた。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [TestCase("CanvasWall", "\u0001CanvasWallは崩れた。", false)]
+    [TestCase("", "\u0001Objectは崩れた。", false)]
+    [TestCase("{{W|CanvasWall}}", "\u0001{{W|帆布壁}}は崩れた。", true)]
+    [TestCase("\u0001CanvasWall", "\u0001CanvasWallは崩れた。", true)]
+    public void Prefix_TranslatesActorDisplayNameFromCurrentOneSignature_EdgeCases(
+        string displayName,
+        string expectedMessage,
+        bool includeDisplayDictionary)
+    {
+        if (includeDisplayDictionary)
+        {
+            WriteUiDictionary(("CanvasWall", "帆布壁"));
+        }
+
+        WriteDictionary(tier1: new[] { ("collapse", "崩れた") });
+        var actor = new DummyCurrentDisplayNameTarget(displayName);
+
+        RunWithXDidYPatch(() =>
+        {
+            DummyXDidYTarget.XDidY(
+                Actor: actor,
+                Verb: "collapse",
+                AlwaysVisible: true);
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+            Assert.That(lastMessage, Is.EqualTo(expectedMessage));
+        });
+    }
+
+    [Test]
     public void Prefix_PromotesUsePopupFromDialogWhenHeldByPlayer()
     {
         WriteDictionary(tier1: new[] { ("block", "防いだ") });
@@ -345,6 +410,76 @@ public sealed class XDidYTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesShrinePrayerVerbAndGeneratedStatueObject()
+    {
+        WriteUiDictionary(
+            ("desecrated", "冒涜された"),
+            ("stone", "石"),
+            ("statue", "像"));
+        WriteDictionary(tier2: new[] { ("voice", "a short prayer beneath {0}", "{0}の下で短い祈りを唱えた") });
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidYToZ)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYToZForTests))));
+
+            DummyXDidYTarget.XDidYToZ(
+                Actor: null,
+                Verb: "voice",
+                Preposition: "a short prayer beneath",
+                Object: "desecrated stone statue of a 山羊人の種播き",
+                SubjectOverride: "あなた",
+                AlwaysVisible: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+                Assert.That(lastMessage, Is.EqualTo("\u0001あなたは冒涜された山羊人の種播きの石の像の下で短い祈りを唱えた。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [TestCase("brass statue of a 山羊人の種播き", "\u0001あなたはbrass statue of a 山羊人の種播きの下で短い祈りを唱えた。", false)]
+    [TestCase("", null, true)]
+    [TestCase("{{W|stone statue of a 山羊人の種播き}}", "\u0001あなたは{{W|山羊人の種播きの石の像}}の下で短い祈りを唱えた。", false)]
+    [TestCase("\u0001stone statue of a 山羊人の種播き", "\u0001あなたは\u0001stone statue of a 山羊人の種播きの下で短い祈りを唱えた。", false)]
+    public void Prefix_TranslatesShrinePrayerVerbAndGeneratedStatueObject_EdgeCases(
+        string objectName,
+        string? expectedMessage,
+        bool expectedOriginalExecuted)
+    {
+        WriteUiDictionary(
+            ("stone", "石"),
+            ("statue", "像"));
+        WriteDictionary(tier2: new[] { ("voice", "a short prayer beneath {0}", "{0}の下で短い祈りを唱えた") });
+
+        RunWithXDidYToZPatch(() =>
+        {
+            DummyXDidYTarget.XDidYToZ(
+                Actor: null,
+                Verb: "voice",
+                Preposition: "a short prayer beneath",
+                Object: objectName,
+                SubjectOverride: "あなた",
+                AlwaysVisible: true);
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(DummyXDidYTarget.OriginalExecuted, Is.EqualTo(expectedOriginalExecuted));
+            Assert.That(lastMessage, Is.EqualTo(expectedMessage));
+        });
+    }
+
+    [Test]
     public void Prefix_TranslatesWDidXToYWithZWithTemplate()
     {
         WriteDictionary(tier3: new[] { ("strike", "{0} with {1} for {2} damage", "{1}で{0}に{2}ダメージを与えた") });
@@ -436,6 +571,66 @@ public sealed class XDidYTranslationPatchTests
         File.WriteAllText(dictionaryPath, builder.ToString(), Utf8WithoutBom);
     }
 
+    private void WriteUiDictionary(params (string key, string text)[] entries)
+    {
+        var builder = new StringBuilder();
+        builder.Append("{\"entries\":[");
+        for (var index = 0; index < entries.Length; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(',');
+            }
+
+            builder.Append("{\"key\":\"")
+                .Append(EscapeJson(entries[index].key))
+                .Append("\",\"text\":\"")
+                .Append(EscapeJson(entries[index].text))
+                .Append("\"}");
+        }
+
+        builder.AppendLine("]}");
+        File.WriteAllText(Path.Combine(tempDirectory, "ui-test.ja.json"), builder.ToString(), Utf8WithoutBom);
+        Translator.ResetForTests();
+        Translator.SetDictionaryDirectoryForTests(tempDirectory);
+    }
+
+    private static void RunWithXDidYPatch(Action action)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidY)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYForTests))));
+            action();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    private static void RunWithXDidYToZPatch(Action action)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidYToZ)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYToZForTests))));
+            action();
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
     private static void WriteTier1(StringBuilder builder, IEnumerable<(string verb, string text)>? entries)
     {
         if (entries is null)
@@ -515,5 +710,73 @@ public sealed class XDidYTranslationPatchTests
             .Replace("\r", "\\r", StringComparison.Ordinal)
             .Replace("\n", "\\n", StringComparison.Ordinal)
             .Replace("\t", "\\t", StringComparison.Ordinal);
+    }
+
+    private sealed class DummyCurrentDisplayNameTarget
+    {
+        public DummyCurrentDisplayNameTarget(string displayName)
+        {
+            DisplayName = displayName;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S1144:Unused private types or members",
+            Justification = "Read by the reflected One signature used in the test.")]
+        public string DisplayName { get; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S1144:Unused private types or members",
+            Justification = "Invoked by XDidYTranslationPatch through reflection.")]
+        public string One(
+            int Cutoff = int.MaxValue,
+            string? Base = null,
+            string? Context = null,
+            bool AsIfKnown = false,
+            bool Single = false,
+            bool NoConfusion = false,
+            bool NoColor = false,
+            bool Stripped = false,
+            bool WithoutTitles = true,
+            bool Short = true,
+            bool BaseOnly = false,
+            bool WithIndefiniteArticle = false,
+            string? DefaultDefiniteArticle = null,
+            bool IndicateHidden = true,
+            bool SecondPerson = true,
+            bool Reflexive = false,
+            bool? IncludeAdjunctNoun = null,
+            bool AsPossessed = false,
+            object? AsPossessedBy = null,
+            bool Reference = false)
+        {
+            _ = Cutoff;
+            _ = Base;
+            _ = Context;
+            _ = AsIfKnown;
+            _ = Single;
+            _ = NoConfusion;
+            _ = NoColor;
+            _ = Stripped;
+            _ = WithoutTitles;
+            _ = Short;
+            _ = BaseOnly;
+            _ = WithIndefiniteArticle;
+            _ = DefaultDefiniteArticle;
+            _ = IndicateHidden;
+            _ = SecondPerson;
+            _ = Reflexive;
+            _ = IncludeAdjunctNoun;
+            _ = AsPossessed;
+            _ = AsPossessedBy;
+            _ = Reference;
+            return DisplayName;
+        }
+
+        public override string ToString()
+        {
+            return "Object";
+        }
     }
 }

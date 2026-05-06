@@ -126,10 +126,13 @@ internal sealed class DummyQuestsStatusScreenTarget
 {
     public DummyMapScrollerControllerTarget mapController = new DummyMapScrollerControllerTarget();
 
+    public List<DummyMapPinData>? PinDataOverride { get; set; }
+
     public void UpdateViewFromData()
     {
         mapController.SetPins(
-            new[]
+            PinDataOverride ??
+            new List<DummyMapPinData>
             {
                 new DummyMapPinData
                 {
@@ -147,12 +150,24 @@ internal sealed class DummyQuestsStatusScreenTarget
 
 internal static class DummyQuestLogTarget
 {
+    public static List<string>? LinesOverride { get; set; }
+
+    public static void Reset()
+    {
+        LinesOverride = null;
+    }
+
     public static List<string> GetLinesForQuest(object? quest, bool includeTitle = true, bool clip = true, int clipWidth = 74)
     {
         _ = quest;
         _ = includeTitle;
         _ = clip;
         _ = clipWidth;
+
+        if (LinesOverride is not null)
+        {
+            return new List<string>(LinesOverride);
+        }
 
         return new List<string>
         {

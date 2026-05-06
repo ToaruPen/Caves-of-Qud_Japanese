@@ -1063,6 +1063,11 @@ public static class PopupTranslationPatch
             quest = ColorAwareTranslationComposer.RestoreCapture(quest, spans, match.Groups["value"]);
         }
 
+        if (GeneratedQuestTitleTranslator.TryTranslatePreservingColors(quest, route, out var translatedQuest))
+        {
+            quest = translatedQuest;
+        }
+
         translated = translatedTemplate.Replace("{0}", quest);
         if (spans.Count > 0)
         {

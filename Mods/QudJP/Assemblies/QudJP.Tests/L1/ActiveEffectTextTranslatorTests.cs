@@ -136,6 +136,36 @@ public sealed class ActiveEffectTextTranslatorTests
         });
     }
 
+    [TestCase(
+        "Acts semi-randomly.\n-6 DV\n-6 MA",
+        "半ばランダムに行動する。\n-6 DV\n-6 MA")]
+    [TestCase(
+        "Acts semi-randomly.\n-6 DV\n-6 MA\n-4 to all mental attributes",
+        "半ばランダムに行動する。\n-6 DV\n-6 MA\n全精神属性に -4")]
+    [TestCase(
+        "Acts semi-randomly.\n  -6 DV\n  -6 MA\n  -4 to all mental attributes",
+        "半ばランダムに行動する。\n-6 DV\n-6 MA\n全精神属性に -4")]
+    public void TryTranslateText_TranslatesGeneratedConfusionDetailsBeforeLineFallback(string source, string expected)
+    {
+        WriteDictionary(
+            ("Acts semi-randomly.\n-{0} DV\n-{0} MA", "半ばランダムに行動する。\n-{0} DV\n-{0} MA"),
+            ("Acts semi-randomly.\n-{0} DV\n-{0} MA\n-{1} to all mental attributes", "半ばランダムに行動する。\n-{0} DV\n-{0} MA\n全精神属性に -{1}"));
+
+        var changed = ActiveEffectTextTranslator.TryTranslateText(
+            source,
+            "ActiveEffectTextTranslatorTests",
+            "ActiveEffects.Details.Confused",
+            out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(translated, Is.EqualTo(expected));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("Acts semi-randomly."), Is.EqualTo(0));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("-6 DV"), Is.EqualTo(0));
+        });
+    }
+
     private void WriteDictionary(params (string key, string text)[] entries)
     {
         var builder = new StringBuilder();
