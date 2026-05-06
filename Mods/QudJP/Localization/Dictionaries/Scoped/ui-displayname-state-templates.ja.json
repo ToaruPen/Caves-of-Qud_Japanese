@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "id": "ui-displayname-state-templates",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    { "key": "sitting on {0}", "context": "GetDisplayName.StateTemplate", "text": "{0}に座っている" },
+    { "key": "lying on {0}", "context": "GetDisplayName.StateTemplate", "text": "{0}に横たわっている" },
+    { "key": "enclosed in {0}", "context": "GetDisplayName.StateTemplate", "text": "{0}に閉じ込められている" },
+    { "key": "engulfed by {0}", "context": "GetDisplayName.StateTemplate", "text": "{0}に呑み込まれている" },
+    { "key": "auto-collecting {0}", "context": "GetDisplayName.StateTemplate", "text": "{0}を自動収集中" }
+  ]
+}

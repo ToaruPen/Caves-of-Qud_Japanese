@@ -79,6 +79,21 @@ public sealed class MessagePatternTranslatorTests
     }
 
     [Test]
+    public void Translate_UsesScopedHistorySpiceCaptureWithoutGlobalExactLookup()
+    {
+        WriteScopedHistorySpiceDictionary(("someone", "誰か"), ("gather", "集う"));
+        WritePatternDictionary(("^(.+?) (.+?) here\\.$", "{t0}がここで{t1}。"));
+
+        var translated = MessagePatternTranslator.Translate("someone gather here.");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("誰かがここで集う。"));
+            Assert.That(Translator.Translate("someone"), Is.EqualTo("someone"));
+        });
+    }
+
+    [Test]
     public void Translate_TranslatesGeneratedActivatedAbilityCapture_FromMutationDisplayName()
     {
         LocalizationAssetResolver.SetLocalizationRootForTests(tempDirectory);
@@ -1418,6 +1433,34 @@ public sealed class MessagePatternTranslatorTests
 
         builder.AppendLine("]}");
         File.WriteAllText(Path.Combine(dictionaryDirectory, "ui-test.ja.json"), builder.ToString(), Utf8WithoutBom);
+    }
+
+    private void WriteScopedHistorySpiceDictionary(params (string key, string text)[] entries)
+    {
+        var scopedDirectory = Path.Combine(dictionaryDirectory, "Scoped");
+        Directory.CreateDirectory(scopedDirectory);
+
+        var builder = new StringBuilder();
+        builder.Append("{\"entries\":[");
+        for (var index = 0; index < entries.Length; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(',');
+            }
+
+            builder.Append("{\"key\":\"");
+            builder.Append(EscapeJson(entries[index].key));
+            builder.Append("\",\"text\":\"");
+            builder.Append(EscapeJson(entries[index].text));
+            builder.Append("\"}");
+        }
+
+        builder.AppendLine("]}");
+        File.WriteAllText(
+            Path.Combine(scopedDirectory, "historyspice-common.ja.json"),
+            builder.ToString(),
+            Utf8WithoutBom);
     }
 
     private static void AppendPatternEntries(StringBuilder builder, IReadOnlyList<(string pattern, string template)> patterns)

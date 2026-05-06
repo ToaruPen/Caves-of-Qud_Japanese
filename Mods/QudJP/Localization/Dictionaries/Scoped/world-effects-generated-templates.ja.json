@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "id": "world-effects-generated-templates",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "protectColorTags": true,
+    "protectHtmlEntities": true
+  },
+  "entries": [
+    { "key": "dominated ({0} turns remaining)", "context": "XRL.World.Effects.Dominated.GetDescription", "text": "支配された（残り{0}ターン）" },
+    { "key": "time-dilated ({{C|-{0}}} Quickness)", "context": "XRL.World.Effects.ITimeDilated.GetDescription", "text": "時間遅延 ({{C|-{0}}} Quickness)" },
+    { "key": "Acts semi-randomly.\n-{0} DV\n-{0} MA", "context": "XRL.World.Effects.Confused.GetDetails", "text": "半ばランダムに行動する。\n-{0} DV\n-{0} MA" },
+    { "key": "Acts semi-randomly.\n-{0} DV\n-{0} MA\n-{1} to all mental attributes", "context": "XRL.World.Effects.Confused.GetDetails", "text": "半ばランダムに行動する。\n-{0} DV\n-{0} MA\n全精神属性に -{1}" },
+    { "key": "lying on {0}", "context": "XRL.World.Effects.Prone.GetDescription", "text": "{0}に横たわっている" },
+    { "key": "engulfed by {0}", "context": "XRL.World.Effects.Engulfed.DisplayName", "text": "{0}に呑み込まれている" },
+    { "key": "enclosed in {0}", "context": "XRL.World.Effects.Enclosed.DisplayName", "text": "{0}に閉じ込められている" },
+    { "key": "sitting on {0}", "context": "XRL.World.Effects.Sitting.DisplayName", "text": "{0}に座っている" },
+    { "key": "piloting {0}", "context": "XRL.World.Effects.Piloting.DisplayName", "text": "{0}を操縦中" },
+    { "key": "marked by {0}", "context": "XRL.World.Effects.RifleMark.GetDescription", "text": "{0}にマークされている" },
+    { "key": "cleaved ({{C|-{0} AV}})", "context": "XRL.World.Effects.ShatterArmor.GetDescription", "text": "裂かれた（{{C|-{0} AV}}）" },
+    { "key": "psionically cleaved (-{0} MA)", "context": "XRL.World.Effects.ShatterMentalArmor.GetDescription", "text": "精神的に裂かれた（-{0} MA）" },
+    { "key": "+{0} Quickness\n+1 rank to physical mutations", "context": "XRL.World.Effects.AdrenalControl2Boosted.GetDetails", "text": "+{0} Quickness\n肉体変異 +1ランク" },
+    { "key": "+{0} Quickness\n+{1} ranks to physical mutations", "context": "XRL.World.Effects.AdrenalControl2Boosted.GetDetails", "text": "+{0} Quickness\n肉体変異 +{1}ランク" }
+  ]
+}

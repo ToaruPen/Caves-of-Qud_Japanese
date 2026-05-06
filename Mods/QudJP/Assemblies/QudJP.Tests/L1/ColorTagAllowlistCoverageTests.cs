@@ -101,8 +101,8 @@ public sealed class ColorTagAllowlistCoverageTests
             // Keys identify the ColorAwareTranslationComposer.Strip call site, not the containing method declaration.
             ["Mods/QudJP/Assemblies/src/Observability/FinalOutputObservability.cs:109:RecordDirectMarker"] = "Observation-only final sink marker check.",
             ["Mods/QudJP/Assemblies/src/Patches/AbilityBarAfterRenderTranslationPatch.cs:239:HasColorMarkup"] = "Predicate only; it compares stripped and original text.",
-            ["Mods/QudJP/Assemblies/src/Patches/ActiveEffectTextTranslator.cs:110:TryTranslateExact"] = "Delegates exact-match restoration to RestoreExactTranslation.",
-            ["Mods/QudJP/Assemblies/src/Patches/ActiveEffectTextTranslator.cs:149:TryTranslateTemplate"] = "Delegates restoration to the template helper selected by the matched rule.",
+            ["Mods/QudJP/Assemblies/src/Patches/ActiveEffectTextTranslator.cs:131:TryTranslateExact"] = "Delegates exact-match restoration to RestoreExactTranslation.",
+            ["Mods/QudJP/Assemblies/src/Patches/ActiveEffectTextTranslator.cs:170:TryTranslateTemplate"] = "Delegates restoration to the template helper selected by the matched rule.",
             ["Mods/QudJP/Assemblies/src/Patches/BedChairFragmentTranslator.cs:120:TryTranslate"] = "Delegates capture restoration to rule builders through RestoreVisible.",
             ["Mods/QudJP/Assemblies/src/Patches/ClonelingVehicleFragmentTranslator.cs:56:TryTranslate"] = "Delegates capture restoration to the build function.",
             ["Mods/QudJP/Assemblies/src/Patches/CombatGetDefenderHitDiceTranslationPatch.cs:82:TryTranslateQueuedMessage"] = "Uses stripped text only for owner-route detection; queued message text is replaced wholesale.",
