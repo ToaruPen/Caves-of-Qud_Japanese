@@ -865,23 +865,6 @@ public static class FactionsStatusScreenTranslationPatch
         return localized.Count > 0;
     }
 
-    internal static bool TryTranslateFactionLabelFromId(string source, string? factionId, out string translated)
-    {
-        translated = source;
-        if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(factionId))
-        {
-            return false;
-        }
-
-        if (source.StartsWith("The ", StringComparison.Ordinal)
-            && TryTranslateFactionLabelFallbackCandidate($"the {factionId}", out translated))
-        {
-            return true;
-        }
-
-        return TryTranslateFactionLabelFallbackCandidate(factionId!, out translated);
-    }
-
     private static void AddLocalizedSearchFragment(List<string> localized, string? source)
     {
         if (string.IsNullOrWhiteSpace(source))
@@ -899,20 +882,5 @@ public static class FactionsStatusScreenTranslationPatch
         {
             localized.Add(stripped);
         }
-    }
-
-    private static bool TryTranslateFactionLabelFallbackCandidate(string key, out string translated)
-    {
-        if (!StringHelpers.TryGetTranslationExactOrLowerAscii(key, out translated))
-        {
-            return false;
-        }
-
-        DynamicTextObservability.RecordTransform(
-            nameof(FactionsStatusScreenTranslationPatch),
-            $"FactionLabelFallback:{key}",
-            key,
-            translated);
-        return true;
     }
 }

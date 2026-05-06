@@ -152,14 +152,15 @@ public sealed class XDidYTranslationPatchTests
         }
     }
 
-    [TestCase("CanvasWall", "\u0001CanvasWallは崩れた。", false)]
-    [TestCase("", "\u0001Objectは崩れた。", false)]
-    [TestCase("{{W|CanvasWall}}", "\u0001{{W|帆布壁}}は崩れた。", true)]
-    [TestCase("\u0001CanvasWall", "\u0001CanvasWallは崩れた。", true)]
+    [TestCase("CanvasWall", "\u0001CanvasWallは崩れた。", false, false)]
+    [TestCase("", null, false, true)]
+    [TestCase("{{W|CanvasWall}}", "\u0001{{W|帆布壁}}は崩れた。", true, false)]
+    [TestCase("\u0001CanvasWall", "\u0001CanvasWallは崩れた。", true, false)]
     public void Prefix_TranslatesActorDisplayNameFromCurrentOneSignature_EdgeCases(
         string displayName,
-        string expectedMessage,
-        bool includeDisplayDictionary)
+        string? expectedMessage,
+        bool includeDisplayDictionary,
+        bool expectedOriginalExecuted)
     {
         if (includeDisplayDictionary)
         {
@@ -179,9 +180,164 @@ public sealed class XDidYTranslationPatchTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+            Assert.That(DummyXDidYTarget.OriginalExecuted, Is.EqualTo(expectedOriginalExecuted));
             Assert.That(lastMessage, Is.EqualTo(expectedMessage));
         });
+    }
+
+    [Test]
+    public void Prefix_TranslatesDeathSubjectFromCurrentOneSignature_NotDisplayNameFallback()
+    {
+        WriteUiDictionary(("Pig Farmer Convert", "豚農家のメカニマス教徒改宗者"));
+        WriteDictionary(tier1: new[] { ("die", "死んだ") });
+
+        var actor = new DummyCurrentDisplayNameTarget(
+            displayName: "Pig Farmer Convert",
+            displayNameMember: "PigFarmerConvert",
+            toStringText: "PigFarmerConvert");
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidY)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYForTests))));
+
+            DummyXDidYTarget.XDidY(
+                Actor: actor,
+                Verb: "die",
+                EndMark: "!",
+                AlwaysVisible: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+                Assert.That(lastMessage, Is.EqualTo("\u0001豚農家のメカニマス教徒改宗者は死んだ！"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesObjectDisplayNameFromCurrentOneSignature_NotDisplayNameFallback()
+    {
+        WriteUiDictionary(("Wooden Arrow", "木の矢"));
+        WriteDictionary(tier2: new[] { ("fire", "at {0}", "{0}を撃った") });
+
+        var target = new DummyCurrentDisplayNameTarget(
+            displayName: "Wooden Arrow",
+            displayNameMember: "ProjectileBlueprint",
+            toStringText: "ProjectileDebugObject");
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidYToZ)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYToZForTests))));
+
+            DummyXDidYTarget.XDidYToZ(
+                Actor: null,
+                Verb: "fire",
+                Preposition: "at",
+                Object: target,
+                SubjectOverride: "砲台",
+                AlwaysVisible: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+                Assert.That(lastMessage, Is.EqualTo("\u0001砲台は木の矢を撃った。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesDoubleObjectDisplayNamesFromCurrentOneSignature_NotFallbackText()
+    {
+        WriteUiDictionary(
+            ("Wooden Arrow", "木の矢"),
+            ("Pig Farmer Convert", "豚農家のメカニマス教徒改宗者"));
+        WriteDictionary(tier3: new[] { ("give", "{0} to {1}", "{0}を{1}に渡した") });
+
+        var item = new DummyCurrentDisplayNameTarget(
+            displayName: "Wooden Arrow",
+            displayNameMember: "ProjectileBlueprint",
+            toStringText: "ProjectileDebugObject");
+        var recipient = new DummyCurrentDisplayNameTarget(
+            displayName: "Pig Farmer Convert",
+            displayNameMember: "PigFarmerConvert",
+            toStringText: "CreatureDebugObject");
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.WDidXToYWithZ)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixWDidXToYWithZForTests))));
+
+            DummyXDidYTarget.WDidXToYWithZ(
+                Actor: null,
+                Verb: "give",
+                DirectPreposition: null,
+                DirectObject: item,
+                IndirectPreposition: "to",
+                IndirectObject: recipient,
+                SubjectOverride: "商人",
+                AlwaysVisible: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+                Assert.That(lastMessage, Is.EqualTo("\u0001商人は木の矢を豚農家のメカニマス教徒改宗者に渡した。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_FallsBackToOriginalWhenTypedDisplayNameRouteIsMissing()
+    {
+        WriteDictionary(tier1: new[] { ("collapse", "崩れた") });
+
+        var actor = new DummyDisplayNameFallbackOnlyTarget();
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidY)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYForTests))));
+
+            DummyXDidYTarget.XDidY(
+                Actor: actor,
+                Verb: "collapse",
+                AlwaysVisible: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyXDidYTarget.OriginalExecuted, Is.True);
+                Assert.That(lastMessage, Is.Null);
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     [Test]
@@ -714,9 +870,14 @@ public sealed class XDidYTranslationPatchTests
 
     private sealed class DummyCurrentDisplayNameTarget
     {
-        public DummyCurrentDisplayNameTarget(string displayName)
+        private readonly string displayName;
+        private readonly string toStringText;
+
+        public DummyCurrentDisplayNameTarget(string displayName, string? displayNameMember = null, string toStringText = "Object")
         {
-            DisplayName = displayName;
+            this.displayName = displayName;
+            DisplayName = displayNameMember ?? displayName;
+            this.toStringText = toStringText;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -751,32 +912,72 @@ public sealed class XDidYTranslationPatchTests
             object? AsPossessedBy = null,
             bool Reference = false)
         {
-            _ = Cutoff;
-            _ = Base;
-            _ = Context;
-            _ = AsIfKnown;
-            _ = Single;
-            _ = NoConfusion;
-            _ = NoColor;
-            _ = Stripped;
-            _ = WithoutTitles;
-            _ = Short;
-            _ = BaseOnly;
-            _ = WithIndefiniteArticle;
-            _ = DefaultDefiniteArticle;
-            _ = IndicateHidden;
-            _ = SecondPerson;
-            _ = Reflexive;
-            _ = IncludeAdjunctNoun;
-            _ = AsPossessed;
-            _ = AsPossessedBy;
-            _ = Reference;
-            return DisplayName;
+            return displayName;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S1144:Unused private types or members",
+            Justification = "Invoked by XDidYTranslationPatch through reflection.")]
+        public string one(
+            int Cutoff = int.MaxValue,
+            string? Base = null,
+            string? Context = null,
+            bool AsIfKnown = false,
+            bool Single = false,
+            bool NoConfusion = false,
+            bool NoColor = false,
+            bool Stripped = false,
+            bool WithoutTitles = true,
+            bool Short = true,
+            bool BaseOnly = false,
+            bool WithIndefiniteArticle = false,
+            string? DefaultDefiniteArticle = null,
+            bool IndicateHidden = true,
+            bool SecondPerson = true,
+            bool Reflexive = false,
+            bool? IncludeAdjunctNoun = null,
+            bool AsPossessed = false,
+            object? AsPossessedBy = null,
+            bool Reference = false)
+        {
+            return displayName;
         }
 
         public override string ToString()
         {
-            return "Object";
+            return toStringText;
+        }
+    }
+
+    private sealed class DummyDisplayNameFallbackOnlyTarget
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S1144:Unused private types or members",
+            Justification = "Verifies XDidYTranslationPatch does not use DisplayName reflection fallback.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S2325:Methods and properties that don't access instance data should be static",
+            Justification = "Reflection fallback probe must be an instance member.")]
+        public string DisplayName => "FallbackDisplayName";
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S1144:Unused private types or members",
+            Justification = "Invoked by XDidYTranslationPatch through reflection.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S2325:Methods and properties that don't access instance data should be static",
+            Justification = "Reflection visibility probe must be an instance member.")]
+        public bool IsVisible()
+        {
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return "FallbackToString";
         }
     }
 }

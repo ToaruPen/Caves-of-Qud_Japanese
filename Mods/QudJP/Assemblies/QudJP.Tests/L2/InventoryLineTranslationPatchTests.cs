@@ -111,6 +111,48 @@ public sealed partial class Issue201StatusScreensBatch2Tests
     }
 
     [Test]
+    public void InventoryLinePrefix_UsesDisplayNameRouteForItemNames_WhenPatched()
+    {
+        WriteDictionary(
+            ("items", "個"),
+            ("Laser Rifle", "グローバルのレーザーライフル"));
+        WriteDictionaryFile(
+            "ui-displayname-atomic.ja.json",
+            ("Laser Rifle", "レーザーライフル"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyInventoryLineTarget), nameof(DummyInventoryLineTarget.setData)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(InventoryLineTranslationPatch), nameof(InventoryLineTranslationPatch.Prefix))));
+
+            var itemTarget = new DummyInventoryLineTarget();
+            itemTarget.setData(new DummyInventoryLineDataTarget
+            {
+                category = false,
+                displayName = "Laser Rifle",
+                go = new DummyStatusGameObject { DisplayName = "Laser Rifle", Weight = 7 },
+            });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(itemTarget.text.Text, Is.EqualTo("レーザーライフル"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(InventoryLineTranslationPatch),
+                        "InventoryLine.ItemName"),
+                    Is.GreaterThan(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void InventoryLinePrefix_FallsBackToOriginal_OnUnsupportedInput()
     {
         var harmonyId = CreateHarmonyId();
@@ -145,6 +187,11 @@ public sealed partial class Issue201StatusScreensBatch2Tests
 
     private void WriteDictionary(params (string key, string text)[] entries)
     {
+        WriteDictionaryFile("issue201-status-batch2.ja.json", entries);
+    }
+
+    private void WriteDictionaryFile(string fileName, params (string key, string text)[] entries)
+    {
         var builder = new StringBuilder();
         builder.Append('{');
         builder.Append("\"entries\":[");
@@ -165,7 +212,7 @@ public sealed partial class Issue201StatusScreensBatch2Tests
         builder.Append("]}");
         builder.AppendLine();
         File.WriteAllText(
-            Path.Combine(tempDirectory, "issue201-status-batch2.ja.json"),
+            Path.Combine(tempDirectory, fileName),
             builder.ToString(),
             new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
     }

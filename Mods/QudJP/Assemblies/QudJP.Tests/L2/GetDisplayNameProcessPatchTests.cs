@@ -761,7 +761,7 @@ public sealed class GetDisplayNameProcessPatchTests
     }
 
     [Test]
-    public void Postfix_TranslatesBlueprintFallbackCanvasWall_WhenPatched()
+    public void Postfix_TranslatesObservedAtomicCanvasWall_WhenPatched()
     {
         WriteDictionaryFile(
             "ui-displayname-atomic.ja.json",

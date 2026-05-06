@@ -299,7 +299,7 @@ public sealed class FactionsStatusScreenTranslationPatchTests
     }
 
     [Test]
-    public void FactionsLineDataPostfix_UsesFactionIdFallbackForGeneratedLabels()
+    public void FactionsLineDataPostfix_DoesNotUseFactionIdFallbackForGeneratedLabels()
     {
         WriteDictionary(("SultanCult1", "スルタン教団1"));
 
@@ -310,9 +310,14 @@ public sealed class FactionsStatusScreenTranslationPatchTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(data.label, Is.EqualTo("スルタン教団1"));
+            Assert.That(data.label, Is.EqualTo("Cult of Baram"));
             Assert.That(data.searchText, Does.Contain("the villagers of sultancult1"));
-            Assert.That(data.searchText, Does.Contain("スルタン教団1"));
+            Assert.That(data.searchText, Does.Not.Contain("スルタン教団1"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(FactionsStatusScreenTranslationPatch),
+                    "FactionLabelFallback:SultanCult1"),
+                Is.EqualTo(0));
         });
     }
 

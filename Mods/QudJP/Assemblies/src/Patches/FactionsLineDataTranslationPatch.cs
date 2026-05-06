@@ -58,30 +58,24 @@ public static class FactionsLineDataTranslationPatch
         var factionId = idField?.FieldType == typeof(string)
             ? idField.GetValue(item) as string
             : null;
-        string? localizedLabel = null;
+        string? labelForSearchText = null;
 
         if (labelField?.FieldType == typeof(string))
         {
             var currentLabel = labelField.GetValue(item) as string;
             if (!string.IsNullOrEmpty(currentLabel))
             {
-                localizedLabel = currentLabel!;
+                labelForSearchText = currentLabel!;
                 if (!FactionsStatusScreenTranslationPatch.IsAlreadyLocalizedFactionText(currentLabel!))
                 {
-                    localizedLabel = FactionsStatusScreenTranslationPatch.TranslateFactionText(
+                    labelForSearchText = FactionsStatusScreenTranslationPatch.TranslateFactionText(
                         currentLabel!,
                         ObservabilityHelpers.ComposeContext(nameof(FactionsLineDataTranslationPatch), "field=label"));
                 }
 
-                if (string.Equals(currentLabel, localizedLabel, StringComparison.Ordinal)
-                    && FactionsStatusScreenTranslationPatch.TryTranslateFactionLabelFromId(currentLabel!, factionId, out var fallbackLabel))
+                if (!string.Equals(currentLabel, labelForSearchText, StringComparison.Ordinal))
                 {
-                    localizedLabel = fallbackLabel;
-                }
-
-                if (!string.Equals(currentLabel, localizedLabel, StringComparison.Ordinal))
-                {
-                    labelField.SetValue(item, localizedLabel);
+                    labelField.SetValue(item, labelForSearchText);
                 }
             }
         }
@@ -101,9 +95,9 @@ public static class FactionsLineDataTranslationPatch
         }
 
         var localizedFragments = new List<string?>();
-        if (!string.IsNullOrWhiteSpace(localizedLabel))
+        if (!string.IsNullOrWhiteSpace(labelForSearchText))
         {
-            localizedFragments.Add(localizedLabel);
+            localizedFragments.Add(labelForSearchText);
         }
 
         if (FactionsStatusScreenTranslationPatch.TryGetLocalizedFactionSearchFragments(factionId, out var searchFragments))

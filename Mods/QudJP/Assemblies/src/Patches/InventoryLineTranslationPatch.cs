@@ -144,7 +144,7 @@ public static class InventoryLineTranslationPatch
         }
         if (displayName is null) { displayName = string.Empty; }
         var itemRoute = ObservabilityHelpers.ComposeContext(Context, "field=text");
-        var translatedDisplayName = TranslateVisibleText(displayName, itemRoute, "InventoryLine.ItemName");
+        var translatedDisplayName = TranslateItemDisplayNameText(displayName, itemRoute);
         OwnerTextSetter.SetTranslatedText(
             GetMemberValue(instance, "text"),
             displayName,
@@ -186,6 +186,22 @@ public static class InventoryLineTranslationPatch
         if (!string.Equals(translated, source, StringComparison.Ordinal))
         {
             DynamicTextObservability.RecordTransform(route, family, source, translated);
+        }
+
+        return translated;
+    }
+
+    private static string TranslateItemDisplayNameText(string source, string route)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return source;
+        }
+
+        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(source, route);
+        if (!string.Equals(translated, source, StringComparison.Ordinal))
+        {
+            DynamicTextObservability.RecordTransform(route, "InventoryLine.ItemName", source, translated);
         }
 
         return translated;
