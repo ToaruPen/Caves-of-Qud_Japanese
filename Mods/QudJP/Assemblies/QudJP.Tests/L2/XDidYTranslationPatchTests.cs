@@ -86,6 +86,40 @@ public sealed class XDidYTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesBreatherConeXDidYAndSkipsOriginalEnglishAssembly()
+    {
+        WriteDictionary(tier2: new[] { ("breath", "a cone of poison gas", "毒ガスを円錐状に吐き出した") });
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidY)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYForTests))));
+
+            DummyXDidYTarget.XDidY(
+                Actor: null,
+                Verb: "breath",
+                Extra: "a cone of poison gas",
+                EndMark: "!",
+                SubjectOverride: "熊",
+                AlwaysVisible: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+                Assert.That(lastMessage, Is.EqualTo("\u0001熊は毒ガスを円錐状に吐き出した！"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_PromotesUsePopupFromDialogWhenHeldByPlayer()
     {
         WriteDictionary(tier1: new[] { ("block", "防いだ") });
@@ -185,6 +219,40 @@ public sealed class XDidYTranslationPatchTests
             {
                 Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
                 Assert.That(lastMessage, Is.EqualTo("\u0001熊はタムを睨みつけた。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_TranslatesXDidYToZFlinchOutOfWayOfProjectile()
+    {
+        WriteDictionary(tier3: new[] { ("flinch", "out of the way of {0}", "{0}をかわした") });
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyXDidYTarget), nameof(DummyXDidYTarget.XDidYToZ)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(XDidYTranslationPatch), nameof(XDidYTranslationPatch.PrefixXDidYToZForTests))));
+
+            DummyXDidYTarget.XDidYToZ(
+                Actor: null,
+                Verb: "flinch",
+                Preposition: "out of the way of",
+                Object: "木の矢",
+                SubjectOverride: "ドリンクス",
+                AlwaysVisible: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyXDidYTarget.OriginalExecuted, Is.False);
+                Assert.That(lastMessage, Is.EqualTo("\u0001ドリンクスは木の矢をかわした。"));
             });
         }
         finally

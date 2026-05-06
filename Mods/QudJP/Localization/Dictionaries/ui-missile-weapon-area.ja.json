@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "id": "ui-missile-weapon-area",
+    "lang": "ja",
+    "version": "0.1.0"
+  },
+  "entries": [
+    { "key": "fire", "text": "射撃" },
+    { "key": "reload", "text": "リロード" }
+  ]
+}

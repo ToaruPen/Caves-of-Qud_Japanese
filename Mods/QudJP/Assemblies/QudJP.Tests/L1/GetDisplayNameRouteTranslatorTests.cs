@@ -159,6 +159,45 @@ public sealed class GetDisplayNameRouteTranslatorTests
     }
 
     [Test]
+    public void TranslatePreservingColors_PrefersAtomicDisplayNameBeforeProperNameModifierHeuristic()
+    {
+        WriteDictionaryFile(
+            "ui-displayname-atomic.ja.json",
+            ("Lead Slug", "鉛スラッグ"));
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
+            ("lead", "鉛"));
+
+        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(
+            "Lead Slug",
+            nameof(GetDisplayNamePatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("鉛スラッグ"));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("Lead Slug"), Is.EqualTo(0));
+        });
+    }
+
+    [Test]
+    public void TranslatePreservingColors_TranslatesObservedAtomicDisplayName()
+    {
+        WriteDictionaryFile(
+            "ui-displayname-atomic.ja.json",
+            ("Wooden Arrow", "木の矢"));
+
+        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(
+            "Wooden Arrow",
+            nameof(GetDisplayNamePatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("木の矢"));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("Wooden Arrow"), Is.EqualTo(0));
+        });
+    }
+
+    [Test]
     public void TranslatePreservingColors_PrefersTrimmedExactLookupBeforeProperNameModifierHeuristic()
     {
         WriteDictionary(("Water Containers", "水容器"));
@@ -188,6 +227,24 @@ public sealed class GetDisplayNameRouteTranslatorTests
             nameof(GetDisplayNamePatch));
 
         Assert.That(translated, Is.EqualTo("{{r|血まみれの}}Naruur"));
+    }
+
+    [Test]
+    public void TranslatePreservingColors_TranslatesLiquidCooledAdjectiveInsideLiquidColorMarkup()
+    {
+        WriteDictionaryFile(
+            "ui-displayname-adjectives.ja.json",
+            ("liquid-cooled", "液冷式"));
+
+        var translated = GetDisplayNameRouteTranslator.TranslatePreservingColors(
+            "{{B|liquid-cooled}}",
+            nameof(GetDisplayNamePatch));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("{{B|液冷式}}"));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("{{B|liquid-cooled}}"), Is.EqualTo(0));
+        });
     }
 
     [Test]

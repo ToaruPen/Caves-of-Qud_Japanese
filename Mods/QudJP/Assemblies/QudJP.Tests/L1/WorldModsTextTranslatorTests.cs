@@ -19,6 +19,7 @@ public sealed class WorldModsTextTranslatorTests
 
         Translator.ResetForTests();
         Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        ScopedDictionaryLookup.ResetForTests();
         DynamicTextObservability.ResetForTests();
     }
 
@@ -26,6 +27,7 @@ public sealed class WorldModsTextTranslatorTests
     public void TearDown()
     {
         Translator.ResetForTests();
+        ScopedDictionaryLookup.ResetForTests();
         DynamicTextObservability.ResetForTests();
 
         if (Directory.Exists(tempDirectory))
@@ -131,6 +133,27 @@ public sealed class WorldModsTextTranslatorTests
     [TestCase(
         "Snail-Encrusted: This item is crawling with tiny snails and grants the wearer +250 reputation with mollusks.",
         "巻貝まみれ: 小さなカタツムリが這っており、装着者に軟体動物との評判+250を与える。")]
+    [TestCase(
+        "+200 reputation with the Issachari tribe",
+        "イッサカリ族との評判+200")]
+    [TestCase(
+        "+200 reputation with the Mechanimists",
+        "the Mechanimistsとの評判+200")]
+    [TestCase(
+        "+200 reputation with the イッサカリ族",
+        "イッサカリ族との評判+200")]
+    [TestCase(
+        "{{rules|+200 reputation with the Issachari tribe}}",
+        "{{rules|イッサカリ族との評判+200}}")]
+    [TestCase(
+        "+200 reputation with {{Y|the Issachari tribe}}",
+        "{{Y|イッサカリ族}}との評判+200")]
+    [TestCase(
+        "{{W|Co-processor: When powered, this item grants +2 Intelligence and provides 13 units of compute power to the local lattice.}}",
+        "{{W|共同処理装置: 通電中、知力に+2を与え、局所格子に13ユニットの演算力を供給する。}}")]
+    [TestCase(
+        "{{rules|Co-Processor: When powered, this item grants bonus Intelligence and provides compute power to the local lattice.}}",
+        "{{rules|共同処理装置: 通電中、知力にボーナスを与え、局所格子に演算力を供給する。}}")]
     [TestCase(
         "Offhand Attack Chance: 15%",
         "オフハンド命中率: 15%")]
@@ -500,9 +523,11 @@ public sealed class WorldModsTextTranslatorTests
             ("Freezing: When powered, this weapon deals additional cold damage on hit.", "冷却: 通電中、この武器は命中時に追加の冷気ダメージを与える。"),
             ("Freezing: When powered, this weapon deals an additional {0} cold damage on hit.", "冷却: 通電中、この武器は命中時に追加で{0}の冷気ダメージを与える。"),
             ("Feathered: This item grants the wearer {0} reputation with birds.", "羽飾り: 装着者に鳥類との評判{0}を与える。"),
+            ("+{0} reputation with {1}", "{1}との評判{0:+#;-#}"),
             ("Offhand Attack Chance: {0}%", "オフハンド命中率: {0}%"),
             ("Scaled: This item grants the wearer {0} reputation with unshelled reptiles.", "鱗状の: 装着者に甲無し爬虫類との評判{0}を与える。"),
             ("Snail-Encrusted: This item is crawling with tiny snails and grants the wearer {0} reputation with mollusks.", "巻貝まみれ: 小さなカタツムリが這っており、装着者に軟体動物との評判{0}を与える。"),
+            ("Issachari tribe", "イッサカリ族"),
             ("Intelligence", "知力"));
     }
 

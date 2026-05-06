@@ -9,6 +9,10 @@ internal static class WorldModsTextTranslator
 {
     private const string WorldModsDictionaryFile = "world-mods.ja.json";
 
+    private static readonly Regex JapaneseCharacterPattern = new Regex(
+        "[\\p{IsHiragana}\\p{IsKatakana}\\p{IsCJKUnifiedIdeographs}]",
+        RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
     private static readonly Regex MasterworkPattern = new Regex(
         "^Masterwork: This weapon scores critical hits (?<value>.+) of the time instead of 5%\\.$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
@@ -105,13 +109,21 @@ internal static class WorldModsTextTranslator
             return false;
         }
 
+        if (TryTranslateDisguiseReputationTemplate(source, route, family, out translated))
+        {
+            translated = CloseDanglingRulesSpan(translated);
+            return true;
+        }
+
         if (TryTranslateScopedExact(source, route, family, out translated))
         {
+            translated = CloseDanglingRulesSpan(translated);
             return true;
         }
 
         if (TryTranslateTemplated(source, route, family, out translated))
         {
+            translated = CloseDanglingRulesSpan(translated);
             return true;
         }
 
@@ -144,6 +156,12 @@ internal static class WorldModsTextTranslator
         }
 
         translated = ColorAwareTranslationComposer.Restore(strippedTranslation, spans);
+        if (translated.StartsWith("{{rules|", StringComparison.Ordinal)
+            && !translated.EndsWith("}}", StringComparison.Ordinal))
+        {
+            translated += "}}";
+        }
+
         DynamicTextObservability.RecordTransform(route, family, source, translated);
         return true;
     }
@@ -346,22 +364,6 @@ internal static class WorldModsTextTranslator
             source,
             route,
             family,
-            DisguiseReputationPattern,
-            "+{0} reputation with {1}",
-            (match, spans) => new[]
-            {
-                GetTranslatedCapture(match, spans, "amount"),
-                GetTranslatedCapture(match, spans, "faction"),
-            },
-            out translated))
-        {
-            return true;
-        }
-
-        if (TryTranslateTemplate(
-            source,
-            route,
-            family,
             FactionSlayerPattern,
             "{0}% chance to behead {1} on hit.",
             (match, spans) => new[]
@@ -531,9 +533,13 @@ internal static class WorldModsTextTranslator
             {
                 GetTranslatedCapture(match, spans, "bonus", TranslateCoProcessorBonus),
                 GetTranslatedCapture(match, spans, "attribute"),
-            };
+        };
 
-        return TryFormatTemplate(source, stripped, spans, route, family, match, template!, args, out translated);
+        var visible = string.Format(CultureInfo.InvariantCulture, template!, args);
+        translated = CloseDanglingRulesSpan(RestoreTemplateBoundarySpans(stripped, spans, match, visible));
+
+        DynamicTextObservability.RecordTransform(route, family, source, translated);
+        return !string.Equals(source, translated, StringComparison.Ordinal);
     }
 
     private static bool TryTranslateCounterweightedTemplate(string source, string route, string family, out string translated)
@@ -559,6 +565,44 @@ internal static class WorldModsTextTranslator
         var args = string.Equals(match.Groups["bonus"].Value, "a bonus", StringComparison.Ordinal)
             ? Array.Empty<string>()
             : new[] { GetTranslatedCapture(match, spans, "bonus") };
+
+        return TryFormatTemplate(source, stripped, spans, route, family, match, template!, args, out translated);
+    }
+
+    private static bool TryTranslateDisguiseReputationTemplate(string source, string route, string family, out string translated)
+    {
+        var (stripped, spans) = ColorAwareTranslationComposer.Strip(source);
+        var match = DisguiseReputationPattern.Match(stripped);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        const string templateKey = "+{0} reputation with {1}";
+        var template = ScopedDictionaryLookup.TranslateExactOrLowerAscii(templateKey, WorldModsDictionaryFile);
+        if (string.IsNullOrEmpty(template) || string.Equals(template, templateKey, StringComparison.Ordinal))
+        {
+            translated = source;
+            return false;
+        }
+
+        var amount = match.Groups["amount"].Value;
+        var amountArgument = int.TryParse(amount, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedAmount)
+            ? (object)parsedAmount
+            : amount;
+        var faction = GetTranslatedWholeCaptureBoundary(match, spans, "faction", TranslateArticleStrippedTemplateCapture);
+        var factionOpening = Regex.Match(faction, "^\\{\\{[^|{}]+\\|");
+        if (factionOpening.Success && source.StartsWith(factionOpening.Value, StringComparison.Ordinal))
+        {
+            faction = TranslateArticleStrippedTemplateCapture(match.Groups["faction"].Value);
+        }
+
+        var args = new[]
+        {
+            amountArgument,
+            faction,
+        };
 
         return TryFormatTemplate(source, stripped, spans, route, family, match, template!, args, out translated);
     }
@@ -635,18 +679,25 @@ internal static class WorldModsTextTranslator
         out string translated)
     {
         var visible = string.Format(CultureInfo.InvariantCulture, template, args);
-        if (spans.Count > 0)
-        {
-            var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(spans, match, stripped.Length, visible.Length);
-            translated = ColorAwareTranslationComposer.Restore(visible, boundarySpans);
-        }
-        else
-        {
-            translated = visible;
-        }
+        translated = RestoreTemplateBoundarySpans(stripped, spans, match, visible);
 
         DynamicTextObservability.RecordTransform(route, family, source, translated);
         return !string.Equals(source, translated, StringComparison.Ordinal);
+    }
+
+    private static string RestoreTemplateBoundarySpans(
+        string stripped,
+        IReadOnlyList<ColorSpan> spans,
+        Match match,
+        string visible)
+    {
+        if (spans.Count > 0)
+        {
+            var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(spans, match, stripped.Length, visible.Length);
+            return ColorAwareTranslationComposer.Restore(visible, boundarySpans);
+        }
+
+        return visible;
     }
 
     private static string GetTranslatedCapture(
@@ -660,6 +711,120 @@ internal static class WorldModsTextTranslator
         return spans.Count > 0
             ? ColorAwareTranslationComposer.RestoreCapture(value, spans, group)
             : value;
+    }
+
+    private static string GetTranslatedWholeCaptureBoundary(
+        Match match,
+        IReadOnlyList<ColorSpan> spans,
+        string groupName,
+        Func<string, string> translate)
+    {
+        var group = match.Groups[groupName];
+        var value = translate(group.Value);
+        if (spans.Count == 0)
+        {
+            return value;
+        }
+
+        var restored = RestoreTrueWholeBoundary(value, spans, group.Index, group.Length);
+        return HasUnbalancedQudSpan(restored) ? value : restored;
+    }
+
+    private static string RestoreTrueWholeBoundary(
+        string value,
+        IReadOnlyList<ColorSpan> spans,
+        int startIndex,
+        int length)
+    {
+        if (length == 0)
+        {
+            return value;
+        }
+
+        var endIndex = startIndex + length;
+        var stack = new List<ColorSpan>();
+        var restoreSpans = new List<ColorSpan>();
+        for (var index = 0; index < spans.Count; index++)
+        {
+            var span = spans[index];
+            if (span.Index < startIndex || span.Index > endIndex)
+            {
+                continue;
+            }
+
+            if (ColorCodePreserver.IsClosingBoundaryToken(span.Token) && stack.Count > 0)
+            {
+                var opening = stack[stack.Count - 1];
+                if (BoundaryTokensMatch(opening.Token, span.Token))
+                {
+                    stack.RemoveAt(stack.Count - 1);
+                    if (opening.Index == startIndex && span.Index == endIndex)
+                    {
+                        restoreSpans.Add(new ColorSpan(0, opening.Token));
+                        restoreSpans.Add(new ColorSpan(value.Length, span.Token));
+                    }
+
+                    continue;
+                }
+            }
+
+            if (ColorCodePreserver.IsOpeningBoundaryToken(span.Token))
+            {
+                stack.Add(span);
+            }
+        }
+
+        return ColorAwareTranslationComposer.Restore(value, restoreSpans);
+    }
+
+    private static bool HasUnbalancedQudSpan(string value)
+    {
+        var openingCount = CountMatches(value, "\\{\\{[^|{}]+\\|");
+        var closingCount = CountMatches(value, "\\}\\}");
+        return openingCount != closingCount;
+    }
+
+    private static int CountMatches(string value, string pattern)
+    {
+        var count = 0;
+        var match = Regex.Match(value, pattern);
+        while (match.Success)
+        {
+            count++;
+            match = match.NextMatch();
+        }
+
+        return count;
+    }
+
+    private static string CloseDanglingRulesSpan(string value)
+    {
+        return value.StartsWith("{{rules|", StringComparison.Ordinal) && !value.EndsWith("}}", StringComparison.Ordinal)
+            ? value + "}}"
+            : value;
+    }
+
+    private static bool BoundaryTokensMatch(string openingToken, string closingToken)
+    {
+        if (openingToken.StartsWith("{{", StringComparison.Ordinal)
+            && openingToken.EndsWith("|", StringComparison.Ordinal))
+        {
+            return string.Equals(closingToken, "}}", StringComparison.Ordinal);
+        }
+
+        if (openingToken.StartsWith("<color=", StringComparison.OrdinalIgnoreCase))
+        {
+            return string.Equals(closingToken, "</color>", StringComparison.OrdinalIgnoreCase);
+        }
+
+        if (openingToken.Length == 2
+            && closingToken.Length == 2
+            && (openingToken[0] == '&' || openingToken[0] == '^'))
+        {
+            return openingToken[0] == closingToken[0];
+        }
+
+        return false;
     }
 
     private static string TranslatePaintedSubject(string source)
@@ -688,11 +853,30 @@ internal static class WorldModsTextTranslator
 
     private static string TranslateDisguiseAppearance(string source)
     {
+        return TranslateArticleStrippedTemplateCapture(source);
+    }
+
+    private static string TranslateArticleStrippedTemplateCapture(string source)
+    {
+        var originalTranslated = TranslateTemplateCapture(source);
+        if (!string.Equals(originalTranslated, source, StringComparison.Ordinal))
+        {
+            return originalTranslated;
+        }
+
         var strippedArticle = StringHelpers.StripLeadingEnglishArticle(source);
+        if (string.Equals(strippedArticle, source, StringComparison.Ordinal))
+        {
+            return source;
+        }
+
         var translated = TranslateTemplateCapture(strippedArticle);
-        return string.Equals(translated, strippedArticle, StringComparison.Ordinal)
-            ? strippedArticle
-            : translated;
+        if (!string.Equals(translated, strippedArticle, StringComparison.Ordinal))
+        {
+            return translated;
+        }
+
+        return JapaneseCharacterPattern.IsMatch(strippedArticle) ? strippedArticle : source;
     }
 
     private static string TranslateLiquidRequirement(string source)

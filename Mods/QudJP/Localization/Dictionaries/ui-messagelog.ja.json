@@ -120,16 +120,6 @@
             "text": "決定"
         },
         {
-            "key": "You stagger ",
-            "context": "XRL.World.XRL.World.Parts.Combat",
-            "text": "よろめかせた："
-        },
-        {
-            "key": " with your shield block!",
-            "context": "XRL.World.XRL.World.Parts.Combat",
-            "text": "（盾ブロック）"
-        },
-        {
             "key": "You are staggered by ",
             "context": "XRL.World.XRL.World.Parts.Combat",
             "text": "よろめかされた："

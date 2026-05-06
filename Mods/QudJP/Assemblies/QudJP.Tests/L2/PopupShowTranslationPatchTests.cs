@@ -96,6 +96,30 @@ public sealed class PopupShowTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesGenericReceiveItemPattern()
+    {
+        WriteMessagePatternDictionary(("^You receive (.+?)[.!]?$", "{t0}を受け取った"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.Show)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.Show("You receive 奇妙な小物!");
+
+            Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo("奇妙な小物を受け取った"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_TranslatesDiscoverLocationTemplateWithColorWrappedTarget()
     {
         WriteDictionary(("You discover {0}!", "{0}を発見した！"));
@@ -385,6 +409,236 @@ public sealed class PopupShowTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesPhysicsAttackConfirmationPopupWithoutDictionaryEntry()
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.ShowYesNo)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.ShowYesNo("Do you really want to attack the ウォーターヴァイン農家?");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupShow.LastShowYesNoMessage, Is.EqualTo("本当にウォーターヴァイン農家を攻撃しますか？"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(PopupShowTranslationPatch),
+                        "Popup.ProducerText.PhysicsAttackConfirm"),
+                    Is.GreaterThan(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [TestCase("The ウォーターヴァイン農家 refuses to speak to you.")]
+    [TestCase("The ウォーターヴァイン農家 refuse to speak to you.")]
+    public void Prefix_TranslatesConversationRefusalPopupWithoutDictionaryEntry(string source)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.ShowFail)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.ShowFail(source);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo("ウォーターヴァイン農家はあなたと話そうとしない。"));
+                Assert.That(
+                    DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                        nameof(PopupShowTranslationPatch),
+                        "Popup.ProducerText.ConversationRefusal"),
+                    Is.GreaterThan(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void Prefix_PhysicsAttackConfirm_LeavesNonMatchingEnglishFallback()
+    {
+        var source = "Do you really want to leave?";
+
+        var translated = RunShowYesNoWithPopupPatch(source);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo(source));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PopupShowTranslationPatch),
+                    "Popup.ProducerText.PhysicsAttackConfirm"),
+                Is.EqualTo(0));
+        });
+    }
+
+    [Test]
+    public void Prefix_PhysicsAttackConfirm_LeavesEmptyInputUnchanged()
+    {
+        var translated = RunShowYesNoWithPopupPatch(string.Empty);
+
+        Assert.That(translated, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void Prefix_PhysicsAttackConfirm_PreservesColorTags()
+    {
+        var translated = RunShowYesNoWithPopupPatch("{{W|Do you really want to attack the ウォーターヴァイン農家?}}");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("{{W|本当にウォーターヴァイン農家を攻撃しますか？}}"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PopupShowTranslationPatch),
+                    "Popup.ProducerText.PhysicsAttackConfirm"),
+                Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
+    public void Prefix_PhysicsAttackConfirm_PreservesTargetColorTagsWhenArticleIsInsideCapture()
+    {
+        var translated = RunShowYesNoWithPopupPatch("Do you really want to attack {{Y|the snapjaw}}?");
+
+        Assert.That(translated, Is.EqualTo("本当に{{Y|snapjaw}}を攻撃しますか？"));
+    }
+
+    [Test]
+    public void Prefix_PhysicsAttackConfirm_StripsDirectMarkerWithoutRetranslating()
+    {
+        var source = "Do you really want to attack the ウォーターヴァイン農家?";
+
+        var translated = RunShowYesNoWithPopupPatch(MessageFrameTranslator.MarkDirectTranslation(source));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo(source));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PopupShowTranslationPatch),
+                    "Popup.ProducerText.PhysicsAttackConfirm"),
+                Is.EqualTo(0));
+        });
+    }
+
+    [Test]
+    public void Prefix_ConversationRefusal_LeavesNonMatchingEnglishFallback()
+    {
+        var source = "The ウォーターヴァイン農家 greets you.";
+
+        var translated = RunShowFailWithPopupPatch(source);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo(source));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PopupShowTranslationPatch),
+                    "Popup.ProducerText.ConversationRefusal"),
+                Is.EqualTo(0));
+        });
+    }
+
+    [Test]
+    public void Prefix_ConversationRefusal_LeavesEmptyInputUnchanged()
+    {
+        var translated = RunShowFailWithPopupPatch(string.Empty);
+
+        Assert.That(translated, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void Prefix_ConversationRefusal_PreservesColorTags()
+    {
+        var translated = RunShowFailWithPopupPatch("{{W|The ウォーターヴァイン農家 refuses to speak to you.}}");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo("{{W|ウォーターヴァイン農家はあなたと話そうとしない。}}"));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PopupShowTranslationPatch),
+                    "Popup.ProducerText.ConversationRefusal"),
+                Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
+    public void Prefix_ConversationRefusal_PreservesTargetColorTagsWhenArticleIsInsideCapture()
+    {
+        var translated = RunShowFailWithPopupPatch("{{Y|The snapjaw}} refuses to speak to you.");
+
+        Assert.That(translated, Is.EqualTo("{{Y|snapjaw}}はあなたと話そうとしない。"));
+    }
+
+    [Test]
+    public void Prefix_ConversationRefusal_StripsDirectMarkerWithoutRetranslating()
+    {
+        var source = "The ウォーターヴァイン農家 refuses to speak to you.";
+
+        var translated = RunShowFailWithPopupPatch(MessageFrameTranslator.MarkDirectTranslation(source));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo(source));
+            Assert.That(
+                DynamicTextObservability.GetRouteFamilyHitCountForTests(
+                    nameof(PopupShowTranslationPatch),
+                    "Popup.ProducerText.ConversationRefusal"),
+                Is.EqualTo(0));
+        });
+    }
+
+    [Test]
+    public void Prefix_DoesNotRecordMissingPattern_WhenTranslatedShowFailReentersShow()
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            var prefix = new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix)));
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.ShowFail)),
+                prefix: prefix);
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.Show)),
+                prefix: prefix);
+
+            const string source = "The ウォーターヴァイン農家 refuses to speak to you.";
+            const string translated = "ウォーターヴァイン農家はあなたと話そうとしない。";
+            DummyPopupShow.ShowFail(source);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyPopupShow.LastShowMessage, Is.EqualTo(translated));
+                Assert.That(MessagePatternTranslator.GetMissingPatternHitCountForTests(translated), Is.EqualTo(0));
+                Assert.That(MessagePatternTranslator.GetMissingPatternHitCountForTests(source), Is.EqualTo(0));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void Prefix_TranslatesPopupShowYesNoAsyncMessage()
     {
         WriteDictionary(("Are you sure you want to quit?", "本当に終了しますか？"));
@@ -538,6 +792,46 @@ public sealed class PopupShowTranslationPatchTests
     {
         return AccessTools.Method(type, methodName)
             ?? throw new InvalidOperationException($"Method not found: {type.FullName}.{methodName}");
+    }
+
+    private static string? RunShowYesNoWithPopupPatch(string source)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.ShowYesNo)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.ShowYesNo(source);
+            return DummyPopupShow.LastShowYesNoMessage;
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    private static string? RunShowFailWithPopupPatch(string source)
+    {
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyPopupShow), nameof(DummyPopupShow.ShowFail)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(PopupShowTranslationPatch), nameof(PopupShowTranslationPatch.Prefix))));
+
+            DummyPopupShow.ShowFail(source);
+            return DummyPopupShow.LastShowMessage;
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
     }
 
     private void WriteDictionary(params (string key, string text)[] entries)

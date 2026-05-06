@@ -13,35 +13,13 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog.ja.json",
-          "entry_index": 28,
+          "entry_index": 26,
           "text": "射撃武器！"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 570,
+          "entry_index": 567,
           "text": "飛び道具を装備していない！"
-        }
-      ]
-    },
-    {
-      "scope": "cross_file",
-      "path": "Dictionaries",
-      "key": " with your shield block!",
-      "entry_count": 2,
-      "texts": [
-        "を盾受けでよろめかせた！",
-        "（盾ブロック）"
-      ],
-      "occurrences": [
-        {
-          "path": "Dictionaries/ui-messagelog.ja.json",
-          "entry_index": 24,
-          "text": "（盾ブロック）"
-        },
-        {
-          "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 566,
-          "text": "を盾受けでよろめかせた！"
         }
       ]
     },
@@ -57,12 +35,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog.ja.json",
-          "entry_index": 31,
+          "entry_index": 29,
           "text": "（あなたを攻撃、武器："
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 581,
+          "entry_index": 578,
           "text": " で注入した。"
         }
       ]
@@ -85,12 +63,12 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 73,
+          "entry_index": 72,
           "text": "良い結果を出せない。自我・意志力・知力・秘術スキルを高めれば改善できる。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 593,
+          "entry_index": 590,
           "text": "成果を上げる見込みがない。エゴ・意志力・知力や秘術技能を高めれば状況を改善できる。"
         }
       ]
@@ -140,7 +118,7 @@
         },
         {
           "path": "Dictionaries/ui-popup.ja.json",
-          "entry_index": 386,
+          "entry_index": 383,
           "text": "……"
         }
       ]
@@ -184,7 +162,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 390,
+          "entry_index": 389,
           "text": "<spice.personNouns.!random>"
         }
       ]
@@ -478,7 +456,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 424,
+          "entry_index": 423,
           "text": "知性"
         }
       ]
@@ -811,12 +789,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 223,
+          "entry_index": 221,
           "text": "注射は失敗に終わった。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 582,
+          "entry_index": 579,
           "text": "注入に失敗した。"
         }
       ]
@@ -1097,12 +1075,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog.ja.json",
-          "entry_index": 25,
+          "entry_index": 23,
           "text": "よろめかされた："
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 567,
+          "entry_index": 564,
           "text": " にひるまされた！"
         }
       ]
@@ -1119,12 +1097,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 89,
+          "entry_index": 88,
           "text": "ワールドマップではそれはできない。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 525,
+          "entry_index": 524,
           "text": "ワールドマップ上ではそれを行えない。"
         }
       ]
@@ -1147,12 +1125,12 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 453,
+          "entry_index": 452,
           "text": "潜伏中はそれを行えない。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 458,
+          "entry_index": 457,
           "text": "潜伏中はそれを行えない。"
         }
       ]
@@ -1174,7 +1152,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 457,
+          "entry_index": 456,
           "text": "囲われている間はそれを行えない。"
         }
       ]
@@ -1196,7 +1174,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 454,
+          "entry_index": 453,
           "text": "飛行中はそれを行えない。"
         }
       ]
@@ -1218,7 +1196,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 482,
+          "entry_index": 481,
           "text": "ワールドマップでは飛び道具を撃てない。"
         }
       ]
@@ -1262,7 +1240,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 480,
+          "entry_index": 479,
           "text": "ワールドマップでは物を投げられない。"
         }
       ]
@@ -1367,12 +1345,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog.ja.json",
-          "entry_index": 26,
+          "entry_index": 24,
           "text": "装備していません："
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 568,
+          "entry_index": 565,
           "text": "あなたは"
         }
       ]
@@ -1400,7 +1378,7 @@
         },
         {
           "path": "Dictionaries/ui-popup.ja.json",
-          "entry_index": 93,
+          "entry_index": 90,
           "text": "クッドの洞窟へ旅立つ。"
         }
       ]
@@ -1439,12 +1417,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 111,
+          "entry_index": 110,
           "text": "下へと落ちた！"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 554,
+          "entry_index": 553,
           "text": "下へ落ちる！"
         }
       ]
@@ -1483,12 +1461,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 164,
+          "entry_index": 162,
           "text": "{part}が使えなくなった。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 560,
+          "entry_index": 559,
           "text": "あなたは の機能を失った。"
         }
       ]
@@ -1511,12 +1489,12 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 74,
+          "entry_index": 73,
           "text": "この難度での精神戦は熟達済みだ。より高い成功率を狙って詳細に指揮する？「いいえ」を選ぶと標準的な成功の結果を自動で受け取る。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 594,
+          "entry_index": 591,
           "text": "この難度での精神戦闘は習熟済みだ。卓越した成功率を狙って詳細な手順を自ら指揮する？「いいえ」を選ぶと、平凡でも堅実な結果が自動的に得られる。"
         }
       ]
@@ -1561,12 +1539,12 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 77,
+          "entry_index": 76,
           "text": "使える手はもうない。ここまでの成果が結果を決める。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 595,
+          "entry_index": 592,
           "text": "使える手段が尽きたので、ここまでの成果で結果が決まる。"
         }
       ]
@@ -1589,12 +1567,12 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 72,
+          "entry_index": 71,
           "text": "次の行動に使える選択肢がない: "
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 592,
+          "entry_index": 589,
           "text": " に使える手段がないため、"
         }
       ]
@@ -1611,12 +1589,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 166,
+          "entry_index": 164,
           "text": "{part}の使用が回復した。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 561,
+          "entry_index": 560,
           "text": "あなたは の機能を回復した。"
         }
       ]
@@ -1633,12 +1611,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 124,
+          "entry_index": 123,
           "text": "「しゅぽん」という音とともに周囲の世界が歪んだ。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 550,
+          "entry_index": 549,
           "text": "シュロープという音とともに、周囲の世界がずれる。"
         }
       ]
@@ -1655,12 +1633,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 125,
+          "entry_index": 124,
           "text": "「しゅぽん」と音がしたが、途中で止まり、何も起きない。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 547,
+          "entry_index": 546,
           "text": "シュロープという音の後につまずきのような感触がする。何も起こらない。"
         }
       ]
@@ -1744,39 +1722,17 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 177,
+          "entry_index": 175,
           "text": "ダメージを跳ね返した。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 599,
+          "entry_index": 596,
           "text": "あなたは"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 607,
-          "text": "あなたは"
-        }
-      ]
-    },
-    {
-      "scope": "cross_file",
-      "path": "Dictionaries",
-      "key": "You stagger ",
-      "entry_count": 2,
-      "texts": [
-        "あなたは",
-        "よろめかせた："
-      ],
-      "occurrences": [
-        {
-          "path": "Dictionaries/ui-messagelog.ja.json",
-          "entry_index": 23,
-          "text": "よろめかせた："
-        },
-        {
-          "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 565,
+          "entry_index": 604,
           "text": "あなたは"
         }
       ]
@@ -2003,7 +1959,7 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-popup.ja.json",
-          "entry_index": 82,
+          "entry_index": 79,
           "text": "液体を採取"
         },
         {
@@ -2300,7 +2256,7 @@
         },
         {
           "path": "Dictionaries/ui-popup.ja.json",
-          "entry_index": 112,
+          "entry_index": 109,
           "text": "操作する"
         }
       ]
@@ -2723,9 +2679,10 @@
       "scope": "cross_file",
       "path": "Dictionaries",
       "key": "select",
-      "entry_count": 2,
+      "entry_count": 3,
       "texts": [
         "決定",
+        "選択",
         "選択"
       ],
       "occurrences": [
@@ -2737,6 +2694,11 @@
         {
           "path": "Dictionaries/ui-options.ja.json",
           "entry_index": 19,
+          "text": "選択"
+        },
+        {
+          "path": "Dictionaries/ui-pick-target.ja.json",
+          "entry_index": 1,
           "text": "選択"
         }
       ]
@@ -2858,7 +2820,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 387,
+          "entry_index": 386,
           "text": "忘れられた遺跡"
         }
       ]
@@ -2930,7 +2892,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 250,
+          "entry_index": 249,
           "text": "マス"
         }
       ]
@@ -3119,12 +3081,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog.ja.json",
-          "entry_index": 30,
+          "entry_index": 28,
           "text": "攻撃を受けている："
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 571,
+          "entry_index": 568,
           "text": " に攻撃されている！"
         }
       ]
@@ -5236,7 +5198,7 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 73,
+          "entry_index": 72,
           "text": "良い結果を出せない。自我・意志力・知力・秘術スキルを高めれば改善できる。"
         }
       ]
@@ -5258,7 +5220,7 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 75,
+          "entry_index": 74,
           "text": "このまま精神戦を終えますか？"
         }
       ]
@@ -5280,7 +5242,7 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 76,
+          "entry_index": 75,
           "text": "今終了すると現状のまま精神戦が終わる。終了してもいいですか？"
         }
       ]
@@ -5297,12 +5259,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 100,
+          "entry_index": 99,
           "text": "別の場所へ弾き飛ばされた！"
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 265,
+          "entry_index": 263,
           "text": "別の場所へ弾き飛ばされた！"
         }
       ]
@@ -5319,12 +5281,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 101,
+          "entry_index": 100,
           "text": "出口へ転送された。"
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 264,
+          "entry_index": 262,
           "text": "出口へ転送された。"
         }
       ]
@@ -5341,12 +5303,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 87,
+          "entry_index": 86,
           "text": "ここから階段へ安全に辿る経路が見つからない。"
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 268,
+          "entry_index": 266,
           "text": "ここから安全に階段へたどり着く方法が分からない。"
         }
       ]
@@ -5363,12 +5325,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 260,
+          "entry_index": 258,
           "text": "目的地への経路が見つからない。"
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 267,
+          "entry_index": 265,
           "text": "目的地への経路が見つからない。"
         }
       ]
@@ -5390,7 +5352,7 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 74,
+          "entry_index": 73,
           "text": "この難度での精神戦は熟達済みだ。より高い成功率を狙って詳細に指揮する？「いいえ」を選ぶと標準的な成功の結果を自動で受け取る。"
         }
       ]
@@ -5412,7 +5374,7 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 77,
+          "entry_index": 76,
           "text": "使える手はもうない。ここまでの成果が結果を決める。"
         }
       ]
@@ -5434,7 +5396,7 @@
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 72,
+          "entry_index": 71,
           "text": "次の行動に使える選択肢がない: "
         }
       ]
@@ -5451,12 +5413,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 130,
+          "entry_index": 129,
           "text": "突然ぐらりとよろめいた！"
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 131,
+          "entry_index": 130,
           "text": "突然ぐらりとよろめいた！"
         }
       ]
@@ -5473,12 +5435,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 194,
+          "entry_index": 192,
           "text": "テレポートした！"
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 266,
+          "entry_index": 264,
           "text": "テレポートした！"
         }
       ]
@@ -5495,12 +5457,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 238,
+          "entry_index": 236,
           "text": "攻撃は{target}に影響を与えない。"
         },
         {
           "path": "Dictionaries/ui-messagelog-world.ja.json",
-          "entry_index": 239,
+          "entry_index": 237,
           "text": "攻撃は{target}に影響を与えない。"
         }
       ]
@@ -7299,12 +7261,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 600,
+          "entry_index": 597,
           "text": " のダメージを跳ね返して "
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 608,
+          "entry_index": 605,
           "text": " のダメージを跳ね返して "
         }
       ]
@@ -7321,12 +7283,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 602,
+          "entry_index": 599,
           "text": " のダメージがあなたに跳ね返ってきた。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 609,
+          "entry_index": 606,
           "text": " のダメージがあなたに跳ね返ってきた。"
         }
       ]
@@ -7348,7 +7310,7 @@
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 271,
+          "entry_index": 270,
           "text": "敏捷"
         }
       ]
@@ -7365,12 +7327,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 248,
+          "entry_index": 247,
           "text": "攻撃"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 563,
+          "entry_index": 562,
           "text": "攻撃"
         }
       ]
@@ -7387,12 +7349,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 317,
+          "entry_index": 316,
           "text": "オブジェクト"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 437,
+          "entry_index": 436,
           "text": "オブジェクト"
         }
       ]
@@ -7409,12 +7371,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 461,
+          "entry_index": 460,
           "text": "あなたは と位相がずれている。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 471,
+          "entry_index": 470,
           "text": "あなたは と位相がずれている。"
         }
       ]
@@ -7431,12 +7393,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 453,
+          "entry_index": 452,
           "text": "潜伏中はそれを行えない。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 458,
+          "entry_index": 457,
           "text": "潜伏中はそれを行えない。"
         }
       ]
@@ -7455,22 +7417,22 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 462,
+          "entry_index": 461,
           "text": "手が届かない: "
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 470,
+          "entry_index": 469,
           "text": "手が届かない: "
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 530,
+          "entry_index": 529,
           "text": "手が届かない: "
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 539,
+          "entry_index": 538,
           "text": "手が届かない: "
         }
       ]
@@ -7487,12 +7449,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 469,
+          "entry_index": 468,
           "text": " のハッキング方法がわからない。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 591,
+          "entry_index": 588,
           "text": " のハッキング方法がわからない。"
         }
       ]
@@ -7509,12 +7471,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 468,
+          "entry_index": 467,
           "text": " のハッキングが進んでいる気がする。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 590,
+          "entry_index": 587,
           "text": " のハッキングが進んでいる気がする。"
         }
       ]
@@ -7531,12 +7493,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 467,
+          "entry_index": 466,
           "text": " をハッキングした。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 589,
+          "entry_index": 586,
           "text": " をハッキングした。"
         }
       ]
@@ -7553,12 +7515,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 475,
+          "entry_index": 474,
           "text": "修理ビット <{{| を受け取った"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 528,
+          "entry_index": 527,
           "text": "修理ビット <{{| を受け取った"
         }
       ]
@@ -7575,12 +7537,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 599,
+          "entry_index": 596,
           "text": "あなたは"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 607,
+          "entry_index": 604,
           "text": "あなたは"
         }
       ]
@@ -7597,12 +7559,12 @@
       "occurrences": [
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 478,
+          "entry_index": 477,
           "text": " を壊してしまった気がする。"
         },
         {
           "path": "Dictionaries/world-parts.ja.json",
-          "entry_index": 516,
+          "entry_index": 515,
           "text": " を壊してしまった気がする。"
         }
       ]

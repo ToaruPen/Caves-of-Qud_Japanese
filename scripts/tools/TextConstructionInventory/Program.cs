@@ -750,10 +750,10 @@ internal static class SummaryMarkdownRenderer
         builder.AppendLine("Reproduction:");
         builder.AppendLine();
         builder.AppendLine("```bash");
-        builder.AppendLine("dotnet run --project scripts/tools/TextConstructionInventory/TextConstructionInventory.csproj -- \\");
-        builder.AppendLine("  --source-root ~/Dev/coq-decompiled_stable \\");
-        builder.AppendLine("  --output /tmp/roslyn-text-construction-inventory.json \\");
-        builder.AppendLine("  --summary-output docs/coderabbit/roslyn-text-construction-inventory-summary.md");
+        builder.AppendLine("just text-construction-inventory \\");
+        builder.AppendLine("  \"$HOME/dev/coq-decompiled_stable\" \\");
+        builder.AppendLine("  /tmp/roslyn-text-construction-inventory.json \\");
+        builder.AppendLine("  docs/coderabbit/roslyn-text-construction-inventory-summary.md");
         builder.AppendLine("```");
         builder.AppendLine();
         AppendScope(builder);

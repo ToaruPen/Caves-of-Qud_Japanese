@@ -79,6 +79,20 @@ public sealed class TradeUiPopupTranslationPatchTests
     }
 
     [Test]
+    public void Prefix_TranslatesShowMessage_WithGenericReceiveItemPattern()
+    {
+        WritePatternDictionary(("^You receive (.+?)[.!]?$", "{t0}を受け取った"));
+
+        using var patch = PatchMethod(nameof(DummyTradeUiPopupTarget.Show));
+
+        DummyTradeUiPopupTarget.Show("You receive 奇妙な小物!");
+
+        Assert.That(
+            DummyTradeUiPopupTarget.LastShowMessage,
+            Is.EqualTo("奇妙な小物を受け取った"));
+    }
+
+    [Test]
     public void Prefix_UsesOwnerTemplateForTradeQuestion_IgnoresDictionaryEntriesAndPreservesColorTags()
     {
         WriteDictionary(

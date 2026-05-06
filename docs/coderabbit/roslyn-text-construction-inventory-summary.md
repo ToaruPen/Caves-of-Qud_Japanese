@@ -25,10 +25,10 @@ Generator:
 Reproduction:
 
 ```bash
-dotnet run --project scripts/tools/TextConstructionInventory/TextConstructionInventory.csproj -- \
-  --source-root ~/Dev/coq-decompiled_stable \
-  --output /tmp/roslyn-text-construction-inventory.json \
-  --summary-output docs/coderabbit/roslyn-text-construction-inventory-summary.md
+just text-construction-inventory \
+  "$HOME/dev/coq-decompiled_stable" \
+  /tmp/roslyn-text-construction-inventory.json \
+  docs/coderabbit/roslyn-text-construction-inventory-summary.md
 ```
 
 ## Scope

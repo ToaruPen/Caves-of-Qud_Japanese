@@ -102,18 +102,6 @@
             "text": "[Tab] 取引"
         },
         {
-            "key": "Do you really want to attack the {0}?",
-            "text": "本当に{0}を攻撃するか？"
-        },
-        {
-            "key": "Do you really want to attack {0}?",
-            "text": "本当に{0}を攻撃するか？"
-        },
-        {
-            "key": "The {0} refuses to speak to you.",
-            "text": "{0}はあなたと話そうとしない。"
-        },
-        {
             "key": "That is not owned by you. Are you sure you want to open it?",
             "text": "それはあなたの所有物ではない。本当に開けるか？"
         },

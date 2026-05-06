@@ -51,6 +51,10 @@ public static class PopupTranslationPatch
         new Regex("^You discover something about (?<value>.+?) that was hidden!$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex QuestReceivedPattern =
         new Regex("^You have received a new quest, (?<value>.+)!$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex PhysicsAttackConfirmPattern =
+        new Regex("^Do you really want to attack (?<value>(?:the |a |an )?.+?)\\?$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex ConversationRefusalPattern =
+        new Regex("^(?<value>(?:The |the |[Aa]n? )?.+?) refuses? to speak to you\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex XRLCoreFleePattern =
         new Regex("^You can't find a way to flee from (?<value>.+)\\.$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
     private static readonly Regex XRLCoreReachPattern =
@@ -401,6 +405,12 @@ public static class PopupTranslationPatch
             return true;
         }
 
+        if (IsAlreadyLocalizedPopupTextCore(stripped))
+        {
+            translated = source;
+            return true;
+        }
+
         if (TryTranslateUntilCalendarTimeOfDay(source, stripped, spans, route, family, out var untilTranslated))
         {
             translated = untilTranslated;
@@ -494,6 +504,31 @@ public static class PopupTranslationPatch
         {
             translated = questReceivedTranslated;
             return true;
+        }
+
+        if (string.Equals(route, nameof(PopupShowTranslationPatch), StringComparison.Ordinal))
+        {
+            if (TryTranslatePhysicsAttackConfirm(
+                    stripped,
+                    route,
+                    family + ".PhysicsAttackConfirm",
+                    spans,
+                    out var physicsAttackConfirmTranslated))
+            {
+                translated = physicsAttackConfirmTranslated;
+                return true;
+            }
+
+            if (TryTranslateConversationRefusal(
+                    stripped,
+                    route,
+                    family + ".ConversationRefusal",
+                    spans,
+                    out var conversationRefusalTranslated))
+            {
+                translated = conversationRefusalTranslated;
+                return true;
+            }
         }
 
         if (!string.Equals(source, stripped, StringComparison.Ordinal)
@@ -1029,6 +1064,72 @@ public static class PopupTranslationPatch
         }
 
         translated = translatedTemplate.Replace("{0}", quest);
+        if (spans.Count > 0)
+        {
+            var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(spans, match, source.Length, translated.Length);
+            translated = ColorAwareTranslationComposer.Restore(translated, boundarySpans);
+        }
+
+        DynamicTextObservability.RecordTransform(route, family, source, translated);
+        return true;
+    }
+
+    private static bool TryTranslatePhysicsAttackConfirm(
+        string source,
+        string route,
+        string family,
+        IReadOnlyList<ColorSpan> spans,
+        out string translated)
+    {
+        var match = PhysicsAttackConfirmPattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var target = StringHelpers.StripLeadingEnglishArticle(
+            match.Groups["value"].Value,
+            includeCapitalizedDefiniteArticle: true);
+        if (spans.Count > 0)
+        {
+            target = ColorAwareTranslationComposer.RestoreCapture(target, spans, match.Groups["value"]);
+        }
+
+        translated = "本当に" + target + "を攻撃しますか？";
+        if (spans.Count > 0)
+        {
+            var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(spans, match, source.Length, translated.Length);
+            translated = ColorAwareTranslationComposer.Restore(translated, boundarySpans);
+        }
+
+        DynamicTextObservability.RecordTransform(route, family, source, translated);
+        return true;
+    }
+
+    private static bool TryTranslateConversationRefusal(
+        string source,
+        string route,
+        string family,
+        IReadOnlyList<ColorSpan> spans,
+        out string translated)
+    {
+        var match = ConversationRefusalPattern.Match(source);
+        if (!match.Success)
+        {
+            translated = source;
+            return false;
+        }
+
+        var target = StringHelpers.StripLeadingEnglishArticle(
+            match.Groups["value"].Value,
+            includeCapitalizedDefiniteArticle: true);
+        if (spans.Count > 0)
+        {
+            target = ColorAwareTranslationComposer.RestoreCapture(target, spans, match.Groups["value"]);
+        }
+
+        translated = target + "はあなたと話そうとしない。";
         if (spans.Count > 0)
         {
             var boundarySpans = ColorAwareTranslationComposer.SliceBoundarySpans(spans, match, source.Length, translated.Length);

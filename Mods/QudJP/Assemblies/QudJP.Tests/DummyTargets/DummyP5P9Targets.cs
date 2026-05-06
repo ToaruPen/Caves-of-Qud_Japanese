@@ -73,7 +73,7 @@ internal static class DummyPopupShow
         bool Capitalize = true,
         bool DimBackground = true)
     {
-        LastShowMessage = Message;
+        Show(Message, CopyScrap: CopyScrap, Capitalize: Capitalize, DimBackground: DimBackground);
     }
 
     public static void Reset()

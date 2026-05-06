@@ -13,7 +13,9 @@ QudJP is the Japanese localization mod for Caves of Qud `2.0.4`. The repo contai
 - Source of truth:
   - behavior: `Mods/QudJP/Assemblies/QudJP.Tests/`
   - layer boundaries: `docs/test-architecture.md`
-  - workflow rules and operating constraints: `docs/RULES.md`
+  - translation ownership and route decision rules: `docs/RULES.md`
+  - PR and runtime procedures: `docs/workflows/pr-review.md`,
+    `docs/workflows/runtime-evidence.md`
   - runtime evidence: fresh logs under `~/Library/Logs/Freehold Games/CavesOfQud/`
   - Steam Workshop release procedure: `docs/release.md`
     - Codex local workflow shortcut: `~/.codex/skills/ship-steam-workshop/SKILL.md`
@@ -21,6 +23,9 @@ QudJP is the Japanese localization mod for Caves of Qud `2.0.4`. The repo contai
 ## How
 
 - If a stale note conflicts with tests or fresh runtime evidence, follow tests first.
+- Use `docs/RULES.md` when deciding where a translation belongs. Use
+  `docs/workflows/` when executing PR, runtime-log, sync, or deployment
+  procedures.
 - For decompiled C# exploration, use structural search with `ast-grep` before
   or alongside `rg` when call shape, argument structure, producer/sink routes,
   wrappers, assignments, or attributes matter. Prefer `just sg-cs
@@ -44,6 +49,7 @@ just python-check
 just python-test
 just localization-check
 just translation-token-check
+just deploy-mod
 just sync-mod
 ```
 

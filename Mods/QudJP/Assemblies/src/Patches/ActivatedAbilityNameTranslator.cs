@@ -5,6 +5,8 @@ namespace QudJP.Patches;
 
 internal static class ActivatedAbilityNameTranslator
 {
+    private const string SkillsAndPowersDictionaryFile = "ui-skillsandpowers.ja.json";
+
     private static readonly Regex ReleaseGasPattern =
         new Regex("^Release (?<gas>.+ Gas)$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
@@ -30,6 +32,13 @@ internal static class ActivatedAbilityNameTranslator
 
     internal static bool TryTranslateVisibleName(string source, out string translated)
     {
+        var scoped = ScopedDictionaryLookup.TranslateExactOrLowerAscii(source, SkillsAndPowersDictionaryFile);
+        if (scoped is not null)
+        {
+            translated = scoped;
+            return true;
+        }
+
         var releaseGasMatch = ReleaseGasPattern.Match(source);
         if (releaseGasMatch.Success
             && TryTranslateReleaseGasName(releaseGasMatch.Groups["gas"].Value, out translated))

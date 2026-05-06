@@ -21,6 +21,7 @@ public sealed class UITextSkinTranslationPatchTests
 
         Translator.ResetForTests();
         Translator.SetDictionaryDirectoryForTests(tempDirectory);
+        ScopedDictionaryLookup.ResetForTests();
         SinkObservation.ResetForTests();
     }
 
@@ -28,6 +29,7 @@ public sealed class UITextSkinTranslationPatchTests
     public void TearDown()
     {
         Translator.ResetForTests();
+        ScopedDictionaryLookup.ResetForTests();
         SinkObservation.ResetForTests();
 
         if (Directory.Exists(tempDirectory))
@@ -357,11 +359,14 @@ public sealed class UITextSkinTranslationPatchTests
     }
 
     [Test]
-    public void TranslatePreservingColors_ReturnsSourceUnchangedForPickTargetObservationOnlyRoute()
+    public void TranslatePreservingColors_TranslatesPickTargetCommandBarOwnerRoute()
     {
-        WriteDictionary(
+        WriteDictionaryFile(
+            "ui-default.ja.json",
+            ("lock", "ロック"));
+        WriteDictionaryFile(
+            "ui-pick-target.ja.json",
             ("Look", "調べる"),
-            ("lock", "固定"),
             ("interact", "インタラクト"),
             ("walk", "歩く"),
             ("select", "選択"));
@@ -371,8 +376,175 @@ public sealed class UITextSkinTranslationPatchTests
             source,
             nameof(PickTargetWindowTextTranslator));
 
-        Assert.That(translated, Is.EqualTo(source),
-            "PickTargetWindowTextTranslator is observation-only — source must pass through unchanged");
+        Assert.That(translated, Is.EqualTo("調べる | ESC | (F1) ロック | space インタラクト | W 歩く | Enter-選択"));
+    }
+
+    [TestCase("navigate", "移動")]
+    [TestCase("Navigate", "移動")]
+    [TestCase("select", "選択")]
+    [TestCase("Select", "選択")]
+    [TestCase("{{W|navigate}}", "{{W|移動}}")]
+    public void TranslatePreservingColors_TranslatesDirectUiActionTokenAtTextSink(string source, string expected)
+    {
+        WriteDictionaryFile(
+            "ui-default.ja.json",
+            ("navigate", "移動"),
+            ("select", "選択"));
+
+        var translated = UITextSkinTranslationPatch.TranslatePreservingColors(
+            source,
+            nameof(UITextSkinTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo(expected));
+    }
+
+    [TestCase("{{W|space}}-select | unlock ({{hotkey|F1}}) | Fire Missile Weapon", "{{W|space}}-選択 | ロック解除 ({{hotkey|F1}}) | Fire Missile Weapon")]
+    [TestCase("{{W|space}}-select | lock ({{hotkey|F1}}) | Fire Missile Weapon", "{{W|space}}-選択 | ロック ({{hotkey|F1}}) | Fire Missile Weapon")]
+    [TestCase("{{W|space}}-select | (F1) {{W|lock}} | Fire Missile Weapon", "{{W|space}}-選択 | (F1) {{W|ロック}} | Fire Missile Weapon")]
+    [TestCase("{{W|space}}-select | {{W|lock}} ({{hotkey|F1}}) | Fire Missile Weapon", "{{W|space}}-選択 | {{W|ロック}} ({{hotkey|F1}}) | Fire Missile Weapon")]
+    [TestCase("{{W|space}}-select | R reload | unlock ({{hotkey|F1}})", "{{W|space}}-選択 | R reload | ロック解除 ({{hotkey|F1}})")]
+    [TestCase("{{W|space}}-select | reload ({{hotkey|R}}) | unlock ({{hotkey|F1}})", "{{W|space}}-選択 | reload ({{hotkey|R}}) | ロック解除 ({{hotkey|F1}})")]
+    [TestCase("{{W|space}}-select | R-reload | unlock ({{hotkey|F1}})", "{{W|space}}-選択 | R-reload | ロック解除 ({{hotkey|F1}})")]
+    [TestCase("{{W|space}}-select | (R) {{W|Reload}} | unlock ({{hotkey|F1}})", "{{W|space}}-選択 | (R) {{W|Reload}} | ロック解除 ({{hotkey|F1}})")]
+    public void TranslatePreservingColors_TranslatesPickTargetMissileFooterFromUiDictionary(string source, string expected)
+    {
+        WriteDictionaryFile(
+            "ui-default.ja.json",
+            ("lock", "ロック"),
+            ("reload", "リロード"));
+        WriteDictionaryFile(
+            "ui-pick-target.ja.json",
+            ("select", "選択"),
+            ("unlock", "ロック解除"));
+
+        string translated = null!;
+        var output = TestTraceHelper.CaptureTrace(() =>
+        {
+            translated = UITextSkinTranslationPatch.TranslatePreservingColors(
+                source,
+                nameof(UITextSkinTranslationPatch));
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(translated, Is.EqualTo(expected));
+            Assert.That(output, Does.Contain("PickTarget.UiText"));
+        });
+    }
+
+    [Test]
+    public void TranslatePreservingColors_LeavesPickTargetCommandBarUnchanged_WhenOwnerTokenMissing()
+    {
+        WriteDictionaryFile(
+            "ui-default.ja.json",
+            ("lock", "ロック"));
+        WriteDictionaryFile(
+            "ui-pick-target.ja.json",
+            ("unlock", "ロック解除"));
+
+        var source = "{{W|space}}-select | unlock ({{hotkey|F1}}) | Fire Missile Weapon";
+        var translated = UITextSkinTranslationPatch.TranslatePreservingColors(
+            source,
+            nameof(UITextSkinTranslationPatch));
+
+        Assert.That(translated, Is.EqualTo(source));
+    }
+
+    [Test]
+    public void MissileWeaponAreaPostfix_TranslatesPlayerUiFireAndReloadHotkeyLabels_FromOwnerDictionary()
+    {
+        WriteDictionaryFile(
+            "ui-missile-weapon-area.ja.json",
+            ("fire", "射撃"),
+            ("reload", "リロード"));
+
+        var fire = new DummyUITextSkin();
+        var reload = new DummyUITextSkin();
+        fire.SetText("{{W|[F]}} fire");
+        reload.SetText("{{W|[R]}} reload");
+
+        MissileWeaponAreaTranslationPatch.Postfix(fire, reload);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(fire.Text, Is.EqualTo("{{W|[F]}} 射撃"));
+            Assert.That(reload.Text, Is.EqualTo("{{W|[R]}} リロード"));
+            Assert.That(fire.ApplyCallCount, Is.EqualTo(0));
+            Assert.That(reload.ApplyCallCount, Is.EqualTo(0));
+        });
+    }
+
+    [Test]
+    public void MissileWeaponAreaPostfix_LeavesHotkeyLabelsUnchanged_WhenOwnerDictionaryMissingKeys()
+    {
+        WriteDictionaryFile("ui-missile-weapon-area.ja.json");
+
+        var fire = new DummyUITextSkin();
+        var reload = new DummyUITextSkin();
+        fire.SetText("{{W|[F]}} fire");
+        reload.SetText("{{W|[R]}} reload");
+
+        MissileWeaponAreaTranslationPatch.Postfix(fire, reload);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(fire.Text, Is.EqualTo("{{W|[F]}} fire"));
+            Assert.That(reload.Text, Is.EqualTo("{{W|[R]}} reload"));
+        });
+    }
+
+    [Test]
+    public void MissileWeaponAreaPostfix_LeavesEmptyAndDirectMarkerTextUnchanged()
+    {
+        WriteDictionaryFile(
+            "ui-missile-weapon-area.ja.json",
+            ("fire", "射撃"),
+            ("reload", "リロード"));
+
+        var fire = new DummyUITextSkin();
+        var reload = new DummyUITextSkin();
+        fire.SetText(string.Empty);
+        reload.SetText(MessageFrameTranslator.MarkDirectTranslation("{{W|[R]}} reload"));
+
+        MissileWeaponAreaTranslationPatch.Postfix(fire, reload);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(fire.Text, Is.EqualTo(string.Empty));
+            Assert.That(reload.Text, Is.EqualTo(MessageFrameTranslator.MarkDirectTranslation("{{W|[R]}} reload")));
+        });
+    }
+
+    [Test]
+    public void MissileWeaponAreaPostfix_LeavesOtherFireAndReloadContextsUnchanged()
+    {
+        WriteDictionaryFile(
+            "ui-missile-weapon-area.ja.json",
+            ("fire", "射撃"),
+            ("reload", "リロード"));
+
+        var fire = new DummyUITextSkin();
+        var reload = new DummyUITextSkin();
+        fire.SetText("{{W|[F]}} fire mode");
+        reload.SetText("{{W|[R]}} Reload from checkpoint");
+
+        MissileWeaponAreaTranslationPatch.Postfix(fire, reload);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(fire.Text, Is.EqualTo("{{W|[F]}} fire mode"));
+            Assert.That(reload.Text, Is.EqualTo("{{W|[R]}} Reload from checkpoint"));
+        });
+    }
+
+    [Test]
+    public void TranslatePreservingColors_LeavesDirectUiActionTokenUnchangedForOwnerObservationContext()
+    {
+        var translated = UITextSkinTranslationPatch.TranslatePreservingColors(
+            "select",
+            nameof(PickTargetWindowTextTranslator));
+
+        Assert.That(translated, Is.EqualTo("select"));
     }
 
     [Test]
@@ -761,6 +933,11 @@ public sealed class UITextSkinTranslationPatchTests
 
     private void WriteDictionary(params (string key, string text)[] entries)
     {
+        WriteDictionaryFile("ui-textskin.ja.json", entries);
+    }
+
+    private void WriteDictionaryFile(string fileName, params (string key, string text)[] entries)
+    {
         var builder = new StringBuilder();
         builder.Append('{');
         builder.Append("\"entries\":[");
@@ -782,7 +959,7 @@ public sealed class UITextSkinTranslationPatchTests
         builder.Append("]}");
         builder.AppendLine();
 
-        var path = Path.Combine(tempDirectory, "ui-textskin.ja.json");
+        var path = Path.Combine(tempDirectory, fileName);
         File.WriteAllText(path, builder.ToString(), new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
     }
 

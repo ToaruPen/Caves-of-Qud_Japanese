@@ -131,6 +131,433 @@ public sealed class CombatAndLogMessageQueuePatchTests
     }
 
     [Test]
+    public void PhysicsObjectEnteringCell_TranslatesCollisionMessage_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^OUCH! You collide with (?:the |a |an |some )?(.+?)[.]$", "{0}にぶつかった！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyPhysicsObjectEnteringCellTarget), nameof(DummyPhysicsObjectEnteringCellTarget.HandleEvent), typeof(DummyObjectEnteringCellEvent)),
+                typeof(PhysicsObjectEnteringCellTranslationPatch));
+
+            var target = new DummyPhysicsObjectEnteringCellTarget
+            {
+                MessageToSend = "OUCH! You collide with a chrome pyramid.",
+            };
+
+            target.HandleEvent(new DummyObjectEnteringCellEvent());
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("chrome pyramidにぶつかった！"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void CrippleApply_TranslatesDurationMessage_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^You are crippled for (.+?)!$", "{t0}のあいだ手足が不自由になった！"));
+        WriteLeafDictionary(("5 turns", "5ターン"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyCrippleApplyTarget), nameof(DummyCrippleApplyTarget.Apply), typeof(DummyGameObject)),
+                typeof(CrippleApplyTranslationPatch));
+
+            var target = new DummyCrippleApplyTarget
+            {
+                MessageToSend = "You are crippled for 5 turns!",
+                ColorToSend = "R",
+            };
+
+            target.Apply(new DummyGameObject());
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("5ターンのあいだ手足が不自由になった！"));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("R"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void CrippleApply_LeavesUnknownOwnerMessageUnchanged_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^You are crippled for (.+?)!$", "{t0}のあいだ手足が不自由になった！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyCrippleApplyTarget), nameof(DummyCrippleApplyTarget.Apply), typeof(DummyGameObject)),
+                typeof(CrippleApplyTranslationPatch));
+
+            var target = new DummyCrippleApplyTarget
+            {
+                MessageToSend = "You are poisoned for 5 turns!",
+            };
+
+            target.Apply(new DummyGameObject());
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You are poisoned for 5 turns!"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void CrippleApply_LeavesEmptyMessageUnchanged_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^You are crippled for (.+?)!$", "{t0}のあいだ手足が不自由になった！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyCrippleApplyTarget), nameof(DummyCrippleApplyTarget.Apply), typeof(DummyGameObject)),
+                typeof(CrippleApplyTranslationPatch));
+
+            var target = new DummyCrippleApplyTarget
+            {
+                MessageToSend = string.Empty,
+                ColorToSend = "R",
+            };
+
+            target.Apply(new DummyGameObject());
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo(string.Empty));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("R"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void CrippleApply_PreservesColorTaggedDurationAndQueueColor_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^You are crippled for (.+?)!$", "{t0}のあいだ手足が不自由になった！"));
+        WriteLeafDictionary(("5 turns", "5ターン"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyCrippleApplyTarget), nameof(DummyCrippleApplyTarget.Apply), typeof(DummyGameObject)),
+                typeof(CrippleApplyTranslationPatch));
+
+            var target = new DummyCrippleApplyTarget
+            {
+                MessageToSend = "You are crippled for {{C|5 turns}}!",
+                ColorToSend = "R",
+            };
+
+            target.Apply(new DummyGameObject());
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("{{C|5ターン}}のあいだ手足が不自由になった！"));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("R"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void CrippleApply_DirectMarkerPassesThroughWithoutRetranslation_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^You are crippled for (.+?)!$", "{t0}のあいだ手足が不自由になった！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyCrippleApplyTarget), nameof(DummyCrippleApplyTarget.Apply), typeof(DummyGameObject)),
+                typeof(CrippleApplyTranslationPatch));
+
+            var target = new DummyCrippleApplyTarget
+            {
+                MessageToSend = "\u0001You are crippled for 5 turns!",
+                ColorToSend = "R",
+            };
+
+            target.Apply(new DummyGameObject());
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You are crippled for 5 turns!"));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("R"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void CrippleApply_DoesNotTranslateQueueOnlyTraffic_WhenOwnerAbsent()
+    {
+        WritePatternDictionary(
+            ("^You are crippled for (.+?)!$", "{t0}のあいだ手足が不自由になった！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+
+            DummyMessageQueue.AddPlayerMessage("You are crippled for 5 turns!", "R", Capitalize: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You are crippled for 5 turns!"));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("R"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void ExperienceAwardXp_TranslatesColorizedXpGain_WhenPatched()
+    {
+        UseRepositoryPatternDictionary();
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyExperienceTarget), nameof(DummyExperienceTarget.HandleEvent), typeof(DummyAwardXPEvent)),
+                typeof(ExperienceAwardXpTranslationPatch));
+
+            var target = new DummyExperienceTarget
+            {
+                MessageToSend = "You gain {{C|75}} XP!",
+                ColorToSend = "C",
+            };
+
+            target.HandleEvent(new DummyAwardXPEvent());
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("あなたは経験値を{{C|75}}獲得した"));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("C"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [TestCase("You gain 75 XP", "あなたは経験値を75獲得した")]
+    [TestCase("You gain 75 XP.", "あなたは経験値を75獲得した")]
+    [TestCase("You gain 75 XP!", "あなたは経験値を75獲得した")]
+    public void ExperienceAwardXp_TranslatesXpGainPunctuationVariants_WhenPatched(string source, string expected)
+    {
+        UseRepositoryPatternDictionary();
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyExperienceTarget), nameof(DummyExperienceTarget.HandleEvent), typeof(DummyAwardXPEvent)),
+                typeof(ExperienceAwardXpTranslationPatch));
+
+            var target = new DummyExperienceTarget
+            {
+                MessageToSend = source,
+            };
+
+            target.HandleEvent(new DummyAwardXPEvent());
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo(expected));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void ExperienceAwardXp_LeavesUnknownOwnerMessageUnchanged_WhenPatched()
+    {
+        UseRepositoryPatternDictionary();
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyExperienceTarget), nameof(DummyExperienceTarget.HandleEvent), typeof(DummyAwardXPEvent)),
+                typeof(ExperienceAwardXpTranslationPatch));
+
+            var target = new DummyExperienceTarget
+            {
+                MessageToSend = "You gain renown!",
+                ColorToSend = "C",
+            };
+
+            target.HandleEvent(new DummyAwardXPEvent());
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You gain renown!"));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("C"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void ExperienceAwardXp_LeavesEmptyMessageUnchanged_WhenPatched()
+    {
+        UseRepositoryPatternDictionary();
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyExperienceTarget), nameof(DummyExperienceTarget.HandleEvent), typeof(DummyAwardXPEvent)),
+                typeof(ExperienceAwardXpTranslationPatch));
+
+            var target = new DummyExperienceTarget
+            {
+                MessageToSend = string.Empty,
+                ColorToSend = "C",
+            };
+
+            target.HandleEvent(new DummyAwardXPEvent());
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo(string.Empty));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("C"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void ExperienceAwardXp_DirectMarkerPassesThroughWithoutRetranslation_WhenPatched()
+    {
+        UseRepositoryPatternDictionary();
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyExperienceTarget), nameof(DummyExperienceTarget.HandleEvent), typeof(DummyAwardXPEvent)),
+                typeof(ExperienceAwardXpTranslationPatch));
+
+            var target = new DummyExperienceTarget
+            {
+                MessageToSend = "\u0001You gain {{C|75}} XP!",
+                ColorToSend = "C",
+            };
+
+            target.HandleEvent(new DummyAwardXPEvent());
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You gain {{C|75}} XP!"));
+                Assert.That(DummyMessageQueue.LastColor, Is.EqualTo("C"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
+    public void ExperienceAwardXp_DoesNotTranslateQueueOnlyTraffic_WhenOwnerAbsent()
+    {
+        UseRepositoryPatternDictionary();
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+
+            DummyMessageQueue.AddPlayerMessage("You gain {{C|75}} XP!", null, Capitalize: false);
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("You gain {{C|75}} XP!"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void GameObjectHeal_TranslatesHealMessage_WhenPatched()
     {
         WritePatternDictionary(
@@ -643,6 +1070,47 @@ public sealed class CombatAndLogMessageQueuePatchTests
     }
 
     [Test]
+    public void MessagingEmitMessage_TranslatesMissileVitalAreaHits_WhenPatched()
+    {
+        UseRepositoryPatternDictionary();
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(
+                    typeof(DummyMessagingEmitMessageTarget),
+                    nameof(DummyMessagingEmitMessageTarget.EmitMessage),
+                    typeof(DummyGameObject),
+                    typeof(string),
+                    typeof(char),
+                    typeof(bool),
+                    typeof(bool),
+                    typeof(bool),
+                    typeof(DummyGameObject),
+                    typeof(DummyGameObject)),
+                typeof(GameObjectEmitMessageTranslationPatch));
+
+            DummyMessagingEmitMessageTarget.MessageToSend = "The 熊 hits the スナップジョー in a vital area.";
+            DummyMessagingEmitMessageTarget.EmitMessage(new DummyGameObject(), "unused", 'W', false, false, false);
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("熊がスナップジョーの急所に命中させた"));
+
+            DummyMessagingEmitMessageTarget.MessageToSend = "You hit the スナップジョー in a vital area.";
+            DummyMessagingEmitMessageTarget.EmitMessage(new DummyGameObject(), "unused", 'W', false, false, false);
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("スナップジョーの急所に命中した"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void MessagingEmitMessage_TranslatesPlayerAcidDamageMessage_WhenPatched()
     {
         UseRepositoryPatternDictionary();
@@ -809,7 +1277,11 @@ public sealed class CombatAndLogMessageQueuePatchTests
     [TestCase("The reacting liquids congeal into a SoupSludge.", "反応した液体が凝固しSoupSludgeになった")]
     [TestCase("The primordial soup nearby starts reacting with the water.", "nearbyの原初のスープがwaterと反応を始めた")]
     [TestCase("You receive tinkering bits <{{|AB}}>.", "修理ビット<{{|AB}}>を受け取った。")]
+    [TestCase("You receive 奇妙な小物!", "奇妙な小物を受け取った")]
     [TestCase("You make some progress disarming 地雷.", "地雷の解除が少し進んだ。")]
+    [TestCase("You reload your クローム・リボルバー with 鉛スラッグ x6.", "クローム・リボルバーに鉛スラッグ x6を装填した")]
+    [TestCase("You toggle {{c|Akimbo}} on.", "{{c|二挺拳銃}}をオンにした。")]
+    [TestCase("You toggle {{c|Akimbo}} off.", "{{c|二挺拳銃}}をオフにした。")]
     [TestCase("An image of タム disappears.", "タムの映像が消えた。")]
     [TestCase("The 熊's carapace loosens.", "熊の甲殻が緩んだ")]
     [TestCase("熊の carapace loosens.", "熊の甲殻が緩んだ")]
@@ -818,6 +1290,9 @@ public sealed class CombatAndLogMessageQueuePatchTests
     [TestCase("You lose 3 HP.", "あなたは3HPを失った")]
     [TestCase("You recover 5 HP.", "あなたは5HP回復した")]
     [TestCase("You take 14 damage from 監視官イラメの freezing effect!", "監視官イラメの凍結効果で14ダメージを受けた！")]
+    [TestCase("You take 6 damage from ドリンクスの pyrokinesis!", "ドリンクスの熱念動で6ダメージを受けた！")]
+    [TestCase("The air here starts to shimmer with heat!", "このあたりの空気が熱で揺らめき始めた！")]
+    [TestCase("The air here ceases shimmering with heat.", "このあたりの空気の熱による揺らめきが収まった。")]
     [TestCase("You harvest a ヴァインウェハー from the ウォーターヴァイン.", "ウォーターヴァインからヴァインウェハーを収穫した")]
     [TestCase("カロク begins flying.", "カロクが飛翔し始めた。")]
     [TestCase("シュウラシュウォレム harvests a スターアップル.", "シュウラシュウォレムはスターアップルを収穫した。")]
@@ -1141,6 +1616,37 @@ public sealed class CombatAndLogMessageQueuePatchTests
     }
 
     [Test]
+    public void CombatGetDefenderHitDice_TranslatesShieldBlockStaggerMessage_WhenPatched()
+    {
+        WritePatternDictionary(
+            ("^You stagger (.+) with your shield block!$", "盾で受け止めて{0}をよろめかせた！"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            PatchQueue(harmony);
+            PatchOwner(
+                harmony,
+                RequireMethod(typeof(DummyCombatGetDefenderHitDiceTarget), nameof(DummyCombatGetDefenderHitDiceTarget.HandleEvent), typeof(DummyCombatGetDefenderHitDiceEvent)),
+                typeof(CombatGetDefenderHitDiceTranslationPatch));
+
+            var target = new DummyCombatGetDefenderHitDiceTarget
+            {
+                MessageToSend = "You stagger Snapjaw Scavenger with your shield block!",
+            };
+
+            target.HandleEvent(new DummyCombatGetDefenderHitDiceEvent());
+
+            Assert.That(DummyMessageQueue.LastMessage, Is.EqualTo("盾で受け止めてSnapjaw Scavengerをよろめかせた！"));
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void CombatGetDefenderHitDice_TranslatesStaggeredByMessage_WhenPatched()
     {
         WritePatternDictionary(
@@ -1410,6 +1916,7 @@ public sealed class CombatAndLogMessageQueuePatchTests
                 "..",
                 "Localization"));
         LocalizationAssetResolver.SetLocalizationRootForTests(localizationRoot);
+        Translator.SetDictionaryDirectoryForTests(Path.Combine(localizationRoot, "Dictionaries"));
         MessagePatternTranslator.SetPatternFileForTests(null);
     }
 }

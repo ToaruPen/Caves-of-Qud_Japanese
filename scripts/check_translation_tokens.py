@@ -108,6 +108,16 @@ class DuplicateConflictState:
     occurrences: tuple[DuplicateOccurrence, ...]
 
 
+@dataclass(frozen=True)
+class TranslationScan:
+    """Collected JSON localization entries and source-token issues."""
+
+    file_count: int
+    entries: list[TranslationEntry]
+    token_issues: list[TranslationIssue]
+    scanned_paths: set[str]
+
+
 def _path_candidates(path: Path) -> tuple[Path, ...]:
     resolved = path.resolve()
     return (path, resolved) if path != resolved else (path,)
@@ -660,6 +670,49 @@ def _duplicate_conflict_states(entries: list[TranslationEntry]) -> dict[tuple[st
     return states
 
 
+def _duplicate_occurrence_payload(occurrence: DuplicateOccurrence) -> dict[str, object]:
+    return {
+        "path": occurrence.path,
+        "entry_index": occurrence.entry_index,
+        "text": occurrence.text,
+    }
+
+
+def _duplicate_state_payload(state: DuplicateConflictState) -> dict[str, object]:
+    return {
+        "scope": state.scope,
+        "path": state.path,
+        "key": state.key,
+        "entry_count": state.entry_count,
+        "texts": list(state.texts),
+        "occurrences": [_duplicate_occurrence_payload(occurrence) for occurrence in state.occurrences],
+    }
+
+
+def _duplicate_baseline_payload(
+    states: dict[tuple[str, str, str], DuplicateConflictState],
+) -> dict[str, object]:
+    return {
+        "version": _DUPLICATE_BASELINE_VERSION,
+        "duplicate_conflicts": [
+            _duplicate_state_payload(state) for state in sorted(states.values(), key=_duplicate_identity)
+        ],
+    }
+
+
+def _write_duplicate_conflict_baseline(
+    path: Path,
+    states: dict[tuple[str, str, str], DuplicateConflictState],
+) -> None:
+    payload = _duplicate_baseline_payload(states)
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    except OSError as e:
+        message = f"Failed to write baseline {path}: {e}"
+        raise ValueError(message) from e
+
+
 def _format_duplicate_state(state: DuplicateConflictState | None) -> str:
     if state is None:
         return "missing current conflict"
@@ -729,8 +782,15 @@ def check_paths(
     duplicate_conflict_baseline: Path | None = None,
 ) -> tuple[int, list[TranslationIssue]]:
     """Check JSON localization token invariants for input paths."""
-    files = collect_translation_json_files(paths)
+    scan = _scan_paths(paths)
     baseline = _load_duplicate_baseline(duplicate_conflict_baseline)
+    issues = list(scan.token_issues)
+    issues.extend(_find_duplicate_conflicts(scan.entries, baseline=baseline, scanned_paths=scan.scanned_paths))
+    return scan.file_count, issues
+
+
+def _scan_paths(paths: list[Path]) -> TranslationScan:
+    files = collect_translation_json_files(paths)
     entries: list[TranslationEntry] = []
     issues: list[TranslationIssue] = []
 
@@ -741,8 +801,12 @@ def check_paths(
             issues.extend(_find_token_issues(entry))
 
     scanned_paths = {_relative_asset_path(path) for path in files}
-    issues.extend(_find_duplicate_conflicts(entries, baseline=baseline, scanned_paths=scanned_paths))
-    return len(files), issues
+    return TranslationScan(
+        file_count=len(files),
+        entries=entries,
+        token_issues=issues,
+        scanned_paths=scanned_paths,
+    )
 
 
 def _print_report(file_count: int, issues: list[TranslationIssue]) -> None:
@@ -758,6 +822,21 @@ def _print_report(file_count: int, issues: list[TranslationIssue]) -> None:
             print(f"    text={issue.text!r}")  # noqa: T201
 
 
+def _write_duplicate_conflict_baseline_for_paths(
+    paths: list[Path],
+    baseline_path: Path,
+) -> tuple[int, list[TranslationIssue]]:
+    scan = _scan_paths(paths)
+    issues = scan.token_issues
+    if scan.file_count == 0 or issues:
+        return scan.file_count, issues
+
+    current_states = _duplicate_conflict_states(scan.entries)
+    _write_duplicate_conflict_baseline(baseline_path, current_states)
+    print(f"Wrote duplicate conflict baseline: {baseline_path} ({len(current_states)} conflict(s))")  # noqa: T201
+    return scan.file_count, issues
+
+
 def main(argv: list[str] | None = None) -> int:
     """Run the translation-token gate CLI."""
     parser = argparse.ArgumentParser(
@@ -768,15 +847,26 @@ def main(argv: list[str] | None = None) -> int:
         "--duplicate-conflict-baseline",
         type=Path,
         default=_DEFAULT_DUPLICATE_BASELINE,
-        help="JSON baseline of known same-file duplicate source-key conflicts.",
+        help="JSON baseline of known duplicate source-key conflicts.",
+    )
+    parser.add_argument(
+        "--write-duplicate-conflict-baseline",
+        type=Path,
+        help="Write the current duplicate source-key conflict state to this baseline JSON and exit.",
     )
     args = parser.parse_args(argv)
 
     try:
-        file_count, issues = check_paths(
-            args.paths,
-            duplicate_conflict_baseline=args.duplicate_conflict_baseline,
-        )
+        if args.write_duplicate_conflict_baseline is not None:
+            file_count, issues = _write_duplicate_conflict_baseline_for_paths(
+                args.paths,
+                args.write_duplicate_conflict_baseline,
+            )
+        else:
+            file_count, issues = check_paths(
+                args.paths,
+                duplicate_conflict_baseline=args.duplicate_conflict_baseline,
+            )
     except (FileNotFoundError, ValueError, TypeError, json.JSONDecodeError, UnicodeDecodeError) as exc:
         print(f"Error: {exc}", file=sys.stderr)  # noqa: T201
         return 1

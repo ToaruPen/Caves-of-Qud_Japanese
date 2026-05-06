@@ -61,24 +61,46 @@ JSON は timestamp と absolute source-root path を含めず、同じ decompile
 **使い方**:
 
 ```bash
-python3.12 scripts/scan_static_producer_inventory.py \
-  --source-root ~/dev/coq-decompiled_stable \
-  --output docs/static-producer-inventory.json
+just static-producer-preview
+```
+
+tracked artifact を意図的に更新する場合のみ、次を使います。
+
+```bash
+just static-producer-regenerate-tracked
 ```
 
 **検証**:
 
 ```bash
-dotnet build scripts/tools/StaticProducerInventoryScanner/StaticProducerInventoryScanner.csproj --configuration Release
-uv run pytest scripts/tests/test_scan_static_producer_inventory.py -q
-ruff check scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py
-uvx basedpyright scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py
+just static-producer-check
 ```
 
 scanner は Roslyn syntax API を source of structure として使い、可能な範囲で
 SemanticModel も取得します。decompiled source の完全な semantic compilation は
 必須にしないため、symbol 解決できない callsite があっても scanner は継続し、
 `roslyn_symbol_status` に `resolved` / `candidate` / `unresolved` を出力します。
+
+Roslyn ツール全体の検証には、次の `just` recipe を使います。
+
+```bash
+just roslyn-build
+just roslyn-test
+just roslyn-check
+```
+
+Annals pattern extractor と text construction inventory の入口も `just`
+から呼び出せます。
+
+```bash
+just annals-pattern-preview
+just annals-pattern-extract-tracked
+just text-construction-inventory
+```
+
+`annals-pattern-extract-tracked` updates the tracked pending artifact. Use it
+only when the task explicitly owns that generated artifact update. For read-only
+review and validation flows, prefer `annals-pattern-preview`.
 
 ---
 
@@ -169,6 +191,26 @@ Scanned 78 files: 77 OK, 1 issue(s)
 ```
 
 **終了コード**: 0 = 問題なし、1 = 問題あり
+
+---
+
+## check_translation_tokens.py
+
+JSON ローカライゼーションの source-side token と重複 source key の状態を検証します。
+
+**使い方**:
+
+```bash
+# JSON localization の token parity と重複 baseline を検証
+python scripts/check_translation_tokens.py Mods/QudJP/Localization/ --duplicate-conflict-baseline scripts/translation_token_duplicate_baseline.json
+
+# 現在の重複 source key conflict baseline を再生成
+python scripts/check_translation_tokens.py Mods/QudJP/Localization/ --write-duplicate-conflict-baseline scripts/translation_token_duplicate_baseline.json
+```
+
+通常の検証では `--duplicate-conflict-baseline` を使い、`--write-duplicate-conflict-baseline` は tracked baseline 更新を所有するタスクでのみ使用します。
+
+`--write-duplicate-conflict-baseline` は token parity issue がある場合は baseline を書き込まずに失敗します。
 
 ---
 

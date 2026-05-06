@@ -352,6 +352,30 @@ public sealed class GetDisplayNameProcessPatchTests
         });
     }
 
+    [TestCase("Lead Slug", "鉛スラッグ")]
+    [TestCase("Torch", "たいまつ")]
+    [TestCase("Wooden Arrow", "木の矢")]
+    public void Postfix_TranslatesAtomicDisplayName_WhenPatched(string source, string expected)
+    {
+        WriteDictionaryFile(
+            "ui-displayname-atomic.ja.json",
+            ("Lead Slug", "鉛スラッグ"),
+            ("Torch", "たいまつ"),
+            ("Wooden Arrow", "木の矢"));
+
+        RunWithDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor(source);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo(expected));
+                Assert.That(Translator.GetMissingKeyHitCountForTests(source), Is.EqualTo(0));
+            });
+        });
+    }
+
     [Test]
     public void Postfix_TranslatesQuantitySuffix_WhenPatched()
     {
@@ -571,6 +595,24 @@ public sealed class GetDisplayNameProcessPatchTests
             {
                 Assert.That(result, Is.EqualTo("{{r|血まみれの}}Naruur"));
                 Assert.That(Translator.GetMissingKeyHitCountForTests("bloody Naruur"), Is.EqualTo(0));
+            });
+        });
+    }
+
+    [Test]
+    public void Postfix_TranslatesLiquidCooledAdjectiveWithLiquidColorMarkup_WhenPatched()
+    {
+        WriteDictionaryFile("ui-displayname-adjectives.ja.json", ("liquid-cooled", "液冷式"));
+
+        RunWithDisplayNameProcessPatch(() =>
+        {
+            var processor = new DummyDisplayNameProcessor();
+            var result = processor.ProcessFor("{{B|liquid-cooled}}");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.EqualTo("{{B|液冷式}}"));
+                Assert.That(Translator.GetMissingKeyHitCountForTests("{{B|liquid-cooled}}"), Is.EqualTo(0));
             });
         });
     }

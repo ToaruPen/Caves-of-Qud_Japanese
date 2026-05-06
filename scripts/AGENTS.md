@@ -18,11 +18,14 @@ This area contains the Python and shell tooling used for validation, extraction,
 - Main commands:
 
 ```bash
-ruff check scripts/
-ruff format scripts/
-uv run pytest scripts/tests/
-uv run pytest scripts/tests/ -k <pattern>
+just python-check
+just python-format
+just python-test
+just python-test-filter '<pattern>'
+just roslyn-build
+just roslyn-test
 just roslyn-check
+just static-producer-check
 just static-producer-preview
 just annals-pattern-preview
 just text-construction-inventory
@@ -30,15 +33,14 @@ just ast-grep-smoke
 just ast-grep-check
 DOTFILES_ROOT=~/Dev/dotfiles just render-skill-evals <skill> <scenario>
 DOTFILES_ROOT=~/Dev/dotfiles just summarize-skill-evals /tmp/skill-eval-results.jsonl
-python3.12 scripts/check_encoding.py Mods/QudJP/Localization scripts
-python3.12 scripts/check_glossary_consistency.py Mods/QudJP/Localization
-python3.12 scripts/check_translation_tokens.py Mods/QudJP/Localization
-python3.12 scripts/validate_xml.py Mods/QudJP/Localization --strict --warning-baseline scripts/validate_xml_warning_baseline.json
+just localization-check
+just translation-token-check
+just translation-token-baseline
 scripts/decompile_game_dll.sh
 scripts/decompile_game_dll.sh --list
 scripts/decompile_game_dll.sh --all
 scripts/diagnose_conversation.sh
-python3.12 scripts/sync_mod.py
+just sync-mod
 ```
 
 - Prefer extending an existing script over creating a parallel tool for the same job.
@@ -60,14 +62,15 @@ and `scripts/merge_annals_patterns.py` extracts, translates, and merges regex /
 template pairs from decompiled `XRL.Annals/*.cs` into
 `Mods/QudJP/Localization/Dictionaries/annals-patterns.ja.json`.
 
-**Operator workflow** (see also: design spec at
+**Tracked artifact update workflow** (see also: design spec at
 `docs/superpowers/specs/2026-04-26-issue-420-hse-pattern-extraction-design.md`):
 
+Use this workflow only when the task explicitly owns the tracked generated
+artifact update. For read-only review or validation, prefer preview recipes such
+as `just annals-pattern-preview` and `just static-producer-preview`.
+
 ```bash
-python3.12 scripts/extract_annals_patterns.py \
-  --source-root ~/dev/coq-decompiled_stable/XRL.Annals \
-  --include "Resheph*.cs" \
-  --output scripts/_artifacts/annals/candidates_pending.json
+just annals-pattern-extract-tracked
 
 $EDITOR scripts/_artifacts/annals/candidates_pending.json   # human review
 
@@ -92,3 +95,7 @@ The `translate` step requires Codex CLI access and is **not** part of CI. The
 other three steps are dev-local but can be re-run in CI for QA. The Roslyn
 console at `scripts/tools/AnnalsPatternExtractor/` IS built in CI to catch
 csproj rot.
+
+Preview recipes are the default for review flows. Use
+`just static-producer-regenerate-tracked` or `just annals-pattern-extract-tracked`
+only when the task explicitly owns the tracked generated artifact being updated.

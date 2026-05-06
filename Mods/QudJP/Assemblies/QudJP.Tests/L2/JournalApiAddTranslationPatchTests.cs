@@ -153,6 +153,66 @@ public sealed class JournalApiAddTranslationPatchTests
     }
 
     [Test]
+    public void AddAccomplishment_TranslatesGivesRepMuralAndGospelVariants_WhenPatched()
+    {
+        WritePatternDictionary(
+            (
+                "^You slew your bonded kith (.+?), violating the covenant of the water ritual and earning the emnity of all\\.$",
+                "水の儀式で結ばれた同胞{0}を殺し、その誓約を破って全ての者の敵意を買った。"),
+            (
+                "^Blasphemously, the traitor (.+?) attacked =name=, (?:his|her|their|its) water-sib, and =name= was forced to slay (?:him|her|them|it)\\. Deep in grief, =name= wept for one year\\.$",
+                "冒涜的にも、裏切り者の{0}は水の同胞である=name=を襲い、=name=は{0}を殺さざるを得なかった。深い悲しみの中、=name=は一年間泣き続けた。"),
+            (
+                "^In the month of (.+?) of (.+?), =name= was challenged by <spice\\.commonPhrases\\.pretender\\.!random\\.article> to a duel over the rights of (.+?)\\. =name= won and murdered the pretender before tragically realizing <spice\\.pronouns\\.subject\\.!random> was (?:your|his|her|their|its) water-sib\\.$",
+                "{1}年{0}、=name= は {2}の権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、偽者を殺した後、悲劇的にも<spice.pronouns.subject.!random>が水の同胞だったと気づいた。"),
+            (
+                "^You slew (.+?)\\.$",
+                "{0}を倒した。"),
+            (
+                "^In the month of (.+?) of (.+?), brave =name= slew (.+?) in single combat\\.$",
+                "{1}年{0}、勇敢なる=name=は一騎打ちで{2}を倒した。"),
+            (
+                "^In the month of (.+?) of (.+?), =name= was challenged by <spice\\.commonPhrases\\.pretender\\.!random\\.article> to a duel over the rights of (.+?)\\. =name= won and murdered the pretender <spice\\.elements\\.(.+?)\\.murdermethods\\.!random>\\.$",
+                "{1}年{0}、=name= は {2}の権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、<spice.elements.{3}.murdermethods.!random>で偽者を殺した。"));
+
+        var harmonyId = CreateHarmonyId();
+        var harmony = new Harmony(harmonyId);
+        try
+        {
+            harmony.Patch(
+                original: RequireMethod(typeof(DummyJournalApi), nameof(DummyJournalApi.AddAccomplishment)),
+                prefix: new HarmonyMethod(RequireMethod(typeof(JournalAccomplishmentAddTranslationPatch), nameof(JournalAccomplishmentAddTranslationPatch.Prefix))),
+                postfix: new HarmonyMethod(RequireMethod(typeof(JournalAccomplishmentAddTranslationPatch), nameof(JournalAccomplishmentAddTranslationPatch.Postfix))));
+
+            DummyJournalApi.AddAccomplishment(
+                "You slew your bonded kith a snapjaw scavenger, violating the covenant of the water ritual and earning the emnity of all.",
+                "Blasphemously, the traitor a snapjaw scavenger attacked =name=, his water-sib, and =name= was forced to slay him. Deep in grief, =name= wept for one year.",
+                "In the month of Ut yara Ux of 1012, =name= was challenged by <spice.commonPhrases.pretender.!random.article> to a duel over the rights of the Mechanimists. =name= won and murdered the pretender before tragically realizing <spice.pronouns.subject.!random> was your water-sib.",
+                category: "general");
+
+            DummyJournalApi.AddAccomplishment(
+                "You slew a snapjaw scavenger.",
+                "In the month of Ut yara Ux of 1012, brave =name= slew loathsome a snapjaw scavenger in single combat.",
+                "In the month of Ut yara Ux of 1012, =name= was challenged by <spice.commonPhrases.pretender.!random.article> to a duel over the rights of the Mechanimists. =name= won and murdered the pretender <spice.elements.salt.murdermethods.!random>.",
+                category: "general");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(DummyJournalApi.Accomplishments[0].Text, Is.EqualTo("\u0001水の儀式で結ばれた同胞a snapjaw scavengerを殺し、その誓約を破って全ての者の敵意を買った。"));
+                Assert.That(DummyJournalApi.Accomplishments[0].MuralText, Is.EqualTo("\u0001冒涜的にも、裏切り者のa snapjaw scavengerは水の同胞である=name=を襲い、=name=はa snapjaw scavengerを殺さざるを得なかった。深い悲しみの中、=name=は一年間泣き続けた。"));
+                Assert.That(DummyJournalApi.Accomplishments[0].GospelText, Is.EqualTo("\u00011012年Ut yara Ux、=name= は the Mechanimistsの権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、偽者を殺した後、悲劇的にも<spice.pronouns.subject.!random>が水の同胞だったと気づいた。"));
+                Assert.That(DummyJournalApi.Accomplishments[1].Text, Is.EqualTo("\u0001a snapjaw scavengerを倒した。"));
+                Assert.That(DummyJournalApi.Accomplishments[1].MuralText, Is.EqualTo("\u00011012年Ut yara Ux、勇敢なる=name=は一騎打ちでloathsome a snapjaw scavengerを倒した。"));
+                Assert.That(DummyJournalApi.Accomplishments[1].GospelText, Is.EqualTo("\u00011012年Ut yara Ux、=name= は the Mechanimistsの権利を巡り<spice.commonPhrases.pretender.!random.article>に決闘を挑まれた。=name= は勝利し、<spice.elements.salt.murdermethods.!random>で偽者を殺した。"));
+            });
+        }
+        finally
+        {
+            harmony.UnpatchAll(harmonyId);
+        }
+    }
+
+    [Test]
     public void AddMapNote_TranslatesText_WhenPatched()
     {
         WritePatternDictionary(("^A \"SATED\" baetyl$", "「満足した」ベテル"));

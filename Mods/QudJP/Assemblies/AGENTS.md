@@ -21,11 +21,11 @@ This area contains the shipped mod DLL and the automated tests that define Harmo
 - Build and test:
 
 ```bash
-dotnet build Mods/QudJP/Assemblies/QudJP.csproj
-dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj
-dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L1
-dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L2
-dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L2G
+just build
+just check
+just test-l1
+just test-l2
+just test-l2g
 ```
 
 - Prefer producer-owned or stable mid-pipeline fixes. Many sink and near-sink routes are intentionally observation-only.

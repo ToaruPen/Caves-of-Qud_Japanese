@@ -62,18 +62,20 @@ Regenerate the tracked inventory only when the task explicitly owns that
 artifact:
 
 ```bash
-python3.12 scripts/scan_static_producer_inventory.py \
-  --source-root ~/dev/coq-decompiled_stable \
-  --output docs/static-producer-inventory.json
+just static-producer-regenerate-tracked
+```
+
+For non-mutating real-source validation, write to a disposable output:
+
+```bash
+just static-producer-preview
 ```
 
 For current static producer inventory changes, run:
 
 ```bash
-dotnet build scripts/tools/StaticProducerInventoryScanner/StaticProducerInventoryScanner.csproj --configuration Release --no-incremental
-uv run pytest scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py -q
-ruff check scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
-uvx basedpyright scripts/scan_static_producer_inventory.py scripts/tests/test_scan_static_producer_inventory.py scripts/tests/test_roslyn_extractor_smoke.py
+just static-producer-check
+just static-producer-preview
 ```
 
 ## Roslyn Scanner Contract
@@ -160,10 +162,10 @@ Use a two-layer check:
 Recommended local checks:
 
 ```bash
-dotnet build scripts/tools/<ToolName>/<ToolName>.csproj --configuration Release --no-incremental
-uv run pytest scripts/tests/test_<scanner>.py scripts/tests/test_roslyn_extractor_smoke.py -q
-ruff check scripts/<wrapper>.py scripts/tests/test_<scanner>.py scripts/tests/test_roslyn_extractor_smoke.py
-uvx basedpyright scripts/<wrapper>.py scripts/tests/test_<scanner>.py scripts/tests/test_roslyn_extractor_smoke.py
+just roslyn-build
+just roslyn-test
+just roslyn-python-check
+just static-producer-preview
 ```
 
 For QudJP static producer inventory work, also run the real-source regeneration command and inspect `roslyn_symbol_status` counts before claiming the scanner is authoritative.

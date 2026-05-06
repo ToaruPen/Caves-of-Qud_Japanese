@@ -1753,6 +1753,11 @@
       "key": "bronze",
       "context": "GetDisplayName.Adjective",
       "text": "青銅"
+    },
+    {
+      "key": "liquid-cooled",
+      "context": "GetDisplayName.Adjective",
+      "text": "液冷式"
     }
   ]
 }
