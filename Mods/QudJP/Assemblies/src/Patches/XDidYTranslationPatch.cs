@@ -842,17 +842,10 @@ public static class XDidYTranslationPatch
             return TranslateDisplayFragment(displayName);
         }
 
-        var fallbackText = value.ToString();
-        if (fallbackText is null)
-        {
-            Trace.TraceWarning("QudJP: XDidYTranslationPatch could not derive a display name from '{0}'.", value.GetType().FullName);
-            return string.Empty;
-        }
-
         Trace.TraceWarning(
-            "QudJP: XDidYTranslationPatch fell back to ToString() for display name from '{0}'.",
+            "QudJP: XDidYTranslationPatch could not derive a display name via one/One from '{0}'; falling back to original message route.",
             value.GetType().FullName);
-        return TranslateDisplayFragment(fallbackText);
+        return string.Empty;
     }
 
     private static bool TryInvokeDisplayNameMethod(
