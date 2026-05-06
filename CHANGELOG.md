@@ -10,6 +10,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.41] - 2026-05-07
+
+### Changed
+
+- README、NOTICE、Steam Workshop 説明文の対応ゲーム表記を Caves of Qud 1.0.4 対応として明確化しました。
+
+### Fixed
+
+- 生成された村の帆布テント名とサイバネティクス端末の身体部位サフィックスを日本語化しました。
+- インベントリ画面で一部アイテム名が表示されなくなる問題を修正しました。
+
+---
+
 ## [0.2.4] - 2026-05-06
 
 ### Changed
@@ -180,6 +193,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+[0.2.41]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.41
 [0.2.4]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.4
 [0.2.3]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.3
 [0.2.2]: https://github.com/ToaruPen/coq-japanese_stable/releases/tag/v0.2.2
