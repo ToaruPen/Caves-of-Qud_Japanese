@@ -35,6 +35,7 @@ Use this skill to turn runtime untranslated text into the smallest correct QudJP
    - For generated or composed text, record the route shape before choosing a fix: fixed frame with generated noun, generated name only, generated sentence from reusable grammar templates, or final sink-only display with no known owner route yet.
    - For scoped dictionary ownership, inspect every production lookup list that can serve the route, including context-specific scoped files, non-contextual scoped phrase lists, and broad/global fallback. Report which list actually serves the failing shape.
    - For Annals / HistorySpice / village history text, inspect both the decompiled event builder under `~/dev/coq-decompiled_stable/XRL.Annals/` and the live `Base/HistorySpice.json` source when available. Title Case dish, festival, gospel, or sacred/profane phrases are usually composed outputs, not fixed leaves.
+   - For HistorySpice token templates, distinguish symbolic expansion templates from visible runtime output before moving dictionary rows. A raw template in `world-gospels.ja.json` or `HistorySpice.json` is not itself an owner route; first trace the visible producer such as `CookingRecipe.GenerateRecipeName`, `Campfire.RollIngredients`, or `Campfire.DescribeMeal`, then decide whether the fix needs an owner translator, scoped component reconstruction, or a follow-up issue.
    - Treat `~/dev/coq-decompiled_stable/` as read-only evidence and never commit it.
 
 3. Choose the ownership surface.
