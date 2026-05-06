@@ -19,6 +19,9 @@ PROJECT_PATH: Final = REPO_ROOT / "scripts" / "tools" / "RoslynSemanticProbe" / 
 REQUIRED_TOP_LEVEL_KEYS: Final = {"schema_version", "query", "metrics", "hits"}
 REQUIRED_METRIC_KEYS: Final = {
     "total_files",
+    "parsed_files",
+    "candidate_files",
+    "returned_hits",
     "resolved_matching_owner_hits",
     "candidate_matching_owner_hits",
     "unresolved_hits",
@@ -27,6 +30,7 @@ REQUIRED_METRIC_KEYS: Final = {
     "string_argument_counts",
     "first_string_argument_counts",
     "string_risk_counts",
+    "timings_ms",
 }
 type JsonObject = dict[str, object]
 

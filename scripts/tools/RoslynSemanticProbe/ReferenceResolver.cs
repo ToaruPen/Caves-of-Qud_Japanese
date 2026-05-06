@@ -13,11 +13,35 @@ internal static class ReferenceResolver
                 .Select(assembly => assembly.Location)
             : trustedPlatformAssemblies.Split(Path.PathSeparator);
 
-        return runtimeReferencePaths
-            .Concat(externalReferencePaths)
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .Select(path => MetadataReference.CreateFromFile(path))
-            .ToList();
+        var references = new List<MetadataReference>();
+        foreach (var path in runtimeReferencePaths
+                     .Concat(externalReferencePaths)
+                     .Where(path => !string.IsNullOrWhiteSpace(path))
+                     .Distinct(StringComparer.Ordinal)
+                     .Order(StringComparer.Ordinal))
+        {
+            if (!File.Exists(path))
+            {
+                continue;
+            }
+
+            try
+            {
+                references.Add(MetadataReference.CreateFromFile(path));
+            }
+            catch (Exception exception) when (IsReferenceLoadFailure(exception))
+            {
+                continue;
+            }
+        }
+
+        return references;
     }
+
+    private static bool IsReferenceLoadFailure(Exception exception) =>
+        exception is ArgumentException
+            or BadImageFormatException
+            or IOException
+            or NotSupportedException
+            or UnauthorizedAccessException;
 }

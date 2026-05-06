@@ -402,12 +402,19 @@ Reject missing `schema_version`, `query`, `metrics`, or `hits`. Validate the
 metric keys used by tests:
 
 ```text
+total_files
+parsed_files
+candidate_files
+returned_hits
 resolved_matching_owner_hits
 candidate_matching_owner_hits
+unresolved_hits
 status_counts
 owner_counts
 string_argument_counts
+first_string_argument_counts
 string_risk_counts
+timings_ms
 ```
 
 - [ ] **Step 3: Run fixture tests**
