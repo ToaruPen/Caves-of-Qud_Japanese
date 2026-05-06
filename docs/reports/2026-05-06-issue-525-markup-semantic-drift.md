@@ -30,7 +30,7 @@ shape. The evidence does not show QudJP final-output mutation.
 
 | Count | Previous raw flags | Producer/screen family | Classification |
 | ---: | --- | --- | --- |
-| 92 | `empty_qud_wrapper,unclosed_qud_scope` | `Qud.UI.WorldGenerationScreen` progress bar (`ProgressBasis` plus `_IncrementProgress()` inserting `}}>{{K|`) | acceptable upstream relaxed markup |
+| 92 | `empty_qud_wrapper,unclosed_qud_scope` | `Qud.UI.WorldGenerationScreen` progress bar (`ProgressBasis` plus `_IncrementProgress()` inserting <code>}}>{{K&#124;</code>) | acceptable upstream relaxed markup |
 | 13 | `repeated_same_qud_scope_start` | `Qud.UI.SelectableTextMenuItem.SelectChanged()` selected row wrapper around hotkey/menu labels | acceptable upstream menu-state markup |
 | 2 | `repeated_same_qud_scope_start` | `Qud.UI.PopupMessage`/conversation body wrapper overlapping already yellow conversation text | acceptable upstream wrapper overlap; untranslated English is separate localization evidence |
 
@@ -106,7 +106,7 @@ is the statically proven world-generation progress-bar family.
 
 ## Relationship To #459
 
-#459 tracks broad Restore ownership and producer-route gaps. #525 is narrower:
+Issue `#459` tracks broad Restore ownership and producer-route gaps. Issue `#525` is narrower:
 it handles current `UITextSkinTranslationPatch` runtime semantic drift evidence.
 The 107 entries classified here are not new Restore ownership targets because
 they are upstream UI wrapper/progress-bar syntax and QudJP is not changing the
