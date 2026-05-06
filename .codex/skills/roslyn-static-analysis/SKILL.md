@@ -14,9 +14,36 @@ Start light, then promote when needed:
 
 1. Use `rg` for literal names, files, and nearby vocabulary.
 2. Use `ast-grep` for call shape, argument shape, assignments, wrappers, and quick structural exploration. In this repo, prefer `just sg-cs '<pattern>'` for common C# structural searches; it defaults to `~/dev/coq-decompiled_stable`, and accepts an optional path as the second argument.
-3. Promote to Roslyn when the result becomes a source-of-truth inventory or when correctness depends on type, receiver, overload, inheritance, alias, or extension-method identity.
+3. Use `just semantic-probe ...` for ad hoc symbol-backed owner evidence when correctness depends on type, receiver, overload, inheritance, alias, generic owner identity, or Unity/TMP property ownership.
+4. Promote to a purpose-built Roslyn inventory when the result becomes a source-of-truth artifact, needs domain-specific closure classification, or must be regenerated and reviewed as tracked project evidence.
 
 Do not replace `ast-grep` with Roslyn for one-off exploration. Do not keep an `ast-grep` or regex scanner as the authoritative source when same-name methods on unrelated types would change the answer.
+Do not treat `just semantic-probe` output as runtime proof; it is static owner evidence with explicit uncertainty.
+
+## Semantic Probe Quick Reference
+
+Use the generic semantic probe after `rg` / `ast-grep` have identified a
+candidate shape but before committing to an owner route:
+
+```bash
+just semantic-probe --method Show --owner XRL.UI.Popup --limit 20
+just semantic-probe --method 'Show*' --owner XRL.UI.Popup --include-nonmatching-owners
+just semantic-probe --method SetText --owner XRL.UI.UITextSkin --owner XRL.UI.UIHotkeySkin --limit 20
+just semantic-probe --assignment-property text --owner TMPro.TMP_Text --owner UnityEngine.UI.Text --managed-dir "$COQ_MANAGED_DIR"
+```
+
+Interpretation rules:
+
+- `resolved_matching_owner_hits` is static semantic owner evidence.
+- `candidate_matching_owner_hits` needs review and must not be consumed as
+  resolved owner proof.
+- `unresolved_hits` must remain visible. Do not silently drop or promote them.
+- Wrapper callsites are reported as the wrapper owner. The wrapped call inside
+  the wrapper body is a separate hit; v1 does not propagate wrapper callsites to
+  wrapped owners.
+- If a target surface becomes recurring or artifact-grade, implement or extend
+  a purpose-built Roslyn inventory instead of using the generic probe as the
+  source of truth.
 
 ## Existing Scanner Quick Reference
 

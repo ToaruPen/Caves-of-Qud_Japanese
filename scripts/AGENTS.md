@@ -25,6 +25,9 @@ just python-test-filter '<pattern>'
 just roslyn-build
 just roslyn-test
 just roslyn-check
+just semantic-probe --method Show --owner XRL.UI.Popup
+just semantic-probe-check
+just semantic-probe-real-smoke
 just static-producer-check
 just static-producer-preview
 just annals-pattern-preview
@@ -46,6 +49,10 @@ just sync-mod
 - Prefer extending an existing script over creating a parallel tool for the same job.
 - Keep error paths explicit and actionable; these scripts support validation and deployment.
 - Python baseline is `3.12+`, with typed and documented public interfaces.
+- Use `just semantic-probe` for ad hoc Roslyn owner checks over decompiled C#.
+  Keep it exploratory: promote recurring or artifact-grade surfaces into a
+  purpose-built inventory instead of treating the generic probe as a tracked
+  source of truth.
 - Roslyn tracked artifact recipes are intentionally named `*-tracked`;
   prefer preview recipes for review and validation unless the task explicitly
   owns the generated artifact.

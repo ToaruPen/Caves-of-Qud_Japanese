@@ -44,6 +44,9 @@ quote-style = "double"
 [tool.pytest.ini_options]
 addopts = ["--durations=10"]
 testpaths = ["scripts/tests"]
+markers = [
+  "semantic_probe_real: optional real-source smoke tests for RoslynSemanticProbe",
+]
 
 [dependency-groups]
 dev = [

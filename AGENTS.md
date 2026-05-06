@@ -31,11 +31,15 @@ QudJP is the Japanese localization mod for Caves of Qud `2.0.4`. The repo contai
   wrappers, assignments, or attributes matter. Prefer `just sg-cs
   'Popup.Show($$$ARGS)'` for common C# searches; plain `rg` is still fine for
   literal text, symbol names, and file discovery.
-- For authoritative C# static inventories or scanner changes where type,
-  receiver, overload, alias, inheritance, or extension-method identity affects
-  correctness, use the repo-local Roslyn static analysis skill at
-  `.codex/skills/roslyn-static-analysis/SKILL.md`. Treat `ast-grep` hits as
-  candidates in that case, not proof.
+- When ad hoc C# exploration depends on type, receiver, overload, alias,
+  inheritance, generic owner identity, or Unity/TMP property ownership, promote
+  the candidate set to `just semantic-probe ...` and keep `candidate` /
+  `unresolved` rows visible as uncertainty, not resolved owner proof.
+- For authoritative C# static inventories or scanner changes, use the
+  repo-local Roslyn static analysis skill at
+  `.codex/skills/roslyn-static-analysis/SKILL.md`. Purpose-built Roslyn
+  inventories are still the source-of-truth path for durable or tracked
+  artifacts; runtime evidence is still required for live route proof.
 - Prefer `just` recipes for routine validation so local runs match the repo task runner.
   Raw commands below document what the recipes execute.
 - Before opening or updating a PR that changes `Mods/QudJP/Localization/`, add

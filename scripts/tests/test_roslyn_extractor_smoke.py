@@ -20,6 +20,7 @@ STATIC_PRODUCER_PROJECT_PATH = (
     / "StaticProducerInventoryScanner"
     / "StaticProducerInventoryScanner.csproj"
 )
+SEMANTIC_PROBE_PROJECT_PATH = _REPO_ROOT / "scripts" / "tools" / "RoslynSemanticProbe" / "RoslynSemanticProbe.csproj"
 FIXTURES = Path(__file__).resolve().parent / "fixtures" / "annals"
 
 
@@ -42,6 +43,20 @@ def test_static_producer_inventory_scanner_csproj_builds_in_release() -> None:
     """The Roslyn static producer scanner csproj must build cleanly."""
     result = subprocess.run(
         ["dotnet", "build", str(STATIC_PRODUCER_PROJECT_PATH), "--configuration", "Release"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, (
+        f"dotnet build failed (exit {result.returncode}).\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+    )
+
+
+@pytest.mark.skipif(not shutil.which("dotnet"), reason="dotnet SDK not available")
+def test_semantic_probe_csproj_builds_in_release() -> None:
+    """The Roslyn semantic probe csproj must build cleanly."""
+    result = subprocess.run(
+        ["dotnet", "build", str(SEMANTIC_PROBE_PROJECT_PATH), "--configuration", "Release"],
         capture_output=True,
         text=True,
         check=False,
