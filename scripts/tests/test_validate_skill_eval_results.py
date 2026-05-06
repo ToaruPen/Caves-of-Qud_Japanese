@@ -95,6 +95,81 @@ def test_validator_rejects_results_without_manifest_scenario(tmp_path: Path) -> 
     assert "no manifest scenario for demo/median-demo" in completed.stderr
 
 
+def test_validator_rejects_non_object_manifest(tmp_path: Path) -> None:
+    """Manifest root must be an object so schema errors stay user-readable."""
+    manifest = tmp_path / "skill-evals.json"
+    results = tmp_path / "skill-eval-results.jsonl"
+    manifest.write_text("[]", encoding="utf-8")
+    _write_jsonl(results, [_result_record()])
+
+    completed = _run_validator(results, manifest)
+
+    assert completed.returncode == 1
+    assert "skill eval manifest must be a JSON object" in completed.stderr
+
+
+def test_validator_normalizes_manifest_read_errors(tmp_path: Path) -> None:
+    """Manifest read and decode failures should return exit code 1, not a traceback."""
+    manifest = tmp_path / "skill-evals.json"
+    results = tmp_path / "skill-eval-results.jsonl"
+    manifest.write_bytes(b"\xff")
+    _write_jsonl(results, [_result_record()])
+
+    completed = _run_validator(results, manifest)
+
+    assert completed.returncode == 1
+    assert "failed to read" in completed.stderr
+
+
+def test_validator_normalizes_result_read_errors(tmp_path: Path) -> None:
+    """Result read and decode failures should return exit code 1, not a traceback."""
+    manifest = tmp_path / "skill-evals.json"
+    results = tmp_path / "skill-eval-results.jsonl"
+    _write_json(
+        manifest,
+        {
+            "skills": {
+                "demo": {
+                    "skill_path": ".codex/skills/demo",
+                    "scenarios": [{"id": "median-demo", "type": "median"}],
+                },
+            },
+        },
+    )
+    results.write_bytes(b"\xff")
+
+    completed = _run_validator(results, manifest)
+
+    assert completed.returncode == 1
+    assert "failed to read" in completed.stderr
+
+
+def test_validator_rejects_duplicate_manifest_scenarios(tmp_path: Path) -> None:
+    """Duplicate scenario ids for one skill are ambiguous and should not be overwritten."""
+    manifest = tmp_path / "skill-evals.json"
+    results = tmp_path / "skill-eval-results.jsonl"
+    _write_json(
+        manifest,
+        {
+            "skills": {
+                "demo": {
+                    "skill_path": ".codex/skills/demo",
+                    "scenarios": [
+                        {"id": "median-demo", "type": "median"},
+                        {"id": "median-demo", "type": "edge"},
+                    ],
+                },
+            },
+        },
+    )
+    _write_jsonl(results, [_result_record()])
+
+    completed = _run_validator(results, manifest)
+
+    assert completed.returncode == 1
+    assert "duplicate manifest scenario: demo/median-demo" in completed.stderr
+
+
 def test_validator_rejects_schema_invalid_results(tmp_path: Path) -> None:
     """Manifest backing does not excuse missing result schema fields."""
     manifest = tmp_path / "skill-evals.json"

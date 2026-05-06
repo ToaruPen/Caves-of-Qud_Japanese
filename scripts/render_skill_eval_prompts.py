@@ -17,8 +17,17 @@ def _load_json(path: Path) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
         raise ValueError(f"missing required file: {path}") from exc
+    except (OSError, UnicodeDecodeError) as exc:
+        raise ValueError(f"failed to read {path}: {exc}") from exc
     except json.JSONDecodeError as exc:
         raise ValueError(f"invalid JSON in {path}: {exc}") from exc
+
+
+def _load_manifest(path: Path) -> dict[str, Any]:
+    manifest = _load_json(path)
+    if not isinstance(manifest, dict):
+        raise ValueError("skill eval manifest must be a JSON object")
+    return manifest
 
 
 def _iter_selected_scenarios(
@@ -122,7 +131,10 @@ def _render_prompt(
     expected = _require_string_array(scenario.get("expected"), f"skills.{skill_name}.scenarios[].expected")
     forbidden = _require_string_array(scenario.get("forbidden"), f"skills.{skill_name}.scenarios[].forbidden")
 
-    skill_text = skill_file.read_text(encoding="utf-8")
+    try:
+        skill_text = skill_file.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        raise ValueError(f"failed to read skill file for {skill_name}: {skill_file}: {exc}") from exc
     return (
         "You are a fresh executor reading the target skill with no hidden context.\n"
         "Use only the target skill text and the scenario below. "
@@ -178,7 +190,7 @@ def main(argv: list[str]) -> int:
     dotfiles_root = args.dotfiles_root.resolve() if args.dotfiles_root is not None else None
 
     try:
-        manifest = _load_json(manifest_path)
+        manifest = _load_manifest(manifest_path)
         selected = _iter_selected_scenarios(
             manifest,
             skill_filter=args.skill,

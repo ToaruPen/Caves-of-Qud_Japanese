@@ -33,8 +33,29 @@ def _load_json(path: Path) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
         raise ValueError(f"missing required file: {path}") from exc
+    except (OSError, UnicodeDecodeError) as exc:
+        raise ValueError(f"failed to read {path}: {exc}") from exc
     except json.JSONDecodeError as exc:
         raise ValueError(f"invalid JSON in {path}: {exc}") from exc
+
+
+def _load_manifest(path: Path) -> dict[str, Any]:
+    manifest = _load_json(path)
+    if not isinstance(manifest, dict):
+        raise ValueError("skill eval manifest must be a JSON object")
+    return manifest
+
+
+def _manifest_scenario_key(skill_name: str, scenario: dict[str, Any]) -> tuple[str, str, str]:
+    scenario_id = scenario.get("id")
+    scenario_type = scenario.get("type")
+    if not isinstance(scenario_id, str) or not scenario_id.strip():
+        raise ValueError(f"skills.{skill_name}.scenarios[].id must be non-empty")
+    if not isinstance(scenario_type, str) or not scenario_type.strip():
+        raise ValueError(f"skills.{skill_name}.scenarios[].type must be non-empty")
+    if scenario_type not in SCENARIO_TYPES:
+        raise ValueError(f"skills.{skill_name}.scenarios[].type must be one of {sorted(SCENARIO_TYPES)}")
+    return skill_name, scenario_id, scenario_type
 
 
 def _manifest_scenarios(manifest: dict[str, Any]) -> dict[tuple[str, str], str]:
@@ -52,23 +73,23 @@ def _manifest_scenarios(manifest: dict[str, Any]) -> dict[tuple[str, str], str]:
         for scenario in scenarios:
             if not isinstance(scenario, dict):
                 raise ValueError(f"skills.{skill_name}.scenarios entry must be an object")
-            scenario_id = scenario.get("id")
-            scenario_type = scenario.get("type")
-            if not isinstance(scenario_id, str) or not scenario_id.strip():
-                raise ValueError(f"skills.{skill_name}.scenarios[].id must be non-empty")
-            if not isinstance(scenario_type, str) or not scenario_type.strip():
-                raise ValueError(f"skills.{skill_name}.scenarios[].type must be non-empty")
-            if scenario_type not in SCENARIO_TYPES:
-                raise ValueError(
-                    f"skills.{skill_name}.scenarios[].type must be one of {sorted(SCENARIO_TYPES)}"
-                )
-            scenarios_by_key[(skill_name, scenario_id)] = scenario_type
+            _, scenario_id, scenario_type = _manifest_scenario_key(skill_name, scenario)
+            key = (skill_name, scenario_id)
+            if key in scenarios_by_key:
+                raise ValueError(f"duplicate manifest scenario: {skill_name}/{scenario_id}")
+            scenarios_by_key[key] = scenario_type
     return scenarios_by_key
 
 
 def _iter_records(path: Path) -> list[tuple[int, dict[str, Any]]]:
     records: list[tuple[int, dict[str, Any]]] = []
-    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError as exc:
+        raise ValueError(f"missing required file: {path}") from exc
+    except (OSError, UnicodeDecodeError) as exc:
+        raise ValueError(f"failed to read {path}: {exc}") from exc
+    for line_number, line in enumerate(lines, start=1):
         if not line.strip():
             continue
         try:
@@ -204,7 +225,7 @@ def main(argv: list[str]) -> int:
     """Validate that every result record points at a manifest scenario."""
     args = _parse_args(argv)
     try:
-        manifest = _load_json(args.manifest.resolve())
+        manifest = _load_manifest(args.manifest.resolve())
         scenarios_by_key = _manifest_scenarios(manifest)
         records = _iter_records(args.results.resolve())
         _validate_result_schema(records)
