@@ -62,10 +62,17 @@ gh pr view <number> --json headRefOid,reviewDecision,statusCheckRollup,latestRev
 The CodeRabbit status context is named `CodeRabbit`. Treat it as current only
 when it belongs to the PR head you are reporting.
 
-Use review-thread state, not only review bodies, to decide whether actionable
-comments remain. The practical convergence check is:
+Inspect the latest review bodies in addition to thread state. CodeRabbit can
+put actionable non-inline notes, such as duplicate-comment summaries, in a
+review body without leaving a separate unresolved review thread. Treat a
+current-head review body with actionable text as open review work even when the
+review-thread count is zero.
+
+Use review-thread state, latest review bodies, and current checks together to
+decide whether actionable comments remain. The practical convergence check is:
 
 - unresolved actionable review threads are zero
+- latest current-head review bodies contain no actionable non-threaded notes
 - checks on the current head pass
 - the current `CodeRabbit` status context is `SUCCESS`
 
