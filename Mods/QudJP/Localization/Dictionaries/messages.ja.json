@@ -1014,6 +1014,11 @@
       "route": "emit-message"
     },
     {
+      "pattern": "^You voice a short prayer beneath the (.+?) stone statue of (?:the |a |an )?(.+?)\\.$",
+      "template": "あなたは{1}の{0}石像の下で短い祈りを唱えた。",
+      "route": "emit-message"
+    },
+    {
       "pattern": "^This statue worked from (.+?) intricately depicts (?:the |a |an )?(.+?):$",
       "template": "{t0}から作られたこの像には{1}が精巧に描かれている:",
       "route": "description"
@@ -1289,6 +1294,11 @@
       "route": "emit-message"
     },
     {
+      "pattern": "^Your (.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s'|の) armor with (.+?) \\[(.+?)\\]!$",
+      "template": "あなたの{0}は{2}で{1}の装甲を貫けなかった！ [{3}]",
+      "route": "message-frame"
+    },
+    {
       "pattern": "^Your (.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s'|の) armor \\[(.+?)\\]!$",
       "template": "あなたの{0}は{1}の装甲を貫けなかった！ [{2}]",
       "route": "message-frame"
@@ -1299,47 +1309,47 @@
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s') (.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s') armor with (.+?) \\[(.+?)\\]!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s'|の) (.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s'|の) armor with (.+?) \\[(.+?)\\]!$",
       "template": "{0}の{1}は{3}で{2}の装甲を貫けなかった！ [{4}]",
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s') (.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s') armor \\[(.+?)\\]!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s'|の) (.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s'|の) armor \\[(.+?)\\]!$",
       "template": "{0}の{1}は{2}の装甲を貫けなかった！ [{3}]",
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s') (.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s') armor!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s'|の) (.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s'|の) armor!$",
       "template": "{0}の{1}は{2}の装甲を貫けなかった！",
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s') armor with (.+?) \\[(.+?)\\]!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s'|の) armor with (.+?) \\[(.+?)\\]!$",
       "template": "{0}は{2}で{1}の装甲を貫けなかった！ [{3}]",
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s') armor \\[(.+?)\\]!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s'|の) armor \\[(.+?)\\]!$",
       "template": "{0}は{1}の装甲を貫けなかった！ [{2}]",
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s') armor!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?) (?:fails|fail) to penetrate (?:the |a |an )?(.+?)(?:'s|s'|の) armor!$",
       "template": "{0}は{1}の装甲を貫けなかった！",
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s') (.+?) (?:fails|fail) to penetrate your armor with (.+?) \\[(.+?)\\]!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s'|の) (.+?) (?:fails|fail) to penetrate your armor with (.+?) \\[(.+?)\\]!$",
       "template": "{0}の{1}は{2}であなたの装甲を貫けなかった！ [{3}]",
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s') (.+?) (?:fails|fail) to penetrate your armor \\[(.+?)\\]!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s'|の) (.+?) (?:fails|fail) to penetrate your armor \\[(.+?)\\]!$",
       "template": "{0}の{1}はあなたの装甲を貫けなかった！ [{2}]",
       "route": "message-frame"
     },
     {
-      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s') (.+?) (?:fails|fail) to penetrate your armor!$",
+      "pattern": "^(?:The |the |[Aa]n? )?(.+?)(?:'s|s'|の) (.+?) (?:fails|fail) to penetrate your armor!$",
       "template": "{0}の{1}はあなたの装甲を貫けなかった！",
       "route": "message-frame"
     },

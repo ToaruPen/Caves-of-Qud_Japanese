@@ -44,6 +44,28 @@
       ]
     },
     {
+      "id": "effect_stat_modifier_lines",
+      "category": "allowed_english_token",
+      "reason": "Compact effect/stat modifier lines intentionally keep game stat abbreviations and terse attribute wording.",
+      "routes": [
+        "<no-context>",
+        "ActiveEffectsOwnerPatch",
+        "DescriptionLongDescriptionPatch",
+        "DescriptionShortDescriptionPatch",
+        "LookTooltipContentPatch",
+        "UITextSkinTranslationPatch"
+      ],
+      "patterns": [
+        "^[+-]\\d+\\s+(?:AV|DV|MA|PV)$"
+      ],
+      "protected_tokens": [
+        "AV",
+        "DV",
+        "MA",
+        "PV"
+      ]
+    },
+    {
       "id": "key_labels_and_hotkeys",
       "category": "allowed_english_token",
       "reason": "Keyboard labels and hotkey-only segments are control tokens, not translation targets.",

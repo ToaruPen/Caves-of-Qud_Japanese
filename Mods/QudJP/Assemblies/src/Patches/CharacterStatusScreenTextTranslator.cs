@@ -216,10 +216,10 @@ internal static class CharacterStatusScreenTextTranslator
         var description = GetMutationDictionaryValue($"mutation:{mutationName}");
         var level = GetIntMemberValue(mutation, "Level");
         var currentRank = level.HasValue
-            ? GetMutationDictionaryValue($"mutation:{mutationName}:rank:{level.Value}")
+            ? GetMutationRankDictionaryValue(mutationName!, level.Value)
             : null;
         var nextRank = level.HasValue
-            ? GetMutationDictionaryValue($"mutation:{mutationName}:rank:{level.Value + 1}")
+            ? GetMutationRankDictionaryValue(mutationName!, level.Value + 1)
             : null;
 
 #pragma warning disable CA2249
@@ -531,6 +531,39 @@ internal static class CharacterStatusScreenTextTranslator
             && !string.Equals(translated, key, StringComparison.Ordinal)
             ? translated
             : null;
+    }
+
+    private static string? GetMutationRankDictionaryValue(string mutationName, int level)
+    {
+        var simpleRank = GetMutationDictionaryValue($"mutation:{mutationName}:rank:{level}");
+        if (!string.IsNullOrEmpty(simpleRank))
+        {
+            return simpleRank;
+        }
+
+        return TryGetStingerRankKey(mutationName, level, out var stingerRankKey)
+            ? GetMutationDictionaryValue(stingerRankKey)
+            : null;
+    }
+
+    private static bool TryGetStingerRankKey(string mutationName, int level, out string rankKey)
+    {
+        var propertyName = mutationName switch
+        {
+            "Stinger (Confusing Venom)" => "Stinger Confusion",
+            "Stinger (Paralyzing Venom)" => "Stinger Paralysis",
+            "Stinger (Poisoning Venom)" => "Stinger Poison",
+            _ => string.Empty,
+        };
+
+        if (string.IsNullOrEmpty(propertyName))
+        {
+            rankKey = string.Empty;
+            return false;
+        }
+
+        rankKey = $"mutation:{mutationName}:{propertyName}:rank:{level}";
+        return true;
     }
 
     private static string? GetStableMutationDictionaryName(object mutation)

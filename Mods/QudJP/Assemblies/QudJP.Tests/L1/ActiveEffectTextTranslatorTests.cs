@@ -92,6 +92,23 @@ public sealed class ActiveEffectTextTranslatorTests
         });
     }
 
+    [Test]
+    public void TryTranslateText_TranslatesGeneratedAllMentalAttributesLine()
+    {
+        var changed = ActiveEffectTextTranslator.TryTranslateText(
+            "-6 to all mental attributes",
+            "ActiveEffectTextTranslatorTests",
+            "ActiveEffects.Details.Confused",
+            out var translated);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(translated, Is.EqualTo("全精神属性に -6"));
+            Assert.That(Translator.GetMissingKeyHitCountForTests("-6 to all mental attributes"), Is.EqualTo(0));
+        });
+    }
+
     [TestCase("dominated (3 turns remaining)", "支配された（残り3ターン）")]
     [TestCase("time-dilated ({{C|-40}} Quickness)", "時間遅延 ({{C|-40}} Quickness)")]
     [TestCase("{{C|lying on a chair}}", "{{C|椅子に横たわっている}}")]
