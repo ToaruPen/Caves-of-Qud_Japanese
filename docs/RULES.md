@@ -1,6 +1,9 @@
 # QudJP Rules
 
-This document is the canonical workflow and decision guide for translation patches, localization assets, runtime evidence, Phase F proof obligations, and deployment. `AGENTS.md` and `CLAUDE.md` point here instead of duplicating the same operating rules.
+This document is the canonical decision guide for QudJP translation ownership,
+localization assets, route boundaries, and regression-test obligations.
+`AGENTS.md` and `CLAUDE.md` point here instead of duplicating the same
+operating rules.
 
 ## Evidence order
 
@@ -14,47 +17,15 @@ Use evidence in this order:
 
 If a stale note conflicts with tests or fresh runtime evidence, follow tests first.
 
-## Phase F boundary and shared defaults
+## Related procedures
 
-Phase F means runtime route-proof evidence. It is distinct from static coverage, and it does not replace the source-first scanner or fixed-leaf workflow.
+This file defines durable rules. Use these procedural guides when the task is
+about execution mechanics rather than a translation decision:
 
-For the first PR in issue #358:
-
-- keep the scope on runtime observability and triage
-- keep SoT cross-reference deferred until the post-#357 integration follow-up
-- keep `DynamicTextProbe` and `SinkObserve` as runtime evidence records, not static coverage verdicts
-
-Shared defaults for this boundary are fixed in the parent roadmap and repeated here for convenience:
-
-- `template_id` is a transport-slot field in this PR, and runtime emitters use `<missing>` until the #357 follow-up owns the canonical static SoT side
-- `family` uses the parent-roadmap vocabulary and is not renamed here
-- `route` is emitted verbatim and is not normalized
-
-Required verification commands for this boundary:
-
-```bash
-dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L1
-uv run pytest scripts/tests/test_triage_log_parser.py scripts/tests/test_triage_models.py scripts/tests/test_triage_classifier.py scripts/tests/test_triage_integration.py -q
-uv run pytest scripts/tests/test_triage_integration.py -q -k sample_log_smoke
-```
-
-Use these commands when checking Phase F docs, runtime observability, or the first-PR boundary.
-
-## PR preflight
-
-Before publishing or updating a broad PR that touches C# patches, script tools,
-or localization assets, prefer the CI-like local gate:
-
-```bash
-just pr-check
-```
-
-This gate intentionally uses the same Release build/test shape as CI for the
-QudJP assemblies. Debug `just check` can pass while Release analyzers still fail.
-
-Localization asset changes also need a changed release-note fragment under
-`docs/release-notes/unreleased/*.md`; `just pr-check` verifies that requirement
-against `origin/main..HEAD`.
+- `docs/workflows/pr-review.md` for PR preflight, review convergence, and
+  CodeRabbit state handling
+- `docs/workflows/runtime-evidence.md` for runtime logs, Phase F evidence,
+  local mod sync, deployment checks, and decompiled-source tracing
 
 ## Route ownership
 
@@ -235,89 +206,6 @@ Producer or queue-gated patches that translate traffic before a generic sink mus
 - observability hit counts proving transformed owner traffic is recorded and pass-through traffic is not recorded as an owner hit
 
 If a route can emit articles, generated names, quantities, or placeholder-like fragments, include those emitted shapes in tests instead of replacing them with dictionary leaves.
-
-## PR review hygiene
-
-Before addressing PR review feedback, confirm the checkout matches the PR head branch:
-
-```bash
-git status --short --branch
-gh pr view <number> --json headRefName
-```
-
-If the active checkout has unrelated dirty work, either use a separate worktree or stage only explicit paths for the PR. Do not commit review fixes from an unrelated branch just because the patch applies cleanly.
-
-For CodeRabbit or reviewer feedback on route ownership, do not stop at the exact
-literal or line named in the comment. Treat the comment as evidence of a route
-family contract issue, then check sibling owner tokens, parser branches,
-punctuation/casing variants, scoped dictionary homes, and owner-vs-sink
-boundaries that share the same behavior.
-
-When interpreting CodeRabbit state after force-pushes, report the current check
-status separately from `reviewDecision` and old review bodies. The latest review
-body can describe an older commit range even when the current CodeRabbit status
-context is passing.
-
-## Runtime evidence
-
-Use runtime logs as evidence, not as the primary behavior definition.
-
-Important paths:
-
-- current log: `~/Library/Logs/Freehold Games/CavesOfQud/Player.log`
-- previous log: `~/Library/Logs/Freehold Games/CavesOfQud/Player-prev.log`
-- build log: `~/Library/Application Support/Freehold Games/CavesOfQud/build_log.txt`
-
-Useful markers:
-
-- `[QudJP] Build marker`
-- `DynamicTextProbe/v1`
-- `SinkObserve/v1`
-- `missing key`
-- `MODWARN`
-
-On Apple Silicon, use Rosetta for in-game evidence:
-
-- `scripts/launch_rosetta.sh`
-- `Launch CavesOfQud (Rosetta).command`
-
-Do not treat native ARM64 runtime logs as localization observability evidence.
-
-## Mod sync and deployment
-
-Preferred deploy path:
-
-```bash
-dotnet clean Mods/QudJP/Assemblies/QudJP.csproj
-dotnet build Mods/QudJP/Assemblies/QudJP.csproj --no-incremental
-python3.12 scripts/sync_mod.py
-```
-
-Helpful variants:
-
-```bash
-python3.12 scripts/sync_mod.py --dry-run
-python3.12 scripts/sync_mod.py --exclude-fonts
-```
-
-`scripts/sync_mod.py` deploys only game-essential files to the platform default mod directory. Use `--destination` if your install uses a non-standard path.
-
-Do not deploy arbitrary source files. The game will try to compile any `.cs` file it finds, and only `Bootstrap.cs` is meant to be game-compiled.
-
-## Decompiled game source
-
-Decompiled source is a tracing aid, not a shipped artifact. issue-357 の Roslyn pilot はここを read-only external inputs として読みます。
-
-- location: `~/dev/coq-decompiled_stable/`
-- regenerate with `scripts/decompile_game_dll.sh`
-- never commit decompiled output or game binaries
-
-Use decompiled code to:
-
-- trace upstream producers
-- verify method signatures and UI plumbing
-- identify renderer-side stop points
-- distinguish repo-owned bugs from game-owned limits
 
 ## Repo constraints
 

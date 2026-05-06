@@ -18,10 +18,10 @@ This area contains the Python and shell tooling used for validation, extraction,
 - Main commands:
 
 ```bash
-ruff check scripts/
-ruff format scripts/
-uv run pytest scripts/tests/
-uv run pytest scripts/tests/ -k <pattern>
+just python-check
+just python-format
+just python-test
+just python-test-filter '<pattern>'
 just roslyn-build
 just roslyn-test
 just roslyn-check
@@ -33,16 +33,14 @@ just ast-grep-smoke
 just ast-grep-check
 DOTFILES_ROOT=~/Dev/dotfiles just render-skill-evals <skill> <scenario>
 DOTFILES_ROOT=~/Dev/dotfiles just summarize-skill-evals /tmp/skill-eval-results.jsonl
-python3.12 scripts/check_encoding.py Mods/QudJP/Localization scripts
-python3.12 scripts/check_glossary_consistency.py Mods/QudJP/Localization
-python3.12 scripts/check_translation_tokens.py Mods/QudJP/Localization
-python3.12 scripts/check_translation_tokens.py Mods/QudJP/Localization --write-duplicate-conflict-baseline scripts/translation_token_duplicate_baseline.json
-python3.12 scripts/validate_xml.py Mods/QudJP/Localization --strict --warning-baseline scripts/validate_xml_warning_baseline.json
+just localization-check
+just translation-token-check
+just translation-token-baseline
 scripts/decompile_game_dll.sh
 scripts/decompile_game_dll.sh --list
 scripts/decompile_game_dll.sh --all
 scripts/diagnose_conversation.sh
-python3.12 scripts/sync_mod.py
+just sync-mod
 ```
 
 - Prefer extending an existing script over creating a parallel tool for the same job.

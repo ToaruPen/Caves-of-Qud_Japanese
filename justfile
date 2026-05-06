@@ -11,6 +11,11 @@ default:
 build:
   dotnet build Mods/QudJP/Assemblies/QudJP.csproj
 
+# Clean and rebuild the shipped QudJP assembly without incremental artifacts.
+rebuild:
+  dotnet clean Mods/QudJP/Assemblies/QudJP.csproj
+  dotnet build Mods/QudJP/Assemblies/QudJP.csproj --no-incremental
+
 # Run fast C# L1 tests.
 test-l1:
   dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --filter TestCategory=L1
@@ -27,9 +32,17 @@ test-l2g:
 python-check:
   ruff check scripts/
 
+# Format Python scripts.
+python-format:
+  ruff format scripts/
+
 # Run Python tests.
 python-test:
   uv run pytest scripts/tests/
+
+# Run focused Python tests by pytest -k expression.
+python-test-filter pattern:
+  uv run pytest scripts/tests/ -k {{quote(pattern)}}
 
 # Run localization asset checks.
 localization-check:
@@ -165,6 +178,31 @@ download-release-zip version:
 # Sync the built mod into the local game install.
 sync-mod:
   {{python}} scripts/sync_mod.py
+
+# Preview the local mod sync without copying files.
+sync-mod-dry-run:
+  {{python}} scripts/sync_mod.py --dry-run
+
+# Sync the built mod without copying fonts.
+sync-mod-exclude-fonts:
+  {{python}} scripts/sync_mod.py --exclude-fonts
+
+# Sync the built mod to an explicit Mods/QudJP destination.
+sync-mod-to destination:
+  {{python}} scripts/sync_mod.py --destination {{quote(destination)}}
+
+# Rebuild and sync the local mod into the game install.
+deploy-mod: rebuild sync-mod
+
+# Rebuild and sync the local mod to an explicit Mods/QudJP destination.
+deploy-mod-to destination:
+  just rebuild
+  just sync-mod-to {{quote(destination)}}
+
+# Run the Phase F runtime evidence verification commands.
+runtime-evidence-check: test-l1
+  uv run pytest scripts/tests/test_triage_log_parser.py scripts/tests/test_triage_models.py scripts/tests/test_triage_classifier.py scripts/tests/test_triage_integration.py -q
+  uv run pytest scripts/tests/test_triage_integration.py -q -k sample_log_smoke
 
 # Run the broad local verification gate.
 check: build test-l1 test-l2 test-l2g python-check python-test localization-check translation-token-check
