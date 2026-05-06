@@ -64,6 +64,7 @@ jobs:
           roslyn_tools=false
           python=false
           localization=false
+          markdown_reports=false
 
           if matches '^\.github/workflows/.*\.ya?ml$'; then
             run_all=true
@@ -80,13 +81,19 @@ jobs:
           if [[ "$run_all" == true ]] || matches '^(Mods/QudJP/Localization/|scripts/(check_translation_tokens|check_glossary_consistency)\.py|scripts/(translation_token_duplicate_baseline|glossary_consistency_baseline)\.json)'; then
             localization=true
           fi
+          if [[ "$run_all" == true ]] || matches '^docs/reports/.*\.md$' || matches '^scripts/check_markdown_reports\.py$'; then
+            markdown_reports=true
+          fi
 
           {
+            echo "base_ref=$base"
+            echo "head_ref=$head"
             echo "qudjp_dotnet=$qudjp_dotnet"
             echo "roslyn_tools=$roslyn_tools"
             echo "dotnet=$([[ "$qudjp_dotnet" == true || "$roslyn_tools" == true ]] && echo true || echo false)"
             echo "python=$python"
             echo "localization=$localization"
+            echo "markdown_reports=$markdown_reports"
           } >> "$GITHUB_OUTPUT"
 
       - name: Setup .NET
@@ -137,12 +144,19 @@ jobs:
         run: dotnet test Mods/QudJP/Assemblies/QudJP.Tests/QudJP.Tests.csproj --configuration Release --no-build
 
       - name: Setup Python
-        if: steps.changes.outputs.python == 'true' || steps.changes.outputs.localization == 'true'
+        if: steps.changes.outputs.python == 'true' || steps.changes.outputs.localization == 'true' || steps.changes.outputs.markdown_reports == 'true'
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: pyproject.toml
+
+      - name: Check Markdown reports
+        if: steps.changes.outputs.markdown_reports == 'true'
+        run: >
+          python scripts/check_markdown_reports.py
+          --base-ref "${{ steps.changes.outputs.base_ref }}"
+          --head-ref "${{ steps.changes.outputs.head_ref }}"
 
       - name: Check release-note fragment
         if: github.event_name == 'pull_request' && steps.changes.outputs.localization == 'true'

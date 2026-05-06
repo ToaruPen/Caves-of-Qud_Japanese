@@ -165,6 +165,12 @@ For color-aware restoration:
 
 Mixed Qud markup and TMP markup must be fixed route-by-route, with tests that preserve the exact broken input shape.
 
+Markup semantic diagnostics must distinguish raw token shape from user-visible
+semantic drift. Repeated same-color Qud wrappers and statically proven upstream
+relaxed markup are not automatically QudJP drift. Keep every exception narrow:
+tie it to a producer route, document the route, and add tests for both the
+accepted relaxed shape and a nearby still-broken shape.
+
 ## Known boundaries
 
 Some behavior is outside QudJP's ownership:
